@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */; };
+		1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9C11AACC4C0007822B0 /* Images.xcassets */; };
+		1D72D9C51AACC4C0007822B0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9C31AACC4C0007822B0 /* LaunchScreen.xib */; };
+		1D72D9D11AACC4C0007822B0 /* IceFishingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9D01AACC4C0007822B0 /* IceFishingTests.swift */; };
+		1D72D9DE1AACC6AA007822B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9DC1AACC6AA007822B0 /* ViewController.swift */; };
+		1D72D9DF1AACC6AA007822B0 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9DD1AACC6AA007822B0 /* ViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1D72D9CB1AACC4C0007822B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D72D9AD1AACC4C0007822B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D72D9B41AACC4C0007822B0;
+			remoteInfo = IceFishing;
+		};
+		1DE9329A1AAD12AB00AD3BF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D72DB671AAD0B97007822B0 /* Alamofire-SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A8AFB70F19D1401D0070765E;
+			remoteInfo = AlamofireSwiftyJSON;
+		};
+		1DE9329C1AAD12AB00AD3BF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D72DB671AAD0B97007822B0 /* Alamofire-SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A8AFB71A19D1401D0070765E;
+			remoteInfo = AlamofireSwiftyJSONTests;
+		};
+		1DE932A71AAD138800AD3BF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D72DB671AAD0B97007822B0 /* Alamofire-SwiftyJSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A8AFB70E19D1401D0070765E;
+			remoteInfo = AlamofireSwiftyJSON;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1D72D9B51AACC4C0007822B0 /* IceFishing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IceFishing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D72D9B91AACC4C0007822B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1D72D9C11AACC4C0007822B0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1D72D9C41AACC4C0007822B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		1D72D9CA1AACC4C0007822B0 /* IceFishingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IceFishingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D72D9CF1AACC4C0007822B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D72D9D01AACC4C0007822B0 /* IceFishingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceFishingTests.swift; sourceTree = "<group>"; };
+		1D72D9DC1AACC6AA007822B0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1D72D9DD1AACC6AA007822B0 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		1D72DB671AAD0B97007822B0 /* Alamofire-SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Alamofire-SwiftyJSON.xcodeproj"; path = "vendor/Alamofire-SwiftyJSON.xcodeproj"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D72D9B21AACC4C0007822B0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D72D9C71AACC4C0007822B0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1D72D9AC1AACC4C0007822B0 = {
+			isa = PBXGroup;
+			children = (
+				1D72D9B71AACC4C0007822B0 /* IceFishing */,
+				1D72D9CD1AACC4C0007822B0 /* IceFishingTests */,
+				1D72D9B61AACC4C0007822B0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1D72D9B61AACC4C0007822B0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D72D9B51AACC4C0007822B0 /* IceFishing.app */,
+				1D72D9CA1AACC4C0007822B0 /* IceFishingTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1D72D9B71AACC4C0007822B0 /* IceFishing */ = {
+			isa = PBXGroup;
+			children = (
+				1DE932921AAD12A700AD3BF0 /* Vendor */,
+				1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */,
+				1D72D9DC1AACC6AA007822B0 /* ViewController.swift */,
+				1D72D9DD1AACC6AA007822B0 /* ViewController.xib */,
+				1D72D9C11AACC4C0007822B0 /* Images.xcassets */,
+				1D72D9C31AACC4C0007822B0 /* LaunchScreen.xib */,
+				1D72D9B81AACC4C0007822B0 /* Supporting Files */,
+			);
+			path = IceFishing;
+			sourceTree = "<group>";
+		};
+		1D72D9B81AACC4C0007822B0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1D72D9B91AACC4C0007822B0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1D72D9CD1AACC4C0007822B0 /* IceFishingTests */ = {
+			isa = PBXGroup;
+			children = (
+				1D72D9D01AACC4C0007822B0 /* IceFishingTests.swift */,
+				1D72D9CE1AACC4C0007822B0 /* Supporting Files */,
+			);
+			path = IceFishingTests;
+			sourceTree = "<group>";
+		};
+		1D72D9CE1AACC4C0007822B0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1D72D9CF1AACC4C0007822B0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1DE932921AAD12A700AD3BF0 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				1D72DB671AAD0B97007822B0 /* Alamofire-SwiftyJSON.xcodeproj */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
+		1DE932961AAD12AB00AD3BF0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1DE9329B1AAD12AB00AD3BF0 /* AlamofireSwiftyJSON.framework */,
+				1DE9329D1AAD12AB00AD3BF0 /* AlamofireSwiftyJSONTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D72D9B41AACC4C0007822B0 /* IceFishing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D72D9D41AACC4C0007822B0 /* Build configuration list for PBXNativeTarget "IceFishing" */;
+			buildPhases = (
+				1D72D9B11AACC4C0007822B0 /* Sources */,
+				1D72D9B21AACC4C0007822B0 /* Frameworks */,
+				1D72D9B31AACC4C0007822B0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1DE932A81AAD138800AD3BF0 /* PBXTargetDependency */,
+			);
+			name = IceFishing;
+			productName = IceFishing;
+			productReference = 1D72D9B51AACC4C0007822B0 /* IceFishing.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1D72D9C91AACC4C0007822B0 /* IceFishingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D72D9D71AACC4C0007822B0 /* Build configuration list for PBXNativeTarget "IceFishingTests" */;
+			buildPhases = (
+				1D72D9C61AACC4C0007822B0 /* Sources */,
+				1D72D9C71AACC4C0007822B0 /* Frameworks */,
+				1D72D9C81AACC4C0007822B0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D72D9CC1AACC4C0007822B0 /* PBXTargetDependency */,
+			);
+			name = IceFishingTests;
+			productName = IceFishingTests;
+			productReference = 1D72D9CA1AACC4C0007822B0 /* IceFishingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1D72D9AD1AACC4C0007822B0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Lucas Derraugh";
+				TargetAttributes = {
+					1D72D9B41AACC4C0007822B0 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					1D72D9C91AACC4C0007822B0 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 1D72D9B41AACC4C0007822B0;
+					};
+				};
+			};
+			buildConfigurationList = 1D72D9B01AACC4C0007822B0 /* Build configuration list for PBXProject "IceFishing" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1D72D9AC1AACC4C0007822B0;
+			productRefGroup = 1D72D9B61AACC4C0007822B0 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1DE932961AAD12AB00AD3BF0 /* Products */;
+					ProjectRef = 1D72DB671AAD0B97007822B0 /* Alamofire-SwiftyJSON.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				1D72D9B41AACC4C0007822B0 /* IceFishing */,
+				1D72D9C91AACC4C0007822B0 /* IceFishingTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		1DE9329B1AAD12AB00AD3BF0 /* AlamofireSwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AlamofireSwiftyJSON.framework;
+			remoteRef = 1DE9329A1AAD12AB00AD3BF0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1DE9329D1AAD12AB00AD3BF0 /* AlamofireSwiftyJSONTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AlamofireSwiftyJSONTests.xctest;
+			remoteRef = 1DE9329C1AAD12AB00AD3BF0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D72D9B31AACC4C0007822B0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D72D9C51AACC4C0007822B0 /* LaunchScreen.xib in Resources */,
+				1D72D9DF1AACC6AA007822B0 /* ViewController.xib in Resources */,
+				1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D72D9C81AACC4C0007822B0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D72D9B11AACC4C0007822B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D72D9DE1AACC6AA007822B0 /* ViewController.swift in Sources */,
+				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D72D9C61AACC4C0007822B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D72D9D11AACC4C0007822B0 /* IceFishingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1D72D9CC1AACC4C0007822B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D72D9B41AACC4C0007822B0 /* IceFishing */;
+			targetProxy = 1D72D9CB1AACC4C0007822B0 /* PBXContainerItemProxy */;
+		};
+		1DE932A81AAD138800AD3BF0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AlamofireSwiftyJSON;
+			targetProxy = 1DE932A71AAD138800AD3BF0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1D72D9C31AACC4C0007822B0 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1D72D9C41AACC4C0007822B0 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1D72D9D21AACC4C0007822B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1D72D9D31AACC4C0007822B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1D72D9D51AACC4C0007822B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = IceFishing/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1D72D9D61AACC4C0007822B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = IceFishing/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1D72D9D81AACC4C0007822B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = IceFishingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IceFishing.app/IceFishing";
+			};
+			name = Debug;
+		};
+		1D72D9D91AACC4C0007822B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = IceFishingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IceFishing.app/IceFishing";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D72D9B01AACC4C0007822B0 /* Build configuration list for PBXProject "IceFishing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D72D9D21AACC4C0007822B0 /* Debug */,
+				1D72D9D31AACC4C0007822B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D72D9D41AACC4C0007822B0 /* Build configuration list for PBXNativeTarget "IceFishing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D72D9D51AACC4C0007822B0 /* Debug */,
+				1D72D9D61AACC4C0007822B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D72D9D71AACC4C0007822B0 /* Build configuration list for PBXNativeTarget "IceFishingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D72D9D81AACC4C0007822B0 /* Debug */,
+				1D72D9D91AACC4C0007822B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1D72D9AD1AACC4C0007822B0 /* Project object */;
+}
