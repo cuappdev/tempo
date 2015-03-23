@@ -8,41 +8,39 @@
 
 import UIKit
 
-class TrendingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TrendingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var trendingTableView = UITableView()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         trendingTableView.delegate = self
         trendingTableView.dataSource = self
-        trendingTableView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        //trendingTableView.center = CGPoint(x: view.center.x, y: view.center.y)
+        
+        trendingTableView.frame = view.bounds
         view.addSubview(trendingTableView)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(animated: Bool) {
+        if let topInset = navigationController?.navigationBar.frame.maxY {
+            trendingTableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0)
+        }
     }
+    
+    // MARK: - UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
     
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("UITableViewCell") as? UITableViewCell
-        if !(cell != nil) {
+        if (cell == nil) {
             cell = UITableViewCell(style: .Default, reuseIdentifier: "UITableViewCell")
         }
         
-        cell?.textLabel.text = "Tropical Avocado Symphony (Trending)"
-        
+        cell?.textLabel?.text = "Tropical Avocado Symphony (Trending)"
         
         return cell! as UITableViewCell
     }
-    
-
 }

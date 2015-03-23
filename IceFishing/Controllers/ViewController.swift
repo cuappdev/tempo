@@ -17,18 +17,5 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Random test for Alamofire-SwiftyJSON
-        Alamofire.request(.GET, "http://httpbin.org/get", parameters: ["foo": "bar"])
-            .responseSwiftyJSON { (request, response, json, error) in
-                println(json)
-                println(error)
-        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
 }

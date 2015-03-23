@@ -20,7 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.makeKeyAndVisible()
         
         let viewController: ViewController = ViewController(nibName: "ViewController", bundle: nil)
-        self.window!.rootViewController = viewController
+        let navController = UINavigationController(rootViewController: MainViewController())
+        let revealController: SWRevealViewController = SWRevealViewController(rearViewController: viewController, frontViewController: navController)
+        self.window!.rootViewController = revealController
         
         return true
     }

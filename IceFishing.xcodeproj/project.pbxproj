@@ -13,9 +13,9 @@
 		1D72D9D11AACC4C0007822B0 /* IceFishingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9D01AACC4C0007822B0 /* IceFishingTests.swift */; };
 		1D72D9DE1AACC6AA007822B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9DC1AACC6AA007822B0 /* ViewController.swift */; };
 		1D72D9DF1AACC6AA007822B0 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9DD1AACC6AA007822B0 /* ViewController.xib */; };
-		7FCE05E81ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E41ABF4BD1002103DE /* FeedViewController.swift */; };
-		7FCE05E91ABF4BD1002103DE /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedVC.swift */; };
-		7FCE05EA1ABF4BD1002103DE /* TrendingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E61ABF4BD1002103DE /* TrendingVC.swift */; };
+		7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E41ABF4BD1002103DE /* MainViewController.swift */; };
+		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
+		7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */; };
 		7FCE05EB1ABF4BD1002103DE /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E71ABF4BD1002103DE /* FeedTableViewCell.swift */; };
 		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
 /* End PBXBuildFile section */
@@ -63,9 +63,9 @@
 		1D72D9DC1AACC6AA007822B0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1D72D9DD1AACC6AA007822B0 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		1D72DB671AAD0B97007822B0 /* Alamofire-SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Alamofire-SwiftyJSON.xcodeproj"; path = "vendor/Alamofire-SwiftyJSON.xcodeproj"; sourceTree = "<group>"; };
-		7FCE05E41ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
-		7FCE05E51ABF4BD1002103DE /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
-		7FCE05E61ABF4BD1002103DE /* TrendingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingVC.swift; sourceTree = "<group>"; };
+		7FCE05E41ABF4BD1002103DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
 		7FCE05E71ABF4BD1002103DE /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -102,9 +102,9 @@
 			isa = PBXGroup;
 			children = (
 				BA257E251ABA3FBC00D939B0 /* SWRevealViewController */,
-				7FCE05E41ABF4BD1002103DE /* FeedViewController.swift */,
-				7FCE05E51ABF4BD1002103DE /* FeedVC.swift */,
-				7FCE05E61ABF4BD1002103DE /* TrendingVC.swift */,
+				7FCE05E41ABF4BD1002103DE /* MainViewController.swift */,
+				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
+				7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */,
 				7FCE05E71ABF4BD1002103DE /* FeedTableViewCell.swift */,
 				1D72D9DC1AACC6AA007822B0 /* ViewController.swift */,
 			);
@@ -320,11 +320,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D72D9DE1AACC6AA007822B0 /* ViewController.swift in Sources */,
-				7FCE05EA1ABF4BD1002103DE /* TrendingVC.swift in Sources */,
+				7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */,
 				7FCE05EB1ABF4BD1002103DE /* FeedTableViewCell.swift in Sources */,
 				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,
-				7FCE05E91ABF4BD1002103DE /* FeedVC.swift in Sources */,
-				7FCE05E81ABF4BD1002103DE /* FeedViewController.swift in Sources */,
+				7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */,
+				7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */,
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
