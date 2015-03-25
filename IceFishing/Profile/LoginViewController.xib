@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Profile" customModuleProvider="target">
+            <connections>
+                <outlet property="emailLabel" destination="5jn-oQ-KFy" id="EiR-2M-XvP"/>
+                <outlet property="fbLoginView" destination="hxd-OX-ntV" id="XOj-4c-Qq1"/>
+                <outlet property="nameLabel" destination="UCx-Gl-jLS" id="SFI-q1-yoE"/>
+                <outlet property="profilePictureView" destination="bds-zi-Mdf" id="ldl-4r-7Z8"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bds-zi-Mdf" customClass="FBProfilePictureView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="125" y="67" width="150" height="150"/>
+                    </variation>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCx-Gl-jLS">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="20"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="169" y="234" width="61" height="20"/>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jn-oQ-KFy">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="178" y="269" width="44" height="17"/>
+                    </variation>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxd-OX-ntV" customClass="FBLoginView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="R42-Ec-rHt">
+                            <variation key="widthClass=compact" constant="250"/>
+                        </constraint>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="R42-Ec-rHt"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="100" y="306" width="200" height="50"/>
+                        <mask key="constraints">
+                            <include reference="R42-Ec-rHt"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="bds-zi-Mdf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="67" id="3fi-Gq-AZf"/>
+                <constraint firstAttribute="centerX" secondItem="5jn-oQ-KFy" secondAttribute="centerX" id="CE0-Un-SMZ"/>
+                <constraint firstAttribute="centerX" secondItem="hxd-OX-ntV" secondAttribute="centerX" id="COy-ub-4x8"/>
+                <constraint firstAttribute="centerX" secondItem="bds-zi-Mdf" secondAttribute="centerX" id="WFk-VZ-PgA"/>
+                <constraint firstAttribute="centerX" secondItem="UCx-Gl-jLS" secondAttribute="centerX" id="ep6-i9-QeM"/>
+                <constraint firstItem="hxd-OX-ntV" firstAttribute="top" secondItem="5jn-oQ-KFy" secondAttribute="bottom" constant="20" id="hhi-Bb-Git"/>
+                <constraint firstItem="UCx-Gl-jLS" firstAttribute="top" secondItem="bds-zi-Mdf" secondAttribute="bottom" constant="20" id="vuM-h7-yFz"/>
+                <constraint firstItem="5jn-oQ-KFy" firstAttribute="top" secondItem="UCx-Gl-jLS" secondAttribute="bottom" constant="10" id="yzm-38-mR8"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="bds-zi-Mdf"/>
+                    <exclude reference="UCx-Gl-jLS"/>
+                    <exclude reference="5jn-oQ-KFy"/>
+                    <exclude reference="hxd-OX-ntV"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="CE0-Un-SMZ"/>
+                    <exclude reference="yzm-38-mR8"/>
+                    <exclude reference="ep6-i9-QeM"/>
+                    <exclude reference="vuM-h7-yFz"/>
+                    <exclude reference="3fi-Gq-AZf"/>
+                    <exclude reference="WFk-VZ-PgA"/>
+                    <exclude reference="COy-ub-4x8"/>
+                    <exclude reference="hhi-Bb-Git"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=compact">
+                <mask key="subviews">
+                    <include reference="bds-zi-Mdf"/>
+                    <include reference="UCx-Gl-jLS"/>
+                    <include reference="5jn-oQ-KFy"/>
+                    <include reference="hxd-OX-ntV"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="CE0-Un-SMZ"/>
+                    <include reference="yzm-38-mR8"/>
+                    <include reference="ep6-i9-QeM"/>
+                    <include reference="vuM-h7-yFz"/>
+                    <include reference="3fi-Gq-AZf"/>
+                    <include reference="WFk-VZ-PgA"/>
+                    <include reference="COy-ub-4x8"/>
+                    <include reference="hhi-Bb-Git"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

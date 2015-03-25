@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  IceFishing
+//  Profile
 //
-//  Created by Lucas Derraugh on 3/8/15.
-//  Copyright (c) 2015 Lucas Derraugh. All rights reserved.
+//  Created by Annie Cheng on 3/17/15.
+//  Copyright (c) 2015 Annie Cheng. All rights reserved.
 //
 
 import UIKit
@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -22,13 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         
-        // Switch viewController if not running Facebook Integration
-        //let viewController = ViewController(nibName: "ViewController", bundle: nil)
-        let viewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
-        let navController = UINavigationController(rootViewController: MainViewController())
-        let revealController = SWRevealViewController(rearViewController: viewController, frontViewController: navController)
-        self.window!.rootViewController = revealController
-
+        var viewController: LoginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
+        self.window!.rootViewController = viewController
+        
         return true
     }
     
