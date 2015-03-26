@@ -62,7 +62,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if (isPlaying) {
                 
-                self.currentlyPlayingCell?.player.pause()
+                if (self.currentlyPlayingCell != sender) {
+                    self.currentlyPlayingCell?.player.pause()
+                }
                 self.currentlyPlayingCell = sender;
             }
         }
