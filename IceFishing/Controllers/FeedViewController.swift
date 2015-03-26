@@ -8,9 +8,10 @@
 
 import UIKit
 
-class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     var currentlyPlayingCell: FeedTableViewCell?
     var feedTableView = UITableView()
+    var pinView: UIView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         feedTableView.frame = view.bounds
         view.addSubview(feedTableView)
+        
+        pinView.frame = CGRectMake(0, 0, view.frame.width, 100)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -69,6 +72,73 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 128.0;
+    }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if (feedTableView.indexPathForSelectedRow() != nil){ //If a row is selected
+            view.addSubview(pinView)
+            //println("lol")
+            var selectedRow = feedTableView.indexPathForSelectedRow()! //Selected Row
+            var rowsICanSee = feedTableView.indexPathsForVisibleRows()! //Rows Seen
+            var cellSelected = feedTableView.cellForRowAtIndexPath(selectedRow)
+            if(rowsICanSee[0] as NSObject == selectedRow || rowsICanSee[rowsICanSee.count-1] as NSObject == selectedRow) { //If the cell is the top or bottom
+                pinView.backgroundColor = cellSelected!.backgroundColor
+                if(rowsICanSee[0] as NSObject == selectedRow){
+                    pinView.center = CGPoint(x: view.center.x, y: 50)
+                    pinView.removeFromSuperview()
+                    view.addSubview(pinView)
+                } else if (rowsICanSee[rowsICanSee.count-1] as NSObject == selectedRow){
+                    pinView.center = CGPoint(x: view.center.x, y: view.frame.height - 50)
+                    pinView.removeFromSuperview()
+                    view.addSubview(pinView)
+                }
+                
+            }
+                
+            else {
+                if(selectedRow.compare(rowsICanSee[0] as NSIndexPath) != selectedRow.compare(rowsICanSee[rowsICanSee.count-1] as NSIndexPath)) { //If they're equal then the thing is not on screen
+                    pinView.center = CGPoint(x: cellSelected!.center.x, y: cellSelected!.center.y - feedTableView.contentOffset.y)
+                    pinView.backgroundColor = cellSelected!.backgroundColor
+                }
+                
+                
+            }
+        }
+        
+    }
+
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (feedTableView.indexPathForSelectedRow() != nil){ //If a row is selected
+            view.addSubview(pinView)
+            //println("Lol 2")
+            var selectedRow = feedTableView.indexPathForSelectedRow()! //Selected Row
+            var rowsICanSee = feedTableView.indexPathsForVisibleRows()! //Rows Seen
+            var cellSelected = feedTableView.cellForRowAtIndexPath(selectedRow)
+            if(rowsICanSee[0] as NSObject == selectedRow || rowsICanSee[rowsICanSee.count-1] as NSObject == selectedRow) { //If the cell is the top or bottom
+                pinView.backgroundColor = cellSelected!.backgroundColor
+                if(rowsICanSee[0] as NSObject == selectedRow){
+                    pinView.center = CGPoint(x: view.center.x, y: 50)
+                    pinView.removeFromSuperview()
+                    view.addSubview(pinView)
+                } else if (rowsICanSee[rowsICanSee.count-1] as NSObject == selectedRow){
+                    pinView.center = CGPoint(x: view.center.x, y: view.frame.height - 50)
+                    pinView.removeFromSuperview()
+                    view.addSubview(pinView)
+                }
+                
+            }
+                
+            else {
+                if(selectedRow.compare(rowsICanSee[0] as NSIndexPath) != selectedRow.compare(rowsICanSee[rowsICanSee.count-1] as NSIndexPath)) { //If they're equal then the thing is not on screen
+                    pinView.center = CGPoint(x: cellSelected!.center.x, y: cellSelected!.center.y - feedTableView.contentOffset.y)
+                    pinView.backgroundColor = cellSelected!.backgroundColor
+                }
+                
+                
+            }
+        }
     }
     
 }
