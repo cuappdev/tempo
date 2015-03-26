@@ -13,6 +13,23 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var feedTableView = UITableView()
     var pinView: UIView = UIView()
     
+    var testSongIDs: [String] = [
+        "https://p.scdn.co/mp3-preview/8b545950a285e9f715e783a197faf6c6bcf6b724",
+        "https://p.scdn.co/mp3-preview/4b75d979f23cb63e2b6c48c98a7706f2735ef15a",
+        "https://p.scdn.co/mp3-preview/342d48054332f1cd5d7fe4f30f6856faf07c1e48",
+        "https://p.scdn.co/mp3-preview/23fa9ad27d22e18fde8ec02eec82b67a3422978f",
+        "https://p.scdn.co/mp3-preview/088f11ec4b7d500586ada02ab99965c681a30e3e",
+        "https://p.scdn.co/mp3-preview/1587652c5763e83fc594a92468b635fbc2d305cb",
+        "https://p.scdn.co/mp3-preview/5ddbf8791851f6d12e8f2348ff3f85f4cad54c26"]
+    var testSongDescriptions: [String] = [
+        "Under the Same Sun - Ben Howard",
+        "1985 - Passion Pit",
+        "Angel - Shaggy",
+        "Rather Be - Clean Bandit feat. Jesse Glynn",
+        "Talking Body - Gryffin Remix - Tove Lo",
+        "Cheerleader - Felix Jaehn Remix Radio Edit - Omi",
+        "Gold Rush - Deluxe Edition - Ed Sheeran"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         feedTableView.delegate = self
@@ -36,26 +53,24 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return testSongIDs.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as FeedTableViewCell
-        if indexPath.row == 0 {
-            // Angel - Shaggy
-            cell.songID = NSURL(string: "https://p.scdn.co/mp3-preview/342d48054332f1cd5d7fe4f30f6856faf07c1e48")
-            cell.player = Player(fileURL: cell.songID)
-            cell.songDescriptionLabel.text = "Angel - Shaggy"
-        } else if indexPath.row == 1 {
-            // Rather Be - Clean Bandit
-            cell.songID = NSURL(string: "https://p.scdn.co/mp3-preview/23fa9ad27d22e18fde8ec02eec82b67a3422978f")
-            cell.player = Player(fileURL: cell.songID)
-            cell.songDescriptionLabel.text = "Rather Be - Clean Bandit feat. Jesse Glynn"
+        
+        cell.songID = NSURL(string: testSongIDs[indexPath.row])
+        cell.player = Player(fileURL: cell.songID)
+        cell.songDescriptionLabel.text = testSongDescriptions[indexPath.row]
+        
+        if indexPath.item == 3 || indexPath.item == 5 || indexPath.item == 0 {
+            cell.avatarImageView.image = UIImage(named: "Eric")
+            cell.profileNameLabel.text = "ERIC APPEL"
+        } else {
+            cell.avatarImageView.image = UIImage(named: "Sexy")
         }
-        
-        cell.avatarImageView.image = UIImage(named: "Sexy")
-        
+                
         cell.callBack = {
             [unowned self]
             (isPlaying, sender) in
