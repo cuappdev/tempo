@@ -9,7 +9,7 @@
 import UIKit
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    var currentlyPlayingCell: FeedTableViewCell?
     var feedTableView = UITableView()
     
     override func viewDidLoad() {
@@ -17,6 +17,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         feedTableView.delegate = self
         feedTableView.dataSource = self
         feedTableView.separatorStyle = .None
+        
+        feedTableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
         
         feedTableView.frame = view.bounds
         view.addSubview(feedTableView)
@@ -31,26 +33,42 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 2
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var returnCell: FeedTableViewCell
         
-        if let cell = tableView.dequeueReusableCellWithIdentifier("id") as? FeedTableViewCell {
-            returnCell = cell
-        } else {
-            returnCell = FeedTableViewCell(style: .Default, reuseIdentifier: "id")
-            returnCell.frame = CGRectMake(0, 0, self.view.frame.width, 100)
-            returnCell.setUpCell("Avocados", songArtist: "Jimmy", songImage: UIImage(named: "Avocados") ?? UIImage(), shareTime: "shared 3 minutes ago", userWhoSharedThis: "Big Bob")
-            let red = CGFloat(CGFloat(arc4random() % 255) / 255.0)
-            returnCell.backgroundColor = UIColor(red: red, green: 0.5, blue: 0.5, alpha: 1.0)
+        let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as FeedTableViewCell
+        if indexPath.row == 0 {
+            // Angel - Shaggy
+            cell.songID = NSURL(string: "https://p.scdn.co/mp3-preview/342d48054332f1cd5d7fe4f30f6856faf07c1e48")
+            cell.player = Player(fileURL: cell.songID)
+            cell.songDescriptionLabel.text = "Angel - Shaggy"
+        } else if indexPath.row == 1 {
+            // Rather Be - Clean Bandit
+            cell.songID = NSURL(string: "https://p.scdn.co/mp3-preview/23fa9ad27d22e18fde8ec02eec82b67a3422978f")
+            cell.player = Player(fileURL: cell.songID)
+            cell.songDescriptionLabel.text = "Rather Be - Clean Bandit feat. Jesse Glynn"
         }
-        return returnCell
+        
+        cell.avatarImageView.image = UIImage(named: "Sexy")
+        
+        cell.callBack = {
+            [unowned self]
+            (isPlaying, sender) in
+            
+            if (isPlaying) {
+                
+                self.currentlyPlayingCell?.player.pause()
+                self.currentlyPlayingCell = sender;
+            }
+        }
+        
+        return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 100
+        return 128.0;
     }
     
 }
