@@ -29,8 +29,10 @@
 		7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E41ABF4BD1002103DE /* MainViewController.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
 		7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */; };
-		7FCE05EB1ABF4BD1002103DE /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E71ABF4BD1002103DE /* FeedTableViewCell.swift */; };
 		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
+		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
+		FA1A91391AC38A5200774EF3 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91371AC38A5200774EF3 /* FeedTableViewCell.swift */; };
+		FA1A913C1AC38A6B00774EF3 /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,10 +95,12 @@
 		7FCE05E41ABF4BD1002103DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
-		7FCE05E71ABF4BD1002103DE /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		FA1A91371AC38A5200774EF3 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
+		FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,7 @@
 		1D046D8A1AB6951C00D0354B /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */,
 				1D72D9DD1AACC6AA007822B0 /* ViewController.xib */,
 			);
 			path = XIBs;
@@ -132,9 +137,9 @@
 			children = (
 				BA257E251ABA3FBC00D939B0 /* SWRevealViewController */,
 				7FCE05E41ABF4BD1002103DE /* MainViewController.swift */,
+				FA1A91371AC38A5200774EF3 /* FeedTableViewCell.swift */,
 				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
 				7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */,
-				7FCE05E71ABF4BD1002103DE /* FeedTableViewCell.swift */,
 				1D72D9DC1AACC6AA007822B0 /* ViewController.swift */,
 			);
 			path = Controllers;
@@ -173,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */,
+				FA1A91301AC3899E00774EF3 /* Player.swift */,
 				6DEE0FC31AC34811005552F9 /* Profile */,
 				1DE932921AAD12A700AD3BF0 /* Vendor */,
 				1D046D8C1AB6953600D0354B /* Controllers */,
@@ -375,6 +381,7 @@
 				6DEE0FD51AC34811005552F9 /* EditProfileViewController.xib in Resources */,
 				1D72D9C51AACC4C0007822B0 /* LaunchScreen.xib in Resources */,
 				1D25B3171AC369D900F64047 /* LICENSE in Resources */,
+				FA1A913C1AC38A6B00774EF3 /* FeedTableViewCell.xib in Resources */,
 				1D72D9DF1AACC6AA007822B0 /* ViewController.xib in Resources */,
 				1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */,
 			);
@@ -395,10 +402,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DEE0FDD1AC34884005552F9 /* LoginViewController.swift in Sources */,
+				FA1A91391AC38A5200774EF3 /* FeedTableViewCell.swift in Sources */,
 				6DEE0FD81AC34811005552F9 /* ProfileViewController.swift in Sources */,
 				1D72D9DE1AACC6AA007822B0 /* ViewController.swift in Sources */,
 				7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */,
-				7FCE05EB1ABF4BD1002103DE /* FeedTableViewCell.swift in Sources */,
+				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
 				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,
 				7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */,
 				7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */,

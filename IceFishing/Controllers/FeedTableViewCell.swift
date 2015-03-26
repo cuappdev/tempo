@@ -1,78 +1,132 @@
 //
 //  FeedTableViewCell.swift
-//  AppFeed
+//  experience
 //
-//  Created by Dennis Fedorko on 3/8/15.
-//  Copyright (c) 2015 Dennis F. All rights reserved.
+//  Created by Mark Bryan on 3/22/15.
+//  Copyright (c) 2015 CUAppDev. All rights reserved.
 //
 
 import UIKit
 
 class FeedTableViewCell: UITableViewCell {
     
-    //Info
-    var songName:String!
-    var userWhoSharedThis:String!
-    var songArtist:String!
-    var shareTime:String!
-    var songImage:UIImage!
-    
-    //Views/Labels
-    var songImageView:UIImageView!
-    var songInfoLabel:UILabel!
-    var shareTimeLabel:UILabel!
-    var userWhoSharedLabel:UILabel!
-    
-    
-    //Constants  - ratio to height
-    let photoDiameterRatio:CGFloat = 0.8
-    let userLabelHeightRatio:CGFloat = 0.2
-    let songInfoLabelHeightRatio:CGFloat = 0.2
-    let shareTimeLabelHeightRatio:CGFloat = 0.2
-    let labelInsetRatio:CGFloat = 1.0
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+    var progressGestureRecognizer: UIPanGestureRecognizer?
+    var songID: NSURL!
+    @IBOutlet weak var profileNameLabel: UILabel!
+    @IBOutlet weak var songDescriptionLabel: UILabel!
+    private var timer: NSTimer?
+    var player: Player! {
+        didSet {
+            player.callBack = {
+                [unowned self]
+                (isPlaying) in
+                
+                if (isPlaying) {
+                    self.timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("timerFired:"), userInfo: nil, repeats: true)
+                } else {
+                    self.timer?.invalidate()
+                    self.timer = nil
+                }
+                
+                self.setNeedsDisplay()
+                
+                if let callBack = self.callBack {
+                    callBack(isPlaying: isPlaying, sender: self)
+                }
+            }
+        }
     }
+    var callBack: ((isPlaying: Bool, sender: FeedTableViewCell) -> Void)?
     
-    func setUpCell(songName:String, songArtist:String, songImage:UIImage, shareTime:String, userWhoSharedThis:String) {
-        
-        self.songName = songName
-        self.songArtist = songArtist
-        self.songImage = songImage
-        self.shareTime = shareTime
-        self.userWhoSharedThis = userWhoSharedThis
-        
-        setUpViewsAndLabels()
-    }
-    
-    func setUpViewsAndLabels() {
-        
-        songImageView = UIImageView(frame: CGRectMake((frame.height - (frame.height * photoDiameterRatio))/2.0, 0, photoDiameterRatio * frame.height, photoDiameterRatio * frame.height))
-        songImageView.center = CGPointMake(songImageView.center.x, frame.height * 0.5)
-        songImageView.layer.cornerRadius = songImageView.frame.width/2.0
-        songImageView.clipsToBounds = true
-        songImageView.image = songImage
-        
-        userWhoSharedLabel = UILabel(frame: CGRectMake(labelInsetRatio * frame.height, userLabelHeightRatio * frame.height, frame.width - songImageView.frame.width, userLabelHeightRatio * frame.height))
-        userWhoSharedLabel.text = userWhoSharedThis
-        
-        songInfoLabel = UILabel(frame: CGRectMake(labelInsetRatio * frame.height, userWhoSharedLabel.frame.height + userWhoSharedLabel.frame.origin.y, frame.width - songImageView.frame.width, userLabelHeightRatio * frame.height))
-        songInfoLabel.text = songName + " : " + songArtist
-        
-        shareTimeLabel = UILabel(frame: CGRectMake(labelInsetRatio * frame.height, songInfoLabel.frame.height + songInfoLabel.frame.origin.y, frame.width - songImageView.frame.width, userLabelHeightRatio * frame.height))
-        shareTimeLabel.text = shareTime
-        
-        self.addSubview(songImageView)
-        self.addSubview(userWhoSharedLabel)
-        self.addSubview(songInfoLabel)
-        self.addSubview(shareTimeLabel)
-        
-    }
+    var fillColor: UIColor = UIColor.grayColor()
+    @IBOutlet weak var avatarImageView: UIImageView!
     
     required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+    }
+    
+    dynamic private func timerFired(timer: NSTimer) {
+        self.setNeedsDisplay()
+    }
+    
+    override func didMoveToSuperview() {
+        self.selectionStyle = .None
+        
+        progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: "changeProgress:")
+        progressGestureRecognizer?.delegate = self
+        addGestureRecognizer(progressGestureRecognizer!)
+        
+        
+        var tapRecognizer = UITapGestureRecognizer(target: self, action: "cellPressed:")
+        addGestureRecognizer(tapRecognizer)
+        
+        avatarImageView.layer.cornerRadius = avatarImageView.bounds.size.width/2
+        avatarImageView.clipsToBounds = true
+        
+        self.avatarImageView.userInteractionEnabled = true
+        self.profileNameLabel.userInteractionEnabled = true
+        
+    }
+    
+    func changeProgress(gesture: UIPanGestureRecognizer) {
+        
+        var xTranslation = gesture.locationInView(self).x
+        var cellWidth = self.bounds.width
+        
+        player.progress = Double(xTranslation/cellWidth)
+        
+        self.setNeedsDisplay()
+        
+    }
+    
+    override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+        
+        fillColor.setFill()
+        CGContextFillRect(UIGraphicsGetCurrentContext(), CGRect(x: 0, y: 0, width: self.bounds.size.width * CGFloat(player.progress), height: self.bounds.size.height))
+        
+    }
+    
+    func cellPressed(sender: UITapGestureRecognizer) {
+        
+        if(player.isPlaying()) {
+            
+            let tapPoint = sender.locationInView(self)
+            let hitView = self.contentView.hitTest(tapPoint, withEvent: nil)
+            
+            if hitView == self.avatarImageView || hitView == self.profileNameLabel {
+                println("GO TO PROFILE")
+                self.player.pause()
+            } else {
+                self.player.pause()
+            }
+            
+        } else { // Player is paused
+            player.play()
+        }
+        
+    }
+    
+    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if gestureRecognizer == self.progressGestureRecognizer {
+            var superview = self.superview as UIScrollView
+            var translation = self.progressGestureRecognizer?.translationInView(self)
+            
+            if let translation = translation {
+                return ((fabs(translation.x) / fabs(translation.y) > 1) && (superview.contentOffset.y == 0.0 && superview.contentOffset.x == 0.0))
+            }
+            return false
+        }
+        
+        return true
+    }
+    
+    
     
 }
