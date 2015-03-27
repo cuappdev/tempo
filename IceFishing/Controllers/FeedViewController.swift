@@ -63,6 +63,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.songID = NSURL(string: testSongIDs[indexPath.row])
         cell.player = Player(fileURL: cell.songID)
         cell.songDescriptionLabel.text = testSongDescriptions[indexPath.row]
+        cell.timePosted.text = String(indexPath.row+1) + " min"
         
         if indexPath.item == 3 || indexPath.item == 5 || indexPath.item == 0 {
             cell.avatarImageView.image = UIImage(named: "Eric")

@@ -40,6 +40,7 @@ class FeedTableViewCell: UITableViewCell {
     
     var fillColor: UIColor = UIColor.grayColor()
     @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var timePosted: UILabel!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

@@ -55,6 +55,7 @@
                 <outlet property="avatarImageView" destination="Nid-NE-gCm" id="I4d-KF-sfc"/>
                 <outlet property="profileNameLabel" destination="YKr-CE-jlM" id="Ha8-FS-b2o"/>
                 <outlet property="songDescriptionLabel" destination="uOI-Pn-Mde" id="UbJ-Dq-U7w"/>
+                <outlet property="timePosted" destination="5c9-Vi-T55" id="0kG-JA-c2E"/>
             </connections>
             <point key="canvasLocation" x="351" y="487"/>
         </tableViewCell>
