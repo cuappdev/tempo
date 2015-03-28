@@ -62,8 +62,20 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.songID = NSURL(string: testSongIDs[indexPath.row])
         cell.player = Player(fileURL: cell.songID)
-        cell.songDescriptionLabel.text = testSongDescriptions[indexPath.row]
-        cell.timePosted.text = String(indexPath.row+1) + " min"
+        
+        /* Hot fix for song name going out of bounds, would be great to make scrolling on play.
+            Currently counts based on number of characters not their pixel size i.e. "..." is smaller than "www"
+            -Steven Yeh - say25
+        */
+        if (testSongDescriptions[indexPath.row].utf16Count >= 45){
+            let index: String.Index = advance(testSongDescriptions[indexPath.row].startIndex, 41)
+            cell.songDescriptionLabel.text = testSongDescriptions[indexPath.row].substringToIndex(index) + "..."
+        }
+        else {
+            cell.songDescriptionLabel.text = testSongDescriptions[indexPath.row]
+        }
+        
+        cell.songPostTimeLabel.text = String(indexPath.row+1) + " min"
         
         if indexPath.item == 3 || indexPath.item == 5 || indexPath.item == 0 {
             cell.avatarImageView.image = UIImage(named: "Eric")
@@ -119,11 +131,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                     pinView.center = CGPoint(x: cellSelected!.center.x, y: cellSelected!.center.y - feedTableView.contentOffset.y)
                     pinView.backgroundColor = cellSelected!.backgroundColor
                 }
-                
-                
             }
         }
-        
     }
 
     
@@ -145,7 +154,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                     pinView.removeFromSuperview()
                     view.addSubview(pinView)
                 }
-                
             }
                 
             else {
@@ -153,10 +161,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                     pinView.center = CGPoint(x: cellSelected!.center.x, y: cellSelected!.center.y - feedTableView.contentOffset.y)
                     pinView.backgroundColor = cellSelected!.backgroundColor
                 }
-                
-                
             }
         }
     }
-    
 }

@@ -14,14 +14,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MARK BRYAN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKr-CE-jlM">
-                        <rect key="frame" x="103" y="26" width="121.5" height="23"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="MARK BRYAN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKr-CE-jlM">
+                        <rect key="frame" x="103" y="26" width="209" height="23"/>
                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5c9-Vi-T55">
-                        <rect key="frame" x="267" y="8" width="31" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="3 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5c9-Vi-T55">
+                        <rect key="frame" x="267" y="8" width="45" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -33,8 +33,8 @@
                             <constraint firstAttribute="width" constant="76" id="OQ3-QG-Xnp"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reflections - MisterWives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOI-Pn-Mde">
-                        <rect key="frame" x="103" y="48.5" width="142" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Reflections - MisterWives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOI-Pn-Mde">
+                        <rect key="frame" x="103" y="49" width="209" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -54,10 +54,10 @@
             <connections>
                 <outlet property="avatarImageView" destination="Nid-NE-gCm" id="I4d-KF-sfc"/>
                 <outlet property="profileNameLabel" destination="YKr-CE-jlM" id="Ha8-FS-b2o"/>
-                <outlet property="songDescriptionLabel" destination="uOI-Pn-Mde" id="UbJ-Dq-U7w"/>
-                <outlet property="timePosted" destination="5c9-Vi-T55" id="0kG-JA-c2E"/>
+                <outlet property="songDescriptionLabel" destination="uOI-Pn-Mde" id="CXU-AP-Poh"/>
+                <outlet property="songPostTimeLabel" destination="5c9-Vi-T55" id="0kG-JA-c2E"/>
             </connections>
-            <point key="canvasLocation" x="351" y="487"/>
+            <point key="canvasLocation" x="351" y="486"/>
         </tableViewCell>
     </objects>
 </document>

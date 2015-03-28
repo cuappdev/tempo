@@ -40,7 +40,7 @@ class FeedTableViewCell: UITableViewCell {
     
     var fillColor: UIColor = UIColor.grayColor()
     @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var timePosted: UILabel!
+    @IBOutlet weak var songPostTimeLabel: UILabel!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -48,7 +48,6 @@ class FeedTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
     }
     
     dynamic private func timerFired(timer: NSTimer) {
@@ -71,7 +70,6 @@ class FeedTableViewCell: UITableViewCell {
         
         self.avatarImageView.userInteractionEnabled = true
         self.profileNameLabel.userInteractionEnabled = true
-        
     }
     
     func changeProgress(gesture: UIPanGestureRecognizer) {
@@ -82,21 +80,16 @@ class FeedTableViewCell: UITableViewCell {
         player.progress = Double(xTranslation/cellWidth)
         
         self.setNeedsDisplay()
-        
     }
     
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
-        
         fillColor.setFill()
         CGContextFillRect(UIGraphicsGetCurrentContext(), CGRect(x: 0, y: 0, width: self.bounds.size.width * CGFloat(player.progress), height: self.bounds.size.height))
-        
     }
     
     func cellPressed(sender: UITapGestureRecognizer) {
-        
         if(player.isPlaying()) {
-            
             let tapPoint = sender.locationInView(self)
             let hitView = self.contentView.hitTest(tapPoint, withEvent: nil)
             
@@ -106,15 +99,12 @@ class FeedTableViewCell: UITableViewCell {
             } else {
                 self.player.pause()
             }
-            
         } else { // Player is paused
             player.play()
         }
-        
     }
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        
         if gestureRecognizer == self.progressGestureRecognizer {
             var superview = self.superview as UIScrollView
             var translation = self.progressGestureRecognizer?.translationInView(self)
@@ -124,10 +114,6 @@ class FeedTableViewCell: UITableViewCell {
             }
             return false
         }
-        
         return true
     }
-    
-    
-    
 }
