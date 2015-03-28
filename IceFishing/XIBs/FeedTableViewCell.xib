@@ -14,16 +14,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="MARK BRYAN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKr-CE-jlM">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MARK BRYAN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKr-CE-jlM">
                         <rect key="frame" x="103" y="26" width="209" height="23"/>
                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="3 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5c9-Vi-T55">
-                        <rect key="frame" x="267" y="8" width="45" height="14.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nid-NE-gCm">
@@ -33,23 +27,40 @@
                             <constraint firstAttribute="width" constant="76" id="OQ3-QG-Xnp"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Reflections - MisterWives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOI-Pn-Mde">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reflections - MisterWives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOI-Pn-Mde">
                         <rect key="frame" x="103" y="49" width="209" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5c9-Vi-T55">
+                        <rect key="frame" x="251" y="8" width="61" height="14.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="61" id="QK4-Nl-Bug"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="5c9-Vi-T55" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="2Am-wz-4sR"/>
+                    <constraint firstItem="uOI-Pn-Mde" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="45L-W6-T5c"/>
                     <constraint firstItem="Nid-NE-gCm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="11" id="BXx-N9-Iq9"/>
                     <constraint firstItem="YKr-CE-jlM" firstAttribute="leading" secondItem="uOI-Pn-Mde" secondAttribute="leading" id="Bfx-Gq-sxB"/>
                     <constraint firstItem="YKr-CE-jlM" firstAttribute="leading" secondItem="Nid-NE-gCm" secondAttribute="trailing" constant="8" id="I3c-x1-hYq"/>
                     <constraint firstAttribute="trailingMargin" secondItem="5c9-Vi-T55" secondAttribute="trailing" constant="14" id="LOK-iR-iZC"/>
                     <constraint firstItem="uOI-Pn-Mde" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="bottom" constant="-0.5" id="Lab-dI-uix"/>
                     <constraint firstItem="Nid-NE-gCm" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="top" id="cf6-XS-Fja"/>
+                    <constraint firstItem="YKr-CE-jlM" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="guW-P9-Dh4"/>
                     <constraint firstAttribute="centerY" secondItem="Nid-NE-gCm" secondAttribute="centerY" constant="0.25" id="mm3-Iy-2hk"/>
                     <constraint firstItem="5c9-Vi-T55" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="wBQ-fL-n7v"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="LOK-iR-iZC"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarImageView" destination="Nid-NE-gCm" id="I4d-KF-sfc"/>

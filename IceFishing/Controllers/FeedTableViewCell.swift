@@ -51,16 +51,15 @@ class FeedTableViewCell: UITableViewCell {
     }
     
     dynamic private func timerFired(timer: NSTimer) {
-        self.setNeedsDisplay()
+        setNeedsDisplay()
     }
     
     override func didMoveToSuperview() {
-        self.selectionStyle = .None
+        selectionStyle = .None
         
         progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: "changeProgress:")
         progressGestureRecognizer?.delegate = self
         addGestureRecognizer(progressGestureRecognizer!)
-        
         
         var tapRecognizer = UITapGestureRecognizer(target: self, action: "cellPressed:")
         addGestureRecognizer(tapRecognizer)
@@ -68,14 +67,14 @@ class FeedTableViewCell: UITableViewCell {
         avatarImageView.layer.cornerRadius = avatarImageView.bounds.size.width/2
         avatarImageView.clipsToBounds = true
         
-        self.avatarImageView.userInteractionEnabled = true
-        self.profileNameLabel.userInteractionEnabled = true
+        avatarImageView.userInteractionEnabled = true
+        profileNameLabel.userInteractionEnabled = true
     }
     
     func changeProgress(gesture: UIPanGestureRecognizer) {
         
         var xTranslation = gesture.locationInView(self).x
-        var cellWidth = self.bounds.width
+        var cellWidth = bounds.width
         
         player.progress = Double(xTranslation/cellWidth)
         
@@ -91,13 +90,13 @@ class FeedTableViewCell: UITableViewCell {
     func cellPressed(sender: UITapGestureRecognizer) {
         if(player.isPlaying()) {
             let tapPoint = sender.locationInView(self)
-            let hitView = self.contentView.hitTest(tapPoint, withEvent: nil)
+            let hitView = contentView.hitTest(tapPoint, withEvent: nil)
             
-            if hitView == self.avatarImageView || hitView == self.profileNameLabel {
+            if hitView == avatarImageView || hitView == profileNameLabel {
                 println("GO TO PROFILE")
-                self.player.pause()
+                player.pause()
             } else {
-                self.player.pause()
+                player.pause()
             }
         } else { // Player is paused
             player.play()
