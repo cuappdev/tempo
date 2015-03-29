@@ -12,6 +12,11 @@ class TrendingViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var refreshControler = UIRefreshControl()
+        
+        self.refreshControl = refreshControler
+        self.refreshControl?.addTarget(self, action: "didRefreshTrending", forControlEvents: .ValueChanged)
+        self.refreshControl?.attributedTitle = NSAttributedString (string: "Last Updated on \(NSDate())")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -20,6 +25,13 @@ class TrendingViewController: UITableViewController {
             tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0)
             tableView.scrollIndicatorInsets = UIEdgeInsetsMake(topInset, 0, 0, 0)
         }
+    }
+    
+    //Mark: - UIRefreshControl
+    
+    func didRefreshTrending() {
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
     }
     
     // MARK: - UITableViewDataSource
