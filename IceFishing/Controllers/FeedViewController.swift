@@ -11,7 +11,7 @@ import UIKit
 class FeedViewController: UITableViewController, UIScrollViewDelegate {
     var currentlyPlayingCell: FeedTableViewCell?
     var pinView: UIView = UIView()
-    
+
     var testSongIDs = [
         "https://p.scdn.co/mp3-preview/8b545950a285e9f715e783a197faf6c6bcf6b724",
         "https://p.scdn.co/mp3-preview/4b75d979f23cb63e2b6c48c98a7706f2735ef15a",
@@ -32,8 +32,25 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var refreshControler = UIRefreshControl()
+        
+        self.refreshControl = refreshControler
+        self.refreshControl?.addTarget(self, action: "didRefreshFeed", forControlEvents: .ValueChanged)
+        self.refreshControl?.attributedTitle = NSAttributedString (string: "Last Updated on \(NSDate())")
+        
         tableView.separatorStyle = .None
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+    }
+    
+    //Mark: - UIRefreshControl
+    
+    func didRefreshFeed() {
+        testSongIDs.append("https://p.scdn.co/mp3-preview/dba0ce6ac6310d7be00545861f9b58aeb86930a3")
+        testSongDescriptions.append("Don't Stop the Party - Pitbull")
+
+        self.tableView.reloadData()
+        
+        self.refreshControl?.endRefreshing()
     }
     
     // MARK: - UITableViewDataSource
@@ -54,7 +71,11 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         if indexPath.item == 3 || indexPath.item == 5 || indexPath.item == 0 {
             cell.avatarImageView.image = UIImage(named: "Eric")
             cell.profileNameLabel.text = "ERIC APPEL"
-        } else {
+        } else if indexPath.item > 6 {
+            cell.avatarImageView.image = UIImage(named: "Steven")
+            cell.profileNameLabel.text = "STEVEN YEH"
+        }
+        else {
             cell.avatarImageView.image = UIImage(named: "Sexy")
         }
                 
@@ -109,8 +130,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
             }
         }
     }
-    
-    // MARK: - UITableViewDelegate
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         if let selectedRow = tableView.indexPathForSelectedRow() { //If a row is selected
