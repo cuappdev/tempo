@@ -73,6 +73,10 @@ class FeedTableViewCell: UITableViewCell {
     
     func changeProgress(gesture: UIPanGestureRecognizer) {
         
+        if !player.isPlaying() {
+            return
+        }
+        
         var xTranslation = gesture.locationInView(self).x
         var cellWidth = bounds.width
         
