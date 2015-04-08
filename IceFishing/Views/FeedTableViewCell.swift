@@ -22,7 +22,9 @@ class FeedTableViewCell: UITableViewCell {
                 (isPlaying) in
                 
                 if (isPlaying) {
-                    self.timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("timerFired:"), userInfo: nil, repeats: true)
+                    self.timer = NSTimer(timeInterval: 0.1, target: self, selector: Selector("timerFired:"), userInfo: nil, repeats: true)
+                    NSRunLoop.currentRunLoop().addTimer(self.timer!, forMode: NSRunLoopCommonModes)
+                    
                 } else {
                     self.timer?.invalidate()
                     self.timer = nil
