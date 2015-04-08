@@ -115,7 +115,9 @@ class FeedTableViewCell: UITableViewCell {
             var translation = self.progressGestureRecognizer?.translationInView(self)
             
             if let translation = translation {
-                return ((fabs(translation.x) / fabs(translation.y) > 1) && (superview.contentOffset.y == 0.0 && superview.contentOffset.x == 0.0))
+                return ((fabs(translation.x) / fabs(translation.y) > 1) &&
+                    (superview.contentOffset.y == 0.0 && superview.contentOffset.x == 0.0)) &&
+                    self.player.isPlaying()
             }
             return false
         }
