@@ -74,9 +74,10 @@ class FeedTableViewCell: UITableViewCell {
     }
     
     func changeProgress(gesture: UIPanGestureRecognizer) {
-        
-        if !player.isPlaying() {
-            return
+        if (gesture.state != .Ended) {
+            player.pause();
+        } else {
+            player.play();
         }
         
         var xTranslation = gesture.locationInView(self).x
