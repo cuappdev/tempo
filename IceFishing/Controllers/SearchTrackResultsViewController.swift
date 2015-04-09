@@ -41,7 +41,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var alert = UIAlertController(title: "Post song of the day", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        var alert = UIAlertController(title: "Post song of the day", message: "post \(results[indexPath.row].name) as your song of the day", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         alert.addAction(UIAlertAction(title: "Post", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
             self.postSong(self.results[indexPath.row])
