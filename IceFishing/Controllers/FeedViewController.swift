@@ -11,7 +11,8 @@ import UIKit
 class FeedViewController: UITableViewController, UIScrollViewDelegate {
     var currentlyPlayingCell: FeedTableViewCell?
     var pinView: UIView = UIView()
-
+    var currentPlayer: Player?
+    
     var testSongIDs = [
         "https://p.scdn.co/mp3-preview/8b545950a285e9f715e783a197faf6c6bcf6b724",
         "https://p.scdn.co/mp3-preview/4b75d979f23cb63e2b6c48c98a7706f2735ef15a",
@@ -29,6 +30,16 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         "Talking Body - Gryffin Remix - Tove Lo",
         "Cheerleader - Felix Jaehn Remix Radio Edit - Omi",
         "Gold Rush - Deluxe Edition - Ed Sheeran"]
+    
+    var testSongProgress = [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+    ];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,9 +74,15 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as FeedTableViewCell
         
         cell.songID = NSURL(string: testSongIDs[indexPath.row])
-        cell.player = Player(fileURL: cell.songID)
         cell.songDescriptionLabel.text = testSongDescriptions[indexPath.row]
         cell.songPostTimeLabel.text = String(indexPath.row+1) + " min"
+        cell.progress = testSongProgress[indexPath.row];
+
+        if cell == currentlyPlayingCell {
+            cell.player = self.currentPlayer
+        } else {
+            cell.player = nil
+        }
         
         if indexPath.item == 3 || indexPath.item == 5 || indexPath.item == 0 {
             cell.avatarImageView.image = UIImage(named: "Eric")
@@ -82,12 +99,23 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
             [unowned self]
             (isPlaying, sender) in
             
-            if isPlaying {
-                
-                if (self.currentlyPlayingCell != sender) {
-                    self.currentlyPlayingCell?.player.pause()
+            if let current = self.currentlyPlayingCell {
+                let path = tableView.indexPathForCell(current)
+                if let path = path {
+                    self.testSongProgress[path.row] = current.progress
                 }
-                self.currentlyPlayingCell = sender;
+            }
+            
+            if !isPlaying {
+                if (self.currentlyPlayingCell != sender) {
+                    self.currentlyPlayingCell?.progress = 1.0;
+                    self.currentlyPlayingCell?.player = nil
+                    self.currentlyPlayingCell = sender
+
+                    self.currentPlayer = Player(fileURL: cell.songID)
+                    self.currentPlayer?.progress = self.currentlyPlayingCell!.progress
+                    self.currentlyPlayingCell?.player = self.currentPlayer
+                }
             }
         }
         

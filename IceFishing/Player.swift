@@ -96,8 +96,10 @@ class Player: NSObject {
         
         set {
             if let player = player {
-                player.seekToTime(CMTimeMake(Int64(newValue * CMTimeGetSeconds(player.currentItem.duration)), 1))
-//                player.currentTime = newValue * player.currentItem.duration
+                let secs = CMTimeGetSeconds(player.currentItem.duration)
+                if (newValue.isNormal && secs.isNormal) {
+                    player.seekToTime(CMTimeMake(Int64(newValue * secs), 1))
+                }
             }
         }
     }

@@ -15,11 +15,23 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var profileNameLabel: UILabel!
     @IBOutlet weak var songDescriptionLabel: UILabel!
     private var timer: NSTimer?
-    var player: Player! {
+    var progress: Double = 0.0 {
         didSet {
-            player.callBack = {
+            self.setNeedsDisplay()
+        }
+    }
+    
+    var player: Player? {
+        didSet {
+            if (player == nil) {
+                self.timer?.invalidate()
+                self.timer = nil
+            }
+            
+            player?.callBack = {
                 [unowned self]
                 (isPlaying) in
+                self.player?.progress = self.progress
                 
                 if (isPlaying) {
                     self.timer = NSTimer(timeInterval: 0.1, target: self, selector: Selector("timerFired:"), userInfo: nil, repeats: true)
@@ -48,12 +60,10 @@ class FeedTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     dynamic private func timerFired(timer: NSTimer) {
-        setNeedsDisplay()
+        if let player = player {
+            self.progress = player.progress
+        }
     }
     
     override func didMoveToSuperview() {
@@ -75,15 +85,16 @@ class FeedTableViewCell: UITableViewCell {
     
     func changeProgress(gesture: UIPanGestureRecognizer) {
         if (gesture.state != .Ended) {
-            player.pause();
+            player?.pause();
         } else {
-            player.play();
+            player?.play();
         }
         
         var xTranslation = gesture.locationInView(self).x
         var cellWidth = bounds.width
         
-        player.progress = Double(xTranslation/cellWidth)
+        progress = Double(xTranslation/cellWidth)
+        player?.progress = progress
         
         self.setNeedsDisplay()
     }
@@ -91,35 +102,53 @@ class FeedTableViewCell: UITableViewCell {
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
         fillColor.setFill()
-        CGContextFillRect(UIGraphicsGetCurrentContext(), CGRect(x: 0, y: 0, width: self.bounds.size.width * CGFloat(player.progress), height: self.bounds.size.height))
+        CGContextFillRect(UIGraphicsGetCurrentContext(), CGRect(x: 0, y: 0, width: self.bounds.size.width * CGFloat(progress), height: self.bounds.size.height))
     }
     
     func cellPressed(sender: UITapGestureRecognizer) {
-        if(player.isPlaying()) {
-            let tapPoint = sender.locationInView(self)
-            let hitView = contentView.hitTest(tapPoint, withEvent: nil)
-            
-            if hitView == avatarImageView || hitView == profileNameLabel {
-                println("GO TO PROFILE")
-                player.pause()
-            } else {
-                player.pause()
+        if let player = player {
+            if (player.isPlaying()) {
+                let tapPoint = sender.locationInView(self)
+                let hitView = contentView.hitTest(tapPoint, withEvent: nil)
+                
+                if hitView == avatarImageView || hitView == profileNameLabel {
+                    player.pause()
+                } else {
+                    player.pause()
+                }
+            } else { // Player is paused
+                player.play()
             }
-        } else { // Player is paused
-            player.play()
+        } else {
+            if let callBack = callBack {
+                callBack(isPlaying: false, sender: self)
+                
+                if let player = player {
+                    cellPressed(sender);
+                }
+            }
+        }
+    }
+    
+    override func prepareForReuse() {
+        if let player = player {
+            callBack?(isPlaying: player.isPlaying(), sender: self)
         }
     }
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == self.progressGestureRecognizer {
-            var superview = self.superview as UIScrollView
-            var translation = self.progressGestureRecognizer?.translationInView(self)
-            
-            if let translation = translation {
-                return ((fabs(translation.x) / fabs(translation.y) > 1) &&
-                    (superview.contentOffset.y == 0.0 && superview.contentOffset.x == 0.0)) &&
-                    self.player.isPlaying()
+            if let player = player {
+                var superview = self.superview as UIScrollView
+                var translation = self.progressGestureRecognizer?.translationInView(self)
+                
+                if let translation = translation {
+                    return ((fabs(translation.x) / fabs(translation.y) > 1) &&
+                        (superview.contentOffset.y == 0.0 && superview.contentOffset.x == 0.0)) &&
+                        player.isPlaying()
+                }
             }
+            
             return false
         }
         return true
