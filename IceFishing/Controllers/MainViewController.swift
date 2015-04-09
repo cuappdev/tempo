@@ -8,19 +8,27 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, SearchTrackResultsViewControllerDelegate {
 
     let options: UISegmentedControl = UISegmentedControl(items: ["Songs", "Users"])
     
     var childVC2 = TrendingViewController()
     var childVC1 = FeedViewController()
+    var searchController: UISearchController!
+    var searchNavigationController: UINavigationController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Add Songs/Users option element to the navbar
         options.selectedSegmentIndex = 0
         options.tintColor = UIColor.grayColor()
         options.addTarget(self, action: "switchTable", forControlEvents: .ValueChanged)
         navigationItem.titleView = options
+        
+        // Add plus sign to the right side of the navbar
+        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "initializePostCreation")
+        navigationItem.rightBarButtonItem = button
         
         addChildViewController(childVC1)
         childVC1.view.frame = view.bounds
@@ -47,5 +55,41 @@ class MainViewController: UIViewController {
             childVC1.view.frame = view.bounds
             view.addSubview(childVC1.view)
         }
+    }
+    
+    func initializePostCreation() {
+        var searchResultsViewController = SearchTrackResultsViewController() as SearchTrackResultsViewController
+        let searchViewController = SearchTrackViewController()
+        searchNavigationController = UINavigationController(rootViewController: searchViewController)
+
+        searchController = UISearchController(searchResultsController: searchResultsViewController)
+        searchController.searchResultsUpdater = searchResultsViewController
+        searchController.hidesNavigationBarDuringPresentation = false
+
+        searchController.searchBar.searchBarStyle = .Minimal
+        searchController.searchBar.placeholder = NSLocalizedString("Search to post a song of the Day", comment: "")
+        searchController.searchBar.showsCancelButton = false
+        searchController.delegate = searchViewController
+        
+        searchResultsViewController.delegate = self
+
+        searchViewController.navigationItem.titleView = searchController.searchBar
+        searchViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "closeSearchView")
+
+        presentViewController(searchNavigationController, animated: false, completion: nil)
+        delay(0.05) {
+            self.searchController.searchBar.becomeFirstResponder()
+            return
+        }
+    }
+    
+    func postSong(track: TrackResult) {
+        closeSearchView()
+        println("TODO: add this track")
+        println(track)
+    }
+    
+    func closeSearchView() {
+        searchNavigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
 }
