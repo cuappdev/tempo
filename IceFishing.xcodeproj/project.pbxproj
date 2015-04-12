@@ -39,6 +39,10 @@
 		BAE499E11AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */; };
 		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
 		FA1A913C1AC38A6B00774EF3 /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */; };
+		FA1E1A781ADB06A3007C823C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A771ADB06A3007C823C /* Post.swift */; };
+		FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7B1ADB072A007C823C /* Song.swift */; };
+		FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7D1ADB0818007C823C /* PostView.swift */; };
+		FA1E1A801ADB0B74007C823C /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7F1ADB0B74007C823C /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +117,10 @@
 		BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackResultsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedTableViewCell.xib; sourceTree = "<group>"; };
+		FA1E1A771ADB06A3007C823C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
+		FA1E1A7B1ADB072A007C823C /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Models/Song.swift; sourceTree = "<group>"; };
+		FA1E1A7D1ADB0818007C823C /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		FA1E1A7F1ADB0B74007C823C /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Vendor/SwiftyJSON/Source/SwiftyJSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */,
+				FA1E1A7D1ADB0818007C823C /* PostView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -201,6 +210,7 @@
 			children = (
 				1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */,
 				FA1A91301AC3899E00774EF3 /* Player.swift */,
+				FA1E1A7A1ADB06A8007C823C /* Models */,
 				6DEE0FC31AC34811005552F9 /* Profile */,
 				1DE932921AAD12A700AD3BF0 /* Vendor */,
 				BAE499D11AD5F2C9003214C0 /* Models */,
@@ -244,6 +254,7 @@
 		1DE932921AAD12A700AD3BF0 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				FA1E1A7F1ADB0B74007C823C /* SwiftyJSON.swift */,
 				1D72DB671AAD0B97007822B0 /* Alamofire-SwiftyJSON.xcodeproj */,
 			);
 			name = Vendor;
@@ -310,6 +321,15 @@
 				BAE499DE1AD60063003214C0 /* Util.swift */,
 			);
 			name = Misc;
+			sourceTree = "<group>";
+		};
+		FA1E1A7A1ADB06A8007C823C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FA1E1A771ADB06A3007C823C /* Post.swift */,
+				FA1E1A7B1ADB072A007C823C /* Song.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -447,9 +467,12 @@
 				6DEE0FDD1AC34884005552F9 /* LoginViewController.swift in Sources */,
 				6DEE0FD81AC34811005552F9 /* ProfileViewController.swift in Sources */,
 				1D72D9DE1AACC6AA007822B0 /* ViewController.swift in Sources */,
+				FA1E1A801ADB0B74007C823C /* SwiftyJSON.swift in Sources */,
 				BAE499DF1AD60063003214C0 /* Util.swift in Sources */,
+				FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */,
 				7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */,
 				1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */,
+				FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */,
 				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
 				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,
 				6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */,
@@ -460,6 +483,7 @@
 				6DEE0FD41AC34811005552F9 /* EditProfileViewController.swift in Sources */,
 				BAE499D41AD5F2D6003214C0 /* TrackResult.swift in Sources */,
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
+				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
 				BAE499DB1AD5F7EB003214C0 /* SearchTrackViewController.swift in Sources */,
 				6DEE0FDA1AC34811005552F9 /* User.swift in Sources */,
 			);
