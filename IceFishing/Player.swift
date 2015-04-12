@@ -12,11 +12,22 @@ import AVFoundation
 class Player: NSObject {
     private var player: AVPlayer?
     var callBack: ((playing: Bool) -> Void)?
+    private var notificationValue: AnyObject?
+    private(set) var finishedPlaying = false
     
     var fileURL: NSURL! {
         didSet {
+            if let notificationValue: AnyObject = notificationValue {
+                NSNotificationCenter.defaultCenter().removeObserver(notificationValue)
+            }
+            
             player?.pause()
             player = AVPlayer(URL: self.fileURL)
+            notificationValue = NSNotificationCenter.defaultCenter().addObserverForName(AVPlayerItemDidPlayToEndTimeNotification,
+                object: player?.currentItem,
+                queue: nil) { [unowned self] (notif) -> Void in
+                    self.finishedPlaying = true
+            }
         }
     }
     
@@ -40,6 +51,11 @@ class Player: NSObject {
     }
     
     func play() {
+        if (finishedPlaying) {
+            finishedPlaying = false
+            currentTime = 0.0
+        }
+        
         player?.play()
         
         if let callBack = callBack {
@@ -86,8 +102,22 @@ class Player: NSObject {
         }
     }
     
+    var duration: NSTimeInterval {
+        if let player = player {
+            if let item = player.currentItem {
+                return CMTimeGetSeconds(item.duration)
+            }
+        }
+        
+        return DBL_MAX
+    }
+    
     dynamic var progress: Double {
         get {
+            if finishedPlaying {
+                return 1.0
+            }
+            
             if let player = player {
                 if let item = player.currentItem {
                     return CMTimeGetSeconds(player.currentTime()) / CMTimeGetSeconds(item.duration)
@@ -100,6 +130,7 @@ class Player: NSObject {
             if let player = player {
                 let secs = CMTimeGetSeconds(player.currentItem.duration)
                 if (newValue.isNormal && secs.isNormal) {
+                    finishedPlaying = false
                     player.seekToTime(CMTimeMake(Int64(newValue * secs), 1))
                 }
             }
