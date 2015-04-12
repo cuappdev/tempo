@@ -32,6 +32,8 @@ struct TrackResult {
             ])
         }
         
+        self.artists = artists_arr
+
         self.album = [
             "id": album["id"] as String,
             "name": album["name"] as String
