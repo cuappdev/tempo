@@ -16,3 +16,5 @@ func delay(delay:Double, closure:()->()) {
         ),
         dispatch_get_main_queue(), closure)
 }
+
+let screenSize: CGRect = UIScreen.mainScreen().bounds

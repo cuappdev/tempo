@@ -22,8 +22,6 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: tableViewCellIdentifier)
     }
     
     // MARK: UITableViewDataSource
@@ -33,15 +31,20 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCellWithIdentifier(tableViewCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(tableViewCellIdentifier) as? UITableViewCell
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: tableViewCellIdentifier)
+        }
+        return cell!
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         cell.textLabel!.text = results[indexPath.row].name
+        cell.detailTextLabel?.text = results[indexPath.row].artists[0]["name"]! + " • " + results[indexPath.row].album["name"]!
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var alert = UIAlertController(title: "Post song of the day", message: "post \(results[indexPath.row].name) as your song of the day", preferredStyle: UIAlertControllerStyle.Alert)
+        var alert = UIAlertController(title: "Post song of the day", message: "Post \(results[indexPath.row].name) as your song of the day?", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         alert.addAction(UIAlertAction(title: "Post", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
             self.postSong(self.results[indexPath.row])
