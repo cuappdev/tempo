@@ -12,6 +12,8 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     var pinView: UIView = UIView()
     var posts: [Post] = []
     var currentlyPlayingIndexPath: NSIndexPath?
+    var topPinViewContainer = UIView()
+    var bottomPinViewContainer = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +29,28 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         posts.append(post)
     }
     
-    //Mark: - UIRefreshControl
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        topPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 128)
+        topPinViewContainer.center = CGPoint(x: view.center.x, y: navigationController!.navigationBar.frame.maxY + 64)
+        parentViewController!.view.addSubview(topPinViewContainer)
+        bottomPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 128)
+        bottomPinViewContainer.center = CGPoint(x: view.center.x, y: view.frame.height - 64)
+        parentViewController!.view.addSubview(bottomPinViewContainer)
+        
+        
+        //XXX: @pastachan: without this we don't receive touches to the first and last items
+        // I suggest hiding them when they are not in use so touch events get passed along to the
+        // table view
+        topPinViewContainer.hidden = true
+        bottomPinViewContainer.hidden = true
+        
+        println(topPinViewContainer.center)
+        println(bottomPinViewContainer.center)
+    }
     
+    //Mark: - UIRefreshControl
     func refreshFeed() {
 //        testSongIDs.append("https://p.scdn.co/mp3-preview/dba0ce6ac6310d7be00545861f9b58aeb86930a3")
 //        testSongDescriptions.append("Don't Stop the Party - Pitbull")
@@ -64,30 +86,34 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         }
         currentlyPlayingIndexPath = indexPath
         
-        if tableView.indexPathForSelectedRow() != nil { //If a row is selected
-            view.addSubview(pinView)
-            //println("lol")
-            let selectedRow = tableView.indexPathForSelectedRow()! //Selected Row
+        println("This has run")
+        if let selectedRow = tableView.indexPathForSelectedRow() { //If a row is selected
             let rowsICanSee = tableView.indexPathsForVisibleRows() as [NSIndexPath] //Rows Seen
             let cellSelected = tableView.cellForRowAtIndexPath(selectedRow)
-            if rowsICanSee.first == selectedRow || rowsICanSee.last == selectedRow { //If the cell is the top or bottom
-                pinView.backgroundColor = cellSelected!.backgroundColor
-                if rowsICanSee.first == selectedRow {
-                    pinView.center = CGPoint(x: view.center.x, y: 50)
+            if cellSelected!.frame.minY - tableView.contentOffset.y <= navigationController!.navigationBar.frame.maxY || rowsICanSee.last == selectedRow { //If the cell is the top or bottom
+                println("here")
+                pinView.backgroundColor = UIColor.blueColor()
+                if (cellSelected!.frame.minY - tableView.contentOffset.y <= navigationController!.navigationBar.frame.maxY) {
+                    println("Here too")
                     pinView.removeFromSuperview()
-                    view.addSubview(pinView)
+                    pinView.frame = topPinViewContainer.bounds
+                    topPinViewContainer.addSubview(pinView)
+                    pinView.backgroundColor = UIColor.redColor()
                 } else if rowsICanSee.last == selectedRow {
-                    pinView.center = CGPoint(x: view.center.x, y: view.frame.height - 50)
+                    println("Hey")
                     pinView.removeFromSuperview()
-                    view.addSubview(pinView)
+                    pinView.frame = bottomPinViewContainer.bounds
+                    bottomPinViewContainer.addSubview(pinView)
+                    pinView.backgroundColor = UIColor.redColor()
                 }
-                
             }
-                
             else {
                 if selectedRow.compare(rowsICanSee.first!) != selectedRow.compare(rowsICanSee.last!) { //If they're equal then the thing is not on screen
-                    pinView.center = CGPoint(x: cellSelected!.center.x, y: cellSelected!.center.y - tableView.contentOffset.y)
-                    pinView.backgroundColor = cellSelected!.backgroundColor
+                    pinView.removeFromSuperview()
+                    view.addSubview(pinView)
+                    println("LOLOLOL")
+                    pinView.center = CGPoint(x: cellSelected!.center.x, y: cellSelected!.center.y)
+                    pinView.backgroundColor = UIColor.blueColor()
                 }
             }
         }
