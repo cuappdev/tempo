@@ -12,6 +12,8 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     var currentlyPlayingCell: FeedTableViewCell?
     var pinView: UIView = UIView()
     var currentPlayer: Player?
+    var topPinViewContainer: UIView = UIView()
+    var bottomPinViewContainer: UIView = UIView()
     
     var testSongIDs = [
         "https://p.scdn.co/mp3-preview/8b545950a285e9f715e783a197faf6c6bcf6b724",
@@ -50,6 +52,25 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         
         tableView.separatorStyle = .None
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+        pinView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 128.0)
+        
+        println(view.frame.height)
+        println(tableView.frame.height)
+        
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        topPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 128)
+        topPinViewContainer.center = CGPoint(x: view.center.x, y: navigationController!.navigationBar.frame.maxY + 64)
+        parentViewController!.view.addSubview(topPinViewContainer)
+        bottomPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 128)
+        bottomPinViewContainer.center = CGPoint(x: view.center.x, y: view.frame.height - 64)
+        parentViewController!.view.addSubview(bottomPinViewContainer)
+        
+        println(topPinViewContainer.center)
+        println(bottomPinViewContainer.center)
+        
     }
     
     //Mark: - UIRefreshControl
@@ -84,16 +105,19 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
             cell.player = nil
         }
         
-        if indexPath.item == 3 || indexPath.item == 5 || indexPath.item == 0 {
+        if indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 0 {
             cell.avatarImageView.image = UIImage(named: "Eric")
             cell.profileNameLabel.text = "ERIC APPEL"
-        } else if indexPath.item > 6 {
+        } else if indexPath.row > 6 {
             cell.avatarImageView.image = UIImage(named: "Steven")
             cell.profileNameLabel.text = "STEVEN YEH"
         }
         else {
             cell.avatarImageView.image = UIImage(named: "Sexy")
         }
+        
+        //ADDED, changed indexPath.item to indexPath.row 
+        //Fill in works momentarily but changes when scroll occurs 
                 
         cell.callBack = {
             [unowned self]
@@ -129,30 +153,34 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if tableView.indexPathForSelectedRow() != nil { //If a row is selected
-            view.addSubview(pinView)
-            //println("lol")
-            let selectedRow = tableView.indexPathForSelectedRow()! //Selected Row
+        println("This has run")
+        if let selectedRow = tableView.indexPathForSelectedRow() { //If a row is selected
             let rowsICanSee = tableView.indexPathsForVisibleRows() as [NSIndexPath] //Rows Seen
             let cellSelected = tableView.cellForRowAtIndexPath(selectedRow)
-            if rowsICanSee.first == selectedRow || rowsICanSee.last == selectedRow { //If the cell is the top or bottom
-                pinView.backgroundColor = cellSelected!.backgroundColor
-                if rowsICanSee.first == selectedRow {
-                    pinView.center = CGPoint(x: view.center.x, y: 50)
+            if cellSelected!.frame.minY - tableView.contentOffset.y <= navigationController!.navigationBar.frame.maxY || rowsICanSee.last == selectedRow { //If the cell is the top or bottom
+                println("here")
+                pinView.backgroundColor = UIColor.blueColor()
+                if (cellSelected!.frame.minY - tableView.contentOffset.y <= navigationController!.navigationBar.frame.maxY) {
+                    println("Here too")
                     pinView.removeFromSuperview()
-                    view.addSubview(pinView)
+                    pinView.frame = topPinViewContainer.bounds
+                    topPinViewContainer.addSubview(pinView)
+                    pinView.backgroundColor = UIColor.redColor()
                 } else if rowsICanSee.last == selectedRow {
-                    pinView.center = CGPoint(x: view.center.x, y: view.frame.height - 50)
+                    println("Hey")
                     pinView.removeFromSuperview()
-                    view.addSubview(pinView)
+                    pinView.frame = bottomPinViewContainer.bounds
+                    bottomPinViewContainer.addSubview(pinView)
+                    pinView.backgroundColor = UIColor.redColor()
                 }
-                
             }
-                
             else {
                 if selectedRow.compare(rowsICanSee.first!) != selectedRow.compare(rowsICanSee.last!) { //If they're equal then the thing is not on screen
-                    pinView.center = CGPoint(x: cellSelected!.center.x, y: cellSelected!.center.y - tableView.contentOffset.y)
-                    pinView.backgroundColor = cellSelected!.backgroundColor
+                    pinView.removeFromSuperview()
+                    view.addSubview(pinView)
+                    println("LOLOLOL")
+                    pinView.center = CGPoint(x: cellSelected!.center.x, y: cellSelected!.center.y)
+                    pinView.backgroundColor = UIColor.blueColor()
                 }
             }
         }
@@ -160,25 +188,29 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         if let selectedRow = tableView.indexPathForSelectedRow() { //If a row is selected
-            view.addSubview(pinView)
             let rowsICanSee = tableView.indexPathsForVisibleRows() as [NSIndexPath] //Rows Seen
             let cellSelected = tableView.cellForRowAtIndexPath(selectedRow)
-            if rowsICanSee.first == selectedRow || rowsICanSee.last == selectedRow { //If the cell is the top or bottom
-                pinView.backgroundColor = cellSelected!.backgroundColor
-                if rowsICanSee.first == selectedRow {
-                    pinView.center = CGPoint(x: view.center.x, y: 50)
+            if cellSelected!.frame.minY - tableView.contentOffset.y <= navigationController!.navigationBar.frame.maxY || rowsICanSee.last == selectedRow { //If the cell is the top or bottom
+                pinView.backgroundColor = UIColor.blueColor()
+                if (cellSelected!.frame.minY - tableView.contentOffset.y <= navigationController!.navigationBar.frame.maxY) {
                     pinView.removeFromSuperview()
-                    view.addSubview(pinView)
+                    pinView.frame = topPinViewContainer.bounds
+                    topPinViewContainer.addSubview(pinView)
+                    pinView.backgroundColor = UIColor.redColor()
                 } else if rowsICanSee.last == selectedRow {
-                    pinView.center = CGPoint(x: view.center.x, y: view.frame.height - 50)
                     pinView.removeFromSuperview()
-                    view.addSubview(pinView)
+                    pinView.frame = bottomPinViewContainer.bounds
+                    bottomPinViewContainer.addSubview(pinView)
+                    pinView.backgroundColor = UIColor.redColor()
                 }
             }
             else {
                 if selectedRow.compare(rowsICanSee.first!) != selectedRow.compare(rowsICanSee.last!) { //If they're equal then the thing is not on screen
-                    pinView.center = CGPoint(x: cellSelected!.center.x, y: cellSelected!.center.y - tableView.contentOffset.y)
-                    pinView.backgroundColor = cellSelected!.backgroundColor
+                    pinView.removeFromSuperview()
+                    view.addSubview(pinView)
+                    println("this is runnning")
+                    pinView.center = CGPoint(x: cellSelected!.center.x, y: cellSelected!.center.y)
+                    pinView.backgroundColor = UIColor.blueColor()
                 }
             }
         }

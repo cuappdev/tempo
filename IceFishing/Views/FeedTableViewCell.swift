@@ -39,6 +39,7 @@ class FeedTableViewCell: UITableViewCell {
                     
                 } else {
                     self.timer?.invalidate()
+                    self.progress=0;
                     self.timer = nil
                 }
                 
@@ -74,7 +75,10 @@ class FeedTableViewCell: UITableViewCell {
         addGestureRecognizer(progressGestureRecognizer!)
         
         var tapRecognizer = UITapGestureRecognizer(target: self, action: "cellPressed:")
+        tapRecognizer.cancelsTouchesInView = false
+        //ADDED
         addGestureRecognizer(tapRecognizer)
+        
         
         avatarImageView.layer.cornerRadius = avatarImageView.bounds.size.width/2
         avatarImageView.clipsToBounds = true
