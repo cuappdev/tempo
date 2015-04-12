@@ -4,3 +4,4 @@
 
 #import "SWRevealViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "CEMovieMaker.h"

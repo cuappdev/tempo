@@ -31,6 +31,7 @@ class MainViewController: UIViewController {
         // Arbitrary additions for SWRevealVC
         revealViewController().panGestureRecognizer()
         revealViewController().tapGestureRecognizer()
+        
     }
     
     func switchTable() {

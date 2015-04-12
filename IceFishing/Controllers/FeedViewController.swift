@@ -39,6 +39,10 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         
         tableView.separatorStyle = .None
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+        
+        //add screen capture class
+        let v = ADScreenCapture(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height), viewController: self)
+        self.view.addSubview(v)
     }
     
     //Mark: - UIRefreshControl
