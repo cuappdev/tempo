@@ -37,7 +37,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.textLabel!.text = results[indexPath.row].name
+        cell.textLabel.text = results[indexPath.row].name
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

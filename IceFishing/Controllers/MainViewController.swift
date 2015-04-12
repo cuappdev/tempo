@@ -19,7 +19,7 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        println(self.navigationController?.navigationBar.frame.height)
         // Add Songs/Users option element to the navbar
         options.selectedSegmentIndex = 0
         options.tintColor = UIColor.grayColor()
