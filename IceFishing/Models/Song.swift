@@ -21,7 +21,7 @@ class Song: NSObject {
             let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: &error)
             if let data = data {
                 let json = JSON(data: data, options: NSJSONReadingOptions(0), error: &error)
-                title = json["title"].stringValue
+                title = json["name"].stringValue
                 let preview = json["preview_url"].stringValue
                 previewURL = NSURL(string: preview)
                 let artists = json["artists"].arrayValue

@@ -9,37 +9,9 @@
 import UIKit
 
 class FeedViewController: UITableViewController, UIScrollViewDelegate {
-    var currentlyPlayingCell: FeedTableViewCell?
     var pinView: UIView = UIView()
-    var currentPlayer: Player?
-    
-    var testSongIDs = [
-        "https://p.scdn.co/mp3-preview/8b545950a285e9f715e783a197faf6c6bcf6b724",
-        "https://p.scdn.co/mp3-preview/4b75d979f23cb63e2b6c48c98a7706f2735ef15a",
-        "https://p.scdn.co/mp3-preview/342d48054332f1cd5d7fe4f30f6856faf07c1e48",
-        "https://p.scdn.co/mp3-preview/23fa9ad27d22e18fde8ec02eec82b67a3422978f",
-        "https://p.scdn.co/mp3-preview/088f11ec4b7d500586ada02ab99965c681a30e3e",
-        "https://p.scdn.co/mp3-preview/1587652c5763e83fc594a92468b635fbc2d305cb",
-        "https://p.scdn.co/mp3-preview/5ddbf8791851f6d12e8f2348ff3f85f4cad54c26"]
-    
-    var testSongDescriptions = [
-        "Under the Same Sun - Ben Howard",
-        "1985 - Passion Pit",
-        "Angel - Shaggy",
-        "Rather Be - Clean Bandit feat. Jesse Glynn",
-        "Talking Body - Gryffin Remix - Tove Lo",
-        "Cheerleader - Felix Jaehn Remix Radio Edit - Omi",
-        "Gold Rush - Deluxe Edition - Ed Sheeran"]
-    
-    var testSongProgress = [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
-    ];
+    var posts: [Post] = []
+    var currentlyPlayingIndexPath: NSIndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,13 +22,16 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         
         tableView.separatorStyle = .None
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+        
+        var post = Post(song: Song(songID: "3TV9xKWFOxndERab4wwxsj"), posterFirst: "Mark", posterLast: "Bryan", date: NSDate(), avatar: UIImage(named: "Sexy"))
+        posts.append(post)
     }
     
     //Mark: - UIRefreshControl
     
     func refreshFeed() {
-        testSongIDs.append("https://p.scdn.co/mp3-preview/dba0ce6ac6310d7be00545861f9b58aeb86930a3")
-        testSongDescriptions.append("Don't Stop the Party - Pitbull")
+//        testSongIDs.append("https://p.scdn.co/mp3-preview/dba0ce6ac6310d7be00545861f9b58aeb86930a3")
+//        testSongDescriptions.append("Don't Stop the Party - Pitbull")
 
         self.tableView.reloadData()
         
@@ -66,59 +41,12 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     // MARK: - UITableViewDataSource
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return testSongIDs.count
+        return posts.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as FeedTableViewCell
-        
-        cell.songID = NSURL(string: testSongIDs[indexPath.row])
-        cell.songDescriptionLabel.text = testSongDescriptions[indexPath.row]
-        cell.songPostTimeLabel.text = String(indexPath.row+1) + " min"
-        cell.progress = testSongProgress[indexPath.row];
-
-        if cell == currentlyPlayingCell {
-            cell.player = self.currentPlayer
-        } else {
-            cell.player = nil
-        }
-        
-        if indexPath.item == 3 || indexPath.item == 5 || indexPath.item == 0 {
-            cell.avatarImageView.image = UIImage(named: "Eric")
-            cell.profileNameLabel.text = "ERIC APPEL"
-        } else if indexPath.item > 6 {
-            cell.avatarImageView.image = UIImage(named: "Steven")
-            cell.profileNameLabel.text = "STEVEN YEH"
-        }
-        else {
-            cell.avatarImageView.image = UIImage(named: "Sexy")
-        }
-                
-        cell.callBack = {
-            [unowned self]
-            (isPlaying, sender) in
-            
-            if let current = self.currentlyPlayingCell {
-                let path = tableView.indexPathForCell(current)
-                if let path = path {
-                    self.testSongProgress[path.row] = current.progress
-                }
-            }
-            
-            if !isPlaying {
-                if (self.currentlyPlayingCell != sender) {
-                    self.currentlyPlayingCell?.progress = 1.0;
-                    self.currentlyPlayingCell?.player = nil
-                    self.currentlyPlayingCell = sender
-
-                    self.currentPlayer = Player(fileURL: cell.songID)
-                    self.currentPlayer?.progress = self.currentlyPlayingCell!.progress
-                    self.currentlyPlayingCell?.player = self.currentPlayer
-                }
-            }
-        }
-        
+        cell.postView.post = posts[indexPath.row]
         return cell
     }
     
@@ -129,6 +57,13 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if (indexPath.isEqual(currentlyPlayingIndexPath)) {
+            posts[indexPath.row].player.togglePlaying()
+        } else {
+            posts[indexPath.row].player.play()
+        }
+        currentlyPlayingIndexPath = indexPath
+        
         if tableView.indexPathForSelectedRow() != nil { //If a row is selected
             view.addSubview(pinView)
             //println("lol")

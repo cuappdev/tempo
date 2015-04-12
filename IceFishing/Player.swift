@@ -89,7 +89,9 @@ class Player: NSObject {
     dynamic var progress: Double {
         get {
             if let player = player {
-                return CMTimeGetSeconds(player.currentTime()) / CMTimeGetSeconds(player.currentItem.duration)
+                if let item = player.currentItem {
+                    return CMTimeGetSeconds(player.currentTime()) / CMTimeGetSeconds(item.duration)
+                }
             }
             return 0.0
         }

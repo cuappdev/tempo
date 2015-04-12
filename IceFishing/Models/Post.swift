@@ -14,16 +14,25 @@ class Post: NSObject {
     var avatar: UIImage?
     var player: Player!
     var song: Song!
+    var date: NSDate!
 
-    init(song: Song, posterFirst: String, posterLast: String) {
+    init(song: Song, posterFirst: String, posterLast: String, date: NSDate, avatar: UIImage?) {
         self.song = song
         self.posterFirstName = posterFirst
+        self.date = date
+        self.avatar = avatar
         self.posterLastName = posterLast
-        player = Player(fileURL: song.previewURL)
+        
+        if let previewURL = song.previewURL {
+            player = Player(fileURL: previewURL)
+        } else {
+            player = Player(fileURL: NSURL(string: "https://p.scdn.co/mp3-preview/004eaa8d0769f3d464992704d9b5c152b862aa65")!);
+        }
+        
         super.init()
     }
     
     override init() {
-        assertionFailure("Use the init(song:) method instead")
+        assertionFailure("Use the init(song:...) method instead")
     }
 }
