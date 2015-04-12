@@ -8,6 +8,7 @@
 
 import UIKit
 
+var addedSongs = 0
 class FeedViewController: UITableViewController, UIScrollViewDelegate {
     var pinView: UIView = UIView()
     var posts: [Post] = []
@@ -26,6 +27,10 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
         
         var post = Post(song: Song(songID: "3TV9xKWFOxndERab4wwxsj"), posterFirst: "Mark", posterLast: "Bryan", date: NSDate(), avatar: UIImage(named: "Sexy"))
+        posts.append(post)
+        post = Post(song: Song(songID: "3igu6bCzkaIrioZIhK3p2n"), posterFirst: "Eric", posterLast: "Appel", date: NSDate(), avatar: UIImage(named: "Eric"))
+        posts.append(post)
+        post = Post(song: Song(songID: "4RY96Asd9IefaL3X4LOLZ8"), posterFirst: "Steven", posterLast: "Yeh", date: NSDate(), avatar: UIImage(named: "Steven"))
         posts.append(post)
     }
     
@@ -54,9 +59,25 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     func refreshFeed() {
 //        testSongIDs.append("https://p.scdn.co/mp3-preview/dba0ce6ac6310d7be00545861f9b58aeb86930a3")
 //        testSongDescriptions.append("Don't Stop the Party - Pitbull")
-
-        self.tableView.reloadData()
+        var post: Post?
+        switch (addedSongs) {
+        case 0:
+            post = Post(song: Song(songID: "0fgZUSa7D7aVvv3GfO0A1n"), posterFirst: "Eric", posterLast: "Appel", date: NSDate(), avatar: UIImage(named: "Eric"))
+            break
+        case 1:
+            post = Post(song: Song(songID: "5dANgSy7v091dhiPnEXNrf"), posterFirst: "Steven", posterLast: "Yeh", date: NSDate(), avatar: UIImage(named: "Steven"))
+            break
+        case 2:
+            post = Post(song: Song(songID: "4wQrzVXnhslsVY5lZSJjHG"), posterFirst: "Mark", posterLast: "Bryan", date: NSDate(), avatar: UIImage(named: "Sexy"))
+            break
+        default:
+            post = Post(song: Song(songID: "0nmxH6IsSQVT1YEsCB9UMi"), posterFirst: "Steven", posterLast: "Yeh", date: NSDate(), avatar: UIImage(named: "Steven"))
+            break
+        }
         
+        posts.append(post!)
+        addedSongs++
+        self.tableView.reloadData()
         self.refreshControl?.endRefreshing()
     }
     
@@ -82,11 +103,17 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         if (indexPath.isEqual(currentlyPlayingIndexPath)) {
             posts[indexPath.row].player.togglePlaying()
         } else {
+            if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+                posts[currentlyPlayingIndexPath.row].player.pause()
+            }
             posts[indexPath.row].player.play()
         }
         currentlyPlayingIndexPath = indexPath
         
         println("This has run")
+        
+        //XXX: Remove this return statement when you fix this
+        return;
         if let selectedRow = tableView.indexPathForSelectedRow() { //If a row is selected
             let rowsICanSee = tableView.indexPathsForVisibleRows() as [NSIndexPath] //Rows Seen
             let cellSelected = tableView.cellForRowAtIndexPath(selectedRow)
@@ -120,6 +147,8 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
+        //XXX: This crashes
+        return;
         if let selectedRow = tableView.indexPathForSelectedRow() { //If a row is selected
             view.addSubview(pinView)
             let rowsICanSee = tableView.indexPathsForVisibleRows() as [NSIndexPath] //Rows Seen
