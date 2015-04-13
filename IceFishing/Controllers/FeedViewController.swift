@@ -100,7 +100,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     // MARK: - UITableViewDelegate
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 128.0;
+        return 96.0;
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
