@@ -21,8 +21,8 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
-        refreshControl?.attributedTitle = NSAttributedString(string: "Last Updated on \(NSDate())")
-        
+        refreshControl?.attributedTitle = NSAttributedString(string: "Last Updated on \(NSDate())", attributes: [ NSForegroundColorAttributeName: UIColor.whiteColor() ])
+
         tableView.separatorStyle = .None
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
         
