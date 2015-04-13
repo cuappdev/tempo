@@ -16,6 +16,15 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     var topPinViewContainer = UIView()
     var bottomPinViewContainer = UIView()
     
+    func addSong(track: TrackResult) {
+        posts.append(Post(trackResult: track,
+            posterFirst: "Mark",
+            posterLast: "Bryan",
+            date: NSDate(),
+            avatar: UIImage(named: "Sexy")))
+        self.tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -32,6 +32,10 @@ class Post: NSObject {
         super.init()
     }
     
+    convenience init(trackResult: TrackResult, posterFirst: String, posterLast: String, date: NSDate, avatar: UIImage?) {
+        self.init(song: Song(spotifyURI: trackResult.id), posterFirst: posterFirst, posterLast: posterLast, date: date, avatar: avatar)
+    }
+    
     override init() {
         assertionFailure("Use the init(song:...) method instead")
     }

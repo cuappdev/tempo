@@ -51,6 +51,15 @@ class Song: NSObject {
         self.setSongID(songID)
     }
     
+    convenience init(spotifyURI: String) {
+        let components = spotifyURI.componentsSeparatedByString(":") as [String]
+        var id = ""
+        if components.count > 0 {
+            id = components.last!
+        }
+        self.init(songID: id)
+    }
+
     private func setSongID(id: String) {
         spotifyID = id;
     }

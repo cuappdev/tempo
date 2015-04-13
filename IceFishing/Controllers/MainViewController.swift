@@ -64,6 +64,7 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
     
     func initializePostCreation() {
         var searchResultsViewController = SearchTrackResultsViewController() as SearchTrackResultsViewController
+        
         let searchViewController = SearchTrackViewController()
         searchNavigationController = UINavigationController(rootViewController: searchViewController)
 
@@ -90,6 +91,8 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
     
     func postSong(track: TrackResult) {
         closeSearchView()
+        childVC1.addSong(track)
+        
         println("TODO: add this track")
         println(track)
     }

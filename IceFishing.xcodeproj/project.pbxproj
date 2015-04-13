@@ -110,7 +110,7 @@
 		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		BAE499D31AD5F2D6003214C0 /* TrackResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackResult.swift; sourceTree = "<group>"; };
+		BAE499D31AD5F2D6003214C0 /* TrackResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackResult.swift; path = Controllers/TrackResult.swift; sourceTree = "<group>"; };
 		BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackResultsViewController.swift; sourceTree = "<group>"; };
 		BAE499DA1AD5F7EB003214C0 /* SearchTrackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackViewController.swift; sourceTree = "<group>"; };
 		BAE499DE1AD60063003214C0 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -213,7 +213,6 @@
 				FA1E1A7A1ADB06A8007C823C /* Models */,
 				6DEE0FC31AC34811005552F9 /* Profile */,
 				1DE932921AAD12A700AD3BF0 /* Vendor */,
-				BAE499D11AD5F2C9003214C0 /* Models */,
 				BAE499DD1AD60058003214C0 /* Misc */,
 				1D046D8C1AB6953600D0354B /* Controllers */,
 				1D65392E1AD0E23800E82627 /* Views */,
@@ -306,15 +305,6 @@
 			name = SWRevealViewController;
 			sourceTree = "<group>";
 		};
-		BAE499D11AD5F2C9003214C0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				BAE499D31AD5F2D6003214C0 /* TrackResult.swift */,
-			);
-			name = Models;
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		BAE499DD1AD60058003214C0 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,6 +316,7 @@
 		FA1E1A7A1ADB06A8007C823C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BAE499D31AD5F2D6003214C0 /* TrackResult.swift */,
 				FA1E1A771ADB06A3007C823C /* Post.swift */,
 				FA1E1A7B1ADB072A007C823C /* Song.swift */,
 			);
