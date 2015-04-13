@@ -13,7 +13,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var profileNameLabel: UILabel?
     @IBOutlet var avatarImageView: UIImageView?
     @IBOutlet var descriptionLabel: UILabel?
-    var fillColor = UIColor.blackColor()
+    var fillColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
     private var updateTimer: NSTimer?
     
     var post: Post? {
@@ -21,7 +21,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             // update stuff
             if let post = post {
                 profileNameLabel?.text = post.posterFirstName + " " + post.posterLastName
-                descriptionLabel?.text = post.song.title + " - " + post.song.artist
+                descriptionLabel?.text = post.song.title + " · " + post.song.artist
                 avatarImageView?.image = post.avatar
                 
                 updateTimer = NSTimer(timeInterval: 0.1,
@@ -46,6 +46,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         
         avatarImageView?.userInteractionEnabled = true
         profileNameLabel?.userInteractionEnabled = true
+        
+        layer.borderColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0).CGColor
+        layer.borderWidth = CGFloat(0.7)
     }
     
     dynamic private func timerFired(timer: NSTimer) {
