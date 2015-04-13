@@ -13,6 +13,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var profileNameLabel: UILabel?
     @IBOutlet var avatarImageView: UIImageView?
     @IBOutlet var descriptionLabel: UILabel?
+    @IBOutlet var dateLabel: UILabel?
     var fillColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
     private var updateTimer: NSTimer?
     
@@ -23,6 +24,14 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 profileNameLabel?.text = post.posterFirstName + " " + post.posterLastName
                 descriptionLabel?.text = post.song.title + " · " + post.song.artist
                 avatarImageView?.image = post.avatar
+                
+                //! TODO: Write something that makes this nice and relative
+                //! that updates every minute
+                let dateFormatter = NSDateFormatter()
+//                dateFormatter.doesRelativeDateFormatting = true
+                dateFormatter.dateStyle = .NoStyle
+                dateFormatter.timeStyle = .ShortStyle
+                dateLabel?.text = dateFormatter.stringFromDate(post.date)
                 
                 updateTimer = NSTimer(timeInterval: 0.1,
                     target: self, selector: Selector("timerFired:"),
