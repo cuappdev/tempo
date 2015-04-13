@@ -10,36 +10,32 @@ import UIKit
 import AVFoundation
 
 class Player: NSObject {
-    private var player: AVPlayer?
-    var callBack: ((playing: Bool) -> Void)?
-    private var notificationValue: AnyObject?
-    private(set) var finishedPlaying = false
-    
-    var fileURL: NSURL! {
+    private var player: AVPlayer? {
         didSet {
+            oldValue?.pause()
+            
             if let notificationValue: AnyObject = notificationValue {
                 NSNotificationCenter.defaultCenter().removeObserver(notificationValue)
             }
             
-            player?.pause()
-            player = AVPlayer(URL: self.fileURL)
             notificationValue = NSNotificationCenter.defaultCenter().addObserverForName(AVPlayerItemDidPlayToEndTimeNotification,
                 object: player?.currentItem,
                 queue: nil) { [unowned self] (notif) -> Void in
                     self.finishedPlaying = true
+                    // we finished playing, destroy the object
+                    self.player = nil
             }
         }
     }
+    var callBack: ((playing: Bool) -> Void)?
+    private var notificationValue: AnyObject?
+    private(set) var finishedPlaying = false
     
-    
+    var fileURL: NSURL!
     init(fileURL: NSURL) {
         super.init()
         // hack to enable did set
-        setFileURL(fileURL)
-    }
-    
-    func setFileURL(url: NSURL) {
-        self.fileURL = url
+        self.fileURL = fileURL
     }
     
     class func keyPathsForValuesAffectingCurrentTime(key: NSString) -> NSSet {
@@ -50,7 +46,15 @@ class Player: NSObject {
         return NSSet(objects: "currentTime")
     }
     
+    func prepareToPlay() {
+        if (self.player == nil) {
+            player = AVPlayer(URL: self.fileURL)
+        }
+    }
+    
     func play() {
+        prepareToPlay()
+        
         if (finishedPlaying) {
             finishedPlaying = false
             currentTime = 0.0
@@ -131,7 +135,7 @@ class Player: NSObject {
                 let secs = CMTimeGetSeconds(player.currentItem.duration)
                 if (newValue.isNormal && secs.isNormal) {
                     finishedPlaying = false
-                    player.seekToTime(CMTimeMake(Int64(newValue * secs), 1))
+                    player.seekToTime(CMTimeMakeWithSeconds(Float64(newValue * secs), 1))
                 }
             }
         }
