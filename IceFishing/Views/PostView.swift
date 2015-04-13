@@ -37,9 +37,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func didMoveToWindow() {
-        progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: "changeProgress:")
-        progressGestureRecognizer?.delegate = self
-        addGestureRecognizer(progressGestureRecognizer!)
+        if (progressGestureRecognizer == nil) {
+            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: "changeProgress:")
+            progressGestureRecognizer?.delegate = self
+            progressGestureRecognizer?.delaysTouchesBegan = true
+            addGestureRecognizer(progressGestureRecognizer!)
+        }
         
         avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
         avatarImageView?.clipsToBounds = true
@@ -86,7 +89,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer == self.progressGestureRecognizer {
+        if gestureRecognizer == progressGestureRecognizer {
             if let player = post?.player {
                 var offsetY:CGFloat = 0.0
                 var offsetX:CGFloat = 0.0
@@ -97,7 +100,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 var translation = self.progressGestureRecognizer?.translationInView(self)
                 
                 if let translation = translation {
-                    return ((fabs(translation.x) / fabs(translation.y) > 1) &&
+                    return ((fabs(translation.x) > fabs(translation.y)) &&
                         (offsetY == 0.0 && offsetX == 0.0)) &&
                         player.isPlaying()
                 }
