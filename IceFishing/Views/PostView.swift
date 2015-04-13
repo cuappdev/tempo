@@ -33,11 +33,14 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 dateFormatter.timeStyle = .ShortStyle
                 dateLabel?.text = dateFormatter.stringFromDate(post.date)
                 
-                updateTimer = NSTimer(timeInterval: 0.1,
-                    target: self, selector: Selector("timerFired:"),
-                    userInfo: nil,
-                    repeats: true)
-                NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
+                if (updateTimer == nil) {
+                    updateTimer = NSTimer(timeInterval: 0.1,
+                        target: self, selector: Selector("timerFired:"),
+                        userInfo: nil,
+                        repeats: true)
+                    NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
+                }
+                
             } else {
                 updateTimer?.invalidate()
                 updateTimer = nil
