@@ -23,7 +23,7 @@ class Player: NSObject {
                 queue: nil) { [unowned self] (notif) -> Void in
                     self.finishedPlaying = true
                     // we finished playing, destroy the object
-                    self.player = nil
+                    self.destroy()
             }
         }
     }
@@ -50,6 +50,10 @@ class Player: NSObject {
         if (self.player == nil) {
             player = AVPlayer(URL: self.fileURL)
         }
+    }
+    
+    func destroy() {
+        self.player = nil
     }
     
     func play() {

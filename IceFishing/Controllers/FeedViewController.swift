@@ -93,6 +93,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as FeedTableViewCell
         cell.postView.post = posts[indexPath.row]
+        cell.postView.post?.player.prepareToPlay()
         return cell
     }
     
