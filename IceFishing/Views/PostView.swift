@@ -10,6 +10,7 @@ import UIKit
 
 class PostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
+    private var tapGestureRecognizer: UITapGestureRecognizer?
     @IBOutlet var profileNameLabel: UILabel?
     @IBOutlet var avatarImageView: UIImageView?
     @IBOutlet var descriptionLabel: UILabel?
@@ -54,6 +55,13 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             progressGestureRecognizer?.delegate = self
             progressGestureRecognizer?.delaysTouchesBegan = true
             addGestureRecognizer(progressGestureRecognizer!)
+        }
+        
+        if (tapGestureRecognizer == nil) {
+            tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "postViewPressed:")
+            tapGestureRecognizer?.delegate = self
+            tapGestureRecognizer?.cancelsTouchesInView = false
+            addGestureRecognizer(tapGestureRecognizer!)
         }
         
         avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
@@ -121,6 +129,20 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             return false
         }
         return true
+    }
+    
+    func postViewPressed(sender: UITapGestureRecognizer) {
+        if let post = post {
+            if post.player.isPlaying() {
+                let tapPoint = sender.locationInView(self)
+                let hitView = self.hitTest(tapPoint, withEvent: nil)
+                
+                if hitView == avatarImageView || hitView == self.profileNameLabel {
+                    // GO TO PROFILE VIEW CONTROLLER
+                    println("GO TO PROFILE")
+                }
+            }
+        }
     }
 
 }
