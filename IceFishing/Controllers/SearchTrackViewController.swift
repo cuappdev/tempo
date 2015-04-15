@@ -9,7 +9,6 @@
 import Foundation
 
 class SearchTrackViewController : UIViewController, UISearchControllerDelegate {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         super.definesPresentationContext = true

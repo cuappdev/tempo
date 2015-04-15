@@ -99,7 +99,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         if let post = post {
             progress = post.player.progress
         }
-        
         super.drawRect(rect)
         fillColor.setFill()
         CGContextFillRect(UIGraphicsGetCurrentContext(),
@@ -125,7 +124,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                         player.isPlaying()
                 }
             }
-            
             return false
         }
         return true
@@ -144,5 +142,4 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             }
         }
     }
-
 }

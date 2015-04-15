@@ -67,7 +67,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         println(bottomPinViewContainer.center)
     }
     
-    //Mark: - UIRefreshControl
+    //MARK: - UIRefreshControl
     func refreshFeed() {
 //        testSongIDs.append("https://p.scdn.co/mp3-preview/dba0ce6ac6310d7be00545861f9b58aeb86930a3")
 //        testSongDescriptions.append("Don't Stop the Party - Pitbull")
