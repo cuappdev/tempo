@@ -27,11 +27,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
         let navController = UINavigationController(rootViewController: MainViewController())
         let revealController = SWRevealViewController(rearViewController: ViewController(), frontViewController: navController)
-        self.window!.rootViewController = viewController
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
-            self.window!.rootViewController = revealController
-        }
-        //        revealController.presentViewController(viewController, animated: false, completion: nil);
+        self.window!.rootViewController = revealController
+        let gestureRecognizer = UISwipeGestureRecognizer()
+        gestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
+        gestureRecognizer.numberOfTouchesRequired = 3
+        let screenCapture = ADScreenCapture(navigationController: revealController, frame: revealController.view.frame, gestureRecognizer: gestureRecognizer)
+        revealController.view.addSubview(screenCapture)
         
         return true
     }
