@@ -138,7 +138,7 @@ class Player: NSObject {
             if let player = player {
                 let secs = CMTimeGetSeconds(player.currentItem.duration)
                 if (newValue.isNormal && secs.isNormal) {
-                    finishedPlaying = false
+                    finishedPlaying = newValue == 1.0
                     player.seekToTime(CMTimeMakeWithSeconds(Float64(newValue * secs), 1))
                 }
             }
