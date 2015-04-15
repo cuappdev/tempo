@@ -119,9 +119,23 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
             if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
                 posts[currentlyPlayingIndexPath.row].player.pause()
                 posts[currentlyPlayingIndexPath.row].player.progress = 1.0 // Fill cell as played
+                
             }
             posts[indexPath.row].player.play()
         }
+        
+        // Update text label
+        var newCell = tableView.cellForRowAtIndexPath(indexPath) as FeedTableViewCell
+        if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+            var lastCell = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath) as FeedTableViewCell
+            lastCell.postView.updateProfileLabelTextColor()
+            if lastCell != newCell {
+                newCell.postView.updateProfileLabelTextColor()
+            }
+        } else {
+            newCell.postView.updateProfileLabelTextColor()
+        }
+        
         currentlyPlayingIndexPath = indexPath
         
         println("This has run")
