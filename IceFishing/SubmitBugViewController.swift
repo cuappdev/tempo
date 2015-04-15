@@ -8,10 +8,12 @@
 
 import UIKit
 import Alamofire
+import MediaPlayer
 
 class SubmitBugViewController: UIViewController {
     
     var recordingURL:NSURL!
+    var textView:UITextView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +46,7 @@ class SubmitBugViewController: UIViewController {
         self.view.addSubview(submitButton)
 
         
-        let textView = UITextView(frame: CGRectMake(0, 50, view.frame.width, 250))
+        textView = UITextView(frame: CGRectMake(0, 50, view.frame.width, 250))
         textView.font = UIFont.systemFontOfSize(16)
         self.view.addSubview(textView)
         
@@ -52,57 +54,74 @@ class SubmitBugViewController: UIViewController {
         
         
     }
+
+    
     func submitBug() {
         
-        let postURL = "https://slack.com/api/files.upload"
-        let fileContents = NSData(contentsOfURL: recordingURL)!
-        let token = "xoxp-2342414247-2344160688-4426650793-038bbb"
-        let channel = "C02LG613T"
-        let comment = "this is a comment"
+        let fileContents = NSData(contentsOfURL: recordingURL)
         
-        let boundaryConstant = "thisisaboundaryconstant"
+        println("++++++++++++++++++++++++++++++++++")
         
-        var mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: postURL)!)
-        mutableURLRequest.HTTPMethod = "POST"
-        
-        let contentType = "multipart/form-data; boundary=" + boundaryConstant
-        var error: NSError?
-        let boundaryStart = "--\(boundaryConstant)\r\n"
-        let boundaryEnd = "--\(boundaryConstant)--\r\n"
-        let contentDispositionString = "Content-Disposition: form-data; name=\"file\"; filename=\"BugReport\"\r\n"
-        let contentTypeString = "Content-Type: video/quicktime\r\n\r\n"
-        
-        // Prepare the HTTPBody for the request.
-        let requestBodyData : NSMutableData = NSMutableData()
-        requestBodyData.appendData(boundaryStart.dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBodyData.appendData(contentDispositionString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBodyData.appendData(contentTypeString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBodyData.appendData(fileContents)
-        requestBodyData.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBodyData.appendData(boundaryEnd.dataUsingEncoding(NSUTF8StringEncoding)!)
-        
-        mutableURLRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
-        mutableURLRequest.HTTPBody = requestBodyData
-        
-        
-//        let request =  Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: ["token":token]).0
-//        println(request)
-        Alamofire.request(.POST, "https://slack.com/api/files.upload", parameters: ["token":token], encoding: .URL)
-            .response { (request, response, data, error) -> Void in
-                if (error != nil) {
-                    print(error)
-                }
-                println(data)
-                println(response)
+        let parameters = [
+            "channels": "C04C10672",
+            "token": "xoxp-2342414247-2693337898-4405497914-7cb1a7",
+            "initial_comment": textView.text!
+        ]
+        let movieData = fileContents as NSData!
+        let urlRequest = urlRequestWithComponents("https://slack.com/api/files.upload", parameters: parameters, data: movieData)
+        Alamofire.upload(urlRequest.0, urlRequest.1)
+            .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
+                println("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
+            }
+            .responseJSON { (request, response, JSON, error) in
+                println("REQUEST \(request)")
+                println("RESPONSE \(response)")
+                println("JSON \(JSON)")
+                println("ERROR \(error)")
         }
         
-        //https://slack.com/api/files.upload?token=xoxp-2342414247-2693337898-4405497914-7cb1a7&file=this%20is%20a%20file&initial_comment=this%20is%20a%20comment&channels=C02LG613T&pretty=1
         
-        
-        
-        dismissViewControllerAnimated(false, completion: nil)
+       dismissViewControllerAnimated(false, completion: nil)
         
     }
+    
+    func urlRequestWithComponents(urlString:String, parameters:Dictionary<String, String>, data:NSData) -> (URLRequestConvertible, NSData) {
+        
+        // create url request to send
+        var mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: urlString)!)
+        mutableURLRequest.HTTPMethod = Alamofire.Method.POST.rawValue
+        let boundaryConstant = "myRandomBoundary12345";
+        let contentType = "multipart/form-data;boundary="+boundaryConstant
+        mutableURLRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+        
+        
+        
+        // create upload data to send
+        let uploadData = NSMutableData()
+        
+        // add image
+        uploadData.appendData("\r\n--\(boundaryConstant)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        uploadData.appendData("Content-Disposition: form-data; name=\"file\"; filename=\"Bug_Report.mov\"\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        uploadData.appendData("Content-Type: movie/quicktime\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        uploadData.appendData(data)
+        
+        // add parameters
+        for (key, value) in parameters {
+            uploadData.appendData("\r\n--\(boundaryConstant)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+            uploadData.appendData("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n\(value)".dataUsingEncoding(NSUTF8StringEncoding)!)
+        }
+        uploadData.appendData("\r\n--\(boundaryConstant)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        
+        
+        
+        // return URLRequestConvertible and NSData
+        return (Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: nil).0, uploadData)
+    }
+    
+
+    
+    
+    
     func cancel() {
         dismissViewControllerAnimated(false, completion: nil)
     }

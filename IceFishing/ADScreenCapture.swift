@@ -16,6 +16,26 @@ class ADScreenCapture: UIView {
     var viewController:UIViewController!
     var recordingIndicator:UIView!
     var recordingURL:NSURL!
+    var screenResolution:CGSize!
+    
+    init(navigationController:UIViewController, frame:CGRect, gestureRecognizer:UIGestureRecognizer)
+    {
+        super.init(frame:frame)
+        self.viewController = navigationController
+        self.userInteractionEnabled = false
+        
+        self.recordingIndicator = UIView(frame: CGRectMake(frame.width - 30, frame.height - 30, 20, 20))
+        self.recordingIndicator.backgroundColor = UIColor.redColor()
+        self.recordingIndicator.layer.cornerRadius = 10
+        
+        gestureRecognizer.addTarget(self, action: Selector("didStartRecording"))
+        self.viewController.view.addGestureRecognizer(gestureRecognizer)
+        
+        let screenBounds = UIScreen.mainScreen().bounds
+        let screenScale = UIScreen.mainScreen().scale
+        screenResolution = CGSizeMake(screenBounds.size.width * screenScale, screenBounds.size.height * screenScale)
+    
+    }
 
     init(frame: CGRect, viewController:UIViewController) {
         super.init(frame: frame)
@@ -38,9 +58,9 @@ class ADScreenCapture: UIView {
     func didStartRecording() {
         println("did start recording")
         
-        self.viewController.view.superview?.addSubview(recordingIndicator)
+        self.viewController.view.addSubview(recordingIndicator)
         
-        let timeSpan:NSTimeInterval = 10.0
+        let timeSpan:NSTimeInterval = 3.0
         screenshotImages = []
         let timer = NSTimer.scheduledTimerWithTimeInterval(1/15.0, target: self, selector: Selector("takeScreenShotOfView:"), userInfo: screenshotImages, repeats: true)
         
@@ -62,7 +82,6 @@ class ADScreenCapture: UIView {
     }
     
     func takeScreenShotOfView(timer:NSTimer){
-        println("Screenshot taken")
         
         let layer = UIApplication.sharedApplication().keyWindow?.layer as CALayer!
         let scale = UIScreen.mainScreen().scale
@@ -79,7 +98,7 @@ class ADScreenCapture: UIView {
     
     func stitchImagesIntoVideo(images:[UIImage]) {
         
-        let settings = CEMovieMaker.videoSettingsWithCodec(AVVideoCodecH264, withWidth: 640, andHeight: 1136)
+        let settings = CEMovieMaker.videoSettingsWithCodec(AVVideoCodecH264, withWidth: screenResolution.width, andHeight: screenResolution.height)
         
         self.movieMaker = CEMovieMaker(settings: settings)
         self.movieMaker.createMovieFromImages(images, withCompletion: { (fileURL:NSURL!) -> Void in
