@@ -113,11 +113,12 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if (indexPath.isEqual(currentlyPlayingIndexPath)) {
+        if (indexPath.isEqual(currentlyPlayingIndexPath)) { // Same index path tapped
             posts[indexPath.row].player.togglePlaying()
-        } else {
+        } else { // Different cell tapped
             if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
                 posts[currentlyPlayingIndexPath.row].player.pause()
+                posts[currentlyPlayingIndexPath.row].player.progress = 1.0 // Fill cell as played
             }
             posts[indexPath.row].player.play()
         }
