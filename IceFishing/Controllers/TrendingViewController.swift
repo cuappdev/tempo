@@ -46,7 +46,7 @@ class TrendingViewController: UITableViewController {
             cell = UITableViewCell(style: .Default, reuseIdentifier: "UITableViewCell")
         }
         
-        cell?.textLabel?.text = "Tropical Avocado Symphony (Trending)"
+        cell?.textLabel.text = "Tropical Avocado Symphony (Trending)"
         
         return cell! as UITableViewCell
     }

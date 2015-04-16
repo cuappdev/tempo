@@ -13,7 +13,8 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
     let options: UISegmentedControl = UISegmentedControl(items: ["Songs", "Users"])
     
     var childVC2 = TrendingViewController()
-    var childVC1 = FeedViewController()
+    var childVC1 = FeedViewController(nibName: "FeedViewController", bundle: nil)
+    //var childVC1 = FeedViewController()
     var searchController: UISearchController!
     var searchNavigationController: UINavigationController!
     
@@ -25,6 +26,7 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         options.tintColor = UIColor.grayColor()
         options.addTarget(self, action: "switchTable", forControlEvents: .ValueChanged)
 //        navigationItem.titleView = options
+        
         
         navigationItem.title = "Songs"
         

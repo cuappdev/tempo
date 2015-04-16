@@ -31,6 +31,7 @@
 		7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E41ABF4BD1002103DE /* MainViewController.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
 		7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */; };
+		7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */; };
 		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
 		BAE499D41AD5F2D6003214C0 /* TrackResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D31AD5F2D6003214C0 /* TrackResult.swift */; };
 		BAE499D61AD5F33B003214C0 /* SearchTrackResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */; };
@@ -107,6 +108,7 @@
 		7FCE05E41ABF4BD1002103DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
+		7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
 		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			children = (
 				FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */,
 				1D72D9DD1AACC6AA007822B0 /* ViewController.xib */,
+				7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				6D3FA6611AD5FD5C00B1320D /* Username.xib in Resources */,
 				FA1A913C1AC38A6B00774EF3 /* FeedTableViewCell.xib in Resources */,
 				1D72D9DF1AACC6AA007822B0 /* ViewController.xib in Resources */,
+				7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */,
 				1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

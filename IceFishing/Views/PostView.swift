@@ -10,7 +10,7 @@ import UIKit
 
 class PostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
-    private var tapGestureRecognizer: UITapGestureRecognizer?
+    var tapGestureRecognizer: UITapGestureRecognizer?
     @IBOutlet var profileNameLabel: UILabel?
     @IBOutlet var avatarImageView: UIImageView?
     @IBOutlet var descriptionLabel: UILabel?
@@ -20,6 +20,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     var post: Post? {
         didSet {
+            println("got here")
             // update stuff
             if let post = post {
                 profileNameLabel?.text = post.posterFirstName + " " + post.posterLastName
@@ -66,7 +67,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         
         avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
         avatarImageView?.clipsToBounds = true
-        
+        userInteractionEnabled = true
         avatarImageView?.userInteractionEnabled = true
         profileNameLabel?.userInteractionEnabled = true
         
