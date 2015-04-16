@@ -60,7 +60,7 @@ class ADScreenCapture: UIView {
         
         self.viewController.view.addSubview(recordingIndicator)
         
-        let timeSpan:NSTimeInterval = 3.0
+        let timeSpan:NSTimeInterval = 10.0
         screenshotImages = []
         let timer = NSTimer.scheduledTimerWithTimeInterval(1/15.0, target: self, selector: Selector("takeScreenShotOfView:"), userInfo: screenshotImages, repeats: true)
         
