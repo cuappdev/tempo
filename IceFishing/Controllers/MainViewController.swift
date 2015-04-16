@@ -46,6 +46,7 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         // Arbitrary additions for SWRevealVC
         revealViewController().panGestureRecognizer()
         revealViewController().tapGestureRecognizer()
+        
     }
     
     func switchTable() {

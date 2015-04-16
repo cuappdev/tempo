@@ -76,7 +76,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         pinView.post?.player.togglePlaying()
     }
     
-    //Mark: - UIRefreshControl
+    //MARK: - UIRefreshControl
     func refreshFeed() {
         //        testSongIDs.append("https://p.scdn.co/mp3-preview/dba0ce6ac6310d7be00545861f9b58aeb86930a3")
         //        testSongDescriptions.append("Don't Stop the Party - Pitbull")
@@ -122,14 +122,29 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if (indexPath.isEqual(currentlyPlayingIndexPath)) {
+        if (indexPath.isEqual(currentlyPlayingIndexPath)) { // Same index path tapped
             posts[indexPath.row].player.togglePlaying()
-        } else {
+        } else { // Different cell tapped
             if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
                 posts[currentlyPlayingIndexPath.row].player.pause()
+                posts[currentlyPlayingIndexPath.row].player.progress = 1.0 // Fill cell as played
+                
             }
             posts[indexPath.row].player.play()
         }
+        
+        // Update text label
+        var newCell = tableView.cellForRowAtIndexPath(indexPath) as FeedTableViewCell
+        if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+            var lastCell = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath) as FeedTableViewCell
+            lastCell.postView.updateProfileLabelTextColor()
+            if lastCell != newCell {
+                newCell.postView.updateProfileLabelTextColor()
+            }
+        } else {
+            newCell.postView.updateProfileLabelTextColor()
+        }
+        
         currentlyPlayingIndexPath = indexPath
         println("This has run")
         //XXX: Remove this return statement when you fix this

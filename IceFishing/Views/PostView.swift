@@ -3,7 +3,7 @@
 //  IceFishing
 //
 //  Created by Alexander Zielenski on 4/12/15.
-//  Copyright (c) 2015 Lucas Derraugh. All rights reserved.
+//  Copyright (c) 2015 Alexander Zielenski and Mark Bryan. All rights reserved.
 //
 
 import UIKit
@@ -79,6 +79,22 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         self.setNeedsDisplay()
     }
     
+    func updateProfileLabelTextColor() {
+        if let post = post {
+            var color: UIColor!
+            var duration = NSTimeInterval(0.3) as NSTimeInterval
+            let label = self.profileNameLabel!
+            if post.player.isPlaying() {
+                color = UIColor(red: CGFloat(181.0/255.0), green: CGFloat(87.0/255.0), blue: CGFloat(78.0/255.0), alpha: 1.0)
+            } else {
+                color = UIColor.whiteColor()
+            }
+            UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+                label.textColor = color
+            }, completion: nil)
+        }
+    }
+    
     dynamic func changeProgress(gesture: UIPanGestureRecognizer) {
         if (gesture.state != .Ended) {
             post?.player.pause();
@@ -100,7 +116,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         if let post = post {
             progress = post.player.progress
         }
-        
         super.drawRect(rect)
         fillColor.setFill()
         CGContextFillRect(UIGraphicsGetCurrentContext(),
@@ -126,7 +141,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                         player.isPlaying()
                 }
             }
-            
             return false
         }
         return true
@@ -145,5 +159,4 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             }
         }
     }
-
 }

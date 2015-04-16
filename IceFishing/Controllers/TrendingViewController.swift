@@ -27,7 +27,7 @@ class TrendingViewController: UITableViewController {
         }
     }
     
-    //Mark: - UIRefreshControl
+    //MARK: - UIRefreshControl
     
     func didRefreshTrending() {
         self.tableView.reloadData()
