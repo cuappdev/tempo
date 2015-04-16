@@ -37,6 +37,12 @@
 		BAE499DB1AD5F7EB003214C0 /* SearchTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499DA1AD5F7EB003214C0 /* SearchTrackViewController.swift */; };
 		BAE499DF1AD60063003214C0 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499DE1AD60063003214C0 /* Util.swift */; };
 		BAE499E11AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */; };
+		D17395741ADB080900A53AEE /* FollowersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395721ADB080900A53AEE /* FollowersViewController.swift */; };
+		D17395751ADB080900A53AEE /* FollowersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395731ADB080900A53AEE /* FollowersViewController.xib */; };
+		D17395781ADB081C00A53AEE /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395761ADB081C00A53AEE /* FollowingViewController.swift */; };
+		D17395791ADB081C00A53AEE /* FollowingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395771ADB081C00A53AEE /* FollowingViewController.xib */; };
+		D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395881ADF360C00A53AEE /* SignInViewController.swift */; };
+		D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395891ADF360C00A53AEE /* SignInViewController.xib */; };
 		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
 		FA1A913C1AC38A6B00774EF3 /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -111,6 +117,12 @@
 		BAE499DA1AD5F7EB003214C0 /* SearchTrackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackViewController.swift; sourceTree = "<group>"; };
 		BAE499DE1AD60063003214C0 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackResultsViewControllerDelegate.swift; sourceTree = "<group>"; };
+		D17395721ADB080900A53AEE /* FollowersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersViewController.swift; sourceTree = "<group>"; };
+		D17395731ADB080900A53AEE /* FollowersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowersViewController.xib; sourceTree = "<group>"; };
+		D17395761ADB081C00A53AEE /* FollowingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
+		D17395771ADB081C00A53AEE /* FollowingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowingViewController.xib; sourceTree = "<group>"; };
+		D17395881ADF360C00A53AEE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		D17395891ADF360C00A53AEE /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -270,12 +282,18 @@
 		6DEE0FC31AC34811005552F9 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				6DEE0FDB1AC34884005552F9 /* LoginViewController.swift */,
-				6DEE0FDC1AC34884005552F9 /* LoginViewController.xib */,
-				6DEE0FC71AC34811005552F9 /* Main.storyboard */,
 				6DEE0FC91AC34811005552F9 /* Bridging-Header.h */,
 				6DEE0FCA1AC34811005552F9 /* EditProfileViewController.swift */,
 				6DEE0FCB1AC34811005552F9 /* EditProfileViewController.xib */,
+				6DEE0FC71AC34811005552F9 /* Main.storyboard */,
+				D17395881ADF360C00A53AEE /* SignInViewController.swift */,
+				D17395891ADF360C00A53AEE /* SignInViewController.xib */,
+				6DEE0FDB1AC34884005552F9 /* LoginViewController.swift */,
+				6DEE0FDC1AC34884005552F9 /* LoginViewController.xib */,
+				D17395721ADB080900A53AEE /* FollowersViewController.swift */,
+				D17395731ADB080900A53AEE /* FollowersViewController.xib */,
+				D17395761ADB081C00A53AEE /* FollowingViewController.swift */,
+				D17395771ADB081C00A53AEE /* FollowingViewController.xib */,
 				6DEE0FCE1AC34811005552F9 /* ProfileViewController.swift */,
 				6DEE0FCF1AC34811005552F9 /* ProfileViewController.xib */,
 				6DEE0FD01AC34811005552F9 /* User.swift */,
@@ -416,8 +434,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D17395751ADB080900A53AEE /* FollowersViewController.xib in Resources */,
 				6DEE0FDE1AC34884005552F9 /* LoginViewController.xib in Resources */,
+				D17395791ADB081C00A53AEE /* FollowingViewController.xib in Resources */,
 				6DEE0FD91AC34811005552F9 /* ProfileViewController.xib in Resources */,
+				D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */,
 				6DEE0FD31AC34811005552F9 /* Main.storyboard in Resources */,
 				1D25B3181AC369D900F64047 /* README.txt in Resources */,
 				6DEE0FD51AC34811005552F9 /* EditProfileViewController.xib in Resources */,
@@ -449,6 +470,7 @@
 				1D72D9DE1AACC6AA007822B0 /* ViewController.swift in Sources */,
 				BAE499DF1AD60063003214C0 /* Util.swift in Sources */,
 				7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */,
+				D17395741ADB080900A53AEE /* FollowersViewController.swift in Sources */,
 				1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */,
 				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
 				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,
@@ -457,8 +479,10 @@
 				7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */,
 				BAE499D61AD5F33B003214C0 /* SearchTrackResultsViewController.swift in Sources */,
 				BAE499E11AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift in Sources */,
+				D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */,
 				6DEE0FD41AC34811005552F9 /* EditProfileViewController.swift in Sources */,
 				BAE499D41AD5F2D6003214C0 /* TrackResult.swift in Sources */,
+				D17395781ADB081C00A53AEE /* FollowingViewController.swift in Sources */,
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 				BAE499DB1AD5F7EB003214C0 /* SearchTrackViewController.swift in Sources */,
 				6DEE0FDA1AC34811005552F9 /* User.swift in Sources */,

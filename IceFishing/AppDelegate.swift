@@ -22,16 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         
-        // Switch viewController if not running Facebook Integration
-        //let viewController = ViewController(nibName: "ViewController", bundle: nil)
         let viewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
+        let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
+        
         let navController = UINavigationController(rootViewController: MainViewController())
-        let revealController = SWRevealViewController(rearViewController: ViewController(), frontViewController: navController)
-        self.window!.rootViewController = viewController
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
-            self.window!.rootViewController = revealController
-        }
-        //        revealController.presentViewController(viewController, animated: false, completion: nil);
+        let newNavController = UINavigationController(rootViewController: viewController)
+        
+//        let navController = UINavigationController(rootViewController: MainViewController())
+//        let newNavController = UINavigationController(rootViewController: viewController)
+//        let revealController = SWRevealViewController(rearViewController: newNavController, frontViewController: navController)
+//        self.window!.rootViewController = revealController
+        
+        self.window!.rootViewController = newNavController
         
         return true
     }
