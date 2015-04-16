@@ -31,16 +31,11 @@
 		7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E41ABF4BD1002103DE /* MainViewController.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
 		7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */; };
-<<<<<<< HEAD
 		7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */; };
-=======
 		9569763F1AD9E3B3003B4ACB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9569763E1AD9E3B3003B4ACB /* ADScreenCapture.swift */; };
 		956976421AD9E41E003B4ACB /* CEMovieMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 956976411AD9E41E003B4ACB /* CEMovieMaker.m */; };
 		956976481AD9F3A2003B4ACB /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956976471AD9F3A2003B4ACB /* SubmitBugViewController.swift */; };
-		9569764B1ADB072B003B4ACB /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 956976491ADB06F7003B4ACB /* Alamofire.framework */; };
-		9569764C1ADB072B003B4ACB /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 956976491ADB06F7003B4ACB /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9569764F1ADB59D6003B4ACB /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 9569764E1ADB59D6003B4ACB /* test.png */; };
->>>>>>> d9761bd3fbd73177ca1c22b5f026c3c012a3d903
 		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
 		BAE499D41AD5F2D6003214C0 /* TrackResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D31AD5F2D6003214C0 /* TrackResult.swift */; };
 		BAE499D61AD5F33B003214C0 /* SearchTrackResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */; };
@@ -93,7 +88,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9569764C1ADB072B003B4ACB /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,16 +125,12 @@
 		7FCE05E41ABF4BD1002103DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
-=======
 		9569763E1AD9E3B3003B4ACB /* ADScreenCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADScreenCapture.swift; sourceTree = "<group>"; };
 		956976401AD9E41E003B4ACB /* CEMovieMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEMovieMaker.h; sourceTree = "<group>"; };
 		956976411AD9E41E003B4ACB /* CEMovieMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEMovieMaker.m; sourceTree = "<group>"; };
 		956976471AD9F3A2003B4ACB /* SubmitBugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitBugViewController.swift; sourceTree = "<group>"; };
-		956976491ADB06F7003B4ACB /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../Library/Developer/Xcode/DerivedData/IceFishing-gtomnzyngwhuymfoiljvnmdzvhle/Build/Products/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
 		9569764E1ADB59D6003B4ACB /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
->>>>>>> d9761bd3fbd73177ca1c22b5f026c3c012a3d903
 		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -163,7 +153,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D25B3151AC369D900F64047 /* Bolts.framework in Frameworks */,
-				9569764B1ADB072B003B4ACB /* Alamofire.framework in Frameworks */,
 				1D25B3161AC369D900F64047 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -226,7 +215,6 @@
 		1D72D9AC1AACC4C0007822B0 = {
 			isa = PBXGroup;
 			children = (
-				956976491ADB06F7003B4ACB /* Alamofire.framework */,
 				1D72D9B71AACC4C0007822B0 /* IceFishing */,
 				1D72D9CD1AACC4C0007822B0 /* IceFishingTests */,
 				1D72D9B61AACC4C0007822B0 /* Products */,

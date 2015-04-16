@@ -39,7 +39,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.textLabel.text = results[indexPath.row].name
+        cell.textLabel?.text = results[indexPath.row].name
         cell.detailTextLabel?.text = results[indexPath.row].artists[0]["name"]! + " • " + results[indexPath.row].album["name"]!
     }
     
