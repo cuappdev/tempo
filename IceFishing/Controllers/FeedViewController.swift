@@ -52,17 +52,17 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        topPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 96.0)
-        topPinViewContainer.center = CGPoint(x: view.center.x, y: navigationController!.navigationBar.frame.maxY + 48)
+        topPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 80.0)
+        topPinViewContainer.center = CGPoint(x: view.center.x, y: navigationController!.navigationBar.frame.maxY + topPinViewContainer.frame.height/2)
         parentViewController!.view.addSubview(topPinViewContainer)
-        bottomPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 96.0)
-        bottomPinViewContainer.center = CGPoint(x: view.center.x, y: view.frame.height - 48)
+        bottomPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 80.0)
+        bottomPinViewContainer.center = CGPoint(x: view.center.x, y: view.frame.height - topPinViewContainer.frame.height/2)
         parentViewController!.view.addSubview(bottomPinViewContainer)
         
         topPinViewContainer.hidden = true
         bottomPinViewContainer.hidden = true
         
-        pinView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 96.0)
+        pinView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 80.0)
         
         
         
@@ -125,7 +125,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     // MARK: - UITableViewDelegate
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 96.0;
+        return 80.0;
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
