@@ -31,6 +31,11 @@
 		7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E41ABF4BD1002103DE /* MainViewController.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
 		7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */; };
+		7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */; };
+		9569763F1AD9E3B3003B4ACB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9569763E1AD9E3B3003B4ACB /* ADScreenCapture.swift */; };
+		956976421AD9E41E003B4ACB /* CEMovieMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 956976411AD9E41E003B4ACB /* CEMovieMaker.m */; };
+		956976481AD9F3A2003B4ACB /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956976471AD9F3A2003B4ACB /* SubmitBugViewController.swift */; };
+		9569764F1ADB59D6003B4ACB /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 9569764E1ADB59D6003B4ACB /* test.png */; };
 		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
 		BAE499D41AD5F2D6003214C0 /* TrackResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D31AD5F2D6003214C0 /* TrackResult.swift */; };
 		BAE499D61AD5F33B003214C0 /* SearchTrackResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */; };
@@ -76,6 +81,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9569764D1ADB072B003B4ACB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1D25B3111AC369D900F64047 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		1D25B3121AC369D900F64047 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -107,6 +125,12 @@
 		7FCE05E41ABF4BD1002103DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
+		7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
+		9569763E1AD9E3B3003B4ACB /* ADScreenCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADScreenCapture.swift; sourceTree = "<group>"; };
+		956976401AD9E41E003B4ACB /* CEMovieMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEMovieMaker.h; sourceTree = "<group>"; };
+		956976411AD9E41E003B4ACB /* CEMovieMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEMovieMaker.m; sourceTree = "<group>"; };
+		956976471AD9F3A2003B4ACB /* SubmitBugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitBugViewController.swift; sourceTree = "<group>"; };
+		9569764E1ADB59D6003B4ACB /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -148,6 +172,7 @@
 			children = (
 				FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */,
 				1D72D9DD1AACC6AA007822B0 /* ViewController.xib */,
+				7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -208,6 +233,9 @@
 		1D72D9B71AACC4C0007822B0 /* IceFishing */ = {
 			isa = PBXGroup;
 			children = (
+				9569763E1AD9E3B3003B4ACB /* ADScreenCapture.swift */,
+				9569764E1ADB59D6003B4ACB /* test.png */,
+				956976471AD9F3A2003B4ACB /* SubmitBugViewController.swift */,
 				1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */,
 				FA1A91301AC3899E00774EF3 /* Player.swift */,
 				FA1E1A7A1ADB06A8007C823C /* Models */,
@@ -295,11 +323,22 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		95C659AF1AD9DF93000C0820 /* CEMovieMaker */ = {
+			isa = PBXGroup;
+			children = (
+				956976401AD9E41E003B4ACB /* CEMovieMaker.h */,
+				956976411AD9E41E003B4ACB /* CEMovieMaker.m */,
+			);
+			name = CEMovieMaker;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		BA257E251ABA3FBC00D939B0 /* SWRevealViewController */ = {
 			isa = PBXGroup;
 			children = (
 				BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */,
 				BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */,
+				95C659AF1AD9DF93000C0820 /* CEMovieMaker */,
 				BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */,
 			);
 			name = SWRevealViewController;
@@ -333,6 +372,7 @@
 				1D72D9B11AACC4C0007822B0 /* Sources */,
 				1D72D9B21AACC4C0007822B0 /* Frameworks */,
 				1D72D9B31AACC4C0007822B0 /* Resources */,
+				9569764D1ADB072B003B4ACB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -431,12 +471,14 @@
 				6DEE0FD91AC34811005552F9 /* ProfileViewController.xib in Resources */,
 				6DEE0FD31AC34811005552F9 /* Main.storyboard in Resources */,
 				1D25B3181AC369D900F64047 /* README.txt in Resources */,
+				9569764F1ADB59D6003B4ACB /* test.png in Resources */,
 				6DEE0FD51AC34811005552F9 /* EditProfileViewController.xib in Resources */,
 				1D72D9C51AACC4C0007822B0 /* LaunchScreen.xib in Resources */,
 				1D25B3171AC369D900F64047 /* LICENSE in Resources */,
 				6D3FA6611AD5FD5C00B1320D /* Username.xib in Resources */,
 				FA1A913C1AC38A6B00774EF3 /* FeedTableViewCell.xib in Resources */,
 				1D72D9DF1AACC6AA007822B0 /* ViewController.xib in Resources */,
+				7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */,
 				1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,6 +498,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DEE0FDD1AC34884005552F9 /* LoginViewController.swift in Sources */,
+				956976481AD9F3A2003B4ACB /* SubmitBugViewController.swift in Sources */,
 				6DEE0FD81AC34811005552F9 /* ProfileViewController.swift in Sources */,
 				1D72D9DE1AACC6AA007822B0 /* ViewController.swift in Sources */,
 				FA1E1A801ADB0B74007C823C /* SwiftyJSON.swift in Sources */,
@@ -471,8 +514,10 @@
 				7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */,
 				BAE499D61AD5F33B003214C0 /* SearchTrackResultsViewController.swift in Sources */,
 				BAE499E11AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift in Sources */,
+				9569763F1AD9E3B3003B4ACB /* ADScreenCapture.swift in Sources */,
 				6DEE0FD41AC34811005552F9 /* EditProfileViewController.swift in Sources */,
 				BAE499D41AD5F2D6003214C0 /* TrackResult.swift in Sources */,
+				956976421AD9E41E003B4ACB /* CEMovieMaker.m in Sources */,
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
 				BAE499DB1AD5F7EB003214C0 /* SearchTrackViewController.swift in Sources */,
@@ -608,9 +653,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FacebookSDK",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/IceFishing-gtomnzyngwhuymfoiljvnmdzvhle/Build/Products/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -625,9 +673,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FacebookSDK",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/IceFishing-gtomnzyngwhuymfoiljvnmdzvhle/Build/Products/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
