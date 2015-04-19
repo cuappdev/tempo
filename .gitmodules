@@ -1,3 +1,2 @@
 [submodule "IceFishing/vendor"]
 	path = IceFishing/Vendor
-	url = https://github.com/SwiftyJSON/Alamofire-SwiftyJSON.git
