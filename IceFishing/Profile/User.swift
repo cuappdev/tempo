@@ -15,17 +15,19 @@ class User: NSObject, NSCoding {
     var id: String = ""
     var friends: [String] = []
     var profilePicture: UIImage!
+    var username: String = ""
     
-    init(name: String, email: String, id: String, friends: [String], profilePicture: UIImage!) {
+    init(name: String, email: String, id: String, friends: [String], profilePicture: UIImage!, username: String) {
         self.name = name
         self.email = email
         self.id = id
         self.friends = friends
         self.profilePicture = profilePicture
+        self.username = username
     }
     
     override var description: String {
-        return "Name: \(name) Email: \(email) ID: \(id) Friends: \(friends)"
+        return "Name: \(name) Email: \(email) ID: \(id) Friends: \(friends) Username: \(username)"
     }
     
     // MARK: - NSCoding
@@ -36,6 +38,7 @@ class User: NSObject, NSCoding {
         id = aDecoder.decodeObjectForKey("id") as String
         friends = aDecoder.decodeObjectForKey("friends") as [String]
         profilePicture = aDecoder.decodeObjectForKey("profilePicture") as UIImage!
+        username = aDecoder.decodeObjectForKey("username") as String
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
@@ -44,6 +47,7 @@ class User: NSObject, NSCoding {
         aCoder.encodeObject(id, forKey: "id")
         aCoder.encodeObject(friends, forKey: "friends")
         aCoder.encodeObject(profilePicture, forKey: "profilePicture")
+        aCoder.encodeObject(username, forKey: "username")
     }
     
 }

@@ -8,32 +8,39 @@
 
 import UIKit
 
-class TrendingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    var trendingTableView = UITableView()
+class TrendingViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        trendingTableView.delegate = self
-        trendingTableView.dataSource = self
+        var refreshControler = UIRefreshControl()
         
-        trendingTableView.frame = view.bounds
-        view.addSubview(trendingTableView)
+        self.refreshControl = refreshControler
+        self.refreshControl?.addTarget(self, action: "didRefreshTrending", forControlEvents: .ValueChanged)
+        self.refreshControl?.attributedTitle = NSAttributedString (string: "Last Updated on \(NSDate())")
     }
     
     override func viewWillAppear(animated: Bool) {
-        if let topInset = navigationController?.navigationBar.frame.maxY {
-            trendingTableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0)
+        super.viewWillAppear(animated)
+        if let topInset = navigationController?.navigationBar.frame.height {
+            tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0)
+            tableView.scrollIndicatorInsets = UIEdgeInsetsMake(topInset, 0, 0, 0)
         }
+    }
+    
+    //MARK: - UIRefreshControl
+    
+    func didRefreshTrending() {
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
     }
     
     // MARK: - UITableViewDataSource
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("UITableViewCell") as? UITableViewCell
         if (cell == nil) {
             cell = UITableViewCell(style: .Default, reuseIdentifier: "UITableViewCell")

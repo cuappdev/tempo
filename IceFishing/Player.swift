@@ -10,25 +10,32 @@ import UIKit
 import AVFoundation
 
 class Player: NSObject {
-    private var player: AVPlayer?
-    var callBack: ((playing: Bool) -> Void)?
-    
-    var fileURL: NSURL! {
+    private var player: AVPlayer? {
         didSet {
-            player?.pause()
-            player = AVPlayer(URL: self.fileURL)
+            oldValue?.pause()
+            
+            if let notificationValue: AnyObject = notificationValue {
+                NSNotificationCenter.defaultCenter().removeObserver(notificationValue)
+            }
+            
+            notificationValue = NSNotificationCenter.defaultCenter().addObserverForName(AVPlayerItemDidPlayToEndTimeNotification,
+                object: player?.currentItem,
+                queue: nil) { [unowned self] (notif) -> Void in
+                    self.finishedPlaying = true
+                    // we finished playing, destroy the object
+                    self.destroy()
+            }
         }
     }
+    var callBack: ((playing: Bool) -> Void)?
+    private var notificationValue: AnyObject?
+    private(set) var finishedPlaying = false
     
-    
+    var fileURL: NSURL!
     init(fileURL: NSURL) {
         super.init()
         // hack to enable did set
-        setFileURL(fileURL)
-    }
-    
-    func setFileURL(url: NSURL) {
-        self.fileURL = url
+        self.fileURL = fileURL
     }
     
     class func keyPathsForValuesAffectingCurrentTime(key: NSString) -> NSSet {
@@ -39,7 +46,24 @@ class Player: NSObject {
         return NSSet(objects: "currentTime")
     }
     
+    func prepareToPlay() {
+        if (self.player == nil) {
+            player = AVPlayer(URL: self.fileURL)
+        }
+    }
+    
+    func destroy() {
+        self.player = nil
+    }
+    
     func play() {
+        prepareToPlay()
+        
+        if (finishedPlaying) {
+            finishedPlaying = false
+            currentTime = 0.0
+        }
+        
         player?.play()
         
         if let callBack = callBack {
@@ -86,18 +110,37 @@ class Player: NSObject {
         }
     }
     
+    var duration: NSTimeInterval {
+        if let player = player {
+            if let item = player.currentItem {
+                return CMTimeGetSeconds(item.duration)
+            }
+        }
+        
+        return DBL_MAX
+    }
+    
     dynamic var progress: Double {
         get {
+            if finishedPlaying {
+                return 1.0
+            }
+            
             if let player = player {
-                return CMTimeGetSeconds(player.currentTime()) / CMTimeGetSeconds(player.currentItem.duration)
+                if let item = player.currentItem {
+                    return CMTimeGetSeconds(player.currentTime()) / CMTimeGetSeconds(item.duration)
+                }
             }
             return 0.0
         }
         
         set {
             if let player = player {
-                player.seekToTime(CMTimeMake(Int64(newValue * CMTimeGetSeconds(player.currentItem.duration)), 1))
-//                player.currentTime = newValue * player.currentItem.duration
+                let secs = CMTimeGetSeconds(player.currentItem.duration)
+                if (newValue.isNormal && secs.isNormal) {
+                    finishedPlaying = newValue == 1.0
+                    player.seekToTime(CMTimeMakeWithSeconds(Float64(newValue * secs), 1))
+                }
             }
         }
     }
