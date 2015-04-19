@@ -84,12 +84,16 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         
         var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
         feedButton.setTitle("Feed", forState: .Normal)
-        feedButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+        feedButton.addTarget(self, action: "pushToFeed", forControlEvents: .TouchUpInside)
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+    }
+    
+    func pushToFeed() {
+        self.navigationController?.pushViewController(FeedViewController(), animated: true)
     }
     
     // Facebook Delegate Methods

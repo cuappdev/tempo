@@ -8,20 +8,15 @@
 
 import UIKit
 
-class FollowingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     
-    var tableView: UITableView = UITableView()
     var followingPics: [String]!
     var following: [String] = ["Derrick", "Eric", "Feifan", "Ilan", "John", "Joe", "Karim", "Lucas", "Manuela", "Mark", "Nicole", "Sam", "Steven", "Tsvi"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.frame = CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height);
-        tableView.backgroundColor = UIColor(red: 48/255, green: 84/255, blue: 110/255, alpha: 1)
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        self.view.addSubview(tableView)
+        
+        tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowersCell")
         
         var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
         backButton.setTitle("Back", forState: .Normal)
@@ -38,35 +33,24 @@ class FollowingViewController: UIViewController, UITableViewDelegate, UITableVie
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.following.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
-        cell.textLabel?.text = self.following[indexPath.row]
-        cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.backgroundColor = UIColor(red: 48/255, green: 84/255, blue: 110/255, alpha: 1)
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        //let
-        //cell.imageView?.image = followingPics[indexPath.row]
-        cell.imageView?.image = UIImage(named: "Sexy")
-        cell.imageView?.layer.masksToBounds = false
-        cell.imageView?.layer.borderWidth = 1.5
-        cell.imageView?.layer.borderColor = UIColor.whiteColor().CGColor
-        cell.imageView?.frame = CGRectMake(0, 0, 20, 20)
-        cell.imageView?.layer.cornerRadius = 50
-        cell.imageView?.clipsToBounds = true
+        let cell = tableView.dequeueReusableCellWithIdentifier("FollowersCell", forIndexPath: indexPath) as FollowersTableViewCell
+        
+        cell.userImage.image = UIImage(named: "Steven")
         
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(100)
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("\(following[indexPath.row])")
         var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor(red: 19/255, green: 39/255, blue: 49/255, alpha: 1)
