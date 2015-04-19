@@ -91,6 +91,13 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         case 2:
             post = Post(song: Song(songID: "4wQrzVXnhslsVY5lZSJjHG"), posterFirst: "Mark", posterLast: "Bryan", date: NSDate(), avatar: UIImage(named: "Sexy"))
             break
+        case 3:
+            post = Post(song: Song(spotifyURI: "spotify:track:4B3RmT3cGvh8By3WY9pbIx"),
+                posterFirst: "Eric",
+                posterLast: "Appel",
+                date: NSDate(),
+                avatar: UIImage(named:"Eric"))
+            break
         default:
             post = Post(song: Song(songID: "0nmxH6IsSQVT1YEsCB9UMi"), posterFirst: "Steven", posterLast: "Yeh", date: NSDate(), avatar: UIImage(named: "Steven"))
             break
