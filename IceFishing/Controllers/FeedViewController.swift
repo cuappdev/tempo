@@ -126,23 +126,11 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
             posts[indexPath.row].player.togglePlaying()
         } else { // Different cell tapped
             if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-                posts[currentlyPlayingIndexPath.row].player.pause()
+                posts[currentlyPlayingIndexPath.row].player.pause(true)
                 posts[currentlyPlayingIndexPath.row].player.progress = 1.0 // Fill cell as played
                 
             }
-            posts[indexPath.row].player.play()
-        }
-        
-        // Update text label
-        var newCell = tableView.cellForRowAtIndexPath(indexPath) as FeedTableViewCell
-        if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-            var lastCell = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath) as FeedTableViewCell
-            lastCell.postView.updateProfileLabelTextColor()
-            if lastCell != newCell {
-                newCell.postView.updateProfileLabelTextColor()
-            }
-        } else {
-            newCell.postView.updateProfileLabelTextColor()
+            posts[indexPath.row].player.play(true)
         }
         
         currentlyPlayingIndexPath = indexPath
@@ -157,7 +145,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         //return;
         cellPin()
     }
-    
     
     func cellPin() {
         if let selectedRow = currentlyPlayingIndexPath { //If a row is selected

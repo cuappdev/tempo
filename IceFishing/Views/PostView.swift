@@ -17,9 +17,14 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var dateLabel: UILabel?
     var fillColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
     private var updateTimer: NSTimer?
+    private var notificationHandler: AnyObject?
     
     var post: Post? {
         didSet {
+            if let handler: AnyObject = notificationHandler {
+                NSNotificationCenter.defaultCenter().removeObserver(handler)
+            }
+            
             println("got here")
             // update stuff
             if let post = post {
@@ -36,13 +41,20 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 dateLabel?.text = dateFormatter.stringFromDate(post.date)
                 
                 if (updateTimer == nil) {
-                    updateTimer = NSTimer(timeInterval: 0.1,
+                    updateTimer = NSTimer(timeInterval: 0.0005,
                         target: self, selector: Selector("timerFired:"),
                         userInfo: nil,
                         repeats: true)
                     NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
                 }
                 
+                notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
+                    object: post.player,
+                    queue: nil, usingBlock: {
+                        [unowned self]
+                        (note) -> Void in
+                        self.updateProfileLabelTextColor()
+                })
             } else {
                 updateTimer?.invalidate()
                 updateTimer = nil
@@ -79,6 +91,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         self.setNeedsDisplay()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateProfileLabelTextColor()
+    }
+    
     func updateProfileLabelTextColor() {
         if let post = post {
             var color: UIColor!
@@ -89,17 +106,20 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             } else {
                 color = UIColor.whiteColor()
             }
-            UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-                label.textColor = color
-            }, completion: nil)
+            
+            if !label.textColor.isEqual(color) {
+                UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+                    label.textColor = color
+                    }, completion: nil)
+            }
         }
     }
     
     dynamic func changeProgress(gesture: UIPanGestureRecognizer) {
         if (gesture.state != .Ended) {
-            post?.player.pause();
+            post?.player.pause(false);
         } else {
-            post?.player.play();
+            post?.player.play(false);
         }
         
         var xTranslation = gesture.locationInView(self).x

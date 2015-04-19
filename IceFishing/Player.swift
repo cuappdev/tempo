@@ -9,6 +9,8 @@
 import UIKit
 import AVFoundation
 
+let PlayerDidChangeStateNotification = "PlayerDidChangeState"
+
 class Player: NSObject {
     private var player: AVPlayer? {
         didSet {
@@ -21,13 +23,13 @@ class Player: NSObject {
             notificationValue = NSNotificationCenter.defaultCenter().addObserverForName(AVPlayerItemDidPlayToEndTimeNotification,
                 object: player?.currentItem,
                 queue: nil) { [unowned self] (notif) -> Void in
+                    self.pause(true)
                     self.finishedPlaying = true
                     // we finished playing, destroy the object
                     self.destroy()
             }
         }
     }
-    var callBack: ((playing: Bool) -> Void)?
     private var notificationValue: AnyObject?
     private(set) var finishedPlaying = false
     
@@ -56,7 +58,7 @@ class Player: NSObject {
         self.player = nil
     }
     
-    func play() {
+    func play(notify: Bool) {
         prepareToPlay()
         
         if (finishedPlaying) {
@@ -66,16 +68,16 @@ class Player: NSObject {
         
         player?.play()
         
-        if let callBack = callBack {
-            callBack(playing: self.isPlaying());
+        if notify {
+            NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
         }
     }
     
-    func pause() {
+    func pause(notify: Bool) {
         player?.pause()
         
-        if let callBack = callBack {
-            callBack(playing: self.isPlaying());
+        if notify {
+            NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
         }
     }
     
@@ -83,14 +85,14 @@ class Player: NSObject {
         if let player = player {
             return player.rate > 0.0
         }
-        return false;
+        return false
     }
     
     func togglePlaying() {
         if (self.isPlaying()) {
-            self.pause()
+            self.pause(true)
         } else {
-            self.play();
+            self.play(true)
         }
     }
     
