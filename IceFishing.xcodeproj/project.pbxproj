@@ -42,6 +42,7 @@
 		BAE499DB1AD5F7EB003214C0 /* SearchTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499DA1AD5F7EB003214C0 /* SearchTrackViewController.swift */; };
 		BAE499DF1AD60063003214C0 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499DE1AD60063003214C0 /* Util.swift */; };
 		BAE499E11AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */; };
+		C0CF7B981AE425450083606C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CF7B971AE425450083606C /* API.swift */; };
 		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
 		FA1A913C1AC38A6B00774EF3 /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */; };
 		FA1E1A781ADB06A3007C823C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A771ADB06A3007C823C /* Post.swift */; };
@@ -119,7 +120,7 @@
 		6DEE0FCB1AC34811005552F9 /* EditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
 		6DEE0FCE1AC34811005552F9 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6DEE0FCF1AC34811005552F9 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
-		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Profile/User.swift; sourceTree = "<group>"; };
 		6DEE0FDB1AC34884005552F9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6DEE0FDC1AC34884005552F9 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		7FCE05E41ABF4BD1002103DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +140,7 @@
 		BAE499DA1AD5F7EB003214C0 /* SearchTrackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackViewController.swift; sourceTree = "<group>"; };
 		BAE499DE1AD60063003214C0 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackResultsViewControllerDelegate.swift; sourceTree = "<group>"; };
+		C0CF7B971AE425450083606C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FA1A913B1AC38A6B00774EF3 /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedTableViewCell.xib; sourceTree = "<group>"; };
 		FA1E1A771ADB06A3007C823C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
@@ -233,11 +235,11 @@
 		1D72D9B71AACC4C0007822B0 /* IceFishing */ = {
 			isa = PBXGroup;
 			children = (
+				C0CF7B971AE425450083606C /* API.swift */,
 				9569763E1AD9E3B3003B4ACB /* ADScreenCapture.swift */,
 				9569764E1ADB59D6003B4ACB /* test.png */,
 				956976471AD9F3A2003B4ACB /* SubmitBugViewController.swift */,
 				1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */,
-				3DF4AE201ADF387000E600FD /* API.swift */,
 				FA1A91301AC3899E00774EF3 /* Player.swift */,
 				FA1E1A7A1ADB06A8007C823C /* Models */,
 				6DEE0FC31AC34811005552F9 /* Profile */,
@@ -317,7 +319,6 @@
 				6DEE0FCB1AC34811005552F9 /* EditProfileViewController.xib */,
 				6DEE0FCE1AC34811005552F9 /* ProfileViewController.swift */,
 				6DEE0FCF1AC34811005552F9 /* ProfileViewController.xib */,
-				6DEE0FD01AC34811005552F9 /* User.swift */,
 				6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */,
 				6D3FA6601AD5FD5C00B1320D /* Username.xib */,
 			);
@@ -356,6 +357,7 @@
 		FA1E1A7A1ADB06A8007C823C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6DEE0FD01AC34811005552F9 /* User.swift */,
 				BAE499D31AD5F2D6003214C0 /* TrackResult.swift */,
 				FA1E1A771ADB06A3007C823C /* Post.swift */,
 				FA1E1A7B1ADB072A007C823C /* Song.swift */,
@@ -506,13 +508,13 @@
 				BAE499DF1AD60063003214C0 /* Util.swift in Sources */,
 				FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */,
 				7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */,
+				C0CF7B981AE425450083606C /* API.swift in Sources */,
 				1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */,
 				FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */,
 				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
 				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,
 				6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */,
 				7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */,
-				3DF4AE211ADF387000E600FD /* API.swift in Sources */,
 				7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */,
 				BAE499D61AD5F33B003214C0 /* SearchTrackResultsViewController.swift in Sources */,
 				BAE499E11AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift in Sources */,
