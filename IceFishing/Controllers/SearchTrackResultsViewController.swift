@@ -63,7 +63,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         }
         
         let searchText = searchController.searchBar.text
-        if countElements(searchText) != 0 {
+        if count(searchText) != 0 {
             initiateRequest(searchText)
         } else {
 
@@ -85,25 +85,25 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     
     // Saves json as new results Track array and reloads table
     func receivedResponse(data: AnyObject?) {
-        let response = data as NSDictionary
-        var tracks = response["tracks"] as NSDictionary
+        let response = data as! NSDictionary
+        var tracks = response["tracks"] as! NSDictionary
         
-        var items = tracks["items"] as NSArray
+        var items = tracks["items"] as! NSArray
         
         var trackResults: [TrackResult] = []
         
         for var i = 0; i < items.count; i++ {
-            let item = items[i] as NSDictionary
+            let item = items[i] as! NSDictionary
             
-            let artists = item["artists"] as NSArray
-            let album = item["album"] as NSDictionary
-            let id = item["id"] as String
-            let name = item["name"] as String
-            let uri = item["uri"] as String
-            let popularity = item["popularity"] as Int
+            let artists = item["artists"] as! NSArray
+            let album = item["album"] as! NSDictionary
+            let id = item["id"] as! String
+            let name = item["name"] as! String
+            let uri = item["uri"] as! String
+            let popularity = item["popularity"] as! Int
             
             trackResults.append(
-                TrackResult(artists: artists, album: album, id: id, name: name, uri: uri, andPopularity: popularity)
+                TrackResult(artists: artists as [AnyObject], album: album, id: id, name: name, uri: uri, andPopularity: popularity)
             )
         }
 

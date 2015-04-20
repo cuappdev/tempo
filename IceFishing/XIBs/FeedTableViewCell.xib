@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -15,22 +15,22 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJt-Cq-8SO" customClass="PostView" customModule="IceFishing" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="348" height="80"/>
+                        <rect key="frame" x="0.0" y="0.0" width="348" height="79"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark Bryan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKr-CE-jlM">
-                                <rect key="frame" x="86" y="17" width="73.5" height="19.5"/>
+                                <rect key="frame" x="86" y="17" width="74" height="20"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reflections · MisterWives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOI-Pn-Mde">
-                                <rect key="frame" x="86" y="37" width="136" height="16.5"/>
+                                <rect key="frame" x="86" y="37" width="136" height="17"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
                                 <color key="textColor" red="0.68627450980392157" green="0.73333333333333328" blue="0.81176470588235294" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5c9-Vi-T55">
-                                <rect key="frame" x="297.5" y="20" width="30" height="16.5"/>
+                                <rect key="frame" x="298" y="20" width="30" height="17"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="12"/>
                                 <color key="textColor" red="0.68627450980000004" green="0.73333333329999995" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -67,9 +67,21 @@
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="QJt-Cq-8SO" secondAttribute="trailing" constant="-8" id="MJa-fp-B3I"/>
                     <constraint firstItem="QJt-Cq-8SO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="NN2-mJ-3pB"/>
+                    <constraint firstItem="QJt-Cq-8SO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="NW5-2T-Yfp"/>
                     <constraint firstAttribute="bottomMargin" secondItem="QJt-Cq-8SO" secondAttribute="bottom" constant="-8" id="Q1d-4Y-bpG"/>
                     <constraint firstItem="QJt-Cq-8SO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="SIW-bZ-F00"/>
+                    <constraint firstItem="QJt-Cq-8SO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ckx-Iq-hB7"/>
+                    <constraint firstAttribute="trailing" secondItem="QJt-Cq-8SO" secondAttribute="trailing" id="dMK-Uh-tES"/>
+                    <constraint firstAttribute="bottom" secondItem="QJt-Cq-8SO" secondAttribute="bottom" id="vIs-Gk-NO3"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="MJa-fp-B3I"/>
+                        <exclude reference="NN2-mJ-3pB"/>
+                        <exclude reference="Q1d-4Y-bpG"/>
+                        <exclude reference="SIW-bZ-F00"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="postView" destination="QJt-Cq-8SO" id="8YT-SU-qgm"/>

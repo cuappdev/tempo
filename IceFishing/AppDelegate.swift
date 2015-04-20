@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //let viewController = ViewController(nibName: "ViewController", bundle: nil)
         let viewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
         let navController = UINavigationController(rootViewController: MainViewController())
-        let revealController = SWRevealViewController(rearViewController: ViewController(), frontViewController: navController)
+        let revealController = SWRevealViewController(rearViewController: viewController, frontViewController: navController)
         self.window!.rootViewController = revealController
         let gestureRecognizer = UISwipeGestureRecognizer()
         gestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: NSString?, annotation: AnyObject) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
         var wasHandled:Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
         return wasHandled
     }

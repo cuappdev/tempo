@@ -42,7 +42,7 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         println("User ID: \(user.objectID)")
         println("User Name: \(user.name)")
         println("Username: \(user.username)")
-        var userEmail = user.objectForKey("email") as String
+        var userEmail = user.objectForKey("email") as! String
         println("User Email: \(userEmail)")
         
         self.profilePictureView.hidden = false

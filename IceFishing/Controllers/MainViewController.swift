@@ -50,13 +50,13 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
     }
     
     func switchTable() {
-        if (options.selectedSegmentIndex == 1 && childViewControllers[0] as NSObject == childVC1) {
+        if (options.selectedSegmentIndex == 1 && childViewControllers[0] as! NSObject == childVC1) {
             childVC1.view.removeFromSuperview() //Removes it from view
             childVC1.removeFromParentViewController() //Removes it as child
             childVC2.view.frame = view.bounds
             addChildViewController(childVC2) //Adds as child
             view.addSubview(childVC2.view) //Adds to view
-        } else if (options.selectedSegmentIndex == 0 && childViewControllers[0] as NSObject == childVC2) {
+        } else if (options.selectedSegmentIndex == 0 && childViewControllers[0] as! NSObject == childVC2) {
             childVC2.view.removeFromSuperview()
             childVC2.removeFromParentViewController()
             addChildViewController(childVC1)

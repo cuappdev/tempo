@@ -39,9 +39,9 @@ class API {
     }
 
 	func isAuthorized() -> Bool {
-        let sessionCode = NSUserDefaults.standardUserDefaults().objectForKey("SessionCode") as String?
+        let sessionCode = NSUserDefaults.standardUserDefaults().objectForKey("SessionCode") as! String?
 		if sessionCode == nil { return false }
-		else if countElements(sessionCode! as String) < 1 { return false }
+		else if count(sessionCode! as String) < 1 { return false }
 		return true
 	}
 	

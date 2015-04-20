@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 let spotifyAPIBaseURL = NSURL(string: "https://api.spotify.com/v1/tracks/")
 class Song: NSObject {

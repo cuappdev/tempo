@@ -23,8 +23,8 @@ struct TrackResult {
         
         for var i = 0; i < artists.count; i++ {
             let artist: AnyObject = artists[i]
-            let artist_name = artist["name"] as String
-            let artist_id = artist["id"] as String
+            let artist_name = artist["name"] as! String
+            let artist_id = artist["id"] as! String
             
             artists_arr.append([
                 "id": artist_id,
@@ -35,8 +35,8 @@ struct TrackResult {
         self.artists = artists_arr
 
         self.album = [
-            "id": album["id"] as String,
-            "name": album["name"] as String
+            "id": album["id"]as! String,
+            "name": album["name"]as! String
         ]
         
         self.id = id

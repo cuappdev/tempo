@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Alamofire
 import MediaPlayer
+import Alamofire
 
 class SubmitBugViewController: UIViewController {
     
