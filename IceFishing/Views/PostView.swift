@@ -11,9 +11,9 @@ import UIKit
 class PostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
     var tapGestureRecognizer: UITapGestureRecognizer?
-    @IBOutlet var profileNameLabel: UILabel?
+    @IBOutlet var profileNameLabel: MarqueeLabel?
     @IBOutlet var avatarImageView: UIImageView?
-    @IBOutlet var descriptionLabel: UILabel?
+    @IBOutlet var descriptionLabel: MarqueeLabel?
     @IBOutlet var dateLabel: UILabel?
     var fillColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
     private var updateTimer: NSTimer?
@@ -85,6 +85,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         
         layer.borderColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0).CGColor
         layer.borderWidth = CGFloat(0.7)
+        
+        profileNameLabel?.scrollRate = 100;
+        profileNameLabel?.trailingBuffer = 8.0
+        descriptionLabel?.scrollRate = 100;
+        descriptionLabel?.trailingBuffer = 8.0;
     }
     
     dynamic private func timerFired(timer: NSTimer) {
