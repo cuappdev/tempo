@@ -43,10 +43,31 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         navigationController?.navigationBar.barStyle = .Black
 //        navigationController?.navigationBar.translucent = true
         
+        // Add profile button to the left side of the navbar
+        let profileButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "pushToProfile")
+        navigationItem.leftBarButtonItem = profileButton
+        
         // Arbitrary additions for SWRevealVC
         revealViewController().panGestureRecognizer()
         revealViewController().tapGestureRecognizer()
         
+    }
+    
+    // Add profile button
+    
+    func pushToProfile() {
+        let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
+        var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
+        feedButton.setTitle("Feed", forState: .Normal)
+        feedButton.addTarget(self, action: "closeProfileView", forControlEvents: .TouchUpInside)
+        loginViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)
+
+        searchNavigationController = UINavigationController(rootViewController: loginViewController)
+        presentViewController(searchNavigationController, animated: false, completion: nil)
+    }
+    
+    func closeProfileView() {
+        searchNavigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func switchTable() {

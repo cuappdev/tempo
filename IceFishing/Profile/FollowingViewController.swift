@@ -19,7 +19,7 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowersCell")
         
         var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
-        backButton.setTitle("Back", forState: .Normal)
+        backButton.setTitle("Profile", forState: .Normal)
         backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)

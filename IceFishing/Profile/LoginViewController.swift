@@ -59,11 +59,6 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         self.fbLoginView.delegate = self
         self.fbLoginView.readPermissions = ["public_profile", "email", "user_friends"]
         
-//        if FBSession.activeSession().isOpen {
-//            let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
-//            self.navigationController?.pushViewController(profileVC, animated: true)
-//        }
-        
         followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
         numFollowersLabel.text = "\(numFollowers)"
         numFollowingLabel.text = "\(numFollowing)"
@@ -82,19 +77,13 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true
         
-        /*var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
-        feedButton.setTitle("Feed", forState: .Normal)
-        feedButton.addTarget(self, action: "pushToFeed", forControlEvents: .TouchUpInside)
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)*/
-        
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
     }
     
-    func pushToFeed() {
-        self.navigationController?.pushViewController(FeedViewController(), animated: true)
-    }
+//    func pushToFeed() {
+//        self.navigationController?.pushViewController(FeedViewController(), animated: true)
+//    }
     
     // Facebook Delegate Methods
     
