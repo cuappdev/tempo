@@ -22,9 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         
-        // Switch viewController if not running Facebook Integration
-        //let viewController = ViewController(nibName: "ViewController", bundle: nil)
         let viewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
+        let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
+        
         let navController = UINavigationController(rootViewController: MainViewController())
         let revealController = SWRevealViewController(rearViewController: viewController, frontViewController: navController)
         self.window!.rootViewController = revealController
@@ -33,6 +33,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         gestureRecognizer.numberOfTouchesRequired = 3
         let screenCapture = ADScreenCapture(navigationController: revealController, frame: revealController.view.frame, gestureRecognizer: gestureRecognizer)
         revealController.view.addSubview(screenCapture)
+        
+//        let navController = UINavigationController(rootViewController: MainViewController())
+//        let newNavController = UINavigationController(rootViewController: viewController)
+//        let revealController = SWRevealViewController(rearViewController: newNavController, frontViewController: navController)
+//        self.window!.rootViewController = revealController
+        
+        //self.window!.rootViewController = newNavController
         
         return true
     }
