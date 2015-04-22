@@ -121,6 +121,7 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         println(track)
     }
     
+    
     func closeSearchView() {
         searchNavigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
