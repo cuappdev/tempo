@@ -40,14 +40,14 @@ class User: NSObject, NSCoding {
     // MARK: - NSCoding
     
     required init(coder aDecoder: NSCoder) {
-        name = aDecoder.decodeObjectForKey("name") as String
-        email = aDecoder.decodeObjectForKey("email") as String
-        id = aDecoder.decodeObjectForKey("id") as String
-        friends = aDecoder.decodeObjectForKey("friends") as [String]
-        profilePicture = aDecoder.decodeObjectForKey("profilePicture") as UIImage!
-        username = aDecoder.decodeObjectForKey("username") as String
-        followers = aDecoder.decodeObjectForKey("followers") as [String]
-        following = aDecoder.decodeObjectForKey("following") as [String]
+        name = aDecoder.decodeObjectForKey("name") as! String
+        email = aDecoder.decodeObjectForKey("email") as! String
+        id = aDecoder.decodeObjectForKey("id") as! String
+        friends = aDecoder.decodeObjectForKey("friends") as! [String]
+        profilePicture = aDecoder.decodeObjectForKey("profilePicture") as! UIImage!
+        username = aDecoder.decodeObjectForKey("username") as! String
+        followers = aDecoder.decodeObjectForKey("followers") as! [String]
+        following = aDecoder.decodeObjectForKey("following") as! [String]
     }
     
     func encodeWithCoder(aCoder: NSCoder) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJt-Cq-8SO" customClass="PostView" customModule="IceFishing" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="348" height="104"/>
+                        <rect key="frame" x="0.0" y="0.0" width="348" height="103"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark Bryan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKr-CE-jlM">
                                 <rect key="frame" x="105" y="22" width="110" height="29"/>
@@ -65,11 +65,23 @@
                     </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="QJt-Cq-8SO" secondAttribute="bottom" id="Ggd-kO-hVD"/>
                     <constraint firstAttribute="trailingMargin" secondItem="QJt-Cq-8SO" secondAttribute="trailing" constant="-8" id="MJa-fp-B3I"/>
                     <constraint firstItem="QJt-Cq-8SO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="NN2-mJ-3pB"/>
                     <constraint firstAttribute="bottomMargin" secondItem="QJt-Cq-8SO" secondAttribute="bottom" constant="-8" id="Q1d-4Y-bpG"/>
                     <constraint firstItem="QJt-Cq-8SO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="SIW-bZ-F00"/>
+                    <constraint firstItem="QJt-Cq-8SO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="e8n-ph-n54"/>
+                    <constraint firstItem="QJt-Cq-8SO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nfO-pT-LJD"/>
+                    <constraint firstAttribute="trailing" secondItem="QJt-Cq-8SO" secondAttribute="trailing" id="pPY-V3-JMI"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="MJa-fp-B3I"/>
+                        <exclude reference="NN2-mJ-3pB"/>
+                        <exclude reference="Q1d-4Y-bpG"/>
+                        <exclude reference="SIW-bZ-F00"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="postView" destination="QJt-Cq-8SO" id="8YT-SU-qgm"/>

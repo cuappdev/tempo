@@ -82,11 +82,11 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true
         
-        var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
+        /*var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
         feedButton.setTitle("Feed", forState: .Normal)
         feedButton.addTarget(self, action: "pushToFeed", forControlEvents: .TouchUpInside)
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)*/
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
@@ -103,7 +103,7 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
     }
     
     func loginViewFetchedUserInfo(loginView: FBLoginView!, user: FBGraphUser) {
-        var userEmail = user.objectForKey("email") as String
+        var userEmail = user.objectForKey("email") as! String
         
         self.profilePictureView.hidden = false
         self.profilePictureView.profileID = user.objectID

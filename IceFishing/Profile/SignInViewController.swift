@@ -27,7 +27,7 @@ class SignInViewController: UIViewController, FBLoginViewDelegate {
                 var domainName: NSString = cookie.domain
                 var domainRange: NSRange = domainName.rangeOfString("facebook")
                 if (domainRange.length > 0) {
-                    storage.deleteCookie(cookie as NSHTTPCookie)
+                    storage.deleteCookie(cookie as! NSHTTPCookie)
                 }
             }
         }
@@ -45,7 +45,7 @@ class SignInViewController: UIViewController, FBLoginViewDelegate {
         println("User ID: \(user.objectID)")
         println("User Name: \(user.name)")
         println("Username: \(user.username)")
-        var userEmail = user.objectForKey("email") as String
+        var userEmail = user.objectForKey("email") as! String
         println("User Email: \(userEmail)")
 
     }

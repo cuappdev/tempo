@@ -39,7 +39,7 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("FollowersCell", forIndexPath: indexPath) as FollowersTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("FollowersCell", forIndexPath: indexPath) as! FollowersTableViewCell
         
         cell.userImage.image = UIImage(named: "Steven")
         
