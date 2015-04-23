@@ -22,11 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         
+        let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
+        
         let viewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
         let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
         
         let navController = UINavigationController(rootViewController: MainViewController())
-        let revealController = SWRevealViewController(rearViewController: viewController, frontViewController: navController)
+        let revealController = SWRevealViewController(rearViewController: sidebarVC, frontViewController: navController)
         self.window!.rootViewController = revealController
         let gestureRecognizer = UISwipeGestureRecognizer()
         gestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
@@ -39,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let revealController = SWRevealViewController(rearViewController: newNavController, frontViewController: navController)
 //        self.window!.rootViewController = revealController
         
-        //self.window!.rootViewController = newNavController
+        //self.window!.rootViewController = sidebarVC
         
         return true
     }

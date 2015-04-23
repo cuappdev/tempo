@@ -54,7 +54,6 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
     }
     
     // Add profile button
-    
     func pushToProfile() {
         let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
         var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
@@ -64,10 +63,6 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
 
         searchNavigationController = UINavigationController(rootViewController: loginViewController)
         presentViewController(searchNavigationController, animated: false, completion: nil)
-    }
-    
-    func closeProfileView() {
-        searchNavigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func switchTable() {
@@ -121,6 +116,9 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         println(track)
     }
     
+    func closeProfileView() {
+        searchNavigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     func closeSearchView() {
         searchNavigationController?.dismissViewControllerAnimated(true, completion: nil)

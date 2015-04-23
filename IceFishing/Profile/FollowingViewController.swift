@@ -12,6 +12,8 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     
     var followingPics: [String]!
     var following: [String] = ["Derrick", "Eric", "Feifan", "Ilan", "John", "Joe", "Karim", "Lucas", "Manuela", "Mark", "Nicole", "Sam", "Steven", "Tsvi"]
+    var followingHandles: [String] = ["derrick", "eric", "feifan", "ilan", "john", "joe", "karim", "lucas", "manuela", "mark", "nicole", "sam", "steven", "tsvi"]
+    var numFollowing: [Int] = [10, 229, 38, 40, 100, 374, 2731, 384, 12, 293]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +44,9 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowersCell", forIndexPath: indexPath) as! FollowersTableViewCell
         cell.userImage.image = UIImage(named: "Steven")
+        cell.username.text = self.following[indexPath.row]
+        cell.userhandle.text = "@\(self.followingHandles[indexPath.row])"
+        cell.numFollowersLabel.text = "\(self.numFollowing[indexPath.row])"
         
         return cell
     }

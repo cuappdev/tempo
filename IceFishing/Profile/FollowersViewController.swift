@@ -12,6 +12,8 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     
     var followersPics: [String]!
     var followers: [String] = ["Adam", "Adler", "Alexander", "Andrew", "Annie", "Ashton", "Austin", "Brendan", "Brian", "Dennis"]
+    var followerHandles: [String] = ["adam", "adler", "alexander", "andrew", "annie", "ashton", "austin", "brendan", "brian", "dennis"]
+    var numFollowers: [Int] = [10, 229, 38, 40, 100, 374, 2731, 384, 12, 293]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,10 +41,11 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowersCell", forIndexPath: indexPath) as! FollowersTableViewCell
-        
         cell.userImage.image = UIImage(named: "Sexy")
+        cell.username.text = self.followers[indexPath.row]
+        cell.userhandle.text = "@\(self.followerHandles[indexPath.row])"
+        cell.numFollowersLabel.text = "\(self.numFollowers[indexPath.row])"
         
         return cell
         
@@ -53,7 +56,6 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("\(followers[indexPath.row])")
         var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor(red: 19/255, green: 39/255, blue: 49/255, alpha: 1)
     }

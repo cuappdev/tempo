@@ -81,10 +81,6 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
     }
     
-//    func pushToFeed() {
-//        self.navigationController?.pushViewController(FeedViewController(), animated: true)
-//    }
-    
     // Facebook Delegate Methods
     
     func loginViewShowingLoggedInUser(loginView: FBLoginView!) {
