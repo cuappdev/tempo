@@ -12,11 +12,13 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var categories: [String] = ["Feed", "People", "Liked", "Spotify"]
     var symbols: [String] = ["Gray-Feed-Icon", "People-Icon", "Liked-Icon", "Music-Icon"]
+    var searchNavigationController: UINavigationController!
 
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var categoryTableView: UITableView!
+    @IBOutlet weak var profileView: UIView!
     
     @IBAction func logOut(sender: UIButton) {
         FBSession.activeSession().closeAndClearTokenInformation()
@@ -32,10 +34,36 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         profilePicture.frame = CGRectMake(0, 0, 85, 85)
         profilePicture.layer.cornerRadius = profilePicture.frame.size.height/2
         profilePicture.clipsToBounds = true
+        
+        let button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        button.frame = self.profileView.bounds
+        button.addTarget(self, action: "pushToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(button)
 
         categoryTableView.registerNib(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
     }
     
+    func pushToProfile(sender:UIButton!) {
+        let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
+        var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        feedButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
+        feedButton.addTarget(self, action: "dismiss:", forControlEvents: .TouchUpInside)
+        loginViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)
+        
+        if self.revealViewController() != nil {
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
+        revealViewController().panGestureRecognizer()
+
+        searchNavigationController = UINavigationController(rootViewController: loginViewController)
+        presentViewController(searchNavigationController, animated: false, completion: nil)
+    }
+    
+    func dismiss(sender:UIButton!) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.categories.count
     }

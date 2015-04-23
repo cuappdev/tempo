@@ -13,6 +13,7 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
     var isFollowing = false
     var numFollowing: Int = 0
     var numFollowers: Int = 0
+    var searchNavigationController: UINavigationController!
     
     @IBOutlet var fbLoginView: FBLoginView!
     @IBOutlet var profilePictureView: FBProfilePictureView!
@@ -79,6 +80,7 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
     }
     
     // Facebook Delegate Methods

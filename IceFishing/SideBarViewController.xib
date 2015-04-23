@@ -9,6 +9,7 @@
                 <outlet property="categoryTableView" destination="j4T-zX-RrL" id="fb4-vM-LJf"/>
                 <outlet property="nameLabel" destination="od3-lH-cxX" id="6Px-gB-y3h"/>
                 <outlet property="profilePicture" destination="YGV-BU-lwG" id="v5k-0d-etd"/>
+                <outlet property="profileView" destination="oAA-qL-88I" id="Bth-Ig-RwI"/>
                 <outlet property="usernameLabel" destination="K6I-hT-uBd" id="52g-AS-RkU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

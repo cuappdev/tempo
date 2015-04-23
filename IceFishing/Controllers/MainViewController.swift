@@ -26,7 +26,6 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         options.addTarget(self, action: "switchTable", forControlEvents: .ValueChanged)
 //        navigationItem.titleView = options
         
-        
         navigationItem.title = "Songs"
         
         // Add plus sign to the right side of the navbar
@@ -43,10 +42,15 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
 //        navigationController?.navigationBar.translucent = true
         
         // Add profile button to the left side of the navbar
-        var profileButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
-        profileButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
-        profileButton.addTarget(self, action: "pushToProfile", forControlEvents: .TouchUpInside)
+        var profileButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
+        profileButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
+//        profileButton.addTarget(self, action: "pushToProfile", forControlEvents: .TouchUpInside)
+        profileButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
         
+        if self.revealViewController() != nil {
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileButton)
         
         // Arbitrary additions for SWRevealVC
@@ -56,16 +60,16 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
     }
     
     // Add profile button
-    func pushToProfile() {
-        let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
-        var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
-        feedButton.setImage(UIImage(named: "Feed-Icon"), forState: .Normal)
-        feedButton.addTarget(self, action: "closeProfileView", forControlEvents: .TouchUpInside)
-        loginViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)
-
-        searchNavigationController = UINavigationController(rootViewController: loginViewController)
-        presentViewController(searchNavigationController, animated: false, completion: nil)
-    }
+//    func pushToProfile() {
+//        let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
+//        var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
+//        feedButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
+//        feedButton.addTarget(self, action: "closeProfileView", forControlEvents: .TouchUpInside)
+//        loginViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)
+//
+//        searchNavigationController = UINavigationController(rootViewController: loginViewController)
+//        presentViewController(searchNavigationController, animated: false, completion: nil)
+//    }
     
     func initializePostCreation() {
         var searchResultsViewController = SearchTrackResultsViewController() as SearchTrackResultsViewController
