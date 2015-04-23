@@ -10,6 +10,21 @@ import UIKit
 
 class UsernameViewController: UIViewController, FBLoginViewDelegate {
  
+    @IBOutlet weak var usernameTextField: UITextField!
+  
+    @IBAction func createUser(sender: UIButton) {
+        //check if username is taken or not by calling doing a GET request to /users/:username 
+//        if (username is taken) {
+//            prompt user with error alert
+//        } else {
+//            create a user by doing a POST request to /sessions with parameters of a user object, where a User object is defined by: name,, email, Facebook id, and username
+//            }
+        
+        let feedVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
+        presentViewController(feedVC, animated: false, completion: nil)
+
+    }
+    
 //    var enterUsername: UITextField!
 //    
 //    override func viewDidLoad() {
@@ -20,7 +35,7 @@ class UsernameViewController: UIViewController, FBLoginViewDelegate {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Custom initialization
-        println("initialized")
+        println("username view controller")
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -31,9 +46,6 @@ class UsernameViewController: UIViewController, FBLoginViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.fbLoginView.delegate = self
-        self.fbLoginView.readPermissions = ["public_profile", "email", "user_friends"]
 
     }
     

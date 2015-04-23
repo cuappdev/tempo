@@ -8,14 +8,19 @@
 
 import UIKit
 
-class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBLoginViewDelegate {
     
     var categories: [String] = ["Feed", "People", "Liked", "Spotify"]
+    var symbols: [String] = ["Gray-Feed-Icon", "People-Icon", "Liked-Icon", "Music-Icon"]
 
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var categoryTableView: UITableView!
+    
+    @IBAction func logOut(sender: UIButton) {
+        FBSession.activeSession().closeAndClearTokenInformation()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +44,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CategoryCell", forIndexPath: indexPath) as! SideBarTableViewCell
         
-        cell.categorySymbol.image = UIImage(named: "Gray-Profile-Icon")
+        cell.categorySymbol.image = UIImage(named: self.symbols[indexPath.row])
         cell.categoryLabel.text = self.categories[indexPath.row]
         
         return cell

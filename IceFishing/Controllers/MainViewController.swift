@@ -44,8 +44,11 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
 //        navigationController?.navigationBar.translucent = true
         
         // Add profile button to the left side of the navbar
-        let profileButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "pushToProfile")
-        navigationItem.leftBarButtonItem = profileButton
+        var profileButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
+        profileButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
+        profileButton.addTarget(self, action: "pushToProfile", forControlEvents: .TouchUpInside)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileButton)
         
         // Arbitrary additions for SWRevealVC
         revealViewController().panGestureRecognizer()
@@ -57,7 +60,7 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
     func pushToProfile() {
         let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
         var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
-        feedButton.setTitle("Feed", forState: .Normal)
+        feedButton.setImage(UIImage(named: "Feed-Icon"), forState: .Normal)
         feedButton.addTarget(self, action: "closeProfileView", forControlEvents: .TouchUpInside)
         loginViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)
 
