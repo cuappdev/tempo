@@ -12,9 +12,8 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
 
     let options: UISegmentedControl = UISegmentedControl(items: ["Songs", "Users"])
     
-    var childVC2 = TrendingViewController()
     var childVC1 = FeedViewController(nibName: "FeedViewController", bundle: nil)
-    //var childVC1 = FeedViewController()
+    //var childVC2 = TrendingViewController()
     var searchController: UISearchController!
     var searchNavigationController: UINavigationController!
     
@@ -66,22 +65,6 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
 
         searchNavigationController = UINavigationController(rootViewController: loginViewController)
         presentViewController(searchNavigationController, animated: false, completion: nil)
-    }
-    
-    func switchTable() {
-        if (options.selectedSegmentIndex == 1 && childViewControllers[0] as! NSObject == childVC1) {
-            childVC1.view.removeFromSuperview() //Removes it from view
-            childVC1.removeFromParentViewController() //Removes it as child
-            childVC2.view.frame = view.bounds
-            addChildViewController(childVC2) //Adds as child
-            view.addSubview(childVC2.view) //Adds to view
-        } else if (options.selectedSegmentIndex == 0 && childViewControllers[0] as! NSObject == childVC2) {
-            childVC2.view.removeFromSuperview()
-            childVC2.removeFromParentViewController()
-            addChildViewController(childVC1)
-            childVC1.view.frame = view.bounds
-            view.addSubview(childVC1.view)
-        }
     }
     
     func initializePostCreation() {
