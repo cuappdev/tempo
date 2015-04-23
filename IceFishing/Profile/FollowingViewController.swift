@@ -18,8 +18,8 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
         
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowersCell")
         
-        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
-        backButton.setTitle("Profile", forState: .Normal)
+        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
+        backButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
         backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
@@ -33,14 +33,14 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // TableView Methods
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.following.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowersCell", forIndexPath: indexPath) as! FollowersTableViewCell
-        
         cell.userImage.image = UIImage(named: "Steven")
         
         return cell

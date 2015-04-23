@@ -18,8 +18,8 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
         
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowersCell")
         
-        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
-        backButton.setTitle("Profile", forState: .Normal)
+        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
+        backButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
         backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
@@ -31,6 +31,8 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     func dismiss() {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    // TableView Methods
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.followers.count
