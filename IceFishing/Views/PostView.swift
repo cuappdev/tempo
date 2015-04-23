@@ -86,9 +86,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         layer.borderColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0).CGColor
         layer.borderWidth = CGFloat(0.7)
         
-        profileNameLabel?.scrollRate = 100;
+        profileNameLabel?.scrollRate = 0;
         profileNameLabel?.trailingBuffer = 8.0
-        descriptionLabel?.scrollRate = 100;
+        descriptionLabel?.scrollRate = 0;
         descriptionLabel?.trailingBuffer = 8.0;
     }
     
@@ -108,8 +108,14 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             let label = self.profileNameLabel!
             if post.player.isPlaying() {
                 color = UIColor(red: CGFloat(181.0/255.0), green: CGFloat(87.0/255.0), blue: CGFloat(78.0/255.0), alpha: 1.0)
+                // Will scroll labels
+                profileNameLabel?.scrollRate = 75
+                descriptionLabel?.scrollRate = 75
             } else {
                 color = UIColor.whiteColor()
+                // Labels won't scroll
+                profileNameLabel?.scrollRate = 0
+                descriptionLabel?.scrollRate = 0
             }
             
             if !label.textColor.isEqual(color) {
