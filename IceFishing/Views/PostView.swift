@@ -109,8 +109,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             if post.player.isPlaying() {
                 color = UIColor(red: CGFloat(181.0/255.0), green: CGFloat(87.0/255.0), blue: CGFloat(78.0/255.0), alpha: 1.0)
                 // Will scroll labels
-                profileNameLabel?.scrollRate = 100
-                descriptionLabel?.scrollRate = 100
+                profileNameLabel?.scrollRate = 75
+                descriptionLabel?.scrollRate = 75
             } else {
                 color = UIColor.whiteColor()
                 // Labels won't scroll
