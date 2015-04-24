@@ -72,7 +72,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     func togglePlay() {
-        println("here tho")
         pinView.post?.player.togglePlaying()
     }
     
@@ -158,9 +157,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
             let rowsICanSee = tableView.indexPathsForVisibleRows() as! [NSIndexPath] //Rows Seen
             if let cellSelected = tableView.cellForRowAtIndexPath(selectedRow) as? FeedTableViewCell {
                 if cellSelected.frame.minY - tableView.contentOffset.y < navigationController!.navigationBar.frame.maxY || rowsICanSee.last == selectedRow { //If the cell is the top or bottom
-                    println("here")
                     if (cellSelected.frame.minY - tableView.contentOffset.y < navigationController!.navigationBar.frame.maxY) {
-                        println("Here too")
                         pinView.post = posts[selectedRow.row]
                         pinView.layoutIfNeeded()
                         topPinViewContainer.addSubview(pinView)
@@ -168,7 +165,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
                         topPinViewContainer.hidden = false
                         
                     } else if (cellSelected.frame.maxY - tableView.contentOffset.y > parentViewController!.view.frame.height) {
-                        println("Hey")
                         pinView.post = posts[selectedRow.row]
                         pinView.layoutIfNeeded()
                         bottomPinViewContainer.addSubview(pinView)

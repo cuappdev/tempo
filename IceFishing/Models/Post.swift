@@ -14,9 +14,9 @@ class Post: NSObject {
     var avatar: UIImage?
     var player: Player!
     var song: Song!
-    var date: NSDate!
+    var date: NSDate?
 
-    init(song: Song, posterFirst: String, posterLast: String, date: NSDate, avatar: UIImage?) {
+    init(song: Song, posterFirst: String, posterLast: String, date: NSDate?, avatar: UIImage?) {
         self.song = song
         self.posterFirstName = posterFirst
         self.date = date
@@ -32,7 +32,7 @@ class Post: NSObject {
         super.init()
     }
     
-    convenience init(trackResult: TrackResult, posterFirst: String, posterLast: String, date: NSDate, avatar: UIImage?) {
+    convenience init(trackResult: TrackResult, posterFirst: String, posterLast: String, date: NSDate?, avatar: UIImage?) {
         self.init(song: Song(spotifyURI: trackResult.id), posterFirst: posterFirst, posterLast: posterLast, date: date, avatar: avatar)
     }
     

@@ -24,8 +24,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             if let handler: AnyObject = notificationHandler {
                 NSNotificationCenter.defaultCenter().removeObserver(handler)
             }
-            
-            println("got here")
+
             // update stuff
             if let post = post {
                 profileNameLabel?.text = post.posterFirstName + " " + post.posterLastName
@@ -34,12 +33,17 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
-                let dateFormatter = NSDateFormatter()
-//                dateFormatter.doesRelativeDateFormatting = true
-                dateFormatter.dateStyle = .NoStyle
-                dateFormatter.timeStyle = .ShortStyle
-                dateLabel?.text = dateFormatter.stringFromDate(post.date)
                 
+                if let date = post.date {
+                    let dateFormatter = NSDateFormatter()
+                    // dateFormatter.doesRelativeDateFormatting = true
+                    dateFormatter.dateStyle = .NoStyle
+                    dateFormatter.timeStyle = .ShortStyle
+                    dateLabel?.text = dateFormatter.stringFromDate(date)
+                } else {
+                    dateLabel?.text = ""
+                }
+
                 if (updateTimer == nil) {
                     updateTimer = NSTimer(timeInterval: 0.0005,
                         target: self, selector: Selector("timerFired:"),
@@ -94,6 +98,16 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         updateProfileLabelTextColor()
+    }
+    
+    // Set image as the avatar view. This is for async image loads.
+    func setImage(image: UIImage) {
+        avatarImageView?.image = image
+    }
+    
+    // Customize view to be able to re-use it for search results.
+    func flagAsSearchResultPost() {
+        descriptionLabel?.text = post!.song.title + " · " + post!.song.album
     }
     
     func updateProfileLabelTextColor() {

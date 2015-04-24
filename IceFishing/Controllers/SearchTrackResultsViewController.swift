@@ -13,15 +13,25 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     
     // MARK: Properties
     
+    let kSearchResultHeight: CGFloat = 72
+    
     let tableViewCellIdentifier = "searchTrackResultsCell"
     var results: [TrackResult] = []
     var delegate: SearchTrackResultsViewControllerDelegate!
     let kSearchBase: String = "https://api.spotify.com/v1/search?type=track&q="
+    var hasSelectedResult = false
+    var activePlayer: Player!
     
     // MARK: Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor(red: 43/255.0, green: 73/255.0, blue: 90/255.0, alpha: 1.0)
+        tableView.backgroundColor = UIColor(red: 43/255.0, green: 73/255.0, blue: 90/255.0, alpha: 1.0)
+        tableView.separatorColor = UIColor.clearColor()
+        tableView.separatorStyle = .None;
+        tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
     }
     
     // MARK: UITableViewDataSource
@@ -30,28 +40,69 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         return results.count
     }
     
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return hasSelectedResult ? kSearchResultHeight : CGFloat(0)
+    }
+    
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(tableViewCellIdentifier) as? UITableViewCell
-        if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: tableViewCellIdentifier)
+        var cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
+        if cell.postView.post != nil {
+            cell.postView.post!.player.destroy()
         }
-        return cell!
+
+        let track = results[indexPath.row]
+        cell.postView.post = Post(trackResult: track,
+            posterFirst: track.artists[0]["name"]!,
+            posterLast: "",
+            date: nil,
+            avatar: transparentPNG(36))
+        cell.postView.flagAsSearchResultPost()
+        cell.postView.post?.player.prepareToPlay()
+        if let artwork = track.album["artwork"] as String? {
+            loadImageAsync(artwork, { image, error in
+                if error == nil {
+                    cell.postView.setImage(image)
+                }
+            })
+        }
+        return cell
     }
-    
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.textLabel?.text = results[indexPath.row].name
-        cell.detailTextLabel?.text = results[indexPath.row].artists[0]["name"]! + " • " + results[indexPath.row].album["name"]!
+
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 96.0;
     }
-    
+
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var alert = UIAlertController(title: "Post song of the day", message: "Post \(results[indexPath.row].name) as your song of the day?", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Post", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
-            self.postSong(self.results[indexPath.row])
-            return
-        }))
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.presentViewController(alert, animated: true, completion: nil)
+        
+        if activePlayer != nil {
+            activePlayer.destroy()
+        }
+
+        let track = results[indexPath.row]
+        delegate.selectSong(track)
+
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
+        cell.postView.post?.player.togglePlaying()
+        
+        addBottomSpace()
+        activePlayer = cell.postView.post?.player
+    }
+    
+    func addBottomSpace() {
+        tableView.beginUpdates()
+        hasSelectedResult = true
+        tableView.endUpdates()
+    }
+    
+    func finishSearching() {
+        if activePlayer != nil {
+            activePlayer.destroy()
+        }
     }
     
     // MARK: UISearchResultsUpdating
@@ -116,9 +167,5 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         results = []
         tableView.reloadData()
     }
-    
-    // Post a song
-    func postSong(track: TrackResult) {
-        delegate?.postSong(track)
-    }
+
 }

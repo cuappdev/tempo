@@ -40,9 +40,10 @@
 		7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */; };
 		7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */; };
 		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
+		BA6113A21AE871DD00D0834B /* TrackSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6113A11AE871DD00D0834B /* TrackSearchController.swift */; };
+		BADB86941AE97F2F00178CCC /* SearchResultSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BADB86931AE97F2F00178CCC /* SearchResultSelectionView.xib */; };
 		BAE499D41AD5F2D6003214C0 /* TrackResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D31AD5F2D6003214C0 /* TrackResult.swift */; };
 		BAE499D61AD5F33B003214C0 /* SearchTrackResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */; };
-		BAE499DB1AD5F7EB003214C0 /* SearchTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499DA1AD5F7EB003214C0 /* SearchTrackViewController.swift */; };
 		BAE499E11AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */; };
 		D17395741ADB080900A53AEE /* FollowersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395721ADB080900A53AEE /* FollowersViewController.swift */; };
 		D17395751ADB080900A53AEE /* FollowersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395731ADB080900A53AEE /* FollowersViewController.xib */; };
@@ -85,26 +86,12 @@
 			remoteGlobalIDString = F8111E3319A95C8B0040E7D1;
 			remoteInfo = "Alamofire iOS";
 		};
-		1D9BBEF91AE487D000C5AF8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1D9BBEF01AE487D000C5AF8D /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4DD67C0B1A5C55C900ED2280;
-			remoteInfo = "Alamofire OSX";
-		};
 		1D9BBEFB1AE487D000C5AF8D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1D9BBEF01AE487D000C5AF8D /* Alamofire.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = F8111E3E19A95C8B0040E7D1;
 			remoteInfo = "Alamofire iOS Tests";
-		};
-		1D9BBEFD1AE487D000C5AF8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1D9BBEF01AE487D000C5AF8D /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F829C6B21A7A94F100A2CD59;
-			remoteInfo = "Alamofire OSX Tests";
 		};
 		1D9BBF151AE487E300C5AF8D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -120,14 +107,28 @@
 			remoteGlobalIDString = 2E4FEFE619575BE100351305;
 			remoteInfo = "SwiftyJSON iOS Tests";
 		};
-		1D9BBF191AE487E300C5AF8D /* PBXContainerItemProxy */ = {
+		BA6113A61AE871DE00D0834B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D9BBEF01AE487D000C5AF8D /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DD67C0B1A5C55C900ED2280;
+			remoteInfo = "Alamofire OSX";
+		};
+		BA6113A81AE871DE00D0834B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D9BBEF01AE487D000C5AF8D /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F829C6B21A7A94F100A2CD59;
+			remoteInfo = "Alamofire OSX Tests";
+		};
+		BA6113AD1AE871DE00D0834B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1D9BBF0E1AE487E300C5AF8D /* SwiftyJSON.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 9C7DFC5B1A9102BD005AA3F7;
 			remoteInfo = "SwiftyJSON OSX";
 		};
-		1D9BBF1B1AE487E300C5AF8D /* PBXContainerItemProxy */ = {
+		BA6113AF1AE871DE00D0834B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1D9BBF0E1AE487E300C5AF8D /* SwiftyJSON.xcodeproj */;
 			proxyType = 2;
@@ -193,9 +194,10 @@
 		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IceFishing-Bridging-Header.h"; path = "Controllers/IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		BA6113A11AE871DD00D0834B /* TrackSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackSearchController.swift; sourceTree = "<group>"; };
+		BADB86931AE97F2F00178CCC /* SearchResultSelectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultSelectionView.xib; sourceTree = "<group>"; };
 		BAE499D31AD5F2D6003214C0 /* TrackResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackResult.swift; path = Controllers/TrackResult.swift; sourceTree = "<group>"; };
 		BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackResultsViewController.swift; sourceTree = "<group>"; };
-		BAE499DA1AD5F7EB003214C0 /* SearchTrackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackViewController.swift; sourceTree = "<group>"; };
 		BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackResultsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		C0CF7B971AE425450083606C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		D17395721ADB080900A53AEE /* FollowersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersViewController.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */,
 				1D72D9DD1AACC6AA007822B0 /* ViewController.xib */,
 				7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */,
+				BADB86931AE97F2F00178CCC /* SearchResultSelectionView.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -250,9 +253,9 @@
 				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
 				7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */,
 				BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */,
-				BAE499DA1AD5F7EB003214C0 /* SearchTrackViewController.swift */,
 				BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */,
 				1D1DD7151AE492B50066AB39 /* SubmitBugViewController.swift */,
+				BA6113A11AE871DD00D0834B /* TrackSearchController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -357,9 +360,9 @@
 			isa = PBXGroup;
 			children = (
 				1D9BBEF81AE487D000C5AF8D /* Alamofire.framework */,
-				1D9BBEFA1AE487D000C5AF8D /* Alamofire.framework */,
+				BA6113A71AE871DE00D0834B /* Alamofire.framework */,
 				1D9BBEFC1AE487D000C5AF8D /* Alamofire iOS Tests.xctest */,
-				1D9BBEFE1AE487D000C5AF8D /* Alamofire OSX Tests.xctest */,
+				BA6113A91AE871DE00D0834B /* Alamofire OSX Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -369,8 +372,8 @@
 			children = (
 				1D9BBF161AE487E300C5AF8D /* SwiftyJSON.framework */,
 				1D9BBF181AE487E300C5AF8D /* SwiftyJSON iOS Tests.xctest */,
-				1D9BBF1A1AE487E300C5AF8D /* SwiftyJSON.framework */,
-				1D9BBF1C1AE487E300C5AF8D /* SwiftyJSON OSX Tests.xctest */,
+				BA6113AE1AE871DE00D0834B /* SwiftyJSON.framework */,
+				BA6113B01AE871DE00D0834B /* SwiftyJSON OSX Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -533,25 +536,11 @@
 			remoteRef = 1D9BBEF71AE487D000C5AF8D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1D9BBEFA1AE487D000C5AF8D /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 1D9BBEF91AE487D000C5AF8D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		1D9BBEFC1AE487D000C5AF8D /* Alamofire iOS Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "Alamofire iOS Tests.xctest";
 			remoteRef = 1D9BBEFB1AE487D000C5AF8D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1D9BBEFE1AE487D000C5AF8D /* Alamofire OSX Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Alamofire OSX Tests.xctest";
-			remoteRef = 1D9BBEFD1AE487D000C5AF8D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1D9BBF161AE487E300C5AF8D /* SwiftyJSON.framework */ = {
@@ -568,18 +557,32 @@
 			remoteRef = 1D9BBF171AE487E300C5AF8D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1D9BBF1A1AE487E300C5AF8D /* SwiftyJSON.framework */ = {
+		BA6113A71AE871DE00D0834B /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = BA6113A61AE871DE00D0834B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA6113A91AE871DE00D0834B /* Alamofire OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire OSX Tests.xctest";
+			remoteRef = BA6113A81AE871DE00D0834B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA6113AE1AE871DE00D0834B /* SwiftyJSON.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SwiftyJSON.framework;
-			remoteRef = 1D9BBF191AE487E300C5AF8D /* PBXContainerItemProxy */;
+			remoteRef = BA6113AD1AE871DE00D0834B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1D9BBF1C1AE487E300C5AF8D /* SwiftyJSON OSX Tests.xctest */ = {
+		BA6113B01AE871DE00D0834B /* SwiftyJSON OSX Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "SwiftyJSON OSX Tests.xctest";
-			remoteRef = 1D9BBF1B1AE487E300C5AF8D /* PBXContainerItemProxy */;
+			remoteRef = BA6113AF1AE871DE00D0834B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -599,6 +602,7 @@
 				6D3FA6611AD5FD5C00B1320D /* Username.xib in Resources */,
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
 				1DC9BBA01AE805A00033E970 /* FeedTableViewCell.xib in Resources */,
+				BADB86941AE97F2F00178CCC /* SearchResultSelectionView.xib in Resources */,
 				1D72D9DF1AACC6AA007822B0 /* ViewController.xib in Resources */,
 				7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */,
 				1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */,
@@ -621,6 +625,7 @@
 			files = (
 				6DEE0FDD1AC34884005552F9 /* LoginViewController.swift in Sources */,
 				6DEE0FD81AC34811005552F9 /* ProfileViewController.swift in Sources */,
+				BA6113A21AE871DD00D0834B /* TrackSearchController.swift in Sources */,
 				FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */,
 				7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */,
 				D17395741ADB080900A53AEE /* FollowersViewController.swift in Sources */,
@@ -644,7 +649,6 @@
 				D17395781ADB081C00A53AEE /* FollowingViewController.swift in Sources */,
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
-				BAE499DB1AD5F7EB003214C0 /* SearchTrackViewController.swift in Sources */,
 				6DEE0FDA1AC34811005552F9 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

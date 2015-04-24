@@ -35,13 +35,23 @@ struct TrackResult {
         self.artists = artists_arr
 
         self.album = [
-            "id": album["id"]as! String,
-            "name": album["name"]as! String
+            "id": album["id"] as! String,
+            "name": album["name"] as! String
         ]
+        
+        var album_images = album["images"] as! NSArray
+        
+        if album_images.count > 1 {
+            self.album["artwork"] = album_images[1]["url"] as? String
+        } else {
+            self.album["artwork"] = nil
+        }
         
         self.id = id
         self.name = name
         self.uri = uri
         self.popularity = andPopularity
+        
+        println(self.artists)
     }
 }
