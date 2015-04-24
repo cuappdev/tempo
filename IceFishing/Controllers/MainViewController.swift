@@ -13,16 +13,10 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
     let options: UISegmentedControl = UISegmentedControl(items: ["Songs", "Users"])
     
     var childVC1 = FeedViewController(nibName: "FeedViewController", bundle: nil)
-<<<<<<< HEAD
 
     var searchController: TrackSearchController!
     var searchResultsController: SearchTrackResultsViewController!
     var preserveTitleView: UIView!
-=======
-    //var childVC2 = TrendingViewController()
-    var searchController: UISearchController!
-    var searchNavigationController: UINavigationController!
->>>>>>> 97f6f4809270e30817b1959e5b108f4dcaf487b7
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,8 +55,7 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         revealViewController().tapGestureRecognizer()
         
     }
-    
-<<<<<<< HEAD
+
     func switchTable() {
         if (options.selectedSegmentIndex == 1 && childViewControllers[0] as! NSObject == childVC1) {
             childVC1.view.removeFromSuperview() //Removes it from view
@@ -78,25 +71,6 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
             view.addSubview(childVC1.view)
         }
     }
-=======
-    // Add profile button
-//    func pushToProfile() {
-//        let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
-//        var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
-//        feedButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
-//        feedButton.addTarget(self, action: "closeProfileView", forControlEvents: .TouchUpInside)
-//        loginViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)
-//
-//        searchNavigationController = UINavigationController(rootViewController: loginViewController)
-//        presentViewController(searchNavigationController, animated: false, completion: nil)
-//    }
-    
-    func initializePostCreation() {
-        var searchResultsViewController = SearchTrackResultsViewController() as SearchTrackResultsViewController
-        
-        let searchViewController = SearchTrackViewController()
-        searchNavigationController = UINavigationController(rootViewController: searchViewController)
->>>>>>> 97f6f4809270e30817b1959e5b108f4dcaf487b7
 
     func addPlusButton() {
         // Add plus sign to the right side of the navbar
