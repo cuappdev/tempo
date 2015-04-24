@@ -10,14 +10,13 @@ import UIKit
 
 class FollowersTableViewCell: UITableViewCell {
 
-    
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var userhandle: UILabel!
+    @IBOutlet weak var numFollowersLabel: UILabel!
     
     override func didMoveToSuperview() {
         selectionStyle = .None
-
         
         userImage.layer.cornerRadius = userImage.bounds.size.width/2
         userImage.clipsToBounds = true

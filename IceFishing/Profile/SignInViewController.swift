@@ -9,28 +9,62 @@
 import UIKit
 
 class SignInViewController: UIViewController, FBLoginViewDelegate {
-
-    @IBOutlet weak var fbLoginView: FBLoginView!
+    
+    @IBOutlet weak var loginButton: UIButton!
+    
+    @IBAction func logIn(sender: UIButton) {
+//        FBSession.openActiveSessionWithAllowLoginUI(true)
+        
+        if (FBSession.activeSession().state == FBSessionState.Open || FBSession.activeSession().state == FBSessionState.OpenTokenExtended)
+        {
+            // Close the session and remove the access token from the cache
+            // The session state handler (in the app delegate) will be called automatically
+            FBSession.activeSession().closeAndClearTokenInformation()
+        }
+        else
+        {
+            // Open a session showing the user the login UI
+            // You must ALWAYS ask for public_profile permissions when opening a session
+            FBSession.openActiveSessionWithReadPermissions(["public_profile"], allowLoginUI: true, completionHandler: {
+                (session:FBSession!, state:FBSessionState, error:NSError!) in
+                
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+                //appDelegate.sessionStateChanged(session, state: state, error: error)
+            })
+        }
+        
+        if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded {
+            
+            // If there's one, just open the session silently, without showing the user the login UI
+            FBSession.openActiveSessionWithReadPermissions(["public_profile", "email"], allowLoginUI: false, completionHandler: {
+                (session, state, error) -> Void in
+                self.sessionStateChanged(session, state: state, error: error)
+            })
+        }
+        
+//        if (FBSession.activeSession().isOpen) {
+//            let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
+//            presentViewController(usernameVC, animated: false, completion: nil)
+//        }
+    }
+    
+    func sessionStateChanged(session : FBSession, state : FBSessionState, error : NSError?)
+    {
+        // If the session was opened successfully
+        if state == FBSessionState.Open
+        {
+            println("Session Opened")
+        }
+        // If the session closed
+        if state == FBSessionState.Closed
+        {
+            println("Closed")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fbLoginView.delegate = self
-        self.fbLoginView.readPermissions = ["public_profile", "email", "user_friends"]
-    }
-    
-    // Delete cookies
-    func fbDidLogOut() {
-        var cookie: NSHTTPCookie
-        var storage: NSHTTPCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-        if let cookies = storage.cookies {
-            for cookie in cookies {
-                var domainName: NSString = cookie.domain
-                var domainRange: NSRange = domainName.rangeOfString("facebook")
-                if (domainRange.length > 0) {
-                    storage.deleteCookie(cookie as! NSHTTPCookie)
-                }
-            }
-        }
     }
     
     // Facebook Delegate Methods
@@ -51,8 +85,6 @@ class SignInViewController: UIViewController, FBLoginViewDelegate {
     }
     
     func loginViewShowingLoggedOutUser(loginView: FBLoginView!) {
-        println("User Logged Out")
-        fbDidLogOut()
         FBSession.activeSession().closeAndClearTokenInformation()
         FBSession.activeSession().close()
     }

@@ -12,14 +12,16 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     
     var followingPics: [String]!
     var following: [String] = ["Derrick", "Eric", "Feifan", "Ilan", "John", "Joe", "Karim", "Lucas", "Manuela", "Mark", "Nicole", "Sam", "Steven", "Tsvi"]
+    var followingHandles: [String] = ["derrick", "eric", "feifan", "ilan", "john", "joe", "karim", "lucas", "manuela", "mark", "nicole", "sam", "steven", "tsvi"]
+    var numFollowing: [Int] = [10, 229, 38, 40, 100, 374, 2731, 384, 12, 293]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowersCell")
         
-        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
-        backButton.setTitle("Back", forState: .Normal)
+        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
+        backButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
         backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
@@ -33,15 +35,18 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // TableView Methods
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.following.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowersCell", forIndexPath: indexPath) as! FollowersTableViewCell
-        
         cell.userImage.image = UIImage(named: "Steven")
+        cell.username.text = self.following[indexPath.row]
+        cell.userhandle.text = "@\(self.followingHandles[indexPath.row])"
+        cell.numFollowersLabel.text = "\(self.numFollowing[indexPath.row])"
         
         return cell
     }
