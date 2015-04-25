@@ -15,7 +15,7 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
     var numFollowers: Int = 0
     var searchNavigationController: UINavigationController!
     
-    @IBOutlet var fbLoginView: FBLoginView!
+    //@IBOutlet var fbLoginView: FBLoginView!
     @IBOutlet var profilePictureView: FBProfilePictureView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var usernameLabel: UILabel!
@@ -26,6 +26,55 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var postHistoryLabel: UILabel!
     @IBOutlet weak var divider: UIView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //self.fbLoginView.delegate = self
+        //self.fbLoginView.readPermissions = ["public_profile", "email", "user_friends"]
+        
+        followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
+        numFollowersLabel.text = "\(numFollowers)"
+        numFollowingLabel.text = "\(numFollowing)"
+        
+        if !isFollowing {
+            followButtonLabel.setTitle("FOLLOW", forState: .Normal)
+        } else {
+            followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
+        }
+        
+        self.profilePictureView.hidden = true
+        profilePictureView.layer.masksToBounds = false
+        profilePictureView.layer.borderWidth = 1.5
+        profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
+        profilePictureView.frame = CGRectMake(0, 0, 150/2, 150/2)
+        profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
+        profilePictureView.clipsToBounds = true
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
+        // Add profile button to the left side of the navbar
+        var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
+        menuButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
+        menuButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
+        
+        // Pop out sidebar when hamburger menu tapped
+        if self.revealViewController() != nil {
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
+//        revealViewController().panGestureRecognizer()
+//        revealViewController().tapGestureRecognizer()
+        
+    }
+    
+    func dismiss() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // Buttons
     
     @IBAction func followButton(sender: UIButton) {
         if (!isFollowing) {
@@ -54,34 +103,6 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         self.presentViewController(navController, animated: true, completion: nil)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.fbLoginView.delegate = self
-        self.fbLoginView.readPermissions = ["public_profile", "email", "user_friends"]
-        
-        followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
-        numFollowersLabel.text = "\(numFollowers)"
-        numFollowingLabel.text = "\(numFollowing)"
-        
-        if !isFollowing {
-            followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-        } else {
-            followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-        }
-        
-        self.profilePictureView.hidden = true
-        profilePictureView.layer.masksToBounds = false
-        profilePictureView.layer.borderWidth = 1.5
-        profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
-        profilePictureView.frame = CGRectMake(0, 0, 150/2, 150/2)
-        profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
-        profilePictureView.clipsToBounds = true
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
-    }
     
     // Facebook Delegate Methods
     

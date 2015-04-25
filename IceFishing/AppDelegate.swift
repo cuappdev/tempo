@@ -18,6 +18,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBLoginView.self
         FBProfilePictureView.self
         
+        // Check for a cached session whenever app is opened
+        if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded
+        {
+            
+            // If there's one, just open the session silently, without showing the user the login UI
+            FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false, completionHandler: {
+                (session, state, error) -> Void in
+                self.sessionStateChanged(session, state: state, error: error)
+            })
+        }
+        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
@@ -36,6 +47,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let screenCapture = ADScreenCapture(navigationController: revealController, frame: revealController.view.frame, gestureRecognizer: gestureRecognizer)
         revealController.view.addSubview(screenCapture)
         
+//        let profileNavController = UINavigationController(rootViewController: LoginViewController())
+//        let revealProfileController = SWRevealViewController(rearViewController: sidebarVC, frontViewController: profileNavController)
+//        self.window!.rootViewController = revealProfileController
+//        //let gestureRecognizer = UISwipeGestureRecognizer()
+//        gestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
+//        gestureRecognizer.numberOfTouchesRequired = 3
+//        let profileScreenCapture = ADScreenCapture(navigationController: revealProfileController, frame: revealProfileController.view.frame, gestureRecognizer: gestureRecognizer)
+//        revealProfileController.view.addSubview(profileScreenCapture)
+        
 //        let navController = UINavigationController(rootViewController: MainViewController())
 //        let newNavController = UINavigationController(rootViewController: viewController)
 //        let revealController = SWRevealViewController(rearViewController: newNavController, frontViewController: navController)
@@ -44,6 +64,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //self.window!.rootViewController = signInVC
         
         return true
+    }
+    
+    // Facebook Session
+    func sessionStateChanged(session : FBSession, state : FBSessionState, error : NSError?)
+    {
+        // If the session was opened successfully
+        if state == FBSessionState.Open {
+            println("Session Opened")
+        }
+        // If the session closed
+        if state == FBSessionState.Closed {
+            println("Session Closed")
+        }
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
