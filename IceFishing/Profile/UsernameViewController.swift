@@ -11,7 +11,13 @@ import UIKit
 class UsernameViewController: UIViewController, FBLoginViewDelegate {
  
     @IBOutlet weak var usernameTextField: UITextField!
-  
+    @IBOutlet var fbLoginView: FBLoginView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+    
     @IBAction func createUser(sender: UIButton) {
         //check if username is taken or not by calling doing a GET request to /users/:username 
 //        if (username is taken) {
@@ -41,13 +47,5 @@ class UsernameViewController: UIViewController, FBLoginViewDelegate {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    @IBOutlet var fbLoginView: FBLoginView!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
-    
     
 }

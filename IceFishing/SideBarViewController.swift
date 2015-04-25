@@ -19,6 +19,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var categoryTableView: UITableView!
     @IBOutlet weak var profileView: UIView!
+    @IBOutlet weak var divider: UIView!
     
     @IBAction func logOut(sender: UIButton) {
         FBSession.activeSession().closeAndClearTokenInformation()
@@ -26,6 +27,16 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        categoryTableView.registerNib(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
+        
+        // Formatting 
+        categoryTableView.separatorStyle = .None
+        categoryTableView.scrollEnabled = false
+        categoryTableView.backgroundColor = UIColor(red: 19.0 / 255.0, green: 39.0 / 255.0, blue: 49.0 / 255.0, alpha: 1.0)
+        profileView.backgroundColor = UIColor(red: 19.0 / 255.0, green: 39.0 / 255.0, blue: 49.0 / 255.0, alpha: 1.0)
+        self.view.backgroundColor = UIColor(red: 19.0 / 255.0, green: 39.0 / 255.0, blue: 49.0 / 255.0, alpha: 1.0)
+        divider.backgroundColor = UIColor(red: 43.0 / 255.0, green: 73.0 / 255.0, blue: 90.0 / 255.0, alpha: 1.0)
         
         profilePicture.image = UIImage(named: "Sexy")
         profilePicture.layer.masksToBounds = false
@@ -35,27 +46,16 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         profilePicture.layer.cornerRadius = profilePicture.frame.size.height/2
         profilePicture.clipsToBounds = true
         
+        // Add button to profile view
         let button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         button.frame = self.profileView.bounds
         button.addTarget(self, action: "pushToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(button)
-
-        categoryTableView.registerNib(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
+        
     }
     
     func pushToProfile(sender:UIButton!) {
         let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
-        var feedButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
-        feedButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
-        feedButton.addTarget(self, action: "dismiss:", forControlEvents: .TouchUpInside)
-        loginViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: feedButton)
-        
-        if self.revealViewController() != nil {
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
-        
-        revealViewController().panGestureRecognizer()
-
         searchNavigationController = UINavigationController(rootViewController: loginViewController)
         presentViewController(searchNavigationController, animated: false, completion: nil)
     }
@@ -63,41 +63,26 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     func dismiss(sender:UIButton!) {
         dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
+    // TableView Methods
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.categories.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("CategoryCell", forIndexPath: indexPath) as! SideBarTableViewCell
         
         cell.categorySymbol.image = UIImage(named: self.symbols[indexPath.row])
         cell.categoryLabel.text = self.categories[indexPath.row]
-        
+        cell.indentationLevel = 0
+
         return cell
         
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(55)
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor(red: 43/255, green: 73/255, blue: 90/255, alpha: 1)
-        
-        if (indexPath.row == 0) {
-//            let feedVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
-//            presentViewController(feedVC, animated: false, completion: nil)
-        } else if (indexPath.row == 1) {
-            
-        } else if (indexPath.row == 2) {
-            
-        } else {
-            
-        }
-        
     }
 
 }

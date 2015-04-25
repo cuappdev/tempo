@@ -1,5 +1,5 @@
 //
-//  FollowersTableViewCell.swift
+//  FollowTableViewCell.swift
 //  IceFishing
 //
 //  Created by Manuela Rios on 4/19/15.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class FollowersTableViewCell: UITableViewCell {
+class FollowTableViewCell: UITableViewCell {
 
     @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var username: UILabel!
-    @IBOutlet weak var userhandle: UILabel!
-    @IBOutlet weak var numFollowersLabel: UILabel!
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var userHandle: UILabel!
+    @IBOutlet weak var numFollowLabel: UILabel!
     
     override func didMoveToSuperview() {
         selectionStyle = .None
@@ -22,7 +22,7 @@ class FollowersTableViewCell: UITableViewCell {
         userImage.clipsToBounds = true
         
         userImage.userInteractionEnabled = true
-        username.userInteractionEnabled = true
+        userName.userInteractionEnabled = true
     }
 
 }

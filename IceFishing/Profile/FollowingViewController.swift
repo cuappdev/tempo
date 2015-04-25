@@ -18,19 +18,20 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowersCell")
-        
-        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
-        backButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
-        backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        tableView.backgroundColor = UIColor(red: 43/255, green: 73/255, blue: 90/255, alpha: 1)
+        tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-
+        
+        // Add back button to profile
+        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
+        backButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
+        backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
+    // Return to profile view
     func dismiss() {
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -42,11 +43,11 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("FollowersCell", forIndexPath: indexPath) as! FollowersTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
         cell.userImage.image = UIImage(named: "Steven")
-        cell.username.text = self.following[indexPath.row]
-        cell.userhandle.text = "@\(self.followingHandles[indexPath.row])"
-        cell.numFollowersLabel.text = "\(self.numFollowing[indexPath.row])"
+        cell.userName.text = self.following[indexPath.row]
+        cell.userHandle.text = "@\(self.followingHandles[indexPath.row])"
+        cell.numFollowLabel.text = "\(self.numFollowing[indexPath.row])"
         
         return cell
     }
