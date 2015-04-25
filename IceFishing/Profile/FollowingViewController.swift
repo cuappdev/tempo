@@ -21,6 +21,8 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
         tableView.backgroundColor = UIColor(red: 43/255, green: 73/255, blue: 90/255, alpha: 1)
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
         
+        tableView.separatorStyle = .None
+        
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
@@ -47,13 +49,13 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
         cell.userImage.image = UIImage(named: "Steven")
         cell.userName.text = self.following[indexPath.row]
         cell.userHandle.text = "@\(self.followingHandles[indexPath.row])"
-        cell.numFollowLabel.text = "\(self.numFollowing[indexPath.row])"
+        cell.numFollowLabel.text = "\(self.numFollowing[indexPath.row]) followers"
         
         return cell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CGFloat(100)
+        return CGFloat(80)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

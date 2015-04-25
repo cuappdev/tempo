@@ -7,7 +7,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="IceFishing" customModuleProvider="target">
             <connections>
                 <outlet property="divider" destination="vN1-g8-9nx" id="AeO-Fp-iBt"/>
-                <outlet property="fbLoginView" destination="hxd-OX-ntV" id="XOj-4c-Qq1"/>
                 <outlet property="followButtonLabel" destination="ZCl-Em-Qfi" id="YHr-Zk-7tH"/>
                 <outlet property="followersLabel" destination="0Ob-Kw-3W3" id="2OS-cl-xuM"/>
                 <outlet property="followingLabel" destination="EI6-D0-sw6" id="ttu-H2-bqz"/>
@@ -215,25 +214,6 @@
                                 </mask>
                             </variation>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxd-OX-ntV" customClass="FBLoginView">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="200" id="R42-Ec-rHt">
-                                    <variation key="widthClass=compact" constant="250"/>
-                                </constraint>
-                            </constraints>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="R42-Ec-rHt"/>
-                                </mask>
-                            </variation>
-                            <variation key="widthClass=compact">
-                                <mask key="constraints">
-                                    <exclude reference="R42-Ec-rHt"/>
-                                </mask>
-                            </variation>
-                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.16862745098039217" green="0.28627450980392155" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -244,29 +224,19 @@
                             <variation key="widthClass=compact" constant="300"/>
                         </constraint>
                         <constraint firstAttribute="height" constant="250" id="Mg6-iU-V55"/>
-                        <constraint firstAttribute="bottom" secondItem="hxd-OX-ntV" secondAttribute="bottom" constant="60" id="PNR-7M-fbg"/>
                         <constraint firstAttribute="height" constant="195" id="Sm0-7N-V9G"/>
-                        <constraint firstItem="hxd-OX-ntV" firstAttribute="centerX" secondItem="m1V-Id-nwc" secondAttribute="centerX" id="U3x-o2-vX8"/>
                         <constraint firstAttribute="centerX" secondItem="hFG-HM-4mJ" secondAttribute="centerX" id="Uli-OP-Uhn"/>
-                        <constraint firstAttribute="trailing" secondItem="hxd-OX-ntV" secondAttribute="trailing" constant="100" id="VgN-VC-g7o"/>
-                        <constraint firstItem="hxd-OX-ntV" firstAttribute="top" secondItem="hFG-HM-4mJ" secondAttribute="bottom" constant="94" id="ZiI-Xq-uXj"/>
-                        <constraint firstAttribute="centerX" secondItem="hxd-OX-ntV" secondAttribute="centerX" id="clQ-DY-dYx"/>
-                        <constraint firstItem="hxd-OX-ntV" firstAttribute="centerX" secondItem="hFG-HM-4mJ" secondAttribute="centerX" id="eJA-ct-hhw"/>
                         <constraint firstAttribute="height" constant="229" id="kN6-ZT-GiZ"/>
                         <constraint firstAttribute="width" constant="400" id="nIK-gI-zho"/>
-                        <constraint firstItem="hxd-OX-ntV" firstAttribute="leading" secondItem="m1V-Id-nwc" secondAttribute="leading" constant="100" id="oeL-wr-g4T"/>
                         <constraint firstItem="hFG-HM-4mJ" firstAttribute="top" secondItem="m1V-Id-nwc" secondAttribute="top" constant="15" id="rNN-OV-gxC">
                             <variation key="widthClass=compact" constant="20"/>
                         </constraint>
                         <constraint firstItem="hFG-HM-4mJ" firstAttribute="top" secondItem="m1V-Id-nwc" secondAttribute="top" constant="21" id="s2k-X2-Bnd"/>
                         <constraint firstAttribute="centerX" secondItem="hFG-HM-4mJ" secondAttribute="centerX" id="uLa-tl-seq"/>
-                        <constraint firstAttribute="centerX" secondItem="hxd-OX-ntV" secondAttribute="centerX" id="ujA-rp-LLX"/>
-                        <constraint firstItem="hxd-OX-ntV" firstAttribute="leading" secondItem="m1V-Id-nwc" secondAttribute="leading" constant="100" id="wde-D5-qb5"/>
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">
                             <exclude reference="hFG-HM-4mJ"/>
-                            <exclude reference="hxd-OX-ntV"/>
                         </mask>
                         <mask key="constraints">
                             <exclude reference="8xk-GU-OEP"/>
@@ -279,21 +249,11 @@
                             <exclude reference="rNN-OV-gxC"/>
                             <exclude reference="s2k-X2-Bnd"/>
                             <exclude reference="uLa-tl-seq"/>
-                            <exclude reference="PNR-7M-fbg"/>
-                            <exclude reference="U3x-o2-vX8"/>
-                            <exclude reference="VgN-VC-g7o"/>
-                            <exclude reference="ZiI-Xq-uXj"/>
-                            <exclude reference="clQ-DY-dYx"/>
-                            <exclude reference="eJA-ct-hhw"/>
-                            <exclude reference="oeL-wr-g4T"/>
-                            <exclude reference="ujA-rp-LLX"/>
-                            <exclude reference="wde-D5-qb5"/>
                         </mask>
                     </variation>
                     <variation key="widthClass=compact">
                         <mask key="subviews">
                             <include reference="hFG-HM-4mJ"/>
-                            <include reference="hxd-OX-ntV"/>
                         </mask>
                         <mask key="constraints">
                             <include reference="8xk-GU-OEP"/>
@@ -306,15 +266,6 @@
                             <include reference="rNN-OV-gxC"/>
                             <exclude reference="s2k-X2-Bnd"/>
                             <include reference="uLa-tl-seq"/>
-                            <include reference="PNR-7M-fbg"/>
-                            <include reference="U3x-o2-vX8"/>
-                            <include reference="VgN-VC-g7o"/>
-                            <include reference="ZiI-Xq-uXj"/>
-                            <exclude reference="clQ-DY-dYx"/>
-                            <include reference="eJA-ct-hhw"/>
-                            <include reference="oeL-wr-g4T"/>
-                            <exclude reference="ujA-rp-LLX"/>
-                            <exclude reference="wde-D5-qb5"/>
                         </mask>
                     </variation>
                 </view>

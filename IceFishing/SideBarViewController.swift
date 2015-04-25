@@ -51,7 +51,6 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         button.frame = self.profileView.bounds
         button.addTarget(self, action: "pushToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(button)
-        
     }
     
     func pushToProfile(sender:UIButton!) {
@@ -75,10 +74,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         cell.categorySymbol.image = UIImage(named: self.symbols[indexPath.row])
         cell.categoryLabel.text = self.categories[indexPath.row]
-        cell.indentationLevel = 0
 
         return cell
-        
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

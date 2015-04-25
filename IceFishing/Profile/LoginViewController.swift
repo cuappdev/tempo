@@ -15,7 +15,7 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
     var numFollowers: Int = 0
     var searchNavigationController: UINavigationController!
     
-    @IBOutlet var fbLoginView: FBLoginView!
+    //@IBOutlet var fbLoginView: FBLoginView!
     @IBOutlet var profilePictureView: FBProfilePictureView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var usernameLabel: UILabel!
@@ -30,8 +30,8 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.fbLoginView.delegate = self
-        self.fbLoginView.readPermissions = ["public_profile", "email", "user_friends"]
+        //self.fbLoginView.delegate = self
+        //self.fbLoginView.readPermissions = ["public_profile", "email", "user_friends"]
         
         followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
         numFollowersLabel.text = "\(numFollowers)"
@@ -57,7 +57,7 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         // Add profile button to the left side of the navbar
         var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
         menuButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
-        menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
+        menuButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
         
         // Pop out sidebar when hamburger menu tapped
@@ -68,6 +68,10 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
 //        revealViewController().panGestureRecognizer()
 //        revealViewController().tapGestureRecognizer()
         
+    }
+    
+    func dismiss() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     // Buttons
