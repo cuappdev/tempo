@@ -13,7 +13,7 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     var followingPics: [String]!
     var following: [String] = ["Derrick", "Eric", "Feifan", "Ilan", "John", "Joe", "Karim", "Lucas", "Manuela", "Mark", "Nicole", "Sam", "Steven", "Tsvi"]
     var followingHandles: [String] = ["derrick", "eric", "feifan", "ilan", "john", "joe", "karim", "lucas", "manuela", "mark", "nicole", "sam", "steven", "tsvi"]
-    var numFollowing: [Int] = [10, 229, 38, 40, 100, 374, 2731, 384, 12, 293]
+    var numFollowing: [Int] = [10, 229, 38, 40, 100, 374, 2731, 384, 12, 293, 34, 3, 120, 3992]
     
     override func viewDidLoad() {
         super.viewDidLoad()
