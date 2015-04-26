@@ -8,17 +8,17 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, FBLoginViewDelegate {
+class LoginViewController: UIViewController {
     
     var isFollowing = false
     var numFollowing: Int = 0
     var numFollowers: Int = 0
-    var searchNavigationController: UINavigationController!
     
-    //@IBOutlet var fbLoginView: FBLoginView!
-    @IBOutlet var profilePictureView: FBProfilePictureView!
+    var searchNavigationController: UINavigationController!
+
+    @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var usernameLabel: UILabel!
+    @IBOutlet var userHandleLabel: UILabel!
     @IBOutlet weak var followButtonLabel: UIButton!
     @IBOutlet weak var numFollowersLabel: UILabel!
     @IBOutlet weak var numFollowingLabel: UILabel!
@@ -30,8 +30,21 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.fbLoginView.delegate = self
-        //self.fbLoginView.readPermissions = ["public_profile", "email", "user_friends"]
+        let user = User.sharedInstance
+
+        nameLabel.text = user.name
+
+        userHandleLabel.text = "@\(user.username)"
+        // Set FB profile picture as user picture
+        if let url = NSURL(string: "http://graph.facebook.com/\(user.id)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                profilePictureView.image = UIImage(data: data)
+            }
+        }
+
+        
+        println(nameLabel.text)
+        println(userHandleLabel.text)
         
         followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
         numFollowersLabel.text = "\(numFollowers)"
@@ -43,7 +56,6 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
             followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
         }
         
-        self.profilePictureView.hidden = true
         profilePictureView.layer.masksToBounds = false
         profilePictureView.layer.borderWidth = 1.5
         profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
@@ -64,10 +76,6 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         if self.revealViewController() != nil {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
-        
-//        revealViewController().panGestureRecognizer()
-//        revealViewController().tapGestureRecognizer()
-        
     }
     
     func dismiss() {
@@ -101,35 +109,6 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         followingVC.title = "Following"
         let navController = UINavigationController(rootViewController: followingVC)
         self.presentViewController(navController, animated: true, completion: nil)
-    }
-
-    
-    // Facebook Delegate Methods
-    
-    func loginViewShowingLoggedInUser(loginView: FBLoginView!) {
-        self.profilePictureView.hidden = false
-    }
-    
-    func loginViewFetchedUserInfo(loginView: FBLoginView!, user: FBGraphUser) {
-        var userEmail = user.objectForKey("email") as! String
-        
-        self.profilePictureView.hidden = false
-        self.profilePictureView.profileID = user.objectID
-        self.nameLabel.text = user.name
-        self.usernameLabel.text = "@" + user.objectID
-    }
-    
-    func loginViewShowingLoggedOutUser(loginView: FBLoginView!) {
-        
-        FBSession.activeSession().closeAndClearTokenInformation()
-        self.profilePictureView.hidden = true
-        self.profilePictureView.profileID = nil
-        self.nameLabel.text = ""
-        self.usernameLabel.text = ""
-    }
-    
-    func loginView(loginView: FBLoginView!, handleError: NSError) {
-        println("Error: \(handleError.localizedDescription)")
     }
     
 }

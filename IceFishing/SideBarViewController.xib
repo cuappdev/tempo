@@ -47,16 +47,8 @@
                             <color key="textColor" red="0.68627450980392157" green="0.73333333333333328" blue="0.81176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ANa-2c-bQz">
-                            <rect key="frame" x="0.0" y="214" width="265" height="1"/>
-                            <color key="backgroundColor" red="0.16862745098039217" green="0.28627450980392155" blue="0.35294117647058826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="1" id="XPS-nt-RD5"/>
-                                <constraint firstAttribute="width" constant="265" id="o6w-Ja-8NN"/>
-                            </constraints>
-                        </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="od3-lH-cxX">
-                            <rect key="frame" x="104" y="143" width="56" height="28"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="od3-lH-cxX">
+                            <rect key="frame" x="104" y="145" width="56" height="28"/>
                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
@@ -67,8 +59,6 @@
                         <constraint firstAttribute="centerX" secondItem="YGV-BU-lwG" secondAttribute="centerX" constant="-0.5" id="0Py-Wt-7Ao"/>
                         <constraint firstItem="YGV-BU-lwG" firstAttribute="leading" secondItem="oAA-qL-88I" secondAttribute="leading" constant="90" id="0eG-Uc-Wih"/>
                         <constraint firstAttribute="bottom" secondItem="K6I-hT-uBd" secondAttribute="bottom" constant="2" id="0oh-Uk-rQu"/>
-                        <constraint firstItem="ANa-2c-bQz" firstAttribute="leading" secondItem="oAA-qL-88I" secondAttribute="leading" id="Caw-r6-tdq"/>
-                        <constraint firstAttribute="bottom" secondItem="ANa-2c-bQz" secondAttribute="bottom" id="Xpy-I3-yrf"/>
                         <constraint firstAttribute="height" constant="215" id="ZcQ-Vw-YvK"/>
                         <constraint firstItem="K6I-hT-uBd" firstAttribute="top" secondItem="od3-lH-cxX" secondAttribute="bottom" constant="3" id="gW8-tg-fWR"/>
                         <constraint firstItem="YGV-BU-lwG" firstAttribute="top" secondItem="oAA-qL-88I" secondAttribute="top" constant="50" id="nZf-bf-9sA"/>
@@ -96,15 +86,32 @@
                         <outlet property="delegate" destination="-1" id="Dp2-Yd-Dlh"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ANa-2c-bQz">
+                    <rect key="frame" x="0.0" y="214" width="600" height="1"/>
+                    <color key="backgroundColor" red="0.16862745098039217" green="0.28627450980392155" blue="0.35294117647058826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="XPS-nt-RD5"/>
+                        <constraint firstAttribute="width" constant="265" id="o6w-Ja-8NN"/>
+                        <constraint firstAttribute="width" constant="600" id="rV1-Vp-dap"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="o6w-Ja-8NN"/>
+                        </mask>
+                    </variation>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.074509803921568626" green="0.15294117647058825" blue="0.19215686274509802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="gx0-co-ykc" secondAttribute="centerX" constant="-0.5" id="BGs-7E-1cO"/>
                 <constraint firstItem="oAA-qL-88I" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LMS-hv-mTL"/>
                 <constraint firstAttribute="trailing" secondItem="j4T-zX-RrL" secondAttribute="trailing" id="QxQ-2V-2ef"/>
+                <constraint firstItem="ANa-2c-bQz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Swy-A3-OWj"/>
+                <constraint firstItem="ANa-2c-bQz" firstAttribute="bottom" secondItem="oAA-qL-88I" secondAttribute="bottom" id="W1e-3C-Ljv"/>
                 <constraint firstItem="oAA-qL-88I" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ZY6-fx-Afb"/>
                 <constraint firstItem="j4T-zX-RrL" firstAttribute="top" secondItem="oAA-qL-88I" secondAttribute="bottom" constant="28" id="hp8-UO-5nC"/>
                 <constraint firstAttribute="bottom" secondItem="gx0-co-ykc" secondAttribute="bottom" constant="15" id="lsi-IA-bb6"/>
+                <constraint firstItem="ANa-2c-bQz" firstAttribute="bottom" secondItem="oAA-qL-88I" secondAttribute="bottom" id="mVi-tZ-Lok"/>
                 <constraint firstItem="gx0-co-ykc" firstAttribute="centerX" secondItem="YGV-BU-lwG" secondAttribute="centerX" id="pvw-o8-2A7"/>
                 <constraint firstItem="j4T-zX-RrL" firstAttribute="top" secondItem="oAA-qL-88I" secondAttribute="bottom" id="tkq-Pg-UJb"/>
                 <constraint firstAttribute="centerX" secondItem="j4T-zX-RrL" secondAttribute="centerX" id="v84-UD-Xsi"/>
@@ -112,6 +119,7 @@
             </constraints>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="W1e-3C-Ljv"/>
                     <exclude reference="hp8-UO-5nC"/>
                     <exclude reference="BGs-7E-1cO"/>
                 </mask>

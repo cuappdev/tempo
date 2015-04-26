@@ -10,9 +10,9 @@ import UIKit
 
 class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBLoginViewDelegate {
     
+    var searchNavigationController: UINavigationController!
     var categories: [String] = ["Feed", "People", "Liked", "Spotify"]
     var symbols: [String] = ["Gray-Feed-Icon", "People-Icon", "Liked-Icon", "Music-Icon"]
-    var searchNavigationController: UINavigationController!
 
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -23,12 +23,25 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func logOut(sender: UIButton) {
         FBSession.activeSession().closeAndClearTokenInformation()
+        let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
+        self.presentViewController(signInVC, animated: false, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let user = User.sharedInstance
+
         categoryTableView.registerNib(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
+        
+        nameLabel.text = user.name
+        usernameLabel.text = "@\(user.username)"
+        // Set FB profile picture as user picture
+        if let url = NSURL(string: "http://graph.facebook.com/\(user.id)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                profilePicture.image = UIImage(data: data)
+            }
+        }
         
         // Formatting 
         categoryTableView.separatorStyle = .None
@@ -38,7 +51,6 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.view.backgroundColor = UIColor(red: 19.0 / 255.0, green: 39.0 / 255.0, blue: 49.0 / 255.0, alpha: 1.0)
         divider.backgroundColor = UIColor(red: 43.0 / 255.0, green: 73.0 / 255.0, blue: 90.0 / 255.0, alpha: 1.0)
         
-        profilePicture.image = UIImage(named: "Sexy")
         profilePicture.layer.masksToBounds = false
         profilePicture.layer.borderWidth = 1.5
         profilePicture.layer.borderColor = UIColor.whiteColor().CGColor

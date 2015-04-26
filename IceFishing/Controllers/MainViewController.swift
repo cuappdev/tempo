@@ -47,11 +47,9 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         // Pop out sidebar when hamburger menu tapped
         if self.revealViewController() != nil {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            revealViewController().panGestureRecognizer()
+            revealViewController().tapGestureRecognizer()
         }
-        
-        // Arbitrary additions for SWRevealVC
-        revealViewController().panGestureRecognizer()
-        revealViewController().tapGestureRecognizer()
         
     }
 
