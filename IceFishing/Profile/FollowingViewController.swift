@@ -18,12 +18,12 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.backgroundColor = UIColor(red: 43/255, green: 73/255, blue: 90/255, alpha: 1)
+        tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
         
         tableView.separatorStyle = .None
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile

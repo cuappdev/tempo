@@ -51,7 +51,7 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add profile button to the left side of the navbar

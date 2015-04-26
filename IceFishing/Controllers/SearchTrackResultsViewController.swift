@@ -27,8 +27,8 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(red: 43/255.0, green: 73/255.0, blue: 90/255.0, alpha: 1.0)
-        tableView.backgroundColor = UIColor(red: 43/255.0, green: 73/255.0, blue: 90/255.0, alpha: 1.0)
+        view.backgroundColor = UIColor.iceDarkGray()
+        tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.separatorColor = UIColor.clearColor()
         tableView.separatorStyle = .None;
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")

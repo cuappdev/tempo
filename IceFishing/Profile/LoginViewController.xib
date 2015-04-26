@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
@@ -32,7 +32,7 @@
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZCl-Em-Qfi">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <color key="backgroundColor" red="0.14509803921568629" green="0.25098039215686274" blue="0.32156862745098042" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.16470588235294117" green="0.1764705882352941" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="98.5" id="bHf-GP-wIA"/>
                         <constraint firstAttribute="height" constant="29.5" id="ria-QI-6ZL"/>
@@ -66,7 +66,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOA-0f-C6w">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <color key="backgroundColor" red="0.1764705882352941" green="0.30588235294117649" blue="0.38823529411764707" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.16470588235294117" green="0.1764705882352941" blue="0.18823529411764706" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="66" id="D3V-lF-27s"/>
                         <constraint firstAttribute="height" constant="50" id="FRS-eY-czE"/>
@@ -99,7 +99,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lZf-dZ-xpF">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <color key="backgroundColor" red="0.1764705882352941" green="0.30588235294117649" blue="0.38823529411764707" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.16470588235294117" green="0.1764705882352941" blue="0.18823529411764706" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="8dZ-Cp-TtU"/>
                         <constraint firstAttribute="width" constant="66" id="BqE-Zr-Xds"/>
@@ -215,7 +215,7 @@
                             </variation>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.16862745098039217" green="0.28627450980392155" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="hFG-HM-4mJ" secondAttribute="centerX" constant="-0.5" id="7fF-cN-xNo">
                             <variation key="widthClass=compact" constant="0.0"/>
@@ -321,7 +321,7 @@
                     </variation>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.18823529411764706" green="0.32941176470588235" blue="0.43137254901960786" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="EI6-D0-sw6" firstAttribute="centerY" secondItem="lZf-dZ-xpF" secondAttribute="centerY" id="0ef-Pf-y9O"/>
                 <constraint firstItem="0Ob-Kw-3W3" firstAttribute="leading" secondItem="7Vc-mb-b1O" secondAttribute="trailing" constant="23.5" id="0mL-UJ-8ad"/>

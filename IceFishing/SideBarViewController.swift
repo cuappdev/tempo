@@ -33,10 +33,10 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Formatting 
         categoryTableView.separatorStyle = .None
         categoryTableView.scrollEnabled = false
-        categoryTableView.backgroundColor = UIColor(red: 19.0 / 255.0, green: 39.0 / 255.0, blue: 49.0 / 255.0, alpha: 1.0)
-        profileView.backgroundColor = UIColor(red: 19.0 / 255.0, green: 39.0 / 255.0, blue: 49.0 / 255.0, alpha: 1.0)
-        self.view.backgroundColor = UIColor(red: 19.0 / 255.0, green: 39.0 / 255.0, blue: 49.0 / 255.0, alpha: 1.0)
-        divider.backgroundColor = UIColor(red: 43.0 / 255.0, green: 73.0 / 255.0, blue: 90.0 / 255.0, alpha: 1.0)
+        categoryTableView.backgroundColor = UIColor.iceDarkGray()
+        profileView.backgroundColor = UIColor(red: CGFloat(35/255.0), green: CGFloat(36/255.0), blue: CGFloat(39/255.0), alpha: 1.0)
+        self.view.backgroundColor = UIColor(red: CGFloat(35/255.0), green: CGFloat(36/255.0), blue: CGFloat(39/255.0), alpha: 1.0)
+        divider.backgroundColor = UIColor.iceLightGray()
         
         profilePicture.image = UIImage(named: "Sexy")
         profilePicture.layer.masksToBounds = false
@@ -74,9 +74,14 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         cell.categorySymbol.image = UIImage(named: self.symbols[indexPath.row])
         cell.categoryLabel.text = self.categories[indexPath.row]
-
+        
         return cell
     }
+   
+// TODO!
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(55)

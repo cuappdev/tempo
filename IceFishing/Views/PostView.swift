@@ -17,7 +17,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var dateLabel: UILabel?
     //var fillColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
     //changed the background color
-      var fillColor = UIColor(red: CGFloat(35/255.0), green: CGFloat(36/255.0), blue: CGFloat(39/255.0), alpha: 1.0)
+      var fillColor = UIColor.iceDarkGray()
     
     
  

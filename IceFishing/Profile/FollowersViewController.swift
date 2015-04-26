@@ -23,7 +23,7 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     
         tableView.separatorStyle = .None
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 181/255, green: 87/255, blue: 78/255, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile

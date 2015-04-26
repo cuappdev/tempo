@@ -26,7 +26,7 @@ class TrackSearchController: UISearchController {
         bottomView.backgroundColor = UIColor.redColor()
         view.addSubview(bottomView)
         
-        view.backgroundColor = UIColor(red: 43/255.0, green: 73/255.0, blue: 90/255.0, alpha: 1.0)
+        view.backgroundColor = UIColor.iceDarkGray()
 
         searchBar.searchBarStyle = .Minimal
         searchBar.placeholder = NSLocalizedString("Search to post a song of the Day", comment: "")
