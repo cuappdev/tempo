@@ -44,7 +44,10 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         post = Post(song: Song(songID: "4RY96Asd9IefaL3X4LOLZ8"), posterFirst: "Steven", posterLast: "Yeh", date: NSDate(), avatar: UIImage(named: "Steven"))
         posts.append(post)
         
-        self.tableView.backgroundColor = UIColor(red: CGFloat(43.0/255.0), green: CGFloat(73.0/255.0), blue: CGFloat(90.0/255.0), alpha: 1.0)
+        //self.tableView.backgroundColor = UIColor(red: CGFloat(43.0/255.0), green: CGFloat(73.0/255.0), blue: CGFloat(90.0/255.0), alpha: 1.0)
+        //new background color for the view
+        self.tableView.backgroundColor = UIColor(red: CGFloat(35/255.0), green: CGFloat(36/255.0), blue: CGFloat(39/255.0), alpha: 1.0)
+
         self.tableView.separatorColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
         pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
         pinViewGestureRecognizer.delegate = pinView

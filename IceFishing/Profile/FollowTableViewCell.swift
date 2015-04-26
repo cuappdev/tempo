@@ -19,6 +19,8 @@ class FollowTableViewCell: UITableViewCell {
     override func didMoveToSuperview() {
         selectionStyle = .None
         self.backgroundColor = UIColor(red: 43.0/255.0, green: 73.0/255.0, blue: 90.0/255.0, alpha: 1.0)
+        
+
         separator.backgroundColor = UIColor(red: 19.0/255.0, green: 39.0/255.0, blue: 49.0/255.0, alpha: 1.0)
         
         userImage.layer.cornerRadius = userImage.bounds.size.width/2
