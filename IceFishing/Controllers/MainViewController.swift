@@ -33,7 +33,7 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         childVC1.view.frame = view.bounds
         view.addSubview(childVC1.view)
         
-        navigationController?.navigationBar.barTintColor = UIColor(red: 181.0 / 255.0, green: 87.0 / 255.0, blue: 78.0 / 255.0, alpha: 1.0)
+        navigationController?.navigationBar.barTintColor = UIColor(red: 191 / 255.0, green: 62.0 / 255.0, blue: 53.0 / 255.0, alpha: 1.0)
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         navigationController?.navigationBar.barStyle = .Black
 //        navigationController?.navigationBar.translucent = true

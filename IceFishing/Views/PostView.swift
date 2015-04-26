@@ -15,7 +15,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var avatarImageView: UIImageView?
     @IBOutlet var descriptionLabel: MarqueeLabel?
     @IBOutlet var dateLabel: UILabel?
-    var fillColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
+    //var fillColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
+    //changed the background color
+      var fillColor = UIColor(red: CGFloat(35/255.0), green: CGFloat(36/255.0), blue: CGFloat(39/255.0), alpha: 1.0)
+    
+    
+ 
     private var updateTimer: NSTimer?
     private var notificationHandler: AnyObject?
     
@@ -87,7 +92,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         avatarImageView?.userInteractionEnabled = true
         profileNameLabel?.userInteractionEnabled = true
         
-        layer.borderColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0).CGColor
+        //layer.borderColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0).CGColor
+        layer.borderColor = UIColor(red: CGFloat(41/255.0), green: CGFloat(42.0/255.0), blue: CGFloat(45.0/255.0), alpha: 1.0).CGColor
         layer.borderWidth = CGFloat(0.7)
         
         profileNameLabel?.scrollRate = 0;
@@ -121,7 +127,10 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             var duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = self.profileNameLabel!
             if post.player.isPlaying() {
-                color = UIColor(red: CGFloat(181.0/255.0), green: CGFloat(87.0/255.0), blue: CGFloat(78.0/255.0), alpha: 1.0)
+                //color = UIColor(red: CGFloat(181.0/255.0), green: CGFloat(87.0/255.0), blue: CGFloat(78.0/255.0), alpha: 1.0)
+                color = UIColor(red: CGFloat(187.0/255.0), green: CGFloat(61.0/255.0), blue: CGFloat(52.0/255.0), alpha: 1.0)
+               
+                
                 // Will scroll labels
                 profileNameLabel?.scrollRate = 75
                 descriptionLabel?.scrollRate = 75
