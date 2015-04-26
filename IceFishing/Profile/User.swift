@@ -7,39 +7,54 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class User: NSObject, NSCoding {
+class User: NSObject {
     
-    var name: String = ""
+    var caption : String = ""
+    var createdAt: String = ""
     var email: String = ""
-    var id: String = ""
-    var friends: [String] = []
-    var profilePicture: UIImage!
-    var username: String = ""
+    var fbid: String = ""
     var followers: [String] = []
-    var following: [String] = []
-    var numFollowers: Int!
+    var followersCount: Int!
+    var hipsterScore = 0
+    var id: String = ""
+    var likeCount: Int!
+    var locationID: String = ""
+    var name: String = ""
+    var updatedAt: String!
+    var username: String = ""
     
-    init(name: String, email: String, id: String, friends: [String], profilePicture: UIImage!, username: String, followers: [String], following: [String]) {
-        self.name = name
-        self.email = email
-        self.id = id
-        self.friends = friends
-        self.profilePicture = profilePicture
-        self.username = username
-        self.followers = followers
-        self.following = following
-        self.numFollowers = followers.count
-        
+    init(json: JSON) {
+        self.caption = json["caption"].stringValue
+        self.createdAt = json["created_at"].stringValue
+        self.email = json["email"].stringValue
+        self.fbid = json["fbid"].stringValue
+        if let followers = json["followers"].arrayObject! as? [String] {
+            self.followers = followers
+        } else {
+            self.followers = []
+        }
+        self.followersCount = json["followers_count"].intValue
+        self.hipsterScore = json["hipster_score"].intValue
+        self.id = json["id"].stringValue
+        self.likeCount = json["like_count"].intValue
+        self.locationID = json["location_id"].stringValue
+        self.name = json["name"].stringValue
+        self.updatedAt = json["updated_at"].stringValue
+        self.username = json["username"].stringValue
+        super.init()
     }
     
     override var description: String {
-        return "Name: \(name) Email: \(email) ID: \(id) Friends: \(friends) Username: \(username) Followers: \(followers) Following: \(following)"
+        //TODO
+        return ""
     }
     
+    // Extend NSCoding
     // MARK: - NSCoding
     
-    required init(coder aDecoder: NSCoder) {
+    /*required init(coder aDecoder: NSCoder) {
         name = aDecoder.decodeObjectForKey("name") as! String
         email = aDecoder.decodeObjectForKey("email") as! String
         id = aDecoder.decodeObjectForKey("id") as! String
@@ -59,7 +74,7 @@ class User: NSObject, NSCoding {
         aCoder.encodeObject(username, forKey: "username")
         aCoder.encodeObject(followers, forKey: "followers")
         aCoder.encodeObject(following, forKey: "following")
-    }
+    }*/
     
 }
 

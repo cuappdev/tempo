@@ -69,11 +69,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         
         pinView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 80.0)
         
-        
-        
-        //XXX: @pastachan: without this we don't receive touches to the first and last items
-        // I suggest hiding them when they are not in use so touch events get passed along to the
-        // table view
     }
     
     func togglePlay() {
