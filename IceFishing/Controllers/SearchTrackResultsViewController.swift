@@ -78,15 +78,16 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        if activePlayer != nil {
-            activePlayer.destroy()
-        }
 
         let track = results[indexPath.row]
         delegate.selectSong(track)
-
+        
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
+        
+        if activePlayer != nil && activePlayer != cell.postView.post?.player {
+            activePlayer.destroy()
+        }
+
         cell.postView.post?.player.togglePlaying()
         
         addBottomSpace()
