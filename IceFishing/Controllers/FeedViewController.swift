@@ -16,6 +16,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     var bottomPinViewContainer: UIView = UIView()
     @IBOutlet var pinView: PostView!
     var pinViewGestureRecognizer: UITapGestureRecognizer!
+    var lastContentOffset: CGFloat!  //Deals with pinView detection
     
     func addSong(track: TrackResult) {
         posts.append(Post(trackResult: track,
@@ -47,6 +48,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         self.tableView.separatorColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
         pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
         pinViewGestureRecognizer.delegate = pinView
+        lastContentOffset = tableView.contentOffset.y
         
     }
     
@@ -141,15 +143,26 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         
         currentlyPlayingIndexPath = indexPath
         println("This has run")
-        //XXX: Remove this return statement when you fix this
-        //return;
         cellPin()
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        //XXX: This crashes
-        //return;
         cellPin()
+        println(tableView.contentOffset.y)
+        if var lastCell = NSIndexPath(forRow: posts.count-1, inSection: 0) {
+            if (currentlyPlayingIndexPath != nil) {
+                var rowsICanSee = tableView.indexPathsForVisibleRows() as! [NSIndexPath]
+                if let cellSelected = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath!) {
+                    if (lastCell == currentlyPlayingIndexPath && cellSelected.frame.maxY - tableView.contentOffset.y < parentViewController!.view.frame.height) {
+                        if (tableView.contentOffset.y > lastContentOffset) {
+                            bottomPinViewContainer.hidden = true
+                            println(tableView.frame.height)
+                        }
+                    }
+                }
+            }
+        }
+        lastContentOffset = tableView.contentOffset.y
     }
     
     func cellPin() {
