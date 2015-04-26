@@ -44,15 +44,12 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         post = Post(song: Song(songID: "4RY96Asd9IefaL3X4LOLZ8"), posterFirst: "Steven", posterLast: "Yeh", date: NSDate(), avatar: UIImage(named: "Steven"))
         posts.append(post)
         
-        //self.tableView.backgroundColor = UIColor(red: CGFloat(43.0/255.0), green: CGFloat(73.0/255.0), blue: CGFloat(90.0/255.0), alpha: 1.0)
-        //new background color for the view
-        self.tableView.backgroundColor = UIColor(red: CGFloat(35/255.0), green: CGFloat(36/255.0), blue: CGFloat(39/255.0), alpha: 1.0)
-
-        self.tableView.separatorColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
+        //background color for the view
+        self.tableView.backgroundColor = UIColor.iceDarkGray()
+        self.tableView.separatorColor = UIColor.iceDarkGray()
         pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
         pinViewGestureRecognizer.delegate = pinView
         lastContentOffset = tableView.contentOffset.y
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -68,7 +65,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
         bottomPinViewContainer.hidden = true
         
         pinView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 80.0)
-        
     }
     
     func togglePlay() {
@@ -134,7 +130,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
             if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
                 posts[currentlyPlayingIndexPath.row].player.pause(true)
                 posts[currentlyPlayingIndexPath.row].player.progress = 1.0 // Fill cell as played
-                
             }
             posts[indexPath.row].player.play(true)
         }
@@ -181,9 +176,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
                         bottomPinViewContainer.addSubview(pinView)
                         pinView.addGestureRecognizer(pinViewGestureRecognizer)
                         bottomPinViewContainer.hidden = false
-                        
                     }
-                    
                 }
                 else {
                     if selectedRow.compare(rowsICanSee.first!) != selectedRow.compare(rowsICanSee.last!) { //If they're equal then the thing is not on screen
@@ -195,6 +188,5 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
                 }
             }
         }
-        
     }
 }

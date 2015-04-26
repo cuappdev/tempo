@@ -34,8 +34,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         categoryTableView.separatorStyle = .None
         categoryTableView.scrollEnabled = false
         categoryTableView.backgroundColor = UIColor.iceDarkGray()
-        profileView.backgroundColor = UIColor(red: CGFloat(35/255.0), green: CGFloat(36/255.0), blue: CGFloat(39/255.0), alpha: 1.0)
-        self.view.backgroundColor = UIColor(red: CGFloat(35/255.0), green: CGFloat(36/255.0), blue: CGFloat(39/255.0), alpha: 1.0)
+        profileView.backgroundColor = UIColor.iceDarkGray()
+        self.view.backgroundColor = UIColor.iceDarkGray()
         divider.backgroundColor = UIColor.iceLightGray()
         
         profilePicture.image = UIImage(named: "Sexy")

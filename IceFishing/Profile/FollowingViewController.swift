@@ -61,7 +61,6 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("\(following[indexPath.row])")
         var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor(red: 19/255, green: 39/255, blue: 49/255, alpha: 1)
-    }
-    
+        selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
+    }    
 }

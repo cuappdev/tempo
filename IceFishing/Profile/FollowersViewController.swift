@@ -18,7 +18,7 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.backgroundColor = UIColor(red: 43/255, green: 73/255, blue: 90/255, alpha: 1)
+        tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
     
         tableView.separatorStyle = .None
@@ -60,7 +60,6 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor(red: 19/255, green: 39/255, blue: 49/255, alpha: 1)
+        selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
     }
-    
 }
