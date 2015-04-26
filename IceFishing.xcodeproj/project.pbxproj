@@ -24,6 +24,9 @@
 		1D72D9D11AACC4C0007822B0 /* IceFishingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9D01AACC4C0007822B0 /* IceFishingTests.swift */; };
 		1D72D9DF1AACC6AA007822B0 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9DD1AACC6AA007822B0 /* ViewController.xib */; };
 		1DC9BBA01AE805A00033E970 /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */; };
+		1DCB96141AED5EA7007F6A4B /* APIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCB96121AED5EA7007F6A4B /* APIViewController.swift */; };
+		1DCB96151AED5EA7007F6A4B /* APIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCB96131AED5EA7007F6A4B /* APIViewController.xib */; };
+		1DCB961C1AED5F48007F6A4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CF7B971AE425450083606C /* API.swift */; };
 		1DD25B101AE9DBBA00C6C8FF /* TrackSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD25B0F1AE9DBBA00C6C8FF /* TrackSearchController.swift */; };
 		6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */; };
 		6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */; };
@@ -37,11 +40,9 @@
 		7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */; };
 		7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */; };
 		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
-		BA6113A21AE871DD00D0834B /* (null) in Sources */ = {isa = PBXBuildFile; };
 		BADB86941AE97F2F00178CCC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		BAE499D41AD5F2D6003214C0 /* TrackResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D31AD5F2D6003214C0 /* TrackResult.swift */; };
 		BAE499D61AD5F33B003214C0 /* SearchTrackResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */; };
-		BAE499DB1AD5F7EB003214C0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		BAE499E11AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */; };
 		D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9C51AE889D600C66385 /* SideBarViewController.swift */; };
 		D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D102A9C61AE889D600C66385 /* SideBarViewController.xib */; };
@@ -178,6 +179,8 @@
 		1D9BBEF01AE487D000C5AF8D /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Vendor/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		1D9BBF0E1AE487E300C5AF8D /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = Vendor/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedTableViewCell.xib; path = IceFishing/Profile/FeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		1DCB96121AED5EA7007F6A4B /* APIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIViewController.swift; sourceTree = "<group>"; };
+		1DCB96131AED5EA7007F6A4B /* APIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = APIViewController.xib; path = ../Controllers/APIViewController.xib; sourceTree = "<group>"; };
 		1DD25B0F1AE9DBBA00C6C8FF /* TrackSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackSearchController.swift; sourceTree = "<group>"; };
 		6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
 		6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowTableViewCell.xib; sourceTree = "<group>"; };
@@ -240,6 +243,7 @@
 		1D046D8A1AB6951C00D0354B /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				1DCB96131AED5EA7007F6A4B /* APIViewController.xib */,
 				1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */,
 				1D72D9DD1AACC6AA007822B0 /* ViewController.xib */,
 				7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */,
@@ -258,6 +262,7 @@
 				BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */,
 				1D1DD7151AE492B50066AB39 /* SubmitBugViewController.swift */,
 				1DD25B0F1AE9DBBA00C6C8FF /* TrackSearchController.swift */,
+				1DCB96121AED5EA7007F6A4B /* APIViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -604,6 +609,7 @@
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
 				1DC9BBA01AE805A00033E970 /* FeedTableViewCell.xib in Resources */,
 				BADB86941AE97F2F00178CCC /* (null) in Resources */,
+				1DCB96151AED5EA7007F6A4B /* APIViewController.xib in Resources */,
 				1D72D9DF1AACC6AA007822B0 /* ViewController.xib in Resources */,
 				D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */,
 				7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */,
@@ -626,8 +632,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
 				6DEE0FDD1AC34884005552F9 /* LoginViewController.swift in Sources */,
-				BA6113A21AE871DD00D0834B /* (null) in Sources */,
 				FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */,
 				7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */,
 				1DD25B101AE9DBBA00C6C8FF /* TrackSearchController.swift in Sources */,
@@ -637,6 +643,7 @@
 				1D1DD7141AE492750066AB39 /* Util.swift in Sources */,
 				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
 				1D1DD7131AE492750066AB39 /* ADScreenCapture.swift in Sources */,
+				1DCB96141AED5EA7007F6A4B /* APIViewController.swift in Sources */,
 				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,
 				6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */,
 				D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */,
@@ -654,7 +661,6 @@
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
 				FA5B131D1AE864DE003C490C /* MarqueeLabel.swift in Sources */,
-				BAE499DB1AD5F7EB003214C0 /* (null) in Sources */,
 				6DEE0FDA1AC34811005552F9 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

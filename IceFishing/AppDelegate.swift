@@ -47,22 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let screenCapture = ADScreenCapture(navigationController: revealController, frame: revealController.view.frame, gestureRecognizer: gestureRecognizer)
         revealController.view.addSubview(screenCapture)
         
-//        let profileNavController = UINavigationController(rootViewController: LoginViewController())
-//        let revealProfileController = SWRevealViewController(rearViewController: sidebarVC, frontViewController: profileNavController)
-//        self.window!.rootViewController = revealProfileController
-//        //let gestureRecognizer = UISwipeGestureRecognizer()
-//        gestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
-//        gestureRecognizer.numberOfTouchesRequired = 3
-//        let profileScreenCapture = ADScreenCapture(navigationController: revealProfileController, frame: revealProfileController.view.frame, gestureRecognizer: gestureRecognizer)
-//        revealProfileController.view.addSubview(profileScreenCapture)
-        
-//        let navController = UINavigationController(rootViewController: MainViewController())
-//        let newNavController = UINavigationController(rootViewController: viewController)
-//        let revealController = SWRevealViewController(rearViewController: newNavController, frontViewController: navController)
-//        self.window!.rootViewController = revealController
-        
-        //self.window!.rootViewController = signInVC
-        
         return true
     }
     
