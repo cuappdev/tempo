@@ -23,8 +23,8 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     var pinViewGestureRecognizer: UITapGestureRecognizer!
     var lastContentOffset: CGFloat!  //Deals with pinView detection
     
-    func addSong(track: TrackResult) {
-        posts.append(Post(trackResult: track,
+    func addSong(track: Song) {
+        posts.append(Post(song: track,
             posterFirst: "Mark",
             posterLast: "Bryan",
             date: NSDate(),
@@ -256,11 +256,11 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         addPlusButton()
     }
     
-    func selectSong(track: TrackResult) {
+    func selectSong(track: Song) {
         searchController?.showResultSelection(track)
     }
     
-    func postSong(track: TrackResult) {
+    func postSong(track: Song) {
         closeSearchView()
         addSong(track)
         searchController.active = false

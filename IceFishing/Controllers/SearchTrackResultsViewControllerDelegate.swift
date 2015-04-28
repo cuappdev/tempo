@@ -9,5 +9,5 @@
 import UIKit
 
 protocol SearchTrackResultsViewControllerDelegate {
-    func selectSong(track: TrackResult)
+    func selectSong(track: Song)
 }

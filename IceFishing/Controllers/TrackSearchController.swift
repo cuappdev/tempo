@@ -13,7 +13,7 @@ class TrackSearchController: UISearchController {
     let kResultSelectionAvatarWidth = 45
     let kResultSelectionHeight = 72
     var bottomView: UIView!
-    var selectedTrack: TrackResult!
+    var selectedTrack: Song!
     var parent: FeedViewController!
     
     override func viewDidLoad() {
@@ -34,7 +34,7 @@ class TrackSearchController: UISearchController {
         hidesNavigationBarDuringPresentation = false
     }
     
-    func showResultSelection(track: TrackResult) {
+    func showResultSelection(track: Song) {
         if let previousSelectionView = bottomView.viewWithTag(150) {
             previousSelectionView.removeFromSuperview()
         }
@@ -59,10 +59,8 @@ class TrackSearchController: UISearchController {
         avatarImage.layer.cornerRadius = CGFloat(kResultSelectionAvatarWidth)/2
         avatarImage.clipsToBounds = true
         firstLabel.text = "Mark Bryan"
-        var secondLine = track.name
-        if track.artists.count > 0 {
-            secondLine += " · " + track.artists[0]["name"]!
-        }
+        var secondLine = track.title
+        secondLine += " · " + track.artist
         secondLabel.text = secondLine
         
         button.addTarget(self, action: "submitTrack", forControlEvents: UIControlEvents.TouchUpInside)

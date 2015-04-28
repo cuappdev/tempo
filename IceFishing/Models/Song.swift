@@ -14,6 +14,7 @@ class Song: NSObject {
     var title = ""
     var artist = ""
     var album = ""
+    var albumArtworkURL: NSURL?
     var spotifyID:String = "" {
         didSet {
             //!TODO: Use Spotify SDK
@@ -22,24 +23,7 @@ class Song: NSObject {
             let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: &error)
             if let data = data {
                 let json = JSON(data: data, options: NSJSONReadingOptions(0), error: &error)
-                title = json["name"].stringValue
-                let preview = json["preview_url"].stringValue
-                previewURL = NSURL(string: preview)
-                let artists = json["artists"].arrayValue
-                if (artists.count > 1) {
-                    artist = "Various Artists"
-                } else if (artists.count == 0) {
-                    artist = "Unknown Artist"
-                } else {
-                    artist = artists[0]["name"].stringValue
-                }
-                
-                let albums = json["name"].arrayValue
-                if (albums.count == 0) {
-                    album = "Unknown Album"
-                } else {
-                    album = albums[0]["name"].stringValue
-                }
+                initializeFromResponse(json)
             } else {
                 println("got error: %@", (error!).description)
             }
@@ -60,11 +44,62 @@ class Song: NSObject {
         }
         self.init(songID: id)
     }
+    
+    init(responseDictionary: NSDictionary) {
+        super.init()
+        initializeFromResponseDictionary(responseDictionary)
+    }
+    
+    private func initializeFromResponseDictionary(response: NSDictionary) {
+        title = response["name"] as? String ?? ""
+        previewURL = NSURL(string: response["preview_url"] as? String ?? "");
+        let artists = response["artists"] as? NSArray ?? NSArray()
+        if (artists.count > 1) {
+            artist = "Various Artists"
+        } else if (artists.count == 0) {
+            artist = "Unknown Artist"
+        } else {
+            artist = artists[0]["name"] as? String ?? "Unknown Artist"
+        }
+        
+        let albums = response["album"] as? NSDictionary ?? NSDictionary()
+        album = albums["name"] as? String ?? "Unknown Album"
+        
+        let images = albums["images"] as? NSArray ?? NSArray()
+        if images.count > 0 {
+            let firstImage = images.lastObject as? NSDictionary ?? NSDictionary()
+            albumArtworkURL = NSURL(string: firstImage["url"] as? String ?? "")
+        }
+        
+    }
+    
+    private func initializeFromResponse(json: JSON) {
+        title = json["name"].stringValue
+        let preview = json["preview_url"].stringValue
+        previewURL = NSURL(string: preview)
+        let artists = json["artists"].arrayValue
+        if (artists.count > 1) {
+            artist = "Various Artists"
+        } else if (artists.count == 0) {
+            artist = "Unknown Artist"
+        } else {
+            artist = artists[0]["name"].stringValue
+        }
+        
+        let albums = json["albums"].arrayValue
+        if (albums.count == 0) {
+            album = "Unknown Album"
+        } else {
+            album = albums[0]["name"].stringValue
+            albumArtworkURL = NSURL(string: albums[0]["artwork"].stringValue)
+        }
+    }
+
 
     private func setSongID(id: String) {
         spotifyID = id
     }
-    
+
     override init() {
         assertionFailure("use init(songID:)")
     }

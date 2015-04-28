@@ -16,7 +16,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     let kSearchResultHeight: CGFloat = 72
     
     let tableViewCellIdentifier = "searchTrackResultsCell"
-    var results: [TrackResult] = []
+    var results: [Song] = []
     var delegate: SearchTrackResultsViewControllerDelegate!
     let kSearchBase: String = "https://api.spotify.com/v1/search?type=track&q="
     var hasSelectedResult = false
@@ -32,6 +32,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.separatorColor = UIColor.clearColor()
         tableView.separatorStyle = .None
+        
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
     }
     
@@ -56,13 +57,9 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         }
 
         let track = results[indexPath.row]
-        cell.postView.post = Post(trackResult: track,
-            posterFirst: track.artists[0]["name"]!,
-            posterLast: "",
-            date: nil,
-            avatar: missingImage)
+        cell.postView.post = Post(song: track, posterFirst: track.artist, posterLast: "", date: nil, avatar: missingImage)
         cell.postView.flagAsSearchResultPost()
-        if let artwork = track.album["artwork"] as String? {
+        if let artwork = track.albumArtworkURL {
             loadImageAsync(artwork, { image, error in
                 if error == nil {
                     cell.postView.setImage(image)
@@ -139,20 +136,20 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         
         var items = tracks["items"] as! NSArray
         
-        var trackResults: [TrackResult] = []
+        var trackResults: [Song] = []
         
         for var i = 0; i < items.count; i++ {
             let item = items[i] as! NSDictionary
-            
-            let artists = item["artists"] as! NSArray
-            let album = item["album"] as! NSDictionary
-            let id = item["id"] as! String
-            let name = item["name"] as! String
-            let uri = item["uri"] as! String
-            let popularity = item["popularity"] as! Int
-            
+//            
+//            let artists = item["artists"] as! NSArray
+//            let album = item["album"] as! NSDictionary
+//            let id = item["id"] as! String
+//            let name = item["name"] as! String
+//            let uri = item["uri"] as! String
+//            let popularity = item["popularity"] as! Int
+//            
             trackResults.append(
-                TrackResult(artists: artists as [AnyObject], album: album, id: id, name: name, uri: uri, andPopularity: popularity)
+                Song(responseDictionary: item)
             )
         }
 

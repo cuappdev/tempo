@@ -60,6 +60,8 @@ class Player: NSObject {
         }
         notificationValue = nil
         self.player = nil
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
     }
     
     deinit {

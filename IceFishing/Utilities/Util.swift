@@ -19,9 +19,8 @@ func delay(delay:Double, closure:()->()) {
         dispatch_get_main_queue(), closure)
 }
 
-func loadImageAsync(stringURL: NSString, completion: (UIImage!, NSError!) -> ()) {
-    let url = NSURL(string: stringURL as String)
-    let requestedURL = NSURLRequest(URL: url!)
+func loadImageAsync(url: NSURL, completion: (UIImage!, NSError!) -> ()) {
+    let requestedURL = NSURLRequest(URL: url)
     
     NSURLConnection.sendAsynchronousRequest(requestedURL, queue: NSOperationQueue.mainQueue()) {
         response, data, error in

@@ -92,11 +92,11 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         addPlusButton()
     }
     
-    func selectSong(track: TrackResult) {
+    func selectSong(track: Song) {
         searchController?.showResultSelection(track)
     }
     
-    func postSong(track: TrackResult) {
+    func postSong(track: Song) {
         closeSearchView()
         childVC1.addSong(track)
         searchController.active = false
