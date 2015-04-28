@@ -138,7 +138,10 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             if !label.textColor.isEqual(color) {
                 UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
                     label.textColor = color
-                    }, completion: nil)
+                    }, completion: {
+                        (success) in
+                        label.textColor = color
+                })
             }
         }
     }

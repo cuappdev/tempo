@@ -21,6 +21,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     let kSearchBase: String = "https://api.spotify.com/v1/search?type=track&q="
     var hasSelectedResult = false
     var activePlayer: Player!
+    let missingImage = transparentPNG(36)
     
     // MARK: Initialization
     
@@ -59,9 +60,8 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
             posterFirst: track.artists[0]["name"]!,
             posterLast: "",
             date: nil,
-            avatar: transparentPNG(36))
+            avatar: missingImage)
         cell.postView.flagAsSearchResultPost()
-        cell.postView.post?.player.prepareToPlay()
         if let artwork = track.album["artwork"] as String? {
             loadImageAsync(artwork, { image, error in
                 if error == nil {
