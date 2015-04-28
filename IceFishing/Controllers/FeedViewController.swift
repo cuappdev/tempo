@@ -230,6 +230,13 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     }
     
     func initializePostCreation() {
+        if let ipath = currentlyPlayingIndexPath {
+            let currentCell = tableView.cellForRowAtIndexPath(ipath) as? FeedTableViewCell
+            if let currentCell = currentCell {
+                currentCell.postView.post?.player.pause(true)
+            }
+        }
+        
         searchResultsController = SearchTrackResultsViewController() as SearchTrackResultsViewController
         
         searchController = TrackSearchController(searchResultsController: searchResultsController)
