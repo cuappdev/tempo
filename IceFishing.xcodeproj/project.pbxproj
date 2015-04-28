@@ -23,6 +23,7 @@
 		1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9C11AACC4C0007822B0 /* Images.xcassets */; };
 		1D72D9D11AACC4C0007822B0 /* IceFishingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9D01AACC4C0007822B0 /* IceFishingTests.swift */; };
 		1D72D9DF1AACC6AA007822B0 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9DD1AACC6AA007822B0 /* ViewController.xib */; };
+		1DB476481AEF24670066014F /* SearchResultSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB476471AEF24670066014F /* SearchResultSelectionView.xib */; };
 		1DC9BBA01AE805A00033E970 /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */; };
 		1DCB96141AED5EA7007F6A4B /* APIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCB96121AED5EA7007F6A4B /* APIViewController.swift */; };
 		1DCB96151AED5EA7007F6A4B /* APIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCB96131AED5EA7007F6A4B /* APIViewController.xib */; };
@@ -179,6 +180,7 @@
 		1D72D9DD1AACC6AA007822B0 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		1D9BBEF01AE487D000C5AF8D /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Vendor/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		1D9BBF0E1AE487E300C5AF8D /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = Vendor/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
+		1DB476471AEF24670066014F /* SearchResultSelectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultSelectionView.xib; sourceTree = "<group>"; };
 		1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedTableViewCell.xib; path = IceFishing/Profile/FeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		1DCB96121AED5EA7007F6A4B /* APIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIViewController.swift; sourceTree = "<group>"; };
 		1DCB96131AED5EA7007F6A4B /* APIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = APIViewController.xib; path = ../Controllers/APIViewController.xib; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			children = (
 				1DCB96131AED5EA7007F6A4B /* APIViewController.xib */,
 				1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */,
+				1DB476471AEF24670066014F /* SearchResultSelectionView.xib */,
 				1D72D9DD1AACC6AA007822B0 /* ViewController.xib */,
 				7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */,
 			);
@@ -607,6 +610,7 @@
 				6DEE0FDE1AC34884005552F9 /* LoginViewController.xib in Resources */,
 				D17395791ADB081C00A53AEE /* FollowingViewController.xib in Resources */,
 				D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */,
+				1DB476481AEF24670066014F /* SearchResultSelectionView.xib in Resources */,
 				1D25B3181AC369D900F64047 /* README.txt in Resources */,
 				6D3FA6611AD5FD5C00B1320D /* Username.xib in Resources */,
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
