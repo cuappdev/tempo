@@ -62,7 +62,7 @@ class Song: NSObject {
     }
 
     private func setSongID(id: String) {
-        spotifyID = id;
+        spotifyID = id
     }
     
     override init() {

@@ -30,7 +30,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         view.backgroundColor = UIColor.iceDarkGray()
         tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.separatorColor = UIColor.clearColor()
-        tableView.separatorStyle = .None;
+        tableView.separatorStyle = .None
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
     }
     
@@ -73,7 +73,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     }
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 96.0;
+        return 96.0
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -117,8 +117,6 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         let searchText = searchController.searchBar.text
         if count(searchText) != 0 {
             initiateRequest(searchText)
-        } else {
-
         }
     }
     
@@ -126,12 +124,11 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     
     // Example results url: https://api.spotify.com/v1/search?type=track&q=kanye
     func initiateRequest(term: String) {
-        var searchUrl = kSearchBase + term.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
+        var searchUrl = kSearchBase + term.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         
         Alamofire.request(.GET, searchUrl)
             .responseJSON { (request, response, data, error) in
                 self.receivedResponse(data)
-                return
         }
     }
     

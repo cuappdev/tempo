@@ -86,6 +86,7 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         searchController.parent = self
         searchResultsController.delegate = self
         definesPresentationContext = true
+        searchController.searchBar.searchBarStyle = .Minimal
         
         preserveTitleView = navigationItem.titleView
         navigationItem.titleView = searchController.searchBar
@@ -93,8 +94,8 @@ class MainViewController: UIViewController, SearchTrackResultsViewControllerDele
         
         delay(0.05) {
             self.searchController.searchBar.becomeFirstResponder()
-            return
         }
+        
     }
     
     func willDismissSearchController(searchController: UISearchController) {

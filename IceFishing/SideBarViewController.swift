@@ -80,7 +80,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
    
 // TODO!
 //    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath]
 //    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

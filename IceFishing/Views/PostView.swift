@@ -92,10 +92,10 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         layer.borderColor = UIColor.iceDarkGray().CGColor
         layer.borderWidth = CGFloat(0.7)
         
-        profileNameLabel?.scrollRate = 0;
+        profileNameLabel?.scrollRate = 0
         profileNameLabel?.trailingBuffer = 8.0
-        descriptionLabel?.scrollRate = 0;
-        descriptionLabel?.trailingBuffer = 8.0;
+        descriptionLabel?.scrollRate = 0
+        descriptionLabel?.trailingBuffer = 8.0
     }
     
     dynamic private func timerFired(timer: NSTimer) {
@@ -145,9 +145,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     dynamic func changeProgress(gesture: UIPanGestureRecognizer) {
         if (gesture.state != .Ended) {
-            post?.player.pause(false);
+            post?.player.pause(false)
         } else {
-            post?.player.play(false);
+            post?.player.play(false)
         }
         
         var xTranslation = gesture.locationInView(self).x

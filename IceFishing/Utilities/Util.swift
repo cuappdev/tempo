@@ -35,8 +35,8 @@ func loadImageAsync(stringURL: NSString, completion: (UIImage!, NSError!) -> ())
 }
 
 func transparentPNG(length: Int) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(CGFloat(length), CGFloat(length)), false, 0.0);
-    var blank = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(CGFloat(length), CGFloat(length)), false, 0.0)
+    var blank = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
     return blank
 }

@@ -55,13 +55,17 @@ class Player: NSObject {
     }
     
     func destroy() {
-        NSNotificationCenter.defaultCenter().removeObserver(notificationValue)
+        if let notificationValue: AnyObject = notificationValue {
+            NSNotificationCenter.defaultCenter().removeObserver(notificationValue)
+        }
         notificationValue = nil
         self.player = nil
     }
     
-    func deinit() {
-        NSNotificationCenter.defaultCenter().removeObserver(notificationValue)
+    deinit {
+        if let notificationValue: AnyObject = notificationValue {
+            NSNotificationCenter.defaultCenter().removeObserver(notificationValue)
+        }
         notificationValue = nil
     }
     

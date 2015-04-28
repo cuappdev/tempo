@@ -26,7 +26,7 @@ class Post: NSObject {
         if let previewURL = song.previewURL {
             player = Player(fileURL: previewURL)
         } else {
-            player = Player(fileURL: NSURL(string: "https://p.scdn.co/mp3-preview/004eaa8d0769f3d464992704d9b5c152b862aa65")!);
+            player = Player(fileURL: NSURL(string: "https://p.scdn.co/mp3-preview/004eaa8d0769f3d464992704d9b5c152b862aa65")!)
         }
         
         super.init()
