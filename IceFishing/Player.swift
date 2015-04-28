@@ -22,11 +22,11 @@ class Player: NSObject {
             
             notificationValue = NSNotificationCenter.defaultCenter().addObserverForName(AVPlayerItemDidPlayToEndTimeNotification,
                 object: player?.currentItem,
-                queue: nil) { [unowned self] (notif) -> Void in
-                    self.pause(true)
-                    self.finishedPlaying = true
+                queue: nil) { [weak self] (notif) -> Void in
+                    self?.pause(true)
+                    self?.finishedPlaying = true
                     // we finished playing, destroy the object
-                    self.destroy()
+                    self?.destroy()
             }
         }
     }
@@ -55,7 +55,14 @@ class Player: NSObject {
     }
     
     func destroy() {
+        NSNotificationCenter.defaultCenter().removeObserver(notificationValue)
+        notificationValue = nil
         self.player = nil
+    }
+    
+    func deinit() {
+        NSNotificationCenter.defaultCenter().removeObserver(notificationValue)
+        notificationValue = nil
     }
     
     func play(notify: Bool) {
