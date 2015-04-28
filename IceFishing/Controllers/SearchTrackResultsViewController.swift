@@ -33,7 +33,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.separatorColor = UIColor.clearColor()
         tableView.separatorStyle = .None
-        
+        tableView.rowHeight = 96
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
     }
     
@@ -64,10 +64,6 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
             })
         }
         return cell
-    }
-
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 96.0
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

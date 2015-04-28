@@ -79,6 +79,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         //background color for the view
         self.tableView.backgroundColor = UIColor.iceDarkGray()
         self.tableView.separatorColor = UIColor.iceDarkGray()
+        tableView.rowHeight = 80
         pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
         pinViewGestureRecognizer.delegate = pinView
         lastContentOffset = tableView.contentOffset.y
@@ -151,11 +152,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     }
     
     // MARK: - UITableViewDelegate
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80.0
-    }
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.isEqual(currentlyPlayingIndexPath)) { // Same index path tapped
             posts[indexPath.row].player.togglePlaying()
