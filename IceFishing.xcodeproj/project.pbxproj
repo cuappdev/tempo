@@ -37,7 +37,6 @@
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
 		6DEE0FDD1AC34884005552F9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FDB1AC34884005552F9 /* LoginViewController.swift */; };
 		6DEE0FDE1AC34884005552F9 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DEE0FDC1AC34884005552F9 /* LoginViewController.xib */; };
-		7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E41ABF4BD1002103DE /* MainViewController.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
 		7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */; };
 		7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */; };
@@ -194,7 +193,6 @@
 		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6DEE0FDB1AC34884005552F9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6DEE0FDC1AC34884005552F9 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
-		7FCE05E41ABF4BD1002103DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
 		7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
@@ -260,7 +258,6 @@
 			isa = PBXGroup;
 			children = (
 				BA257E251ABA3FBC00D939B0 /* SWRevealViewController */,
-				7FCE05E41ABF4BD1002103DE /* MainViewController.swift */,
 				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
 				7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */,
 				BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */,
@@ -655,7 +652,6 @@
 				6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */,
 				D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */,
 				7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */,
-				7FCE05E81ABF4BD1002103DE /* MainViewController.swift in Sources */,
 				BAE499D61AD5F33B003214C0 /* SearchTrackResultsViewController.swift in Sources */,
 				1D1DD7161AE492B50066AB39 /* SubmitBugViewController.swift in Sources */,
 				BAE499E11AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift in Sources */,

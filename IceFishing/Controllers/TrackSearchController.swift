@@ -14,7 +14,7 @@ class TrackSearchController: UISearchController {
     let kResultSelectionHeight = 72
     var bottomView: UIView!
     var selectedTrack: TrackResult!
-    var parent: MainViewController!
+    var parent: FeedViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()

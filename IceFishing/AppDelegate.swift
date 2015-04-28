@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let viewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
         
-        let navController = UINavigationController(rootViewController: MainViewController())
+        let navController = UINavigationController(rootViewController: FeedViewController(nibName: "FeedViewController", bundle: nil))
         let revealController = SWRevealViewController(rearViewController: sidebarVC, frontViewController: navController)
         self.window!.rootViewController = revealController
         let gestureRecognizer = UISwipeGestureRecognizer()

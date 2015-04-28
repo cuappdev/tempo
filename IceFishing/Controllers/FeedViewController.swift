@@ -9,7 +9,12 @@
 import UIKit
 
 var addedSongs = 0
-class FeedViewController: UITableViewController, UIScrollViewDelegate {
+class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTrackResultsViewControllerDelegate, UISearchControllerDelegate {
+
+    var searchController: TrackSearchController!
+    var searchResultsController: SearchTrackResultsViewController!
+    var preserveTitleView: UIView!
+    
     var posts: [Post] = []
     var currentlyPlayingIndexPath: NSIndexPath?
     var topPinViewContainer: UIView = UIView()
@@ -29,6 +34,31 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //—————————————from MAIN VC——————————————————
+        navigationItem.title = "Songs"
+        addPlusButton()
+        
+        navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        navigationController?.navigationBar.barStyle = .Black
+        //        navigationController?.navigationBar.translucent = true
+        
+        // Add hamburger menu to the left side of the navbar
+        var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
+        menuButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
+        menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
+        
+        // Pop out sidebar when hamburger menu tapped
+        if self.revealViewController() != nil {
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
+        // Arbitrary additions for SWRevealVC
+        revealViewController().panGestureRecognizer()
+        revealViewController().tapGestureRecognizer()
+        //—————————————from MAIN VC——————————————————
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
@@ -188,5 +218,59 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate {
                 }
             }
         }
+    }
+    
+    // From Old Main VC, might need some cleanup
+    
+    func addPlusButton() {
+        // Add plus sign to the right side of the navbar
+        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "initializePostCreation")
+        navigationItem.rightBarButtonItem = button
+    }
+    
+    func initializePostCreation() {
+        searchResultsController = SearchTrackResultsViewController() as SearchTrackResultsViewController
+        
+        searchController = TrackSearchController(searchResultsController: searchResultsController)
+        searchController.searchResultsUpdater = searchResultsController
+        searchController.delegate = self
+        searchController.parent = self
+        searchResultsController.delegate = self
+        definesPresentationContext = true
+        searchController.searchBar.searchBarStyle = .Minimal
+        
+        preserveTitleView = navigationItem.titleView
+        navigationItem.titleView = searchController.searchBar
+        navigationItem.rightBarButtonItem = nil
+        
+        delay(0.05) {
+            self.searchController.searchBar.becomeFirstResponder()
+        }
+        
+    }
+    
+    func willDismissSearchController(searchController: UISearchController) {
+        searchResultsController.finishSearching()
+        navigationItem.titleView = preserveTitleView
+        addPlusButton()
+    }
+    
+    func selectSong(track: TrackResult) {
+        searchController?.showResultSelection(track)
+    }
+    
+    func postSong(track: TrackResult) {
+        closeSearchView()
+        addSong(track)
+        searchController.active = false
+        
+        println("TODO: add this track")
+        println(track)
+    }
+    
+    func closeSearchView() {
+        searchController?.searchBar.text = ""
+        searchController?.searchBar.resignFirstResponder()
+        searchResultsController.finishSearching()
     }
 }
