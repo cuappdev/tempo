@@ -17,6 +17,8 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     
     var posts: [Post] = []
     var currentlyPlayingIndexPath: NSIndexPath?
+    var currentlyPlayingPost: Post?
+    
     var topPinViewContainer: UIView = UIView()
     var bottomPinViewContainer: UIView = UIView()
     @IBOutlet var pinView: PostView!
@@ -163,6 +165,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
                 posts[currentlyPlayingIndexPath.row].player.progress = 1.0 // Fill cell as played
             }
             posts[indexPath.row].player.play(true)
+            currentlyPlayingPost = posts[indexPath.row]
         }
         
         currentlyPlayingIndexPath = indexPath
@@ -230,18 +233,16 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     }
     
     func initializePostCreation() {
-        if let ipath = currentlyPlayingIndexPath {
-            let currentCell = tableView.cellForRowAtIndexPath(ipath) as? FeedTableViewCell
-            if let currentCell = currentCell {
-                currentCell.postView.post?.player.pause(true)
-            }
-        }
-        
         if (searchResultsController == nil) {
             searchResultsController = SearchTrackResultsViewController() as SearchTrackResultsViewController
         }
         
-        searchController = TrackSearchController(searchResultsController: searchResultsController)
+        if (searchController == nil) {
+            searchController = TrackSearchController(searchResultsController: searchResultsController)
+        }
+        
+        searchResultsController.parent = self
+        searchResultsController.shouldResume = currentlyPlayingPost?.player.isPlaying() ?? false
         searchController.searchResultsUpdater = searchResultsController
         searchController.delegate = self
         searchController.parent = self

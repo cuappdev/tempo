@@ -14,7 +14,8 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     // MARK: Properties
     
     let kSearchResultHeight: CGFloat = 72
-    
+    weak var parent: FeedViewController?
+    var shouldResume = false
     let tableViewCellIdentifier = "searchTrackResultsCell"
     var results: [Song] = []
     var delegate: SearchTrackResultsViewControllerDelegate!
@@ -76,6 +77,10 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
+        if let post = parent?.currentlyPlayingPost {
+            post.player.pause(false)
+        }
+        
         let track = results[indexPath.row]
         delegate.selectSong(track)
         
@@ -100,6 +105,12 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     func finishSearching() {
         if activePlayer != nil {
             activePlayer.destroy()
+        }
+        
+        if (shouldResume) {
+            if let post = parent?.currentlyPlayingPost {
+                post.player.play(false)
+            }
         }
     }
     
