@@ -237,7 +237,9 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
             }
         }
         
-        searchResultsController = SearchTrackResultsViewController() as SearchTrackResultsViewController
+        if (searchResultsController == nil) {
+            searchResultsController = SearchTrackResultsViewController() as SearchTrackResultsViewController
+        }
         
         searchController = TrackSearchController(searchResultsController: searchResultsController)
         searchController.searchResultsUpdater = searchResultsController
