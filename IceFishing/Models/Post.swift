@@ -15,6 +15,7 @@ class Post: NSObject {
     var player: Player!
     var song: Song!
     var date: NSDate?
+    var likes = 0
 
     init(song: Song, posterFirst: String, posterLast: String, date: NSDate?, avatar: UIImage?) {
         self.song = song
@@ -34,6 +35,10 @@ class Post: NSObject {
     
     convenience init(trackResult: TrackResult, posterFirst: String, posterLast: String, date: NSDate?, avatar: UIImage?) {
         self.init(song: Song(spotifyURI: trackResult.id), posterFirst: posterFirst, posterLast: posterLast, date: date, avatar: avatar)
+    }
+    
+    func relativeDate() -> String {
+        return ""
     }
     
     override init() {
