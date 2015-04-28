@@ -190,7 +190,7 @@
 		6D3FA6601AD5FD5C00B1320D /* Username.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Username.xib; sourceTree = "<group>"; };
 		6DA5FE4C1AED72F800E795DD /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		6DEE0FC91AC34811005552F9 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Profile/User.swift; sourceTree = "<group>"; };
 		6DEE0FDB1AC34884005552F9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6DEE0FDC1AC34884005552F9 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -427,7 +427,6 @@
 				D102A9D01AE88CB400C66385 /* SideBarTableViewCell.xib */,
 				6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */,
 				6D3FA6601AD5FD5C00B1320D /* Username.xib */,
-				6DEE0FD01AC34811005552F9 /* User.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -447,6 +446,7 @@
 				BAE499D31AD5F2D6003214C0 /* TrackResult.swift */,
 				FA1E1A771ADB06A3007C823C /* Post.swift */,
 				FA1E1A7B1ADB072A007C823C /* Song.swift */,
+				6DEE0FD01AC34811005552F9 /* User.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";

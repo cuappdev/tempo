@@ -11,9 +11,11 @@ import SwiftyJSON
 
 class User: NSObject {
     
+    static let currentUser: User = User()
+    
     var caption : String = ""
     var createdAt: String = ""
-    var email: String = ""
+    var email: String = "temp@example.com"
     var fbid: String = ""
     var followers: [String] = []
     var followersCount: Int!
@@ -21,11 +23,12 @@ class User: NSObject {
     var id: String = ""
     var likeCount: Int!
     var locationID: String = ""
-    var name: String = ""
+    var name: String = "Temp Name"
     var updatedAt: String!
-    var username: String = ""
-
+    var username: String = "temp_username"
     
+    override init() {}
+
     init(json: JSON) {
         self.caption = json["caption"].stringValue
         self.createdAt = json["created_at"].stringValue

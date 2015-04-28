@@ -11,8 +11,8 @@ import UIKit
 var addedSongs = 0
 class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTrackResultsViewControllerDelegate, UISearchControllerDelegate {
 
-    var searchController: TrackSearchController!
-    var searchResultsController: SearchTrackResultsViewController!
+    lazy var searchResultsController: SearchTrackResultsViewController = SearchTrackResultsViewController()
+    lazy var searchController: TrackSearchController = TrackSearchController(searchResultsController: self.searchResultsController)
     var preserveTitleView: UIView!
     
     var posts: [Post] = []
@@ -229,14 +229,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     }
     
     func initializePostCreation() {
-        if (searchResultsController == nil) {
-            searchResultsController = SearchTrackResultsViewController() as SearchTrackResultsViewController
-        }
-        
-        if (searchController == nil) {
-            searchController = TrackSearchController(searchResultsController: searchResultsController)
-        }
-        
         searchResultsController.parent = self
         searchResultsController.shouldResume = currentlyPlayingPost?.player.isPlaying() ?? false
         searchController.searchResultsUpdater = searchResultsController
@@ -263,7 +255,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     }
     
     func selectSong(track: Song) {
-        searchController?.showResultSelection(track)
+        searchController.showResultSelection(track)
     }
     
     func postSong(track: Song) {
@@ -276,8 +268,8 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     }
     
     func closeSearchView() {
-        searchController?.searchBar.text = ""
-        searchController?.searchBar.resignFirstResponder()
+        searchController.searchBar.text = ""
+        searchController.searchBar.resignFirstResponder()
         searchResultsController.finishSearching()
     }
 }

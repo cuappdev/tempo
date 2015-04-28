@@ -15,6 +15,16 @@ class APIViewController: UIViewController {
             println("Valid Username: \(isValid)")
         }
         
-        API.sharedAPI.getSession()
+        API.sharedAPI.getSession {
+            print($0)
+        }
+    }
+    
+    init() {
+        super.init(nibName: "APIViewController", bundle: nil)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

@@ -8,16 +8,23 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
-//typealias ResponseHandler = (NSURLRequest, NSHTTPURLResponse?, AnyObject?, NSError?) -> Void
-//typealias ProgressHandler = (Int64, Int64, Int64) -> Void
+// TODO: Fetch userID from User object
+let userID = 8
 
 enum Router: URLStringConvertible {
     static let baseURLString = "http://icefishing-web.herokuapp.com"
     case Root
     case ValidUsername
-    case FeedEveryone
     case Sessions
+    case Users
+    case Feed
+    case FeedEveryone
+    case History
+    case Likes
+    case Followings
+    case Posts
     
     var URLString: String {
         let path: String = {
@@ -26,10 +33,22 @@ enum Router: URLStringConvertible {
                 return "/"
             case .ValidUsername:
                 return "/users/valid_username"
-            case .FeedEveryone:
-                return "/feed"
             case .Sessions:
                 return "/sessions"
+            case .Users:
+                return "/users/\(userID)"
+            case .Feed:
+                return "/\(userID)/feed"
+            case .FeedEveryone:
+                return "/feed"
+            case .History:
+                return "/\(userID)/posts"
+            case .Likes:
+                return "/likes"
+            case .Followings:
+                return "/followings"
+            case .Posts:
+                return "/posts"
             }
             }()
         return Router.baseURLString + path
@@ -45,50 +64,78 @@ class API {
         return NSUserDefaults.standardUserDefaults().objectForKey("SessionCode") as? String
     }
     
-    func userNameIsValid(name: String, completion: Bool -> Void) {
-        Alamofire
-            .request(.GET, Router.ValidUsername, parameters: ["username" : name])
-            .responseJSON { (_, _, json, _) -> Void in
-                if let json = json as? [String : Bool], isValid = json["is_valid"] {
-                    completion(isValid)
-                } else {
-                    completion(false)
-                }
-        }
+    func userNameIsValid(username: String, completion: Bool -> Void) {
+        let map: [String : Bool] -> Bool? = { $0["is_valid"] }
+        get(.ValidUsername, params: ["username" : username], map: map, completion: completion)
     }
     
-    func getSession() {
+    func getSession(completion: User -> Void) {
         let user = [
             "email": "ldd49@cornell.edu",
             "name": "Lucas Derraugh",
             "username": "ldd49",
             "fbid": "1"
         ]
-        Alamofire
-            .request(.POST, Router.Sessions, parameters: ["user" : user], encoding: .JSON)
-            .responseJSON { (request, response, data, error) -> Void in
-                println(response)
-                println(data)
-                println(error)
-        }
+        let map: [String : User] -> User? = { $0["is_valid"] }
+        post(.Sessions, params: ["user" : user], map: map, completion: completion)
     }
     
     // TODO: Change completion handles to match proper objects
     
-    func fetchFeed(userID: Int, completion: Bool -> Void) {
-        // TODO
+    func fetchUser(userID: Int, completion: User -> Void) {
+        let map: [String : User] -> User? = { $0["is_valid"] }
+        get(.Users, params: ["user_id" : userID, "session_code" : sessionCode!], map: map, completion: completion)
     }
     
-    func fetchPosts(userID: Int, completion: Bool -> Void) {
-        // TODO
+    func fetchFeed(userID: Int, completion: [Post] -> Void) {
+        let map: [String : [Post]] -> [Post]? = { $0["is_valid"] }
+        get(.Feed, params: ["user_id" : userID, "session_code" : sessionCode!], map: map, completion: completion)
     }
     
-    func fetchFollowing(userID: Int, completion: Bool -> Void) {
-        // TODO
+    func fetchFeedOfEveryone(completion: [Post] -> Void) {
+        let map: [String : [Post]] -> [Post]? = { $0["is_valid"] }
+        get(.FeedEveryone, params: ["session_code" : sessionCode!], map: map, completion: completion)
     }
     
-    func fetchFollowers(userID: Int, completion: Bool -> Void) {
-        // TODO
+    func fetchPosts(userID: Int, completion: [Post] -> Void) {
+        let map: [String : [Post]] -> [Post]? = { $0["is_valid"] }
+        get(.History, params: ["id" : userID, "session_code" : sessionCode!], map: map, completion: completion)
     }
     
+    func updateLikes(postID: Int, unlike: Bool, completion: [String : Bool] -> Void) {
+        post(.Likes, params: ["post_id" : postID, "unlike" : unlike, "session_code" : sessionCode!], map: { $0 }, completion: completion)
+    }
+    
+    func updateFollowings(userID: Int, unfollow: Bool, completion: [String : Bool] -> Void) {
+        post(.Followings, params: ["user_id" : userID, "unfollow" : unfollow, "session_code" : sessionCode!], map: { $0 }, completion: completion)
+    }
+    
+    func updatePost(userID: Int, spotifyURL: String, completion: [String : AnyObject] -> Void) {
+        post(.Posts, params: ["user_id" : userID, "spotify_url" : spotifyURL, "session_code" : sessionCode!], map: { $0 }, completion: completion)
+    }
+    
+    // MARK: Private Methods
+    
+    private func post<O, T>(router: Router, params: [String : AnyObject], map: O -> T?, completion: T -> Void) {
+        makeNetworkRequest(.POST, router: router, params: params, map: map, completion: completion)
+    }
+    
+    private func get<O, T>(router: Router, params: [String : AnyObject], map: O -> T?, completion: T -> Void) {
+        makeNetworkRequest(.GET, router: router, params: params, map: map, completion: completion)
+    }
+    
+    private func makeNetworkRequest<O, T>(method: Alamofire.Method, router: Router, params: [String : AnyObject], map: O -> T?, completion: T -> Void) {
+        Alamofire
+            .request(method, router, parameters: params)
+            .responseJSON { (request, response, json, error) -> Void in
+                if let json = json as? O, obj = map(json) {
+                    completion(obj)
+                } else {
+                    println("Couldn't decompose object")
+                    println("Error: \(error)")
+                    println("Request: \(request)")
+                    println("Response: \(response)")
+                }
+        }
+    }
 }
