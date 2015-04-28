@@ -31,10 +31,18 @@
                         <action selector="logIn:" destination="-1" eventType="touchUpInside" id="54R-7R-xOR"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ice Fishing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T8J-AL-ZeE">
+                    <rect key="frame" x="171" y="150" width="259" height="69"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="50"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="T8J-AL-ZeE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="150" id="3DE-5Y-lZh"/>
                 <constraint firstAttribute="centerY" secondItem="Vrr-zH-v88" secondAttribute="centerY" id="dbU-oY-KHe"/>
+                <constraint firstAttribute="centerX" secondItem="T8J-AL-ZeE" secondAttribute="centerX" id="hPv-gK-WqQ"/>
                 <constraint firstAttribute="centerX" secondItem="Vrr-zH-v88" secondAttribute="centerX" constant="-0.5" id="uFp-qd-aDe"/>
             </constraints>
         </view>

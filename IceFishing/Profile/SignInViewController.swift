@@ -8,56 +8,62 @@
 
 import UIKit
 
-class SignInViewController: UIViewController, FBLoginViewDelegate {
+class SignInViewController: UIViewController {
+    
+    var searchNavigationController: UINavigationController!
     
     @IBOutlet weak var loginButton: UIButton!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+    
     @IBAction func logIn(sender: UIButton) {
-        if (FBSession.activeSession().state == FBSessionState.Open || FBSession.activeSession().state == FBSessionState.OpenTokenExtended)
-        {
-            FBSession.activeSession().closeAndClearTokenInformation()
-        }
-        else
-        {
-            // Open a session showing the user the login UI
-            // You must ALWAYS ask for public_profile permissions when opening a session
+        
+        // If there is an existing open session
+        if (FBSession.activeSession().state == FBSessionState.Open || FBSession.activeSession().state == FBSessionState.OpenTokenExtended) {
+            
+            let mainVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
+            self.searchNavigationController = UINavigationController(rootViewController: mainVC)
+            self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
+            
+        } else {
+            
+            // Open a session with the login UI
             FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: true, completionHandler: {
                 (session:FBSession!, state:FBSessionState, error:NSError!) in
                 
+                // Handle session state changes
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
                 appDelegate.sessionStateChanged(session, state: state, error: error)
+                
+                // Request FB user info
+                if (session.isOpen) {
+                    var userRequest : FBRequest = FBRequest.requestForMe()
+                    userRequest.startWithCompletionHandler{(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+  
+                        if (error == nil) {
+                            let userName = result["name"]
+                            let userID = result["id"]
+                            let userEmail = result["email"]
+                            
+//                            let usernameViewController = UsernameViewController(nibName: "Username", bundle: nil)
+//                            self.searchNavigationController = UINavigationController(rootViewController: usernameViewController)
+//                            self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
+                            
+                            let mainVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
+                            self.searchNavigationController = UINavigationController(rootViewController: mainVC)
+                            self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
+                            
+                        } else {
+                            println("Error")
+                        }
+                    }
+                }
             })
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    // Facebook Delegate Methods
-    
-    func loginViewShowingLoggedInUser(loginView: FBLoginView!) {
-        println("User Logged In")
-
-    }
-    
-    func loginViewFetchedUserInfo(loginView: FBLoginView!, user: FBGraphUser) {
-        println("User: \(user)")
-        println("User ID: \(user.objectID)")
-        println("User Name: \(user.name)")
-        var userEmail = user.objectForKey("email") as! String
-        println("User Email: \(userEmail)")
-
-    }
-    
-    func loginViewShowingLoggedOutUser(loginView: FBLoginView!) {
-        FBSession.activeSession().closeAndClearTokenInformation()
-        FBSession.activeSession().close()
-    }
-    
-    func loginView(loginView: FBLoginView!, handleError: NSError) {
-        println("Error: \(handleError.localizedDescription)")
+        
     }
     
 }

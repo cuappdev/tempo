@@ -15,51 +15,85 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        FBLoginView.self
-        FBProfilePictureView.self
-        
-        // Check for a cached session whenever app is opened
-        if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded
-        {
-            
-            // If there's one, just open the session silently, without showing the user the login UI
-            FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false, completionHandler: {
-                (session, state, error) -> Void in
-                self.sessionStateChanged(session, state: state, error: error)
-            })
-        }
-        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         
-        let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
-        let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
+        // Check for a cached session whenever app is opened
+        if (FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded) {
+            
+            // If there's one, open session without displaying Login UI
+            FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false, completionHandler: { (session, state, error) -> Void in
+                self.sessionStateChanged(session, state: state, error: error)
+            })
+        }
         
-        let viewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
-        
-        let navController = UINavigationController(rootViewController: FeedViewController(nibName: "FeedViewController", bundle: nil))
-        let revealController = SWRevealViewController(rearViewController: sidebarVC, frontViewController: navController)
-        self.window!.rootViewController = revealController
-        let gestureRecognizer = UISwipeGestureRecognizer()
-        gestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
-        gestureRecognizer.numberOfTouchesRequired = 3
-        let screenCapture = ADScreenCapture(navigationController: revealController, frame: revealController.view.frame, gestureRecognizer: gestureRecognizer)
-        revealController.view.addSubview(screenCapture)
-        
+        // Go to feed if open session, else sign in screen
+        toggleRootVC()
+
         return true
+    }
+    
+    // Toggle rootViewController
+    func toggleRootVC() {
+        let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
+        let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
+        
+        if (!FBSession.activeSession().isOpen) {
+            self.window!.rootViewController = signInVC
+        } else {
+            let navController = UINavigationController(rootViewController: FeedViewController(nibName: "FeedViewController", bundle: nil))
+            let revealController = SWRevealViewController(rearViewController: sidebarVC, frontViewController: navController)
+            self.window!.rootViewController = revealController
+            let gestureRecognizer = UISwipeGestureRecognizer()
+            gestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
+            gestureRecognizer.numberOfTouchesRequired = 3
+            let screenCapture = ADScreenCapture(navigationController: revealController, frame: revealController.view.frame, gestureRecognizer: gestureRecognizer)
+            revealController.view.addSubview(screenCapture)
+        }
     }
     
     // Facebook Session
     func sessionStateChanged(session : FBSession, state : FBSessionState, error : NSError?)
     {
-        // If the session was opened successfully
-        if state == FBSessionState.Open {
-            println("Session Opened")
+        if (error != nil) {
+            FBSession.activeSession().closeAndClearTokenInformation()
+        } else {
+            if (state == FBSessionState.Open) {
+                println("Session Opened")
+                // Request FB user info
+                var userRequest : FBRequest = FBRequest.requestForMe()
+                userRequest.startWithCompletionHandler{(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+                    
+                    if (error == nil) {
+                        let userName = result["name"]
+                        let userID = result["id"]
+                        let userEmail = result["email"]
+                        println(userName)
+                        println(userID)
+                        println(userEmail)
+                        
+                    } else {
+                        println("Error")
+                    }
+                }
+            }
+            toggleRootVC()
         }
-        // If the session closed
-        if state == FBSessionState.Closed {
+        
+        // Error Messages
+        if (state == FBSessionState.Closed || state == FBSessionState.ClosedLoginFailed) {
             println("Session Closed")
+        }
+        if (FBErrorUtility.shouldNotifyUserForError(error) == true) {
+            println("Error")
+        } else {
+            if (FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.UserCancelled) {
+                println("Login Cancelled")
+            }
+            else if (FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.AuthenticationReopenSession) {
+                println("Invalid Session")
+            }
         }
     }
     
