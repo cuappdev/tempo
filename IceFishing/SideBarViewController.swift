@@ -23,8 +23,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func logOut(sender: UIButton) {
         FBSession.activeSession().closeAndClearTokenInformation()
-        let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
-        self.presentViewController(signInVC, animated: false, completion: nil)
+//        let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
+//        self.presentViewController(signInVC, animated: false, completion: nil)
     }
     
     override func viewDidLoad() {

@@ -24,9 +24,9 @@ class SignInViewController: UIViewController {
         // If there is an existing open session
         if (FBSession.activeSession().state == FBSessionState.Open || FBSession.activeSession().state == FBSessionState.OpenTokenExtended) {
             
-            let mainVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
-            self.searchNavigationController = UINavigationController(rootViewController: mainVC)
-            self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
+            //let mainVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
+            //self.searchNavigationController = UINavigationController(rootViewController: mainVC)
+            //self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
             
         } else {
             
@@ -52,9 +52,9 @@ class SignInViewController: UIViewController {
 //                            self.searchNavigationController = UINavigationController(rootViewController: usernameViewController)
 //                            self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
                             
-                            let mainVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
-                            self.searchNavigationController = UINavigationController(rootViewController: mainVC)
-                            self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
+//                            let mainVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
+//                            self.searchNavigationController = UINavigationController(rootViewController: mainVC)
+//                            self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
                             
                         } else {
                             println("Error")

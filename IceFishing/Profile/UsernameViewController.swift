@@ -36,11 +36,6 @@ class UsernameViewController: UIViewController, FBLoginViewDelegate {
                 Create a user by doing a POST request to /sessions with parameters of a user object(name, email, FB id, username)
             }
         */
-        
-        let mainVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
-        self.searchNavigationController = UINavigationController(rootViewController: mainVC)
-        self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
-
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
