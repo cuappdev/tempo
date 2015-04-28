@@ -17,7 +17,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     weak var parent: FeedViewController?
     var shouldResume = false
     let tableViewCellIdentifier = "searchTrackResultsCell"
-    var results: [Song] = []
+    var results: [Post] = []
     var delegate: SearchTrackResultsViewControllerDelegate!
     let kSearchBase: String = "https://api.spotify.com/v1/search?type=track&q="
     var hasSelectedResult = false
@@ -54,9 +54,9 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
         let track = results[indexPath.row]
-        cell.postView.post = Post(song: track, posterFirst: track.artist, posterLast: "", date: nil, avatar: missingImage)
+        cell.postView.post = track
         cell.postView.flagAsSearchResultPost()
-        if let artwork = track.albumArtworkURL {
+        if let artwork = track.song.albumArtworkURL {
             loadImageAsync(artwork, { image, error in
                 if error == nil {
                     cell.postView.setImage(image)
@@ -74,7 +74,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         }
         
         let track = results[indexPath.row]
-        delegate.selectSong(track)
+        delegate.selectSong(track.song)
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
         
@@ -139,7 +139,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         
         var items = tracks["items"] as! NSArray
         
-        var trackResults: [Song] = []
+        var trackResults: [Post] = []
         
         for var i = 0; i < items.count; i++ {
             let item = items[i] as! NSDictionary
@@ -150,9 +150,9 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
 //            let name = item["name"] as! String
 //            let uri = item["uri"] as! String
 //            let popularity = item["popularity"] as! Int
-//            
+            let track = Song(responseDictionary: item)
             trackResults.append(
-                Song(responseDictionary: item)
+                Post(song: track, posterFirst: track.artist, posterLast: "", date: nil, avatar: missingImage)
             )
         }
 
