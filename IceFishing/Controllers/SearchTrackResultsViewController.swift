@@ -53,10 +53,6 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
-        if cell.postView.post != nil {
-            cell.postView.post!.player.destroy()
-        }
-
         let track = results[indexPath.row]
         cell.postView.post = Post(song: track, posterFirst: track.artist, posterLast: "", date: nil, avatar: missingImage)
         cell.postView.flagAsSearchResultPost()
