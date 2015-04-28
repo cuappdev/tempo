@@ -54,9 +54,7 @@ class Song: NSObject {
         title = response["name"] as? String ?? ""
         previewURL = NSURL(string: response["preview_url"] as? String ?? "");
         let artists = response["artists"] as? NSArray ?? NSArray()
-        if (artists.count > 1) {
-            artist = "Various Artists"
-        } else if (artists.count == 0) {
+        if (artists.count == 0) {
             artist = "Unknown Artist"
         } else {
             artist = artists[0]["name"] as? String ?? "Unknown Artist"
