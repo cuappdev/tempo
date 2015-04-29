@@ -189,7 +189,7 @@
 		6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
 		6D3FA6601AD5FD5C00B1320D /* Username.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Username.xib; sourceTree = "<group>"; };
 		6DA5FE4C1AED72F800E795DD /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
-		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Profile/User.swift; sourceTree = "<group>"; };
+		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		6DEE0FDB1AC34884005552F9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6DEE0FDC1AC34884005552F9 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -198,12 +198,12 @@
 		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IceFishing-Bridging-Header.h"; path = "Controllers/IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		BAE499D31AD5F2D6003214C0 /* TrackResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackResult.swift; path = Controllers/TrackResult.swift; sourceTree = "<group>"; };
+		BAE499D31AD5F2D6003214C0 /* TrackResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackResult.swift; path = Models/TrackResult.swift; sourceTree = "<group>"; };
 		BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackResultsViewController.swift; sourceTree = "<group>"; };
 		BAE499E01AD6029F003214C0 /* SearchTrackResultsViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackResultsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		C0CF7B971AE425450083606C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		D102A9C51AE889D600C66385 /* SideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideBarViewController.swift; path = ../SideBarViewController.swift; sourceTree = "<group>"; };
-		D102A9C61AE889D600C66385 /* SideBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SideBarViewController.xib; path = ../SideBarViewController.xib; sourceTree = "<group>"; };
+		D102A9C51AE889D600C66385 /* SideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
+		D102A9C61AE889D600C66385 /* SideBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarViewController.xib; sourceTree = "<group>"; };
 		D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarTableViewCell.swift; sourceTree = "<group>"; };
 		D102A9D01AE88CB400C66385 /* SideBarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarTableViewCell.xib; sourceTree = "<group>"; };
 		D17395721ADB080900A53AEE /* FollowersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersViewController.swift; sourceTree = "<group>"; };
@@ -327,11 +327,11 @@
 				FA1A91301AC3899E00774EF3 /* Player.swift */,
 				FA1E1A7A1ADB06A8007C823C /* Models */,
 				6DEE0FC31AC34811005552F9 /* Profile */,
-				1DE932921AAD12A700AD3BF0 /* Vendor */,
 				1D046D8C1AB6953600D0354B /* Controllers */,
 				1D65392E1AD0E23800E82627 /* Views */,
 				1D1DD7101AE492750066AB39 /* Utilities */,
 				1D046D8A1AB6951C00D0354B /* XIBs */,
+				1DE932921AAD12A700AD3BF0 /* Vendor */,
 				1D72D9C11AACC4C0007822B0 /* Images.xcassets */,
 				1D72D9C31AACC4C0007822B0 /* LaunchScreen.xib */,
 				BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */,
