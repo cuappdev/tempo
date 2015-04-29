@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+import SwiftyJSON
 
 class IceFishingTests: XCTestCase {
     
@@ -31,6 +32,10 @@ class IceFishingTests: XCTestCase {
         self.measureBlock() {
             // Put the code you want to measure the time of here.
         }
+    }
+    
+    func testUserObject() { //Written by Joe
+        
     }
     
 }
