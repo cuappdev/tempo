@@ -11,13 +11,21 @@ import UIKit
 class APIViewController: UIViewController {
 
     @IBAction func sendRequest(sender: AnyObject) {
-        API.sharedAPI.userNameIsValid("lucasderraugh") { isValid in
-            println("Valid Username: \(isValid)")
+//        API.sharedAPI.userNameIsValid("lucasderraugh") { isValid in
+//            println("Valid Username: \(isValid)")
+//        }
+        
+        API.sharedAPI.getCurrentUser { currentUser in
+            println(currentUser)
+//            API.sharedAPI.fetchUser(currentUser.id) {
+//                println($0)
+//            }
+            API.sharedAPI.updatePost(User.currentUser.id, spotifyURL: "spotify:track:4B3RmT3cGvh8By3WY9pbIx") {
+                println($0)
+            }
         }
         
-        API.sharedAPI.getSession {
-            print($0)
-        }
+        
     }
     
     init() {

@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class User: NSObject {
     
-    static let currentUser: User = User()
+    static var currentUser: User = User()
     
     var caption : String = ""
     var createdAt: String = ""
@@ -20,7 +20,7 @@ class User: NSObject {
     var followers: [String] = []
     var followersCount: Int!
     var hipsterScore = 0
-    var id: String = ""
+    var id: Int = 0
     var likeCount: Int!
     var locationID: String = ""
     var name: String = "Temp Name"
@@ -41,7 +41,7 @@ class User: NSObject {
         }
         self.followersCount = json["followers_count"].intValue
         self.hipsterScore = json["hipster_score"].intValue
-        self.id = json["id"].stringValue
+        self.id = json["id"].intValue
         self.likeCount = json["like_count"].intValue
         self.locationID = json["location_id"].stringValue
         self.name = json["name"].stringValue
