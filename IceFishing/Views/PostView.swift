@@ -15,6 +15,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var avatarImageView: UIImageView?
     @IBOutlet var descriptionLabel: MarqueeLabel?
     @IBOutlet var dateLabel: UILabel?
+    @IBOutlet var spacingConstraint: NSLayoutConstraint?
     
     var fillColor = UIColor.iceDarkGray()
  
@@ -96,6 +97,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         profileNameLabel?.trailingBuffer = 8.0
         descriptionLabel?.scrollRate = 0
         descriptionLabel?.trailingBuffer = 8.0
+        
+    }
+    
+    override func didMoveToSuperview() {
+        spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
     }
     
     dynamic private func timerFired(timer: NSTimer) {
