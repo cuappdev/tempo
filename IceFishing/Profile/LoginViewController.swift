@@ -26,8 +26,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var postHistoryLabel: UILabel!
     @IBOutlet weak var divider: UIView!
-    @IBOutlet weak var postCalendarView: UIView!
-    
+    @IBOutlet weak var postCalendarView: HipCalendarView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,10 +62,7 @@ class LoginViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Post history calendar
-        var collectionView: HipCalendarView = HipCalendarView()
-        collectionView.frame = postCalendarView.frame
-        collectionView.initialize()
-        postCalendarView.addSubview(collectionView)
+        postCalendarView.initialize()
         
         // Add profile button to the left side of the navbar
         var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))

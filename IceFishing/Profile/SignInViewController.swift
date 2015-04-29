@@ -49,11 +49,6 @@ class SignInViewController: UIViewController {
                             let userID = result["id"]
                             let userEmail = result["email"]
                             
-                            // Check if new user
-//                            api.fetchUser(userID, completion: {(user: User) -> Void in
-//                                
-//                            })
-                            
                             let usernameViewController = UsernameViewController(nibName: "Username", bundle: nil)
                             self.searchNavigationController = UINavigationController(rootViewController: usernameViewController)
                             self.presentViewController(self.searchNavigationController, animated: false, completion: nil)

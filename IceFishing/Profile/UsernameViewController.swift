@@ -32,28 +32,6 @@ class UsernameViewController: UIViewController {
             if (success) {
                 // Username available: create new user
                 // Create a user by doing a POST request to /sessions with parameters of a user object(name, email, FB id, username)
-                var userRequest : FBRequest = FBRequest.requestForMe()
-                userRequest.startWithCompletionHandler{(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-                    
-                    if (error == nil) {
-                        let userName = result["name"] as! String
-                        let userID = result["id"] as! String
-                        let userEmail = result["email"] as! String
-                        
-                        self.api.getSession({ (user: User) -> Void in
-                            let user = [
-                                "email": userEmail,
-                                "name": userName,
-                                "username": username,
-                                "fbid": userID
-                            ]
-                        })
-                        
-                    } else {
-                        println("Error")
-                    }
-                }
-                
             } else {
                 // Username already taken (prompt user with error alert in UsernameVC)
                 var errorAlert = UIAlertController(title: "Sorry!", message: "Username is taken.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -71,8 +49,6 @@ class UsernameViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        // Custom initialization
-        println("username view controller")
     }
     
     required init(coder aDecoder: NSCoder) {

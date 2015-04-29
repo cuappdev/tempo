@@ -30,7 +30,7 @@ class HipCalendarCollectionReusableView: UICollectionReusableView {
         titleLabel = UILabel(frame: rect)
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)!
-        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.textColor = UIColor.iceDarkRed()
         self.addSubview(titleLabel)
     }
     

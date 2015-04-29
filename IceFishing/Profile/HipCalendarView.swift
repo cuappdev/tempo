@@ -105,8 +105,6 @@ class HipCalendarView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
             // TODO: Push to tableViewCell associated with that date
             let postHistoryVC = PostHistoryTableViewController(nibName: "PostHistoryTableViewController", bundle: nil)
             postHistoryVC.postedDates = dates
-            
-            
         }
         
         if (delegate != nil) {

@@ -31,9 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Go to feed if open session, else sign in screen
         toggleRootVC()
         
-//        let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
-//        self.window!.rootViewController = usernameVC
-        
         return true
     }
     
