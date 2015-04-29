@@ -96,6 +96,18 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         profileNameLabel?.trailingBuffer = 8.0
         descriptionLabel?.scrollRate = 0
         descriptionLabel?.trailingBuffer = 8.0
+        
+        profileNameLabel?.type = .Continuous
+        profileNameLabel?.fadeLength = 8
+        profileNameLabel?.tapToScroll = false
+        profileNameLabel?.holdScrolling = true
+        profileNameLabel?.animationDelay = 2.0
+        
+        descriptionLabel?.type = .Continuous
+        descriptionLabel?.fadeLength = 8
+        descriptionLabel?.tapToScroll = false
+        descriptionLabel?.holdScrolling = true
+        descriptionLabel?.animationDelay = 2.0
     }
     
     dynamic private func timerFired(timer: NSTimer) {
@@ -104,7 +116,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateProfileLabelTextColor()
     }
     
     // Set image as the avatar view. This is for async image loads.
@@ -126,13 +137,13 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 color = UIColor.iceDarkRed()
                 
                 // Will scroll labels
-                profileNameLabel?.scrollRate = 75
-                descriptionLabel?.scrollRate = 75
+                profileNameLabel?.holdScrolling = false
+                descriptionLabel?.holdScrolling = false
             } else {
                 color = UIColor.whiteColor()
                 // Labels won't scroll
-                profileNameLabel?.scrollRate = 0
-                descriptionLabel?.scrollRate = 0
+                profileNameLabel?.holdScrolling = true
+                descriptionLabel?.holdScrolling = true
             }
             
             if !label.textColor.isEqual(color) {
