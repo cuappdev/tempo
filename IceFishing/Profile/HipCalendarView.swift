@@ -8,8 +8,9 @@
 
 import UIKit
 
-class HipCalendarView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class HipCalendarView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
     
+    var delegate: HipCalendarViewDelegate?
     var calendar : NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     var startDate : NSDate! = NSDate(dateString:"2014-04-01")
     var currentDate : NSDate! = NSDate()
@@ -102,6 +103,14 @@ class HipCalendarView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
         let index: Int? = find(dates, date) as Int?
         if (index != nil) {
             // TODO: Push to tableViewCell associated with that date
+            let postHistoryVC = PostHistoryTableViewController(nibName: "PostHistoryTableViewController", bundle: nil)
+            postHistoryVC.postedDates = dates
+            
+            
+        }
+        
+        if (delegate != nil) {
+            delegate?.hipCalendarView(self, didSelectDate: date)
         }
     }
     

@@ -30,7 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Go to feed if open session, else sign in screen
         toggleRootVC()
-
+        
+//        let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
+//        self.window!.rootViewController = usernameVC
+        
         return true
     }
     
@@ -69,10 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         let userName = result["name"]
                         let userID = result["id"]
                         let userEmail = result["email"]
-                        println(userName)
-                        println(userID)
-                        println(userEmail)
-                        
                     } else {
                         println("Error")
                     }

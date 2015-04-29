@@ -298,15 +298,15 @@
                             <exclude reference="Sm0-7N-V9G"/>
                             <exclude reference="kN6-ZT-GiZ"/>
                             <exclude reference="nIK-gI-zho"/>
-                            <exclude reference="5W5-so-gdC"/>
-                            <exclude reference="Xuh-su-DeU"/>
-                            <exclude reference="cFF-EH-hOH"/>
-                            <exclude reference="d9v-E9-bQ6"/>
                             <exclude reference="7fF-cN-xNo"/>
                             <exclude reference="Uli-OP-Uhn"/>
                             <exclude reference="rNN-OV-gxC"/>
                             <exclude reference="s2k-X2-Bnd"/>
                             <exclude reference="uLa-tl-seq"/>
+                            <exclude reference="5W5-so-gdC"/>
+                            <exclude reference="Xuh-su-DeU"/>
+                            <exclude reference="cFF-EH-hOH"/>
+                            <exclude reference="d9v-E9-bQ6"/>
                         </mask>
                     </variation>
                     <variation key="widthClass=compact">
@@ -320,15 +320,15 @@
                             <exclude reference="Sm0-7N-V9G"/>
                             <exclude reference="kN6-ZT-GiZ"/>
                             <exclude reference="nIK-gI-zho"/>
-                            <include reference="5W5-so-gdC"/>
-                            <include reference="Xuh-su-DeU"/>
-                            <include reference="cFF-EH-hOH"/>
-                            <include reference="d9v-E9-bQ6"/>
                             <exclude reference="7fF-cN-xNo"/>
                             <exclude reference="Uli-OP-Uhn"/>
                             <include reference="rNN-OV-gxC"/>
                             <exclude reference="s2k-X2-Bnd"/>
                             <include reference="uLa-tl-seq"/>
+                            <include reference="5W5-so-gdC"/>
+                            <include reference="Xuh-su-DeU"/>
+                            <include reference="cFF-EH-hOH"/>
+                            <include reference="d9v-E9-bQ6"/>
                         </mask>
                     </variation>
                 </view>

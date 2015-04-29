@@ -51,7 +51,7 @@ class User: NSObject {
     }
 
     override var description: String {
-        return "Name: \(name) Email: \(email) ID: \(id) Username: \(username)"
+        return "Name: \(name) Email: \(email) FBID: \(fbid) Username: \(username)"
     }
     
     // Extend NSCoding
