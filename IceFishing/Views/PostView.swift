@@ -97,13 +97,10 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         profileNameLabel?.trailingBuffer = 8.0
         descriptionLabel?.scrollRate = 0
         descriptionLabel?.trailingBuffer = 8.0
-        
-<<<<<<< HEAD
     }
     
     override func didMoveToSuperview() {
         spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
-=======
         profileNameLabel?.type = .Continuous
         profileNameLabel?.fadeLength = 8
         profileNameLabel?.tapToScroll = false
@@ -115,7 +112,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         descriptionLabel?.tapToScroll = false
         descriptionLabel?.holdScrolling = true
         descriptionLabel?.animationDelay = 2.0
->>>>>>> 67b04a126853445b7a195fb270cb21fe14cf68f3
     }
     
     dynamic private func timerFired(timer: NSTimer) {
