@@ -8,12 +8,12 @@
 
 import UIKit
 
-class UsernameViewController: UIViewController, FBLoginViewDelegate {
+class UsernameViewController: UIViewController {
  
     var searchNavigationController: UINavigationController!
+    let api = API.sharedAPI
     
     @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet var fbLoginView: FBLoginView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,22 +26,29 @@ class UsernameViewController: UIViewController, FBLoginViewDelegate {
     
     @IBAction func createUser(sender: UIButton) {
         
-        let username = usernameTextField.text
+        let username = usernameTextField.text as String
         
-        // TODO: Check if username is taken or not by calling a GET request to /users/:username
-        /*
-            if (username is taken) {
-                Prompt user with error alert in UsernameVC
+        api.usernameIsValid(username,completion:{ (success: Bool) -> Void in
+            if (success) {
+                // Username available: create new user
+                // Create a user by doing a POST request to /sessions with parameters of a user object(name, email, FB id, username)
             } else {
-                Create a user by doing a POST request to /sessions with parameters of a user object(name, email, FB id, username)
+                // Username already taken (prompt user with error alert in UsernameVC)
+                var errorAlert = UIAlertController(title: "Sorry!", message: "Username is taken.", preferredStyle: UIAlertControllerStyle.Alert)
+                errorAlert.addAction(UIAlertAction(title: "Try again", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(errorAlert, animated: true, completion: nil)
+                self.clearTextField()
             }
-        */
+        })
+        
+    }
+    
+    func clearTextField() {
+        usernameTextField.text = ""
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        // Custom initialization
-        println("username view controller")
     }
     
     required init(coder aDecoder: NSCoder) {

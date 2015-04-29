@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
@@ -13,6 +13,7 @@
                 <outlet property="nameLabel" destination="UCx-Gl-jLS" id="SFI-q1-yoE"/>
                 <outlet property="numFollowersLabel" destination="7Vc-mb-b1O" id="gyR-OK-knN"/>
                 <outlet property="numFollowingLabel" destination="oId-QB-kvn" id="RZY-zH-vgN"/>
+                <outlet property="postCalendarView" destination="bRD-Ik-gVS" id="y8b-6R-mx2"/>
                 <outlet property="postHistoryLabel" destination="hFG-HM-4mJ" id="A5X-4j-YsS"/>
                 <outlet property="profilePictureView" destination="4qp-8z-VHa" id="htL-Wb-QrP"/>
                 <outlet property="userHandleLabel" destination="5jn-oQ-KFy" id="91l-9E-Xrc"/>
@@ -256,9 +257,14 @@
                                 </mask>
                             </variation>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRD-Ik-gVS" customClass="HipCalendarView" customModule="IceFishing" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <color key="backgroundColor" red="0.13725490196078433" green="0.14117647058823529" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="bRD-Ik-gVS" secondAttribute="bottom" constant="15" id="5W5-so-gdC"/>
                         <constraint firstAttribute="centerX" secondItem="hFG-HM-4mJ" secondAttribute="centerX" constant="-0.5" id="7fF-cN-xNo">
                             <variation key="widthClass=compact" constant="0.0"/>
                         </constraint>
@@ -268,6 +274,11 @@
                         <constraint firstAttribute="height" constant="250" id="Mg6-iU-V55"/>
                         <constraint firstAttribute="height" constant="195" id="Sm0-7N-V9G"/>
                         <constraint firstAttribute="centerX" secondItem="hFG-HM-4mJ" secondAttribute="centerX" id="Uli-OP-Uhn"/>
+                        <constraint firstAttribute="centerX" secondItem="bRD-Ik-gVS" secondAttribute="centerX" id="Xuh-su-DeU"/>
+                        <constraint firstItem="bRD-Ik-gVS" firstAttribute="leading" secondItem="m1V-Id-nwc" secondAttribute="leading" constant="25" id="cFF-EH-hOH"/>
+                        <constraint firstItem="bRD-Ik-gVS" firstAttribute="top" secondItem="hFG-HM-4mJ" secondAttribute="bottom" constant="8" id="d9v-E9-bQ6">
+                            <variation key="widthClass=compact" constant="5"/>
+                        </constraint>
                         <constraint firstAttribute="height" constant="229" id="kN6-ZT-GiZ"/>
                         <constraint firstAttribute="width" constant="400" id="nIK-gI-zho"/>
                         <constraint firstItem="hFG-HM-4mJ" firstAttribute="top" secondItem="m1V-Id-nwc" secondAttribute="top" constant="15" id="rNN-OV-gxC">
@@ -279,6 +290,7 @@
                     <variation key="default">
                         <mask key="subviews">
                             <exclude reference="hFG-HM-4mJ"/>
+                            <exclude reference="bRD-Ik-gVS"/>
                         </mask>
                         <mask key="constraints">
                             <exclude reference="8xk-GU-OEP"/>
@@ -291,11 +303,16 @@
                             <exclude reference="rNN-OV-gxC"/>
                             <exclude reference="s2k-X2-Bnd"/>
                             <exclude reference="uLa-tl-seq"/>
+                            <exclude reference="5W5-so-gdC"/>
+                            <exclude reference="Xuh-su-DeU"/>
+                            <exclude reference="cFF-EH-hOH"/>
+                            <exclude reference="d9v-E9-bQ6"/>
                         </mask>
                     </variation>
                     <variation key="widthClass=compact">
                         <mask key="subviews">
                             <include reference="hFG-HM-4mJ"/>
+                            <include reference="bRD-Ik-gVS"/>
                         </mask>
                         <mask key="constraints">
                             <include reference="8xk-GU-OEP"/>
@@ -308,6 +325,10 @@
                             <include reference="rNN-OV-gxC"/>
                             <exclude reference="s2k-X2-Bnd"/>
                             <include reference="uLa-tl-seq"/>
+                            <include reference="5W5-so-gdC"/>
+                            <include reference="Xuh-su-DeU"/>
+                            <include reference="cFF-EH-hOH"/>
+                            <include reference="d9v-E9-bQ6"/>
                         </mask>
                     </variation>
                 </view>

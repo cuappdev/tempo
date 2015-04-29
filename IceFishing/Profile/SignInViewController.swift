@@ -11,6 +11,7 @@ import UIKit
 class SignInViewController: UIViewController {
     
     var searchNavigationController: UINavigationController!
+    let api = API.sharedAPI
     
     @IBOutlet weak var loginButton: UIButton!
     
@@ -48,13 +49,9 @@ class SignInViewController: UIViewController {
                             let userID = result["id"]
                             let userEmail = result["email"]
                             
-//                            let usernameViewController = UsernameViewController(nibName: "Username", bundle: nil)
-//                            self.searchNavigationController = UINavigationController(rootViewController: usernameViewController)
-//                            self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
-                            
-//                            let mainVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
-//                            self.searchNavigationController = UINavigationController(rootViewController: mainVC)
-//                            self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
+                            let usernameViewController = UsernameViewController(nibName: "Username", bundle: nil)
+                            self.searchNavigationController = UINavigationController(rootViewController: usernameViewController)
+                            self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
                             
                         } else {
                             println("Error")
