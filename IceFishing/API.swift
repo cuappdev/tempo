@@ -69,35 +69,40 @@ class API {
         }
     }
     
-    func userNameIsValid(username: String, completion: Bool -> Void) {
+    func usernameIsValid(username: String, completion: Bool -> Void) {
         let map: [String: Bool] -> Bool? = { $0["is_valid"] }
         get(.ValidUsername, params: ["username": username], map: map, completion: completion)
     }
     
     func getCurrentUser(completion: User -> Void) {
         // TODO: This should be accessed from Facebook API, but manual for testing purposes
-        let user = [
-            "email": "ldd1@cornell.edu",
-            "name": "Lucas Derraugh",
-            "username": "ldd49",
-            "fbid": "2",
-        ]
         let map: [String: AnyObject] -> User? = {
-            if let success = $0["success"] as? Bool, user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
+            if let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
                 self.sessionCode = code
                 User.currentUser = User(json: JSON(user))
                 return User.currentUser
             }
             return nil
         }
-        post(.Sessions, params: ["user": user], map: map, completion: completion)
+        // TODO: This call should probably be removed and in place only called by signin folks after login
+        // Other times you can simply reference the saved user object, instead of pinging facebook
+        let userRequest : FBRequest = FBRequest.requestForMe()
+        userRequest.startWithCompletionHandler { [unowned self] (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+            println(result)
+            if (error == nil) {
+                let user = [
+                    "email": result["email"] as! String,
+                    "name": result["name"] as! String,
+                    "username": result["name"] as! String,
+                    "fbid": result["id"] as! String
+                ]
+                self.post(.Sessions, params: ["user": user], map: map, completion: completion)
+            }
+        }
     }
-    
-    // TODO: Change completion handles to match proper objects
     
     func fetchUser(userID: Int, completion: User -> Void) {
         let map: [String: AnyObject] -> User? = {
-            
             return User(json: JSON($0))
         }
         get(.Users(userID), params: ["session_code": sessionCode!], map: map, completion: completion)
