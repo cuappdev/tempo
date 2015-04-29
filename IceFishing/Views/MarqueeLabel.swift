@@ -141,7 +141,7 @@ public class MarqueeLabel: UILabel {
     // MARK: - Private details
     //
     
-    private var sublabel = UILabel()
+    private(set) var sublabel = UILabel()
     private var animationDuration: CGFloat = 0.0
 
     private var homeLabelFrame: CGRect = CGRect.zeroRect
@@ -487,13 +487,13 @@ public class MarqueeLabel: UILabel {
         return expectedLabelSize
     }
     
-    override public func sizeThatFits(size: CGSize) -> CGSize {
-        var fitSize = sublabel.sizeThatFits(size)
-        fitSize.width += 2.0 * fadeLength
-        
-        return fitSize
-    }
-    
+//    override public func sizeThatFits(size: CGSize) -> CGSize {
+//        var fitSize = sublabel.sizeThatFits(size)
+//        fitSize.width += 2.0 * fadeLength
+//        
+//        return fitSize
+//    }
+//    
     //
     // MARK: - Animation Handling
     //
@@ -666,37 +666,39 @@ public class MarqueeLabel: UILabel {
 
     
     private func scrollContinuous(interval: CGFloat, delay: CGFloat) {
-        let scroller = { (interval: CGFloat, delay: CGFloat) -> [(layer: CALayer, anim: CAKeyframeAnimation)] in
-            // Create animation for positions
-            var offset: CGFloat = 0.0
-            var scrolls: [(layer: CALayer, anim: CAKeyframeAnimation)] = []
-            for sl in self.allSublabels() {
-                // Create values, bumped by the offset
-                let values: [NSValue] = [
-                    NSValue(CGPoint: self.offsetCGPoint(self.homeLabelFrame.origin, offset: offset)), // Start at home
-                    NSValue(CGPoint: self.offsetCGPoint(self.homeLabelFrame.origin, offset: offset)), // Stay at home for delay
-                    NSValue(CGPoint: self.offsetCGPoint(self.awayLabelFrame.origin, offset: offset))  // Move to away
-                ]
+        if labelShouldScroll() {
+            let scroller = { (interval: CGFloat, delay: CGFloat) -> [(layer: CALayer, anim: CAKeyframeAnimation)] in
+                // Create animation for positions
+                var offset: CGFloat = 0.0
+                var scrolls: [(layer: CALayer, anim: CAKeyframeAnimation)] = []
+                for sl in self.allSublabels() {
+                    // Create values, bumped by the offset
+                    let values: [NSValue] = [
+                        NSValue(CGPoint: self.offsetCGPoint(self.homeLabelFrame.origin, offset: offset)), // Start at home
+                        NSValue(CGPoint: self.offsetCGPoint(self.homeLabelFrame.origin, offset: offset)), // Stay at home for delay
+                        NSValue(CGPoint: self.offsetCGPoint(self.awayLabelFrame.origin, offset: offset))  // Move to away
+                    ]
+                    
+                    // Generate animation
+                    let layer = sl.layer
+                    let anim = self.keyFrameAnimationForProperty("position", values: values, interval: interval, delay: delay)
+                    
+                    // Add to scrolls
+                    scrolls += [(layer: layer, anim: anim)]
+                    
+                    // Increment offset
+                    offset += (self.homeLabelFrame.origin.x - self.awayLabelFrame.origin.x)
+                }
                 
-                // Generate animation
-                let layer = sl.layer
-                let anim = self.keyFrameAnimationForProperty("position", values: values, interval: interval, delay: delay)
-                
-                // Add to scrolls
-                scrolls += [(layer: layer, anim: anim)]
-                
-                // Increment offset
-                offset += (self.homeLabelFrame.origin.x - self.awayLabelFrame.origin.x)
+                return scrolls
             }
             
-            return scrolls
+            // Create curried function for callback
+            let callback = MarqueeLabel.scrollContinuous
+            
+            // Scroll
+            scroll(interval, delay: delay, scroller: scroller, callback: callback)
         }
-        
-        // Create curried function for callback
-        let callback = MarqueeLabel.scrollContinuous
-        
-        // Scroll
-        scroll(interval, delay: delay, scroller: scroller, callback: callback)
     }
     
     private func applyGradientMask(fadeLength: CGFloat, animated: Bool) {

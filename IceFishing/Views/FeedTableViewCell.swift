@@ -14,6 +14,7 @@ class FeedTableViewCell: UITableViewCell {
     
     override func didMoveToSuperview() {
         selectionStyle = .None
+        backgroundColor = UIColor.iceLightGray()
 //        var tapRecognizer = UITapGestureRecognizer(target: self, action: "cellPressed:")
 //        addGestureRecognizer(tapRecognizer)
     }

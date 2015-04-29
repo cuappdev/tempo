@@ -26,7 +26,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var postHistoryLabel: UILabel!
     @IBOutlet weak var divider: UIView!
-    
+    @IBOutlet weak var postCalendarView: HipCalendarView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,10 +40,6 @@ class LoginViewController: UIViewController {
 //                profilePictureView.image = UIImage(data: data)
 //            }
 //        }
-
-        
-        println(nameLabel.text)
-        println(userHandleLabel.text)
         
         followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
         numFollowersLabel.text = "\(numFollowers)"
@@ -64,6 +61,15 @@ class LoginViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
+        // Post history calendar
+        postCalendarView.initialize()
+        
+        // Add refresh scroll button for calendar
+        let button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        button.frame = self.postHistoryLabel.frame
+        button.addTarget(self, action: "refreshScroll", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(button)
+        
         // Add profile button to the left side of the navbar
         var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
         menuButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
@@ -74,6 +80,10 @@ class LoginViewController: UIViewController {
         if self.revealViewController() != nil {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+    }
+    
+    func refreshScroll() {
+        
     }
     
     func dismiss() {
@@ -108,6 +118,8 @@ class LoginViewController: UIViewController {
         let navController = UINavigationController(rootViewController: followingVC)
         self.presentViewController(navController, animated: true, completion: nil)
     }
+    
+    
     
 }
 

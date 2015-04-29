@@ -1,25 +1,27 @@
 //
-//  FollowingViewController.swift
+//  PostHistoryTableViewController.swift
 //  IceFishing
 //
-//  Created by Annie Cheng on 4/12/15.
+//  Created by Annie Cheng on 4/28/15.
 //  Copyright (c) 2015 Lucas Derraugh. All rights reserved.
 //
 
 import UIKit
 
-class FollowingViewController: UITableViewController, UIScrollViewDelegate {
+class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegate {
     
-    var followingPics: [String]!
-    var following: [String] = ["Derrick", "Eric", "Feifan", "Ilan", "John", "Joe", "Karim", "Lucas", "Manuela", "Mark", "Nicole", "Sam", "Steven", "Tsvi"]
-    var followingHandles: [String] = ["derrick", "eric", "feifan", "ilan", "john", "joe", "karim", "lucas", "manuela", "mark", "nicole", "sam", "steven", "tsvi"]
-    var numFollowing: [Int] = [10, 229, 38, 40, 100, 374, 2731, 384, 12, 293, 34, 3, 120, 3992]
-    
+    var songPictures: [String]! = []
+    var songArtists: [String]! = []
+    var songNames: [String]! = []
+    var postedDates: [NSDate]! = []
+    var index: Int!
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        println(postedDates)
         
         tableView.backgroundColor = UIColor.iceDarkGray()
-        tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
+        tableView.registerNib(UINib(nibName: "PostHistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "PostedSongCell")
         
         tableView.separatorStyle = .None
         
@@ -27,7 +29,7 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile
-        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
+        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
         backButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
         backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
@@ -41,15 +43,24 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     // TableView Methods
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.following.count
+        return self.postedDates.count
     }
     
+    
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
-        cell.userImage.image = UIImage(named: "Steven")
-        cell.userName.text = self.following[indexPath.row]
-        cell.userHandle.text = "@\(self.followingHandles[indexPath.row])"
-        cell.numFollowLabel.text = "\(self.numFollowing[indexPath.row]) followers"
+        let cell = tableView.dequeueReusableCellWithIdentifier("PostedSongCell", forIndexPath: indexPath) as! PostHistoryTableViewCell
+        
+//        cell.artistNameLabel.text = self.songArtists[indexPath.row]
+//        cell.songNameLabel.text = self.songNames[indexPath.row]
+        
+        cell.postedSongImage.image = UIImage(named: "Sexy")
+        cell.artistNameLabel.text = "John Legend"
+        cell.songNameLabel.text = "All Of Me"
+        var formatter: NSDateFormatter = NSDateFormatter()
+        formatter.dateFormat = "MM-dd-YY"
+        let date: String = formatter.stringFromDate(self.postedDates[indexPath.row])
+        cell.datePostedLabel.text = "Date Posted: \(date)"
         
         return cell
     }
@@ -61,5 +72,6 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
-    }    
+    }
+    
 }
