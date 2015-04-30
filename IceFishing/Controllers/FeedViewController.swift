@@ -59,12 +59,13 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         let session = AVAudioSession.sharedInstance()
         
         if let post = self.currentlyPlayingPost {
-            session.setCategory(AVAudioSessionCategoryPlayback, error: nil)
-            session.setActive(true, error: nil)
-            
             // state change, update play information
             let center = MPNowPlayingInfoCenter.defaultCenter()
             if (post.player.progress != 1.0) {
+                session.setCategory(AVAudioSessionCategoryPlayback, error: nil)
+                session.setActive(true, error: nil)
+                UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+                
                 let artwork = post.song.fetchArtwork() ?? UIImage(named: "Sexy")!
                 center.nowPlayingInfo = [
                     MPMediaItemPropertyTitle:  post.song.title,
@@ -77,6 +78,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
                     MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
                     MPNowPlayingInfoPropertyPlaybackQueueCount: posts.count ]
             } else {
+                UIApplication.sharedApplication().endReceivingRemoteControlEvents()
                 session.setActive(false, error: nil)
                 center.nowPlayingInfo = nil
             }

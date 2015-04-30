@@ -130,6 +130,11 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     
     // Saves json as new results Track array and reloads table
     func receivedResponse(data: AnyObject?) {
+        if (data == nil) {
+            results = []
+            tableView.reloadData()
+            return
+        }
         let response = data as! NSDictionary
         var tracks = response["tracks"] as! NSDictionary
         
