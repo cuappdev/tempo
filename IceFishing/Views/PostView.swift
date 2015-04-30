@@ -18,7 +18,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
     var tapGestureRecognizer: UITapGestureRecognizer?
     @IBOutlet var profileNameLabel: MarqueeLabel?
-    @IBOutlet var avatarImageView: UIImageView?
+    @IBOutlet var avatarImageView: FeedImageView?
     @IBOutlet var descriptionLabel: MarqueeLabel?
     @IBOutlet var dateLabel: UILabel?
     @IBOutlet var spacingConstraint: NSLayoutConstraint?
@@ -138,11 +138,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-    }
-    
-    // Set image as the avatar view. This is for async image loads.
-    func setImage(image: UIImage) {
-        avatarImageView?.image = image
     }
     
     // Customize view to be able to re-use it for search results.

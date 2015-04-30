@@ -10,12 +10,26 @@ import UIKit
 import SwiftyJSON
 
 let spotifyAPIBaseURL = NSURL(string: "https://api.spotify.com/v1/tracks/")
+let SongDidDownloadArtworkNotification = "SongDidDownloadArtwork"
+
 class Song: NSObject {
     var title = ""
     var artist = ""
     var album = ""
     var largeArtworkURL: NSURL?
     var smallArtworkURL: NSURL?
+    
+    private var largeArtwork: UIImage?
+    func fetchArtwork() -> UIImage? {
+        if (largeArtwork == nil && largeArtworkURL != nil) {
+            loadImageAsync(largeArtworkURL!, { [weak self] (image, error) -> () in
+                self?.largeArtwork = image
+                NSNotificationCenter.defaultCenter().postNotificationName(SongDidDownloadArtworkNotification, object: self)
+            })
+        }
+        return largeArtwork
+    }
+    
     var spotifyID:String = "" {
         didSet {
             //!TODO: Use Spotify SDK

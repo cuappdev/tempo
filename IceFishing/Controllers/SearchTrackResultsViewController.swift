@@ -57,13 +57,8 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         cell.postView.type = .Search
         cell.postView.post = track
         cell.postView.flagAsSearchResultPost()
-        if let artwork = track.song.smallArtworkURL {
-            loadImageAsync(artwork, { [weak cell] image, error in
-                if error == nil {
-                    cell?.postView.setImage(image)
-                }
-            })
-        }
+        cell.postView.avatarImageView?.placeholderImage = missingImage
+        cell.postView.avatarImageView?.imageURL = track.song.smallArtworkURL
         return cell
     }
 
@@ -153,7 +148,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
 //            let popularity = item["popularity"] as! Int
             let track = Song(responseDictionary: item)
             trackResults.append(
-                Post(song: track, posterFirst: "", posterLast: "", date: nil, avatar: missingImage)
+                Post(song: track, posterFirst: "", posterLast: "", date: nil, avatar: nil)
             )
         }
 

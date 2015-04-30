@@ -64,13 +64,13 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
             // state change, update play information
             let center = MPNowPlayingInfoCenter.defaultCenter()
             if (post.player.progress != 1.0) {
-                let artworkURL = post.song.largeArtworkURL!
-                let artworkData = NSData(contentsOfURL: artworkURL)!
+                let artwork = post.song.fetchArtwork() ?? UIImage(named: "Sexy")!
                 center.nowPlayingInfo = [
                     MPMediaItemPropertyTitle:  post.song.title,
                     MPMediaItemPropertyArtist: post.song.artist,
                     MPMediaItemPropertyAlbumTitle: post.song.album,
-                    MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: UIImage(data: artworkData)!),
+                    //!TODO: cache this image
+                    MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: artwork),
                     MPMediaItemPropertyPlaybackDuration: post.player.duration,
                     MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
                     MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying() ? post.player.rate : 0.0,
@@ -91,6 +91,10 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         }
         
         NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidSeekNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
+            self?.updateNowPlayingInfo()
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(SongDidDownloadArtworkNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
             self?.updateNowPlayingInfo()
         }
         

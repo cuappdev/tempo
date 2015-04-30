@@ -20,7 +20,7 @@ func delay(delay:Double, closure:()->()) {
 }
 
 func loadImageAsync(url: NSURL, completion: (UIImage!, NSError!) -> ()) {
-    let requestedURL = NSURLRequest(URL: url)
+    let requestedURL = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReturnCacheDataElseLoad, timeoutInterval: 10.0)
     
     NSURLConnection.sendAsynchronousRequest(requestedURL, queue: NSOperationQueue.mainQueue()) {
         response, data, error in

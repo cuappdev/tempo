@@ -28,13 +28,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
             player?.delegate = self
         }
     }
-    private(set) var finishedPlaying = false {
-        didSet {
-            if (finishedPlaying == true && !oldValue) {
-                NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
-            }
-        }
-    }
+    private(set) var finishedPlaying = false
     
     var fileURL: NSURL!
     init(fileURL: NSURL) {
@@ -200,6 +194,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
         pause(true)
         finishedPlaying = true
+        NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
         // we finished playing, destroy the object
         destroy()
     }
