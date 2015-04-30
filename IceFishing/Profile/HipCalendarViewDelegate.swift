@@ -10,6 +10,7 @@ import Foundation
 
 protocol HipCalendarViewDelegate {
 
-    func hipCalendarView(calendarView: HipCalendarView, didSelectDate date: NSDate)
+    func hipCalendarView(hipCalendarView: HipCalendarView, didSelectDate date: NSDate)
+    func hipCalendarView(hipCalendarView: HipCalendarView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 
 }

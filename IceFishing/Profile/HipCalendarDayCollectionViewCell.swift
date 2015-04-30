@@ -16,32 +16,21 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
     var dayInnerCircleView: UIView!
     
     // Colors
-    var unselectedTextColor : UIColor! = UIColor.whiteColor()
-    var unselectedColor : UIColor! = UIColor.iceDarkGray()
-    var selectedColor : UIColor! = UIColor(red: 179/255, green: 121/255, blue: 122/255, alpha: 1)
+    var noPostColor : UIColor! = UIColor.iceDarkGray()
     var circleColor : UIColor! = UIColor.iceDarkRed()
-    var todayColor: UIColor! = UIColor.iceDarkRed()
     
     var date: NSDate! {
         didSet {
             dayLabel.text = HipCalendarDayStringFromDate(date)
-            dayInnerCircleView.backgroundColor = unselectedColor
             dayLabel.textColor = UIColor.whiteColor()
+            dayInnerCircleView.backgroundColor = noPostColor
+            dayCircleView.backgroundColor = circleColor
             
             if (isToday()) {
-                dayLabel.textColor = todayColor
                 dayLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 15.0)
-                dayCircleView.backgroundColor = todayColor
             } else {
                 dayLabel.font = UIFont(name: "HelveticaNeue-Light", size: 12.0)
-                dayCircleView.backgroundColor = circleColor
             }
-        }
-    }
-    
-    override var selected: Bool {
-        didSet {
-            dayInnerCircleView.backgroundColor = selected ? selectedColor : unselectedColor
         }
     }
     

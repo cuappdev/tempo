@@ -10,13 +10,19 @@ import UIKit
 
 class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     
-    var followingPics: [String]!
+    // TODO: Uncomment when test user is made
+    //var following: [String]! = []
+    
+    // TODO: For testing purposes (delete when test user is made)
     var following: [String] = ["Derrick", "Eric", "Feifan", "Ilan", "John", "Joe", "Karim", "Lucas", "Manuela", "Mark", "Nicole", "Sam", "Steven", "Tsvi"]
     var followingHandles: [String] = ["derrick", "eric", "feifan", "ilan", "john", "joe", "karim", "lucas", "manuela", "mark", "nicole", "sam", "steven", "tsvi"]
     var numFollowing: [Int] = [10, 229, 38, 40, 100, 374, 2731, 384, 12, 293, 34, 3, 120, 3992]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // TODO: Uncomment when test user is made
+        //self.following = User.currentUser.following
         
         tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
@@ -46,10 +52,23 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
+        
+        // TODO: For testing purposes (delete when test user is made)
         cell.userImage.image = UIImage(named: "Steven")
         cell.userName.text = self.following[indexPath.row]
         cell.userHandle.text = "@\(self.followingHandles[indexPath.row])"
         cell.numFollowLabel.text = "\(self.numFollowing[indexPath.row]) followers"
+        
+        // TODO: Uncomment when test user is made
+        //        if let url = NSURL(string: "http://graph.facebook.com/\(self.following[indexPath.row].fbid)/picture?type=large") {
+        //            if let data = NSData(contentsOfURL: url) {
+        //                cell.userImage.image = UIImage(data: data)
+        //            }
+        //        }
+        //        cell.userName.text = self.following[indexPath.row].name
+        //        cell.userHandle.text = "@\(self.following[indexPath.row].username)"
+        //        cell.numFollowLabel.text = "\(self.following[indexPath.row].followersCount) followers"
+        
         
         return cell
     }
@@ -61,5 +80,7 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
+        
+        // TODO: Push to user's profile view
     }    
 }

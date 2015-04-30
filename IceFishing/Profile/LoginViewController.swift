@@ -12,7 +12,7 @@ class LoginViewController: UIViewController, HipCalendarViewDelegate {
     
     var isFollowing = false
     var numFollowing: Int = 0
-    var numFollowers: Int = 0
+    var postedDates: [NSDate]! = []
     
     var searchNavigationController: UINavigationController!
 
@@ -39,9 +39,8 @@ class LoginViewController: UIViewController, HipCalendarViewDelegate {
             }
         }
 
-
         followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
-        numFollowersLabel.text = "\(numFollowers)"
+        numFollowersLabel.text = "\(User.currentUser.followersCount)"
         numFollowingLabel.text = "\(numFollowing)"
         
         if !isFollowing {
@@ -96,13 +95,13 @@ class LoginViewController: UIViewController, HipCalendarViewDelegate {
         if (!isFollowing) {
             isFollowing = true
             followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-            numFollowers = numFollowers + 1
+            User.currentUser.followersCount = User.currentUser.followersCount + 1
         } else {
             isFollowing = false
             followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-            numFollowers = numFollowers - 1
+            User.currentUser.followersCount = User.currentUser.followersCount - 1
         }
-        numFollowersLabel.text = "\(numFollowers)"
+        numFollowersLabel.text = "\(User.currentUser.followersCount)"
     }
     
     @IBAction func followersButton(sender: UIButton) {
@@ -121,10 +120,15 @@ class LoginViewController: UIViewController, HipCalendarViewDelegate {
     
     // HipCalendarViewDelegate Methods
     
-    func hipCalendarView(calendarView: HipCalendarView, didSelectDate date: NSDate) {
+    func hipCalendarView(hipCalendarView: HipCalendarView, didSelectDate date: NSDate) {
+        println("Selected \(date)")
         let postHistoryVC = PostHistoryTableViewController(nibName: "PostHistoryTableViewController", bundle: nil)
         //postHistoryVC.postedDates = dates
         self.presentViewController(postHistoryVC, animated: false, completion: nil)
+    }
+    
+    func hipCalendarView(hipCalendarView: HipCalendarView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        println(indexPath)
     }
     
     

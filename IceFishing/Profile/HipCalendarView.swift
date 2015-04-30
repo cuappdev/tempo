@@ -12,9 +12,12 @@ class HipCalendarView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     
     var delegate: HipCalendarViewDelegate?
     var calendar : NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-    var startDate : NSDate! = NSDate(dateString:"2014-04-01")
+    var startDate : NSDate! = NSDate(dateString:"2014-04-01") // User creation date
     var currentDate : NSDate! = NSDate()
     var dates : [NSDate]! = []
+    // For testing purposes
+    var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-27"), NSDate(dateString:"2015-04-25"), NSDate(dateString:"2015-04-18"),
+        NSDate(dateString:"2015-04-17"), NSDate(dateString:"2015-04-9"), NSDate(dateString:"2015-04-1")]
     var daySize : CGSize!
     var padding : CGFloat = 5
     
@@ -27,7 +30,7 @@ class HipCalendarView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
         daySize = CGSize(width: cwidth, height: cheight)
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: padding)
+        layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         
@@ -77,6 +80,10 @@ class HipCalendarView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
         var cell : HipCalendarDayCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
         cell.date = date
         
+        if (contains(postedDates,cell.date)) {
+            cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed()
+        }
+        
         return cell
     }
     
@@ -100,13 +107,6 @@ class HipCalendarView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let date: NSDate = dateForIndexPath(indexPath)
         println(date)
-        let index: Int? = find(dates, date) as Int?
-        if (index != nil) {
-            // TODO: Push to tableViewCell associated with that date
-            let postHistoryVC = PostHistoryTableViewController(nibName: "PostHistoryTableViewController", bundle: nil)
-            postHistoryVC.postedDates = dates
-        }
-        
     }
     
     // MARK: UICollectionViewDelegateFlowLayout
