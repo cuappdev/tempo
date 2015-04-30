@@ -9,26 +9,25 @@
 import UIKit
 import AVFoundation
 
-class Player: NSObject {
-    private var player: AVPlayer? {
+let PlayerDidChangeStateNotification = "PlayerDidChangeState"
+let PlayerDidSeekNotification = "PlayerDidSeek"
+let PlayerDidFinishPlayingNotification = "PlayerDidFinishPlaying"
+
+class Player: NSObject, AVAudioPlayerDelegate {
+    var downloadCallback: ((progress: Double) -> ())?
+    
+    private var currentConnection: NSURLConnection?
+    private var player: AVAudioPlayer? {
         didSet {
             oldValue?.pause()
-            
-            if let notificationValue: AnyObject = notificationValue {
-                NSNotificationCenter.defaultCenter().removeObserver(notificationValue)
+            if let oldDelegate = oldValue?.delegate as? Player {
+                if (self == oldDelegate) {
+                    oldValue?.delegate = nil
+                }
             }
-            
-            notificationValue = NSNotificationCenter.defaultCenter().addObserverForName(AVPlayerItemDidPlayToEndTimeNotification,
-                object: player?.currentItem,
-                queue: nil) { [unowned self] (notif) -> Void in
-                    self.finishedPlaying = true
-                    // we finished playing, destroy the object
-                    self.destroy()
-            }
+            player?.delegate = self
         }
     }
-    var callBack: ((playing: Bool) -> Void)?
-    private var notificationValue: AnyObject?
     private(set) var finishedPlaying = false
     
     var fileURL: NSURL!
@@ -47,57 +46,75 @@ class Player: NSObject {
     }
     
     func prepareToPlay() {
-        if (self.player == nil) {
-            player = AVPlayer(URL: self.fileURL)
+        if (player == nil) {
+            if (fileURL.fileURL) {
+                player = AVAudioPlayer(contentsOfURL: fileURL, error: nil)
+            } else if (currentConnection == nil) {
+                // get cached data
+                let request = NSURLRequest(URL: fileURL,
+                    cachePolicy: NSURLRequestCachePolicy.ReturnCacheDataElseLoad,
+                    timeoutInterval: 15.0)
+                currentConnection = NSURLConnection(request: request, delegate: self, startImmediately: true)
+            }
         }
     }
     
     func destroy() {
         self.player = nil
+        NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
     }
     
-    func play() {
+    private var shouldAutoplay = false
+    func play(notify: Bool) {
         prepareToPlay()
-        
-        if (finishedPlaying) {
-            finishedPlaying = false
-            currentTime = 0.0
+        finishedPlaying = false
+        if (player == nil) {
+            shouldAutoplay = true
+        } else {
+            player?.play()
         }
         
-        player?.play()
-        
-        if let callBack = callBack {
-            callBack(playing: self.isPlaying());
+        if notify {
+            NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
         }
     }
     
-    func pause() {
+    var rate:Float {
+        get {
+            return player?.rate ?? 0.0
+        }
+        set {
+            player?.rate = newValue
+        }
+    }
+    
+    func pause(notify: Bool) {
         player?.pause()
-        
-        if let callBack = callBack {
-            callBack(playing: self.isPlaying());
+        shouldAutoplay = false
+        if notify {
+            NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
         }
     }
     
     func isPlaying() -> Bool {
         if let player = player {
-            return player.rate > 0.0
+            return player.playing
         }
-        return false;
+        return false
     }
     
     func togglePlaying() {
         if (self.isPlaying()) {
-            self.pause()
+            self.pause(true)
         } else {
-            self.play();
+            self.play(true)
         }
     }
     
     dynamic var currentTime: NSTimeInterval {
         get {
             if let player = player {
-                return CMTimeGetSeconds(player.currentTime())
+                return player.currentTime
             } else {
                 return 0.0
             }
@@ -105,16 +122,19 @@ class Player: NSObject {
         
         set {
             if let player = player {
-                player.seekToTime(CMTimeMake(Int64(newValue), 1))
+                var val = newValue
+                val = max(0, val)
+                val = min(duration, val)
+                
+                player.currentTime = val
+                NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidSeekNotification, object: self)
             }
         }
     }
     
     var duration: NSTimeInterval {
         if let player = player {
-            if let item = player.currentItem {
-                return CMTimeGetSeconds(item.duration)
-            }
+            return player.duration
         }
         
         return DBL_MAX
@@ -127,22 +147,55 @@ class Player: NSObject {
             }
             
             if let player = player {
-                if let item = player.currentItem {
-                    return CMTimeGetSeconds(player.currentTime()) / CMTimeGetSeconds(item.duration)
-                }
+                return currentTime / duration
             }
             return 0.0
         }
         
         set {
             if let player = player {
-                let secs = CMTimeGetSeconds(player.currentItem.duration)
-                if (newValue.isNormal && secs.isNormal) {
-                    finishedPlaying = newValue == 1.0
-                    player.seekToTime(CMTimeMakeWithSeconds(Float64(newValue * secs), 1))
+                if newValue == 1.0 {
+                    finishedPlaying = true
                 }
+                
+                currentTime = newValue * duration
             }
         }
     }
     
+    // MARK: NSURLConnectionDelegate
+    private var expectedLength: Int64 = 0
+    private var totalData: NSMutableData?
+    func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
+        expectedLength = response.expectedContentLength
+        totalData = NSMutableData(capacity: Int(expectedLength))
+    }
+    
+    func connection(connection: NSURLConnection, didReceiveData data: NSData) {
+        totalData?.appendData(data)
+        if let totalData = totalData {
+            downloadCallback?(progress: Double(totalData.length) / Double(expectedLength))
+        }
+    }
+    
+    func connectionDidFinishLoading(connection: NSURLConnection) {
+        downloadCallback?(progress: 1.0)
+        player = AVAudioPlayer(data: totalData, error: nil)
+        totalData = nil
+        currentConnection = nil
+        
+        if (shouldAutoplay == true) {
+            player?.play()
+        }
+    }
+    
+    // MARK: AVAudioPlayerDelegate
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+        pause(true)
+        finishedPlaying = true
+        NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
+        // we finished playing, destroy the object
+        destroy()
+    }
 }

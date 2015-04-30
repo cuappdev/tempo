@@ -7,42 +7,78 @@
 //
 
 import UIKit
+import MediaPlayer
+
+enum ViewType: Int {
+    case Feed
+    case Search
+}
 
 class PostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
     var tapGestureRecognizer: UITapGestureRecognizer?
-    @IBOutlet var profileNameLabel: UILabel?
-    @IBOutlet var avatarImageView: UIImageView?
-    @IBOutlet var descriptionLabel: UILabel?
+    @IBOutlet var profileNameLabel: MarqueeLabel?
+    @IBOutlet var avatarImageView: FeedImageView?
+    @IBOutlet var descriptionLabel: MarqueeLabel?
     @IBOutlet var dateLabel: UILabel?
-    var fillColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0)
+    @IBOutlet var spacingConstraint: NSLayoutConstraint?
+    
+    var fillColor = UIColor.iceDarkGray()
+ 
+    var type: ViewType = .Feed
     private var updateTimer: NSTimer?
+    private var notificationHandler: AnyObject?
     
     var post: Post? {
         didSet {
-            println("got here")
+            if let handler: AnyObject = notificationHandler {
+                NSNotificationCenter.defaultCenter().removeObserver(handler)
+            }
+
             // update stuff
             if let post = post {
-                profileNameLabel?.text = post.posterFirstName + " " + post.posterLastName
-                descriptionLabel?.text = post.song.title + " · " + post.song.artist
+                switch type {
+                case .Feed:
+                    profileNameLabel?.text = post.posterFirstName + " " + post.posterLastName
+                    descriptionLabel?.text = post.song.title + " · " + post.song.artist
+                    break
+                case .Search:
+                    profileNameLabel?.text = post.song.title
+                    descriptionLabel?.text = post.song.artist
+                    break
+                }
+                
                 avatarImageView?.image = post.avatar
+
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
-                let dateFormatter = NSDateFormatter()
-//                dateFormatter.doesRelativeDateFormatting = true
-                dateFormatter.dateStyle = .NoStyle
-                dateFormatter.timeStyle = .ShortStyle
-                dateLabel?.text = dateFormatter.stringFromDate(post.date)
                 
+                if let date = post.date {
+                    let dateFormatter = NSDateFormatter()
+                    // dateFormatter.doesRelativeDateFormatting = true
+                    dateFormatter.dateStyle = .NoStyle
+                    dateFormatter.timeStyle = .ShortStyle
+                    dateLabel?.text = dateFormatter.stringFromDate(date)
+                } else {
+                    dateLabel?.text = ""
+                }
+
                 if (updateTimer == nil) {
-                    updateTimer = NSTimer(timeInterval: 0.1,
+                    updateTimer = NSTimer(timeInterval: 0.0005,
                         target: self, selector: Selector("timerFired:"),
                         userInfo: nil,
                         repeats: true)
                     NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
                 }
                 
+                notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
+                    object: post.player,
+                    queue: nil, usingBlock: {
+                        [weak self]
+                        (note) -> Void in
+                        self?.updateProfileLabelTextColor()
+                })
             } else {
                 updateTimer?.invalidate()
                 updateTimer = nil
@@ -71,12 +107,42 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         avatarImageView?.userInteractionEnabled = true
         profileNameLabel?.userInteractionEnabled = true
         
-        layer.borderColor = UIColor(red: CGFloat(19.0/255.0), green: CGFloat(39.0/255.0), blue: CGFloat(49.0/255.0), alpha: 1.0).CGColor
+        layer.borderColor = UIColor.iceDarkGray().CGColor
         layer.borderWidth = CGFloat(0.7)
+        
+        profileNameLabel?.scrollRate = 0
+        profileNameLabel?.trailingBuffer = 8.0
+        descriptionLabel?.scrollRate = 0
+        descriptionLabel?.trailingBuffer = 8.0
+        
+        profileNameLabel?.type = .Continuous
+        profileNameLabel?.fadeLength = 8
+        profileNameLabel?.tapToScroll = false
+        profileNameLabel?.holdScrolling = true
+        profileNameLabel?.animationDelay = 2.0
+        
+        descriptionLabel?.type = .Continuous
+        descriptionLabel?.fadeLength = 8
+        descriptionLabel?.tapToScroll = false
+        descriptionLabel?.holdScrolling = true
+        descriptionLabel?.animationDelay = 2.0
+    }
+    
+    override func didMoveToSuperview() {
+        spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
     }
     
     dynamic private func timerFired(timer: NSTimer) {
         self.setNeedsDisplay()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+    
+    // Customize view to be able to re-use it for search results.
+    func flagAsSearchResultPost() {
+        descriptionLabel?.text = post!.song.title + " · " + post!.song.album
     }
     
     func updateProfileLabelTextColor() {
@@ -85,21 +151,34 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             var duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = self.profileNameLabel!
             if post.player.isPlaying() {
-                color = UIColor(red: CGFloat(181.0/255.0), green: CGFloat(87.0/255.0), blue: CGFloat(78.0/255.0), alpha: 1.0)
+                color = UIColor.iceDarkRed()
+                
+                // Will scroll labels
+                profileNameLabel?.holdScrolling = false
+                descriptionLabel?.holdScrolling = false
             } else {
                 color = UIColor.whiteColor()
+                // Labels won't scroll
+                profileNameLabel?.holdScrolling = true
+                descriptionLabel?.holdScrolling = true
             }
-            UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-                label.textColor = color
-            }, completion: nil)
+            
+            if !label.textColor.isEqual(color) {
+                UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+                    label.textColor = color
+                    }, completion: {
+                        (success) in
+                        label.textColor = color
+                })
+            }
         }
     }
     
     dynamic func changeProgress(gesture: UIPanGestureRecognizer) {
         if (gesture.state != .Ended) {
-            post?.player.pause();
+            post?.player.pause(false)
         } else {
-            post?.player.play();
+            post?.player.play(false)
         }
         
         var xTranslation = gesture.locationInView(self).x

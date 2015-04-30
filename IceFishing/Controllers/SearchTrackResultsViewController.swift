@@ -13,15 +13,28 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     
     // MARK: Properties
     
+    let kSearchResultHeight: CGFloat = 72
+    weak var parent: FeedViewController?
+    var shouldResume = false
     let tableViewCellIdentifier = "searchTrackResultsCell"
-    var results: [TrackResult] = []
+    var results: [Post] = []
     var delegate: SearchTrackResultsViewControllerDelegate!
     let kSearchBase: String = "https://api.spotify.com/v1/search?type=track&q="
+    var hasSelectedResult = false
+    var activePlayer: Player!
+    let missingImage = transparentPNG(36)
     
     // MARK: Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.iceDarkGray()
+        tableView.backgroundColor = UIColor.iceDarkGray()
+        tableView.separatorColor = UIColor.clearColor()
+        tableView.separatorStyle = .None
+        tableView.rowHeight = 96
+        tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
     }
     
     // MARK: UITableViewDataSource
@@ -30,28 +43,63 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         return results.count
     }
     
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return hasSelectedResult ? kSearchResultHeight : CGFloat(0)
+    }
+    
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(tableViewCellIdentifier) as? UITableViewCell
-        if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: tableViewCellIdentifier)
-        }
-        return cell!
+        var cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
+        let track = results[indexPath.row]
+        cell.postView.type = .Search
+        cell.postView.post = track
+        cell.postView.flagAsSearchResultPost()
+        cell.postView.avatarImageView?.placeholderImage = missingImage
+        cell.postView.avatarImageView?.imageURL = track.song.smallArtworkURL
+        return cell
     }
-    
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.textLabel?.text = results[indexPath.row].name
-        cell.detailTextLabel?.text = results[indexPath.row].artists[0]["name"]! + " • " + results[indexPath.row].album["name"]!
-    }
-    
+
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var alert = UIAlertController(title: "Post song of the day", message: "Post \(results[indexPath.row].name) as your song of the day?", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Post", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
-            self.postSong(self.results[indexPath.row])
-            return
-        }))
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.presentViewController(alert, animated: true, completion: nil)
+
+        if let post = parent?.currentlyPlayingPost {
+            post.player.pause(false)
+        }
+        
+        let track = results[indexPath.row]
+        delegate.selectSong(track.song)
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
+        
+        if activePlayer != nil && activePlayer != cell.postView.post?.player {
+            activePlayer.destroy()
+        }
+
+        cell.postView.post?.player.togglePlaying()
+        
+        addBottomSpace()
+        activePlayer = cell.postView.post?.player
+    }
+    
+    func addBottomSpace() {
+        tableView.beginUpdates()
+        hasSelectedResult = true
+        tableView.endUpdates()
+    }
+    
+    func finishSearching() {
+        if activePlayer != nil {
+            activePlayer.destroy()
+        }
+        
+        if (shouldResume) {
+            if let post = parent?.currentlyPlayingPost {
+                post.player.play(false)
+            }
+        }
     }
     
     // MARK: UISearchResultsUpdating
@@ -63,10 +111,8 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         }
         
         let searchText = searchController.searchBar.text
-        if countElements(searchText) != 0 {
+        if count(searchText) != 0 {
             initiateRequest(searchText)
-        } else {
-
         }
     }
     
@@ -74,36 +120,35 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     
     // Example results url: https://api.spotify.com/v1/search?type=track&q=kanye
     func initiateRequest(term: String) {
-        var searchUrl = kSearchBase + term.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
+        var searchUrl = kSearchBase + term.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         
         Alamofire.request(.GET, searchUrl)
             .responseJSON { (request, response, data, error) in
                 self.receivedResponse(data)
-                return
         }
     }
     
     // Saves json as new results Track array and reloads table
     func receivedResponse(data: AnyObject?) {
-        let response = data as NSDictionary
-        var tracks = response["tracks"] as NSDictionary
+        let response = data as! NSDictionary
+        var tracks = response["tracks"] as! NSDictionary
         
-        var items = tracks["items"] as NSArray
+        var items = tracks["items"] as! NSArray
         
-        var trackResults: [TrackResult] = []
+        var trackResults: [Post] = []
         
         for var i = 0; i < items.count; i++ {
-            let item = items[i] as NSDictionary
-            
-            let artists = item["artists"] as NSArray
-            let album = item["album"] as NSDictionary
-            let id = item["id"] as String
-            let name = item["name"] as String
-            let uri = item["uri"] as String
-            let popularity = item["popularity"] as Int
-            
+            let item = items[i] as! NSDictionary
+//            
+//            let artists = item["artists"] as! NSArray
+//            let album = item["album"] as! NSDictionary
+//            let id = item["id"] as! String
+//            let name = item["name"] as! String
+//            let uri = item["uri"] as! String
+//            let popularity = item["popularity"] as! Int
+            let track = Song(responseDictionary: item)
             trackResults.append(
-                TrackResult(artists: artists, album: album, id: id, name: name, uri: uri, andPopularity: popularity)
+                Post(song: track, posterFirst: "", posterLast: "", date: nil, avatar: nil)
             )
         }
 
@@ -116,9 +161,5 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         results = []
         tableView.reloadData()
     }
-    
-    // Post a song
-    func postSong(track: TrackResult) {
-        delegate?.postSong(track)
-    }
+
 }

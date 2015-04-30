@@ -7,36 +7,46 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class Post: NSObject {
-    var posterFirstName = ""
-    var posterLastName = ""
+    let posterFirstName: String
+    let posterLastName: String
     var avatar: UIImage?
     var player: Player!
-    var song: Song!
-    var date: NSDate!
+    let song: Song
+    var date: NSDate?
+    var likes = 0
 
-    init(song: Song, posterFirst: String, posterLast: String, date: NSDate, avatar: UIImage?) {
+    init(song: Song, posterFirst: String, posterLast: String, date: NSDate?, avatar: UIImage?) {
         self.song = song
         self.posterFirstName = posterFirst
+        self.posterLastName = posterLast
         self.date = date
         self.avatar = avatar
-        self.posterLastName = posterLast
         
         if let previewURL = song.previewURL {
             player = Player(fileURL: previewURL)
         } else {
-            player = Player(fileURL: NSURL(string: "https://p.scdn.co/mp3-preview/004eaa8d0769f3d464992704d9b5c152b862aa65")!);
+            player = Player(fileURL: NSURL(string: "https://p.scdn.co/mp3-preview/004eaa8d0769f3d464992704d9b5c152b862aa65")!)
         }
         
         super.init()
     }
     
-    convenience init(trackResult: TrackResult, posterFirst: String, posterLast: String, date: NSDate, avatar: UIImage?) {
-        self.init(song: Song(spotifyURI: trackResult.id), posterFirst: posterFirst, posterLast: posterLast, date: date, avatar: avatar)
+    convenience init(json: JSON) {
+        let songID = json["song"]["spotify_url"].stringValue
+        let name = split(json["user"]["name"].stringValue) { $0 == " " }
+        let first = name.first ?? ""
+        let last = name.count > 1 ? name.last! : ""
+        self.init(song: Song(spotifyURI: songID), posterFirst: first, posterLast: last, date: nil, avatar: nil)
     }
     
-    override init() {
-        assertionFailure("Use the init(song:...) method instead")
+    func relativeDate() -> String {
+        return ""
+    }
+    
+    override var description: String {
+        return "\(song.title) posted by \(posterFirstName) \(posterLastName)"
     }
 }

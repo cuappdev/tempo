@@ -1,79 +1,176 @@
 //
 //  API.swift
+//  IceFishing
+//
+//  Created by Lucas Derraugh on 4/22/15.
+//  Copyright (c) 2015 Lucas Derraugh. All rights reserved.
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
 
-typealias ResponseHandler = (NSURLRequest, NSHTTPURLResponse?, AnyObject?, NSError?) -> Void
-typealias ProgressHandler = (Int64, Int64, Int64) -> Void
-enum Endpoint:String {
-	
+enum Router: URLStringConvertible {
+    static let baseURLString = "http://icefishing-web.herokuapp.com"
+    case Root
+    case ValidUsername
+    case Sessions
+    case Users(Int)
+    case Feed(Int)
+    case FeedEveryone
+    case History(Int)
+    case Likes
+    case Followings
+    case Posts
+    
+    var URLString: String {
+        let path: String = {
+            switch self {
+            case .Root:
+                return "/"
+            case .ValidUsername:
+                return "/users/valid_username"
+            case .Sessions:
+                return "/sessions"
+            case .Users(let userID):
+                return "/users/\(userID)"
+            case .Feed(let userID):
+                return "/\(userID)/feed"
+            case .FeedEveryone:
+                return "/feed"
+            case .History(let userID):
+                return "/\(userID)/posts"
+            case .Likes:
+                return "/likes"
+            case .Followings:
+                return "/followings"
+            case .Posts:
+                return "/posts"
+            }
+            }()
+        return Router.baseURLString + path
+    }
 }
 
-private var _SharedAPI: API? = nil
+private let currentUserKey = "CurrentUserKey"
+private let sessionCodeKey = "SessionCodeKey"
 
 class API {
-	let BASE_URL: String = "http://localhost:3000"
-	
-	class var sharedAPI: API {
-		if _SharedAPI == nil {
-			_sharedAPI = API()
-		}
-		return _SharedAPI!
-	}
-
-	func isAuthorized() -> Bool {
-		let sessionCode = Defaults.get("SessionCode")
-		if sessionCode == nil { return false }
-		if countElements(sessionCode! as String) < 1 { return false }
-		return true
-	}
-	
-	func get(endpoint: Endpoint, responseHandler: ResponseHandler) {
-		makeRequest(.GET, url: fullURL(endpoint), parameters: [String: String](), responseHandler: responseHandler)
-	}
-	func get(endpoint: String, responseHandler: ResponseHandler) {
-		makeRequest(.GET, url: fullURL(endpoint), parameters: [String: String](), responseHandler: responseHandler)
-	}
-	func get(endpoint: Endpoint, params: Dictionary<String, String>, responseHandler: ResponseHandler) {
-		makeRequest(.GET, url: fullURL(endpoint), parameters: params, responseHandler: responseHandler)
-	}
-	func get(endpoint: String, params: [String: String], responseHandler: ResponseHandler) {
-		makeRequest(.GET, url: fullURL(endpoint), parameters: params, responseHandler: responseHandler)
-	}
-	
-	func send(endpoint: Endpoint, params: Dictionary<String, AnyObject>, responseHandler: ResponseHandler) {
-		send(endpoint.rawValue, params: params, responseHandler: responseHandler)
-	}
-	func send(endpoint: String, params: [String: AnyObject], responseHandler: ResponseHandler) {
-		makeRequest(.POST, url: fullURL(endpoint), parameters: params, responseHandler: responseHandler)
-	}
-	
-	private func fullURL(endpoint: Endpoint) -> String {
-		return BASE_URL + endpoint.rawValue
-	}
-	private func fullURL(endpoint: String) -> String {
-		return BASE_URL + endpoint
-	}
-	private func queryString(params: [String: AnyObject]) -> String {
-		var queryString = ""
-		for (param, value) in params {
-			queryString += "\(param)=\(value)&"
-		}
-		queryString = queryString.substringToIndex(advance(queryString.startIndex, countElements(queryString) - 1))
-		return "?\(queryString)"
-	}
-	private func fullURLWithGETParams(endpoint: Endpoint, params: [String: AnyObject]) -> String {
-		let endpoint = fullURL(endpoint)
-		let qstring = queryString(params)
-		return "\(endpoint)\(qstring)"
-	}
-	private func makeRequest(method: Method, url: String, parameters: Dictionary<String, AnyObject>, responseHandler: ResponseHandler) {
-		var prms = parameters
-		if let sessionCode = Defaults.get("SessionCode") {
-			prms["session_code"] = sessionCode
-		}
-		prms["build"] = UpdateCheck.buildTime()
-		request(method, url, parameters: prms).responseJSON(responseHandler)
-	}
+    
+    static let sharedAPI: API = API()
+    
+    // Mappings
+    let postMapping: [String: [AnyObject]] -> [Post]? = {
+        if let posts = $0["posts"] {
+            var feed: [Post] = []
+            for post in posts {
+                feed.append(Post(json: JSON(post)))
+            }
+            return feed.reverse()
+        }
+        return nil
+    }
+    
+    // Could call getSession()
+    private var sessionCode: String? {
+        set {
+            NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: sessionCodeKey)
+        }
+        get {
+            return NSUserDefaults.standardUserDefaults().objectForKey(sessionCodeKey) as? String
+        }
+    }
+    
+    func usernameIsValid(username: String, completion: Bool -> Void) {
+        let map: [String: Bool] -> Bool? = { $0["is_valid"] }
+        get(.ValidUsername, params: ["username": username], map: map, completion: completion)
+    }
+    
+    func getCurrentUser(completion: User -> Void) {
+        let map: [String: AnyObject] -> User? = {
+            if let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
+                self.sessionCode = code
+                User.currentUser = User(json: JSON(user))
+                return User.currentUser
+            }
+            return nil
+        }
+        // TODO: This call should probably be removed and in place only called by signin folks after login
+        // Other times you can simply reference the saved user object, instead of pinging facebook
+        let userRequest : FBRequest = FBRequest.requestForMe()
+        userRequest.startWithCompletionHandler { [unowned self] (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+            if (error == nil) {
+                let user = [
+                    "email": result["email"] as! String,
+                    "name": result["name"] as! String,
+                    "username": result["name"] as! String,
+                    "fbid": result["id"] as! String
+                ]
+                self.post(.Sessions, params: ["user": user], map: map, completion: completion)
+            }
+        }
+    }
+    
+    func fetchUser(userID: Int, completion: User -> Void) {
+        let map: [String: AnyObject] -> User? = { User(json: JSON($0)) }
+        get(.Users(userID), params: ["session_code": sessionCode!], map: map, completion: completion)
+    }
+    
+    func fetchFeed(userID: Int, completion: [Post] -> Void) {
+        get(.Feed(userID), params: ["session_code": sessionCode!], map: postMapping, completion: completion)
+    }
+    
+    // Method used for testing purposes
+    func fetchFeedOfEveryone(completion: [Post] -> Void) {
+        get(.FeedEveryone, params: ["session_code": sessionCode!], map: postMapping, completion: completion)
+    }
+    
+    func fetchPosts(userID: Int, completion: [Post] -> Void) {
+        let map: [String: [Post]] -> [Post]? = { $0["is_valid"] }
+        get(.History(userID), params: ["id": userID, "session_code": sessionCode!], map: map, completion: completion)
+    }
+    
+    func updateLikes(postID: Int, unlike: Bool, completion: [String: Bool] -> Void) {
+        post(.Likes, params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode!], map: { $0 }, completion: completion)
+    }
+    
+    func updateFollowings(userID: Int, unfollow: Bool, completion: [String: Bool] -> Void) {
+        post(.Followings, params: ["user_id": userID, "unfollow": unfollow, "session_code": sessionCode!], map: { $0 }, completion: completion)
+    }
+    
+    func updatePost(userID: Int, song: Song, completion: [String: AnyObject] -> Void) {
+        let songDict = [
+            "artist": song.artist,
+            "track": song.title,
+            "spotify_url": song.spotifyID
+        ]
+        let map: [String: AnyObject] -> [String: AnyObject]? = { Optional($0) }
+        post(.Posts, params: ["user_id": userID, "song": songDict, "session_code": sessionCode!], map: map, completion: completion)
+    }
+    
+    // MARK: Private Methods
+    
+    private func post<O, T>(router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
+        makeNetworkRequest(.POST, router: router, params: params, map: map, completion: completion)
+    }
+    
+    private func get<O, T>(router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
+        makeNetworkRequest(.GET, router: router, params: params, map: map, completion: completion)
+    }
+    
+    private func makeNetworkRequest<O, T>(method: Alamofire.Method, router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
+        Alamofire
+            .request(method, router, parameters: params)
+            .responseJSON { (request, response, json, error) -> Void in
+                if let json = json as? O, obj = map(json) {
+                    completion(obj)
+                } else {
+                    println("—————— Couldn't decompose object ——————")
+                    println("JSON: \(json)")
+                    println("Error: \(error)")
+                    println("Request: \(request)")
+                    println("Response: \(response)")
+                }
+        }
+    }
 }
