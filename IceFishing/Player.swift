@@ -66,17 +66,18 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
     
     private var shouldAutoplay = false
+    private var shouldNotify = false
     func play(notify: Bool) {
         prepareToPlay()
         finishedPlaying = false
         if (player == nil) {
             shouldAutoplay = true
+            shouldNotify = notify
         } else {
             player?.play()
-        }
-        
-        if notify {
-            NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
+            if notify {
+                NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
+            }
         }
     }
     
@@ -92,6 +93,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     func pause(notify: Bool) {
         player?.pause()
         shouldAutoplay = false
+
         if notify {
             NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
         }
@@ -189,6 +191,9 @@ class Player: NSObject, AVAudioPlayerDelegate {
         
         if (shouldAutoplay) {
             player?.play()
+            if shouldNotify {
+                NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
+            }
         }
     }
     
