@@ -204,12 +204,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         tableView.separatorStyle = .None
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
         
-        var post = Post(song: Song(songID: "3TV9xKWFOxndERab4wwxsj"), posterFirst: "Mark", posterLast: "Bryan", date: NSDate(), avatar: UIImage(named: "Sexy"))
-        posts.append(post)
-        post = Post(song: Song(songID: "3igu6bCzkaIrioZIhK3p2n"), posterFirst: "Eric", posterLast: "Appelaklsdjalskdjaslkdjalskjdalksjdalksjdlkasjdlaskjdlaksjdlaksjdalksjdalksjdlkasjdlaksjdlaksjdlaksjd", date: NSDate(), avatar: UIImage(named: "Eric"))
-        posts.append(post)
-        post = Post(song: Song(songID: "5Yt80fWRB8JG73XlPjrrKP"), posterFirst: "Steven", posterLast: "Yeh", date: NSDate(), avatar: UIImage(named: "Steven"))
-        posts.append(post)
+        refreshFeed()
         
         //background color for the view
         self.tableView.backgroundColor = UIColor.iceDarkGray()
