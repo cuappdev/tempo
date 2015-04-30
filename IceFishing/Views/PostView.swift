@@ -72,7 +72,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                         self?.updateProfileLabelTextColor()
                         
                         if (self?.updateTimer == nil && self?.post?.player.isPlaying() ?? false) {
-                            self?.updateTimer = NSTimer(timeInterval: 0.0005,
+                            // 60 fps
+                            self?.updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
                                 target: self!, selector: Selector("timerFired:"),
                                 userInfo: nil,
                                 repeats: true)
