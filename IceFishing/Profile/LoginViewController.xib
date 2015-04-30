@@ -13,7 +13,7 @@
                 <outlet property="nameLabel" destination="UCx-Gl-jLS" id="SFI-q1-yoE"/>
                 <outlet property="numFollowersLabel" destination="7Vc-mb-b1O" id="gyR-OK-knN"/>
                 <outlet property="numFollowingLabel" destination="oId-QB-kvn" id="RZY-zH-vgN"/>
-                <outlet property="postCalendarView" destination="bRD-Ik-gVS" id="y8b-6R-mx2"/>
+                <outlet property="postCalendarView" destination="bRD-Ik-gVS" id="c9H-OT-Yu9"/>
                 <outlet property="postHistoryLabel" destination="hFG-HM-4mJ" id="A5X-4j-YsS"/>
                 <outlet property="profilePictureView" destination="4qp-8z-VHa" id="htL-Wb-QrP"/>
                 <outlet property="userHandleLabel" destination="5jn-oQ-KFy" id="91l-9E-Xrc"/>
@@ -257,9 +257,12 @@
                                 </mask>
                             </variation>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRD-Ik-gVS" customClass="HipCalendarView" customModule="IceFishing" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRD-Ik-gVS">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            <color key="backgroundColor" red="0.13725490196078433" green="0.14117647058823529" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <variation key="widthClass=compact" misplaced="YES">
+                                <rect key="frame" x="25" y="45" width="350" height="243"/>
+                            </variation>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

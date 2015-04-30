@@ -51,13 +51,11 @@
 		D102A9D21AE88CB400C66385 /* SideBarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D102A9D01AE88CB400C66385 /* SideBarTableViewCell.xib */; };
 		D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */; };
 		D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */; };
-		D148F4961AF031A2009AB073 /* HipCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4951AF031A2009AB073 /* HipCalendarView.swift */; };
 		D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4971AF031DB009AB073 /* NSDateExtension.swift */; };
 		D148F4AA1AF03EB4009AB073 /* PostHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */; };
 		D148F4AB1AF03EB4009AB073 /* PostHistoryTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D148F4A91AF03EB4009AB073 /* PostHistoryTableViewController.xib */; };
 		D148F4AE1AF03EF5009AB073 /* PostHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */; };
 		D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */; };
-		D148F4B11AF06CEF009AB073 /* HipCalendarViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4B01AF06CEF009AB073 /* HipCalendarViewDelegate.swift */; };
 		D17395741ADB080900A53AEE /* FollowersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395721ADB080900A53AEE /* FollowersViewController.swift */; };
 		D17395751ADB080900A53AEE /* FollowersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395731ADB080900A53AEE /* FollowersViewController.xib */; };
 		D17395781ADB081C00A53AEE /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395761ADB081C00A53AEE /* FollowingViewController.swift */; };
@@ -218,13 +216,11 @@
 		D102A9D01AE88CB400C66385 /* SideBarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarTableViewCell.xib; sourceTree = "<group>"; };
 		D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarCollectionReusableView.swift; sourceTree = "<group>"; };
 		D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarDayCollectionViewCell.swift; sourceTree = "<group>"; };
-		D148F4951AF031A2009AB073 /* HipCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarView.swift; sourceTree = "<group>"; };
 		D148F4971AF031DB009AB073 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostHistoryTableViewController.swift; path = ../Controllers/PostHistoryTableViewController.swift; sourceTree = "<group>"; };
 		D148F4A91AF03EB4009AB073 /* PostHistoryTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostHistoryTableViewController.xib; path = ../XIBs/PostHistoryTableViewController.xib; sourceTree = "<group>"; };
 		D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHistoryTableViewCell.xib; sourceTree = "<group>"; };
-		D148F4B01AF06CEF009AB073 /* HipCalendarViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarViewDelegate.swift; sourceTree = "<group>"; };
 		D17395721ADB080900A53AEE /* FollowersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersViewController.swift; sourceTree = "<group>"; };
 		D17395731ADB080900A53AEE /* FollowersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowersViewController.xib; sourceTree = "<group>"; };
 		D17395761ADB081C00A53AEE /* FollowingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
@@ -470,9 +466,7 @@
 				D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */,
 				D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */,
 				D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */,
-				D148F4951AF031A2009AB073 /* HipCalendarView.swift */,
 				D148F4971AF031DB009AB073 /* NSDateExtension.swift */,
-				D148F4B01AF06CEF009AB073 /* HipCalendarViewDelegate.swift */,
 			);
 			name = "Post History Calendar";
 			sourceTree = "<group>";
@@ -675,14 +669,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D148F4961AF031A2009AB073 /* HipCalendarView.swift in Sources */,
 				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,
 				6DEE0FDD1AC34884005552F9 /* LoginViewController.swift in Sources */,
 				FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */,
 				7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */,
 				1DD25B101AE9DBBA00C6C8FF /* TrackSearchController.swift in Sources */,
-				D148F4B11AF06CEF009AB073 /* HipCalendarViewDelegate.swift in Sources */,
 				D17395741ADB080900A53AEE /* FollowersViewController.swift in Sources */,
 				1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */,
 				FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */,

@@ -14,16 +14,16 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
     var songArtists: [String]! = []
     var songNames: [String]! = []
     var postedDates: [NSDate]! = []
-    var index: Int!
+    var index: Int = 0
+    var selectedDate: NSDate!
         
     override func viewDidLoad() {
         super.viewDidLoad()
         println(postedDates)
         
+        tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.registerNib(UINib(nibName: "PostHistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "PostedSongCell")
-        
-        tableView.separatorStyle = .None
         
         self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
@@ -31,13 +31,18 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
         // Add back button to profile
         var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
         backButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
-        backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: "popToRoot", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        let selectedRow:NSIndexPath = NSIndexPath(forRow: index, inSection: 0)
+        self.tableView.selectRowAtIndexPath(selectedRow, animated: true, scrollPosition: UITableViewScrollPosition.Middle)
+    }
+    
     // Return to profile view
-    func dismiss() {
-        dismissViewControllerAnimated(true, completion: nil)
+    func popToRoot() {
+        navigationController?.popToRootViewControllerAnimated(true)
     }
     
     // TableView Methods
@@ -46,17 +51,19 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
         return self.postedDates.count
     }
     
-    
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostedSongCell", forIndexPath: indexPath) as! PostHistoryTableViewCell
         
-//        cell.artistNameLabel.text = self.songArtists[indexPath.row]
-//        cell.songNameLabel.text = self.songNames[indexPath.row]
-        
+        // TODO: For testing purposes (delete when test user is made)
         cell.postedSongImage.image = UIImage(named: "Sexy")
         cell.artistNameLabel.text = "John Legend"
         cell.songNameLabel.text = "All Of Me"
+        
+        // TODO: Uncomment when test user is made
+        // cell.artistNameLabel.text = self.songArtists[indexPath.row]
+        // cell.songNameLabel.text = self.songNames[indexPath.row]
+        // cell.postedSongImage.image = UIImage(named: "self.songPictures[indexPath.row]")
+        
         var formatter: NSDateFormatter = NSDateFormatter()
         formatter.dateFormat = "MM-dd-YY"
         let date: String = formatter.stringFromDate(self.postedDates[indexPath.row])

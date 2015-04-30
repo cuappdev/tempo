@@ -8,14 +8,21 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, HipCalendarViewDelegate {
+class LoginViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var isFollowing = false
     var numFollowing: Int = 0
-    var postedDates: [NSDate]! = []
-    
     var searchNavigationController: UINavigationController!
-
+    
+    // Post History Calendar
+    var calendar : NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+    var startDate : NSDate! = NSDate(dateString:"2014-04-01") // User creation date
+    var currentDate : NSDate! = NSDate()
+    var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-30"), NSDate(dateString:"2015-04-27"), NSDate(dateString:"2015-04-25"), NSDate(dateString:"2015-04-19"), NSDate(dateString:"2015-04-18"), NSDate(dateString:"2015-04-17"), NSDate(dateString:"2015-04-13"), NSDate(dateString:"2015-04-10"), NSDate(dateString:"2015-04-8"), NSDate(dateString:"2015-04-3"), NSDate(dateString:"2015-04-1")]
+    var daySize : CGSize!
+    var padding : CGFloat = 5
+    
+    // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var userHandleLabel: UILabel!
@@ -26,47 +33,14 @@ class LoginViewController: UIViewController, HipCalendarViewDelegate {
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var postHistoryLabel: UILabel!
     @IBOutlet weak var divider: UIView!
-    @IBOutlet weak var postCalendarView: HipCalendarView!
+    @IBOutlet weak var postCalendarView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nameLabel.text = User.currentUser.name
-        userHandleLabel.text = "@\(User.currentUser.username)"
-        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                profilePictureView.image = UIImage(data: data)
-            }
-        }
-
-        followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
-        numFollowersLabel.text = "\(User.currentUser.followersCount)"
-        numFollowingLabel.text = "\(numFollowing)"
-        
-        if !isFollowing {
-            followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-        } else {
-            followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-        }
-        
-        profilePictureView.layer.masksToBounds = false
-        profilePictureView.layer.borderWidth = 1.5
-        profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
-        profilePictureView.frame = CGRectMake(0, 0, 150/2, 150/2)
-        profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
-        profilePictureView.clipsToBounds = true
-        
+        // Navigation Bar
         self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
-        // Post history calendar
-        postCalendarView.initialize()
-        
-        // Add refresh scroll button for calendar
-        let button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        button.frame = self.postHistoryLabel.frame
-        button.addTarget(self, action: "refreshScroll", forControlEvents: UIControlEvents.TouchUpInside)
-        self.postCalendarView.addSubview(button)
         
         // Add profile button to the left side of the navbar
         var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
@@ -78,18 +52,66 @@ class LoginViewController: UIViewController, HipCalendarViewDelegate {
         if self.revealViewController() != nil {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
-    }
-    
-    func refreshScroll() {
-        self.postCalendarView.reloadInputViews()
-        println("reload")
+        
+        // Profile Info
+        nameLabel.text = User.currentUser.name
+        userHandleLabel.text = "@\(User.currentUser.username)"
+        profilePictureView.layer.masksToBounds = false
+        profilePictureView.layer.borderWidth = 1.5
+        profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
+        profilePictureView.frame = CGRectMake(0, 0, 150/2, 150/2)
+        profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
+        profilePictureView.clipsToBounds = true
+        
+        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                profilePictureView.image = UIImage(data: data)
+            }
+        }
+
+        // Followers & Following
+        followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
+        numFollowersLabel.text = "\(User.currentUser.followersCount)"
+        numFollowingLabel.text = "\(numFollowing)"
+        
+        if !isFollowing {
+            followButtonLabel.setTitle("FOLLOW", forState: .Normal)
+        } else {
+            followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
+        }
+        
+        // Post History Calendar
+        let cols : Int = 6
+        let cwidth = postCalendarView.frame.width/CGFloat(cols)
+        let cheight = cwidth
+        daySize = CGSize(width: cwidth, height: cheight)
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        
+        var collectionView : UICollectionView = UICollectionView(frame: postCalendarView.frame, collectionViewLayout: layout)
+        collectionView.registerClass(HipCalendarCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
+        collectionView.registerClass(HipCalendarDayCollectionViewCell.self, forCellWithReuseIdentifier: "DayCell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = UIColor.clearColor()
+        collectionView.allowsMultipleSelection = true
+        postCalendarView.addSubview(collectionView)
+        
+//        // Add refresh scroll button for calendar
+//        let button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+//        button.frame = self.postHistoryLabel.frame
+//        button.addTarget(self, action: "refreshScroll", forControlEvents: UIControlEvents.TouchUpInside)
+//        self.postCalendarView.addSubview(button)
     }
     
     func dismiss() {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // Buttons
+    // <------------------------FOLLOW BUTTONS------------------------>
     
     @IBAction func followButton(sender: UIButton) {
         if (!isFollowing) {
@@ -118,20 +140,88 @@ class LoginViewController: UIViewController, HipCalendarViewDelegate {
         self.presentViewController(navController, animated: true, completion: nil)
     }
     
-    // HipCalendarViewDelegate Methods
+    // <------------------------POST HISTORY------------------------>
     
-    func hipCalendarView(hipCalendarView: HipCalendarView, didSelectDate date: NSDate) {
-        println("Selected \(date)")
+    // Helper Methods
+    private func dateForIndexPath(indexPath: NSIndexPath) -> NSDate {
+        var date : NSDate! = currentDate?.dateByAddingMonths(-indexPath.section).lastDayOfMonth()
+        let components : NSDateComponents = date.components()
+        components.day = date.numDaysInMonth() - indexPath.item
+        date = NSDate.dateFromComponents(components)
+        
+        return date;
+    }
+    
+    // Cell
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let date: NSDate = dateForIndexPath(indexPath)
+        var cell : HipCalendarDayCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
+        cell.date = date
+        cell.userInteractionEnabled = false
+
+        if (contains(postedDates,cell.date)) {
+            cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed()
+            cell.userInteractionEnabled = true
+            //postedDates.append(cell.date)
+        }
+        
+        return cell
+    }
+    
+    // Section Header
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        
+        if (kind == UICollectionElementKindSectionHeader) {
+            let firstDayOfMonth: NSDate = dateForIndexPath(indexPath).firstDayOfMonth()
+            var header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! HipCalendarCollectionReusableView
+            header.firstDayOfMonth = firstDayOfMonth
+            
+            return header
+        }
+        
+        return UICollectionReusableView()
+    }
+    
+    // MARK: UICollectionViewDataSource
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        var numberOfMonths : Int? = startDate?.numberOfMonths(self.currentDate!)
+        return numberOfMonths == nil ? 0 : numberOfMonths!
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let firstDayOfMonth : NSDate? = currentDate?.firstDayOfMonth().dateByAddingMonths(section)
+        let lastDayOfMonth : NSDate? = firstDayOfMonth?.lastDayOfMonth()
+        var numberOfDays : Int? = firstDayOfMonth?.numDaysInMonth()
+        numberOfDays == nil ? 0 : numberOfDays!
+        
+        return numberOfDays!
+    }
+    
+    // MARK: UICollectionViewDelegate
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let date: NSDate = dateForIndexPath(indexPath)
+        println(date)
+        let index = find(postedDates, date) as Int?
+        
+        // Push to TableView with posted songs and dates
         let postHistoryVC = PostHistoryTableViewController(nibName: "PostHistoryTableViewController", bundle: nil)
-        //postHistoryVC.postedDates = dates
-        self.presentViewController(postHistoryVC, animated: false, completion: nil)
+        postHistoryVC.postedDates = postedDates
+        postHistoryVC.selectedDate = date
+        postHistoryVC.index = index!
+        navigationController?.pushViewController(postHistoryVC, animated: true)
     }
     
-    func hipCalendarView(hipCalendarView: HipCalendarView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println(indexPath)
+    // MARK: UICollectionViewDelegateFlowLayout
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSizeMake(collectionView.frame.width - padding * 2, 30)
     }
     
-    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return daySize
+    }
     
 }
 
