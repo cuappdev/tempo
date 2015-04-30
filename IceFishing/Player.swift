@@ -11,6 +11,7 @@ import AVFoundation
 
 let PlayerDidChangeStateNotification = "PlayerDidChangeState"
 let PlayerDidSeekNotification = "PlayerDidSeek"
+let PlayerDidFinishPlayingNotification = "PlayerDidFinishPlaying"
 
 class Player: NSObject, AVAudioPlayerDelegate {
     var downloadCallback: ((progress: Double) -> ())?
@@ -27,7 +28,13 @@ class Player: NSObject, AVAudioPlayerDelegate {
             player?.delegate = self
         }
     }
-    private(set) var finishedPlaying = false
+    private(set) var finishedPlaying = false {
+        didSet {
+            if (finishedPlaying == true && !oldValue) {
+                NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
+            }
+        }
+    }
     
     var fileURL: NSURL!
     init(fileURL: NSURL) {

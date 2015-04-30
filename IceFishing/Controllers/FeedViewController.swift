@@ -94,6 +94,22 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
             self?.updateNowPlayingInfo()
         }
         
+        NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidFinishPlayingNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
+            if let current = self?.currentlyPlayingPost {
+                if (current.player == note.object as? Player) {
+                    let path = self!.currentlyPlayingIndexPath
+                    if let path = path {
+                        var row = path.row + 1
+                        if (row >= self!.posts.count) {
+                            row = 0
+                        }
+                        
+                        self?.currentlyPlayingIndexPath = NSIndexPath(forRow: row, inSection: path.section)
+                    }
+                }
+            }
+        }
+        
         //!TODO: fetch the largest artwork image for lockscreen in Post
         let center = MPRemoteCommandCenter.sharedCommandCenter()
         center.playCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
