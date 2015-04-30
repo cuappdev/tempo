@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum ViewType: Int {
+    case Feed
+    case Search
+}
+
 class PostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
     var tapGestureRecognizer: UITapGestureRecognizer?
@@ -19,6 +24,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     var fillColor = UIColor.iceDarkGray()
  
+    var type: ViewType = .Feed
     private var updateTimer: NSTimer?
     private var notificationHandler: AnyObject?
     
@@ -30,9 +36,19 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 
             // update stuff
             if let post = post {
-                profileNameLabel?.text = post.posterFirstName + " " + post.posterLastName
-                descriptionLabel?.text = post.song.title + " · " + post.song.artist
+                switch type {
+                case .Feed:
+                    profileNameLabel?.text = post.posterFirstName + " " + post.posterLastName
+                    descriptionLabel?.text = post.song.title + " · " + post.song.artist
+                    break
+                case .Search:
+                    profileNameLabel?.text = post.song.title
+                    descriptionLabel?.text = post.song.artist
+                    break
+                }
+                
                 avatarImageView?.image = post.avatar
+
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
