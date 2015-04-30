@@ -14,7 +14,8 @@ class Song: NSObject {
     var title = ""
     var artist = ""
     var album = ""
-    var albumArtworkURL: NSURL?
+    var largeArtworkURL: NSURL?
+    var smallArtworkURL: NSURL?
     var spotifyID:String = "" {
         didSet {
             //!TODO: Use Spotify SDK
@@ -65,8 +66,11 @@ class Song: NSObject {
         
         let images = albums["images"] as? NSArray ?? NSArray()
         if images.count > 0 {
-            let firstImage = images.lastObject as? NSDictionary ?? NSDictionary()
-            albumArtworkURL = NSURL(string: firstImage["url"] as? String ?? "")
+            var firstImage = images.lastObject as? NSDictionary ?? NSDictionary()
+            smallArtworkURL = NSURL(string: firstImage["url"] as? String ?? "")
+            
+            firstImage = images[0] as? NSDictionary ?? NSDictionary()
+            largeArtworkURL = NSURL(string: firstImage["url"] as? String ?? "")
         }
         
     }
@@ -81,15 +85,19 @@ class Song: NSObject {
         } else if (artists.count == 0) {
             artist = "Unknown Artist"
         } else {
-            artist = artists[0]["name"].stringValue
+            artist = artists[0]["name"].string ?? "Unknown Artist"
         }
         
-        let albums = json["albums"].arrayValue
-        if (albums.count == 0) {
-            album = "Unknown Album"
-        } else {
-            album = albums[0]["name"].stringValue
-            albumArtworkURL = NSURL(string: albums[0]["artwork"].stringValue)
+        let albums = json["album"].dictionaryValue
+        album = albums["name"]?.string ?? "Unknown Album"
+        
+        let images = albums["images"]?.arrayValue ?? []
+        if images.count > 0 {
+            var firstImage = images[images.count - 1].dictionaryValue
+            smallArtworkURL = NSURL(string: firstImage["url"]?.stringValue ?? "")
+            
+            firstImage = images[0].dictionaryValue
+            largeArtworkURL = NSURL(string: firstImage["url"]?.stringValue ?? "")
         }
     }
 

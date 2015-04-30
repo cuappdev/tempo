@@ -57,7 +57,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         cell.postView.type = .Search
         cell.postView.post = track
         cell.postView.flagAsSearchResultPost()
-        if let artwork = track.song.albumArtworkURL {
+        if let artwork = track.song.smallArtworkURL {
             loadImageAsync(artwork, { [weak cell] image, error in
                 if error == nil {
                     cell?.postView.setImage(image)

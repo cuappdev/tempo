@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 enum ViewType: Int {
     case Feed
@@ -74,9 +75,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
                     object: post.player,
                     queue: nil, usingBlock: {
-                        [unowned self]
+                        [weak self]
                         (note) -> Void in
-                        self.updateProfileLabelTextColor()
+                        self?.updateProfileLabelTextColor()
                 })
             } else {
                 updateTimer?.invalidate()

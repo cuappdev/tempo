@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 var addedSongs = 0
 class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTrackResultsViewControllerDelegate, UISearchControllerDelegate {
@@ -16,7 +17,26 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     var preserveTitleView: UIView!
     
     var posts: [Post] = []
-    var currentlyPlayingIndexPath: NSIndexPath?
+    var currentlyPlayingIndexPath: NSIndexPath? {
+        didSet {
+            if (currentlyPlayingIndexPath?.isEqual(oldValue) ?? false) { // Same index path tapped
+                currentlyPlayingPost?.player.togglePlaying()
+            } else { // Different cell tapped
+                currentlyPlayingPost?.player.pause(true)
+                currentlyPlayingPost?.player.progress = 1.0 // Fill cell as played
+                
+                if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+                    currentlyPlayingPost = posts[currentlyPlayingIndexPath.row]
+                    currentlyPlayingPost!.player.play(true)
+                } else {
+                    currentlyPlayingPost = nil
+                }
+            }
+            
+            tableView.selectRowAtIndexPath(currentlyPlayingIndexPath, animated: false, scrollPosition: UITableViewScrollPosition.None)
+            cellPin()
+        }
+    }
     var currentlyPlayingPost: Post?
     
     var topPinViewContainer: UIView = UIView()
@@ -34,8 +54,95 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         self.tableView.reloadData()
     }
     
+    private func updateNowPlayingInfo() {
+        let session = AVAudioSession.sharedInstance()
+        
+        if let post = self.currentlyPlayingPost {
+            session.setCategory(AVAudioSessionCategoryPlayback, error: nil)
+            session.setActive(true, error: nil)
+            
+            // state change, update play information
+            let center = MPNowPlayingInfoCenter.defaultCenter()
+            if (post.player.progress != 1.0) {
+                let artworkURL = post.song.largeArtworkURL!
+                let artworkData = NSData(contentsOfURL: artworkURL)!
+                center.nowPlayingInfo = [
+                    MPMediaItemPropertyTitle:  post.song.title,
+                    MPMediaItemPropertyArtist: post.song.artist,
+                    MPMediaItemPropertyAlbumTitle: post.song.album,
+                    MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: UIImage(data: artworkData)!),
+                    MPMediaItemPropertyPlaybackDuration: post.player.duration,
+                    MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
+                    MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying() ? post.player.rate : 0.0,
+                    MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
+                    MPNowPlayingInfoPropertyPlaybackQueueCount: posts.count ]
+            } else {
+                session.setActive(false, error: nil)
+                center.nowPlayingInfo = nil
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
+            self?.updateNowPlayingInfo()
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidSeekNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
+            self?.updateNowPlayingInfo()
+        }
+        
+        //!TODO: fetch the largest artwork image for lockscreen in Post
+        let center = MPRemoteCommandCenter.sharedCommandCenter()
+        center.playCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            if let player = self?.currentlyPlayingPost?.player {
+                player.play(true)
+                return .Success
+            }
+            return .NoSuchContent
+        }
+        center.pauseCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            if let player = self?.currentlyPlayingPost?.player {
+                player.pause(true)
+                return .Success
+            }
+            return .NoSuchContent
+        }
+        
+        center.nextTrackCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            if let path = self?.currentlyPlayingIndexPath {
+                if (path.row < self!.posts.count - 1) {
+                    self?.currentlyPlayingIndexPath = NSIndexPath(forRow: path.row + 1, inSection: path.section)
+                    return .Success
+                }
+            }
+
+            return .NoSuchContent
+        }
+        
+        center.previousTrackCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            if let path = self?.currentlyPlayingIndexPath {
+                if (path.row > 0) {
+                    self?.currentlyPlayingIndexPath = NSIndexPath(forRow: path.row - 1, inSection: path.section)
+                }
+                return .Success
+            }
+
+            return .NoSuchContent
+        }
+        
+        center.seekForwardCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            
+            return .Success
+        }
+        
+        center.seekBackwardCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            
+            return .Success
+        }
+        
         
         //—————————————from MAIN VC——————————————————
         navigationItem.title = "Songs"
@@ -153,20 +260,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     
     // MARK: - UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if (indexPath.isEqual(currentlyPlayingIndexPath)) { // Same index path tapped
-            posts[indexPath.row].player.togglePlaying()
-        } else { // Different cell tapped
-            if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-                posts[currentlyPlayingIndexPath.row].player.pause(true)
-                posts[currentlyPlayingIndexPath.row].player.progress = 1.0 // Fill cell as played
-            }
-            posts[indexPath.row].player.play(true)
-            currentlyPlayingPost = posts[indexPath.row]
-        }
-        
         currentlyPlayingIndexPath = indexPath
-        println("This has run")
-        cellPin()
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -271,5 +365,9 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         searchController.searchBar.text = ""
         searchController.searchBar.resignFirstResponder()
         searchResultsController.finishSearching()
+    }
+    
+    override func canBecomeFirstResponder() -> Bool {
+        return true
     }
 }
