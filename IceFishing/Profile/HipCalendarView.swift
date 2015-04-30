@@ -107,9 +107,6 @@ class HipCalendarView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
             postHistoryVC.postedDates = dates
         }
         
-        if (delegate != nil) {
-            delegate?.hipCalendarView(self, didSelectDate: date)
-        }
     }
     
     // MARK: UICollectionViewDelegateFlowLayout

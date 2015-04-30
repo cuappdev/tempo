@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, HipCalendarViewDelegate {
     
     var isFollowing = false
     var numFollowing: Int = 0
@@ -30,17 +30,16 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        nameLabel.text = user.name
-//
-//        userHandleLabel.text = "@\(user.username)"
-//        // Set FB profile picture as user picture
-//        if let url = NSURL(string: "http://graph.facebook.com/\(user.id)/picture?type=large") {
-//            if let data = NSData(contentsOfURL: url) {
-//                profilePictureView.image = UIImage(data: data)
-//            }
-//        }
         
+        nameLabel.text = User.currentUser.name
+        userHandleLabel.text = "@\(User.currentUser.username)"
+        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                profilePictureView.image = UIImage(data: data)
+            }
+        }
+
+
         followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
         numFollowersLabel.text = "\(numFollowers)"
         numFollowingLabel.text = "\(numFollowing)"
@@ -68,7 +67,7 @@ class LoginViewController: UIViewController {
         let button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         button.frame = self.postHistoryLabel.frame
         button.addTarget(self, action: "refreshScroll", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(button)
+        self.postCalendarView.addSubview(button)
         
         // Add profile button to the left side of the navbar
         var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
@@ -83,7 +82,8 @@ class LoginViewController: UIViewController {
     }
     
     func refreshScroll() {
-        
+        self.postCalendarView.reloadInputViews()
+        println("reload")
     }
     
     func dismiss() {
@@ -117,6 +117,14 @@ class LoginViewController: UIViewController {
         followingVC.title = "Following"
         let navController = UINavigationController(rootViewController: followingVC)
         self.presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    // HipCalendarViewDelegate Methods
+    
+    func hipCalendarView(calendarView: HipCalendarView, didSelectDate date: NSDate) {
+        let postHistoryVC = PostHistoryTableViewController(nibName: "PostHistoryTableViewController", bundle: nil)
+        //postHistoryVC.postedDates = dates
+        self.presentViewController(postHistoryVC, animated: false, completion: nil)
     }
     
     

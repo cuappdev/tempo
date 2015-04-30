@@ -11,6 +11,5 @@ import Foundation
 protocol HipCalendarViewDelegate {
 
     func hipCalendarView(calendarView: HipCalendarView, didSelectDate date: NSDate)
-    //func hipCalendarView(calendarView: HipCalendarView, didDeselectDate date: NSDate)
 
 }

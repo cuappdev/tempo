@@ -61,18 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             if (state == FBSessionState.Open) {
                 println("Session Opened")
-                // Request FB user info
-                var userRequest : FBRequest = FBRequest.requestForMe()
-                userRequest.startWithCompletionHandler{(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-                    
-                    if (error == nil) {
-                        let userName = result["name"]
-                        let userID = result["id"]
-                        let userEmail = result["email"]
-                    } else {
-                        println("Error")
-                    }
-                }
             }
             toggleRootVC()
         }

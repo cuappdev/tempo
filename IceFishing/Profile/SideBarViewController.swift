@@ -23,8 +23,6 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func logOut(sender: UIButton) {
         FBSession.activeSession().closeAndClearTokenInformation()
-//        let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
-//        self.presentViewController(signInVC, animated: false, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -32,16 +30,15 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         categoryTableView.registerNib(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
         
-//        nameLabel.text = user.name
-//        usernameLabel.text = "@\(user.username)"
-//        // Set FB profile picture as user picture
-//        if let url = NSURL(string: "http://graph.facebook.com/\(user.id)/picture?type=large") {
-//            if let data = NSData(contentsOfURL: url) {
-//                profilePicture.image = UIImage(data: data)
-//            }
-//        }
+        nameLabel.text = User.currentUser.name
+        usernameLabel.text = "@\(User.currentUser.username)"
+        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                profilePicture.image = UIImage(data: data)
+            }
+        }
         
-        // Formatting 
+        // Formatting
         categoryTableView.separatorStyle = .None
         categoryTableView.scrollEnabled = false
         categoryTableView.backgroundColor = UIColor.iceDarkGray()
