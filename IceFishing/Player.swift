@@ -49,6 +49,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
         if (player == nil) {
             if (fileURL.fileURL) {
                 player = AVAudioPlayer(contentsOfURL: fileURL, error: nil)
+                player?.prepareToPlay()
             } else if (currentConnection == nil) {
                 // get cached data
                 let request = NSURLRequest(URL: fileURL,
@@ -156,6 +157,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
             if let player = player {
                 if newValue == 1.0 {
                     finishedPlaying = true
+                    destroy()
                 }
                 
                 currentTime = newValue * duration
@@ -181,10 +183,11 @@ class Player: NSObject, AVAudioPlayerDelegate {
     func connectionDidFinishLoading(connection: NSURLConnection) {
         downloadCallback?(progress: 1.0)
         player = AVAudioPlayer(data: totalData, error: nil)
+        player?.prepareToPlay()
         totalData = nil
         currentConnection = nil
         
-        if (shouldAutoplay == true) {
+        if (shouldAutoplay) {
             player?.play()
         }
     }

@@ -63,14 +63,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 } else {
                     dateLabel?.text = ""
                 }
-
-                if (updateTimer == nil) {
-                    updateTimer = NSTimer(timeInterval: 0.0005,
-                        target: self, selector: Selector("timerFired:"),
-                        userInfo: nil,
-                        repeats: true)
-                    NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
-                }
                 
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
                     object: post.player,
@@ -78,6 +70,17 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                         [weak self]
                         (note) -> Void in
                         self?.updateProfileLabelTextColor()
+                        
+                        if (self?.updateTimer == nil && self?.post?.player.isPlaying() ?? false) {
+                            self?.updateTimer = NSTimer(timeInterval: 0.0005,
+                                target: self!, selector: Selector("timerFired:"),
+                                userInfo: nil,
+                                repeats: true)
+                            NSRunLoop.currentRunLoop().addTimer(self!.updateTimer!, forMode: NSRunLoopCommonModes)
+                        } else {
+                            self?.updateTimer?.invalidate()
+                            self?.updateTimer = nil
+                        }
                 })
             } else {
                 updateTimer?.invalidate()
@@ -133,7 +136,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     dynamic private func timerFired(timer: NSTimer) {
-        self.setNeedsDisplay()
+        if (self.post?.player.isPlaying() ?? false) {
+            self.setNeedsDisplay()
+        }
     }
     
     override func layoutSubviews() {

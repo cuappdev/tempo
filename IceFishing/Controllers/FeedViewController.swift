@@ -70,7 +70,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
                     MPMediaItemPropertyTitle:  post.song.title,
                     MPMediaItemPropertyArtist: post.song.artist,
                     MPMediaItemPropertyAlbumTitle: post.song.album,
-                    //!TODO: cache this image
                     MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: artwork),
                     MPMediaItemPropertyPlaybackDuration: post.player.duration,
                     MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
@@ -88,15 +87,21 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
-            self?.updateNowPlayingInfo()
+            if (note.object as? Player == self?.currentlyPlayingPost?.player) {
+                self?.updateNowPlayingInfo()
+            }
         }
         
         NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidSeekNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
-            self?.updateNowPlayingInfo()
+            if (note.object as? Player == self?.currentlyPlayingPost?.player) {
+                self?.updateNowPlayingInfo()
+            }
         }
         
         NSNotificationCenter.defaultCenter().addObserverForName(SongDidDownloadArtworkNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
-            self?.updateNowPlayingInfo()
+            if (note.object as? Song == self?.currentlyPlayingPost?.song) {
+                self?.updateNowPlayingInfo()
+            }
         }
         
         NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidFinishPlayingNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
@@ -262,7 +267,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         cellPin()
-        println(tableView.contentOffset.y)
         if var lastCell = NSIndexPath(forRow: posts.count-1, inSection: 0) {
             if (currentlyPlayingIndexPath != nil) {
                 var rowsICanSee = tableView.indexPathsForVisibleRows() as! [NSIndexPath]
