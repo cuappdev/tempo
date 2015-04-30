@@ -54,12 +54,13 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
         let track = results[indexPath.row]
+        cell.postView.type = .Search
         cell.postView.post = track
         cell.postView.flagAsSearchResultPost()
         if let artwork = track.song.albumArtworkURL {
-            loadImageAsync(artwork, { image, error in
+            loadImageAsync(artwork, { [weak cell] image, error in
                 if error == nil {
-                    cell.postView.setImage(image)
+                    cell?.postView.setImage(image)
                 }
             })
         }
@@ -152,7 +153,7 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
 //            let popularity = item["popularity"] as! Int
             let track = Song(responseDictionary: item)
             trackResults.append(
-                Post(song: track, posterFirst: track.artist, posterLast: "", date: nil, avatar: missingImage)
+                Post(song: track, posterFirst: "", posterLast: "", date: nil, avatar: missingImage)
             )
         }
 
