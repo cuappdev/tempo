@@ -30,14 +30,6 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         categoryTableView.registerNib(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
         
-        nameLabel.text = User.currentUser.name
-        usernameLabel.text = "@\(User.currentUser.username)"
-        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                profilePicture.image = UIImage(data: data)
-            }
-        }
-        
         // Formatting
         categoryTableView.separatorStyle = .None
         categoryTableView.scrollEnabled = false
@@ -58,6 +50,18 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         button.frame = self.profileView.bounds
         button.addTarget(self, action: "pushToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(button)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        nameLabel.text = User.currentUser.name
+        usernameLabel.text = "@\(User.currentUser.username)"
+        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                profilePicture.image = UIImage(data: data)
+            }
+        }
     }
     
     func pushToProfile(sender:UIButton!) {

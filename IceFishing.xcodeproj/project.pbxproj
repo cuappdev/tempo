@@ -18,6 +18,7 @@
 		1D25B3151AC369D900F64047 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D25B3111AC369D900F64047 /* Bolts.framework */; };
 		1D25B3161AC369D900F64047 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D25B3121AC369D900F64047 /* FacebookSDK.framework */; };
 		1D25B3181AC369D900F64047 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1D25B3141AC369D900F64047 /* README.txt */; };
+		1D2E124B1AF2223700104BF3 /* PostHistoryTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D2E124A1AF2223700104BF3 /* PostHistoryTableViewController.xib */; };
 		1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */; };
 		1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */; };
 		1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9C11AACC4C0007822B0 /* Images.xcassets */; };
@@ -176,6 +177,7 @@
 		1D25B3121AC369D900F64047 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		1D25B3131AC369D900F64047 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		1D25B3141AC369D900F64047 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		1D2E124A1AF2223700104BF3 /* PostHistoryTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHistoryTableViewController.xib; sourceTree = "<group>"; };
 		1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		1D72D9B51AACC4C0007822B0 /* IceFishing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IceFishing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D72D9B91AACC4C0007822B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -191,7 +193,7 @@
 		1DB476471AEF24670066014F /* SearchResultSelectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultSelectionView.xib; sourceTree = "<group>"; };
 		1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedTableViewCell.xib; path = IceFishing/Profile/FeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		1DCB96121AED5EA7007F6A4B /* APIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIViewController.swift; sourceTree = "<group>"; };
-		1DCB96131AED5EA7007F6A4B /* APIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = APIViewController.xib; path = ../Controllers/APIViewController.xib; sourceTree = "<group>"; };
+		1DCB96131AED5EA7007F6A4B /* APIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APIViewController.xib; sourceTree = "<group>"; };
 		1DD25B0F1AE9DBBA00C6C8FF /* TrackSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackSearchController.swift; sourceTree = "<group>"; };
 		6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
 		6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowTableViewCell.xib; sourceTree = "<group>"; };
@@ -204,7 +206,7 @@
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		7FCE05E61ABF4BD1002103DE /* TrendingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
 		7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
-		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IceFishing-Bridging-Header.h"; path = "Controllers/IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
+		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		BAE499D51AD5F33B003214C0 /* SearchTrackResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackResultsViewController.swift; sourceTree = "<group>"; };
@@ -218,8 +220,8 @@
 		D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarDayCollectionViewCell.swift; sourceTree = "<group>"; };
 		D148F4951AF031A2009AB073 /* HipCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarView.swift; sourceTree = "<group>"; };
 		D148F4971AF031DB009AB073 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
-		D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostHistoryTableViewController.swift; path = ../../PostHistoryTableViewController.swift; sourceTree = "<group>"; };
-		D148F4A91AF03EB4009AB073 /* PostHistoryTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostHistoryTableViewController.xib; path = ../../PostHistoryTableViewController.xib; sourceTree = "<group>"; };
+		D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostHistoryTableViewController.swift; path = ../Controllers/PostHistoryTableViewController.swift; sourceTree = "<group>"; };
+		D148F4A91AF03EB4009AB073 /* PostHistoryTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostHistoryTableViewController.xib; path = ../XIBs/PostHistoryTableViewController.xib; sourceTree = "<group>"; };
 		D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHistoryTableViewCell.xib; sourceTree = "<group>"; };
 		D148F4B01AF06CEF009AB073 /* HipCalendarViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarViewDelegate.swift; sourceTree = "<group>"; };
@@ -263,10 +265,11 @@
 			isa = PBXGroup;
 			children = (
 				1DCB96131AED5EA7007F6A4B /* APIViewController.xib */,
+				7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */,
 				1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */,
 				1DB476471AEF24670066014F /* SearchResultSelectionView.xib */,
+				1D2E124A1AF2223700104BF3 /* PostHistoryTableViewController.xib */,
 				1D72D9DD1AACC6AA007822B0 /* ViewController.xib */,
-				7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -479,7 +482,6 @@
 			children = (
 				FA1E1A771ADB06A3007C823C /* Post.swift */,
 				FA1E1A7B1ADB072A007C823C /* Song.swift */,
-				BAE499D31AD5F2D6003214C0 /* TrackResult.swift */,
 				6DEE0FD01AC34811005552F9 /* User.swift */,
 			);
 			name = Models;
@@ -643,6 +645,7 @@
 				D148F4AB1AF03EB4009AB073 /* PostHistoryTableViewController.xib in Resources */,
 				D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */,
 				1DB476481AEF24670066014F /* SearchResultSelectionView.xib in Resources */,
+				1D2E124B1AF2223700104BF3 /* PostHistoryTableViewController.xib in Resources */,
 				1D25B3181AC369D900F64047 /* README.txt in Resources */,
 				6D3FA6611AD5FD5C00B1320D /* Username.xib in Resources */,
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
@@ -846,7 +849,7 @@
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "IceFishing/Controllers/IceFishing-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "IceFishing/IceFishing-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -864,7 +867,7 @@
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "IceFishing/Controllers/IceFishing-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "IceFishing/IceFishing-Bridging-Header.h";
 			};
 			name = Release;
 		};

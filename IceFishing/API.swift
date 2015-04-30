@@ -15,10 +15,10 @@ enum Router: URLStringConvertible {
     case Root
     case ValidUsername
     case Sessions
-    case Users(Int)
-    case Feed(Int)
+    case Users(String)
+    case Feed(String)
     case FeedEveryone
-    case History(Int)
+    case History(String)
     case Likes
     case Followings
     case Posts
@@ -99,6 +99,7 @@ class API {
         // Other times you can simply reference the saved user object, instead of pinging facebook
         let userRequest : FBRequest = FBRequest.requestForMe()
         userRequest.startWithCompletionHandler { [unowned self] (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+            println(result)
             if (error == nil) {
                 let user = [
                     "email": result["email"] as! String,
@@ -111,12 +112,12 @@ class API {
         }
     }
     
-    func fetchUser(userID: Int, completion: User -> Void) {
+    func fetchUser(userID: String, completion: User -> Void) {
         let map: [String: AnyObject] -> User? = { User(json: JSON($0)) }
         get(.Users(userID), params: ["session_code": sessionCode!], map: map, completion: completion)
     }
     
-    func fetchFeed(userID: Int, completion: [Post] -> Void) {
+    func fetchFeed(userID: String, completion: [Post] -> Void) {
         get(.Feed(userID), params: ["session_code": sessionCode!], map: postMapping, completion: completion)
     }
     
@@ -125,20 +126,20 @@ class API {
         get(.FeedEveryone, params: ["session_code": sessionCode!], map: postMapping, completion: completion)
     }
     
-    func fetchPosts(userID: Int, completion: [Post] -> Void) {
+    func fetchPosts(userID: String, completion: [Post] -> Void) {
         let map: [String: [Post]] -> [Post]? = { $0["is_valid"] }
         get(.History(userID), params: ["id": userID, "session_code": sessionCode!], map: map, completion: completion)
     }
     
-    func updateLikes(postID: Int, unlike: Bool, completion: [String: Bool] -> Void) {
+    func updateLikes(postID: String, unlike: Bool, completion: [String: Bool] -> Void) {
         post(.Likes, params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode!], map: { $0 }, completion: completion)
     }
     
-    func updateFollowings(userID: Int, unfollow: Bool, completion: [String: Bool] -> Void) {
+    func updateFollowings(userID: String, unfollow: Bool, completion: [String: Bool] -> Void) {
         post(.Followings, params: ["user_id": userID, "unfollow": unfollow, "session_code": sessionCode!], map: { $0 }, completion: completion)
     }
     
-    func updatePost(userID: Int, song: Song, completion: [String: AnyObject] -> Void) {
+    func updatePost(userID: String, song: Song, completion: [String: AnyObject] -> Void) {
         let songDict = [
             "artist": song.artist,
             "track": song.title,

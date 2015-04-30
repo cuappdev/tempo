@@ -16,11 +16,11 @@ class User: NSObject, NSCoding {
     var caption : String = ""
     var createdAt: String = ""
     var email: String = "temp@example.com"
-    var fbid: Int = 0
+    var fbid: String = ""
     var followers: [String] = []
     var followersCount: Int!
     var hipsterScore = 0
-    var id: Int = 0
+    var id: String = ""
     var likeCount: Int!
     var locationID: String = ""
     var firstName: String = ""
@@ -45,7 +45,7 @@ class User: NSObject, NSCoding {
         self.caption = json["caption"].stringValue
         self.createdAt = json["created_at"].stringValue
         self.email = json["email"].stringValue
-        self.fbid = json["fbid"].intValue
+        self.fbid = json["fbid"].stringValue
         if let followers = json["followers"].arrayObject! as? [String] {
             self.followers = followers
         } else {
@@ -53,7 +53,7 @@ class User: NSObject, NSCoding {
         }
         self.followersCount = json["followers_count"].intValue
         self.hipsterScore = json["hipster_score"].intValue
-        self.id = json["id"].intValue
+        self.id = json["id"].stringValue
         self.likeCount = json["like_count"].intValue
         self.locationID = json["location_id"].stringValue
         self.name = json["name"].stringValue
@@ -73,11 +73,11 @@ class User: NSObject, NSCoding {
         caption = aDecoder.decodeObjectForKey("caption") as! String
         createdAt = aDecoder.decodeObjectForKey("created_at") as! String
         email = aDecoder.decodeObjectForKey("email") as! String
-        fbid = aDecoder.decodeObjectForKey("fbid") as! Int
+        fbid = aDecoder.decodeObjectForKey("fbid") as! String
         followers = aDecoder.decodeObjectForKey("followers") as! [String]
         followersCount = aDecoder.decodeObjectForKey("followers_count") as! Int
         hipsterScore = aDecoder.decodeObjectForKey("hipster_score") as! Int
-        id = aDecoder.decodeObjectForKey("id") as! Int!
+        id = aDecoder.decodeObjectForKey("id") as! String
         likeCount = aDecoder.decodeObjectForKey("like_count") as! Int
         locationID = aDecoder.decodeObjectForKey("location_id") as! String
         name = aDecoder.decodeObjectForKey("name") as! String

@@ -9,7 +9,6 @@
 import UIKit
 import MediaPlayer
 
-var addedSongs = 0
 class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTrackResultsViewControllerDelegate, UISearchControllerDelegate {
 
     lazy var searchResultsController: SearchTrackResultsViewController = SearchTrackResultsViewController()
@@ -46,11 +45,11 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     var lastContentOffset: CGFloat!  //Deals with pinView detection
     
     func addSong(track: Song) {
-        posts.append(Post(song: track,
+        posts.insert(Post(song: track,
             posterFirst: User.currentUser.name,
             posterLast: "Bryan",
             date: NSDate(),
-            avatar: UIImage(named: "Sexy")))
+            avatar: UIImage(named: "Sexy")), atIndex: 0)
         API.sharedAPI.updatePost(User.currentUser.id, song: track) { song in
             self.tableView.reloadData()
         }
