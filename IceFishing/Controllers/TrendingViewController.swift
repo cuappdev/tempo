@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Joseph Antonakakis. All rights reserved.
 //
 
+// Class put on hold, possible future feature
+
 import UIKit
 
 class TrendingViewController: UITableViewController {

@@ -59,6 +59,18 @@ class API {
     
     static let sharedAPI: API = API()
     
+    // Mappings
+    let postMapping: [String: [AnyObject]] -> [Post]? = {
+        if let posts = $0["posts"] {
+            var feed: [Post] = []
+            for post in posts {
+                feed.append(Post(json: JSON(post)))
+            }
+            return feed.reverse()
+        }
+        return nil
+    }
+    
     // Could call getSession()
     private var sessionCode: String? {
         set {
@@ -75,7 +87,6 @@ class API {
     }
     
     func getCurrentUser(completion: User -> Void) {
-        // TODO: This should be accessed from Facebook API, but manual for testing purposes
         let map: [String: AnyObject] -> User? = {
             if let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
                 self.sessionCode = code
@@ -88,7 +99,6 @@ class API {
         // Other times you can simply reference the saved user object, instead of pinging facebook
         let userRequest : FBRequest = FBRequest.requestForMe()
         userRequest.startWithCompletionHandler { [unowned self] (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-            println(result)
             if (error == nil) {
                 let user = [
                     "email": result["email"] as! String,
@@ -102,20 +112,17 @@ class API {
     }
     
     func fetchUser(userID: Int, completion: User -> Void) {
-        let map: [String: AnyObject] -> User? = {
-            return User(json: JSON($0))
-        }
+        let map: [String: AnyObject] -> User? = { User(json: JSON($0)) }
         get(.Users(userID), params: ["session_code": sessionCode!], map: map, completion: completion)
     }
     
     func fetchFeed(userID: Int, completion: [Post] -> Void) {
-        let map: [String: [Post]] -> [Post]? = { $0["is_valid"] }
-        get(.Feed(userID), params: ["session_code": sessionCode!], map: map, completion: completion)
+        get(.Feed(userID), params: ["session_code": sessionCode!], map: postMapping, completion: completion)
     }
     
+    // Method used for testing purposes
     func fetchFeedOfEveryone(completion: [Post] -> Void) {
-        let map: [String: [Post]] -> [Post]? = { $0["is_valid"] }
-        get(.FeedEveryone, params: ["session_code": sessionCode!], map: map, completion: completion)
+        get(.FeedEveryone, params: ["session_code": sessionCode!], map: postMapping, completion: completion)
     }
     
     func fetchPosts(userID: Int, completion: [Post] -> Void) {
@@ -131,8 +138,14 @@ class API {
         post(.Followings, params: ["user_id": userID, "unfollow": unfollow, "session_code": sessionCode!], map: { $0 }, completion: completion)
     }
     
-    func updatePost(userID: Int, spotifyURL: String, completion: [String: AnyObject] -> Void) {
-        post(.Posts, params: ["user_id": userID, "spotify_url": spotifyURL, "session_code": sessionCode!], map: { $0 }, completion: completion)
+    func updatePost(userID: Int, song: Song, completion: [String: AnyObject] -> Void) {
+        let songDict = [
+            "artist": song.artist,
+            "track": song.title,
+            "spotify_url": song.spotifyID
+        ]
+        let map: [String: AnyObject] -> [String: AnyObject]? = { Optional($0) }
+        post(.Posts, params: ["user_id": userID, "song": songDict, "session_code": sessionCode!], map: map, completion: completion)
     }
     
     // MARK: Private Methods

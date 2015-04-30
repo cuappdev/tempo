@@ -25,29 +25,17 @@ class Song: NSObject {
             loadImageAsync(largeArtworkURL!, { [weak self] (image, error) -> () in
                 self?.largeArtwork = image
                 NSNotificationCenter.defaultCenter().postNotificationName(SongDidDownloadArtworkNotification, object: self)
-            })
+                })
         }
         return largeArtwork
     }
     
-    var spotifyID:String = "" {
-        didSet {
-            //!TODO: Use Spotify SDK
-            let request = NSURLRequest(URL: NSURL(string: spotifyID, relativeToURL: spotifyAPIBaseURL)!)
-            var error:NSError? = nil
-            let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: &error)
-            if let data = data {
-                let json = JSON(data: data, options: NSJSONReadingOptions(0), error: &error)
-                initializeFromResponse(json)
-            } else {
-                println("got error: %@", (error!).description)
-            }
-        }
-    }
+    var spotifyID: String = ""
     var previewURL: NSURL!
     
     init(songID: String) {
         super.init()
+        spotifyID = songID
         self.setSongID(songID)
     }
     
@@ -86,6 +74,7 @@ class Song: NSObject {
             firstImage = images[0] as? NSDictionary ?? NSDictionary()
             largeArtworkURL = NSURL(string: firstImage["url"] as? String ?? "")
         }
+        spotifyID = response["id"] as? String ?? ""
         
     }
     
@@ -113,13 +102,23 @@ class Song: NSObject {
             firstImage = images[0].dictionaryValue
             largeArtworkURL = NSURL(string: firstImage["url"]?.stringValue ?? "")
         }
+        spotifyID = json["id"].stringValue
     }
-
-
+    
+    
     private func setSongID(id: String) {
-        spotifyID = id
+        //!TODO: Use Spotify SDK
+        let request = NSURLRequest(URL: NSURL(string: spotifyID, relativeToURL: spotifyAPIBaseURL)!)
+        var error:NSError? = nil
+        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: &error)
+        if let data = data {
+            let json = JSON(data: data, options: NSJSONReadingOptions(0), error: &error)
+            initializeFromResponse(json)
+        } else {
+            println("got error: %@", (error!).description)
+        }
     }
-
+    
     override init() {
         assertionFailure("use init(songID:)")
     }

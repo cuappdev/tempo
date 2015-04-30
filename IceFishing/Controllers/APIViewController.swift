@@ -20,12 +20,13 @@ class APIViewController: UIViewController {
 //            API.sharedAPI.fetchUser(currentUser.id) {
 //                println($0)
 //            }
-            API.sharedAPI.updatePost(User.currentUser.id, spotifyURL: "spotify:track:4B3RmT3cGvh8By3WY9pbIx") {
+            API.sharedAPI.updatePost(User.currentUser.id, song: Song(spotifyURI: "spotify:track:5EYdTPdJD74r9EVZBztqGG")) {
                 println($0)
             }
+//            API.sharedAPI.fetchFeedOfEveryone {
+//                println($0)
+//            }
         }
-        
-        
     }
     
     init() {

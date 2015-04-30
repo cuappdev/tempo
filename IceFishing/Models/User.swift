@@ -16,24 +16,36 @@ class User: NSObject, NSCoding {
     var caption : String = ""
     var createdAt: String = ""
     var email: String = "temp@example.com"
-    var fbid: String = ""
+    var fbid: Int = 0
     var followers: [String] = []
     var followersCount: Int!
     var hipsterScore = 0
     var id: Int = 0
     var likeCount: Int!
     var locationID: String = ""
-    var name: String = "Temp Name"
+    var firstName: String = ""
+    var lastName: String = ""
+    var name: String {
+        set(newName) {
+            let newName = split(newName) { $0 == " " }
+            firstName = newName.first ?? ""
+            lastName = newName.count > 1 ? newName.last! : ""
+        }
+        get {
+            return "\(firstName) \(lastName)"
+        }
+    }
     var updatedAt: String!
     var username: String = "temp_username"
     
     override init() {}
 
     init(json: JSON) {
+        super.init()
         self.caption = json["caption"].stringValue
         self.createdAt = json["created_at"].stringValue
         self.email = json["email"].stringValue
-        self.fbid = json["fbid"].stringValue
+        self.fbid = json["fbid"].intValue
         if let followers = json["followers"].arrayObject! as? [String] {
             self.followers = followers
         } else {
@@ -47,21 +59,21 @@ class User: NSObject, NSCoding {
         self.name = json["name"].stringValue
         self.updatedAt = json["updated_at"].stringValue
         self.username = json["username"].stringValue
-        super.init()
     }
 
     override var description: String {
-        return "Name: \(name) Email: \(email) FBID: \(fbid) Username: \(username)"
+        return "Name: \(name)| Email: \(email)| ID: \(id)| Username: \(username)| FacebookID: \(fbid)"
     }
     
     // Extend NSCoding
     // MARK: - NSCoding
     
     required init(coder aDecoder: NSCoder) {
+        super.init()
         caption = aDecoder.decodeObjectForKey("caption") as! String
         createdAt = aDecoder.decodeObjectForKey("created_at") as! String
         email = aDecoder.decodeObjectForKey("email") as! String
-        fbid = aDecoder.decodeObjectForKey("fbid") as! String
+        fbid = aDecoder.decodeObjectForKey("fbid") as! Int
         followers = aDecoder.decodeObjectForKey("followers") as! [String]
         followersCount = aDecoder.decodeObjectForKey("followers_count") as! Int
         hipsterScore = aDecoder.decodeObjectForKey("hipster_score") as! Int
@@ -71,7 +83,6 @@ class User: NSObject, NSCoding {
         name = aDecoder.decodeObjectForKey("name") as! String
         updatedAt = aDecoder.decodeObjectForKey("updated_at") as! String
         username = aDecoder.decodeObjectForKey("username") as! String
-        
     }
     
     func encodeWithCoder(aCoder: NSCoder) {

@@ -7,22 +7,23 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class Post: NSObject {
-    var posterFirstName = ""
-    var posterLastName = ""
+    let posterFirstName: String
+    let posterLastName: String
     var avatar: UIImage?
     var player: Player!
-    var song: Song!
+    let song: Song
     var date: NSDate?
     var likes = 0
 
     init(song: Song, posterFirst: String, posterLast: String, date: NSDate?, avatar: UIImage?) {
         self.song = song
         self.posterFirstName = posterFirst
+        self.posterLastName = posterLast
         self.date = date
         self.avatar = avatar
-        self.posterLastName = posterLast
         
         if let previewURL = song.previewURL {
             player = Player(fileURL: previewURL)
@@ -33,11 +34,19 @@ class Post: NSObject {
         super.init()
     }
     
+    convenience init(json: JSON) {
+        let songID = json["song"]["spotify_url"].stringValue
+        let name = split(json["user"]["name"].stringValue) { $0 == " " }
+        let first = name.first ?? ""
+        let last = name.count > 1 ? name.last! : ""
+        self.init(song: Song(spotifyURI: songID), posterFirst: first, posterLast: last, date: nil, avatar: nil)
+    }
+    
     func relativeDate() -> String {
         return ""
     }
     
-    override init() {
-        assertionFailure("Use the init(song:...) method instead")
+    override var description: String {
+        return "\(song.title) posted by \(posterFirstName) \(posterLastName)"
     }
 }

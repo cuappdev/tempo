@@ -63,6 +63,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             if (state == FBSessionState.Open) {
                 println("Session Opened")
+                // Request FB user info
+                API.sharedAPI.getCurrentUser { _ in }
+//                var userRequest : FBRequest = FBRequest.requestForMe()
+//                userRequest.startWithCompletionHandler{(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+//                    
+//                    if (error == nil) {
+//                        let userName = result["name"]
+//                        let userID = result["id"]
+//                        let userEmail = result["email"]
+//                        println(userName)
+//                        println(userID)
+//                        println(userEmail)
+//                        
+//                    } else {
+//                        println("Error")
+//                    }
+//                }
             }
             toggleRootVC()
         }

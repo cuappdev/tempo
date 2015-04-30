@@ -479,6 +479,7 @@
 			children = (
 				FA1E1A771ADB06A3007C823C /* Post.swift */,
 				FA1E1A7B1ADB072A007C823C /* Song.swift */,
+				BAE499D31AD5F2D6003214C0 /* TrackResult.swift */,
 				6DEE0FD01AC34811005552F9 /* User.swift */,
 			);
 			name = Models;

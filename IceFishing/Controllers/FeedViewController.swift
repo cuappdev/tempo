@@ -47,11 +47,13 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     
     func addSong(track: Song) {
         posts.append(Post(song: track,
-            posterFirst: "Mark",
+            posterFirst: User.currentUser.name,
             posterLast: "Bryan",
             date: NSDate(),
             avatar: UIImage(named: "Sexy")))
-        self.tableView.reloadData()
+        API.sharedAPI.updatePost(User.currentUser.id, song: track) { song in
+            self.tableView.reloadData()
+        }
     }
     
     private func updateNowPlayingInfo() {
@@ -234,35 +236,11 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     
     //MARK: - UIRefreshControl
     func refreshFeed() {
-        //        testSongIDs.append("https://p.scdn.co/mp3-preview/dba0ce6ac6310d7be00545861f9b58aeb86930a3")
-        //        testSongDescriptions.append("Don't Stop the Party - Pitbull")
-        var post: Post?
-        switch (addedSongs) {
-        case 0:
-            post = Post(song: Song(songID: "0fgZUSa7D7aVvv3GfO0A1n"), posterFirst: "Eric", posterLast: "Appel", date: NSDate(), avatar: UIImage(named: "Eric"))
-            break
-        case 1:
-            post = Post(song: Song(songID: "5dANgSy7v091dhiPnEXNrf"), posterFirst: "Steven", posterLast: "Yeh", date: NSDate(), avatar: UIImage(named: "Steven"))
-            break
-        case 2:
-            post = Post(song: Song(songID: "4wQrzVXnhslsVY5lZSJjHG"), posterFirst: "Mark", posterLast: "Bryan", date: NSDate(), avatar: UIImage(named: "Sexy"))
-            break
-        case 3:
-            post = Post(song: Song(spotifyURI: "spotify:track:4B3RmT3cGvh8By3WY9pbIx"),
-                posterFirst: "Eric",
-                posterLast: "Appel",
-                date: NSDate(),
-                avatar: UIImage(named:"Eric"))
-            break
-        default:
-            post = Post(song: Song(songID: "0nmxH6IsSQVT1YEsCB9UMi"), posterFirst: "Steven", posterLast: "Yeh", date: NSDate(), avatar: UIImage(named: "Steven"))
-            break
+        API.sharedAPI.fetchFeedOfEveryone {
+            self.posts = $0
+            self.tableView.reloadData()
+            self.refreshControl?.endRefreshing()
         }
-        
-        posts.append(post!)
-        addedSongs++
-        self.tableView.reloadData()
-        self.refreshControl?.endRefreshing()
     }
     
     // MARK: - UITableViewDataSource
@@ -376,9 +354,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         closeSearchView()
         addSong(track)
         searchController.active = false
-        
-        println("TODO: add this track")
-        println(track)
     }
     
     func closeSearchView() {
