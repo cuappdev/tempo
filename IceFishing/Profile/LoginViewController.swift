@@ -20,7 +20,7 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     var startDate : NSDate! = NSDate(dateString:"2014-04-01") // User creation date
     var currentDate : NSDate! = NSDate()
     // Hardcoded dates for testing
-    var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-30"), NSDate(dateString:"2015-04-27"), NSDate(dateString:"2015-04-25"), NSDate(dateString:"2015-04-19"), NSDate(dateString:"2015-04-18"), NSDate(dateString:"2015-04-17"), NSDate(dateString:"2015-04-13"), NSDate(dateString:"2015-04-10"), NSDate(dateString:"2015-04-8"), NSDate(dateString:"2015-04-3"), NSDate(dateString:"2015-04-1")]
+    var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-24"), NSDate(dateString:"2015-04-22"), NSDate(dateString:"2015-04-18"), NSDate(dateString:"2015-04-15"), NSDate(dateString:"2015-04-11"), NSDate(dateString:"2015-04-9"), NSDate(dateString:"2015-04-08"), NSDate(dateString:"2015-04-07")]
     var daySize : CGSize!
     var padding : CGFloat = 5
     

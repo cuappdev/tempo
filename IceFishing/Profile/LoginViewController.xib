@@ -304,12 +304,12 @@
                             <exclude reference="Sm0-7N-V9G"/>
                             <exclude reference="kN6-ZT-GiZ"/>
                             <exclude reference="nIK-gI-zho"/>
+                            <exclude reference="ZJF-ub-riR"/>
+                            <exclude reference="epr-ss-PY3"/>
                             <exclude reference="5W5-so-gdC"/>
                             <exclude reference="SnQ-jQ-Iyf"/>
                             <exclude reference="Xuh-su-DeU"/>
                             <exclude reference="cFF-EH-hOH"/>
-                            <exclude reference="ZJF-ub-riR"/>
-                            <exclude reference="epr-ss-PY3"/>
                         </mask>
                     </variation>
                     <variation key="widthClass=compact">
@@ -323,12 +323,12 @@
                             <exclude reference="Sm0-7N-V9G"/>
                             <exclude reference="kN6-ZT-GiZ"/>
                             <exclude reference="nIK-gI-zho"/>
+                            <include reference="ZJF-ub-riR"/>
+                            <include reference="epr-ss-PY3"/>
                             <exclude reference="5W5-so-gdC"/>
                             <include reference="SnQ-jQ-Iyf"/>
                             <include reference="Xuh-su-DeU"/>
                             <include reference="cFF-EH-hOH"/>
-                            <include reference="ZJF-ub-riR"/>
-                            <include reference="epr-ss-PY3"/>
                         </mask>
                     </variation>
                 </view>

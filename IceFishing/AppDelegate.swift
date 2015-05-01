@@ -38,12 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Toggle rootViewController
     func toggleRootVC() {
-        let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
-        let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
-        
         if (!FBSession.activeSession().isOpen) {
+            let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
             self.window!.rootViewController = signInVC
         } else {
+            let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
             let navController = UINavigationController(rootViewController: FeedViewController(nibName: "FeedViewController", bundle: nil))
             let revealController = SWRevealViewController(rearViewController: sidebarVC, frontViewController: navController)
             self.window!.rootViewController = revealController
@@ -63,25 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             if (state == FBSessionState.Open) {
                 println("Session Opened")
-                // Request FB user info
                 API.sharedAPI.getCurrentUser { _ in }
-//                var userRequest : FBRequest = FBRequest.requestForMe()
-//                userRequest.startWithCompletionHandler{(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-//                    
-//                    if (error == nil) {
-//                        let userName = result["name"]
-//                        let userID = result["id"]
-//                        let userEmail = result["email"]
-//                        println(userName)
-//                        println(userID)
-//                        println(userEmail)
-//                        
-//                    } else {
-//                        println("Error")
-//                    }
-//                }
             }
-            toggleRootVC()
         }
         
         // Error Messages

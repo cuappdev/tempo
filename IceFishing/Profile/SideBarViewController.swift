@@ -23,6 +23,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func logOut(sender: UIButton) {
         FBSession.activeSession().closeAndClearTokenInformation()
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.toggleRootVC()
     }
     
     override func viewDidLoad() {
