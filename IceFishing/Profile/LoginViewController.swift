@@ -15,9 +15,11 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     var searchNavigationController: UINavigationController!
     
     // Post History Calendar
+    var collectionView : UICollectionView!
     var calendar : NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     var startDate : NSDate! = NSDate(dateString:"2014-04-01") // User creation date
     var currentDate : NSDate! = NSDate()
+    // Hardcoded dates for testing
     var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-30"), NSDate(dateString:"2015-04-27"), NSDate(dateString:"2015-04-25"), NSDate(dateString:"2015-04-19"), NSDate(dateString:"2015-04-18"), NSDate(dateString:"2015-04-17"), NSDate(dateString:"2015-04-13"), NSDate(dateString:"2015-04-10"), NSDate(dateString:"2015-04-8"), NSDate(dateString:"2015-04-3"), NSDate(dateString:"2015-04-1")]
     var daySize : CGSize!
     var padding : CGFloat = 5
@@ -31,7 +33,6 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     @IBOutlet weak var numFollowingLabel: UILabel!
     @IBOutlet weak var followersLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
-    @IBOutlet weak var postHistoryLabel: UILabel!
     @IBOutlet weak var divider: UIView!
     @IBOutlet weak var postCalendarView: UIView!
 
@@ -82,29 +83,25 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         // Post History Calendar
         let cols : Int = 6
-        let cwidth = postCalendarView.frame.width/CGFloat(cols)
-        let cheight = cwidth
-        daySize = CGSize(width: cwidth, height: cheight)
+        let dayWidth = postCalendarView.frame.width/CGFloat(cols)
+        let dayHeight = dayWidth
+        daySize = CGSize(width: dayWidth, height: dayHeight)
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         
-        var collectionView : UICollectionView = UICollectionView(frame: postCalendarView.frame, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: postCalendarView.frame, collectionViewLayout: layout)
         collectionView.registerClass(HipCalendarCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
         collectionView.registerClass(HipCalendarDayCollectionViewCell.self, forCellWithReuseIdentifier: "DayCell")
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.clearColor()
         collectionView.allowsMultipleSelection = true
+        collectionView.frame = CGRectMake(0, 0, postCalendarView.frame.width, postCalendarView.frame.height/2.25)
         postCalendarView.addSubview(collectionView)
-        
-//        // Add refresh scroll button for calendar
-//        let button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-//        button.frame = self.postHistoryLabel.frame
-//        button.addTarget(self, action: "refreshScroll", forControlEvents: UIControlEvents.TouchUpInside)
-//        self.postCalendarView.addSubview(button)
+        collectionView.scrollsToTop = false
     }
     
     func dismiss() {
@@ -141,6 +138,11 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     // <------------------------POST HISTORY------------------------>
+    
+    // When post history label clicked
+    @IBAction func scrollToTop(sender: UIButton) {
+        collectionView.setContentOffset(CGPointZero, animated: true)
+    }
     
     // Helper Methods
     private func dateForIndexPath(indexPath: NSIndexPath) -> NSDate {
@@ -202,7 +204,6 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let date: NSDate = dateForIndexPath(indexPath)
-        println(date)
         let index = find(postedDates, date) as Int?
         
         // Push to TableView with posted songs and dates

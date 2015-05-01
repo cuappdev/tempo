@@ -19,8 +19,7 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        println(postedDates)
-        
+
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.registerNib(UINib(nibName: "PostHistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "PostedSongCell")
@@ -36,8 +35,8 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
     }
     
     override func viewWillAppear(animated: Bool) {
-        let selectedRow:NSIndexPath = NSIndexPath(forRow: index, inSection: 0)
-        self.tableView.selectRowAtIndexPath(selectedRow, animated: true, scrollPosition: UITableViewScrollPosition.Middle)
+        let selectedRow: NSIndexPath = NSIndexPath(forRow: index, inSection: 0)
+        self.tableView.selectRowAtIndexPath(selectedRow, animated: true, scrollPosition: UITableViewScrollPosition.Top)
     }
     
     // Return to profile view
