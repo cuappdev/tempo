@@ -72,12 +72,12 @@ class API {
     }
     
     // Could call getSession()
-    private var sessionCode: String? {
+    private var sessionCode: String {
         set {
             NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: sessionCodeKey)
         }
         get {
-            return NSUserDefaults.standardUserDefaults().objectForKey(sessionCodeKey) as? String
+            return NSUserDefaults.standardUserDefaults().objectForKey(sessionCodeKey) as? String ?? ""
         }
     }
     
@@ -114,29 +114,29 @@ class API {
     
     func fetchUser(userID: String, completion: User -> Void) {
         let map: [String: AnyObject] -> User? = { User(json: JSON($0)) }
-        get(.Users(userID), params: ["session_code": sessionCode!], map: map, completion: completion)
+        get(.Users(userID), params: ["session_code": sessionCode], map: map, completion: completion)
     }
     
     func fetchFeed(userID: String, completion: [Post] -> Void) {
-        get(.Feed(userID), params: ["session_code": sessionCode!], map: postMapping, completion: completion)
+        get(.Feed(userID), params: ["session_code": sessionCode], map: postMapping, completion: completion)
     }
     
     // Method used for testing purposes
     func fetchFeedOfEveryone(completion: [Post] -> Void) {
-        get(.FeedEveryone, params: ["session_code": sessionCode!], map: postMapping, completion: completion)
+        get(.FeedEveryone, params: ["session_code": sessionCode], map: postMapping, completion: completion)
     }
     
     func fetchPosts(userID: String, completion: [Post] -> Void) {
         let map: [String: [Post]] -> [Post]? = { $0["is_valid"] }
-        get(.History(userID), params: ["id": userID, "session_code": sessionCode!], map: map, completion: completion)
+        get(.History(userID), params: ["id": userID, "session_code": sessionCode], map: map, completion: completion)
     }
     
     func updateLikes(postID: String, unlike: Bool, completion: [String: Bool] -> Void) {
-        post(.Likes, params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode!], map: { $0 }, completion: completion)
+        post(.Likes, params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: { $0 }, completion: completion)
     }
     
     func updateFollowings(userID: String, unfollow: Bool, completion: [String: Bool] -> Void) {
-        post(.Followings, params: ["user_id": userID, "unfollow": unfollow, "session_code": sessionCode!], map: { $0 }, completion: completion)
+        post(.Followings, params: ["user_id": userID, "unfollow": unfollow, "session_code": sessionCode], map: { $0 }, completion: completion)
     }
     
     func updatePost(userID: String, song: Song, completion: [String: AnyObject] -> Void) {
@@ -146,7 +146,7 @@ class API {
             "spotify_url": song.spotifyID
         ]
         let map: [String: AnyObject] -> [String: AnyObject]? = { Optional($0) }
-        post(.Posts, params: ["user_id": userID, "song": songDict, "session_code": sessionCode!], map: map, completion: completion)
+        post(.Posts, params: ["user_id": userID, "song": songDict, "session_code": sessionCode], map: map, completion: completion)
     }
     
     // MARK: Private Methods

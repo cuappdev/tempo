@@ -14,7 +14,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     lazy var searchResultsController: SearchTrackResultsViewController = SearchTrackResultsViewController()
     lazy var searchController: TrackSearchController = TrackSearchController(searchResultsController: self.searchResultsController)
     var preserveTitleView: UIView!
-    var avatarImage: UIImage!
     
     var posts: [Post] = []
     var currentlyPlayingIndexPath: NSIndexPath? {
@@ -46,16 +45,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     var lastContentOffset: CGFloat!  //Deals with pinView detection
     
     func addSong(track: Song) {
-        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                avatarImage = UIImage(data: data)
-            }
-        }
-        posts.insert(Post(song: track,
-            posterFirst: User.currentUser.firstName,
-            posterLast: User.currentUser.lastName,
-            date: NSDate(),
-            avatar: avatarImage), atIndex: 0)
+        posts.insert(Post(song: track, user: User.currentUser, date: NSDate()), atIndex: 0)
         API.sharedAPI.updatePost(User.currentUser.id, song: track) { song in
             self.tableView.reloadData()
         }

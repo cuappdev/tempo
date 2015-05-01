@@ -37,9 +37,27 @@ class User: NSObject, NSCoding {
     }
     var updatedAt: String!
     var username: String = "temp_username"
+    var profileImage: UIImage?
+    
+    func loadImage(completion:(UIImage -> Void)) {
+        if let image = profileImage {
+            completion(image)
+        } else {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+                if let url = NSURL(string: "http://graph.facebook.com/\(self.fbid)/picture?type=large"),
+                    data = NSData(contentsOfURL: url),
+                    image = UIImage(data: data) {
+                        self.profileImage = image
+                        dispatch_async(dispatch_get_main_queue()) {
+                            completion(image)
+                        }
+                }
+            }
+        }
+    }
     
     override init() {}
-
+    
     init(json: JSON) {
         super.init()
         self.caption = json["caption"].stringValue
@@ -59,8 +77,11 @@ class User: NSObject, NSCoding {
         self.name = json["name"].stringValue
         self.updatedAt = json["updated_at"].stringValue
         self.username = json["username"].stringValue
+        loadImage {
+            self.profileImage = $0
+        }
     }
-
+    
     override var description: String {
         return "Name: \(name)| Email: \(email)| ID: \(id)| Username: \(username)| FacebookID: \(fbid)"
     }

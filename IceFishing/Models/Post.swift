@@ -10,20 +10,16 @@ import UIKit
 import SwiftyJSON
 
 class Post: NSObject {
-    let posterFirstName: String
-    let posterLastName: String
-    var avatar: UIImage?
+    let user: User
     var player: Player!
     let song: Song
     var date: NSDate?
     var likes = 0
 
-    init(song: Song, posterFirst: String, posterLast: String, date: NSDate?, avatar: UIImage?) {
+    init(song: Song, user: User, date: NSDate?) {
         self.song = song
-        self.posterFirstName = posterFirst
-        self.posterLastName = posterLast
+        self.user = user
         self.date = date
-        self.avatar = avatar
         
         if let previewURL = song.previewURL {
             player = Player(fileURL: previewURL)
@@ -36,10 +32,8 @@ class Post: NSObject {
     
     convenience init(json: JSON) {
         let songID = json["song"]["spotify_url"].stringValue
-        let name = split(json["user"]["name"].stringValue) { $0 == " " }
-        let first = name.first ?? ""
-        let last = name.count > 1 ? name.last! : ""
-        self.init(song: Song(spotifyURI: songID), posterFirst: first, posterLast: last, date: nil, avatar: nil)
+        let user = User(json: json["user"])
+        self.init(song: Song(spotifyURI: songID), user: user, date: nil)
     }
     
     func relativeDate() -> String {
@@ -47,6 +41,6 @@ class Post: NSObject {
     }
     
     override var description: String {
-        return "\(song.title) posted by \(posterFirstName) \(posterLastName)"
+        return "\(song.title) posted by \(user.name)"
     }
 }
