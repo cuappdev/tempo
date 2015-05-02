@@ -24,7 +24,7 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
             dayLabel.text = HipCalendarDayStringFromDate(date)
             dayLabel.textColor = UIColor.whiteColor()
             dayInnerCircleView.backgroundColor = noPostColor
-            dayCircleView.backgroundColor = circleColor
+            //dayCircleView.backgroundColor = circleColor
             
             if (isToday()) {
                 dayLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 15.0)
@@ -39,10 +39,10 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let dayCircleViewInset:CGFloat = contentView.bounds.size.height * 0.15
-        dayCircleView = UIView(frame: CGRectInset(contentView.frame, dayCircleViewInset, dayCircleViewInset))
-        dayCircleView.layer.cornerRadius = CGRectGetHeight(dayCircleView.bounds) / 2
-        contentView.addSubview(dayCircleView)
+//        let dayCircleViewInset:CGFloat = contentView.bounds.size.height * 0.15
+//        dayCircleView = UIView(frame: CGRectInset(contentView.frame, dayCircleViewInset, dayCircleViewInset))
+//        dayCircleView.layer.cornerRadius = CGRectGetHeight(dayCircleView.bounds) / 2
+//        contentView.addSubview(dayCircleView)
         
         let dayInnerCircleViewInset:CGFloat = contentView.bounds.size.height * 0.2
         dayInnerCircleView = UIView(frame: CGRectInset(contentView.frame, dayInnerCircleViewInset, dayInnerCircleViewInset))

@@ -35,9 +35,15 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var divider: UIView!
     @IBOutlet weak var postCalendarView: UIView!
+    @IBOutlet weak var separator: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // TODO: Uncomment when API done
+        //        API.sharedAPI.fetchPosts(User.currentUser.id) { post in
+        //            self.postedDates = post.date // dates user posted song
+        //        }
         
         // Navigation Bar
         self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
@@ -86,9 +92,10 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         let dayWidth = postCalendarView.frame.width/CGFloat(cols)
         let dayHeight = dayWidth
         daySize = CGSize(width: dayWidth, height: dayHeight)
+        separator.backgroundColor = UIColor.iceDarkRed()
         
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+        let layout: HipStickyHeaderFlowLayout = HipStickyHeaderFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: padding*6, bottom: padding*2, right: 0)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         
