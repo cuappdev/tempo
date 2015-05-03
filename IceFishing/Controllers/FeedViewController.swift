@@ -243,9 +243,10 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     //MARK: - UIRefreshControl
     func refreshFeed() {
         API.sharedAPI.fetchFeedOfEveryone {
-            self.posts = $0
-            self.tableView.reloadData()
-            self.refreshControl?.endRefreshing()
+            [weak self] in
+            self?.posts = $0
+            self?.tableView.reloadData()
+            self?.refreshControl?.endRefreshing()
         }
     }
     
