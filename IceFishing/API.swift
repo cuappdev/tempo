@@ -127,8 +127,7 @@ class API {
     }
     
     func fetchPosts(userID: String, completion: [Post] -> Void) {
-        let map: [String: [Post]] -> [Post]? = { $0["is_valid"] }
-        get(.History(userID), params: ["id": userID, "session_code": sessionCode], map: map, completion: completion)
+        get(.History(userID), params: ["id": userID, "session_code": sessionCode], map: postMapping, completion: completion)
     }
     
     func updateLikes(postID: String, unlike: Bool, completion: [String: Bool] -> Void) {
