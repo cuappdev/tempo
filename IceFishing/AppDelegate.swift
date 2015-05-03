@@ -64,10 +64,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if (sidebarVC == nil) {
                 sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
                 sidebarVC?.elements = [
-                    SideBarElement(title: "Feed", viewController: feedNavVC, image: UIImage(named: "Gray-Feed-Icon")),
+                    SideBarElement(title: "Feed", viewController: feedNavVC, image: UIImage(named: "Feed-Icon")),
                     SideBarElement(title: "People", viewController: feedNavVC, image: UIImage(named: "People-Icon")),
                     SideBarElement(title: "Liked", viewController: likedViewController, image: UIImage(named: "Liked-Icon")),
-                    SideBarElement(title: "Spotify", viewController: feedNavVC, image: UIImage(named: "Music-Icon"))
+                    SideBarElement(title: "Spotify", viewController: feedNavVC, image: UIImage(named: "Spotify-Icon"))
                 ]
                 sidebarVC?.selectionHandler = {
                     [weak self]

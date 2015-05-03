@@ -25,6 +25,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var searchNavigationController: UINavigationController!
     var elements: [SideBarElement] = []
+
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!

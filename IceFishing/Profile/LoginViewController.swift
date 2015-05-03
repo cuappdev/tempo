@@ -46,6 +46,7 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         //        }
         
         // Navigation Bar
+        navigationItem.title = "Profile"
         self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
