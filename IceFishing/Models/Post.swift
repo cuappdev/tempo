@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyJSON
 
+private let dateFormatter = NSDateFormatter()
+
 class Post: NSObject {
     let user: User
     var player: Player!
@@ -33,7 +35,12 @@ class Post: NSObject {
     convenience init(json: JSON) {
         let songID = json["song"]["spotify_url"].stringValue
         let user = User(json: json["user"])
-        self.init(song: Song(spotifyURI: songID), user: user, date: nil)
+        let dateString = json["created_at"].stringValue
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+        let date = dateFormatter.dateFromString(dateString)
+        self.init(song: Song(spotifyURI: songID), user: user, date: date)
     }
     
     func relativeDate() -> String {

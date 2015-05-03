@@ -138,6 +138,10 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
                         self.presentViewController(alert, animated: true, completion: nil)
                     } else {
                         User.currentUser.username = newUsername
+
+                        API.sharedAPI.updateCurrentUser(newUsername) { user in
+                        }
+
                         self.userHandleLabel.setTitle("@\(User.currentUser.username)", forState: UIControlState.Normal)
                     }
                 } else {
@@ -166,17 +170,15 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     @IBAction func followersButton(sender: UIButton) {
-        let followersVC = FollowersViewController()
+        let followersVC = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
         followersVC.title = "Followers"
-        let navController = UINavigationController(rootViewController: followersVC)
-        self.presentViewController(navController, animated: true, completion: nil)
+        navigationController?.pushViewController(followersVC, animated: true)
     }
 
     @IBAction func followingButton(sender: UIButton) {
-        let followingVC = FollowingViewController()
+        let followingVC = FollowingViewController(nibName: "FollowingViewController", bundle: nil)
         followingVC.title = "Following"
-        let navController = UINavigationController(rootViewController: followingVC)
-        self.presentViewController(navController, animated: true, completion: nil)
+        navigationController?.pushViewController(followingVC, animated: true)
     }
     
     // <------------------------POST HISTORY------------------------>

@@ -15,14 +15,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EHb-bm-mfh">
-                        <rect key="frame" x="28" y="29" width="45" height="45"/>
+                        <rect key="frame" x="13" y="29" width="45" height="45"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="45" id="3bs-pm-2Ti"/>
                             <constraint firstAttribute="width" constant="45" id="MrB-Lz-B32"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Song" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fop-cr-nyw">
-                        <rect key="frame" x="94" y="46" width="29" height="17"/>
+                        <rect key="frame" x="79" y="46" width="29" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="jk4-4E-a9x"/>
                         </constraints>
@@ -36,7 +36,7 @@
                         </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pMC-FE-dki">
-                        <rect key="frame" x="94" y="32" width="34" height="20"/>
+                        <rect key="frame" x="79" y="32" width="34" height="20"/>
                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -49,7 +49,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 Likes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MYA-xY-WTN">
-                        <rect key="frame" x="94" y="60" width="45" height="17"/>
+                        <rect key="frame" x="79" y="60" width="45" height="17"/>
                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -71,7 +71,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="pMC-FE-dki" firstAttribute="top" secondItem="EHb-bm-mfh" secondAttribute="top" constant="-6" id="0dz-lZ-oyI"/>
-                    <constraint firstItem="EHb-bm-mfh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="2vO-3J-83k"/>
+                    <constraint firstItem="EHb-bm-mfh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="2vO-3J-83k"/>
                     <constraint firstItem="0X4-nB-FPu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="3BZ-Yp-MKV"/>
                     <constraint firstItem="EHb-bm-mfh" firstAttribute="bottom" secondItem="MYA-xY-WTN" secondAttribute="bottom" constant="-3" id="3v2-oT-rvU"/>
                     <constraint firstAttribute="trailingMargin" secondItem="bpL-wv-Ma7" secondAttribute="trailing" constant="80" id="4NW-zb-Nf1"/>
@@ -126,12 +126,6 @@
                         <exclude reference="oXA-8j-nkB"/>
                         <exclude reference="xMi-Ql-FCc"/>
                         <exclude reference="zy4-Jh-mpK"/>
-                        <exclude reference="Ahz-WQ-axa"/>
-                        <exclude reference="D08-Xd-LTu"/>
-                        <exclude reference="OEe-ZW-SdX"/>
-                        <exclude reference="Yi6-eD-DHQ"/>
-                        <exclude reference="yEi-oH-F6h"/>
-                        <exclude reference="pEU-Dx-gRF"/>
                         <exclude reference="3BZ-Yp-MKV"/>
                         <exclude reference="CMJ-ye-f2s"/>
                         <exclude reference="Kwa-Ug-jw1"/>
@@ -141,6 +135,12 @@
                         <exclude reference="jbr-2p-mJZ"/>
                         <exclude reference="kKv-oI-dhn"/>
                         <exclude reference="yF8-xF-tNu"/>
+                        <exclude reference="Ahz-WQ-axa"/>
+                        <exclude reference="D08-Xd-LTu"/>
+                        <exclude reference="OEe-ZW-SdX"/>
+                        <exclude reference="Yi6-eD-DHQ"/>
+                        <exclude reference="yEi-oH-F6h"/>
+                        <exclude reference="pEU-Dx-gRF"/>
                         <exclude reference="4NW-zb-Nf1"/>
                         <exclude reference="5Yq-kN-vV5"/>
                         <exclude reference="8qO-Mn-x54"/>

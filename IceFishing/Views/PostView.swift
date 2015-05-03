@@ -23,7 +23,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var dateLabel: UILabel?
     @IBOutlet var spacingConstraint: NSLayoutConstraint?
     @IBOutlet var likesLabel: UILabel?
-    
+    @IBOutlet var likedButton: UIButton?
     var fillColor = UIColor.iceDarkGray()
  
     var type: ViewType = .Feed
@@ -59,6 +59,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
+                println(post.date)
                 
                 if let date = post.date {
                     let dateFormatter = NSDateFormatter()
@@ -264,10 +265,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     func postViewPressed(sender: UITapGestureRecognizer) {
         if let post = post {
-            if post.player.isPlaying() {
-                let tapPoint = sender.locationInView(self)
-                let hitView = self.hitTest(tapPoint, withEvent: nil)
-                
+            let tapPoint = sender.locationInView(self)
+            let hitView = self.hitTest(tapPoint, withEvent: nil)
+            if hitView == likedButton {
+                println("Liking")
+            } else if post.player.isPlaying() {
                 if hitView == avatarImageView || hitView == self.profileNameLabel {
                     // GO TO PROFILE VIEW CONTROLLER
                     println("GO TO PROFILE")

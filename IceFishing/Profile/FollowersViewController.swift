@@ -35,15 +35,15 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile
-        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
-        backButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
-        backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height))
+        backButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
+        backButton.addTarget(self, action: "popToRoot", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
     // Return to profile view
-    func dismiss() {
-        dismissViewControllerAnimated(true, completion: nil)
+    func popToRoot() {
+        navigationController?.popToRootViewControllerAnimated(true)
     }
     
     // TableView Methods
