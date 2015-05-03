@@ -80,9 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             }
                         }
                         
-                        println("switch to \(viewController)")
-                        println("with \(self?.revealVC)")
-
                         self?.revealVC?.setFrontViewController(viewController, animated: true)
                         self?.revealVC?.setFrontViewPosition(.Left, animated: true)
                     }
