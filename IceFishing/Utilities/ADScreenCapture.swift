@@ -84,6 +84,28 @@ class ADScreenCapture: UIView {
 
     }
     
+    func takeOneScreenshot() {
+        
+        let timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("takeAndSubmitScreenshot"), userInfo: nil, repeats: false)
+    }
+    
+    func takeAndSubmitScreenshot() {
+        
+        let layer = UIApplication.sharedApplication().keyWindow?.layer as CALayer!
+        let scale = UIScreen.mainScreen().scale
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
+        
+        layer.renderInContext(UIGraphicsGetCurrentContext())
+        let screenshot:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        let vc = SubmitBugViewController()
+        vc.recordingURL = nil
+        vc.screenshot = screenshot
+        self.viewController.presentViewController(vc, animated: true, completion: nil)
+
+    }
+    
     func invalidateTimer(t:NSTimer) {
         
         println("recording stopped")
