@@ -22,6 +22,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var descriptionLabel: MarqueeLabel?
     @IBOutlet var dateLabel: UILabel?
     @IBOutlet var spacingConstraint: NSLayoutConstraint?
+    @IBOutlet var likesLabel: UILabel?
     
     var fillColor = UIColor.iceDarkGray()
  
