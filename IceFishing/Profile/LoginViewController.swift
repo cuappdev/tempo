@@ -27,7 +27,7 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var userHandleLabel: UILabel!
+    @IBOutlet weak var userHandleLabel: UIButton!
     @IBOutlet weak var followButtonLabel: UIButton!
     @IBOutlet weak var numFollowersLabel: UILabel!
     @IBOutlet weak var numFollowingLabel: UILabel!
@@ -35,9 +35,15 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var divider: UIView!
     @IBOutlet weak var postCalendarView: UIView!
+    @IBOutlet weak var separator: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // TODO: Uncomment when API done
+        //        API.sharedAPI.fetchPosts(User.currentUser.id) { post in
+        //            self.postedDates = post.date // dates user posted song
+        //        }
         
         // Navigation Bar
         self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
@@ -56,7 +62,7 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         // Profile Info
         nameLabel.text = User.currentUser.name
-        userHandleLabel.text = "@\(User.currentUser.username)"
+        userHandleLabel.setTitle("@\(User.currentUser.username)", forState: UIControlState.Normal)
         profilePictureView.layer.masksToBounds = false
         profilePictureView.layer.borderWidth = 1.5
         profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
@@ -86,9 +92,10 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         let dayWidth = postCalendarView.frame.width/CGFloat(cols)
         let dayHeight = dayWidth
         daySize = CGSize(width: dayWidth, height: dayHeight)
+        separator.backgroundColor = UIColor.iceDarkRed()
         
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+        let layout: HipStickyHeaderFlowLayout = HipStickyHeaderFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: padding*6, bottom: padding*2, right: 0)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         
@@ -104,10 +111,44 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         collectionView.scrollsToTop = false
     }
     
+    // TODO: Change to reveal sidebar
     func dismiss() {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // When username on profile screen clicked
+    @IBAction func changeUserHandle(sender: UIButton) {
+        var editAlert = UIAlertController(title: "Edit Username", message: "This is how you appear to other users.", preferredStyle: UIAlertControllerStyle.Alert)
+        editAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+        editAlert.addTextFieldWithConfigurationHandler { textField in
+            textField.placeholder = "New username"
+            textField.textAlignment = NSTextAlignment.Center
+        }
+        editAlert.addAction(UIAlertAction(title: "Save", style: UIAlertActionStyle.Default) {action -> Void in
+            
+            let textField = editAlert.textFields?.first as? UITextField
+            let newUsername = textField!.text
+            
+            API.sharedAPI.usernameIsValid(newUsername) { success in
+                if (success) {
+                    if (newUsername == "") {
+                        var alert = UIAlertController(title: "Oh no!", message: "Username cannot be empty.", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    } else {
+                        User.currentUser.username = newUsername
+                        self.userHandleLabel.setTitle("@\(User.currentUser.username)", forState: UIControlState.Normal)
+                    }
+                } else {
+                    var alert = UIAlertController(title: "Sorry!", message: "Username is taken.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        })
+        self.presentViewController(editAlert, animated: true, completion: nil)
+    }
+
     // <------------------------FOLLOW BUTTONS------------------------>
     
     @IBAction func followButton(sender: UIButton) {

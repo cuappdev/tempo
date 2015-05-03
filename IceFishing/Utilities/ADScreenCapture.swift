@@ -17,16 +17,26 @@ class ADScreenCapture: UIView {
     var recordingIndicator:UIView!
     var recordingURL:NSURL!
     var screenResolution:CGSize!
+    let tweaks = Tweaks()
+    var isRecording = false
     
-    init(navigationController:UIViewController, frame:CGRect, gestureRecognizer:UIGestureRecognizer)
+    init(rootViewController:UIViewController, frame:CGRect, gestureRecognizer:UIGestureRecognizer)
     {
         super.init(frame:frame)
-        self.viewController = navigationController
+        self.viewController = rootViewController
         self.userInteractionEnabled = false
         
-        self.recordingIndicator = UIView(frame: CGRectMake(frame.width - 30, frame.height - 30, 20, 20))
-        self.recordingIndicator.backgroundColor = UIColor.redColor()
-        self.recordingIndicator.layer.cornerRadius = 10
+        //self.recordingIndicator = UIView(frame: CGRectMake((frame.width - 30) - 10, (frame.height - 30) - 10, 30, 30))
+        
+        tweaks.tweakActionForCategory("Screen Capture", collectionName: "Recording Indicator", name: "Diameter", defaultValue: 30, minimumValue: nil, maximumValue: nil, action: { (currentValue) -> () in
+            let diameter:CGFloat! = CGFloat(currentValue.floatValue)
+                self.recordingIndicator = UIView(frame: CGRectMake((frame.width - diameter) - 10, (frame.height - diameter) - 10, diameter, diameter))
+                self.recordingIndicator.backgroundColor = UIColor.redColor()
+                self.recordingIndicator.layer.cornerRadius = 10
+            
+            println(self.recordingIndicator)
+            
+            })
         
         gestureRecognizer.addTarget(self, action: Selector("didStartRecording"))
         self.viewController.view.addGestureRecognizer(gestureRecognizer)
@@ -58,9 +68,11 @@ class ADScreenCapture: UIView {
     func didStartRecording() {
         println("did start recording")
         
+        isRecording = true
         self.viewController.view.addSubview(recordingIndicator)
-        
-        let timeSpan:NSTimeInterval = 10.0
+        println(self.recordingIndicator)
+
+        let timeSpan:NSTimeInterval = 3.0
         screenshotImages = []
         let timer = NSTimer.scheduledTimerWithTimeInterval(1/15.0, target: self, selector: Selector("takeScreenShotOfView:"), userInfo: screenshotImages, repeats: true)
         
@@ -79,13 +91,15 @@ class ADScreenCapture: UIView {
         timer.invalidate()
         stitchImagesIntoVideo(screenshotImages)
         
+        isRecording = false
+        
     }
     
     func takeScreenShotOfView(timer:NSTimer){
         
         let layer = UIApplication.sharedApplication().keyWindow?.layer as CALayer!
         let scale = UIScreen.mainScreen().scale
-        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale)
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
         
         layer.renderInContext(UIGraphicsGetCurrentContext())
         let screenshot:UIImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -130,5 +144,13 @@ class ADScreenCapture: UIView {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    /*
+    // Only override drawRect: if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func drawRect(rect: CGRect) {
+        // Drawing code
+    }
+    */
 
 }

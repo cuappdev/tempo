@@ -31,21 +31,15 @@ class SignInViewController: UIViewController {
             // Request FB user info
             if (session.isOpen) {
                 API.sharedAPI.getCurrentUser() { user in
-                    println(user)
-                    
-                    let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
-                    self.presentViewController(usernameVC, animated: false, completion: nil)
-                    
-                    // TODO: Uncomment when user saved in NSUserDefaults
-//                    API.sharedAPI.usernameIsValid(User.currentUser.username) { success in
-//                        if (success) {
-//                            let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
-//                            self.presentViewController(usernameVC, animated: false, completion: nil)
-//                        } else {
-//                             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//                             appDelegate.toggleRootVC()
-//                        }
-//                    }
+                    API.sharedAPI.usernameIsValid(User.currentUser.username) { success in
+                        if (success) {
+                            let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
+                            self.presentViewController(usernameVC, animated: false, completion: nil)
+                        } else {
+                             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                             appDelegate.toggleRootVC()
+                        }
+                    }
                 }
                 
             }

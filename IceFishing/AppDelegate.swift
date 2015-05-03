@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    var tools:Tools!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let URLCache = NSURLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
@@ -46,12 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let navController = UINavigationController(rootViewController: FeedViewController(nibName: "FeedViewController", bundle: nil))
             let revealController = SWRevealViewController(rearViewController: sidebarVC, frontViewController: navController)
             self.window!.rootViewController = revealController
-            let gestureRecognizer = UISwipeGestureRecognizer()
-            gestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
-            gestureRecognizer.numberOfTouchesRequired = 3
-            let screenCapture = ADScreenCapture(navigationController: revealController, frame: revealController.view.frame, gestureRecognizer: gestureRecognizer)
-            revealController.view.addSubview(screenCapture)
         }
+        tools = Tools(rootViewController: self.window!.rootViewController!)
     }
     
     // Facebook Session
