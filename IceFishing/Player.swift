@@ -154,7 +154,6 @@ class Player: NSObject, AVAudioPlayerDelegate {
             if let player = player {
                 if newValue == 1.0 {
                     finishedPlaying = true
-                    destroy()
                 }
                 
                 currentTime = newValue * duration

@@ -73,10 +73,6 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         delegate.selectSong(track.song)
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
-        
-        if activePlayer != nil && activePlayer != cell.postView.post?.player {
-            activePlayer.destroy()
-        }
 
         cell.postView.post?.player.togglePlaying()
         
@@ -91,10 +87,6 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
     }
     
     func finishSearching() {
-        if activePlayer != nil {
-            activePlayer.destroy()
-        }
-        
         if (shouldResume) {
             if let post = parent?.currentlyPlayingPost {
                 post.player.play(false)
