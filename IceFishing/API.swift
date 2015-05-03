@@ -15,6 +15,7 @@ enum Router: URLStringConvertible {
     case Root
     case ValidUsername
     case Sessions
+    case UserSearch
     case Users(String)
     case Feed(String)
     case FeedEveryone
@@ -32,12 +33,14 @@ enum Router: URLStringConvertible {
                 return "/users/valid_username"
             case .Sessions:
                 return "/sessions"
+            case .UserSearch:
+                return "/users.json"
             case .Users(let userID):
                 return "/users/\(userID)"
             case .Feed(let userID):
                 return "/\(userID)/feed"
             case .FeedEveryone:
-                return "/feed"
+                return "/feed.json"
             case .History(let userID):
                 return "/\(userID)/posts"
             case .Likes:
@@ -112,6 +115,29 @@ class API {
         }
     }
     
+    func updateCurrentUser(changedUsername: String, completion: User -> Void) {
+        let map: [String: AnyObject] -> User? = {
+            let user = User(json: JSON($0))
+            User.currentUser = user
+            return user
+        }
+        patch(.Users(User.currentUser.id), params: ["username": changedUsername], map: map, completion: completion)
+    }
+    
+    func searchUsers(username: String, completion: [User] -> Void) {
+        let map: [String: [AnyObject]] -> [User]? = {
+            if let users = $0["users"] {
+                var feed: [User] = []
+                for user in users {
+                    feed.append(User(json: JSON(user)))
+                }
+                return feed
+            }
+            return nil
+        }
+        get(.UserSearch, params: ["q": username, "session_code": sessionCode], map: map, completion: completion)
+    }
+    
     func fetchUser(userID: String, completion: User -> Void) {
         let map: [String: AnyObject] -> User? = { User(json: JSON($0)) }
         get(.Users(userID), params: ["session_code": sessionCode], map: map, completion: completion)
@@ -158,12 +184,18 @@ class API {
         makeNetworkRequest(.GET, router: router, params: params, map: map, completion: completion)
     }
     
+    private func patch<O, T>(router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
+        makeNetworkRequest(.PATCH, router: router, params: params, map: map, completion: completion)
+    }
+    
     private func makeNetworkRequest<O, T>(method: Alamofire.Method, router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
         Alamofire
             .request(method, router, parameters: params)
             .responseJSON { (request, response, json, error) -> Void in
-                if let json = json as? O, obj = map(json) {
-                    completion(obj)
+                if let json = json as? O {
+                    if let obj = map(json) {
+                        completion(obj)
+                    }
                 } else {
                     println("—————— Couldn't decompose object ——————")
                     println("JSON: \(json)")
