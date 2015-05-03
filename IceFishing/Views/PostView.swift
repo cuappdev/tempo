@@ -147,6 +147,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        setNeedsDisplay()
+        updateProfileLabelTextColor()
     }
     
     // Customize view to be able to re-use it for search results.
