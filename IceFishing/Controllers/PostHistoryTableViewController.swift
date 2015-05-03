@@ -57,6 +57,7 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
         cell.postedSongImage.image = UIImage(named: "Sexy")
         cell.artistNameLabel.text = "John Legend"
         cell.songNameLabel.text = "All Of Me"
+        cell.numLikesLabel.text = "10 Likes"
         
         // TODO: Uncomment when test user is made
         // cell.artistNameLabel.text = self.songArtists[indexPath.row]
@@ -64,9 +65,9 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
         // cell.postedSongImage.image = UIImage(named: "self.songPictures[indexPath.row]")
         
         var formatter: NSDateFormatter = NSDateFormatter()
-        formatter.dateFormat = "MM-dd-YY"
+        formatter.dateFormat = "M.dd.YY"
         let date: String = formatter.stringFromDate(self.postedDates[indexPath.row])
-        cell.datePostedLabel.text = "Date Posted: \(date)"
+        cell.datePostedLabel.text = "\(date)"
         
         return cell
     }

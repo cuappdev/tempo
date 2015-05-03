@@ -31,7 +31,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
                     currentlyPlayingPost = nil
                 }
             }
-            
             tableView.selectRowAtIndexPath(currentlyPlayingIndexPath, animated: false, scrollPosition: UITableViewScrollPosition.None)
             cellPin()
         }
@@ -142,7 +141,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
                     return .Success
                 }
             }
-
             return .NoSuchContent
         }
         
@@ -169,7 +167,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         
         
         //—————————————from MAIN VC——————————————————
-        navigationItem.title = "Songs"
+        navigationItem.title = "Feed"
         addPlusButton()
         
         navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
@@ -334,7 +332,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         delay(0.05) {
             self.searchController.searchBar.becomeFirstResponder()
         }
-        
     }
     
     func willDismissSearchController(searchController: UISearchController) {

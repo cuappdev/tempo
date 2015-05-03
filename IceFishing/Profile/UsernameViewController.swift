@@ -19,7 +19,6 @@ class UsernameViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor(red: 181.0 / 255.0, green: 87.0 / 255.0, blue: 78.0 / 255.0, alpha: 1.0)
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         navigationController?.navigationBar.barStyle = .Black
-        
     }
     
     @IBAction func createUser(sender: UIButton) {
