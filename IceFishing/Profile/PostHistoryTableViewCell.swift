@@ -13,6 +13,7 @@ class PostHistoryTableViewCell: UITableViewCell {
     @IBOutlet weak var postedSongImage: UIImageView!
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var songNameLabel: UILabel!
+    @IBOutlet weak var numLikesLabel: UILabel!
     @IBOutlet weak var datePostedLabel: UILabel! 
     @IBOutlet weak var separator: UIView!
     

@@ -132,7 +132,8 @@ class API {
             User.currentUser = user
             return user
         }
-        patch(.Users(User.currentUser.id), params: ["username": changedUsername], map: map, completion: completion)
+        let changes = ["username": changedUsername]
+        patch(.Users(User.currentUser.id), params: ["user": changes, "session_code": sessionCode], map: map, completion: completion)
     }
     
     func searchUsers(username: String, completion: [User] -> Void) {

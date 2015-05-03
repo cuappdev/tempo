@@ -17,7 +17,7 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     // Post History Calendar
     var collectionView : UICollectionView!
     var calendar : NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-    var startDate : NSDate! = NSDate(dateString:"2014-04-01") // User creation date
+    var startDate : NSDate! = NSDate(dateString: "2014-04-01") // User creation date
     var currentDate : NSDate! = NSDate()
     // Hardcoded dates for testing
     var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-24"), NSDate(dateString:"2015-04-22"), NSDate(dateString:"2015-04-18"), NSDate(dateString:"2015-04-15"), NSDate(dateString:"2015-04-11"), NSDate(dateString:"2015-04-9"), NSDate(dateString:"2015-04-08"), NSDate(dateString:"2015-04-07")]
@@ -46,13 +46,14 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         //        }
         
         // Navigation Bar
+        navigationItem.title = "Profile"
         self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add profile button to the left side of the navbar
         var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
         menuButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
-        menuButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+        menuButton.addTarget(self, action: "dismiss:", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
         
         // Pop out sidebar when hamburger menu tapped
@@ -112,8 +113,8 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     // TODO: Change to reveal sidebar
-    func dismiss() {
-        dismissViewControllerAnimated(true, completion: nil)
+    func dismiss(sender: AnyObject?) {
+        self.revealViewController()?.revealToggle(sender)
     }
     
     // When username on profile screen clicked

@@ -14,12 +14,14 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     //var followers: [String]! = []
     
     // TODO: For testing purposes (delete when test user is made)
-    var followers: [String] = ["Adam", "Adler", "Alexander", "Andrew", "Annie", "Ashton", "Austin", "Brendan", "Brian", "Dennis"]
-    var followerHandles: [String] = ["adam", "adler", "alexander", "andrew", "annie", "ashton", "austin", "brendan", "brian", "dennis"]
-    var numFollowers: [Int] = [10, 229, 38, 40, 100, 374, 2731, 384, 12, 293]
+    var followers: [String] = ["Derrick", "Eric", "Feifan", "Ilan", "John", "Joe", "Karim", "Lucas", "Manuela", "Mark", "Nicole", "Sam", "Steven", "Tsvi"]
+    var followerHandles: [String] = ["derrick", "eric", "feifan", "ilan", "john", "joe", "karim", "lucas", "manuela", "mark", "nicole", "sam", "steven", "tsvi"]
+    var numFollowers: [Int] = [10, 229, 38, 40, 100, 374, 2731, 384, 12, 293, 34, 3, 120, 3992]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        User.currentUser.followers
         
         // TODO: Uncomment when test user is made
         //self.followers = User.currentUser.followers

@@ -25,6 +25,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var searchNavigationController: UINavigationController!
     var elements: [SideBarElement] = []
+
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -63,6 +64,12 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         button.frame = self.profileView.bounds
         button.addTarget(self, action: "pushToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(button)
+        
+        categoryTableView.reloadData()
+        // mark first item selected cuz it is
+        if (elements.count > 0) {
+            categoryTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: .None)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -78,9 +85,13 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func pushToProfile(sender:UIButton!) {
-        let loginVC = LoginViewController(nibName: "LoginViewController", bundle: nil)
-        searchNavigationController = UINavigationController(rootViewController: loginVC)
-        presentViewController(searchNavigationController, animated: false, completion: nil)
+        if (searchNavigationController == nil) {
+            let loginVC = LoginViewController(nibName: "LoginViewController", bundle: nil)
+            searchNavigationController = UINavigationController(rootViewController: loginVC)
+        }
+//        presentViewController(searchNavigationController, animated: false, completion: nil)
+        selectionHandler?(searchNavigationController)
+        self.categoryTableView.selectRowAtIndexPath(nil, animated: false, scrollPosition: .None)
     }
     
     func dismiss(sender:UIButton!) {
