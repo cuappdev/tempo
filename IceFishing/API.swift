@@ -19,7 +19,7 @@ enum Router: URLStringConvertible {
     case Feed(String)
     case FeedEveryone
     case History(String)
-    case Likes
+    case Likes(String?)
     case Followings
     case Posts
     
@@ -40,8 +40,11 @@ enum Router: URLStringConvertible {
                 return "/feed"
             case .History(let userID):
                 return "/\(userID)/posts"
-            case .Likes:
-                return "/likes"
+            case .Likes(let userID):
+                if (userID != nil) {
+                    return "/\(userID!)/likes"
+                }
+                return "/lieks"
             case .Followings:
                 return "/followings"
             case .Posts:
@@ -69,6 +72,14 @@ class API {
             return feed.reverse()
         }
         return nil
+    }
+    
+    let songMapping: [String: [AnyObject]] -> [Song]? = {
+        var songs: [Song] = []
+        
+        println($0)
+        
+        return songs
     }
     
     // Could call getSession()
@@ -131,7 +142,11 @@ class API {
     }
     
     func updateLikes(postID: String, unlike: Bool, completion: [String: Bool] -> Void) {
-        post(.Likes, params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: { $0 }, completion: completion)
+        post(Router.Likes(nil), params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: { $0 }, completion: completion)
+    }
+    
+    func fetchLikes(userID: String, completion: [Song] -> Void) {
+        get(Router.Likes(userID), params: [:], map: songMapping, completion: completion)
     }
     
     func updateFollowings(userID: String, unfollow: Bool, completion: [String: Bool] -> Void) {

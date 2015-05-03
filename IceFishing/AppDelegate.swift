@@ -37,16 +37,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    var sidebarVC: SideBarViewController?
+    var feedNavVC: UINavigationController?
+    var revealVC: SWRevealViewController?
+    var likedViewController: LikedTableViewController?
+    
+    //    var categories: [String: UIViewController?] = ["Feed": nil, "People": nil, "Liked": nil, "Spotify": nil]
+    //    var symbols: [String] = ["Gray-Feed-Icon", "People-Icon", "Liked-Icon", "Music-Icon"]
+
+    
     // Toggle rootViewController
     func toggleRootVC() {
         if (!FBSession.activeSession().isOpen) {
             let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
             self.window!.rootViewController = signInVC
         } else {
-            let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
-            let navController = UINavigationController(rootViewController: FeedViewController(nibName: "FeedViewController", bundle: nil))
-            let revealController = SWRevealViewController(rearViewController: sidebarVC, frontViewController: navController)
-            self.window!.rootViewController = revealController
+            if (feedNavVC == nil) {
+                let feedVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
+                feedNavVC = UINavigationController(rootViewController: feedVC)
+            }
+            
+            if (likedViewController == nil) {
+                likedViewController = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
+            }
+            
+            if (sidebarVC == nil) {
+                sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
+                sidebarVC?.elements = [
+                    SideBarElement(title: "Feed", viewController: feedNavVC, image: UIImage(named: "Gray-Feed-Icon")),
+                    SideBarElement(title: "People", viewController: feedNavVC, image: UIImage(named: "People-Icon")),
+                    SideBarElement(title: "Liked", viewController: likedViewController, image: UIImage(named: "Liked-Icon")),
+                    SideBarElement(title: "Spotify", viewController: feedNavVC, image: UIImage(named: "Music-Icon"))
+                ]
+                sidebarVC?.selectionHandler = {
+                    [weak self]
+                    (viewController) in
+                    if let viewController = viewController {
+                        if let front = self?.revealVC?.frontViewController {
+                            if viewController == front {
+                                self?.revealVC?.setFrontViewPosition(.Left, animated: true)
+                                return
+                            }
+                        }
+                        
+                        println("switch to \(viewController)")
+                        println("with \(self?.revealVC)")
+
+                        self?.revealVC?.setFrontViewController(viewController, animated: true)
+                        self?.revealVC?.setFrontViewPosition(.Left, animated: true)
+                    }
+                }
+            }
+            
+            if (revealVC == nil) {
+                revealVC = SWRevealViewController(rearViewController: sidebarVC, frontViewController: feedNavVC)
+            }
+            self.window!.rootViewController = revealVC
         }
         tools = Tools(rootViewController: self.window!.rootViewController!)
     }

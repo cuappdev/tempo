@@ -358,8 +358,4 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         searchController.searchBar.resignFirstResponder()
         searchResultsController.finishSearching()
     }
-    
-    override func canBecomeFirstResponder() -> Bool {
-        return true
-    }
 }

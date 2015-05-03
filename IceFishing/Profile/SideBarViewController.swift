@@ -8,12 +8,23 @@
 
 import UIKit
 
+struct SideBarElement {
+    var title: String
+    var viewController: UIViewController?
+    var image: UIImage?
+    
+    init(title: String, viewController: UIViewController?, image: UIImage?) {
+        self.title = title
+        self.viewController = viewController
+        self.image = image
+    }
+}
+
 class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBLoginViewDelegate {
+    var selectionHandler: (UIViewController? -> ())?
     
     var searchNavigationController: UINavigationController!
-    var categories: [String] = ["Feed", "People", "Liked", "Spotify"]
-    var symbols: [String] = ["Gray-Feed-Icon", "People-Icon", "Liked-Icon", "Music-Icon"]
-
+    var elements: [SideBarElement] = []
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -79,22 +90,23 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     // TableView Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.categories.count
+        return self.elements.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CategoryCell", forIndexPath: indexPath) as! SideBarTableViewCell
+        let element = elements[indexPath.row]
         
-        cell.categorySymbol.image = UIImage(named: self.symbols[indexPath.row])
-        cell.categoryLabel.text = self.categories[indexPath.row]
+        cell.categorySymbol.image = element.image
+        cell.categoryLabel.text = element.title
         
         return cell
     }
    
-// TODO!
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath]
-//    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let element = elements[indexPath.row]
+        selectionHandler?(element.viewController)
+    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(55)
