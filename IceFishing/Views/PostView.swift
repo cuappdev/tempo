@@ -36,6 +36,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 NSNotificationCenter.defaultCenter().removeObserver(handler)
             }
 
+            setUpTimer()
+            
             // update stuff
             if let post = post {
                 switch type {
@@ -74,24 +76,28 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                         [weak self]
                         (note) -> Void in
                         self?.updateProfileLabelTextColor()
+                        self?.setUpTimer()
                         
-                        if (self?.updateTimer == nil && self?.post?.player.isPlaying() ?? false) {
-                            // 60 fps
-                            self?.updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
-                                target: self!, selector: Selector("timerFired:"),
-                                userInfo: nil,
-                                repeats: true)
-                            NSRunLoop.currentRunLoop().addTimer(self!.updateTimer!, forMode: NSRunLoopCommonModes)
-                        } else {
-                            self?.updateTimer?.invalidate()
-                            self?.updateTimer = nil
-                        }
                 })
-            } else {
-                updateTimer?.invalidate()
-                updateTimer = nil
             }
         }
+    }
+    
+    private func setUpTimer() {
+        if (self.updateTimer == nil && self.post?.player.isPlaying() ?? false) {
+            // 60 fps
+            
+            self.updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
+                target: self, selector: Selector("timerFired:"),
+                userInfo: nil,
+                repeats: true)
+
+            NSRunLoop.currentRunLoop().addTimer(self.updateTimer!, forMode: NSRunLoopCommonModes)
+        } else {
+            self.updateTimer?.invalidate()
+            self.updateTimer = nil
+        }
+        
     }
     
     override func didMoveToWindow() {
@@ -141,15 +147,16 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     dynamic private func timerFired(timer: NSTimer) {
-        if (self.post?.player.isPlaying() ?? false) {
+//        if (self.post?.player.isPlaying() ?? false) {
             self.setNeedsDisplay()
-        }
+//        }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setNeedsDisplay()
         updateProfileLabelTextColor()
+        setUpTimer()
     }
     
     // Customize view to be able to re-use it for search results.
@@ -158,12 +165,30 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     func updateProfileLabelTextColor() {
+        if let avatarImageView = self.avatarImageView {
+            let layer = avatarImageView.layer
+            layer.transform = CATransform3DIdentity
+            layer.removeAllAnimations()
+        }
+
         if let post = post {
             var color: UIColor!
             var duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = self.profileNameLabel!
             if post.player.isPlaying() {
                 color = UIColor.iceDarkRed()
+                if let avatarImageView = self.avatarImageView {
+                    let layer = avatarImageView.layer
+                    let rotation = CATransform3DMakeRotation(CGFloat(2.0 * M_PI), 0, 0, 1.0)
+                    layer.transform = rotation
+                    let animation = CABasicAnimation(keyPath: "transform.rotation")
+                    animation.fromValue = 0
+                    animation.duration = 3 * M_PI
+                    animation.toValue = 2 * M_PI
+                    animation.repeatCount = FLT_MAX
+                    layer.addAnimation(animation, forKey: "transform.rotation")
+                    
+                }
                 
                 // Will scroll labels
                 profileNameLabel?.holdScrolling = false
