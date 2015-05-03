@@ -66,7 +66,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     dateFormatter.timeStyle = .ShortStyle
                     dateLabel?.text = dateFormatter.stringFromDate(date)
                 } else {
-                    dateLabel?.text = "oops"
+                    dateLabel?.text = ""
                 }
                 
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
