@@ -32,7 +32,7 @@ class Tools: UIView, UIActionSheetDelegate, FBTweakViewControllerDelegate {
         rootViewController.view.addSubview(screenCapture)
         rootViewController.view.addSubview(self)
         
-        popup = UIActionSheet(title: "App Dev Tools", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Submit Bug", "Tweaks")
+        popup = UIActionSheet(title: "App Dev Tools", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Submit Screenshot", "Submit Message", "Tweaks")
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "assignFirstResponder", name:"AssignToolsAsFirstResponder", object: nil)
         self.becomeFirstResponder()
@@ -80,13 +80,26 @@ class Tools: UIView, UIActionSheetDelegate, FBTweakViewControllerDelegate {
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         if actionSheet == popup {
             switch buttonIndex {
+//            case 1:
+//                print("Submit Video")
+//                if(!screenCapture.isRecording) {
+//                    screenCapture.didStartRecording()
+//                }
+//                break
             case 1:
-                print("Submit Bug")
+                print("Submit Screenshot")
                 if(!screenCapture.isRecording) {
-                    screenCapture.didStartRecording()
+                    screenCapture.takeOneScreenshot()
                 }
                 break
             case 2:
+                print("Submit Message")
+                if(!screenCapture.isRecording) {
+                    let vc = SubmitBugViewController()
+                    self.screenCapture.viewController.presentViewController(vc, animated: true, completion: nil)
+                }
+                break
+            case 3:
                 print("Tweaks")
                 if(!displayingTweaks) {
                     fbTweaks = FBTweakViewController(store: FBTweakStore.sharedInstance())
