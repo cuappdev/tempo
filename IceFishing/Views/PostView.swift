@@ -57,6 +57,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
+                println(post.date)
                 
                 if let date = post.date {
                     let dateFormatter = NSDateFormatter()
@@ -65,7 +66,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     dateFormatter.timeStyle = .ShortStyle
                     dateLabel?.text = dateFormatter.stringFromDate(date)
                 } else {
-                    dateLabel?.text = ""
+                    dateLabel?.text = "oops"
                 }
                 
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
