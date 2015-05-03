@@ -59,12 +59,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
             }
         }
     }
-    
-    func destroy() {
-        self.player = nil
-        NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
-    }
-    
+
     private var shouldAutoplay = false
     private var shouldNotify = false
     func play(notify: Bool) {
@@ -159,7 +154,6 @@ class Player: NSObject, AVAudioPlayerDelegate {
             if let player = player {
                 if newValue == 1.0 {
                     finishedPlaying = true
-                    destroy()
                 }
                 
                 currentTime = newValue * duration
@@ -204,6 +198,5 @@ class Player: NSObject, AVAudioPlayerDelegate {
         finishedPlaying = true
         NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
         // we finished playing, destroy the object
-        destroy()
     }
 }

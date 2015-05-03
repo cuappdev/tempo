@@ -205,7 +205,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
         //background color for the view
         self.tableView.backgroundColor = UIColor.iceDarkGray()
         self.tableView.separatorColor = UIColor.iceDarkGray()
-        tableView.rowHeight = 80
+        tableView.rowHeight = 90
         pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
         pinViewGestureRecognizer.delegate = pinView
         lastContentOffset = tableView.contentOffset.y
@@ -214,17 +214,17 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        topPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 80.0)
+        topPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: tableView.rowHeight)
         topPinViewContainer.center = CGPoint(x: view.center.x, y: navigationController!.navigationBar.frame.maxY + topPinViewContainer.frame.height/2)
         parentViewController!.view.addSubview(topPinViewContainer)
-        bottomPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 80.0)
+        bottomPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: tableView.rowHeight)
         bottomPinViewContainer.center = CGPoint(x: view.center.x, y: view.frame.height - topPinViewContainer.frame.height/2)
         parentViewController!.view.addSubview(bottomPinViewContainer)
         
         topPinViewContainer.hidden = true
         bottomPinViewContainer.hidden = true
         
-        pinView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 80.0)
+        pinView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: tableView.rowHeight)
     }
     
     func togglePlay() {
@@ -234,9 +234,10 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, SearchTra
     //MARK: - UIRefreshControl
     func refreshFeed() {
         API.sharedAPI.fetchFeedOfEveryone {
-            self.posts = $0
-            self.tableView.reloadData()
-            self.refreshControl?.endRefreshing()
+            [weak self] in
+            self?.posts = $0
+            self?.tableView.reloadData()
+            self?.refreshControl?.endRefreshing()
         }
     }
     

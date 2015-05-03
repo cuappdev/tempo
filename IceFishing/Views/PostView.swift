@@ -22,6 +22,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var descriptionLabel: MarqueeLabel?
     @IBOutlet var dateLabel: UILabel?
     @IBOutlet var spacingConstraint: NSLayoutConstraint?
+    @IBOutlet var likesLabel: UILabel?
     
     var fillColor = UIColor.iceDarkGray()
  
@@ -147,6 +148,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        setNeedsDisplay()
+        updateProfileLabelTextColor()
     }
     
     // Customize view to be able to re-use it for search results.

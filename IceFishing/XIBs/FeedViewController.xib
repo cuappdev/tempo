@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D130a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedViewController" customModule="IceFishing" customModuleProvider="target">
@@ -16,44 +16,58 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark Bryan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgb-gS-5gP" customClass="MarqueeLabel" customModule="IceFishing" customModuleProvider="target">
-                    <rect key="frame" x="86" y="277" width="84" height="22"/>
-                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                    <rect key="frame" x="86" y="275" width="74" height="20"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jPq-zl-fap">
+                    <rect key="frame" x="552" y="20" width="28" height="16"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="11"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reflections · MisterWives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kv-YD-iI3" customClass="MarqueeLabel" customModule="IceFishing" customModuleProvider="target">
+                    <rect key="frame" x="86" y="292" width="136" height="17"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="0.81000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hls-Pe-wsf" customClass="FeedImageView" customModule="IceFishing" customModuleProvider="target">
-                    <rect key="frame" x="20" y="277" width="45" height="45"/>
+                    <rect key="frame" x="20" y="278" width="45" height="45"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="6Im-zT-PUK"/>
                         <constraint firstAttribute="height" constant="45" id="ba0-sL-49r"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jPq-zl-fap">
-                    <rect key="frame" x="550" y="20" width="30" height="17"/>
-                    <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="12"/>
-                    <color key="textColor" red="0.68627450980000004" green="0.73333333329999995" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reflections · MisterWives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kv-YD-iI3" customClass="MarqueeLabel" customModule="IceFishing" customModuleProvider="target">
-                    <rect key="frame" x="86" y="299" width="159" height="20"/>
-                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                    <color key="textColor" red="0.68627450980000004" green="0.73333333329999995" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8 likes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4D-XC-Dqb">
+                    <rect key="frame" x="86" y="309" width="35" height="17"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" red="0.16862745098039217" green="0.28627450980392155" blue="0.35294117647058826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="jPq-zl-fap" firstAttribute="top" secondItem="qmq-a6-HvM" secondAttribute="top" constant="20" symbolic="YES" id="12Q-M8-1bg"/>
-                <constraint firstItem="0kv-YD-iI3" firstAttribute="top" secondItem="tgb-gS-5gP" secondAttribute="bottom" id="63Z-Yd-MAy"/>
                 <constraint firstItem="tgb-gS-5gP" firstAttribute="leading" secondItem="Hls-Pe-wsf" secondAttribute="trailing" constant="21" id="6z1-Yt-ZYB"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tgb-gS-5gP" secondAttribute="trailing" constant="20" symbolic="YES" id="7nU-K2-Y71"/>
+                <constraint firstItem="B4D-XC-Dqb" firstAttribute="leading" secondItem="Hls-Pe-wsf" secondAttribute="trailing" constant="21" id="AIj-ux-KTo"/>
                 <constraint firstItem="Hls-Pe-wsf" firstAttribute="leading" secondItem="qmq-a6-HvM" secondAttribute="leading" constant="20" id="Av9-zh-R8w"/>
-                <constraint firstItem="Hls-Pe-wsf" firstAttribute="top" secondItem="tgb-gS-5gP" secondAttribute="top" id="DwF-2l-efp"/>
+                <constraint firstItem="0kv-YD-iI3" firstAttribute="centerY" secondItem="Hls-Pe-wsf" secondAttribute="centerY" id="CQo-sF-fYL"/>
                 <constraint firstItem="0kv-YD-iI3" firstAttribute="leading" secondItem="tgb-gS-5gP" secondAttribute="leading" id="H5N-Zu-JTS"/>
+                <constraint firstItem="tgb-gS-5gP" firstAttribute="top" secondItem="Hls-Pe-wsf" secondAttribute="top" constant="-3" id="NHw-hO-7jq"/>
+                <constraint firstItem="tgb-gS-5gP" firstAttribute="top" secondItem="Hls-Pe-wsf" secondAttribute="top" constant="-3" id="OYt-kV-9TB"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0kv-YD-iI3" secondAttribute="trailing" constant="20" symbolic="YES" id="dDC-0J-W2r"/>
+                <constraint firstItem="B4D-XC-Dqb" firstAttribute="bottom" secondItem="Hls-Pe-wsf" secondAttribute="bottom" constant="3" id="hGH-r8-t6s"/>
                 <constraint firstAttribute="trailing" secondItem="jPq-zl-fap" secondAttribute="trailing" constant="20" symbolic="YES" id="rHE-fx-qQk"/>
                 <constraint firstAttribute="centerY" secondItem="Hls-Pe-wsf" secondAttribute="centerY" id="tlw-7b-6pa"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="NHw-hO-7jq"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="avatarImageView" destination="Hls-Pe-wsf" id="iFB-Ee-OE4"/>
                 <outlet property="dateLabel" destination="jPq-zl-fap" id="VOL-Cd-9mI"/>
