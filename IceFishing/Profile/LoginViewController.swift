@@ -64,18 +64,13 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         // Profile Info
         nameLabel.text = User.currentUser.name
         userHandleLabel.setTitle("@\(User.currentUser.username)", forState: UIControlState.Normal)
+        profilePictureView.image = User.currentUser.profileImage
         profilePictureView.layer.masksToBounds = false
         profilePictureView.layer.borderWidth = 1.5
         profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
         profilePictureView.frame = CGRectMake(0, 0, 150/2, 150/2)
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true
-        
-        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                profilePictureView.image = UIImage(data: data)
-            }
-        }
 
         // Followers & Following
         followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
@@ -112,7 +107,6 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         collectionView.scrollsToTop = false
     }
     
-    // TODO: Change to reveal sidebar
     func dismiss(sender: AnyObject?) {
         self.revealViewController()?.revealToggle(sender)
     }
@@ -138,10 +132,7 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
                         self.presentViewController(alert, animated: true, completion: nil)
                     } else {
                         User.currentUser.username = newUsername
-
-                        API.sharedAPI.updateCurrentUser(newUsername) { user in
-                        }
-
+                        API.sharedAPI.updateCurrentUser(newUsername) { user in }
                         self.userHandleLabel.setTitle("@\(User.currentUser.username)", forState: UIControlState.Normal)
                     }
                 } else {
@@ -161,12 +152,21 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
             isFollowing = true
             followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
             User.currentUser.followersCount = User.currentUser.followersCount + 1
+            // TODO: Update following
+//            API.sharedAPI.updateFollowings(User.currentUser.id, unfollow: false) { bool in
+//                println(bool)
+//            }
         } else {
             isFollowing = false
             followButtonLabel.setTitle("FOLLOW", forState: .Normal)
             User.currentUser.followersCount = User.currentUser.followersCount - 1
+            // TODO: Update following
+//            API.sharedAPI.updateFollowings(User.currentUser.id, unfollow: true) { bool in
+//                println(bool)
+//            }
         }
         numFollowersLabel.text = "\(User.currentUser.followersCount)"
+        println(User.currentUser.followers)
     }
     
     @IBAction func followersButton(sender: UIButton) {

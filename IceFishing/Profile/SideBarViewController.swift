@@ -77,11 +77,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         nameLabel.text = User.currentUser.name
         usernameLabel.text = "@\(User.currentUser.username)"
-        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                profilePicture.image = UIImage(data: data)
-            }
-        }
+        profilePicture.image = User.currentUser.profileImage
     }
     
     func pushToProfile(sender:UIButton!) {
@@ -89,7 +85,6 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
             let loginVC = LoginViewController(nibName: "LoginViewController", bundle: nil)
             searchNavigationController = UINavigationController(rootViewController: loginVC)
         }
-//        presentViewController(searchNavigationController, animated: false, completion: nil)
         selectionHandler?(searchNavigationController)
         self.categoryTableView.selectRowAtIndexPath(nil, animated: false, scrollPosition: .None)
     }

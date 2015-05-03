@@ -11,7 +11,7 @@ import UIKit
 class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     
     // TODO: Uncomment when test user is made
-    //var followers: [String]! = []
+    //var followers: [User]! = []
     
     // TODO: For testing purposes (delete when test user is made)
     var followers: [String] = ["Derrick", "Eric", "Feifan", "Ilan", "John", "Joe", "Karim", "Lucas", "Manuela", "Mark", "Nicole", "Sam", "Steven", "Tsvi"]
@@ -62,11 +62,7 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
         cell.numFollowLabel.text = "\(self.numFollowers[indexPath.row]) followers"
         
         // TODO: Uncomment when test user is made
-        //        if let url = NSURL(string: "http://graph.facebook.com/\(self.followers[indexPath.row].fbid)/picture?type=large") {
-        //            if let data = NSData(contentsOfURL: url) {
-        //                cell.userImage.image = UIImage(data: data)
-        //            }
-        //        }
+        //        cell.userImage.image = self.followers[indexPath.row].profileImage
         //        cell.userName.text = self.followers[indexPath.row].name
         //        cell.userHandle.text = "@\(self.followers[indexPath.row].username)"
         //        cell.numFollowLabel.text = "\(self.followers[indexPath.row].followersCount) followers"
