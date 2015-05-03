@@ -17,7 +17,7 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     // Post History Calendar
     var collectionView : UICollectionView!
     var calendar : NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-    var startDate : NSDate! = NSDate(dateString:"2014-04-01") // User creation date
+    var startDate : NSDate! = NSDate(dateString: "2014-04-01") // User creation date
     var currentDate : NSDate! = NSDate()
     // Hardcoded dates for testing
     var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-24"), NSDate(dateString:"2015-04-22"), NSDate(dateString:"2015-04-18"), NSDate(dateString:"2015-04-15"), NSDate(dateString:"2015-04-11"), NSDate(dateString:"2015-04-9"), NSDate(dateString:"2015-04-08"), NSDate(dateString:"2015-04-07")]

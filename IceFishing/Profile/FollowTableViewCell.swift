@@ -17,7 +17,7 @@ class FollowTableViewCell: UITableViewCell {
     @IBOutlet weak var separator: UIView!
     
     override func didMoveToSuperview() {
-        //selectionStyle = .None
+        selectionStyle = .None
         self.backgroundColor = UIColor.iceDarkGray()
         separator.backgroundColor = UIColor.iceLightGray()
         
@@ -26,6 +26,15 @@ class FollowTableViewCell: UITableViewCell {
         
         userImage.userInteractionEnabled = true
         userName.userInteractionEnabled = true
+    }
+    
+    // Custom selected cell view
+    override func setSelected(selected: Bool, animated: Bool) {
+        if (selected) {
+            self.contentView.backgroundColor = UIColor.iceLightGray()
+        } else {
+            self.contentView.backgroundColor = UIColor.clearColor()
+        }
     }
 
 }
