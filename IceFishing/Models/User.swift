@@ -64,11 +64,7 @@ class User: NSObject, NSCoding {
         self.createdAt = json["created_at"].stringValue
         self.email = json["email"].stringValue
         self.fbid = json["fbid"].stringValue
-        if let followers = json["followers"].arrayObject! as? [String] {
-            self.followers = followers
-        } else {
-            self.followers = []
-        }
+        followers = json["followers"].arrayObject as? [String] ?? []
         self.followersCount = json["followers_count"].intValue
         self.hipsterScore = json["hipster_score"].intValue
         self.id = json["id"].stringValue
