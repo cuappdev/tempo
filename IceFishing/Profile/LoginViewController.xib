@@ -69,7 +69,7 @@
                         <constraint firstAttribute="height" constant="30" id="bgP-Oe-KMy"/>
                     </constraints>
                     <state key="normal">
-                        <color key="titleColor" red="0.91437752019999996" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="default">
@@ -108,7 +108,7 @@
                         </constraint>
                     </constraints>
                     <state key="normal">
-                        <color key="titleColor" red="0.95828581199999996" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="default">
                         <mask key="constraints">

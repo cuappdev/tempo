@@ -35,13 +35,13 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
         // Add back button to profile
         var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
         backButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
-        backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: "popToRoot", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
     // Return to profile view
-    func dismiss() {
-        dismissViewControllerAnimated(true, completion: nil)
+    func popToRoot() {
+        navigationController?.popToRootViewControllerAnimated(true)
     }
     
     // TableView Methods
