@@ -39,7 +39,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             if let post = post {
                 switch type {
                 case .Feed:
-                    profileNameLabel?.text = post.posterFirstName + " " + post.posterLastName
+                    profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = post.song.title + " · " + post.song.artist
                     break
                 case .Search:
@@ -48,8 +48,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     break
                 }
                 
-                avatarImageView?.image = post.avatar
-
+                if type != .Search {
+                    post.user.loadImage {
+                        avatarImageView?.image = $0
+                    }
+                }
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute

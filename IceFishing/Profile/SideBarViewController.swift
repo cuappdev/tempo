@@ -23,6 +23,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func logOut(sender: UIButton) {
         FBSession.activeSession().closeAndClearTokenInformation()
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.toggleRootVC()
     }
     
     override func viewDidLoad() {
@@ -65,8 +67,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func pushToProfile(sender:UIButton!) {
-        let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
-        searchNavigationController = UINavigationController(rootViewController: loginViewController)
+        let loginVC = LoginViewController(nibName: "LoginViewController", bundle: nil)
+        searchNavigationController = UINavigationController(rootViewController: loginVC)
         presentViewController(searchNavigationController, animated: false, completion: nil)
     }
     

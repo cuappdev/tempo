@@ -11,13 +11,11 @@ import UIKit
 class SignInViewController: UIViewController {
     
     var searchNavigationController: UINavigationController!
-    let api = API.sharedAPI
     
     @IBOutlet weak var loginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     @IBAction func logIn(sender: UIButton) {
@@ -32,28 +30,16 @@ class SignInViewController: UIViewController {
             
             // Request FB user info
             if (session.isOpen) {
-//                var userRequest : FBRequest = FBRequest.requestForMe()
-//                userRequest.startWithCompletionHandler{(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-//
-//                    if (error == nil) {
-//                        let userName = result["name"]
-//                        let userID = result["id"]
-//                        let userEmail = result["email"]
-//                        
-//                        let usernameViewController = UsernameViewController(nibName: "Username", bundle: nil)
-//                        self.searchNavigationController = UINavigationController(rootViewController: usernameViewController)
-//                        self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
-//                        
-//                    } else {
-//                        println("Error")
-//                    }
-//                    
-//                }
-                self.api.getCurrentUser() { user in
-                    println(user)
-                    let usernameViewController = UsernameViewController(nibName: "Username", bundle: nil)
-                    self.searchNavigationController = UINavigationController(rootViewController: usernameViewController)
-                    self.presentViewController(self.searchNavigationController, animated: false, completion: nil)
+                API.sharedAPI.getCurrentUser() { user in
+                    API.sharedAPI.usernameIsValid(User.currentUser.username) { success in
+                        if (success) {
+                            let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
+                            self.presentViewController(usernameVC, animated: false, completion: nil)
+                        } else {
+                             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                             appDelegate.toggleRootVC()
+                        }
+                    }
                 }
                 
             }

@@ -144,16 +144,9 @@ class SearchTrackResultsViewController: UITableViewController, UISearchResultsUp
         
         for var i = 0; i < items.count; i++ {
             let item = items[i] as! NSDictionary
-//            
-//            let artists = item["artists"] as! NSArray
-//            let album = item["album"] as! NSDictionary
-//            let id = item["id"] as! String
-//            let name = item["name"] as! String
-//            let uri = item["uri"] as! String
-//            let popularity = item["popularity"] as! Int
             let track = Song(responseDictionary: item)
             trackResults.append(
-                Post(song: track, posterFirst: "", posterLast: "", date: nil, avatar: nil)
+                Post(song: track, user: User.currentUser, date: nil)
             )
         }
 

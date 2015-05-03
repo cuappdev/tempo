@@ -55,10 +55,14 @@ class TrackSearchController: UISearchController {
         var secondLabel = selectionView.viewWithTag(3) as! UILabel
         var button = selectionView.viewWithTag(4) as! UIButton
 
-        avatarImage.image = UIImage(named: "Sexy")
+        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=normal") {
+            if let data = NSData(contentsOfURL: url) {
+                avatarImage.image = UIImage(data: data)
+            }
+        }
         avatarImage.layer.cornerRadius = CGFloat(kResultSelectionAvatarWidth)/2
         avatarImage.clipsToBounds = true
-        firstLabel.text = "Mark Bryan"
+        firstLabel.text = User.currentUser.name
         var secondLine = track.title
         secondLine += " · " + track.artist
         secondLabel.text = secondLine
