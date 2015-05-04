@@ -45,10 +45,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 case .Feed:
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = post.song.title + " · " + post.song.artist
+                    likesLabel?.text = String(post.likes) + " likes"
                     break
                 case .Search:
                     profileNameLabel?.text = post.song.title
                     descriptionLabel?.text = post.song.artist
+                    likesLabel?.text = ""
                     break
                 }
                 
