@@ -58,6 +58,12 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OvL-PV-iIp">
+                                <rect key="frame" x="280" y="58" width="16" height="16"/>
+                                <state key="normal" image="Add-Icon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="bgO-bG-1rj" firstAttribute="leading" secondItem="Nid-NE-gCm" secondAttribute="trailing" constant="21" id="2LY-CJ-qI7"/>
@@ -67,15 +73,20 @@
                             <constraint firstAttribute="centerY" secondItem="Nid-NE-gCm" secondAttribute="centerY" id="HKw-jz-64n"/>
                             <constraint firstItem="Nid-NE-gCm" firstAttribute="leading" secondItem="QJt-Cq-8SO" secondAttribute="leading" constant="20" id="KdP-ma-5Op"/>
                             <constraint firstItem="uOI-Pn-Mde" firstAttribute="centerY" secondItem="Nid-NE-gCm" secondAttribute="centerY" constant="0.5" id="NnZ-WN-LLM"/>
+                            <constraint firstItem="OvL-PV-iIp" firstAttribute="bottom" secondItem="6mr-Fh-ZfQ" secondAttribute="bottom" id="Nns-Bp-QKo"/>
                             <constraint firstItem="uOI-Pn-Mde" firstAttribute="leading" secondItem="YKr-CE-jlM" secondAttribute="leading" id="Pbo-hS-N69"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YKr-CE-jlM" secondAttribute="trailing" constant="76" id="Qm8-3A-vx8"/>
                             <constraint firstItem="5c9-Vi-T55" firstAttribute="top" secondItem="QJt-Cq-8SO" secondAttribute="top" constant="20" symbolic="YES" id="Xox-pL-MqX"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uOI-Pn-Mde" secondAttribute="trailing" constant="50" id="bgX-rg-DvA"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uOI-Pn-Mde" secondAttribute="trailing" constant="76" id="bgX-rg-DvA"/>
                             <constraint firstItem="YKr-CE-jlM" firstAttribute="leading" secondItem="Nid-NE-gCm" secondAttribute="trailing" constant="21" id="eap-fr-BWT"/>
+                            <constraint firstItem="OvL-PV-iIp" firstAttribute="leading" secondItem="5c9-Vi-T55" secondAttribute="leading" id="fLH-ih-l1Q"/>
+                            <constraint firstItem="OvL-PV-iIp" firstAttribute="top" secondItem="6mr-Fh-ZfQ" secondAttribute="top" id="p6r-EU-nQe"/>
+                            <constraint firstItem="6mr-Fh-ZfQ" firstAttribute="leading" secondItem="OvL-PV-iIp" secondAttribute="trailing" constant="16" id="tau-0E-CaM"/>
                             <constraint firstAttribute="trailing" secondItem="5c9-Vi-T55" secondAttribute="trailing" constant="20" symbolic="YES" id="yrl-AI-Z6g"/>
                             <constraint firstItem="Nid-NE-gCm" firstAttribute="bottom" secondItem="bgO-bG-1rj" secondAttribute="bottom" constant="-3" id="z8L-dh-MBU"/>
                         </constraints>
                         <connections>
+                            <outlet property="addButton" destination="OvL-PV-iIp" id="dd8-Wd-3ed"/>
                             <outlet property="avatarImageView" destination="Nid-NE-gCm" id="tOJ-nl-KG3"/>
                             <outlet property="dateLabel" destination="5c9-Vi-T55" id="OPV-kq-To8"/>
                             <outlet property="descriptionLabel" destination="uOI-Pn-Mde" id="KMS-oB-AtZ"/>
@@ -113,6 +124,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="Add-Icon" width="15" height="15"/>
         <image name="Liked-Icon" width="23" height="23"/>
     </resources>
 </document>
