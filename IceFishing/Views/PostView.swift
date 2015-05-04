@@ -268,7 +268,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             let tapPoint = sender.locationInView(self)
             let hitView = self.hitTest(tapPoint, withEvent: nil)
             if hitView == likedButton {
-                println("Liking")
+                post.like()
             } else if post.player.isPlaying() {
                 if hitView == avatarImageView || hitView == self.profileNameLabel {
                     // GO TO PROFILE VIEW CONTROLLER

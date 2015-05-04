@@ -17,7 +17,8 @@ class Post: NSObject {
     let song: Song
     var date: NSDate?
     var likes = 0
-
+    var postID = ""
+    
     init(song: Song, user: User, date: NSDate?) {
         self.song = song
         self.user = user
@@ -41,6 +42,7 @@ class Post: NSObject {
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         let date = dateFormatter.dateFromString(dateString)
         self.init(song: Song(spotifyURI: songID), user: user, date: date)
+        postID = json["id"].stringValue
     }
     
     func relativeDate() -> String {
@@ -49,5 +51,20 @@ class Post: NSObject {
     
     override var description: String {
         return "\(song.title) posted by \(user.name)"
+    }
+    
+    func like() {
+        println(postID)
+        API.sharedAPI.updateLikes(postID, unlike: false, completion: {
+            (response) in
+            println(response)
+        })
+    }
+    
+    func unlike() {
+        API.sharedAPI.updateLikes(postID, unlike: true, completion: {
+            (response) in
+            println(response)
+        })
     }
 }

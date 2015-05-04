@@ -47,7 +47,7 @@ enum Router: URLStringConvertible {
                 if (userID != nil) {
                     return "/\(userID!)/likes"
                 }
-                return "/lieks"
+                return "/likes"
             case .Followings:
                 return "/followings"
             case .Posts:
@@ -169,11 +169,12 @@ class API {
     }
     
     func updateLikes(postID: String, unlike: Bool, completion: [String: Bool] -> Void) {
+        println(sessionCode)
         post(Router.Likes(nil), params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: { $0 }, completion: completion)
     }
     
     func fetchLikes(userID: String, completion: [Song] -> Void) {
-        get(Router.Likes(userID), params: [:], map: songMapping, completion: completion)
+        get(Router.Likes(userID), params: ["session_code": sessionCode], map: songMapping, completion: completion)
     }
     
     func updateFollowings(userID: String, unfollow: Bool, completion: [String: Bool] -> Void) {
