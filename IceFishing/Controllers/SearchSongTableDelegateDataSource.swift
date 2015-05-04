@@ -123,9 +123,10 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
 //        
-//        if activePlayer != nil && activePlayer != cell.postView.post?.player {
-//            activePlayer.destroy()
-//        }
+        if activePlayer != nil && activePlayer != cell.postView.post?.player {
+            activePlayer.pause(true)
+            activePlayer = nil
+        }
 
         cell.postView.post?.player.togglePlaying()
         
@@ -179,9 +180,10 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     }
     
     func finishSearching() {
-//        if activePlayer != nil {
-//            activePlayer.destroy()
-//        }
+        if activePlayer != nil {
+            activePlayer.pause(true)
+            activePlayer = nil
+        }
         
         if (shouldResume) {
             if let post = parent?.currentlyPlayingPost {
