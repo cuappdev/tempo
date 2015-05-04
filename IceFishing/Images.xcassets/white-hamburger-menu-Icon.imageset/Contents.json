@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "Hamburger Icon@1x.png"
+      "filename" : "burger-2.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "Hamburger Icon@1x-1.png"
+      "filename" : "burger-1.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "Hamburger Icon@1x-1-1.png"
+      "filename" : "burger.png"
     }
   ],
   "info" : {
