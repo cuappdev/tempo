@@ -146,7 +146,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func didMoveToSuperview() {
-        spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
+        super.didMoveToSuperview()
+
+        if superview != nil && dateLabel != nil {
+            spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
+        }
     }
     
     dynamic private func timerFired(timer: NSTimer) {
