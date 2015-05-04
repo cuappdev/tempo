@@ -40,7 +40,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
     var lastContentOffset: CGFloat!  //Deals with pinView detection
     
     func addSong(track: Song) {
-        posts.insert(Post(song: track, user: User.currentUser, date: NSDate()), atIndex: 0)
+        posts.insert(Post(song: track, user: User.currentUser, date: NSDate(), likes: 0), atIndex: 0)
         API.sharedAPI.updatePost(User.currentUser.id, song: track) { song in
             self.tableView.reloadData()
         }

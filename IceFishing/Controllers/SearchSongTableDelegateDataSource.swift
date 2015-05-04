@@ -244,7 +244,7 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
             let item = items[i] as! NSDictionary
             let song = Song(responseDictionary: item)
             postResults.append(
-                Post(song: song, user: User.currentUser, date: nil)
+                Post(song: song, user: User.currentUser, date: nil, likes: 0)
             )
         }
 
