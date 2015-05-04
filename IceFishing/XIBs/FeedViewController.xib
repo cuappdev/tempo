@@ -46,10 +46,29 @@
                     <color key="textColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFO-aF-x4f">
+                    <rect key="frame" x="564" y="307" width="16" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="16" id="DLo-Ge-znX"/>
+                        <constraint firstAttribute="width" constant="16" id="SFd-XA-yct"/>
+                    </constraints>
+                    <state key="normal" image="Liked-Icon">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYY-UA-oN5">
+                    <rect key="frame" x="533" y="304" width="15" height="22"/>
+                    <state key="normal" image="Add-Icon">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.16862745098039217" green="0.28627450980392155" blue="0.35294117647058826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="jPq-zl-fap" firstAttribute="top" secondItem="qmq-a6-HvM" secondAttribute="top" constant="20" symbolic="YES" id="12Q-M8-1bg"/>
+                <constraint firstItem="Hls-Pe-wsf" firstAttribute="bottom" secondItem="vFO-aF-x4f" secondAttribute="bottom" id="310-Tj-2lT"/>
+                <constraint firstItem="FYY-UA-oN5" firstAttribute="centerY" secondItem="vFO-aF-x4f" secondAttribute="centerY" id="6d4-Yp-N9N"/>
+                <constraint firstAttribute="trailing" secondItem="vFO-aF-x4f" secondAttribute="trailing" constant="20" id="6sv-bm-yZg"/>
                 <constraint firstItem="tgb-gS-5gP" firstAttribute="leading" secondItem="Hls-Pe-wsf" secondAttribute="trailing" constant="21" id="6z1-Yt-ZYB"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tgb-gS-5gP" secondAttribute="trailing" constant="20" symbolic="YES" id="7nU-K2-Y71"/>
                 <constraint firstItem="B4D-XC-Dqb" firstAttribute="leading" secondItem="Hls-Pe-wsf" secondAttribute="trailing" constant="21" id="AIj-ux-KTo"/>
@@ -58,7 +77,8 @@
                 <constraint firstItem="0kv-YD-iI3" firstAttribute="leading" secondItem="tgb-gS-5gP" secondAttribute="leading" id="H5N-Zu-JTS"/>
                 <constraint firstItem="tgb-gS-5gP" firstAttribute="top" secondItem="Hls-Pe-wsf" secondAttribute="top" constant="-3" id="NHw-hO-7jq"/>
                 <constraint firstItem="tgb-gS-5gP" firstAttribute="top" secondItem="Hls-Pe-wsf" secondAttribute="top" constant="-3" id="OYt-kV-9TB"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0kv-YD-iI3" secondAttribute="trailing" constant="20" symbolic="YES" id="dDC-0J-W2r"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0kv-YD-iI3" secondAttribute="trailing" constant="76" id="dDC-0J-W2r"/>
+                <constraint firstItem="vFO-aF-x4f" firstAttribute="leading" secondItem="FYY-UA-oN5" secondAttribute="trailing" constant="16" id="eqF-Ps-OVt"/>
                 <constraint firstItem="B4D-XC-Dqb" firstAttribute="bottom" secondItem="Hls-Pe-wsf" secondAttribute="bottom" constant="3" id="hGH-r8-t6s"/>
                 <constraint firstAttribute="trailing" secondItem="jPq-zl-fap" secondAttribute="trailing" constant="20" symbolic="YES" id="rHE-fx-qQk"/>
                 <constraint firstAttribute="centerY" secondItem="Hls-Pe-wsf" secondAttribute="centerY" id="tlw-7b-6pa"/>
@@ -83,4 +103,8 @@
             <point key="canvasLocation" x="1048" y="1062"/>
         </tableView>
     </objects>
+    <resources>
+        <image name="Add-Icon" width="15" height="15"/>
+        <image name="Liked-Icon" width="23" height="23"/>
+    </resources>
 </document>

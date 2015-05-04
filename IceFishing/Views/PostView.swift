@@ -24,6 +24,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var spacingConstraint: NSLayoutConstraint?
     @IBOutlet var likesLabel: UILabel?
     @IBOutlet var likedButton: UIButton?
+    @IBOutlet var addButton: UIButton?
     var fillColor = UIColor.iceDarkGray()
  
     var type: ViewType = .Feed
@@ -44,10 +45,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 case .Feed:
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = post.song.title + " · " + post.song.artist
+                    likesLabel?.text = String(post.likes) + " likes"
                     break
                 case .Search:
                     profileNameLabel?.text = post.song.title
                     descriptionLabel?.text = post.song.artist
+                    likesLabel?.text = ""
                     break
                 }
                 
@@ -269,6 +272,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             let hitView = self.hitTest(tapPoint, withEvent: nil)
             if hitView == likedButton {
                 post.like()
+                println("Liking")
+            } else if hitView == addButton {
+                println("Adding")
             } else if post.player.isPlaying() {
                 if hitView == avatarImageView || hitView == self.profileNameLabel {
                     // GO TO PROFILE VIEW CONTROLLER

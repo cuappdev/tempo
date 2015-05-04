@@ -29,10 +29,7 @@ class UsernameViewController: UIViewController {
             if (success) {
                 // Username available
                 User.currentUser.username = username
-                
-                API.sharedAPI.updateCurrentUser(username) { user in
-                }
-
+                API.sharedAPI.updateCurrentUser(username) { user in }
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 appDelegate.toggleRootVC()
             } else {

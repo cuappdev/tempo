@@ -25,6 +25,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var searchNavigationController: UINavigationController!
     var elements: [SideBarElement] = []
+    var button: UIButton!
 
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -60,11 +61,11 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         profilePicture.clipsToBounds = true
         
         // Add button to profile view
-        let button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         button.frame = self.profileView.bounds
         button.addTarget(self, action: "pushToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(button)
-        
+
         categoryTableView.reloadData()
         // mark first item selected cuz it is
         if (elements.count > 0) {
@@ -77,25 +78,17 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         nameLabel.text = User.currentUser.name
         usernameLabel.text = "@\(User.currentUser.username)"
-        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                profilePicture.image = UIImage(data: data)
-            }
-        }
+        profilePicture.image = User.currentUser.profileImage
     }
     
     func pushToProfile(sender:UIButton!) {
+        profileView.backgroundColor = UIColor.iceLightGray()
         if (searchNavigationController == nil) {
             let loginVC = LoginViewController(nibName: "LoginViewController", bundle: nil)
             searchNavigationController = UINavigationController(rootViewController: loginVC)
         }
-//        presentViewController(searchNavigationController, animated: false, completion: nil)
         selectionHandler?(searchNavigationController)
         self.categoryTableView.selectRowAtIndexPath(nil, animated: false, scrollPosition: .None)
-    }
-    
-    func dismiss(sender:UIButton!) {
-        dismissViewControllerAnimated(true, completion: nil)
     }
     
     // TableView Methods
@@ -117,6 +110,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let element = elements[indexPath.row]
         selectionHandler?(element.viewController)
+        profileView.backgroundColor = UIColor.clearColor()
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

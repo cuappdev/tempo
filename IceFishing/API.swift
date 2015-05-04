@@ -126,14 +126,17 @@ class API {
         }
     }
     
-    func updateCurrentUser(changedUsername: String, completion: User -> Void) {
-        let map: [String: AnyObject] -> User? = {
-            let user = User(json: JSON($0))
-            User.currentUser = user
-            return user
+    func updateCurrentUser(changedUsername: String, didSucceed: Bool -> Void) {
+        let map: [String: Int] -> Bool? = {
+            if let success = $0["user"] {
+                User.currentUser.username = changedUsername
+                println("User: \(User.currentUser)")
+                return true
+            }
+            return false
         }
         let changes = ["username": changedUsername]
-        patch(.Users(User.currentUser.id), params: ["user": changes, "session_code": sessionCode], map: map, completion: completion)
+        patch(.Users(User.currentUser.id), params: ["user": changes, "session_code": sessionCode], map: map, completion: didSucceed)
     }
     
     func searchUsers(username: String, completion: [User] -> Void) {
@@ -211,6 +214,7 @@ class API {
             .responseJSON { (request, response, json, error) -> Void in
                 if let json = json as? O {
                     if let obj = map(json) {
+                        println(json)
                         completion(obj)
                     }
                 } else {
