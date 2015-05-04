@@ -90,14 +90,13 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     private func setUpTimer() {
         if (self.updateTimer == nil && self.post?.player.isPlaying() ?? false) {
             // 60 fps
-            
             self.updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
                 target: self, selector: Selector("timerFired:"),
                 userInfo: nil,
                 repeats: true)
 
             NSRunLoop.currentRunLoop().addTimer(self.updateTimer!, forMode: NSRunLoopCommonModes)
-        } else {
+        } else if (self.post?.player.isPlaying() ?? false) {
             self.updateTimer?.invalidate()
             self.updateTimer = nil
         }
