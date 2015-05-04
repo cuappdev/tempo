@@ -163,7 +163,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         
         
         //—————————————from MAIN VC——————————————————
-        navigationItem.title = "Songs"
+        navigationItem.title = "Feed"
         initializeSearch()
         
         navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()

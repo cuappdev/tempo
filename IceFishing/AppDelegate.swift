@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var sidebarVC: SideBarViewController?
     var feedNavVC: UINavigationController?
     var revealVC: SWRevealViewController?
-    var likedViewController: LikedTableViewController?
+    var likedNavVC: UINavigationController?
     
     //    var categories: [String: UIViewController?] = ["Feed": nil, "People": nil, "Liked": nil, "Spotify": nil]
     //    var symbols: [String] = ["Gray-Feed-Icon", "People-Icon", "Liked-Icon", "Music-Icon"]
@@ -59,8 +59,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 feedNavVC = UINavigationController(rootViewController: feedVC)
             }
             
-            if (likedViewController == nil) {
-                likedViewController = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
+            if (likedNavVC == nil) {
+                let likedVC = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
+                likedNavVC = UINavigationController(rootViewController: likedVC)
             }
             
             if (sidebarVC == nil) {
@@ -68,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 sidebarVC?.elements = [
                     SideBarElement(title: "Feed", viewController: feedNavVC, image: UIImage(named: "Feed-Icon")),
                     SideBarElement(title: "People", viewController: feedNavVC, image: UIImage(named: "People-Icon")),
-                    SideBarElement(title: "Liked", viewController: likedViewController, image: UIImage(named: "Liked-Icon")),
+                    SideBarElement(title: "Liked", viewController: likedNavVC, image: UIImage(named: "Liked-Icon")),
                     SideBarElement(title: "Spotify", viewController: feedNavVC, image: UIImage(named: "Spotify-Icon"))
                 ]
                 sidebarVC?.selectionHandler = {
