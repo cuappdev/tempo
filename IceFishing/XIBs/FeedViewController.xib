@@ -92,6 +92,8 @@
                 <outlet property="avatarImageView" destination="Hls-Pe-wsf" id="iFB-Ee-OE4"/>
                 <outlet property="dateLabel" destination="jPq-zl-fap" id="VOL-Cd-9mI"/>
                 <outlet property="descriptionLabel" destination="0kv-YD-iI3" id="asD-kF-CfN"/>
+                <outlet property="likedButton" destination="vFO-aF-x4f" id="VTo-cB-WvQ"/>
+                <outlet property="likesLabel" destination="B4D-XC-Dqb" id="t6Q-Q0-Y1R"/>
                 <outlet property="profileNameLabel" destination="tgb-gS-5gP" id="yVr-Hv-PQo"/>
             </connections>
             <point key="canvasLocation" x="345" y="1200"/>
