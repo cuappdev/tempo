@@ -69,7 +69,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     // dateFormatter.doesRelativeDateFormatting = true
                     dateFormatter.dateStyle = .NoStyle
                     dateFormatter.timeStyle = .ShortStyle
-                    dateLabel?.text = dateFormatter.stringFromDate(date)
+                    //dateLabel?.text = dateFormatter.stringFromDate(date)
+                    dateLabel?.text = post.relativeDate()
                 } else {
                     dateLabel?.text = ""
                 }

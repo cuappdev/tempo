@@ -43,10 +43,29 @@ class Post: NSObject {
         let date = dateFormatter.dateFromString(dateString)
         self.init(song: Song(spotifyURI: songID), user: user, date: date)
         postID = json["id"].stringValue
+        relativeDate()
     }
     
     func relativeDate() -> String {
-        return ""
+        var now = NSDate()
+        var seconds = now.timeIntervalSinceDate(self.date!)
+        println("Time interval: \(seconds) seconds")
+        if seconds < 60 {
+            return "just now"
+        }
+        var minutes: Int = Int(seconds/60)
+        if minutes < 60 {
+            return "\(minutes) min"
+        }
+        var hours: Int = minutes/60
+        if hours < 24 {
+            return "\(hours) hr"
+        }
+        var days: Int = hours/24
+        if days < 30 {
+            return "\(days) days"
+        }
+        return "..."
     }
     
     override var description: String {
