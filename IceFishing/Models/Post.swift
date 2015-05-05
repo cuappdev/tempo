@@ -16,14 +16,13 @@ class Post: NSObject {
     var player: Player!
     let song: Song
     var date: NSDate?
-    var likes: Int
+    var likes = 0
     var postID = ""
     
-    init(song: Song, user: User, date: NSDate?, likes: Int) {
+    init(song: Song, user: User, date: NSDate?) {
         self.song = song
         self.user = user
         self.date = date
-        self.likes = likes
         
         if let previewURL = song.previewURL {
             player = Player(fileURL: previewURL)
@@ -38,12 +37,11 @@ class Post: NSObject {
         let songID = json["song"]["spotify_url"].stringValue
         let user = User(json: json["user"])
         let dateString = json["created_at"].stringValue
-        let likes = json["likes_count"].intValue
         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         let date = dateFormatter.dateFromString(dateString)
-        self.init(song: Song(spotifyURI: songID), user: user, date: date, likes: likes)
+        self.init(song: Song(spotifyURI: songID), user: user, date: date)
         postID = json["id"].stringValue
         relativeDate()
     }
