@@ -80,7 +80,7 @@ class API {
     let songMapping: [String: [AnyObject]] -> [Song]? = {
         var songs: [Song] = []
         
-        println($0)
+        println("song: \($0)")
         
         return songs
     }
@@ -113,7 +113,6 @@ class API {
         // Other times you can simply reference the saved user object, instead of pinging facebook
         let userRequest : FBRequest = FBRequest.requestForMe()
         userRequest.startWithCompletionHandler { [unowned self] (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-            println(result)
             if (error == nil) {
                 let user = [
                     "email": result["email"] as! String,
@@ -172,8 +171,10 @@ class API {
     }
     
     func updateLikes(postID: String, unlike: Bool, completion: [String: Bool] -> Void) {
-        println(sessionCode)
-        post(Router.Likes(nil), params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: { $0 }, completion: completion)
+        let map: [String: Bool] -> [String: Bool]? = {
+            $0
+        }
+        post(Router.Likes(nil), params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: map, completion: completion)
     }
     
     func fetchLikes(userID: String, completion: [Song] -> Void) {
@@ -214,7 +215,6 @@ class API {
             .responseJSON { (request, response, json, error) -> Void in
                 if let json = json as? O {
                     if let obj = map(json) {
-                        println(json)
                         completion(obj)
                     }
                 } else {
