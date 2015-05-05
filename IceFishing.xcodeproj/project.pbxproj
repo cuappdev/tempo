@@ -85,6 +85,7 @@
 		FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7B1ADB072A007C823C /* Song.swift */; };
 		FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7D1ADB0818007C823C /* PostView.swift */; };
 		FA5B131D1AE864DE003C490C /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5B131C1AE864DE003C490C /* MarqueeLabel.swift */; };
+		FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C061AF9105E00C14463 /* ADRefreshControl.swift */; };
 		FAB564731AF6A8C9001059DF /* LikedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */; };
 		FAB564741AF6A8C9001059DF /* LikedTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB564721AF6A8C9001059DF /* LikedTableViewController.xib */; };
 		FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */; };
@@ -287,6 +288,7 @@
 		FA1E1A7B1ADB072A007C823C /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Models/Song.swift; sourceTree = "<group>"; };
 		FA1E1A7D1ADB0818007C823C /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		FA5B131C1AE864DE003C490C /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
+		FA674C061AF9105E00C14463 /* ADRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRefreshControl.swift; sourceTree = "<group>"; };
 		FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikedTableViewController.swift; sourceTree = "<group>"; };
 		FAB564721AF6A8C9001059DF /* LikedTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LikedTableViewController.xib; path = ../Controllers/LikedTableViewController.xib; sourceTree = "<group>"; };
 		FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarTableViewCell.xib; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 		1D65392E1AD0E23800E82627 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FA674C061AF9105E00C14463 /* ADRefreshControl.swift */,
 				FA5B131C1AE864DE003C490C /* MarqueeLabel.swift */,
 				1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */,
 				FA1E1A7D1ADB0818007C823C /* PostView.swift */,
@@ -816,6 +819,7 @@
 				95711F191AF4774D002167EB /* _FBTweakCategoryViewController.m in Sources */,
 				6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */,
 				95711F211AF4774D002167EB /* FBTweakShakeWindow.m in Sources */,
+				FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */,
 				D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */,
 				6DA5FE4D1AED72F800E795DD /* ColorExtension.swift in Sources */,
 				D17395781ADB081C00A53AEE /* FollowingViewController.swift in Sources */,
