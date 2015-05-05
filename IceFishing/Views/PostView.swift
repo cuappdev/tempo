@@ -96,7 +96,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 repeats: true)
 
             NSRunLoop.currentRunLoop().addTimer(self.updateTimer!, forMode: NSRunLoopCommonModes)
-        } else if (self.post?.player.isPlaying() ?? false) {
+        } else if (!(self.post?.player.isPlaying() ?? false)) {
             self.updateTimer?.invalidate()
             self.updateTimer = nil
         }
@@ -168,8 +168,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     func updateProfileLabelTextColor() {
-        if let avatarImageView = self.avatarImageView {
-            let layer = avatarImageView.layer
+        let avatarLayer = avatarImageView?.layer
+        let current: AnyObject? = layer.presentationLayer()?.valueForKeyPath("transform.rotation")
+        if let layer = avatarLayer {
             layer.transform = CATransform3DIdentity
             layer.removeAllAnimations()
         }
@@ -180,10 +181,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             let label = self.profileNameLabel!
             if post.player.isPlaying() {
                 color = UIColor.iceDarkRed()
-                if let avatarImageView = self.avatarImageView {
-                    let layer = avatarImageView.layer
-                    let rotation = CATransform3DMakeRotation(CGFloat(2.0 * M_PI), 0, 0, 1.0)
-                    layer.transform = rotation
+                if let layer = avatarLayer {
                     let animation = CABasicAnimation(keyPath: "transform.rotation")
                     animation.fromValue = 0
                     animation.duration = 3 * M_PI
@@ -201,6 +199,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 // Labels won't scroll
                 profileNameLabel?.holdScrolling = true
                 descriptionLabel?.holdScrolling = true
+                if let layer = avatarLayer {
+                    println("\(current)")
+                    
+                }
+
             }
             
             if !label.textColor.isEqual(color) {
