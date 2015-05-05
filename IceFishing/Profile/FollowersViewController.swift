@@ -57,7 +57,6 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
         
         // TODO: For testing purposes (delete when test user is made)
         cell.userImage.setImage(UIImage(named: "Sexy"), forState: .Normal)
-        cell.userImage.addTarget(self, action: "goToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.userName.text = self.followers[indexPath.row]
         cell.userHandle.text = "@\(self.followerHandles[indexPath.row])"
         cell.numFollowLabel.text = "\(self.numFollowers[indexPath.row]) followers"
@@ -72,17 +71,6 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
         return cell
     }
     
-    func goToProfile(sender: UIButton) {
-        //let userID = String(sender.tag)
-        let userID = User.currentUser.fbid
-        API.sharedAPI.fetchUser(userID) { user in
-            let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
-            profileVC.title = "Profile"
-            profileVC.otherUser = user
-            self.navigationController?.pushViewController(profileVC, animated: true)
-        }
-    }
-    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(80)
     }
@@ -91,6 +79,12 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
         var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
         
-        // TODO: Push to user's profile view
+        let userID = User.currentUser.fbid
+        API.sharedAPI.fetchUser(userID) { user in
+            let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+            profileVC.title = "Profile"
+            profileVC.otherUser = user
+            self.navigationController?.pushViewController(profileVC, animated: true)
+        }
     }
 }
