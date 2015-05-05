@@ -44,13 +44,21 @@ class User: NSObject, NSCoding {
             completion(image)
         } else {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
-                if let url = NSURL(string: "http://graph.facebook.com/\(self.fbid)/picture?type=large"),
-                    data = NSData(contentsOfURL: url),
-                    image = UIImage(data: data) {
-                        self.profileImage = image
-                        dispatch_async(dispatch_get_main_queue()) {
-                            completion(image)
+                [weak self] in
+                if let fbid = self?.fbid {
+                    if let url = NSURL(string: "http://graph.facebook.com/\(fbid)/picture?type=large") {
+                        let request = NSURLRequest(URL: url, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+                        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
+                        
+                        if let data = data {
+                            self?.profileImage = UIImage(data: data)
+                            if let image = self?.profileImage {
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    completion(image)
+                                })
+                            }
                         }
+                    }
                 }
             }
         }
