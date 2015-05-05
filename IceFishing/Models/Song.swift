@@ -54,28 +54,7 @@ class Song: NSObject {
     }
     
     private func initializeFromResponseDictionary(response: NSDictionary) {
-        title = response["name"] as? String ?? ""
-        previewURL = NSURL(string: response["preview_url"] as? String ?? "");
-        let artists = response["artists"] as? NSArray ?? NSArray()
-        if (artists.count == 0) {
-            artist = "Unknown Artist"
-        } else {
-            artist = artists[0]["name"] as? String ?? "Unknown Artist"
-        }
-        
-        let albums = response["album"] as? NSDictionary ?? NSDictionary()
-        album = albums["name"] as? String ?? "Unknown Album"
-        
-        let images = albums["images"] as? NSArray ?? NSArray()
-        if images.count > 0 {
-            var firstImage = images.lastObject as? NSDictionary ?? NSDictionary()
-            smallArtworkURL = NSURL(string: firstImage["url"] as? String ?? "")
-            
-            firstImage = images[0] as? NSDictionary ?? NSDictionary()
-            largeArtworkURL = NSURL(string: firstImage["url"] as? String ?? "")
-        }
-        spotifyID = response["id"] as? String ?? ""
-        
+        initializeFromResponse(JSON(response))
     }
     
     private func initializeFromResponse(json: JSON) {
