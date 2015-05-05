@@ -239,10 +239,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func drawRect(rect: CGRect) {
-        var progress = 0.0
-        if let post = post {
-            progress = post.player.progress
-        }
+        var progress = post?.player.progress ?? 0.0
+        
         super.drawRect(rect)
         fillColor.setFill()
         CGContextFillRect(UIGraphicsGetCurrentContext(),
