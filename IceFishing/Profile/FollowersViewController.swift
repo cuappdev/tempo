@@ -76,7 +76,6 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
         //let userID = String(sender.tag)
         let userID = User.currentUser.fbid
         API.sharedAPI.fetchUser(userID) { user in
-            println(user)
             let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
             profileVC.title = "Profile"
             profileVC.otherUser = user

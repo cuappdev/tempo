@@ -122,7 +122,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         // Add return to profile button
         var profileButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
-        profileButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
+        profileButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
         profileButton.addTarget(self, action: "popToRoot", forControlEvents: .TouchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
     }
