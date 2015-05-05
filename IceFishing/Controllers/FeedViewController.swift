@@ -271,7 +271,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
                     if (lastCell == currentlyPlayingIndexPath && cellSelected.frame.maxY - tableView.contentOffset.y < parentViewController!.view.frame.height) {
                         if (tableView.contentOffset.y > lastContentOffset) {
                             bottomPinViewContainer.hidden = true
-                            println(tableView.frame.height)
                         }
                     }
                 }
