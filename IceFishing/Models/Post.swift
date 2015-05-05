@@ -38,20 +38,21 @@ class Post: NSObject {
         let songID = json["song"]["spotify_url"].stringValue
         let user = User(json: json["user"])
         let dateString = json["created_at"].stringValue
-        let likes = json["likes_count"].intValue
+        let likes = json["like_count"].intValue
+        
         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         let date = dateFormatter.dateFromString(dateString)
+                
         self.init(song: Song(spotifyURI: songID), user: user, date: date, likes: likes)
+        
         postID = json["id"].stringValue
-        relativeDate()
     }
     
     func relativeDate() -> String {
         var now = NSDate()
         var seconds = now.timeIntervalSinceDate(self.date!)
-        println("Time interval: \(seconds) seconds")
         if seconds < 60 {
             return "just now"
         }
@@ -75,17 +76,24 @@ class Post: NSObject {
     }
     
     func like() {
-        println(postID)
         API.sharedAPI.updateLikes(postID, unlike: false, completion: {
             (response) in
-            println(response)
+            if let success = response["success"] {
+                println("successfully liked")
+            } else {
+                println("failed to like post")
+            }
         })
     }
     
     func unlike() {
         API.sharedAPI.updateLikes(postID, unlike: true, completion: {
             (response) in
-            println(response)
+            if let success = response["success"] {
+                
+            } else {
+                println("failed to like post")
+            }
         })
     }
 }
