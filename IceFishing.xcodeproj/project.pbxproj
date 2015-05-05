@@ -55,6 +55,9 @@
 		95711F2E1AF47776002167EB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95711F2D1AF47776002167EB /* Constants.swift */; };
 		95711F301AF4778C002167EB /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95711F2F1AF4778C002167EB /* ADScreenCapture.swift */; };
 		95711F321AF477BD002167EB /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95711F311AF477BD002167EB /* Tools.swift */; };
+		BA24C5751AF866220066C2ED /* SearchSongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C5741AF866220066C2ED /* SearchSongTableViewCell.swift */; };
+		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
+		BA24C57F1AF8687A0066C2ED /* SearchSongTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA24C57E1AF8687A0066C2ED /* SearchSongTableViewCell.xib */; };
 		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
 		BA7B625D1AF5F33D000E1050 /* SearchSongTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7B625C1AF5F33D000E1050 /* SearchSongTableView.swift */; };
 		BADB86941AE97F2F00178CCC /* (null) in Resources */ = {isa = PBXBuildFile; };
@@ -252,6 +255,9 @@
 		95711F2D1AF47776002167EB /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		95711F2F1AF4778C002167EB /* ADScreenCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADScreenCapture.swift; sourceTree = "<group>"; };
 		95711F311AF477BD002167EB /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		BA24C5741AF866220066C2ED /* SearchSongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSongTableViewCell.swift; sourceTree = "<group>"; };
+		BA24C57C1AF866630066C2ED /* SearchPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPostView.swift; sourceTree = "<group>"; };
+		BA24C57E1AF8687A0066C2ED /* SearchSongTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchSongTableViewCell.xib; sourceTree = "<group>"; };
 		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -311,6 +317,7 @@
 		1D046D8A1AB6951C00D0354B /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				BA24C57E1AF8687A0066C2ED /* SearchSongTableViewCell.xib */,
 				1DCB96131AED5EA7007F6A4B /* APIViewController.xib */,
 				7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */,
 				1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */,
@@ -362,9 +369,11 @@
 		1D65392E1AD0E23800E82627 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA24C5741AF866220066C2ED /* SearchSongTableViewCell.swift */,
 				FA5B131C1AE864DE003C490C /* MarqueeLabel.swift */,
 				1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */,
 				FA1E1A7D1ADB0818007C823C /* PostView.swift */,
+				BA24C57C1AF866630066C2ED /* SearchPostView.swift */,
 				FA171CBF1AF1D758007B40AF /* FeedImageView.swift */,
 			);
 			path = Views;
@@ -734,6 +743,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA24C57F1AF8687A0066C2ED /* SearchSongTableViewCell.xib in Resources */,
 				D17395751ADB080900A53AEE /* FollowersViewController.xib in Resources */,
 				FAB564741AF6A8C9001059DF /* LikedTableViewController.xib in Resources */,
 				6DEE0FDE1AC34884005552F9 /* LoginViewController.xib in Resources */,
@@ -773,6 +783,7 @@
 				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,
 				95711F1D1AF4774D002167EB /* FBTweak.m in Sources */,
+				BA24C5751AF866220066C2ED /* SearchSongTableViewCell.swift in Sources */,
 				6DEE0FDD1AC34884005552F9 /* LoginViewController.swift in Sources */,
 				FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */,
 				95711F231AF4774D002167EB /* FBTweakViewController.m in Sources */,
@@ -813,6 +824,7 @@
 				95711F181AF4774D002167EB /* _FBTweakBindObserver.m in Sources */,
 				95711F321AF477BD002167EB /* Tools.swift in Sources */,
 				95711F201AF4774D002167EB /* FBTweakInline.m in Sources */,
+				BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */,
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 				BA7B625D1AF5F33D000E1050 /* SearchSongTableView.swift in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,

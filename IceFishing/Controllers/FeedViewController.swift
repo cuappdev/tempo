@@ -354,7 +354,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
     }
     
     func rotatePlusButton(active: Bool) {
-        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 50, options: nil, animations: {
+        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 50, options: nil, animations: {
             if active {
                 var transform = CGAffineTransformMakeRotation(CGFloat(M_PI_4))
                 self.plusButton.transform = transform
