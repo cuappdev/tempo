@@ -63,6 +63,8 @@
 		D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9C51AE889D600C66385 /* SideBarViewController.swift */; };
 		D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D102A9C61AE889D600C66385 /* SideBarViewController.xib */; };
 		D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */; };
+		D11740001AF8574400302FFD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1173FFF1AF8574400302FFD /* ProfileViewController.swift */; };
+		D11740081AF8574900302FFD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D11740071AF8574900302FFD /* ProfileViewController.xib */; };
 		D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */; };
 		D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */; };
 		D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4971AF031DB009AB073 /* NSDateExtension.swift */; };
@@ -263,6 +265,8 @@
 		D102A9C51AE889D600C66385 /* SideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
 		D102A9C61AE889D600C66385 /* SideBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarViewController.xib; sourceTree = "<group>"; };
 		D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarTableViewCell.swift; sourceTree = "<group>"; };
+		D1173FFF1AF8574400302FFD /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D11740071AF8574900302FFD /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarCollectionReusableView.swift; sourceTree = "<group>"; };
 		D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarDayCollectionViewCell.swift; sourceTree = "<group>"; };
 		D148F4971AF031DB009AB073 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
@@ -485,6 +489,8 @@
 				D17395891ADF360C00A53AEE /* SignInViewController.xib */,
 				6DEE0FDB1AC34884005552F9 /* LoginViewController.swift */,
 				6DEE0FDC1AC34884005552F9 /* LoginViewController.xib */,
+				D1173FFF1AF8574400302FFD /* ProfileViewController.swift */,
+				D11740071AF8574900302FFD /* ProfileViewController.xib */,
 				D17395721ADB080900A53AEE /* FollowersViewController.swift */,
 				D17395731ADB080900A53AEE /* FollowersViewController.xib */,
 				D17395761ADB081C00A53AEE /* FollowingViewController.swift */,
@@ -755,6 +761,7 @@
 				D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */,
 				7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */,
 				FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */,
+				D11740081AF8574900302FFD /* ProfileViewController.xib in Resources */,
 				1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -805,6 +812,7 @@
 				1D1DD7191AE4932F0066AB39 /* CEMovieMaker.m in Sources */,
 				D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */,
 				FA171CC01AF1D758007B40AF /* FeedImageView.swift in Sources */,
+				D11740001AF8574400302FFD /* ProfileViewController.swift in Sources */,
 				95711F191AF4774D002167EB /* _FBTweakCategoryViewController.m in Sources */,
 				6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */,
 				95711F211AF4774D002167EB /* FBTweakShakeWindow.m in Sources */,

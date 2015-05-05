@@ -33,6 +33,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var categoryTableView: UITableView!
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var divider: UIView!
+    @IBOutlet weak var sideView: UIView!
     
     @IBAction func logOut(sender: UIButton) {
         FBSession.activeSession().closeAndClearTokenInformation()
@@ -52,6 +53,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileView.backgroundColor = UIColor.iceDarkGray()
         self.view.backgroundColor = UIColor.iceDarkGray()
         divider.backgroundColor = UIColor.iceLightGray()
+        sideView.hidden = true
+        sideView.backgroundColor = UIColor.iceDarkRed()
         
         profilePicture.layer.masksToBounds = false
         profilePicture.layer.borderWidth = 1.5
@@ -78,11 +81,17 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         nameLabel.text = User.currentUser.name
         usernameLabel.text = "@\(User.currentUser.username)"
-        profilePicture.image = User.currentUser.profileImage
+        //profilePicture.image = User.currentUser.profileImage
+        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                self.profilePicture.image = UIImage(data: data)
+            }
+        }
     }
     
     func pushToProfile(sender:UIButton!) {
         profileView.backgroundColor = UIColor.iceLightGray()
+        sideView.hidden = false
         if (searchNavigationController == nil) {
             let loginVC = LoginViewController(nibName: "LoginViewController", bundle: nil)
             searchNavigationController = UINavigationController(rootViewController: loginVC)
@@ -115,6 +124,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
             var vc = PeopleSearchViewController()
             self.presentViewController(vc, animated: true, completion: nil)
         }
+        sideView.hidden = true
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

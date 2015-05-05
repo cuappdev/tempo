@@ -282,7 +282,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             } else if post.player.isPlaying() {
                 if hitView == avatarImageView || hitView == self.profileNameLabel {
                     // GO TO PROFILE VIEW CONTROLLER
-                    println("GO TO PROFILE")
+                    println(post.user.fbid) 
                 }
             }
         }

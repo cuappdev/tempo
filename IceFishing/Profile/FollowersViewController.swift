@@ -37,13 +37,13 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
         // Add back button to profile
         var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height))
         backButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
-        backButton.addTarget(self, action: "popToRoot", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
-    // Return to profile view
-    func popToRoot() {
-        navigationController?.popToRootViewControllerAnimated(true)
+    // Return to previous view
+    func popToPrevious() {
+        navigationController?.popViewControllerAnimated(true)
     }
     
     // TableView Methods
@@ -56,18 +56,32 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
         
         // TODO: For testing purposes (delete when test user is made)
-        cell.userImage.image = UIImage(named: "Sexy")
+        cell.userImage.setImage(UIImage(named: "Sexy"), forState: .Normal)
+        cell.userImage.addTarget(self, action: "goToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.userName.text = self.followers[indexPath.row]
         cell.userHandle.text = "@\(self.followerHandles[indexPath.row])"
         cell.numFollowLabel.text = "\(self.numFollowers[indexPath.row]) followers"
         
         // TODO: Uncomment when test user is made
-        //        cell.userImage.image = self.followers[indexPath.row].profileImage
+        //        cell.userImage.setImage(self.followers[indexPath.row].profileImage, forState: .Normal)
+        //        cell.userImage.tag = self.followers[indexPath.row].fbid
         //        cell.userName.text = self.followers[indexPath.row].name
         //        cell.userHandle.text = "@\(self.followers[indexPath.row].username)"
         //        cell.numFollowLabel.text = "\(self.followers[indexPath.row].followersCount) followers"
         
         return cell
+    }
+    
+    func goToProfile(sender: UIButton) {
+        //let userID = String(sender.tag)
+        let userID = User.currentUser.fbid
+        API.sharedAPI.fetchUser(userID) { user in
+            println(user)
+            let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+            profileVC.title = "Profile"
+            profileVC.otherUser = user
+            self.navigationController?.pushViewController(profileVC, animated: true)
+        }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
