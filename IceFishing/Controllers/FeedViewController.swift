@@ -12,6 +12,8 @@ import MediaPlayer
 class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchBarDelegate {
     
     var posts: [Post] = []
+    var customRefresh:ADRefreshControl!
+    
     var currentlyPlayingIndexPath: NSIndexPath? {
         didSet {
             if (currentlyPlayingIndexPath?.isEqual(oldValue) ?? false) { // Same index path tapped
@@ -188,8 +190,9 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         //—————————————from MAIN VC——————————————————
         
         refreshControl = UIRefreshControl()
+        customRefresh = ADRefreshControl(refreshControl: refreshControl!, tableView: self.tableView)
         refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
-        refreshControl?.attributedTitle = NSAttributedString(string: "Last Updated on \(NSDate())", attributes: [ NSForegroundColorAttributeName: UIColor.whiteColor() ])
+        //refreshControl?.attributedTitle = NSAttributedString(string: "Last Updated on \(NSDate())", attributes: [ NSForegroundColorAttributeName: UIColor.whiteColor() ])
         
         tableView.separatorStyle = .None
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
@@ -231,7 +234,13 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
             [weak self] in
             self?.posts = $0
             self?.tableView.reloadData()
-            self?.refreshControl?.endRefreshing()
+            
+            var popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)));
+            dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
+                // When done requesting/reloading/processing invoke endRefreshing, to close the control
+                self!.refreshControl!.endRefreshing()
+            }
+
         }
     }
     
@@ -269,6 +278,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
             }
         }
         lastContentOffset = tableView.contentOffset.y
+        customRefresh.scrollViewDidScroll(scrollView)
     }
     
     func cellPin() {
