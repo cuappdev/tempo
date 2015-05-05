@@ -27,13 +27,16 @@ class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UI
         
         // Reload the table
         self.tableView.reloadData()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         if let navBar = self.navigationController?.navigationBar {
-        
+            
             searchBar = UITextField(frame: CGRect(x: 0, y: 0, width: navBar.frame.width*0.66, height: navBar.frame.height/2))
             searchBar.center = navBar.center
             searchBar.textColor = UIColor.whiteColor()
             searchBar.backgroundColor = UIColor.iceDarkRed()
-            searchBar.placeholder = "Type a name of your friend!"
+            searchBar.placeholder = "Search for your friends!"
             searchBar.textAlignment = NSTextAlignment.Center
             searchBar.delegate = self
             searchBar.addTarget(self, action: "search:", forControlEvents: UIControlEvents.EditingChanged)
@@ -51,7 +54,7 @@ class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UI
         cell.numFollowLabel.text = "\(users[indexPath.row].followersCount) followers"
         if let url = NSURL(string: "http://graph.facebook.com/\(users[indexPath.row].fbid)/picture?type=large") {
             if let data = NSData(contentsOfURL: url) {
-                cell.userImage.setImage(UIImage(data: data), forState: .Normal)
+                cell.userImage.image = UIImage(data: data)
             }
         }
         
@@ -64,6 +67,16 @@ class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UI
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
+        let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        profileVC.title = "Profile"
+        profileVC.otherUser = users[indexPath.row]
+        searchBar.removeFromSuperview()
+        self.navigationController?.pushViewController(profileVC, animated: true)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

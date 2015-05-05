@@ -36,43 +36,6 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     @IBOutlet weak var divider: UIView!
     @IBOutlet weak var postCalendarView: UIView!
     @IBOutlet weak var separator: UIView!
-
-    func loadUserByID(id: String) {
-        API.sharedAPI.fetchUser(id) { user in
-            // Profile Info
-            self.nameLabel.text = user.name
-            self.userHandleLabel.setTitle("@\(user.username)", forState: UIControlState.Normal)
-            //self.profilePictureView.image = user.profileImage
-            if let url = NSURL(string: "http://graph.facebook.com/\(user.fbid)/picture?type=large") {
-                if let data = NSData(contentsOfURL: url) {
-                    self.profilePictureView.image = UIImage(data: data)
-                }
-            }
-            self.profilePictureView.layer.masksToBounds = false
-            self.profilePictureView.layer.borderWidth = 1.5
-            self.profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
-            self.profilePictureView.frame = CGRectMake(0, 0, 150/2, 150/2)
-            self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.size.height/2
-            self.profilePictureView.clipsToBounds = true
-            
-            // Followers & Following
-            self.followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
-            self.numFollowersLabel.text = "\(user.followersCount)"
-            self.numFollowingLabel.text = "\(self.numFollowing)"
-            
-            if !self.isFollowing {
-                self.followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-            } else {
-                self.followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-            }
-            
-            // User Creation Date
-            var dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
-            var dateFromString = dateFormatter.dateFromString(User.currentUser.createdAt)
-            //startDate = dateFromString
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +45,38 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         //            self.postedDates = post.date // dates user posted song
         //        }
         
-        loadUserByID(User.currentUser.fbid)
+        // Profile Info
+        self.nameLabel.text = User.currentUser.name
+        self.userHandleLabel.setTitle("@\(User.currentUser.username)", forState: UIControlState.Normal)
+        //self.profilePictureView.image = user.profileImage
+        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                self.profilePictureView.image = UIImage(data: data)
+            }
+        }
+        self.profilePictureView.layer.masksToBounds = false
+        self.profilePictureView.layer.borderWidth = 1.5
+        self.profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.profilePictureView.frame = CGRectMake(0, 0, 150/2, 150/2)
+        self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.size.height/2
+        self.profilePictureView.clipsToBounds = true
+        
+        // Followers & Following
+        self.followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
+        self.numFollowersLabel.text = "\(User.currentUser.followersCount)"
+        self.numFollowingLabel.text = "\(self.numFollowing)"
+        
+        if !self.isFollowing {
+            self.followButtonLabel.setTitle("FOLLOW", forState: .Normal)
+        } else {
+            self.followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
+        }
+        
+        // User Creation Date
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
+        var dateFromString = dateFormatter.dateFromString(User.currentUser.createdAt)
+        //startDate = dateFromString
         
         // Navigation Bar
         self.title = "Profile"

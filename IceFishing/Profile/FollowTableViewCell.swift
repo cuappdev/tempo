@@ -9,9 +9,8 @@
 import UIKit
 
 class FollowTableViewCell: UITableViewCell {
-
-
-    @IBOutlet weak var userImage: UIButton!
+    
+    @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userHandle: UILabel!
     @IBOutlet weak var numFollowLabel: UILabel!
@@ -24,9 +23,6 @@ class FollowTableViewCell: UITableViewCell {
         
         userImage.layer.cornerRadius = userImage.bounds.size.width/2
         userImage.clipsToBounds = true
-        
-        userImage.userInteractionEnabled = true
-        userName.userInteractionEnabled = true
     }
     
     @IBAction func userImageClicked(sender: UIButton) {

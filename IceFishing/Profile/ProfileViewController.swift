@@ -21,7 +21,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var startDate : NSDate! = NSDate(dateString:"2015-01-26")
     var currentDate : NSDate! = NSDate()
     // Hardcoded dates for testing
-    var postedDates: [NSDate]! = [NSDate(dateString:"2015-05-04"), NSDate(dateString:"2015-05-03"), NSDate(dateString:"2015-05-02"), NSDate(dateString:"2015-05-01"), NSDate(dateString:"2015-04-30"), NSDate(dateString:"2015-04-29"), NSDate(dateString:"2015-04-28"), NSDate(dateString:"2015-04-27")]
+    var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-20"), NSDate(dateString:"2015-04-17"), NSDate(dateString:"2015-04-26"), NSDate(dateString:"2015-04-23"), NSDate(dateString:"2015-04-19"), NSDate(dateString:"2015-04-15"), NSDate(dateString:"2015-04-08"), NSDate(dateString:"2015-04-07")]
     var daySize : CGSize!
     var padding : CGFloat = 5
     
@@ -37,44 +37,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var divider: UIView!
     @IBOutlet weak var postCalendarView: UIView!
     @IBOutlet weak var separator: UIView!
-
-    func loadUserByID(id: String) {
-        API.sharedAPI.fetchUser(id) { user in
-            // Profile Info
-            self.nameLabel.text = user.name
-            self.userHandleLabel.text = "@\(user.username)"
-            //self.profilePictureView.image = user.profileImage
-            if let url = NSURL(string: "http://graph.facebook.com/\(user.fbid)/picture?type=large") {
-                if let data = NSData(contentsOfURL: url) {
-                    self.profilePictureView.image = UIImage(data: data)
-                }
-            }
-            self.profilePictureView.layer.masksToBounds = false
-            self.profilePictureView.layer.borderWidth = 1.5
-            self.profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
-            self.profilePictureView.frame = CGRectMake(0, 0, 150/2, 150/2)
-            self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.size.height/2
-            self.profilePictureView.clipsToBounds = true
-            
-            // Followers & Following
-            self.followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
-            self.numFollowersLabel.text = "\(user.followersCount)"
-            self.numFollowingLabel.text = "\(self.numFollowing)"
-            
-            if !self.isFollowing {
-                self.followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-            } else {
-                self.followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-            }
-            
-            // User Creation Date
-            var dateFormatter = NSDateFormatter()
-            //!TODO: Make this a global date formatter
-            dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
-            var dateFromString = dateFormatter.dateFromString(User.currentUser.createdAt)
-            //startDate = dateFromString
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +46,38 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         //            self.postedDates = post.date // dates user posted song
         //        }
         
-        loadUserByID(otherUser.fbid)
+        // Profile Info
+        self.nameLabel.text = otherUser.name
+        self.userHandleLabel.text = "@\(otherUser.username)"
+        if let url = NSURL(string: "http://graph.facebook.com/\(otherUser.fbid)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                self.profilePictureView.image = UIImage(data: data)
+            }
+        }
+        self.profilePictureView.layer.masksToBounds = false
+        self.profilePictureView.layer.borderWidth = 1.5
+        self.profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.profilePictureView.frame = CGRectMake(0, 0, 150/2, 150/2)
+        self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.size.height/2
+        self.profilePictureView.clipsToBounds = true
+        
+        // Followers & Following
+        self.followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
+        self.numFollowersLabel.text = "\(otherUser.followersCount)"
+        self.numFollowingLabel.text = "\(self.numFollowing)"
+        
+        if !self.isFollowing {
+            self.followButtonLabel.setTitle("FOLLOW", forState: .Normal)
+        } else {
+            self.followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
+        }
+        
+        // User Creation Date
+        var dateFormatter = NSDateFormatter()
+        //!TODO: Make this a global date formatter
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
+        var dateFromString = dateFormatter.dateFromString(User.currentUser.createdAt)
+        //startDate = dateFromString
         
         // Navigation Bar
         navigationItem.title = "Profile"

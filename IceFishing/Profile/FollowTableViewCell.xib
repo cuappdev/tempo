@@ -39,41 +39,32 @@
                             <constraint firstAttribute="height" constant="1" id="jRF-fw-lOY"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aba-oz-5KE">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8sn-Jc-sON">
                         <rect key="frame" x="13" y="29" width="45" height="45"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="45" id="BaI-Tk-34r"/>
-                            <constraint firstAttribute="width" constant="45" id="COs-e2-Brb"/>
+                            <constraint firstAttribute="width" constant="45" id="2Y8-e4-gEq"/>
+                            <constraint firstAttribute="height" constant="45" id="ZTu-wb-jTM"/>
                         </constraints>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <state key="normal">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="userImageClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hPi-R0-Unh"/>
-                        </connections>
-                    </button>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.13725490196078433" green="0.14117647058823529" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <color key="tintColor" red="0.23244757399999999" green="1" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstItem="YKr-CE-jlM" firstAttribute="leading" secondItem="Aba-oz-5KE" secondAttribute="trailing" constant="21" id="1BT-xb-88J"/>
-                    <constraint firstItem="uOI-Pn-Mde" firstAttribute="centerY" secondItem="Aba-oz-5KE" secondAttribute="centerY" id="N1t-QN-Fse"/>
+                    <constraint firstItem="YKr-CE-jlM" firstAttribute="leading" secondItem="8sn-Jc-sON" secondAttribute="trailing" constant="21" id="6X8-oY-CFp"/>
+                    <constraint firstItem="RHF-ja-uAd" firstAttribute="bottom" secondItem="8sn-Jc-sON" secondAttribute="bottom" constant="3" id="91v-C9-oIU"/>
+                    <constraint firstItem="YKr-CE-jlM" firstAttribute="top" secondItem="8sn-Jc-sON" secondAttribute="top" constant="-6" id="Kds-dW-z9j"/>
                     <constraint firstItem="YKr-CE-jlM" firstAttribute="leading" secondItem="RHF-ja-uAd" secondAttribute="leading" id="Qry-BM-hi0"/>
-                    <constraint firstItem="Aba-oz-5KE" firstAttribute="bottom" secondItem="RHF-ja-uAd" secondAttribute="bottom" constant="-3" id="RKE-iG-ds2"/>
                     <constraint firstAttribute="bottom" secondItem="4aW-FM-QRN" secondAttribute="bottom" id="Ygp-mX-41C"/>
+                    <constraint firstItem="uOI-Pn-Mde" firstAttribute="centerY" secondItem="8sn-Jc-sON" secondAttribute="centerY" id="bJi-Wh-8fo"/>
                     <constraint firstItem="uOI-Pn-Mde" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="bottom" constant="-1" id="caW-1R-j8a"/>
                     <constraint firstItem="uOI-Pn-Mde" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="bottom" constant="-3" id="gki-D7-0gr"/>
                     <constraint firstItem="RHF-ja-uAd" firstAttribute="top" secondItem="uOI-Pn-Mde" secondAttribute="bottom" constant="8" symbolic="YES" id="gtp-2c-pMc"/>
-                    <constraint firstAttribute="centerY" secondItem="Aba-oz-5KE" secondAttribute="centerY" id="msp-Un-7LC"/>
                     <constraint firstAttribute="bottomMargin" secondItem="4aW-FM-QRN" secondAttribute="bottom" id="n87-8J-Ooa"/>
-                    <constraint firstItem="Aba-oz-5KE" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="top" constant="6" id="qrc-hQ-hRp"/>
+                    <constraint firstItem="8sn-Jc-sON" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="qEu-86-r7S"/>
                     <constraint firstItem="4aW-FM-QRN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="rWp-TH-uOL"/>
+                    <constraint firstAttribute="centerY" secondItem="8sn-Jc-sON" secondAttribute="centerY" id="t4c-9w-uzw"/>
                     <constraint firstItem="4aW-FM-QRN" firstAttribute="top" secondItem="RHF-ja-uAd" secondAttribute="bottom" constant="15" id="t9q-Ue-jJl"/>
                     <constraint firstAttribute="trailing" secondItem="4aW-FM-QRN" secondAttribute="trailing" id="tN4-Av-6c2"/>
-                    <constraint firstItem="Aba-oz-5KE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="wUs-zF-yn4"/>
                     <constraint firstItem="YKr-CE-jlM" firstAttribute="leading" secondItem="uOI-Pn-Mde" secondAttribute="leading" id="xlg-FC-iRr"/>
                 </constraints>
                 <variation key="default">
@@ -92,7 +83,7 @@
                 <outlet property="numFollowLabel" destination="RHF-ja-uAd" id="rKP-Ln-qhu"/>
                 <outlet property="separator" destination="4aW-FM-QRN" id="8ny-YP-nCb"/>
                 <outlet property="userHandle" destination="uOI-Pn-Mde" id="E50-0H-wSc"/>
-                <outlet property="userImage" destination="Aba-oz-5KE" id="xtM-9y-wtY"/>
+                <outlet property="userImage" destination="8sn-Jc-sON" id="Wk9-ex-1uz"/>
                 <outlet property="userName" destination="YKr-CE-jlM" id="ceS-Mi-WXe"/>
             </connections>
             <point key="canvasLocation" x="475" y="158"/>

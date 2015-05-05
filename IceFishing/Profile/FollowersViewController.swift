@@ -9,22 +9,17 @@
 import UIKit
 
 class FollowersViewController: UITableViewController, UIScrollViewDelegate {
-    
-    // TODO: Uncomment when test user is made
-    //var followers: [User]! = []
-    
-    // TODO: For testing purposes (delete when test user is made)
-    var followers: [String] = ["Alex", "Eric", "Feifan", "Ilan", "John", "Joe", "Karim", "Lucas", "Manuela", "Mark", "Nicole", "Sam", "Steven", "Tsvi"]
-    var followerHandles: [String] = ["boss", "eric", "feifan", "ilan", "john", "joe", "karim", "lucas", "manuela", "mark", "nicole", "sam", "steven", "tsvi"]
-    var numFollowers: [Int] = [9001, 229, 38, 40, 100, 374, 2731, 384, 12, 293, 34, 3, 120, 3992]
-    
+
+    var followers: [User] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        User.currentUser.followers
-        
-        // TODO: Uncomment when test user is made
-        //self.followers = User.currentUser.followers
+        // TODO: For testing purposes (delete when test user is made)
+        API.sharedAPI.searchUsers("a") { users in
+            self.followers = users
+            self.tableView.reloadData()
+        }
         
         tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
@@ -55,18 +50,14 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
         
-        // TODO: For testing purposes (delete when test user is made)
-        cell.userImage.setImage(UIImage(named: "Sexy"), forState: .Normal)
-        cell.userName.text = self.followers[indexPath.row]
-        cell.userHandle.text = "@\(self.followerHandles[indexPath.row])"
-        cell.numFollowLabel.text = "\(self.numFollowers[indexPath.row]) followers"
-        
-        // TODO: Uncomment when test user is made
-        //        cell.userImage.setImage(self.followers[indexPath.row].profileImage, forState: .Normal)
-        //        cell.userImage.tag = self.followers[indexPath.row].fbid
-        //        cell.userName.text = self.followers[indexPath.row].name
-        //        cell.userHandle.text = "@\(self.followers[indexPath.row].username)"
-        //        cell.numFollowLabel.text = "\(self.followers[indexPath.row].followersCount) followers"
+        if let url = NSURL(string: "http://graph.facebook.com/\(self.followers[indexPath.row].fbid)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                cell.userImage.image = UIImage(data: data)
+            }
+        }
+        cell.userName.text = self.followers[indexPath.row].name
+        cell.userHandle.text = "@\(self.followers[indexPath.row].username)"
+        cell.numFollowLabel.text = "\(self.followers[indexPath.row].followersCount) followers"
         
         return cell
     }
@@ -76,15 +67,11 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        var selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
-        
-        let userID = User.currentUser.fbid
-        API.sharedAPI.fetchUser(userID) { user in
-            let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
-            profileVC.title = "Profile"
-            profileVC.otherUser = user
-            self.navigationController?.pushViewController(profileVC, animated: true)
-        }
+        let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        profileVC.title = "Profile"
+        profileVC.otherUser = followers[indexPath.row]
+        self.navigationController?.pushViewController(profileVC, animated: true)
     }
 }
