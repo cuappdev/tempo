@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 feedNavVC = UINavigationController(rootViewController: feedVC)
             }
             if (peopleNavVC == nil) {
-                let peopleVC = PeopleSearchViewController(nibName: "PeopleSearchViewController", bundle: nil)
+                let peopleVC = PeopleSearchViewController()
                 peopleNavVC = UINavigationController(rootViewController: peopleVC)
             }
             if (likedNavVC == nil) {
@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
                 sidebarVC?.elements = [
                     SideBarElement(title: "Feed", viewController: feedNavVC, image: UIImage(named: "Feed-Icon")),
-                    SideBarElement(title: "People", viewController: feedNavVC, image: UIImage(named: "People-Icon")),
+                    SideBarElement(title: "People", viewController: peopleNavVC, image: UIImage(named: "People-Icon")),
                     SideBarElement(title: "Liked", viewController: likedNavVC, image: UIImage(named: "Liked-Icon")),
                     SideBarElement(title: "Spotify", viewController: feedNavVC, image: UIImage(named: "Spotify-Icon"))
                 ]

@@ -120,10 +120,6 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         let element = elements[indexPath.row]
         selectionHandler?(element.viewController)
         profileView.backgroundColor = UIColor.clearColor()
-        if (indexPath.row == 1) {
-            var vc = PeopleSearchViewController()
-            self.presentViewController(vc, animated: true, completion: nil)
-        }
         sideView.hidden = true
     }
     
