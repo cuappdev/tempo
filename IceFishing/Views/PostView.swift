@@ -82,7 +82,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                         (note) -> Void in
                         self?.updateProfileLabelTextColor()
                         self?.setUpTimer()
-                        
+                        self?.setNeedsDisplay()
                 })
             }
         }
