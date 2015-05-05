@@ -26,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Check for a cached session whenever app is opened
         if (FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded) {
-            
             // If there's one, open session without displaying Login UI
             FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false, completionHandler: { (session, state, error) -> Void in
                 self.sessionStateChanged(session, state: state, error: error)
@@ -42,11 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var sidebarVC: SideBarViewController?
     var feedNavVC: UINavigationController?
     var revealVC: SWRevealViewController?
+    var peopleNavVC: UINavigationController?
     var likedNavVC: UINavigationController?
-    
-    //    var categories: [String: UIViewController?] = ["Feed": nil, "People": nil, "Liked": nil, "Spotify": nil]
-    //    var symbols: [String] = ["Gray-Feed-Icon", "People-Icon", "Liked-Icon", "Music-Icon"]
-
     
     // Toggle rootViewController
     func toggleRootVC() {
@@ -58,7 +54,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let feedVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
                 feedNavVC = UINavigationController(rootViewController: feedVC)
             }
-            
+            if (peopleNavVC == nil) {
+                let peopleVC = PeopleSearchViewController(nibName: "PeopleSearchViewController", bundle: nil)
+                peopleNavVC = UINavigationController(rootViewController: peopleVC)
+            }
             if (likedNavVC == nil) {
                 let likedVC = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
                 likedNavVC = UINavigationController(rootViewController: likedVC)
@@ -151,7 +150,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
 }
-

@@ -122,7 +122,7 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         selectSong(post.song)
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
-//        
+        
         if activePlayer != nil && activePlayer != cell.postView.post?.player {
             activePlayer.pause(true)
             activePlayer = nil
@@ -244,7 +244,7 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
             let item = items[i] as! NSDictionary
             let song = Song(responseDictionary: item)
             postResults.append(
-                Post(song: song, user: User.currentUser, date: nil)
+                Post(song: song, user: User.currentUser, date: nil, likes: 0)
             )
         }
 
