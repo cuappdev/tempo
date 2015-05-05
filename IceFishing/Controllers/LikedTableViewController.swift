@@ -16,6 +16,11 @@ class LikedTableViewController: UITableViewController, UIScrollViewDelegate  {
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.title = "Liked"
         beginIceFishing()
+        
+        API.sharedAPI.fetchLikes(User.currentUser.id, completion: {
+            (songs) in
+            println(songs)
+        })
     }
     
     override func didReceiveMemoryWarning() {

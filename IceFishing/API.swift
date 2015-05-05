@@ -45,7 +45,7 @@ enum Router: URLStringConvertible {
                 return "/\(userID)/posts"
             case .Likes(let userID):
                 if (userID != nil) {
-                    return "/\(userID!)/likes"
+                    return "/users/\(userID!)/likes"
                 }
                 return "/likes"
             case .Followings:
