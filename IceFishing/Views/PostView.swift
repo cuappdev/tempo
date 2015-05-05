@@ -177,7 +177,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         let current: AnyObject? = layer.presentationLayer()?.valueForKeyPath("transform.rotation")
         if let layer = avatarLayer {
             layer.transform = CATransform3DIdentity
-            layer.removeAllAnimations()
+            layer.removeAnimationForKey("transform.rotation")
         }
 
         if let post = post {
