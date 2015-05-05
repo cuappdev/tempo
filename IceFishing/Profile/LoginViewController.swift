@@ -85,20 +85,8 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         loadUserByID(User.currentUser.fbid)
         
         // Navigation Bar
-        navigationItem.title = "Profile"
-        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
-        // Add profile button to the left side of the navbar
-        var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
-        menuButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
-        menuButton.addTarget(self, action: "dismiss:", forControlEvents: .TouchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
-        
-        // Pop out sidebar when hamburger menu tapped
-        if self.revealViewController() != nil {
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
+        self.title = "Profile"
+        beginIceFishing()
         
         // Post History Calendar
         let cols : Int = 6

@@ -165,29 +165,9 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         
         
         //—————————————from MAIN VC——————————————————
-        navigationItem.title = "Feed"
+        self.title = "Feed"
+        beginIceFishing()
         initializeSearch()
-        
-        navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        navigationController?.navigationBar.barStyle = .Black
-        //        navigationController?.navigationBar.translucent = true
-        
-        // Add hamburger menu to the left side of the navbar
-        var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
-        menuButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
-        menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
-        
-        // Pop out sidebar when hamburger menu tapped
-        if self.revealViewController() != nil {
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
-        
-        // Arbitrary additions for SWRevealVC
-        revealViewController().panGestureRecognizer()
-        revealViewController().tapGestureRecognizer()
-        //—————————————from MAIN VC——————————————————
         
         refreshControl = UIRefreshControl()
         customRefresh = ADRefreshControl(refreshControl: refreshControl!, tableView: self.tableView)
@@ -200,9 +180,8 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         refreshFeed()
         
         //background color for the view
-        self.tableView.backgroundColor = UIColor.iceDarkGray()
-        self.tableView.separatorColor = UIColor.iceDarkGray()
         tableView.rowHeight = 90
+        
         pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
         pinViewGestureRecognizer.delegate = pinView
         lastContentOffset = tableView.contentOffset.y

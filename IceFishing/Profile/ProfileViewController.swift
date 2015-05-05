@@ -69,6 +69,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             // User Creation Date
             var dateFormatter = NSDateFormatter()
+            //!TODO: Make this a global date formatter
             dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
             var dateFromString = dateFormatter.dateFromString(User.currentUser.createdAt)
             //startDate = dateFromString
