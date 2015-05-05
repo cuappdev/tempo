@@ -131,6 +131,10 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         activePlayer = cell.postView.post?.player
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        parent!.selectSong()
+    }
+
     func selectSong(song: Song) {
         if let previousSelectionView = bottomView.viewWithTag(150) {
             previousSelectionView.removeFromSuperview()
