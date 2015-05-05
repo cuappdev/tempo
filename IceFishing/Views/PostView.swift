@@ -69,7 +69,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     // dateFormatter.doesRelativeDateFormatting = true
                     dateFormatter.dateStyle = .NoStyle
                     dateFormatter.timeStyle = .ShortStyle
-                    dateLabel?.text = dateFormatter.stringFromDate(date)
+                    //dateLabel?.text = dateFormatter.stringFromDate(date)
+                    dateLabel?.text = post.relativeDate()
                 } else {
                     dateLabel?.text = ""
                 }
@@ -146,7 +147,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func didMoveToSuperview() {
-        spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
+        super.didMoveToSuperview()
+
+        if superview != nil && dateLabel != nil {
+            spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
+        }
     }
     
     dynamic private func timerFired(timer: NSTimer) {
@@ -280,7 +285,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             } else if post.player.isPlaying() {
                 if hitView == avatarImageView || hitView == self.profileNameLabel {
                     // GO TO PROFILE VIEW CONTROLLER
-                    println("GO TO PROFILE")
+                    println(post.user.fbid) 
                 }
             }
         }

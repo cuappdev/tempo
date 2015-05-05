@@ -89,6 +89,12 @@ extension NSDate {
         return calendar.dateByAddingComponents(components, toDate: self, options: NSCalendarOptions(0))!
     }
     
+    func numDaysUntilEndDate(endDate: NSDate) -> Int {
+        let calendar : NSCalendar = NSCalendar.currentCalendar()
+        let components : NSDateComponents = calendar.components(NSCalendarUnit.CalendarUnitDay, fromDate:self, toDate:endDate, options: NSCalendarOptions(0))
+        return components.day + 1
+    }
+    
     func isCurrentMonth(date: NSDate) -> Bool {
         return (date.month() == NSDate().month() && date.year() == NSDate().year())
     }

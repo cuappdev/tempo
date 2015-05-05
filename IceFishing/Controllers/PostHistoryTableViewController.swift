@@ -24,13 +24,14 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
         tableView.backgroundColor = UIColor.iceDarkGray()
         tableView.registerNib(UINib(nibName: "PostHistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "PostedSongCell")
         
+        navigationItem.title = "Post History"
         self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile
         var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height))
         backButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
-        backButton.addTarget(self, action: "popToRoot", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
@@ -40,8 +41,8 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
     }
     
     // Return to profile view
-    func popToRoot() {
-        navigationController?.popToRootViewControllerAnimated(true)
+    func popToPrevious() {
+        navigationController?.popViewControllerAnimated(true)
     }
     
     // TableView Methods

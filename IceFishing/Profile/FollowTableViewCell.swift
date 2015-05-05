@@ -10,7 +10,8 @@ import UIKit
 
 class FollowTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var userImage: UIImageView!
+
+    @IBOutlet weak var userImage: UIButton!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userHandle: UILabel!
     @IBOutlet weak var numFollowLabel: UILabel!
@@ -28,6 +29,12 @@ class FollowTableViewCell: UITableViewCell {
         userName.userInteractionEnabled = true
     }
     
+    @IBAction func userImageClicked(sender: UIButton) {
+        
+        
+        
+    }
+
     // Custom selected cell view
     override func setSelected(selected: Bool, animated: Bool) {
         if (selected) {

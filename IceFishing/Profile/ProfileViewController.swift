@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  ProfileViewController.swift
 //  Profile
 //
 //  Created by Annie Cheng on 3/17/15.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    var otherUser: User!
     var isFollowing = false
     var numFollowing: Int = 0
     var searchNavigationController: UINavigationController!
@@ -20,14 +21,14 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     var startDate : NSDate! = NSDate(dateString:"2015-01-26")
     var currentDate : NSDate! = NSDate()
     // Hardcoded dates for testing
-    var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-24"), NSDate(dateString:"2015-04-22"), NSDate(dateString:"2015-04-18"), NSDate(dateString:"2015-04-15"), NSDate(dateString:"2015-04-11"), NSDate(dateString:"2015-04-9"), NSDate(dateString:"2015-04-08"), NSDate(dateString:"2015-04-07")]
+    var postedDates: [NSDate]! = [NSDate(dateString:"2015-05-04"), NSDate(dateString:"2015-05-03"), NSDate(dateString:"2015-05-02"), NSDate(dateString:"2015-05-01"), NSDate(dateString:"2015-04-30"), NSDate(dateString:"2015-04-29"), NSDate(dateString:"2015-04-28"), NSDate(dateString:"2015-04-27")]
     var daySize : CGSize!
     var padding : CGFloat = 5
     
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
-    @IBOutlet weak var userHandleLabel: UIButton!
+    @IBOutlet weak var userHandleLabel: UILabel!
     @IBOutlet weak var followButtonLabel: UIButton!
     @IBOutlet weak var numFollowersLabel: UILabel!
     @IBOutlet weak var numFollowingLabel: UILabel!
@@ -41,7 +42,7 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         API.sharedAPI.fetchUser(id) { user in
             // Profile Info
             self.nameLabel.text = user.name
-            self.userHandleLabel.setTitle("@\(user.username)", forState: UIControlState.Normal)
+            self.userHandleLabel.text = "@\(user.username)"
             //self.profilePictureView.image = user.profileImage
             if let url = NSURL(string: "http://graph.facebook.com/\(user.fbid)/picture?type=large") {
                 if let data = NSData(contentsOfURL: url) {
@@ -82,23 +83,12 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         //            self.postedDates = post.date // dates user posted song
         //        }
         
-        loadUserByID(User.currentUser.fbid)
+        loadUserByID(otherUser.fbid)
         
         // Navigation Bar
         navigationItem.title = "Profile"
         self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
-        // Add profile button to the left side of the navbar
-        var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
-        menuButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
-        menuButton.addTarget(self, action: "dismiss:", forControlEvents: .TouchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
-        
-        // Pop out sidebar when hamburger menu tapped
-        if self.revealViewController() != nil {
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
         
         // Post History Calendar
         let cols : Int = 6
@@ -122,46 +112,31 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         collectionView.frame = CGRectMake(0, 0, postCalendarView.frame.width, postCalendarView.frame.height/2.25)
         postCalendarView.addSubview(collectionView)
         collectionView.scrollsToTop = false
-    }
-    
-    func dismiss(sender: AnyObject?) {
-        self.revealViewController()?.revealToggle(sender)
-    }
-    
-    // When username on profile screen clicked
-    @IBAction func changeUserHandle(sender: UIButton) {
-        var editAlert = UIAlertController(title: "Edit Username", message: "This is how you appear to other users.", preferredStyle: UIAlertControllerStyle.Alert)
-        editAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        editAlert.addTextFieldWithConfigurationHandler { textField in
-            textField.placeholder = "New username"
-            textField.textAlignment = NSTextAlignment.Center
-        }
-        editAlert.addAction(UIAlertAction(title: "Save", style: UIAlertActionStyle.Default) {action -> Void in
-            
-            let textField = editAlert.textFields?.first as? UITextField
-            let newUsername = textField!.text
-            
-            API.sharedAPI.usernameIsValid(newUsername) { success in
-                if (success) {
-                    if (newUsername == "") {
-                        var alert = UIAlertController(title: "Oh no!", message: "Username cannot be empty.", preferredStyle: UIAlertControllerStyle.Alert)
-                        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: nil))
-                        self.presentViewController(alert, animated: true, completion: nil)
-                    } else {
-                        User.currentUser.username = newUsername
-                        API.sharedAPI.updateCurrentUser(newUsername) { user in }
-                        self.userHandleLabel.setTitle("@\(User.currentUser.username)", forState: UIControlState.Normal)
-                    }
-                } else {
-                    var alert = UIAlertController(title: "Sorry!", message: "Username is taken.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
-        })
-        self.presentViewController(editAlert, animated: true, completion: nil)
+        
+        // Add back button
+        self.navigationItem.hidesBackButton = true
+        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height/2))
+        backButton.setImage(UIImage(named: "LeftArrow"), forState: .Normal)
+        backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        // Add return to profile button
+        var profileButton = UIButton(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
+        profileButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
+        profileButton.addTarget(self, action: "popToRoot", forControlEvents: .TouchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
     }
 
+    // Return to profile view
+    func popToRoot() {
+        navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    // Return to previous view
+    func popToPrevious() {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     // <------------------------FOLLOW BUTTONS------------------------>
     
     @IBAction func followButton(sender: UIButton) {
