@@ -49,8 +49,12 @@ class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UI
         cell.userHandle.text = users[indexPath.row].name
         cell.userName.text = users[indexPath.row].username
         cell.numFollowLabel.text = "\(users[indexPath.row].followersCount) followers"
-        //TODO: use real images - users[indexPath.row].profileImage
-        cell.userImage.setImage(UIImage(named: "Steven"), forState: .Normal)
+        if let url = NSURL(string: "http://graph.facebook.com/\(users[indexPath.row].fbid)/picture?type=large") {
+            if let data = NSData(contentsOfURL: url) {
+                cell.userImage.setImage(UIImage(data: data), forState: .Normal)
+            }
+        }
+        
         return cell as FollowTableViewCell
     }
     
