@@ -67,14 +67,7 @@ class API {
     
     // Mappings
     let postMapping: [String: [AnyObject]] -> [Post]? = {
-        if let posts = $0["posts"] {
-            var feed: [Post] = []
-            for post in posts {
-                feed.append(Post(json: JSON(post)))
-            }
-            return feed
-        }
-        return nil
+        return $0["posts"]?.map { Post(json: JSON($0)) }
     }
     
     // Could call getSession()
@@ -132,14 +125,7 @@ class API {
     
     func searchUsers(username: String, completion: [User] -> Void) {
         let map: [String: [AnyObject]] -> [User]? = {
-            if let users = $0["users"] {
-                var feed: [User] = []
-                for user in users {
-                    feed.append(User(json: JSON(user)))
-                }
-                return feed
-            }
-            return nil
+            return $0["users"]?.map { User(json: JSON($0)) }
         }
         get(.UserSearch, params: ["q": username, "session_code": sessionCode], map: map, completion: completion)
     }
@@ -164,21 +150,14 @@ class API {
     
     func updateLikes(postID: String, unlike: Bool, completion: [String: Bool] -> Void) {
         let map: [String: Bool] -> [String: Bool]? = { $0 }
-        post(Router.Likes(nil), params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: map, completion: completion)
+        post(.Likes(nil), params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: map, completion: completion)
     }
     
     func fetchLikes(userID: String, completion: [Song] -> Void) {
         let map: [String: [AnyObject]] -> [Song]? = {
-            if let users = $0["songs"] {
-                var songs: [Song] = []
-                for song in songs {
-                    songs.append(Song(json: JSON(song)))
-                }
-                return songs
-            }
-            return nil
+            return $0["songs"]?.map { Song(json: JSON($0)) }
         }
-        get(Router.Likes(userID), params: ["session_code": sessionCode], map: map, completion: completion)
+        get(.Likes(userID), params: ["session_code": sessionCode], map: map, completion: completion)
     }
     
     func updateFollowings(userID: String, unfollow: Bool, completion: [String: Bool] -> Void) {

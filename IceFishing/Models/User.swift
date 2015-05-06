@@ -37,7 +37,7 @@ class User: NSObject, NSCoding {
     }
     var updatedAt: String!
     var username: String = "temp_username"
-    var profileImage: UIImage?
+    private var profileImage: UIImage?
     
     func loadImage(completion:(UIImage -> Void)) {
         if let image = profileImage {

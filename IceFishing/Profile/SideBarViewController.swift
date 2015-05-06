@@ -26,7 +26,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     var searchNavigationController: UINavigationController!
     var elements: [SideBarElement] = []
     var button: UIButton!
-
+    
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -43,7 +43,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         categoryTableView.registerNib(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
         
         // Formatting
@@ -68,7 +68,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         button.frame = self.profileView.bounds
         button.addTarget(self, action: "pushToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(button)
-
+        
         categoryTableView.reloadData()
         // mark first item selected cuz it is
         if (elements.count > 0) {
@@ -82,10 +82,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         nameLabel.text = User.currentUser.name
         usernameLabel.text = "@\(User.currentUser.username)"
         //profilePicture.image = User.currentUser.profileImage
-        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                self.profilePicture.image = UIImage(data: data)
-            }
+        User.currentUser.loadImage {
+            self.profilePicture.image = $0
         }
     }
     
@@ -115,7 +113,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         return cell
     }
-   
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let element = elements[indexPath.row]
         selectionHandler?(element.viewController)
@@ -126,5 +124,5 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(55)
     }
-
+    
 }
