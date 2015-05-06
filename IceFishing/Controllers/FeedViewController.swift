@@ -43,8 +43,9 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
     
     func addSong(track: Song) {
         posts.insert(Post(song: track, user: User.currentUser, date: NSDate(), likes: 0), atIndex: 0)
+        tableView.reloadData()
         API.sharedAPI.updatePost(User.currentUser.id, song: track) { song in
-            self.tableView.reloadData()
+            self.refreshFeed()
         }
     }
     
@@ -149,7 +150,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
                 }
                 return .Success
             }
-
+            
             return .NoSuchContent
         }
         
@@ -235,7 +236,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
                 // When done requesting/reloading/processing invoke endRefreshing, to close the control
                 self.refreshControl!.endRefreshing()
             }
-
+            
         }
     }
     
@@ -367,7 +368,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
                 var transform = CGAffineTransformIdentity
                 self.plusButton.transform = transform
             }
-        }, completion: nil)
+            }, completion: nil)
     }
     
     func dropSearchBar(active: Bool) {
@@ -422,7 +423,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         rotatePlusButton(isSearching)
         dropSearchBar(isSearching)
     }
-
+    
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         searchTableDelegateDataSource.update(searchText)
     }
@@ -435,6 +436,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         searchBar.resignFirstResponder()
     }
     
+    // Called from search
     func submitSong(song: Song) {
         searchBar.resignFirstResponder()
         plusButtonTapped()
