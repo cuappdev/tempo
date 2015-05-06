@@ -60,8 +60,10 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         self.profilePictureView.clipsToBounds = true
         
         // Followers & Following
-        self.numFollowersLabel.text = "\(User.currentUser.followersCount)"
-        self.numFollowingLabel.text = "\(self.numFollowing)"
+//        self.numFollowersLabel.text = "\(User.currentUser.followersCount)"
+//        self.numFollowingLabel.text = "\(self.numFollowing)"
+        self.numFollowersLabel.text = "5"
+        self.numFollowingLabel.text = "2"
         
         // User Creation Date
         var dateFormatter = NSDateFormatter()
