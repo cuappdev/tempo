@@ -168,7 +168,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         self.title = "Feed"
         beginIceFishing()
         initializeSearch()
-        
         refreshControl = UIRefreshControl()
         customRefresh = ADRefreshControl(refreshControl: refreshControl!, tableView: self.tableView)
         refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
@@ -201,6 +200,12 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         bottomPinViewContainer.hidden = true
         
         pinView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: tableView.rowHeight)
+    }
+    
+    func revealToggle(button: UIButton) {
+        if !isSearching {
+            self.revealViewController().revealToggle(button)
+        }
     }
     
     func togglePlay() {
@@ -342,7 +347,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
     }
     
     func rotatePlusButton(active: Bool) {
-        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 50, options: nil, animations: {
+        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 50, options: nil, animations: {
             if active {
                 var transform = CGAffineTransformMakeRotation(CGFloat(M_PI_4))
                 self.plusButton.transform = transform

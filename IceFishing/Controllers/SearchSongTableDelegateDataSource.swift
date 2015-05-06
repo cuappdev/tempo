@@ -1,6 +1,6 @@
 //
 //  SearchSongTableDelegateDataSource.swift
-//  SpotifySearch
+//  IceFishing
 //
 //  Created by Austin Chan on 3/15/15.
 //  Copyright (c) 2015 CUAppDev. All rights reserved.
@@ -16,7 +16,6 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     let kSearchResultHeight: CGFloat = 54
     weak var parent: FeedViewController?
     var shouldResume = false
-    let tableViewCellIdentifier = "searchSongResultsCell"
     var results: [Post] = []
     let kSearchBase: String = "https://api.spotify.com/v1/search?type=track&q="
     var hasSelectedResult = false
@@ -105,13 +104,11 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("searchSongResultsCell", forIndexPath: indexPath) as! SearchSongTableViewCell
         let post = results[indexPath.row]
-        cell.postView.type = .Search
         cell.postView.post = post
-        cell.postView.flagAsSearchResultPost()
         cell.postView.avatarImageView?.placeholderImage = missingImage
-        cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
+        cell.postView.avatarImageView?.imageURL = post.song.largeArtworkURL
         return cell
     }
 
@@ -121,8 +118,8 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         let post = results[indexPath.row]
         selectSong(post.song)
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
-        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! SearchSongTableViewCell
+
         if activePlayer != nil && activePlayer != cell.postView.post?.player {
             activePlayer.pause(true)
             activePlayer = nil
@@ -134,6 +131,10 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         activePlayer = cell.postView.post?.player
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        parent!.selectSong()
+    }
+
     func selectSong(song: Song) {
         if let previousSelectionView = bottomView.viewWithTag(150) {
             previousSelectionView.removeFromSuperview()

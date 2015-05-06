@@ -16,7 +16,7 @@ class SearchSongTableView: UITableView {
         separatorColor = UIColor.clearColor()
         separatorStyle = .None
         rowHeight = 96
-        registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+        registerNib(UINib(nibName: "SearchSongTableViewCell", bundle: nil), forCellReuseIdentifier: "searchSongResultsCell")
     }
 
     required init(coder aDecoder: NSCoder) {
