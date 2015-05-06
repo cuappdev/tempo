@@ -72,9 +72,17 @@ class API {
             for post in posts {
                 feed.append(Post(json: JSON(post)))
             }
-            return feed
+            return feed.reverse()
         }
         return nil
+    }
+    
+    let songMapping: [String: [AnyObject]] -> [Song]? = {
+        var songs: [Song] = []
+        
+        println("song: \($0)")
+        
+        return songs
     }
     
     // Could call getSession()
@@ -163,27 +171,22 @@ class API {
     }
     
     func updateLikes(postID: String, unlike: Bool, completion: [String: Bool] -> Void) {
-        let map: [String: Bool] -> [String: Bool]? = { $0 }
+<<<<<<< HEAD
+        let map: [String: Bool] -> [String: Bool]? = { Optional($0) }
+=======
+        let map: [String: Bool] -> [String: Bool]? = {
+            $0
+        }
+>>>>>>> eb71107db750199b080ea02f83c5156896e2a975
         post(Router.Likes(nil), params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: map, completion: completion)
     }
     
     func fetchLikes(userID: String, completion: [Song] -> Void) {
-        let map: [String: [AnyObject]] -> [Song]? = {
-            if let users = $0["songs"] {
-                var songs: [Song] = []
-                for song in songs {
-                    songs.append(Song(json: JSON(song)))
-                }
-                return songs
-            }
-            return nil
-        }
-        get(Router.Likes(userID), params: ["session_code": sessionCode], map: map, completion: completion)
+        get(Router.Likes(userID), params: ["session_code": sessionCode], map: songMapping, completion: completion)
     }
     
     func updateFollowings(userID: String, unfollow: Bool, completion: [String: Bool] -> Void) {
-        let map: [String: Bool] -> [String: Bool]? = { $0 }
-        post(.Followings, params: ["user_id": userID, "unfollow": unfollow, "session_code": sessionCode], map: map, completion: completion)
+        post(.Followings, params: ["user_id": userID, "unfollow": unfollow, "session_code": sessionCode], map: { $0 }, completion: completion)
     }
     
     func updatePost(userID: String, song: Song, completion: [String: AnyObject] -> Void) {
@@ -192,7 +195,7 @@ class API {
             "track": song.title,
             "spotify_url": song.spotifyID
         ]
-        let map: [String: AnyObject] -> [String: AnyObject]? = { $0 }
+        let map: [String: AnyObject] -> [String: AnyObject]? = { Optional($0) }
         post(.Posts, params: ["user_id": userID, "song": songDict, "session_code": sessionCode], map: map, completion: completion)
     }
     
@@ -217,7 +220,6 @@ class API {
                 if let json = json as? O {
                     if let obj = map(json) {
                         completion(obj)
-                        println(json)
                     }
                 } else {
                     println("—————— Couldn't decompose object ——————")

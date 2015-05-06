@@ -3,7 +3,7 @@
 //  IceFishing
 //
 //  Created by Alexander Zielenski on 5/3/15.
-//  Copyright (c) 2015 Lucas Derraugh. All rights reserved.
+//  Copyright (c) 2015 Alexander Zielenski. All rights reserved.
 //
 
 import UIKit
@@ -18,8 +18,7 @@ class LikedTableViewController: UITableViewController, UIScrollViewDelegate  {
         beginIceFishing()
         
         API.sharedAPI.fetchLikes(User.currentUser.id, completion: {
-            (songs) in
-            println(songs)
+            println("Songs: \($0)")
         })
     }
     

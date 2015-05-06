@@ -214,15 +214,33 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
     
     //MARK: - UIRefreshControl
     func refreshFeed() {
-        API.sharedAPI.fetchFeedOfEveryone {
-            [weak self] in
-            self?.posts = $0
-            self?.tableView.reloadData()
+        API.sharedAPI.fetchFeedOfEveryone { [unowned self] posts in
+            if let firstPost = self.posts.first {
+                var newPosts: [Post] = []
+                var indexPaths: [NSIndexPath] = []
+                for i in 0..<posts.count {
+                    let post = posts[i]
+                    if post.postID != firstPost.postID {
+                        newPosts.append(post)
+                        indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+                    } else {
+                        break
+                    }
+                }
+                
+                self.posts = newPosts + self.posts
+                self.tableView.beginUpdates()
+                self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Top)
+                self.tableView.endUpdates()
+            } else {
+                self.posts = posts
+                self.tableView.reloadData()
+            }
             
             var popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)));
             dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
                 // When done requesting/reloading/processing invoke endRefreshing, to close the control
-                self!.refreshControl!.endRefreshing()
+                self.refreshControl!.endRefreshing()
             }
 
         }

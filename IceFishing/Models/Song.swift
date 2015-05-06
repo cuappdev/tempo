@@ -53,6 +53,11 @@ class Song: NSObject {
         initializeFromResponseDictionary(responseDictionary)
     }
     
+    init(json: JSON) {
+        super.init()
+        initializeFromResponse(json)
+    }
+    
     private func initializeFromResponseDictionary(response: NSDictionary) {
         initializeFromResponse(JSON(response))
     }
