@@ -43,9 +43,8 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
     
     func addSong(track: Song) {
         posts.insert(Post(song: track, user: User.currentUser, date: NSDate(), likes: 0), atIndex: 0)
-        tableView.reloadData()
         API.sharedAPI.updatePost(User.currentUser.id, song: track) { song in
-            self.refreshFeed()
+            self.tableView.reloadData()
         }
     }
     
@@ -216,25 +215,15 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
     //MARK: - UIRefreshControl
     // Should be dumping old songs after 1 day? Not currently doing that
     func refreshFeed() {
-        API.sharedAPI.fetchFeedOfEveryone { [unowned self] in
-            let diff = $0.count - self.posts.count
-            if self.posts.isEmpty {
-                self.posts = $0
-                self.tableView.reloadData()
-            } else if diff > 0 {
-                let newPosts = $0[0..<diff]
-                let indexPaths = (0..<diff).map { NSIndexPath(forRow: $0, inSection: 0) }
-                self.posts = newPosts + self.posts
-                
-                self.tableView.beginUpdates()
-                self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Top)
-                self.tableView.endUpdates()
-            }
+        API.sharedAPI.fetchFeedOfEveryone {
+            [weak self] in
+            self?.posts = $0
+            self?.tableView.reloadData()
             
             var popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)));
             dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
                 // When done requesting/reloading/processing invoke endRefreshing, to close the control
-                self.refreshControl!.endRefreshing()
+                self!.refreshControl!.endRefreshing()
             }
             
         }
