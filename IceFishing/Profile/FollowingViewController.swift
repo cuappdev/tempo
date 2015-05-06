@@ -50,14 +50,13 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
         
-        if let url = NSURL(string: "http://graph.facebook.com/\(self.following[indexPath.row].fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                cell.userImage.image = UIImage(data: data)
-            }
+        let user = following[indexPath.row]
+        cell.userName.text = user.name
+        cell.userHandle.text = "@\(user.username)"
+        cell.numFollowLabel.text = "\(user.followersCount) followers"
+        user.loadImage {
+            cell.userImage.image = $0
         }
-        cell.userName.text = self.following[indexPath.row].name
-        cell.userHandle.text = "@\(self.following[indexPath.row].username)"
-        cell.numFollowLabel.text = "\(self.following[indexPath.row].followersCount) followers"
         
         return cell
     }
