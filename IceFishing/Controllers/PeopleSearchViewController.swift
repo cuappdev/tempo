@@ -49,13 +49,12 @@ class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UI
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! FollowTableViewCell
         
         // Configure the cell
-        cell.userHandle.text = users[indexPath.row].name
-        cell.userName.text = users[indexPath.row].username
-        cell.numFollowLabel.text = "\(users[indexPath.row].followersCount) followers"
-        if let url = NSURL(string: "http://graph.facebook.com/\(users[indexPath.row].fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                cell.userImage.image = UIImage(data: data)
-            }
+        let user = users[indexPath.row]
+        cell.userHandle.text = user.name
+        cell.userName.text = user.username
+        cell.numFollowLabel.text = "\(user.followersCount) followers"
+        user.loadImage {
+            cell.userImage.image = $0
         }
         
         return cell as FollowTableViewCell

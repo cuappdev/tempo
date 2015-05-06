@@ -45,14 +45,13 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         //        }
         
         // Profile Info
-        self.nameLabel.text = User.currentUser.name
-        self.userHandleLabel.setTitle("@\(User.currentUser.username)", forState: UIControlState.Normal)
-        //self.profilePictureView.image = user.profileImage
-        if let url = NSURL(string: "http://graph.facebook.com/\(User.currentUser.fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                self.profilePictureView.image = UIImage(data: data)
-            }
+        let user = User.currentUser
+        self.nameLabel.text = user.name
+        self.userHandleLabel.setTitle("@\(user.username)", forState: UIControlState.Normal)
+        user.loadImage {
+            self.profilePictureView.image = $0
         }
+        
         self.profilePictureView.layer.masksToBounds = false
         self.profilePictureView.layer.borderWidth = 1.5
         self.profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor

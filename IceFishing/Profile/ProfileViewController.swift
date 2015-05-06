@@ -49,10 +49,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         // Profile Info
         self.nameLabel.text = otherUser.name
         self.userHandleLabel.text = "@\(otherUser.username)"
-        if let url = NSURL(string: "http://graph.facebook.com/\(otherUser.fbid)/picture?type=large") {
-            if let data = NSData(contentsOfURL: url) {
-                self.profilePictureView.image = UIImage(data: data)
-            }
+        otherUser.loadImage {
+            self.profilePictureView.image = $0
         }
         self.profilePictureView.layer.masksToBounds = false
         self.profilePictureView.layer.borderWidth = 1.5
