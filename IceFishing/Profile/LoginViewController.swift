@@ -28,7 +28,6 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet weak var userHandleLabel: UIButton!
-    @IBOutlet weak var followButtonLabel: UIButton!
     @IBOutlet weak var numFollowersLabel: UILabel!
     @IBOutlet weak var numFollowingLabel: UILabel!
     @IBOutlet weak var followersLabel: UILabel!
@@ -62,15 +61,8 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         self.profilePictureView.clipsToBounds = true
         
         // Followers & Following
-        self.followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
         self.numFollowersLabel.text = "\(User.currentUser.followersCount)"
         self.numFollowingLabel.text = "\(self.numFollowing)"
-        
-        if !self.isFollowing {
-            self.followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-        } else {
-            self.followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-        }
         
         // User Creation Date
         var dateFormatter = NSDateFormatter()
@@ -145,28 +137,6 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
 
     // <------------------------FOLLOW BUTTONS------------------------>
-    
-    @IBAction func followButton(sender: UIButton) {
-        if (!isFollowing) {
-            isFollowing = true
-            followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-            User.currentUser.followersCount = User.currentUser.followersCount + 1
-            // TODO: Update following
-//            API.sharedAPI.updateFollowings(User.currentUser.id, unfollow: false) { bool in
-//                println(bool)
-//            }
-        } else {
-            isFollowing = false
-            followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-            User.currentUser.followersCount = User.currentUser.followersCount - 1
-            // TODO: Update following
-//            API.sharedAPI.updateFollowings(User.currentUser.id, unfollow: true) { bool in
-//                println(bool)
-//            }
-        }
-        numFollowersLabel.text = "\(User.currentUser.followersCount)"
-        println(User.currentUser.followers)
-    }
     
     @IBAction func followersButton(sender: UIButton) {
         let followersVC = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
