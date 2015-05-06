@@ -352,6 +352,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         searchBanner.addSubview(searchBar)
         searchContainer.addSubview(searchBanner)
         navigationController?.view.addSubview(searchContainer)
+        searchContainer.hidden = true
         
         searchBottomView = UIView(frame: CGRectMake(0, screenSize.height, screenSize.width, CGFloat(kSearchResultHeight)))
         navigationController?.view.addSubview(searchBottomView)
@@ -376,11 +377,16 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
             } else {
                 self.searchBanner.frame.origin.y = -54
             }
-        }, completion: nil)
+            }, completion: { _ in
+                if !active {
+                    self.searchContainer.hidden = true
+                }
+        })
     }
     
     func plusButtonTapped() {
         if !isSearching {
+            searchContainer.hidden = false
             preserveTitle = navigationItem.title
             navigationItem.title = "Choose Your Song of the Day"
             
