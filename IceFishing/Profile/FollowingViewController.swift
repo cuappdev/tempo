@@ -21,12 +21,12 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
             self.tableView.reloadData()
         }
         
-        tableView.backgroundColor = UIColor.iceDarkGray()
+        tableView.backgroundColor = UIColor.iceDarkGray
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
         
         tableView.separatorStyle = .None
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
+        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile
@@ -67,7 +67,7 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
+        selectedCell.contentView.backgroundColor = UIColor.iceLightGray
         let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
         profileVC.otherUser = following[indexPath.row]

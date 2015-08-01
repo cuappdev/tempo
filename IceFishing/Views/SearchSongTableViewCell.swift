@@ -14,6 +14,6 @@ class SearchSongTableViewCell: UITableViewCell {
     
     override func didMoveToSuperview() {
         selectionStyle = .None
-        backgroundColor = UIColor.iceLightGray()
+        backgroundColor = UIColor.iceLightGray
     }
 }

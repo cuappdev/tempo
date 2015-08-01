@@ -78,7 +78,7 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         let dayWidth = postCalendarView.frame.width/CGFloat(cols)
         let dayHeight = dayWidth
         daySize = CGSize(width: dayWidth, height: dayHeight)
-        separator.backgroundColor = UIColor.iceDarkRed()
+        separator.backgroundColor = UIColor.iceDarkRed
         
         let layout: HipStickyHeaderFlowLayout = HipStickyHeaderFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: padding*6, bottom: padding*2, right: 0)
@@ -173,7 +173,7 @@ class LoginViewController: UIViewController, UICollectionViewDelegate, UICollect
         cell.userInteractionEnabled = false
 
         if (contains(postedDates,cell.date)) {
-            cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed()
+            cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed
             cell.userInteractionEnabled = true
         }
         

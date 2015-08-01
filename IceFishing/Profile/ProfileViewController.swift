@@ -79,7 +79,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         // Navigation Bar
         navigationItem.title = "Profile"
-        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
+        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Post History Calendar
@@ -87,7 +87,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let dayWidth = postCalendarView.frame.width/CGFloat(cols)
         let dayHeight = dayWidth
         daySize = CGSize(width: dayWidth, height: dayHeight)
-        separator.backgroundColor = UIColor.iceDarkRed()
+        separator.backgroundColor = UIColor.iceDarkRed
         
         let layout: HipStickyHeaderFlowLayout = HipStickyHeaderFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: padding*6, bottom: padding*2, right: 0)
@@ -189,8 +189,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         cell.userInteractionEnabled = false
 
         if (contains(postedDates,cell.date)) {
-            cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed()
-            cell.userInteractionEnabled = true
+            cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed
+			cell.userInteractionEnabled = true
         }
         
         return cell

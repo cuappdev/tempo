@@ -184,7 +184,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
         pinViewGestureRecognizer.delegate = pinView
         lastContentOffset = tableView.contentOffset.y
-        pinView.backgroundColor = UIColor.iceLightGray()
+        pinView.backgroundColor = UIColor.iceLightGray
     }
     
     override func viewDidAppear(animated: Bool) {

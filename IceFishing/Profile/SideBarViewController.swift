@@ -49,12 +49,12 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Formatting
         categoryTableView.separatorStyle = .None
         categoryTableView.scrollEnabled = false
-        categoryTableView.backgroundColor = UIColor.iceDarkGray()
-        profileView.backgroundColor = UIColor.iceDarkGray()
-        self.view.backgroundColor = UIColor.iceDarkGray()
-        divider.backgroundColor = UIColor.iceLightGray()
-        sideView.hidden = true
-        sideView.backgroundColor = UIColor.iceDarkRed()
+        categoryTableView.backgroundColor = UIColor.iceDarkGray
+        profileView.backgroundColor = UIColor.iceDarkGray
+        self.view.backgroundColor = UIColor.iceDarkGray
+        divider.backgroundColor = UIColor.iceLightGray
+		sideView.hidden = true
+        sideView.backgroundColor = UIColor.iceDarkRed
         
         profilePicture.layer.masksToBounds = false
         profilePicture.layer.borderWidth = 1.5
@@ -88,7 +88,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func pushToProfile(sender:UIButton!) {
-        profileView.backgroundColor = UIColor.iceLightGray()
+        profileView.backgroundColor = UIColor.iceLightGray
         sideView.hidden = false
         if (searchNavigationController == nil) {
             let loginVC = LoginViewController(nibName: "LoginViewController", bundle: nil)

@@ -27,7 +27,7 @@ class HipCalendarCollectionReusableView: UICollectionReusableView {
         rect.origin.y = 0.4*frame.size.height
         
         titleLabel = UILabel(frame: rect)
-        titleLabel.textColor = UIColor.iceDarkRed()
+        titleLabel.textColor = UIColor.iceDarkRed
         titleLabel.font = UIFont(name: "HelveticaNeue", size: 12)!
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))

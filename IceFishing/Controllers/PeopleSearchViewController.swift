@@ -35,7 +35,7 @@ class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UI
             searchBar = UITextField(frame: CGRect(x: 0, y: 0, width: navBar.frame.width*0.66, height: navBar.frame.height/2))
             searchBar.center = navBar.center
             searchBar.textColor = UIColor.whiteColor()
-            searchBar.backgroundColor = UIColor.iceDarkRed()
+            searchBar.backgroundColor = UIColor.iceDarkRed
             searchBar.placeholder = "Search for your friends!"
             searchBar.textAlignment = NSTextAlignment.Center
             searchBar.delegate = self
@@ -70,7 +70,7 @@ class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UI
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
+        selectedCell.contentView.backgroundColor = UIColor.iceLightGray
         let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
         profileVC.otherUser = users[indexPath.row]

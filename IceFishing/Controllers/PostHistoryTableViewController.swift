@@ -21,11 +21,11 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
         super.viewDidLoad()
 
         tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor.iceDarkGray()
+        tableView.backgroundColor = UIColor.iceDarkGray
         tableView.registerNib(UINib(nibName: "PostHistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "PostedSongCell")
         
         navigationItem.title = "Post History"
-        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
+        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile
@@ -79,7 +79,7 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
+        selectedCell.contentView.backgroundColor = UIColor.iceLightGray
     }
     
 }

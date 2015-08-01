@@ -18,7 +18,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var dateLabel: UILabel?
     @IBOutlet var spacingConstraint: NSLayoutConstraint?
     
-    var fillColor = UIColor.iceDarkGray()
+    var fillColor = UIColor.iceDarkGray
  
     private var updateTimer: NSTimer?
     private var notificationHandler: AnyObject?
@@ -93,7 +93,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         avatarImageView?.userInteractionEnabled = true
         profileNameLabel?.userInteractionEnabled = true
         
-        layer.borderColor = UIColor.iceDarkGray().CGColor
+        layer.borderColor = UIColor.iceDarkGray.CGColor
         layer.borderWidth = CGFloat(0.7)
         
         profileNameLabel?.scrollRate = 0
@@ -128,10 +128,6 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
     // Customize view to be able to re-use it for search results.
     func flagAsSearchResultPost() {
         descriptionLabel?.text = post!.song.title + " · " + post!.song.album
@@ -143,8 +139,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
             var duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = self.profileNameLabel!
             if post.player.isPlaying() {
-                color = UIColor.iceDarkRed()
-                
+                color = UIColor.iceDarkRed
                 // Will scroll labels
                 profileNameLabel?.holdScrolling = false
                 descriptionLabel?.holdScrolling = false

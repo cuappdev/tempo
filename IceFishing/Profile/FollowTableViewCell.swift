@@ -18,8 +18,8 @@ class FollowTableViewCell: UITableViewCell {
     
     override func didMoveToSuperview() {
         selectionStyle = .None
-        self.backgroundColor = UIColor.iceDarkGray()
-        separator.backgroundColor = UIColor.iceLightGray()
+        self.backgroundColor = UIColor.iceDarkGray
+        separator.backgroundColor = UIColor.iceLightGray
         
         userImage.layer.cornerRadius = userImage.bounds.size.width/2
         userImage.clipsToBounds = true
@@ -34,7 +34,7 @@ class FollowTableViewCell: UITableViewCell {
     // Custom selected cell view
     override func setSelected(selected: Bool, animated: Bool) {
         if (selected) {
-            self.contentView.backgroundColor = UIColor.iceLightGray()
+            self.contentView.backgroundColor = UIColor.iceLightGray
         } else {
             self.contentView.backgroundColor = UIColor.clearColor()
         }

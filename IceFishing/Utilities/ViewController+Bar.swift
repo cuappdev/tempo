@@ -13,7 +13,7 @@ extension UIViewController {
         //—————————————from MAIN VC——————————————————
         navigationItem.title = self.title
         
-        navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
+        navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         navigationController?.navigationBar.barStyle = .Black
         navigationController?.navigationBar.translucent = true
@@ -35,8 +35,8 @@ extension UIViewController {
         
         //—————————————from MAIN VC——————————————————
         if let tableSelf = self as? UITableViewController {
-            tableSelf.tableView.backgroundColor = UIColor.iceDarkGray()
-            tableSelf.tableView.separatorColor = UIColor.iceDarkGray()
+            tableSelf.tableView.backgroundColor = UIColor.iceDarkGray
+            tableSelf.tableView.separatorColor = UIColor.iceDarkGray
         }
 
     }

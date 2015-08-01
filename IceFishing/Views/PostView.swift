@@ -25,7 +25,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var likesLabel: UILabel?
     @IBOutlet var likedButton: UIButton?
     @IBOutlet var addButton: UIButton?
-    var fillColor = UIColor.iceDarkGray()
+    var fillColor = UIColor.iceDarkGray
  
     var type: ViewType = .Feed
     private var updateTimer: NSTimer?
@@ -125,7 +125,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         avatarImageView?.userInteractionEnabled = true
         profileNameLabel?.userInteractionEnabled = true
         
-        layer.borderColor = UIColor.iceDarkGray().CGColor
+        layer.borderColor = UIColor.iceDarkGray.CGColor
         layer.borderWidth = CGFloat(0.7)
         
         profileNameLabel?.scrollRate = 0
@@ -185,8 +185,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             var duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = self.profileNameLabel!
             if post.player.isPlaying() {
-                color = UIColor.iceDarkRed()
-                if let layer = avatarLayer {
+                color = UIColor.iceDarkRed
+				if let layer = avatarLayer {
                     let animation = CABasicAnimation(keyPath: "transform.rotation")
                     animation.fromValue = 0
                     animation.duration = 3 * M_PI
