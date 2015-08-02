@@ -1,6 +1,8 @@
 [submodule "IceFishing/Vendor/Alamofire"]
 	path = IceFishing/Vendor/Alamofire
 	url = https://github.com/Alamofire/Alamofire.git
+	ignore = all
 [submodule "IceFishing/Vendor/SwiftyJSON"]
 	path = IceFishing/Vendor/SwiftyJSON
 	url = https://github.com/SwiftyJSON/SwiftyJSON.git
+	ignore = all
