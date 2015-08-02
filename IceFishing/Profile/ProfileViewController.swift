@@ -16,13 +16,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var searchNavigationController: UINavigationController!
     
     // Post History Calendar
-    var collectionView : UICollectionView!
     var calendar : NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-    var startDate : NSDate! = NSDate(dateString:"2015-01-26")
-    var currentDate : NSDate! = NSDate()
+    var startDate = NSDate(dateString:"2015-01-26")
     // Hardcoded dates for testing
     var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-20"), NSDate(dateString:"2015-04-17"), NSDate(dateString:"2015-04-26"), NSDate(dateString:"2015-04-23"), NSDate(dateString:"2015-04-19"), NSDate(dateString:"2015-04-15"), NSDate(dateString:"2015-04-08"), NSDate(dateString:"2015-04-07")]
-    var daySize : CGSize!
     var padding : CGFloat = 5
     
     // Outlets
@@ -30,93 +27,63 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet weak var userHandleLabel: UILabel!
     @IBOutlet weak var followButtonLabel: UIButton!
-    @IBOutlet weak var numFollowersLabel: UILabel!
-    @IBOutlet weak var numFollowingLabel: UILabel!
     @IBOutlet weak var followersLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var divider: UIView!
-    @IBOutlet weak var postCalendarView: UIView!
     @IBOutlet weak var separator: UIView!
-    
+	@IBOutlet weak var collectionView: UICollectionView!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // TODO: Uncomment when API done
         //        API.sharedAPI.fetchPosts(User.currentUser.id) { post in
-        //            self.postedDates = post.date // dates user posted song
+        //            postedDates = post.date // dates user posted song
         //        }
         
         // Profile Info
-        self.nameLabel.text = otherUser.name
-        self.userHandleLabel.text = "@\(otherUser.username)"
+		title = "Profile"
+		beginIceFishing()
+		
+        nameLabel.text = otherUser.name
+        userHandleLabel.text = "@\(otherUser.username)"
         otherUser.loadImage {
             self.profilePictureView.image = $0
         }
-        self.profilePictureView.layer.masksToBounds = false
-        self.profilePictureView.layer.borderWidth = 1.5
-        self.profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
-        self.profilePictureView.frame = CGRectMake(0, 0, 150/2, 150/2)
-        self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.size.height/2
-        self.profilePictureView.clipsToBounds = true
+        profilePictureView.layer.borderWidth = 1.5
+        profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
+        profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
+        profilePictureView.clipsToBounds = true
         
         // Followers & Following
-        self.followButtonLabel.frame = CGRectMake(0, 0, 197/2, 59/2)
-        self.numFollowersLabel.text = "\(otherUser.followersCount)"
-        self.numFollowingLabel.text = "\(self.numFollowing)"
-        
-        if !self.isFollowing {
-            self.followButtonLabel.setTitle("FOLLOW", forState: .Normal)
+        followButtonLabel.setTitle("\(otherUser.followersCount)", forState: .Normal)
+		
+        if !isFollowing {
+            followButtonLabel.setTitle("FOLLOW", forState: .Normal)
         } else {
-            self.followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
+            followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
         }
         
         // User Creation Date
-        var dateFormatter = NSDateFormatter()
-        //!TODO: Make this a global date formatter
-        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
-        var dateFromString = dateFormatter.dateFromString(User.currentUser.createdAt)
-        //startDate = dateFromString
-        
-        // Navigation Bar
-        navigationItem.title = "Profile"
-        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
-        // Post History Calendar
-        let cols : Int = 6
-        let dayWidth = postCalendarView.frame.width/CGFloat(cols)
-        let dayHeight = dayWidth
-        daySize = CGSize(width: dayWidth, height: dayHeight)
+        let dateFromString = NSDateFormatter.dateFormatter.dateFromString(User.currentUser.createdAt)
+		
+		// Post History Calendar
         separator.backgroundColor = UIColor.iceDarkRed
         
-        let layout: HipStickyHeaderFlowLayout = HipStickyHeaderFlowLayout()
+        let layout = collectionView.collectionViewLayout as! HipStickyHeaderFlowLayout
         layout.sectionInset = UIEdgeInsets(top: 0, left: padding*6, bottom: padding*2, right: 0)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        
-        collectionView = UICollectionView(frame: postCalendarView.frame, collectionViewLayout: layout)
+		
         collectionView.registerClass(HipCalendarCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
         collectionView.registerClass(HipCalendarDayCollectionViewCell.self, forCellWithReuseIdentifier: "DayCell")
-        collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.backgroundColor = UIColor.clearColor()
-        collectionView.allowsMultipleSelection = true
-        collectionView.frame = CGRectMake(0, 0, postCalendarView.frame.width, postCalendarView.frame.height/2.25)
-        postCalendarView.addSubview(collectionView)
-        collectionView.scrollsToTop = false
-        
-        // Add back button
-        self.navigationItem.hidesBackButton = true
-        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height/2))
-        backButton.setImage(UIImage(named: "LeftArrow"), forState: .Normal)
-        backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        
-        // Add return to profile button
-        var profileButton = UIButton(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
-        profileButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
-        profileButton.addTarget(self, action: "popToRoot", forControlEvents: .TouchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
+		collectionView.scrollsToTop = false
+		
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close-Icon"), style: .Plain, target: self, action: "popToRoot")
+		
+		let views: [NSObject : AnyObject] = ["pic" : profilePictureView, "topGuide": self.topLayoutGuide]
+		self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: .DirectionLeadingToTrailing, metrics: nil, views: views))
     }
 
     // Return to profile view
@@ -149,7 +116,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 //                println(bool)
 //            }
         }
-        numFollowersLabel.text = "\(User.currentUser.followersCount)"
+//        numFollowersLabel.text = "\(User.currentUser.followersCount)"
         println(User.currentUser.followers)
     }
     
@@ -174,17 +141,16 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     // Helper Methods
     private func dateForIndexPath(indexPath: NSIndexPath) -> NSDate {
-        var date : NSDate! = currentDate?.dateByAddingMonths(-indexPath.section).lastDayOfMonth()
+        let date = NSDate().dateByAddingMonths(-indexPath.section).lastDayOfMonth()
         let components : NSDateComponents = date.components()
         components.day = date.numDaysInMonth() - indexPath.item
-        date = NSDate.dateFromComponents(components)
-        return date;
+        return NSDate.dateFromComponents(components)
     }
     
     // Cell
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let date: NSDate = dateForIndexPath(indexPath)
-        var cell : HipCalendarDayCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
+        let date = dateForIndexPath(indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
         cell.date = date
         cell.userInteractionEnabled = false
 
@@ -200,7 +166,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
         if (kind == UICollectionElementKindSectionHeader) {
-            let firstDayOfMonth: NSDate = dateForIndexPath(indexPath).firstDayOfMonth()
+            let firstDayOfMonth = dateForIndexPath(indexPath).firstDayOfMonth()
             var header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! HipCalendarCollectionReusableView
             header.firstDayOfMonth = firstDayOfMonth
             
@@ -213,29 +179,24 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     // MARK: UICollectionViewDataSource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        var numberOfMonths : Int? = startDate?.numberOfMonths(self.currentDate!)
-        println(numberOfMonths)
-        return numberOfMonths == nil ? 0 : numberOfMonths!
+        return startDate.numberOfMonths(NSDate())
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let firstDayOfMonth : NSDate? = currentDate?.firstDayOfMonth().dateByAddingMonths(-section)
-        var numberOfDays : Int? = firstDayOfMonth?.numDaysInMonth()
-        numberOfDays == nil ? 0 : numberOfDays!
-        println(firstDayOfMonth)
+        let firstDayOfMonth = NSDate().firstDayOfMonth().dateByAddingMonths(-section)
+        var numberOfDays = firstDayOfMonth.numDaysInMonth()
         
-        if (firstDayOfMonth!.month() == startDate.month() && firstDayOfMonth!.year() == startDate.year()) {
-            numberOfDays = startDate.numDaysUntilEndDate(firstDayOfMonth!.lastDayOfMonth())
+        if (firstDayOfMonth.month() == startDate.month() && firstDayOfMonth.year() == startDate.year()) {
+            numberOfDays = startDate.numDaysUntilEndDate(firstDayOfMonth.lastDayOfMonth())
         }
-        println(numberOfDays)
         
-        return numberOfDays!
+        return numberOfDays
     }
     
     // MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let date: NSDate = dateForIndexPath(indexPath)
+        let date = dateForIndexPath(indexPath)
         let index = find(postedDates, date) as Int?
         
         // Push to TableView with posted songs and dates
@@ -253,7 +214,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return daySize
+		let cols: CGFloat = 6
+		let dayWidth = collectionView.frame.width / cols
+		let dayHeight = dayWidth
+        return CGSize(width: dayWidth, height: dayHeight)
     }
     
 }

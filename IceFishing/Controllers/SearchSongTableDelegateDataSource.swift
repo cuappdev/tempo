@@ -71,16 +71,16 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
          NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if results.count == 0 && count(lastTerm) == 0 {
-            tableView.backgroundView = backgroundView
-            return 0
-        }
-
-        tableView.backgroundView = UIView()
-        return 1
-    }
-    
+//    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//        if results.count == 0 && count(lastTerm) == 0 {
+//            tableView.backgroundView = backgroundView
+//            return 0
+//        }
+//
+//        tableView.backgroundView = UIView()
+//        return 1
+//    }
+	
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results.count
     }
