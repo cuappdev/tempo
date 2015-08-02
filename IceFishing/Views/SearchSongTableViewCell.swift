@@ -13,7 +13,6 @@ class SearchSongTableViewCell: UITableViewCell {
     @IBOutlet var postView: SearchPostView!
     
     override func didMoveToSuperview() {
-        selectionStyle = .None
         backgroundColor = UIColor.iceLightGray
     }
 }

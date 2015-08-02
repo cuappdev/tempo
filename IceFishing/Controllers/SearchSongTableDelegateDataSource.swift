@@ -28,7 +28,9 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     var backgroundView: UIView!
     var bottomView: UIView!
     var selectedSong: Song!
-    
+	
+	lazy var postButton = PostButton.instanceFromNib()
+	
     // MARK: UITableViewDataSource
     
     override init() {
@@ -136,26 +138,18 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     }
 
     func selectSong(song: Song) {
-        if let previousSelectionView = bottomView.viewWithTag(150) {
-            previousSelectionView.removeFromSuperview()
-        }
-        
-        var selectionView = NSBundle.mainBundle().loadNibNamed("SearchResultSelectionView", owner: self, options: nil).first as! UIView
-        
-        bottomView.addSubview(selectionView)
-        selectionView.frame.size.width = screenSize.width
+		if postButton.superview == nil {
+			postButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+			bottomView.addSubview(postButton)
+			bottomView.addConstraints(NSLayoutConstraint.constraintsToFillSuperview(postButton))
+		}
         
         UIView.animateWithDuration(0.3, animations: {
-            var frame = self.bottomView.frame
-            frame.origin.y = screenSize.height - CGFloat(self.kSearchResultHeight)
-            self.bottomView.frame = frame
+            self.bottomView.frame = CGRectMake(0, screenSize.height - self.kSearchResultHeight, self.bottomView.frame.width, self.kSearchResultHeight)
         })
-        
-        var firstLabel = selectionView.viewWithTag(2) as! UILabel
-        var button = selectionView.viewWithTag(4) as! UIButton
 
-        firstLabel.text = song.title + " - " + song.artist
-        button.addTarget(self, action: "submitSong", forControlEvents: UIControlEvents.TouchUpInside)
+        postButton.title = song.title + " - " + song.artist
+        postButton.addTarget(self, action: "submitSong", forControlEvents: UIControlEvents.TouchUpInside)
         
         selectedSong = song
         

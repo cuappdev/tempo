@@ -70,13 +70,12 @@ class API {
         return $0["posts"]?.map { Post(json: JSON($0)) }
     }
     
-    // Could call getSession()
     private var sessionCode: String {
         set {
-            NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: sessionCodeKey)
+			NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: sessionCodeKey)
         }
         get {
-            return NSUserDefaults.standardUserDefaults().objectForKey(sessionCodeKey) as? String ?? ""
+			return NSUserDefaults.standardUserDefaults().objectForKey(sessionCodeKey) as? String ?? ""
         }
     }
     

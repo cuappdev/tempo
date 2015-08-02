@@ -21,7 +21,9 @@
 		1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */; };
 		1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9C11AACC4C0007822B0 /* Images.xcassets */; };
 		1D72D9D11AACC4C0007822B0 /* IceFishingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9D01AACC4C0007822B0 /* IceFishingTests.swift */; };
-		1DB476481AEF24670066014F /* SearchResultSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB476471AEF24670066014F /* SearchResultSelectionView.xib */; };
+		1DA44FC61B6D84D1009EC2BD /* PostButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA44FC51B6D84D1009EC2BD /* PostButton.swift */; };
+		1DB283901B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */; };
+		1DB476481AEF24670066014F /* PostButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB476471AEF24670066014F /* PostButton.xib */; };
 		1DC9BBA01AE805A00033E970 /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */; };
 		1DCB96141AED5EA7007F6A4B /* APIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCB96121AED5EA7007F6A4B /* APIViewController.swift */; };
 		1DCB96151AED5EA7007F6A4B /* APIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCB96131AED5EA7007F6A4B /* APIViewController.xib */; };
@@ -209,7 +211,9 @@
 		1D72D9D01AACC4C0007822B0 /* IceFishingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceFishingTests.swift; sourceTree = "<group>"; };
 		1D9BBEF01AE487D000C5AF8D /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Vendor/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		1D9BBF0E1AE487E300C5AF8D /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = Vendor/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
-		1DB476471AEF24670066014F /* SearchResultSelectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultSelectionView.xib; sourceTree = "<group>"; };
+		1DA44FC51B6D84D1009EC2BD /* PostButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostButton.swift; sourceTree = "<group>"; };
+		1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutContraint+Fill.swift"; sourceTree = "<group>"; };
+		1DB476471AEF24670066014F /* PostButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostButton.xib; sourceTree = "<group>"; };
 		1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedTableViewCell.xib; path = IceFishing/Profile/FeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		1DCB96121AED5EA7007F6A4B /* APIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIViewController.swift; sourceTree = "<group>"; };
 		1DCB96131AED5EA7007F6A4B /* APIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APIViewController.xib; sourceTree = "<group>"; };
@@ -337,6 +341,7 @@
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
 				FAB564721AF6A8C9001059DF /* LikedTableViewController.xib */,
 				FA674C0E1AF917A200C14463 /* ViewController+Bar.swift */,
+				1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -375,7 +380,7 @@
 				FA1E1A7D1ADB0818007C823C /* PostView.swift */,
 				BA24C57C1AF866630066C2ED /* SearchPostView.swift */,
 				FA171CBF1AF1D758007B40AF /* FeedImageView.swift */,
-				1DB476471AEF24670066014F /* SearchResultSelectionView.xib */,
+				1DB283911B6D969A00134FEA /* Controls */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -464,6 +469,15 @@
 				1D9BBF1C1AE487E300C5AF8D /* SwiftyJSON OSX Tests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1DB283911B6D969A00134FEA /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				1DA44FC51B6D84D1009EC2BD /* PostButton.swift */,
+				1DB476471AEF24670066014F /* PostButton.xib */,
+			);
+			name = Controls;
 			sourceTree = "<group>";
 		};
 		1DE932921AAD12A700AD3BF0 /* Vendor */ = {
@@ -642,7 +656,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
-				ORGANIZATIONNAME = "Lucas Derraugh";
+				ORGANIZATIONNAME = CUAppDev;
 				TargetAttributes = {
 					1D72D9B41AACC4C0007822B0 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -754,7 +768,7 @@
 				D17395791ADB081C00A53AEE /* FollowingViewController.xib in Resources */,
 				D148F4AB1AF03EB4009AB073 /* PostHistoryTableViewController.xib in Resources */,
 				D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */,
-				1DB476481AEF24670066014F /* SearchResultSelectionView.xib in Resources */,
+				1DB476481AEF24670066014F /* PostButton.xib in Resources */,
 				1D25B3181AC369D900F64047 /* README.txt in Resources */,
 				6D3FA6611AD5FD5C00B1320D /* Username.xib in Resources */,
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
@@ -794,10 +808,12 @@
 				95711F2C1AF47769002167EB /* Tweaks.swift in Sources */,
 				7FCE05EA1ABF4BD1002103DE /* TrendingViewController.swift in Sources */,
 				95711F1C1AF4774D002167EB /* _FBTweakTableViewCell.m in Sources */,
+				1DB283901B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift in Sources */,
 				D17395741ADB080900A53AEE /* FollowersViewController.swift in Sources */,
 				95711F301AF4778C002167EB /* ADScreenCapture.swift in Sources */,
 				1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */,
 				FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */,
+				1DA44FC61B6D84D1009EC2BD /* PostButton.swift in Sources */,
 				95711F171AF4774D002167EB /* _FBTweakArrayViewController.m in Sources */,
 				1D1DD7141AE492750066AB39 /* Util.swift in Sources */,
 				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
@@ -982,6 +998,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "IceFishing/IceFishing-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 			};
 			name = Debug;
 		};
@@ -1001,6 +1018,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "IceFishing/IceFishing-Bridging-Header.h";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 			};
 			name = Release;
 		};
