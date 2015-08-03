@@ -106,7 +106,7 @@ class SubmitBugViewController: UIViewController {
         ]
         let imageData = fileContents as NSData!
         let urlRequest = urlRequestWithComponents("https://slack.com/api/files.upload", parameters: parameters, data: imageData)
-        Alamofire.upload(urlRequest.0, urlRequest.1)
+        Alamofire.upload(urlRequest.0, data: urlRequest.1)
             .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
                 println("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
             }
@@ -134,7 +134,7 @@ class SubmitBugViewController: UIViewController {
         ]
         let movieData = fileContents as NSData!
         let urlRequest = urlRequestWithComponents("https://slack.com/api/files.upload", parameters: parameters, data: movieData)
-        Alamofire.upload(urlRequest.0, urlRequest.1)
+        Alamofire.upload(urlRequest.0, data: urlRequest.1)
             .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
                 println("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
             }
