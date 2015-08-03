@@ -63,9 +63,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         } else {
             followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
         }
-        
-        // User Creation Date
-        let dateFromString = NSDateFormatter.dateFormatter.dateFromString(User.currentUser.createdAt)
 		
 		// Post History Calendar
         separator.backgroundColor = UIColor.iceDarkRed

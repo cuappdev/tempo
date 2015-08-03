@@ -9,9 +9,13 @@
 import Foundation
 
 extension NSDateFormatter {
-	static var dateFormatter: NSDateFormatter {
+	
+	// All formatter types should be in here
+	static var parsingDateFormatter: NSDateFormatter {
 		let formatter = NSDateFormatter()
 		formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
+		formatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+		formatter.locale = NSLocale(localeIdentifier: "en_US")
 		return formatter
 	}
 }

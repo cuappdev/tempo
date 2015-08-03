@@ -37,7 +37,7 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let dayInnerCircleViewInset:CGFloat = contentView.bounds.size.height * 0.2
+        let dayInnerCircleViewInset = contentView.bounds.size.height * 0.2
         dayInnerCircleView = UIView(frame: CGRectInset(contentView.frame, dayInnerCircleViewInset, dayInnerCircleViewInset))
         dayInnerCircleView.layer.cornerRadius = CGRectGetHeight(dayInnerCircleView.bounds) / 2
         contentView.addSubview(dayInnerCircleView)

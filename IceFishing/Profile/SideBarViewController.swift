@@ -91,7 +91,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileView.backgroundColor = UIColor.iceLightGray
         sideView.hidden = false
         if (searchNavigationController == nil) {
-            let loginVC = LoginViewController(nibName: "LoginViewController", bundle: nil)
+            let loginVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
             searchNavigationController = UINavigationController(rootViewController: loginVC)
         }
         selectionHandler?(searchNavigationController)
@@ -122,7 +122,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CGFloat(55)
+        return 55
     }
     
 }

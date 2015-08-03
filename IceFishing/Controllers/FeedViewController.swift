@@ -344,7 +344,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
         navigationController?.view.addSubview(searchContainer)
         searchContainer.hidden = true
         
-        searchBottomView = UIView(frame: CGRectMake(0, screenSize.height, screenSize.width, CGFloat(kSearchResultHeight)))
+        searchBottomView = UIView(frame: CGRectMake(0, screenSize.height, screenSize.width, kSearchResultHeight))
         navigationController?.view.addSubview(searchBottomView)
     }
     

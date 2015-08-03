@@ -126,7 +126,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         profileNameLabel?.userInteractionEnabled = true
         
         layer.borderColor = UIColor.iceDarkGray.CGColor
-        layer.borderWidth = CGFloat(0.7)
+        layer.borderWidth = 0.7
         
         profileNameLabel?.scrollRate = 0
         profileNameLabel?.trailingBuffer = 8.0
@@ -239,7 +239,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func drawRect(rect: CGRect) {
-        var progress = post?.player.progress ?? 0.0
+        let progress = post?.player.progress ?? 0.0
         
         super.drawRect(rect)
         fillColor.setFill()

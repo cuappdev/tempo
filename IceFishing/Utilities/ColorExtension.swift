@@ -10,14 +10,14 @@ import Foundation
 
 extension UIColor {
 	class var iceDarkRed: UIColor {
-        return UIColor(red: CGFloat(187.0/255.0), green: CGFloat(61.0/255.0), blue: CGFloat(52.0/255.0), alpha: 1.0)
+        return UIColor(red: 187/255.0, green: 61/255.0, blue: 52/255.0, alpha: 1.0)
     }
     
 	class var iceDarkGray: UIColor {
-        return UIColor(red: CGFloat(35/255.0), green: CGFloat(36/255.0), blue: CGFloat(39/255.0), alpha: 1.0)
+        return UIColor(red: 35/255.0, green: 36/255.0, blue: 39/255.0, alpha: 1.0)
     }
     
 	class var iceLightGray: UIColor {
-        return UIColor(red: CGFloat(44/255.0), green: CGFloat(45/255.0), blue: CGFloat(48/255.0), alpha: 1.0)
+        return UIColor(red: 44/255.0, green: 45/255.0, blue: 48/255.0, alpha: 1.0)
     }
 }
