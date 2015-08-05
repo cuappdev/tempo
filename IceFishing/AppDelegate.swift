@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var tools:Tools!
+    var tools: Tools!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
@@ -39,10 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     var sidebarVC: SideBarViewController?
-    var feedNavVC: UINavigationController?
-    var revealVC: SWRevealViewController?
+	var revealVC: SWRevealViewController?
+	var feedNavVC: UINavigationController?
     var peopleNavVC: UINavigationController?
     var likedNavVC: UINavigationController?
+	lazy var mainNavigationController = UINavigationController()
     
     // Toggle rootViewController
     func toggleRootVC() {
@@ -65,13 +66,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if (sidebarVC == nil) {
                 sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
-                sidebarVC?.elements = [
+                sidebarVC!.elements = [
                     SideBarElement(title: "Feed", viewController: feedNavVC, image: UIImage(named: "Feed-Icon")),
                     SideBarElement(title: "People", viewController: peopleNavVC, image: UIImage(named: "People-Icon")),
                     SideBarElement(title: "Liked", viewController: likedNavVC, image: UIImage(named: "Liked-Icon")),
                     SideBarElement(title: "Spotify", viewController: feedNavVC, image: UIImage(named: "Spotify-Icon"))
                 ]
-                sidebarVC?.selectionHandler = {
+                sidebarVC!.selectionHandler = {
                     [weak self]
                     (viewController) in
                     if let viewController = viewController {

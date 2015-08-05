@@ -10,7 +10,7 @@ import UIKit
 
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var otherUser: User!
+    var user: User!
     var isFollowing = false
     var numFollowing: Int = 0
     var searchNavigationController: UINavigationController!
@@ -45,9 +45,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		title = "Profile"
 		beginIceFishing()
 		
-        nameLabel.text = otherUser.name
-        userHandleLabel.text = "@\(otherUser.username)"
-        otherUser.loadImage {
+        nameLabel.text = user.name
+        userHandleLabel.text = "@\(user.username)"
+        user.loadImage {
             self.profilePictureView.image = $0
         }
         profilePictureView.layer.borderWidth = 1.5
@@ -56,7 +56,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         profilePictureView.clipsToBounds = true
         
         // Followers & Following
-        followButtonLabel.setTitle("\(otherUser.followersCount)", forState: .Normal)
+        followButtonLabel.setTitle("\(user.followersCount)", forState: .Normal)
 		
         if !isFollowing {
             followButtonLabel.setTitle("FOLLOW", forState: .Normal)

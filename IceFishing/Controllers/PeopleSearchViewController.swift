@@ -73,7 +73,7 @@ class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UI
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray
         let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
-        profileVC.otherUser = users[indexPath.row]
+        profileVC.user = users[indexPath.row]
         searchBar.removeFromSuperview()
         self.navigationController?.pushViewController(profileVC, animated: true)
     }

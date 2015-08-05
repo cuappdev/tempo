@@ -10,15 +10,15 @@
 		1D1DD7141AE492750066AB39 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1DD7121AE492750066AB39 /* Util.swift */; };
 		1D1DD7161AE492B50066AB39 /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1DD7151AE492B50066AB39 /* SubmitBugViewController.swift */; };
 		1D1DD7191AE4932F0066AB39 /* CEMovieMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1DD7181AE4932F0066AB39 /* CEMovieMaker.m */; };
-		1D48BC4D1B6F64F20003883D /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D48BC4B1B6F64F20003883D /* Alamofire.framework */; };
-		1D48BC4E1B6F64F20003883D /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D48BC4C1B6F64F20003883D /* SwiftyJSON.framework */; };
-		1D48BC541B6F661E0003883D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D48BC521B6F661E0003883D /* Bolts.framework */; };
-		1D48BC551B6F661E0003883D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D48BC531B6F661E0003883D /* FacebookSDK.framework */; };
-		1D48BC571B6F79000003883D /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D48BC561B6F79000003883D /* Spotify.framework */; };
+		1D5F56E01B71B68400BF0F04 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA48FFA1B71B5280085732F /* SwiftyJSON.framework */; };
+		1D5F56E21B71B6CD00BF0F04 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5F56E11B71B6CD00BF0F04 /* Spotify.framework */; };
 		1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */; };
 		1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */; };
 		1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9C11AACC4C0007822B0 /* Images.xcassets */; };
 		1DA44FC61B6D84D1009EC2BD /* PostButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA44FC51B6D84D1009EC2BD /* PostButton.swift */; };
+		1DA48FFB1B71B5280085732F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA48FF91B71B5280085732F /* Alamofire.framework */; };
+		1DA490011B71B54E0085732F /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA48FFF1B71B54E0085732F /* Bolts.framework */; };
+		1DA490021B71B54E0085732F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA490001B71B54E0085732F /* FacebookSDK.framework */; };
 		1DB283901B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */; };
 		1DB476481AEF24670066014F /* PostButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB476471AEF24670066014F /* PostButton.xib */; };
 		1DC9BBA01AE805A00033E970 /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */; };
@@ -94,11 +94,7 @@
 		1D1DD7151AE492B50066AB39 /* SubmitBugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitBugViewController.swift; sourceTree = "<group>"; };
 		1D1DD7171AE4932F0066AB39 /* CEMovieMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEMovieMaker.h; sourceTree = "<group>"; };
 		1D1DD7181AE4932F0066AB39 /* CEMovieMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEMovieMaker.m; sourceTree = "<group>"; };
-		1D48BC4B1B6F64F20003883D /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		1D48BC4C1B6F64F20003883D /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = ../Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
-		1D48BC521B6F661E0003883D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../IceFishing/Vendor/FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
-		1D48BC531B6F661E0003883D /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../IceFishing/Vendor/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
-		1D48BC561B6F79000003883D /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spotify.framework; path = "../Carthage/Checkouts/ios-sdk/Spotify.framework"; sourceTree = "<group>"; };
+		1D5F56E11B71B6CD00BF0F04 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spotify.framework; path = "Carthage/Checkouts/ios-sdk/Spotify.framework"; sourceTree = "<group>"; };
 		1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		1D72D9B51AACC4C0007822B0 /* IceFishing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IceFishing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D72D9B91AACC4C0007822B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -108,6 +104,10 @@
 		1D72D9CF1AACC4C0007822B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D72D9D01AACC4C0007822B0 /* IceFishingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceFishingTests.swift; sourceTree = "<group>"; };
 		1DA44FC51B6D84D1009EC2BD /* PostButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostButton.swift; sourceTree = "<group>"; };
+		1DA48FF91B71B5280085732F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		1DA48FFA1B71B5280085732F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		1DA48FFF1B71B54E0085732F /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = IceFishing/Vendor/FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
+		1DA490001B71B54E0085732F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = IceFishing/Vendor/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSLayoutContraint+Fill.swift"; path = "../Controllers/NSLayoutContraint+Fill.swift"; sourceTree = "<group>"; };
 		1DB476471AEF24670066014F /* PostButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostButton.xib; sourceTree = "<group>"; };
 		1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedTableViewCell.xib; path = IceFishing/Profile/FeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -201,11 +201,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D48BC571B6F79000003883D /* Spotify.framework in Frameworks */,
-				1D48BC541B6F661E0003883D /* Bolts.framework in Frameworks */,
-				1D48BC551B6F661E0003883D /* FacebookSDK.framework in Frameworks */,
-				1D48BC4D1B6F64F20003883D /* Alamofire.framework in Frameworks */,
-				1D48BC4E1B6F64F20003883D /* SwiftyJSON.framework in Frameworks */,
+				1D5F56E21B71B6CD00BF0F04 /* Spotify.framework in Frameworks */,
+				1DA490011B71B54E0085732F /* Bolts.framework in Frameworks */,
+				1DA490021B71B54E0085732F /* FacebookSDK.framework in Frameworks */,
+				1DA48FFB1B71B5280085732F /* Alamofire.framework in Frameworks */,
+				1D5F56E01B71B68400BF0F04 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,18 +241,6 @@
 				1DD875FB1B6E27DD0041C45B /* NSDateFormatter+Shared.swift */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		1D25B3101AC369D900F64047 /* FacebookSDK */ = {
-			isa = PBXGroup;
-			children = (
-				1D48BC561B6F79000003883D /* Spotify.framework */,
-				1D48BC521B6F661E0003883D /* Bolts.framework */,
-				1D48BC531B6F661E0003883D /* FacebookSDK.framework */,
-				1D48BC4B1B6F64F20003883D /* Alamofire.framework */,
-				1D48BC4C1B6F64F20003883D /* SwiftyJSON.framework */,
-			);
-			path = FacebookSDK;
 			sourceTree = "<group>";
 		};
 		1D65392E1AD0E23800E82627 /* Views */ = {
@@ -354,7 +342,11 @@
 		6D54C2A61ABF5A87007648A5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1D25B3101AC369D900F64047 /* FacebookSDK */,
+				1D5F56E11B71B6CD00BF0F04 /* Spotify.framework */,
+				1DA48FFF1B71B54E0085732F /* Bolts.framework */,
+				1DA490001B71B54E0085732F /* FacebookSDK.framework */,
+				1DA48FF91B71B5280085732F /* Alamofire.framework */,
+				1DA48FFA1B71B5280085732F /* SwiftyJSON.framework */,
 			);
 			name = Frameworks;
 			path = ..;
@@ -558,7 +550,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Checkouts/ios-sdk/Spotify.framework",
 			);
 			name = "Carthage Copy Frameworks Script";
 			outputPaths = (
@@ -744,6 +735,7 @@
 					"$(PROJECT_DIR)/Carthage/Checkouts/ios-sdk",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -768,6 +760,7 @@
 					"$(PROJECT_DIR)/Carthage/Checkouts/ios-sdk",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

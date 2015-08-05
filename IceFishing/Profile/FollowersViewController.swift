@@ -70,7 +70,7 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
-        profileVC.otherUser = followers[indexPath.row]
+        profileVC.user = followers[indexPath.row]
         self.navigationController?.pushViewController(profileVC, animated: true)
     }
 }
