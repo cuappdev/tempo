@@ -16,12 +16,12 @@ class PostButton: UIControl {
 		fatalError("Must use +instanceFromNib")
 	}
 
-	required init(coder aDecoder: NSCoder) {
+	required init?(coder aDecoder: NSCoder) {
 	    super.init(coder: aDecoder)
 	}
 	
 	class func instanceFromNib() -> PostButton {
-		return UINib(nibName: reflect(self).summary.pathExtension, bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! PostButton
+		return UINib(nibName: "PostButton", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! PostButton
 	}
 	
 	var title: String {

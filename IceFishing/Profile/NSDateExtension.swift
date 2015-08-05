@@ -26,7 +26,7 @@ extension NSDate {
     
     private func HipCalendarDateComponents(date: NSDate) -> NSDateComponents {
         let calendar : NSCalendar = NSCalendar.currentCalendar()
-        return calendar.components(NSCalendarUnit.CalendarUnitYear|NSCalendarUnit.CalendarUnitMonth|NSCalendarUnit.CalendarUnitWeekOfYear|NSCalendarUnit.CalendarUnitDay, fromDate:self)
+        return calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Day], fromDate:self)
     }
     
     func components() -> NSDateComponents {
@@ -66,7 +66,7 @@ extension NSDate {
         let firstDay : NSDate = self.firstDayOfMonth()
         let lastDay : NSDate = self.lastDayOfMonth()
         
-        let components : NSDateComponents = calendar.components(NSCalendarUnit.CalendarUnitDay, fromDate: firstDay, toDate: lastDay, options: NSCalendarOptions(0))
+        let components : NSDateComponents = calendar.components(NSCalendarUnit.Day, fromDate: firstDay, toDate: lastDay, options: NSCalendarOptions(rawValue: 0))
         
         if (isCurrentMonth(firstDay)) {
             components.day = NSDate().day()
@@ -78,7 +78,7 @@ extension NSDate {
     
     func numberOfMonths(endDate: NSDate) -> Int {
         let calendar : NSCalendar = NSCalendar.currentCalendar()
-        let components : NSDateComponents = calendar.components(NSCalendarUnit.CalendarUnitMonth, fromDate:self, toDate:endDate, options: NSCalendarOptions(0))
+        let components : NSDateComponents = calendar.components(NSCalendarUnit.Month, fromDate:self, toDate:endDate, options: NSCalendarOptions(rawValue: 0))
         return components.month + 1
     }
     
@@ -86,12 +86,12 @@ extension NSDate {
         let calendar : NSCalendar = NSCalendar.currentCalendar()
         let components : NSDateComponents = NSDateComponents()
         components.month = months
-        return calendar.dateByAddingComponents(components, toDate: self, options: NSCalendarOptions(0))!
+        return calendar.dateByAddingComponents(components, toDate: self, options: NSCalendarOptions(rawValue: 0))!
     }
     
     func numDaysUntilEndDate(endDate: NSDate) -> Int {
         let calendar : NSCalendar = NSCalendar.currentCalendar()
-        let components : NSDateComponents = calendar.components(NSCalendarUnit.CalendarUnitDay, fromDate:self, toDate:endDate, options: NSCalendarOptions(0))
+        let components : NSDateComponents = calendar.components(NSCalendarUnit.Day, fromDate:self, toDate:endDate, options: NSCalendarOptions(rawValue: 0))
         return components.day + 1
     }
     

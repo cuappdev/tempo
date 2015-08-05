@@ -27,7 +27,7 @@ class User: NSObject, NSCoding {
     var lastName: String = ""
     var name: String {
         set(newName) {
-            let newName = split(newName) { $0 == " " }
+            let newName = split(newName.characters) { $0 == " " }.map { String($0) }
             firstName = newName.first ?? ""
             lastName = newName.count > 1 ? newName.last! : ""
         }
@@ -48,7 +48,12 @@ class User: NSObject, NSCoding {
                 if let fbid = self?.fbid {
                     if let url = NSURL(string: "http://graph.facebook.com/\(fbid)/picture?type=large") {
                         let request = NSURLRequest(URL: url, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
-                        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
+                        let data: NSData?
+                        do {
+                            data = try NSURLConnection.sendSynchronousRequest(request, returningResponse: nil)
+                        } catch _ {
+                            data = nil
+                        }
                         
                         if let data = data {
                             self?.profileImage = UIImage(data: data)
@@ -93,7 +98,7 @@ class User: NSObject, NSCoding {
     // Extend NSCoding
     // MARK: - NSCoding
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init()
         caption = aDecoder.decodeObjectForKey("caption") as! String
         createdAt = aDecoder.decodeObjectForKey("created_at") as! String

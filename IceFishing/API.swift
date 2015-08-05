@@ -111,9 +111,9 @@ class API {
     
     func updateCurrentUser(changedUsername: String, didSucceed: Bool -> Void) {
         let map: [String: Int] -> Bool? = {
-            if let success = $0["user"] {
+            if let _ = $0["user"] {
                 User.currentUser.username = changedUsername
-                println("User: \(User.currentUser)")
+                print("User: \(User.currentUser)")
                 return true
             }
             return false
@@ -191,18 +191,18 @@ class API {
     private func makeNetworkRequest<O, T>(method: Alamofire.Method, router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
         Alamofire
             .request(method, router, parameters: params)
-            .responseJSON { (request, response, json, error) -> Void in
+            .responseJSON { (request, response, json) -> Void in
                 if let json = json as? O {
                     if let obj = map(json) {
                         completion(obj)
-                        println(json)
+                        print(json)
                     }
                 } else {
-                    println("—————— Couldn't decompose object ——————")
-                    println("JSON: \(json)")
-                    println("Error: \(error)")
-                    println("Request: \(request)")
-                    println("Response: \(response)")
+                    print("—————— Couldn't decompose object ——————")
+                    print("JSON: \(json)")
+//                    print("Error: \(error)")
+                    print("Request: \(request)")
+                    print("Response: \(response)")
                 }
         }
     }

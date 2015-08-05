@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FollowingViewController: UITableViewController, UIScrollViewDelegate {
+class FollowingViewController: UITableViewController {
     
     var following: [User]! = []
     
@@ -30,7 +30,7 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile
-        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height))
+        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height))
         backButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
         backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
@@ -66,7 +66,7 @@ class FollowingViewController: UITableViewController, UIScrollViewDelegate {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        let selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray
         let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"

@@ -11,11 +11,11 @@ import UIKit
 extension NSLayoutConstraint {
 	
 	class func constraintsToFillSuperview(view: UIView) -> [NSLayoutConstraint]{
-		view.setTranslatesAutoresizingMaskIntoConstraints(false)
+		view.translatesAutoresizingMaskIntoConstraints = false
 		
 		var constraints: [NSLayoutConstraint] = []
-		constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[v]|", options: .DirectionLeadingToTrailing, metrics: nil, views: ["v" : view]) as! [NSLayoutConstraint]
-		constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|[v]|", options: .DirectionLeadingToTrailing, metrics: nil, views: ["v" : view]) as! [NSLayoutConstraint]
+		constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[v]|", options: .DirectionLeadingToTrailing, metrics: nil, views: ["v" : view]) 
+		constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|[v]|", options: .DirectionLeadingToTrailing, metrics: nil, views: ["v" : view]) 
 		
 		return constraints
 	}

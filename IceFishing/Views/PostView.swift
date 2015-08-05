@@ -62,9 +62,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
-                println(post.date)
-                
-                if let date = post.date {
+                print(post.date)
+				
+                if let _ = post.date {
                     let dateFormatter = NSDateFormatter()
                     // dateFormatter.doesRelativeDateFormatting = true
                     dateFormatter.dateStyle = .NoStyle
@@ -174,7 +174,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     func updateProfileLabelTextColor() {
         let avatarLayer = avatarImageView?.layer
-        let current: AnyObject? = layer.presentationLayer()?.valueForKeyPath("transform.rotation")
+//        let current: AnyObject? = layer.presentationLayer()?.valueForKeyPath("transform.rotation")
         if let layer = avatarLayer {
             layer.transform = CATransform3DIdentity
             layer.removeAnimationForKey("transform.rotation")
@@ -182,7 +182,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 
         if let post = post {
             var color: UIColor!
-            var duration = NSTimeInterval(0.3) as NSTimeInterval
+            let duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = self.profileNameLabel!
             if post.player.isPlaying() {
                 color = UIColor.iceDarkRed
@@ -204,10 +204,10 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 // Labels won't scroll
                 profileNameLabel?.holdScrolling = true
                 descriptionLabel?.holdScrolling = true
-                if let layer = avatarLayer {
-                    println("\(current)")
-                    
-                }
+//                if let layer = avatarLayer {
+//                    print("\(current)")
+//                    
+//                }
 
             }
             
@@ -229,8 +229,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             post?.player.play(false)
         }
         
-        var xTranslation = gesture.locationInView(self).x
-        var cellWidth = bounds.width
+        let xTranslation = gesture.locationInView(self).x
+        let cellWidth = bounds.width
         
         let progress = Double(xTranslation/cellWidth)
         post?.player.progress = progress
@@ -258,7 +258,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     offsetY = superview.contentOffset.y
                     offsetX = superview.contentOffset.x
                 }
-                var translation = self.progressGestureRecognizer?.translationInView(self)
+                let translation = self.progressGestureRecognizer?.translationInView(self)
                 
                 if let translation = translation {
                     return ((fabs(translation.x) > fabs(translation.y)) &&
@@ -277,13 +277,13 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             let hitView = self.hitTest(tapPoint, withEvent: nil)
             if hitView == likedButton {
                 post.like()
-                println("Liking")
+                print("Liking")
             } else if hitView == addButton {
-                println("Adding")
+                print("Adding")
             } else if post.player.isPlaying() {
                 if hitView == avatarImageView || hitView == self.profileNameLabel {
                     // GO TO PROFILE VIEW CONTROLLER
-                    println(post.user.fbid) 
+                    print(post.user.fbid) 
                 }
             }
         }

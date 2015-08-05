@@ -44,7 +44,7 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         tableView = table
 
         backgroundView = UIView(frame: CGRectMake(0, 0, tableView.frame.width, tableView.frame.height))
-        var backgroundLabel = UILabel()
+        let backgroundLabel = UILabel()
         backgroundLabel.text = "Post your song of the day!"
         backgroundLabel.font = UIFont(name: "AvenirNext-Medium", size: 21)
         backgroundLabel.textColor = UIColor(white: 153/255.0, alpha: 1)
@@ -52,7 +52,7 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         backgroundLabel.sizeToFit()
         backgroundLabel.frame.size.width = screenSize.width
         backgroundLabel.frame.origin.y = 235
-        var backgroundGlass = UIImageView(frame: CGRectMake((screenSize.width - 95)/2, 115, 95, 95))
+        let backgroundGlass = UIImageView(frame: CGRectMake((screenSize.width - 95)/2, 115, 95, 95))
         backgroundGlass.image = UIImage(named: "search-glass")
         backgroundView.addSubview(backgroundGlass)
         backgroundView.addSubview(backgroundLabel)
@@ -106,7 +106,7 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("searchSongResultsCell", forIndexPath: indexPath) as! SearchSongTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("searchSongResultsCell", forIndexPath: indexPath) as! SearchSongTableViewCell
         let post = results[indexPath.row]
         cell.postView.post = post
         cell.postView.avatarImageView?.placeholderImage = missingImage
@@ -139,7 +139,7 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
 
     func selectSong(song: Song) {
 		if postButton.superview == nil {
-			postButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+			postButton.translatesAutoresizingMaskIntoConstraints = false
 			bottomView.addSubview(postButton)
 			bottomView.addConstraints(NSLayoutConstraint.constraintsToFillSuperview(postButton))
 		}
@@ -161,8 +161,8 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     }
     
     func keyboardFrameChanged(notification: NSNotification) {
-        var rect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
-        println(rect)
+        let rect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
+        print(rect)
         tableView.beginUpdates()
         keyboardHeight = screenSize.height - rect!.origin.y
         tableView.endUpdates()
@@ -196,7 +196,7 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         
         lastTerm = searchText
 
-        if count(searchText) != 0 {
+        if searchText.characters.count != 0 {
             initiateRequest(searchText)
         } else {
             results = []
@@ -208,16 +208,15 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     
     // Example results url: https://api.spotify.com/v1/search?type=track&q=kanye
     func initiateRequest(term: String) {
-        var searchUrl = kSearchBase + term.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        
+        let searchUrl = kSearchBase + term.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         lastRequest = Alamofire.request(.GET, searchUrl)
-            .responseJSON { (request, response, data, error) in
-                if error != nil {
-                    return
+            .responseJSON { (request, response, result) in
+                if result.isFailure {
+                    print(result.error)
                 }
 
                 self.lastRequest = nil
-                self.receivedResponse(data)
+                self.receivedResponse(result.data)
         }
     }
     
@@ -229,9 +228,9 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
             return
         }
         let response = data as! NSDictionary
-        var songs = response["tracks"] as! NSDictionary
+        let songs = response["tracks"] as! NSDictionary
         
-        var items = songs["items"] as! NSArray
+        let items = songs["items"] as! NSArray
         
         var postResults: [Post] = []
         

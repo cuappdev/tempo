@@ -19,7 +19,7 @@ class SearchSongTableView: UITableView {
         registerNib(UINib(nibName: "SearchSongTableViewCell", bundle: nil), forCellReuseIdentifier: "searchSongResultsCell")
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 }

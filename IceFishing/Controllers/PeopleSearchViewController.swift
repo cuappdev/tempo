@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchDisplayDelegate, UITextFieldDelegate {
+class PeopleSearchViewController: UITableViewController, UISearchBarDelegate, UISearchDisplayDelegate, UITextFieldDelegate {
 
     var searchBar: UITextField!
     var users: [User] = []
@@ -69,7 +69,7 @@ class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UI
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        let selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray
         let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
@@ -93,9 +93,9 @@ class PeopleSearchViewController: UITableViewController, UITableViewDelegate, UI
             self.tableView.reloadData()
         }
         else {
-            API.sharedAPI.searchUsers(searchBar.text.lowercaseString, completion: { users in
+            API.sharedAPI.searchUsers(searchBar.text!.lowercaseString, completion: { users in
                 self.users = users
-                println("In here")
+                print("In here")
                 self.tableView.reloadData()
             })
         }

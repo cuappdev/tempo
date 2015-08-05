@@ -45,20 +45,20 @@ class Post: NSObject {
     }
     
     func relativeDate() -> String {
-        var now = NSDate()
-        var seconds = now.timeIntervalSinceDate(self.date!)
+        let now = NSDate()
+        let seconds = now.timeIntervalSinceDate(self.date!)
         if seconds < 60 {
             return "just now"
         }
-        var minutes: Int = Int(seconds/60)
+        let minutes: Int = Int(seconds/60)
         if minutes < 60 {
             return "\(minutes) min"
         }
-        var hours: Int = minutes/60
+        let hours: Int = minutes/60
         if hours < 24 {
             return "\(hours) hr"
         }
-        var days: Int = hours/24
+        let days: Int = hours/24
         if days < 30 {
             return "\(days) days"
         }
@@ -73,9 +73,9 @@ class Post: NSObject {
         API.sharedAPI.updateLikes(postID, unlike: false, completion: {
             (response) in
             if let success = response["success"] {
-                println("successfully liked")
+                print("successfully liked")
             } else {
-                println("failed to like post")
+                print("failed to like post")
             }
         })
     }
@@ -86,7 +86,7 @@ class Post: NSObject {
             if let success = response["success"] {
                 
             } else {
-                println("failed to like post")
+                print("failed to like post")
             }
         })
     }

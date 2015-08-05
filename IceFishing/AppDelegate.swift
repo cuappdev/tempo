@@ -14,10 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	var tools: Tools!
 	lazy var revealVC = SWRevealViewController()
-	lazy var sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
-	lazy var feedVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
-	lazy var peopleVC = PeopleSearchViewController()
-	lazy var likedVC = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
+	lazy var sidebarVC: SideBarViewController = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
+	lazy var feedVC: FeedViewController = FeedViewController(nibName: "FeedViewController", bundle: nil)
+	lazy var peopleVC: PeopleSearchViewController = PeopleSearchViewController()
+	lazy var likedVC: LikedTableViewController = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
 	lazy var mainNavigationController = UINavigationController()
 	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -86,29 +86,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			FBSession.activeSession().closeAndClearTokenInformation()
 		} else {
 			if (state == FBSessionState.Open) {
-				println("Session Opened")
+				print("Session Opened")
 				API.sharedAPI.getCurrentUser { _ in }
 			}
 		}
 		
 		// Error Messages
 		if (state == FBSessionState.Closed || state == FBSessionState.ClosedLoginFailed) {
-			println("Session Closed")
+			print("Session Closed")
 		}
 		if (FBErrorUtility.shouldNotifyUserForError(error) == true) {
-			println("Error")
+			print("Error")
 		} else {
 			if (FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.UserCancelled) {
-				println("Login Cancelled")
+				print("Login Cancelled")
 			}
 			else if (FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.AuthenticationReopenSession) {
-				println("Invalid Session")
+				print("Invalid Session")
 			}
 		}
 	}
 	
-	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-		var wasHandled:Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+		let wasHandled:Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
 		return wasHandled
 	}
 }

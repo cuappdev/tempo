@@ -67,11 +67,11 @@ class Tools: UIView, UIActionSheetDelegate, FBTweakViewControllerDelegate {
         super.init(frame: frame)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == .MotionShake {
             popup.showInView(self.rootViewController.view)
         }
@@ -87,20 +87,20 @@ class Tools: UIView, UIActionSheetDelegate, FBTweakViewControllerDelegate {
 //                }
 //                break
             case 1:
-                print("Submit Screenshot")
+                print("Submit Screenshot", appendNewline: false)
                 if(!screenCapture.isRecording) {
                     screenCapture.takeOneScreenshot()
                 }
                 break
             case 2:
-                print("Submit Message")
+                print("Submit Message", appendNewline: false)
                 if(!screenCapture.isRecording) {
                     let vc = SubmitBugViewController()
                     self.screenCapture.viewController.presentViewController(vc, animated: true, completion: nil)
                 }
                 break
             case 3:
-                print("Tweaks")
+                print("Tweaks", appendNewline: false)
                 if(!displayingTweaks) {
                     fbTweaks = FBTweakViewController(store: FBTweakStore.sharedInstance())
                     fbTweaks.tweaksDelegate = self

@@ -19,7 +19,7 @@ extension UIViewController {
         navigationController?.navigationBar.translucent = true
         
         // Add hamburger menu to the left side of the navbar
-        var menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
+        let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
         menuButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
         menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)

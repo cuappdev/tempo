@@ -47,7 +47,7 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(dayLabel)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

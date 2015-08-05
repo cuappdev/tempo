@@ -22,7 +22,7 @@ class Song: NSObject {
     private var largeArtwork: UIImage?
     func fetchArtwork() -> UIImage? {
         if (largeArtwork == nil && largeArtworkURL != nil) {
-            loadImageAsync(largeArtworkURL!, { [weak self] (image, error) -> () in
+            loadImageAsync(largeArtworkURL!, completion: { [weak self] (image, error) -> () in
                 self?.largeArtwork = image
                 NSNotificationCenter.defaultCenter().postNotificationName(SongDidDownloadArtworkNotification, object: self)
                 })
@@ -94,12 +94,18 @@ class Song: NSObject {
         //!TODO: Use Spotify SDK
         let request = NSURLRequest(URL: NSURL(string: spotifyID, relativeToURL: spotifyAPIBaseURL)!)
         var error:NSError? = nil
-        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: &error)
+        let data: NSData?
+        do {
+            data = try NSURLConnection.sendSynchronousRequest(request, returningResponse: nil)
+        } catch let error1 as NSError {
+            error = error1
+            data = nil
+        }
         if let data = data {
-            let json = JSON(data: data, options: NSJSONReadingOptions(0), error: &error)
+            let json = JSON(data: data, options: NSJSONReadingOptions(rawValue: 0), error: &error)
             initializeFromResponse(json)
         } else {
-            println("got error: %@", (error!).description)
+            print("got error: %@", (error!).description)
         }
     }
     

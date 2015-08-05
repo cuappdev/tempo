@@ -16,21 +16,15 @@ func delay(delay:Double, closure:()->()) {
 
 func loadImageAsync(url: NSURL, completion: (UIImage!, NSError!) -> ()) {
     let requestedURL = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReturnCacheDataElseLoad, timeoutInterval: 10.0)
-    
-    NSURLConnection.sendAsynchronousRequest(requestedURL, queue: NSOperationQueue.mainQueue()) {
-        response, data, error in
-        
-        if error != nil {
-            completion(nil, error)
-        } else {
-            completion(UIImage(data: data), nil)
-        }
-    }
+	
+	NSURLSession.sharedSession().dataTaskWithRequest(requestedURL, completionHandler: { (data, response, error) -> Void in
+		error != nil ? completion(nil, error) : completion(UIImage(data: data!), nil)
+	})
 }
 
 func transparentPNG(length: CGFloat) -> UIImage {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(length, length), false, 0.0)
-    var blank = UIGraphicsGetImageFromCurrentImageContext()
+    let blank = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     return blank
 }

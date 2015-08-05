@@ -18,7 +18,7 @@ class FeedImageView: UIImageView {
             
             image = placeholderImage
             if let imageURL = imageURL {
-                loadImageAsync(imageURL, { [weak self] (image, error) -> () in
+                loadImageAsync(imageURL, completion: { [weak self] (image, error) -> () in
                     self?.image = image
                 })
             }

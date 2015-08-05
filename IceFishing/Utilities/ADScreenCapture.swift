@@ -34,7 +34,7 @@ class ADScreenCapture: UIView {
 			self.recordingIndicator.backgroundColor = UIColor.redColor()
 			self.recordingIndicator.layer.cornerRadius = 10
 			
-			println(self.recordingIndicator)
+			print(self.recordingIndicator)
 			
 		})
 		
@@ -66,11 +66,11 @@ class ADScreenCapture: UIView {
 	}
 	
 	func didStartRecording() {
-		println("did start recording")
+		print("did start recording")
 		
 		isRecording = true
 		self.viewController.view.addSubview(recordingIndicator)
-		println(self.recordingIndicator)
+		print(self.recordingIndicator)
 		
 		let timeSpan:NSTimeInterval = 3.0
 		screenshotImages = []
@@ -86,7 +86,7 @@ class ADScreenCapture: UIView {
 	
 	func takeOneScreenshot() {
 		
-		let timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("takeAndSubmitScreenshot"), userInfo: nil, repeats: false)
+		NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("takeAndSubmitScreenshot"), userInfo: nil, repeats: false)
 	}
 	
 	func takeAndSubmitScreenshot() {
@@ -108,7 +108,7 @@ class ADScreenCapture: UIView {
 	
 	func invalidateTimer(t:NSTimer) {
 		
-		println("recording stopped")
+		print("recording stopped")
 		let timer = t.userInfo as! NSTimer
 		timer.invalidate()
 		stitchImagesIntoVideo(screenshotImages)
@@ -128,7 +128,7 @@ class ADScreenCapture: UIView {
 		UIGraphicsEndImageContext()
 		
 		screenshotImages.append(screenshot)
-		println(screenshotImages.count)
+		print(screenshotImages.count)
 		
 	}
 	
@@ -163,7 +163,7 @@ class ADScreenCapture: UIView {
 	}
 	
 	
-	required init(coder aDecoder: NSCoder) {
+	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LikedTableViewController: UITableViewController, UIScrollViewDelegate  {
+class LikedTableViewController: UITableViewController  {
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +18,7 @@ class LikedTableViewController: UITableViewController, UIScrollViewDelegate  {
         beginIceFishing()
         
         API.sharedAPI.fetchLikes(User.currentUser.id, completion: {
-            println("Songs: \($0)")
+            print("Songs: \($0)")
         })
     }
     

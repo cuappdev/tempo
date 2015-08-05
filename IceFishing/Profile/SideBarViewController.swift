@@ -64,7 +64,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         profilePicture.clipsToBounds = true
         
         // Add button to profile view
-        button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        button = UIButton(type: UIButtonType.System)
         button.frame = self.profileView.bounds
         button.addTarget(self, action: "pushToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(button)

@@ -79,8 +79,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close-Icon"), style: .Plain, target: self, action: "popToRoot")
 		
-		let views: [NSObject : AnyObject] = ["pic" : profilePictureView, "topGuide": self.topLayoutGuide]
-		self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: .DirectionLeadingToTrailing, metrics: nil, views: views))
+		let views: [String : AnyObject] = ["pic" : profilePictureView, "topGuide": self.topLayoutGuide]
+		self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
     }
 
     // Return to profile view
@@ -114,7 +114,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 //            }
         }
 //        numFollowersLabel.text = "\(User.currentUser.followersCount)"
-        println(User.currentUser.followers)
+        print(User.currentUser.followers)
     }
     
     @IBAction func followersButton(sender: UIButton) {
@@ -151,7 +151,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         cell.date = date
         cell.userInteractionEnabled = false
 
-        if (contains(postedDates,cell.date)) {
+        if (postedDates.contains(cell.date)) {
             cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed
 			cell.userInteractionEnabled = true
         }
@@ -164,7 +164,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         if (kind == UICollectionElementKindSectionHeader) {
             let firstDayOfMonth = dateForIndexPath(indexPath).firstDayOfMonth()
-            var header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! HipCalendarCollectionReusableView
+            let header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! HipCalendarCollectionReusableView
             header.firstDayOfMonth = firstDayOfMonth
             
             return header
@@ -194,7 +194,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let date = dateForIndexPath(indexPath)
-        let index = find(postedDates, date) as Int?
+        let index = postedDates.indexOf(date) as Int?
         
         // Push to TableView with posted songs and dates
         let postHistoryVC = PostHistoryTableViewController(nibName: "PostHistoryTableViewController", bundle: nil)

@@ -136,7 +136,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     func updateProfileLabelTextColor() {
         if let post = post {
             var color: UIColor!
-            var duration = NSTimeInterval(0.3) as NSTimeInterval
+            let duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = self.profileNameLabel!
             if post.player.isPlaying() {
                 color = UIColor.iceDarkRed
@@ -168,8 +168,8 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
             post?.player.play(false)
         }
         
-        var xTranslation = gesture.locationInView(self).x
-        var cellWidth = bounds.width
+        let xTranslation = gesture.locationInView(self).x
+        let cellWidth = bounds.width
         
         let progress = Double(xTranslation/cellWidth)
         post?.player.progress = progress
@@ -199,7 +199,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
                     offsetY = superview.contentOffset.y
                     offsetX = superview.contentOffset.x
                 }
-                var translation = self.progressGestureRecognizer?.translationInView(self)
+                let translation = self.progressGestureRecognizer?.translationInView(self)
                 
                 if let translation = translation {
                     return ((fabs(translation.x) > fabs(translation.y)) &&

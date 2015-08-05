@@ -73,7 +73,7 @@ class SubmitBugViewController: UIViewController {
     
     func submitText() {
         
-        println("++++++++++++++++++++++++++++++++++")
+        print("++++++++++++++++++++++++++++++++++")
         
         let parameters = [
             "channel": "C04C10672",
@@ -84,10 +84,10 @@ class SubmitBugViewController: UIViewController {
         
         Alamofire.request(.POST, "https://slack.com/api/chat.postMessage", parameters: parameters)
             .response { (request, response, JSON, error) in
-                println("REQUEST \(request)")
-                println("RESPONSE \(response)")
-                println("JSON \(JSON)")
-                println("ERROR \(error)")
+                print("REQUEST \(request)")
+                print("RESPONSE \(response)")
+                print("JSON \(JSON)")
+                print("ERROR \(error)")
         }
         
         dismissViewControllerAnimated(false, completion: nil)
@@ -97,7 +97,7 @@ class SubmitBugViewController: UIViewController {
         
         let fileContents = UIImageJPEGRepresentation(screenshot, 0.7)
         
-        println("++++++++++++++++++++++++++++++++++")
+        print("++++++++++++++++++++++++++++++++++")
         
         let parameters = [
             "channels": "C04C10672",
@@ -108,13 +108,13 @@ class SubmitBugViewController: UIViewController {
         let urlRequest = urlRequestWithComponents("https://slack.com/api/files.upload", parameters: parameters, data: imageData)
         Alamofire.upload(urlRequest.0, data: urlRequest.1)
             .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
-                println("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
+                print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
             }
-            .responseJSON { (request, response, JSON, error) in
-                println("REQUEST \(request)")
-                println("RESPONSE \(response)")
-                println("JSON \(JSON)")
-                println("ERROR \(error)")
+            .responseJSON { (request, response, result) in
+                print("REQUEST \(request)")
+                print("RESPONSE \(response)")
+                print("JSON \(result.value)")
+                print("ERROR \(result.error)")
         }
         
         
@@ -125,7 +125,7 @@ class SubmitBugViewController: UIViewController {
         
         let fileContents = NSData(contentsOfURL: recordingURL)
         
-        println("++++++++++++++++++++++++++++++++++")
+        print("++++++++++++++++++++++++++++++++++")
         
         let parameters = [
             "channels": "C04C10672",
@@ -136,13 +136,13 @@ class SubmitBugViewController: UIViewController {
         let urlRequest = urlRequestWithComponents("https://slack.com/api/files.upload", parameters: parameters, data: movieData)
         Alamofire.upload(urlRequest.0, data: urlRequest.1)
             .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
-                println("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
+                print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
             }
-            .responseJSON { (request, response, JSON, error) in
-                println("REQUEST \(request)")
-                println("RESPONSE \(response)")
-                println("JSON \(JSON)")
-                println("ERROR \(error)")
+            .responseJSON { (request, response, result) in
+                print("REQUEST \(request)")
+                print("RESPONSE \(response)")
+                print("JSON \(result.value)")
+                print("ERROR \(result.error)")
         }
         
         
@@ -153,7 +153,7 @@ class SubmitBugViewController: UIViewController {
     func urlRequestWithComponents(urlString:String, parameters:Dictionary<String, String>, data:NSData) -> (URLRequestConvertible, NSData) {
         
         // create url request to send
-        var mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: urlString)!)
+        let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: urlString)!)
         mutableURLRequest.HTTPMethod = Alamofire.Method.POST.rawValue
         let boundaryConstant = "myRandomBoundary12345"
         let contentType = "multipart/form-data;boundary="+boundaryConstant

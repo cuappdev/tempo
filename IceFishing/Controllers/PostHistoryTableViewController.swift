@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegate {
+class PostHistoryTableViewController: UITableViewController {
     
     var songPictures: [String]! = []
     var songArtists: [String]! = []
@@ -29,7 +29,7 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile
-        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height))
+        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height))
         backButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
         backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
@@ -65,7 +65,7 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
         // cell.songNameLabel.text = self.songNames[indexPath.row]
         // cell.postedSongImage.image = UIImage(named: "self.songPictures[indexPath.row]")
         
-        var formatter: NSDateFormatter = NSDateFormatter()
+        let formatter: NSDateFormatter = NSDateFormatter()
         formatter.dateFormat = "M.dd.YY"
         let date: String = formatter.stringFromDate(self.postedDates[indexPath.row])
         cell.datePostedLabel.text = "\(date)"
@@ -78,7 +78,7 @@ class PostHistoryTableViewController: UITableViewController, UIScrollViewDelegat
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        let selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray
     }
     

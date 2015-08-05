@@ -23,8 +23,8 @@ class UsernameViewController: UIViewController {
     
     @IBAction func createUser(sender: UIButton) {
         
-        let username = usernameTextField.text as String
-        
+		guard let username = usernameTextField.text else { print("No Username"); return}
+			
         API.sharedAPI.usernameIsValid(username) { success in
             if (success) {
                 // Username available
@@ -34,7 +34,7 @@ class UsernameViewController: UIViewController {
                 appDelegate.toggleRootVC()
             } else {
                 // Username already taken (prompt user with error alert in UsernameVC)
-                var errorAlert = UIAlertController(title: "Sorry!", message: "Username is taken.", preferredStyle: UIAlertControllerStyle.Alert)
+                let errorAlert = UIAlertController(title: "Sorry!", message: "Username is taken.", preferredStyle: UIAlertControllerStyle.Alert)
                 errorAlert.addAction(UIAlertAction(title: "Try again", style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(errorAlert, animated: true, completion: nil)
                 self.clearTextField()
@@ -50,7 +50,7 @@ class UsernameViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

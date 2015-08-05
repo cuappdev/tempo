@@ -48,7 +48,11 @@ class Player: NSObject, AVAudioPlayerDelegate {
     func prepareToPlay() {
         if (player == nil) {
             if (fileURL.fileURL) {
-                player = AVAudioPlayer(contentsOfURL: fileURL, error: nil)
+                do {
+                    player = try AVAudioPlayer(contentsOfURL: fileURL)
+                } catch _ {
+                    player = nil
+                }
                 player?.prepareToPlay()
             } else if (currentConnection == nil) {
                 // get cached data
@@ -144,14 +148,14 @@ class Player: NSObject, AVAudioPlayerDelegate {
                 return 1.0
             }
             
-            if let player = player {
+            if let _ = player {
                 return currentTime / duration
             }
             return 0.0
         }
         
         set {
-            if let player = player {
+            if let _ = player {
                 if newValue == 1.0 {
                     finishedPlaying = true
                 }
@@ -178,7 +182,11 @@ class Player: NSObject, AVAudioPlayerDelegate {
     
     func connectionDidFinishLoading(connection: NSURLConnection) {
         downloadCallback?(progress: 1.0)
-        player = AVAudioPlayer(data: totalData, error: nil)
+        do {
+            player = try AVAudioPlayer(data: totalData!)
+        } catch _ {
+            player = nil
+        }
         player?.prepareToPlay()
         totalData = nil
         currentConnection = nil
@@ -193,7 +201,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     
     // MARK: AVAudioPlayerDelegate
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         pause(true)
         finishedPlaying = true
         NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
