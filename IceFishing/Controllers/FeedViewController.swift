@@ -189,6 +189,7 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+		
         topPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: tableView.rowHeight)
         topPinViewContainer.center = CGPoint(x: view.center.x, y: navigationController!.navigationBar.frame.maxY + topPinViewContainer.frame.height/2)
         parentViewController!.view.addSubview(topPinViewContainer)
@@ -248,7 +249,6 @@ class FeedViewController: UITableViewController, UIScrollViewDelegate, UISearchB
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        cellPin()
         if var lastCell = NSIndexPath(forRow: posts.count-1, inSection: 0) {
             if (currentlyPlayingIndexPath != nil) {
                 var rowsICanSee = tableView.indexPathsForVisibleRows() as! [NSIndexPath]

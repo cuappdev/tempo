@@ -10,10 +10,10 @@ import UIKit
 
 struct SideBarElement {
     var title: String
-    var viewController: UIViewController?
+    var viewController: UIViewController
     var image: UIImage?
     
-    init(title: String, viewController: UIViewController?, image: UIImage?) {
+    init(title: String, viewController: UIViewController, image: UIImage?) {
         self.title = title
         self.viewController = viewController
         self.image = image
@@ -81,7 +81,6 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         nameLabel.text = User.currentUser.name
         usernameLabel.text = "@\(User.currentUser.username)"
-        //profilePicture.image = User.currentUser.profileImage
         User.currentUser.loadImage {
             self.profilePicture.image = $0
         }
@@ -90,11 +89,9 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     func pushToProfile(sender:UIButton!) {
         profileView.backgroundColor = UIColor.iceLightGray
         sideView.hidden = false
-        if (searchNavigationController == nil) {
-            let loginVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
-            searchNavigationController = UINavigationController(rootViewController: loginVC)
-        }
-        selectionHandler?(searchNavigationController)
+		let loginVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		loginVC.user = User.currentUser
+        selectionHandler?(loginVC)
         self.categoryTableView.selectRowAtIndexPath(nil, animated: false, scrollPosition: .None)
     }
     
