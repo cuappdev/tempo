@@ -191,16 +191,16 @@ class API {
     private func makeNetworkRequest<O, T>(method: Alamofire.Method, router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
         Alamofire
             .request(method, router, parameters: params)
-            .responseJSON { (request, response, json) -> Void in
-                if let json = json as? O {
+            .responseJSON { (request, response, result) -> Void in
+                if let json = result.value as? O {
                     if let obj = map(json) {
                         completion(obj)
                         print(json)
                     }
                 } else {
                     print("—————— Couldn't decompose object ——————")
-                    print("JSON: \(json)")
-//                    print("Error: \(error)")
+                    print("JSON: \(result.value)")
+                    print("Error: \(result.error)")
                     print("Request: \(request)")
                     print("Response: \(response)")
                 }

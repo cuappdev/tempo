@@ -216,7 +216,7 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
                 }
 
                 self.lastRequest = nil
-                self.receivedResponse(result.data)
+                self.receivedResponse(result.value)
         }
     }
     

@@ -10,17 +10,16 @@
 
 #import <Foundation/Foundation.h>
 
-#import <Bolts/BFAppLinkResolving.h>
+/*!
+ Represents the registration of a cancellation observer with a cancellation token.
+ Can be used to unregister the observer at a later time.
+ */
+@interface BFCancellationTokenRegistration : NSObject
 
 /*!
- A reference implementation for an App Link resolver that uses a hidden UIWebView
- to parse the HTML containing App Link metadata.
+ Removes the cancellation observer registered with the token
+ and releases all resources associated with this registration.
  */
-@interface BFWebViewAppLinkResolver : NSObject <BFAppLinkResolving>
-
-/*!
- Gets the instance of a BFWebViewAppLinkResolver.
- */
-+ (instancetype)sharedInstance;
+- (void)dispose;
 
 @end

@@ -72,7 +72,7 @@ class Post: NSObject {
     func like() {
         API.sharedAPI.updateLikes(postID, unlike: false, completion: {
             (response) in
-            if let success = response["success"] {
+            if let _ = response["success"] {
                 print("successfully liked")
             } else {
                 print("failed to like post")
@@ -83,7 +83,7 @@ class Post: NSObject {
     func unlike() {
         API.sharedAPI.updateLikes(postID, unlike: true, completion: {
             (response) in
-            if let success = response["success"] {
+            if let _ = response["success"] {
                 
             } else {
                 print("failed to like post")

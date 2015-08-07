@@ -65,6 +65,8 @@ class ADScreenCapture: UIView {
 		
 	}
 	
+	// FIXME: There is a seriously inapporiate use of NSTimer going on here
+	
 	func didStartRecording() {
 		print("did start recording")
 		
@@ -76,6 +78,7 @@ class ADScreenCapture: UIView {
 		screenshotImages = []
 		let timer = NSTimer.scheduledTimerWithTimeInterval(1/15.0, target: self, selector: Selector("takeScreenShotOfView:"), userInfo: screenshotImages, repeats: true)
 		
+		// FIXME: Use dispatch_after if you want an arbitrary execution after 'timeSpan'
 		let timerForTimer = NSTimer.scheduledTimerWithTimeInterval(timeSpan, target: self, selector: Selector("invalidateTimer:"), userInfo: timer, repeats: false)
 		
 		let runloop = NSRunLoop.currentRunLoop()

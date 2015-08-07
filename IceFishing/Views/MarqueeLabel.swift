@@ -205,7 +205,6 @@ public class MarqueeLabel: UILabel {
     private func observedViewControllerChange(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             let fromController = userInfo["UINavigationControllerLastVisibleViewController"] as? UIViewController
-            let toController = userInfo["UINavigationControllerNextVisibleViewController"] as? UIViewController
             
             if let ownController = self.firstAvailableViewController() {
                 if let fromController = fromController {
@@ -458,14 +457,6 @@ public class MarqueeLabel: UILabel {
             
             // Enforce text alignment for this type
             sublabel.textAlignment = NSTextAlignment.Left
-            
-        default:
-            // Something strange happened!
-            homeLabelFrame = CGRect.zeroRect
-            awayLabelFrame = CGRect.zeroRect
-            
-            // Do not attempt to scroll
-            return
         }
         
         if !tapToScroll && !holdScrolling && shouldBeginScroll {

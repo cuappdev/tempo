@@ -9,7 +9,8 @@
 import UIKit
 
 class Tools: UIView, UIActionSheetDelegate, FBTweakViewControllerDelegate {
-    
+	
+	// FIXME: iOS 8.3 deprecated UIActionSheet, convert to UIAlertController
     //let tweakMethods = Tweaks()
     var screenCapture:ADScreenCapture!
     var popup:UIActionSheet!
