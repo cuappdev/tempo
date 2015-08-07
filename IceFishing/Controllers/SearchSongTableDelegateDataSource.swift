@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 
+// FIXME: This entire class should really be a UIViewController/UITableViewController
 class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: Properties
@@ -23,7 +24,6 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     let missingImage = transparentPNG(36)
     var tableView: UITableView!
     var lastRequest: Alamofire.Request!
-    var lastTerm: String = ""
     var keyboardHeight: CGFloat = 0
     var backgroundView: UIView!
     var bottomView: UIView!
@@ -71,15 +71,15 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
          NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-//    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        if results.count == 0 && count(lastTerm) == 0 {
-//            tableView.backgroundView = backgroundView
-//            return 0
-//        }
-//
-//        tableView.backgroundView = UIView()
-//        return 1
-//    }
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if results.count == 0 {
+            tableView.backgroundView = backgroundView
+            return 0
+        }
+
+        tableView.backgroundView = UIView()
+        return 1
+    }
 	
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results.count
@@ -88,7 +88,9 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 44
     }
-    
+	
+	// FIXME: This is purely a hack around pushing search content higher. Use Auto Layout, that's what it's for.
+	// This also just doesn't work after the keyboard is hidden. Rather rewrite than hack on top
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         var height = keyboardHeight
         if hasSelectedResult && height == 0 {
@@ -191,10 +193,9 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     
     func update(searchText: String) {
         if lastRequest != nil {
+			print("Cancelling")
             lastRequest.cancel()
         }
-        
-        lastTerm = searchText
 
         if searchText.characters.count != 0 {
             initiateRequest(searchText)
@@ -208,7 +209,8 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
     
     // Example results url: https://api.spotify.com/v1/search?type=track&q=kanye
     func initiateRequest(term: String) {
-        let searchUrl = kSearchBase + term.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+		// Changed this, but not actually sure it is correct (may be source of search errors otherwise)
+		let searchUrl = kSearchBase + term.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.alphanumericCharacterSet())!
         lastRequest = Alamofire.request(.GET, searchUrl)
             .responseJSON { (request, response, result) in
                 if result.isFailure {

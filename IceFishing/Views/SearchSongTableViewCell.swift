@@ -11,8 +11,4 @@ import UIKit
 class SearchSongTableViewCell: UITableViewCell {
     var callBack: ((isPlaying: Bool, sender: SearchSongTableViewCell) -> Void)?
     @IBOutlet var postView: SearchPostView!
-    
-    override func didMoveToSuperview() {
-        backgroundColor = UIColor.iceLightGray
-    }
 }

@@ -98,7 +98,9 @@ class ADScreenCapture: UIView {
 		let scale = UIScreen.mainScreen().scale
 		UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
 		
-		layer.renderInContext(UIGraphicsGetCurrentContext())
+		guard let context = UIGraphicsGetCurrentContext() else { print("Can't create context: " + __FUNCTION__); return }
+		
+		layer.renderInContext(context)
 		let screenshot:UIImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		
@@ -126,7 +128,8 @@ class ADScreenCapture: UIView {
 		let scale = UIScreen.mainScreen().scale
 		UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
 		
-		layer.renderInContext(UIGraphicsGetCurrentContext())
+		guard let context = UIGraphicsGetCurrentContext() else { print("Can't create context: " + __FUNCTION__); return }
+		layer.renderInContext(context)
 		let screenshot:UIImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		

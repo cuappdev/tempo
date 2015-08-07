@@ -19,7 +19,7 @@ func loadImageAsync(url: NSURL, completion: (UIImage!, NSError!) -> ()) {
 	
 	NSURLSession.sharedSession().dataTaskWithRequest(requestedURL, completionHandler: { (data, response, error) -> Void in
 		error != nil ? completion(nil, error) : completion(UIImage(data: data!), nil)
-	})
+	}).resume()
 }
 
 func transparentPNG(length: CGFloat) -> UIImage {

@@ -27,7 +27,7 @@ class User: NSObject, NSCoding {
     var lastName: String = ""
     var name: String {
         set(newName) {
-            let newName = split(newName.characters) { $0 == " " }.map { String($0) }
+			let newName = newName.characters.split { $0 == " " }.map { String($0) }
             firstName = newName.first ?? ""
             lastName = newName.count > 1 ? newName.last! : ""
         }
