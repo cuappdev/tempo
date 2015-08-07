@@ -322,19 +322,17 @@ class FeedViewController: UITableViewController, UISearchBarDelegate {
 	
 	// Initialize plus sign and the drop-down searchbar.
 	func initializeSearch() {
-		let plusContainer = UIView(frame: CGRectMake(0, 0, 44, 44))
-		plusButton = UIButton(frame: CGRectMake(0, 0, 44, 44))
-		plusButton.setTitle("+", forState: UIControlState.Normal)
-		plusButton.titleLabel?.font = UIFont.systemFontOfSize(36)
-		plusButton.titleLabel?.textColor = UIColor.whiteColor()
-		plusButton.contentEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 8.0, 0.0);
+		let image = UIImage(named: "Add-Icon")!
+		plusButton = UIButton(type: UIButtonType.Custom)
+		plusButton.frame = CGRectMake(0, 0, image.size.width, image.size.height)
+		plusButton.setImage(image, forState: .Normal)
+		plusButton.imageView!.contentMode = .Center
+		plusButton.imageView!.clipsToBounds = false;
+		plusButton.adjustsImageWhenHighlighted = false;
 		plusButton.addTarget(self, action: "plusButtonTapped", forControlEvents: UIControlEvents.TouchUpInside)
-		plusContainer.addSubview(plusButton)
-		let button = UIBarButtonItem(customView: plusContainer)
-		navigationItem.rightBarButtonItem = button
-		let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-		spacer.width = -16;
-		navigationItem.rightBarButtonItems = [spacer, button]
+		
+		let barButton = UIBarButtonItem(customView: plusButton)
+		navigationItem.rightBarButtonItem = barButton
 		
 		searchContainer = UIView(frame: CGRectMake(0, 64, screenSize.width, 54))
 		searchContainer.clipsToBounds = true
@@ -359,28 +357,21 @@ class FeedViewController: UITableViewController, UISearchBarDelegate {
 	}
 	
 	func rotatePlusButton(active: Bool) {
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 50, options: [], animations: {
-			if active {
-				let transform = CGAffineTransformMakeRotation(CGFloat(M_PI_4))
-				self.plusButton.transform = transform
-			} else {
-				let transform = CGAffineTransformIdentity
-				self.plusButton.transform = transform
-			}
+		if let currentTransform = (self.plusButton.imageView!.layer.presentationLayer() as? CALayer)?.transform {
+			self.plusButton.imageView?.layer.transform = currentTransform
+		}
+		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 20, options: [], animations: {
+			let transform = active ? CGAffineTransformMakeRotation(CGFloat(M_PI_4)) : CGAffineTransformIdentity
+			self.plusButton.imageView!.transform = transform
 			}, completion: nil)
 	}
 	
 	func dropSearchBar(active: Bool) {
 		UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 20, options: [], animations: {
-			if active {
-				self.searchBanner.frame.origin.y = -10
-			} else {
-				self.searchBanner.frame.origin.y = -54
-			}
+			self.searchBanner.frame.origin.y = active ? -10 : -54
 			}, completion: { _ in
-				if !active {
-					self.searchContainer.hidden = true
-				}
+				self.searchContainer.hidden = !active
+				if active { self.searchBar.becomeFirstResponder() }
 		})
 	}
 	
@@ -404,10 +395,6 @@ class FeedViewController: UITableViewController, UISearchBarDelegate {
 			UIView.animateWithDuration(0.4, animations: {
 				self.searchTable.alpha = 1
 			})
-			
-			delay(0.05) {
-				self.searchBar.becomeFirstResponder()
-			}
 		} else {
 			navigationItem.title = preserveTitle
 			searchBottomView.frame.origin.y = screenSize.height
@@ -422,6 +409,8 @@ class FeedViewController: UITableViewController, UISearchBarDelegate {
 		rotatePlusButton(isSearching)
 		dropSearchBar(isSearching)
 	}
+	
+	// MARK: - UISearchBarDelegate
 	
 	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
 		searchTableDelegateDataSource.update(searchText)
