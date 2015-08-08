@@ -10,10 +10,10 @@ import UIKit
 import Alamofire
 
 // FIXME: This entire class should really be a UITableViewController
-class SearchSongTableViewController: UITableViewController {
+class SearchSongTableViewController: UITableViewController, UISearchResultsUpdating {
     
     // MARK: Properties
-	
+	let cellIdentifier = "SearchSongTableViewCell"
 	let searchController = UISearchController(searchResultsController: nil)
     
     let kSearchResultHeight: CGFloat = 54
@@ -24,7 +24,6 @@ class SearchSongTableViewController: UITableViewController {
     var lastRequest: Alamofire.Request!
     var keyboardHeight: CGFloat = 0
     var backgroundView: UIView!
-    var bottomView: UIView!
     var selectedSong: Song!
 	
 	lazy var postButton = PostButton.instanceFromNib()
@@ -34,10 +33,26 @@ class SearchSongTableViewController: UITableViewController {
 		super.viewDidLoad()
 		beginIceFishing()
 		title = "Post your song of the day!"
+		tableView.contentInset = UIEdgeInsetsMake(100, 0, 0, 0)
+		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
+		tableView.separatorStyle = .None
+		tableView.rowHeight = 96
+		
+		searchController.searchResultsUpdater = self
+	}
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		update("Everybody Backstreet")
 	}
 	
 	func closeSearch(sender: UIButton) {
 		navigationController?.popViewControllerAnimated(false)
+	}
+	
+	func updateSearchResultsForSearchController(searchController: UISearchController) {
+		update("Everybody Backstreet")
 	}
 	
     // MARK: UITableViewDataSource
@@ -78,6 +93,10 @@ class SearchSongTableViewController: UITableViewController {
 	
 	func dismiss() {
 		navigationController?.popViewControllerAnimated(false)
+		if activePlayer != nil {
+			activePlayer.pause(true)
+			activePlayer = nil
+		}
 	}
 	
     deinit {
@@ -99,7 +118,7 @@ class SearchSongTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("searchSongResultsCell", forIndexPath: indexPath) as! SearchSongTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! SearchSongTableViewCell
         let post = results[indexPath.row]
         cell.postView.post = post
         cell.postView.avatarImageView?.imageURL = post.song.largeArtworkURL
@@ -120,21 +139,32 @@ class SearchSongTableViewController: UITableViewController {
         }
 
         cell.postView.post?.player.togglePlaying()
-        
-//        addBottomSpace()
         activePlayer = cell.postView.post?.player
     }
 
     func selectSong(song: Song) {
 		if postButton.superview == nil {
 			postButton.translatesAutoresizingMaskIntoConstraints = false
-			bottomView.addSubview(postButton)
-			bottomView.addConstraints(NSLayoutConstraint.constraintsToFillSuperview(postButton))
+			navigationController?.view.addSubview(postButton)
+			var constraints: [NSLayoutConstraint] = []
+			constraints += NSLayoutConstraint.constraintsWithVisualFormat("|[v]|", options: .DirectionLeadingToTrailing, metrics: nil, views: ["v" : postButton])
+			constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:[v(==50)]", options: .DirectionLeadingToTrailing, metrics: nil, views: ["v" : postButton])
+			let bottomConstraint = NSLayoutConstraint(item: postButton, attribute: .Bottom, relatedBy: NSLayoutRelation.Equal, toItem: navigationController?.view, attribute: .Bottom, multiplier: 1, constant: 50)
+			constraints.append(bottomConstraint)
+			NSLayoutConstraint.activateConstraints(constraints)
+			
+			navigationController?.view.layoutIfNeeded()
+			bottomConstraint.constant = 0
+			UIView.animateWithDuration(0.4, animations: { () -> Void in
+				navigationController?.view.layoutIfNeeded()
+			})
+			
+//			NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsToFillSuperview(postButton))
 		}
-        
-        UIView.animateWithDuration(0.3, animations: {
-            self.bottomView.frame = CGRectMake(0, screenSize.height - self.kSearchResultHeight, self.bottomView.frame.width, self.kSearchResultHeight)
-        })
+//        let screenSize = self.view.frame.size
+//        UIView.animateWithDuration(0.3, animations: {
+//            self.bottomView.frame = CGRectMake(0, screenSize.height - self.kSearchResultHeight, self.bottomView.frame.width, self.kSearchResultHeight)
+//        })
 
         postButton.title = song.title + " - " + song.artist
         postButton.addTarget(self, action: "submitSong", forControlEvents: UIControlEvents.TouchUpInside)
@@ -150,7 +180,7 @@ class SearchSongTableViewController: UITableViewController {
         let rect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
         print(rect)
         tableView.beginUpdates()
-        keyboardHeight = screenSize.height - rect!.origin.y
+//        keyboardHeight = screenSize.height - rect!.origin.y
         tableView.endUpdates()
     }
 	
