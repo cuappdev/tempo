@@ -12,7 +12,7 @@ class ADRefreshControl: NSObject {
     
     var refreshControl:UIRefreshControl!
     var tableView:UITableView!
-    var graphic = UIImage(named: "vinylRED.png")
+    var graphic = UIImage(named: "Vinyl-Red")
     var graphicView:UIImageView!
     var refreshColorView:UIView!
     var isRefreshAnimating = false

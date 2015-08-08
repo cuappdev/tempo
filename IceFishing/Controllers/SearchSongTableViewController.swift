@@ -1,5 +1,5 @@
 //
-//  SearchSongTableDelegateDataSource.swift
+//  SearchSongTableViewController.swift
 //  IceFishing
 //
 //  Created by Austin Chan on 3/15/15.
@@ -9,20 +9,18 @@
 import UIKit
 import Alamofire
 
-// FIXME: This entire class should really be a UIViewController/UITableViewController
-class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
+// FIXME: This entire class should really be a UITableViewController
+class SearchSongTableViewController: UITableViewController {
     
     // MARK: Properties
+	
+	let searchController = UISearchController(searchResultsController: nil)
     
     let kSearchResultHeight: CGFloat = 54
-    weak var parent: FeedViewController?
     var shouldResume = false
     var results: [Post] = []
     let kSearchBase: String = "https://api.spotify.com/v1/search?type=track&q="
-    var hasSelectedResult = false
     var activePlayer: Player!
-    let missingImage = transparentPNG(36)
-    var tableView: UITableView!
     var lastRequest: Alamofire.Request!
     var keyboardHeight: CGFloat = 0
     var backgroundView: UIView!
@@ -31,47 +29,62 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
 	
 	lazy var postButton = PostButton.instanceFromNib()
 	
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		beginIceFishing()
+		title = "Post your song of the day!"
+	}
+	
+	func closeSearch(sender: UIButton) {
+		navigationController?.popViewControllerAnimated(false)
+	}
+	
     // MARK: UITableViewDataSource
     
-    override init() {
-        super.init()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardFrameChanged:", name: UIKeyboardDidChangeFrameNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardFrameChanged:", name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    convenience init(parent: FeedViewController, table: UITableView, bottom: UIView) {
-        self.init()
-        tableView = table
-
-        backgroundView = UIView(frame: CGRectMake(0, 0, tableView.frame.width, tableView.frame.height))
-        let backgroundLabel = UILabel()
-        backgroundLabel.text = "Post your song of the day!"
-        backgroundLabel.font = UIFont(name: "AvenirNext-Medium", size: 21)
-        backgroundLabel.textColor = UIColor(white: 153/255.0, alpha: 1)
-        backgroundLabel.textAlignment = NSTextAlignment.Center
-        backgroundLabel.sizeToFit()
-        backgroundLabel.frame.size.width = screenSize.width
-        backgroundLabel.frame.origin.y = 235
-        let backgroundGlass = UIImageView(frame: CGRectMake((screenSize.width - 95)/2, 115, 95, 95))
-        backgroundGlass.image = UIImage(named: "search-glass")
-        backgroundView.addSubview(backgroundGlass)
-        backgroundView.addSubview(backgroundLabel)
-        
-        bottomView = bottom
-        
-        self.parent = parent
-        
+//    override init() {
+//        super.init()
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardFrameChanged:", name: UIKeyboardDidChangeFrameNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardFrameChanged:", name: UIKeyboardWillHideNotification, object: nil)
+//    }
+	
+//    convenience init(parent: FeedViewController, table: UITableView, bottom: UIView) {
+//        self.init()
+//        tableView = table
+//
+//        backgroundView = UIView(frame: CGRectMake(0, 0, tableView.frame.width, tableView.frame.height))
+//        let backgroundLabel = UILabel()
+//        backgroundLabel.text = "Post your song of the day!"
+//        backgroundLabel.font = UIFont(name: "AvenirNext-Medium", size: 21)
+//        backgroundLabel.textColor = UIColor(white: 153/255.0, alpha: 1)
+//        backgroundLabel.textAlignment = NSTextAlignment.Center
+//        backgroundLabel.sizeToFit()
+//        backgroundLabel.frame.size.width = screenSize.width
+//        backgroundLabel.frame.origin.y = 235
+//        let backgroundGlass = UIImageView(frame: CGRectMake((screenSize.width - 95)/2, 115, 95, 95))
+//        backgroundGlass.image = UIImage(named: "Search-Glass")
+//        backgroundView.addSubview(backgroundGlass)
+//        backgroundView.addSubview(backgroundLabel)
+//        
+//        bottomView = bottom
+	
+//        self.parent = parent
+		
         // Pause main feed if it's playing.
-        if let post = self.parent?.currentlyPlayingPost {
-            post.player.pause(false)
-        }
-    }
-    
+//        if let post = self.parent?.currentlyPlayingPost {
+//            post.player.pause(false)
+//        }
+//    }
+	
+	func dismiss() {
+		navigationController?.popViewControllerAnimated(false)
+	}
+	
     deinit {
          NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if results.count == 0 {
             tableView.backgroundView = backgroundView
             return 0
@@ -81,42 +94,19 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         return 1
     }
 	
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results.count
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44
-    }
-	
-	// FIXME: This is purely a hack around pushing search content higher. Use Auto Layout, that's what it's for.
-	// This also just doesn't work after the keyboard is hidden. Rather rewrite than hack on top
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        var height = keyboardHeight
-        if hasSelectedResult && height == 0 {
-            height += kSearchResultHeight
-        }
-        return height
-    }
-
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("searchSongResultsCell", forIndexPath: indexPath) as! SearchSongTableViewCell
         let post = results[indexPath.row]
         cell.postView.post = post
-        cell.postView.avatarImageView?.placeholderImage = missingImage
         cell.postView.avatarImageView?.imageURL = post.song.largeArtworkURL
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let post = results[indexPath.row]
@@ -131,12 +121,8 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
 
         cell.postView.post?.player.togglePlaying()
         
-        addBottomSpace()
+//        addBottomSpace()
         activePlayer = cell.postView.post?.player
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        parent!.selectSong()
     }
 
     func selectSong(song: Song) {
@@ -154,12 +140,10 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         postButton.addTarget(self, action: "submitSong", forControlEvents: UIControlEvents.TouchUpInside)
         
         selectedSong = song
-        
-        parent?.selectSong()
     }
     
     func submitSong() {
-        parent?.submitSong(selectedSong)
+		
     }
     
     func keyboardFrameChanged(notification: NSNotification) {
@@ -169,13 +153,7 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         keyboardHeight = screenSize.height - rect!.origin.y
         tableView.endUpdates()
     }
-    
-    func addBottomSpace() {
-        tableView.beginUpdates()
-        hasSelectedResult = true
-        tableView.endUpdates()
-    }
-    
+	
     func finishSearching() {
         if activePlayer != nil {
             activePlayer.pause(true)
@@ -183,9 +161,9 @@ class SearchSongTableDelegateDataSource: NSObject, UITableViewDataSource, UITabl
         }
         
         if (shouldResume) {
-            if let post = parent?.currentlyPlayingPost {
-                post.player.play(false)
-            }
+//            if let post = parent?.currentlyPlayingPost {
+//                post.player.play(false)
+//            }
         }
     }
     

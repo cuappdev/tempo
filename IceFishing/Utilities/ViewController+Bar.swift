@@ -20,7 +20,7 @@ extension UIViewController {
         
         // Add hamburger menu to the left side of the navbar
         let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
-        menuButton.setImage(UIImage(named: "white-hamburger-menu-Icon"), forState: .Normal)
+        menuButton.setImage(UIImage(named: "Hamburger-Menu-Icon"), forState: .Normal)
         menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
         

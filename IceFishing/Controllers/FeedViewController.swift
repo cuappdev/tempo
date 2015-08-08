@@ -9,10 +9,13 @@
 import UIKit
 import MediaPlayer
 
-class FeedViewController: UITableViewController, UISearchBarDelegate {
+class FeedViewController: UITableViewController, UISearchControllerDelegate {
 	
 	var posts: [Post] = []
 	var customRefresh:ADRefreshControl!
+	
+	let searchSongTableViewController = SearchSongTableViewController()
+	var plusButton: UIButton!
 	
 	var currentlyPlayingIndexPath: NSIndexPath? {
 		didSet {
@@ -176,7 +179,7 @@ class FeedViewController: UITableViewController, UISearchBarDelegate {
 		//—————————————from MAIN VC——————————————————
 		self.title = "Feed"
 		beginIceFishing()
-		initializeSearch()
+		setupAddButton()
 		refreshControl = UIRefreshControl()
 		customRefresh = ADRefreshControl(refreshControl: refreshControl!, tableView: self.tableView)
 		refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
@@ -196,6 +199,12 @@ class FeedViewController: UITableViewController, UISearchBarDelegate {
 		pinView.backgroundColor = UIColor.iceLightGray
 	}
 	
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		rotatePlusButton(false)
+	}
+	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
@@ -213,9 +222,10 @@ class FeedViewController: UITableViewController, UISearchBarDelegate {
 	}
 	
 	func revealToggle(button: UIButton) {
-		if !isSearching {
-			self.revealViewController().revealToggle(button)
-		}
+		print(__FUNCTION__)
+//		if !isSearching {
+//			self.revealViewController().revealToggle(button)
+//		}
 	}
 	
 	func togglePlay() {
@@ -309,19 +319,8 @@ class FeedViewController: UITableViewController, UISearchBarDelegate {
 	
 	// From Old Main VC, might need some cleanup
 	
-	let kSearchResultHeight: CGFloat = 72
-	var searchTableDelegateDataSource: SearchSongTableDelegateDataSource!
-	var searchBanner: UIView!
-	var searchContainer: UIView!
-	var searchTable: SearchSongTableView!
-	var searchBar: UISearchBar!
-	var searchBottomView: UIView!
-	var preserveTitle: String!
-	var plusButton: UIButton!
-	var isSearching: Bool = false
-	
 	// Initialize plus sign and the drop-down searchbar.
-	func initializeSearch() {
+	func setupAddButton() {
 		let image = UIImage(named: "Add-Icon")!
 		plusButton = UIButton(type: UIButtonType.Custom)
 		plusButton.frame = CGRectMake(0, 0, image.size.width, image.size.height)
@@ -329,105 +328,36 @@ class FeedViewController: UITableViewController, UISearchBarDelegate {
 		plusButton.imageView!.contentMode = .Center
 		plusButton.imageView!.clipsToBounds = false;
 		plusButton.adjustsImageWhenHighlighted = false;
-		plusButton.addTarget(self, action: "plusButtonTapped", forControlEvents: UIControlEvents.TouchUpInside)
+		plusButton.addTarget(self, action: "plusButtonTapped", forControlEvents: .TouchUpInside)
 		
 		let barButton = UIBarButtonItem(customView: plusButton)
 		navigationItem.rightBarButtonItem = barButton
-		
-		searchContainer = UIView(frame: CGRectMake(0, 64, screenSize.width, 54))
-		searchContainer.clipsToBounds = true
-		searchBanner = UIView(frame: CGRectMake(0, -54, screenSize.width, 54))
-		var bounds = searchBanner.bounds
-		bounds.origin.y = 10
-		bounds.size.height = 44
-		searchBar = UISearchBar(frame: bounds)
-		searchBanner.backgroundColor = UIColor(red: 180/255.0, green: 72/255.0, blue: 65/255.0, alpha: 1)
-		searchBar.barTintColor = UIColor(red: 172/255.0, green: 77/255.0, blue: 70/255.0, alpha: 1)
-		searchBar.placeholder = "Search"
-		searchBar.searchBarStyle = UISearchBarStyle.Minimal
-		searchBar.barStyle = UIBarStyle.Black
-		searchBar.delegate = self
-		searchBanner.addSubview(searchBar)
-		searchContainer.addSubview(searchBanner)
-		navigationController?.view.addSubview(searchContainer)
-		searchContainer.hidden = true
-		
-		searchBottomView = UIView(frame: CGRectMake(0, screenSize.height, screenSize.width, kSearchResultHeight))
-		navigationController?.view.addSubview(searchBottomView)
 	}
 	
 	func rotatePlusButton(active: Bool) {
 		if let currentTransform = (self.plusButton.imageView!.layer.presentationLayer() as? CALayer)?.transform {
 			self.plusButton.imageView?.layer.transform = currentTransform
 		}
+		plusButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
+		plusButton.addTarget(active ? searchSongTableViewController : self, action: active ? "dismiss" : "plusButtonTapped", forControlEvents: .TouchUpInside)
 		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 20, options: [], animations: {
 			let transform = active ? CGAffineTransformMakeRotation(CGFloat(M_PI_4)) : CGAffineTransformIdentity
 			self.plusButton.imageView!.transform = transform
 			}, completion: nil)
 	}
 	
-	func dropSearchBar(active: Bool) {
-		UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 20, options: [], animations: {
-			self.searchBanner.frame.origin.y = active ? -10 : -54
-			}, completion: { _ in
-				self.searchContainer.hidden = !active
-				if active { self.searchBar.becomeFirstResponder() }
-		})
-	}
-	
 	func plusButtonTapped() {
-		if !isSearching {
-			searchContainer.hidden = false
-			preserveTitle = navigationItem.title
-			navigationItem.title = "Choose Your Song of the Day"
-			
-			var bounds = view.bounds
-			bounds.origin.y = 64
-			bounds.size.height = screenSize.height - 64
-			searchTable = SearchSongTableView(frame: bounds, style: UITableViewStyle.Plain)
-			searchTableDelegateDataSource = SearchSongTableDelegateDataSource(parent: self, table: searchTable, bottom: searchBottomView)
-			searchTable.alpha = 0
-			searchTable.dataSource = searchTableDelegateDataSource
-			searchTable.delegate = searchTableDelegateDataSource
-			searchTableDelegateDataSource.parent = self
-			searchTableDelegateDataSource.tableView = searchTable
-			navigationController?.view.insertSubview(searchTable, belowSubview: searchContainer)
-			UIView.animateWithDuration(0.4, animations: {
-				self.searchTable.alpha = 1
-			})
-		} else {
-			navigationItem.title = preserveTitle
-			searchBottomView.frame.origin.y = screenSize.height
-			searchTableDelegateDataSource.finishSearching()
-			
-			searchBar.resignFirstResponder()
-			searchBar.text = ""
-			searchTable.removeFromSuperview()
-		}
-		
-		isSearching = !isSearching
-		rotatePlusButton(isSearching)
-		dropSearchBar(isSearching)
+		rotatePlusButton(true)
+		searchSongTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
+		navigationController?.pushViewController(searchSongTableViewController, animated: false)
 	}
 	
-	// MARK: - UISearchBarDelegate
 	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		searchTableDelegateDataSource.update(searchText)
-	}
-	
-	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-		searchBar.resignFirstResponder()
-	}
-	
-	func selectSong() {
-		searchBar.resignFirstResponder()
-	}
 	
 	// Called from search
-	func submitSong(song: Song) {
-		searchBar.resignFirstResponder()
-		plusButtonTapped()
-		addSong(song)
-	}
+//	func submitSong(song: Song) {
+//		searchBar.resignFirstResponder()
+//		plusButtonTapped()
+//		addSong(song)
+//	}
 }
