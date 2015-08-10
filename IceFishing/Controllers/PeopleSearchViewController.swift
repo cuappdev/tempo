@@ -40,6 +40,8 @@ class PeopleSearchViewController: UITableViewController, UISearchBarDelegate, UI
             searchBar.textAlignment = NSTextAlignment.Center
             searchBar.delegate = self
             searchBar.addTarget(self, action: "search:", forControlEvents: UIControlEvents.EditingChanged)
+			
+			// Don't do this
             self.navigationController?.view.addSubview(searchBar)
         }
     }

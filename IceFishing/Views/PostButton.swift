@@ -10,7 +10,7 @@ import UIKit
 
 class PostButton: UIControl {
 	
-	@IBOutlet private var titleField: UILabel!
+	@IBOutlet internal var titleField: UILabel!
 
 	override init(frame: CGRect) {
 		fatalError("Must use +instanceFromNib")
@@ -25,7 +25,7 @@ class PostButton: UIControl {
 	}
 	
 	var title: String {
-		set { titleField.text = title }
+		set { titleField.text = newValue }
 		get { return titleField.text ?? "" }
 	}
 }

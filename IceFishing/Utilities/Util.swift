@@ -16,7 +16,9 @@ func loadImageAsync(url: NSURL, completion: (UIImage!, NSError!) -> ()) {
     let requestedURL = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReturnCacheDataElseLoad, timeoutInterval: 10.0)
 	
 	NSURLSession.sharedSession().dataTaskWithRequest(requestedURL, completionHandler: { (data, response, error) -> Void in
-		error != nil ? completion(nil, error) : completion(UIImage(data: data!), nil)
+		dispatch_async(dispatch_get_main_queue(), { () -> Void in
+			error != nil ? completion(nil, error) : completion(UIImage(data: data!), nil)
+		})
 	}).resume()
 }
 

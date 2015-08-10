@@ -26,8 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let URLCache = NSURLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
 		NSURLCache.setSharedURLCache(URLCache)
 		
+		StyleController.applyStyles()
+		
 		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-		self.window!.backgroundColor = UIColor.whiteColor()
+		self.window!.backgroundColor = UIColor.iceLightGray
 		self.window!.makeKeyAndVisible()
 		
 		// Check for a cached session whenever app is opened

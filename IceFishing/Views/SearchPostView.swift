@@ -17,8 +17,6 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var descriptionLabel: MarqueeLabel?
     @IBOutlet var dateLabel: UILabel?
     @IBOutlet var spacingConstraint: NSLayoutConstraint?
-    
-    var fillColor = UIColor.iceDarkGray
  
     private var updateTimer: NSTimer?
     private var notificationHandler: AnyObject?
@@ -183,7 +181,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
             progress = post.player.progress
         }
         super.drawRect(rect)
-        fillColor.setFill()
+        UIColor.iceDarkGray.setFill()
         CGContextFillRect(UIGraphicsGetCurrentContext(),
             CGRect(x: 0, y: 0,
                 width: self.bounds.size.width * CGFloat(progress),

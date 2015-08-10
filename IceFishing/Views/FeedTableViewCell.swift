@@ -9,10 +9,5 @@
 import UIKit
 
 class FeedTableViewCell: UITableViewCell {
-    var callBack: ((isPlaying: Bool, sender: FeedTableViewCell) -> Void)?
     @IBOutlet var postView: PostView!
-    
-    override func didMoveToSuperview() {
-        backgroundColor = UIColor.iceLightGray
-    }
 }

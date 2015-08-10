@@ -9,13 +9,17 @@
 import UIKit
 import MediaPlayer
 
-class FeedViewController: UITableViewController, UISearchControllerDelegate {
+class FeedViewController: UITableViewController, SongSearchDelegate {
 	
 	var posts: [Post] = []
 	var customRefresh:ADRefreshControl!
-	
-	let searchSongTableViewController = SearchSongTableViewController()
 	var plusButton: UIButton!
+	
+	lazy var songSearchTableViewController: SongSearchViewController = {
+		let vc = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
+		vc.delegate = self
+		return vc
+	}()
 	
 	var currentlyPlayingIndexPath: NSIndexPath? {
 		didSet {
@@ -33,7 +37,7 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 				}
 			}
 			tableView.selectRowAtIndexPath(currentlyPlayingIndexPath, animated: false, scrollPosition: UITableViewScrollPosition.None)
-			cellPin()
+//			cellPin()
 		}
 	}
 	var currentlyPlayingPost: Post?
@@ -44,9 +48,9 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 	var pinViewGestureRecognizer: UITapGestureRecognizer!
 	var lastContentOffset: CGFloat!  //Deals with pinView detection
 	
-	func addSong(track: Song) {
-		posts.insert(Post(song: track, user: User.currentUser, date: NSDate(), likes: 0), atIndex: 0)
-		API.sharedAPI.updatePost(User.currentUser.id, song: track) { song in
+	func didSelectSong(song: Song) {
+		posts.insert(Post(song: song, user: User.currentUser, date: NSDate(), likes: 0), atIndex: 0)
+		API.sharedAPI.updatePost(User.currentUser.id, song: song) { song in
 			self.tableView.reloadData()
 		}
 	}
@@ -129,14 +133,14 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 		
 		//!TODO: fetch the largest artwork image for lockscreen in Post
 		let center = MPRemoteCommandCenter.sharedCommandCenter()
-		center.playCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+		center.playCommand.addTargetWithHandler { [weak self] _ -> MPRemoteCommandHandlerStatus in
 			if let player = self?.currentlyPlayingPost?.player {
 				player.play(true)
 				return .Success
 			}
 			return .NoSuchContent
 		}
-		center.pauseCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+		center.pauseCommand.addTargetWithHandler { [weak self] _ -> MPRemoteCommandHandlerStatus in
 			if let player = self?.currentlyPlayingPost?.player {
 				player.pause(true)
 				return .Success
@@ -144,7 +148,7 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 			return .NoSuchContent
 		}
 		
-		center.nextTrackCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+		center.nextTrackCommand.addTargetWithHandler { [weak self] _ -> MPRemoteCommandHandlerStatus in
 			if let path = self?.currentlyPlayingIndexPath {
 				if (path.row < self!.posts.count - 1) {
 					self?.currentlyPlayingIndexPath = NSIndexPath(forRow: path.row + 1, inSection: path.section)
@@ -154,7 +158,7 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 			return .NoSuchContent
 		}
 		
-		center.previousTrackCommand.addTargetWithHandler { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+		center.previousTrackCommand.addTargetWithHandler { [weak self] _ -> MPRemoteCommandHandlerStatus in
 			if let path = self?.currentlyPlayingIndexPath {
 				if (path.row > 0) {
 					self?.currentlyPlayingIndexPath = NSIndexPath(forRow: path.row - 1, inSection: path.section)
@@ -165,13 +169,11 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 			return .NoSuchContent
 		}
 		
-		center.seekForwardCommand.addTargetWithHandler { event -> MPRemoteCommandHandlerStatus in
-			
+		center.seekForwardCommand.addTargetWithHandler { _ -> MPRemoteCommandHandlerStatus in
 			return .Success
 		}
 		
-		center.seekBackwardCommand.addTargetWithHandler { event -> MPRemoteCommandHandlerStatus in
-			
+		center.seekBackwardCommand.addTargetWithHandler { _ -> MPRemoteCommandHandlerStatus in
 			return .Success
 		}
 		
@@ -185,13 +187,9 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 		refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
 		//refreshControl?.attributedTitle = NSAttributedString(string: "Last Updated on \(NSDate())", attributes: [ NSForegroundColorAttributeName: UIColor.whiteColor() ])
 		
-		tableView.separatorStyle = .None
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
 		refreshFeed()
-		
-		//background color for the view
-		tableView.rowHeight = 90
 		
 		pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
 		pinViewGestureRecognizer.delegate = pinView
@@ -267,59 +265,56 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 		currentlyPlayingIndexPath = indexPath
 	}
 	
-	override func scrollViewDidScroll(scrollView: UIScrollView) {
-		let lastCell = NSIndexPath(forRow: posts.count-1, inSection: 0)
-		if (currentlyPlayingIndexPath != nil) {
-			if tableView.indexPathsForVisibleRows != nil {
-				if let cellSelected = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath!) {
-					if (lastCell == currentlyPlayingIndexPath && cellSelected.frame.maxY - tableView.contentOffset.y < parentViewController!.view.frame.height) {
-						if (tableView.contentOffset.y > lastContentOffset) {
-							bottomPinViewContainer.hidden = true
-						}
-					}
-				}
-			}
-		}
-		lastContentOffset = tableView.contentOffset.y
-		customRefresh.scrollViewDidScroll(scrollView)
-	}
+//	override func scrollViewDidScroll(scrollView: UIScrollView) {
+//		let lastCell = NSIndexPath(forRow: posts.count-1, inSection: 0)
+//		if (currentlyPlayingIndexPath != nil) {
+//			if tableView.indexPathsForVisibleRows != nil {
+//				if let cellSelected = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath!) {
+//					if (lastCell == currentlyPlayingIndexPath && cellSelected.frame.maxY - tableView.contentOffset.y < parentViewController!.view.frame.height) {
+//						if (tableView.contentOffset.y > lastContentOffset) {
+//							bottomPinViewContainer.hidden = true
+//						}
+//					}
+//				}
+//			}
+//		}
+//		lastContentOffset = tableView.contentOffset.y
+//		customRefresh.scrollViewDidScroll(scrollView)
+//	}
+//	
+//	func cellPin() {
+//		if let selectedRow = currentlyPlayingIndexPath { //If a row is selected
+//			if let rowsICanSee = tableView.indexPathsForVisibleRows { //Rows Seen
+//				if let cellSelected = tableView.cellForRowAtIndexPath(selectedRow) as? FeedTableViewCell {
+//					if cellSelected.frame.minY - tableView.contentOffset.y < navigationController!.navigationBar.frame.maxY || rowsICanSee.last == selectedRow { //If the cell is the top or bottom
+//						if (cellSelected.frame.minY - tableView.contentOffset.y < navigationController!.navigationBar.frame.maxY) {
+//							pinView.post = posts[selectedRow.row]
+//							pinView.layoutIfNeeded()
+//							topPinViewContainer.addSubview(pinView)
+//							pinView.addGestureRecognizer(pinViewGestureRecognizer)
+//							topPinViewContainer.hidden = false
+//							
+//						} else if (cellSelected.frame.maxY - tableView.contentOffset.y > parentViewController!.view.frame.height) {
+//							pinView.post = posts[selectedRow.row]
+//							pinView.layoutIfNeeded()
+//							bottomPinViewContainer.addSubview(pinView)
+//							pinView.addGestureRecognizer(pinViewGestureRecognizer)
+//							bottomPinViewContainer.hidden = false
+//						}
+//					}
+//					else {
+//						if selectedRow.compare(rowsICanSee.first!) != selectedRow.compare(rowsICanSee.last!) { //If they're equal then the thing is not on screen
+//							topPinViewContainer.hidden = true
+//							bottomPinViewContainer.hidden = true
+//							pinView.post = nil
+//							pinView.removeFromSuperview()
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 	
-	func cellPin() {
-		if let selectedRow = currentlyPlayingIndexPath { //If a row is selected
-			if let rowsICanSee = tableView.indexPathsForVisibleRows { //Rows Seen
-				if let cellSelected = tableView.cellForRowAtIndexPath(selectedRow) as? FeedTableViewCell {
-					if cellSelected.frame.minY - tableView.contentOffset.y < navigationController!.navigationBar.frame.maxY || rowsICanSee.last == selectedRow { //If the cell is the top or bottom
-						if (cellSelected.frame.minY - tableView.contentOffset.y < navigationController!.navigationBar.frame.maxY) {
-							pinView.post = posts[selectedRow.row]
-							pinView.layoutIfNeeded()
-							topPinViewContainer.addSubview(pinView)
-							pinView.addGestureRecognizer(pinViewGestureRecognizer)
-							topPinViewContainer.hidden = false
-							
-						} else if (cellSelected.frame.maxY - tableView.contentOffset.y > parentViewController!.view.frame.height) {
-							pinView.post = posts[selectedRow.row]
-							pinView.layoutIfNeeded()
-							bottomPinViewContainer.addSubview(pinView)
-							pinView.addGestureRecognizer(pinViewGestureRecognizer)
-							bottomPinViewContainer.hidden = false
-						}
-					}
-					else {
-						if selectedRow.compare(rowsICanSee.first!) != selectedRow.compare(rowsICanSee.last!) { //If they're equal then the thing is not on screen
-							topPinViewContainer.hidden = true
-							bottomPinViewContainer.hidden = true
-							pinView.post = nil
-							pinView.removeFromSuperview()
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	// From Old Main VC, might need some cleanup
-	
-	// Initialize plus sign and the drop-down searchbar.
 	func setupAddButton() {
 		let image = UIImage(named: "Add-Icon")!
 		plusButton = UIButton(type: UIButtonType.Custom)
@@ -330,8 +325,7 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 		plusButton.adjustsImageWhenHighlighted = false;
 		plusButton.addTarget(self, action: "plusButtonTapped", forControlEvents: .TouchUpInside)
 		
-		let barButton = UIBarButtonItem(customView: plusButton)
-		navigationItem.rightBarButtonItem = barButton
+		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: plusButton)
 	}
 	
 	func rotatePlusButton(active: Bool) {
@@ -339,8 +333,8 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 			self.plusButton.imageView?.layer.transform = currentTransform
 		}
 		plusButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
-		plusButton.addTarget(active ? searchSongTableViewController : self, action: active ? "dismiss" : "plusButtonTapped", forControlEvents: .TouchUpInside)
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 20, options: [], animations: {
+		plusButton.addTarget(active ? songSearchTableViewController : self, action: active ? "dismiss" : "plusButtonTapped", forControlEvents: .TouchUpInside)
+		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
 			let transform = active ? CGAffineTransformMakeRotation(CGFloat(M_PI_4)) : CGAffineTransformIdentity
 			self.plusButton.imageView!.transform = transform
 			}, completion: nil)
@@ -348,16 +342,9 @@ class FeedViewController: UITableViewController, UISearchControllerDelegate {
 	
 	func plusButtonTapped() {
 		rotatePlusButton(true)
-		searchSongTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
-		navigationController?.pushViewController(searchSongTableViewController, animated: false)
+		
+		songSearchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
+		songSearchTableViewController.navigationItem.leftBarButtonItem = navigationItem.leftBarButtonItem
+		navigationController?.pushViewController(songSearchTableViewController, animated: false)
 	}
-	
-	
-	
-	// Called from search
-//	func submitSong(song: Song) {
-//		searchBar.resignFirstResponder()
-//		plusButtonTapped()
-//		addSong(song)
-//	}
 }
