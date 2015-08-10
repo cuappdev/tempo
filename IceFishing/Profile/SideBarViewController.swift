@@ -71,7 +71,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         categoryTableView.reloadData()
         // mark first item selected cuz it is
-        if (elements.count > 0) {
+        if elements.count > 0 {
             categoryTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: .None)
         }
     }

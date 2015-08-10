@@ -52,7 +52,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
                         (note) -> Void in
                         self?.updateProfileLabelTextColor()
                         
-                        if (self?.updateTimer == nil && self?.post?.player.isPlaying() ?? false) {
+                        if self?.updateTimer == nil && self?.post?.player.isPlaying() ?? false {
                             // 60 fps
                             self?.updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
                                 target: self!, selector: Selector("timerFired:"),
@@ -72,14 +72,14 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func didMoveToWindow() {
-        if (progressGestureRecognizer == nil) {
+        if progressGestureRecognizer == nil {
             progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: "changeProgress:")
             progressGestureRecognizer?.delegate = self
             progressGestureRecognizer?.delaysTouchesBegan = true
             addGestureRecognizer(progressGestureRecognizer!)
         }
         
-        if (tapGestureRecognizer == nil) {
+        if tapGestureRecognizer == nil {
             tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "postViewPressed:")
             tapGestureRecognizer?.delegate = self
             tapGestureRecognizer?.cancelsTouchesInView = false
@@ -121,7 +121,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     }
     
     dynamic private func timerFired(timer: NSTimer) {
-        if (self.post?.player.isPlaying() ?? false) {
+        if self.post?.player.isPlaying() ?? false {
             self.setNeedsDisplay()
         }
     }
@@ -160,7 +160,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     }
     
     dynamic func changeProgress(gesture: UIPanGestureRecognizer) {
-        if (gesture.state != .Ended) {
+        if gesture.state != .Ended {
             post?.player.pause(false)
         } else {
             post?.player.play(false)

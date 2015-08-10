@@ -78,6 +78,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		searchBar.becomeFirstResponder()
 	}
 	
+	// Called from bar button, not an elegant solution (should audit)
 	func dismiss() {
 		navigationController?.popViewControllerAnimated(false)
 		clearResults()
@@ -124,7 +125,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 			
 			postButton.addTarget(self, action: "submitSong", forControlEvents: UIControlEvents.TouchUpInside)
 		}
-		postButton.title = song.title + " - " + song.artist
+		postButton.title = "\(song.title) - \(song.artist)"
 		selectedSong = song
 		searchBar.resignFirstResponder()
 		
@@ -134,11 +135,6 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 	func submitSong() {
 		self.delegate?.didSelectSong(selectedSong!)
 		dismiss()
-	}
-	
-	func finishSearching() {
-		activePlayer?.pause(true)
-		activePlayer = nil
 	}
 	
 	func update(searchText: String) {
@@ -196,6 +192,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		selectedSong = nil
 		activePlayer?.pause(true)
 		activePlayer = nil
+		searchBar.text = nil
 	}
 	
 	// MARK: - Notifications

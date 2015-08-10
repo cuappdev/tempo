@@ -96,7 +96,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     // <------------------------FOLLOW BUTTONS------------------------>
     
     @IBAction func followButton(sender: UIButton) {
-        if (!isFollowing) {
+        if !isFollowing {
             isFollowing = true
             followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
             User.currentUser.followersCount = User.currentUser.followersCount + 1
@@ -151,7 +151,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         cell.date = date
         cell.userInteractionEnabled = false
 
-        if (postedDates.contains(cell.date)) {
+        if postedDates.contains(cell.date) {
             cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed
 			cell.userInteractionEnabled = true
         }
@@ -162,7 +162,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     // Section Header
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
-        if (kind == UICollectionElementKindSectionHeader) {
+        if kind == UICollectionElementKindSectionHeader {
             let firstDayOfMonth = dateForIndexPath(indexPath).firstDayOfMonth()
             let header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! HipCalendarCollectionReusableView
             header.firstDayOfMonth = firstDayOfMonth
@@ -183,7 +183,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let firstDayOfMonth = NSDate().firstDayOfMonth().dateByAddingMonths(-section)
         var numberOfDays = firstDayOfMonth.numDaysInMonth()
         
-        if (firstDayOfMonth.month() == startDate.month() && firstDayOfMonth.year() == startDate.year()) {
+        if firstDayOfMonth.month() == startDate.month() && firstDayOfMonth.year() == startDate.year() {
             numberOfDays = startDate.numDaysUntilEndDate(firstDayOfMonth.lastDayOfMonth())
         }
         

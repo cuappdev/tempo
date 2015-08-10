@@ -90,7 +90,7 @@ class PeopleSearchViewController: UITableViewController, UISearchBarDelegate, UI
     }
 
     func search(sender: UITextField) {
-        if (searchBar.text == "") {
+        if searchBar.text == "" {
             users = []
             self.tableView.reloadData()
         }

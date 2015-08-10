@@ -27,7 +27,7 @@ class PostHistoryTableViewCell: UITableViewCell {
     
     // Custom selected cell view
     override func setSelected(selected: Bool, animated: Bool) {
-        if (selected) {
+        if selected {
             self.contentView.backgroundColor = UIColor.iceLightGray
         } else {
             self.contentView.backgroundColor = UIColor.clearColor()

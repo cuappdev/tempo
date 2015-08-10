@@ -21,7 +21,7 @@ class Song: NSObject {
     
     private var largeArtwork: UIImage?
     func fetchArtwork() -> UIImage? {
-        if (largeArtwork == nil && largeArtworkURL != nil) {
+        if largeArtwork == nil && largeArtworkURL != nil {
             loadImageAsync(largeArtworkURL!, completion: { [weak self] (image, error) -> () in
                 self?.largeArtwork = image
                 NSNotificationCenter.defaultCenter().postNotificationName(SongDidDownloadArtworkNotification, object: self)
@@ -67,9 +67,9 @@ class Song: NSObject {
         let preview = json["preview_url"].stringValue
         previewURL = NSURL(string: preview)
         let artists = json["artists"].arrayValue
-        if (artists.count > 1) {
+        if artists.count > 1 {
             artist = "Various Artists"
-        } else if (artists.count == 0) {
+        } else if artists.count == 0 {
             artist = "Unknown Artist"
         } else {
             artist = artists[0]["name"].string ?? "Unknown Artist"

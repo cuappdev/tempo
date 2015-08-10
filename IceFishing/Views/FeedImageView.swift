@@ -12,7 +12,7 @@ class FeedImageView: UIImageView {
 	var placeholderImage: UIImage?
 	var imageURL: NSURL? {
 		didSet {
-			if (imageURL == oldValue) {
+			if imageURL == oldValue {
 				return
 			}
 			

@@ -68,7 +68,7 @@ extension NSDate {
         
         let components : NSDateComponents = calendar.components(NSCalendarUnit.Day, fromDate: firstDay, toDate: lastDay, options: NSCalendarOptions(rawValue: 0))
         
-        if (isCurrentMonth(firstDay)) {
+        if isCurrentMonth(firstDay) {
             components.day = NSDate().day()
             return components.day
         }

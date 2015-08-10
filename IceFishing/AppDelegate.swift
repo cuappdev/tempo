@@ -13,12 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	var window: UIWindow?
 	var tools: Tools!
-	lazy var revealVC = SWRevealViewController()
-	lazy var sidebarVC: SideBarViewController = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
-	lazy var feedVC: FeedViewController = FeedViewController(nibName: "FeedViewController", bundle: nil)
-	lazy var peopleVC: PeopleSearchViewController = PeopleSearchViewController()
-	lazy var likedVC: LikedTableViewController = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
-	lazy var mainNavigationController = UINavigationController()
+	var revealVC = SWRevealViewController()
+	var sidebarVC: SideBarViewController = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
+	var feedVC: FeedViewController = FeedViewController(nibName: "FeedViewController", bundle: nil)
+	var peopleVC: PeopleSearchViewController = PeopleSearchViewController()
+	var likedVC: LikedTableViewController = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
+	var navigationController = UINavigationController()
 	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
@@ -28,32 +28,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		StyleController.applyStyles()
 		
+		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
+		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")
+		SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistReadPrivateScope]
+		
+		let loginURL = SPTAuth.defaultInstance().loginURL
+		application.performSelector("openURL:", withObject: loginURL, afterDelay: 0.5)
+		
 		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		self.window!.backgroundColor = UIColor.iceLightGray
 		self.window!.makeKeyAndVisible()
 		
-		// Check for a cached session whenever app is opened
-		if (FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded) {
-			// If there's one, open session without displaying Login UI
+		if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded {
 			FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false, completionHandler: { (session, state, error) -> Void in
 				self.sessionStateChanged(session, state: state, error: error)
 			})
 		}
 		
-		// Go to feed if open session, else sign in screen
 		toggleRootVC()
 		
 		return true
 	}
 	
-	// Toggle rootViewController
 	func toggleRootVC() {
-		if (!FBSession.activeSession().isOpen) {
+		if !FBSession.activeSession().isOpen {
 			let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
 			self.window!.rootViewController = signInVC
 		} else {
-			mainNavigationController.setViewControllers([feedVC], animated: false)
-			revealVC.setFrontViewController(mainNavigationController, animated: false)
+			navigationController.setViewControllers([feedVC], animated: false)
+			revealVC.setFrontViewController(navigationController, animated: false)
 			revealVC.setRearViewController(sidebarVC, animated: false)
 			sidebarVC.elements = [
 				SideBarElement(title: "Feed", viewController: feedVC, image: UIImage(named: "Feed-Icon")),
@@ -71,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 							return
 						}
 					}
-					self?.mainNavigationController.setViewControllers([viewController], animated: false)
+					self?.navigationController.setViewControllers([viewController], animated: false)
 					self?.revealVC.setFrontViewPosition(.Left, animated: true)
 				}
 			}
@@ -84,33 +87,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// Facebook Session
 	func sessionStateChanged(session : FBSession, state : FBSessionState, error : NSError?)
 	{
-		if (error != nil) {
+		if error != nil {
 			FBSession.activeSession().closeAndClearTokenInformation()
 		} else {
-			if (state == FBSessionState.Open) {
+			if state == FBSessionState.Open {
 				print("Session Opened")
 				API.sharedAPI.getCurrentUser { _ in }
 			}
 		}
 		
 		// Error Messages
-		if (state == FBSessionState.Closed || state == FBSessionState.ClosedLoginFailed) {
+		if state == FBSessionState.Closed || state == FBSessionState.ClosedLoginFailed {
 			print("Session Closed")
 		}
-		if (FBErrorUtility.shouldNotifyUserForError(error) == true) {
+		if FBErrorUtility.shouldNotifyUserForError(error) == true {
 			print("Error")
 		} else {
-			if (FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.UserCancelled) {
+			if FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.UserCancelled {
 				print("Login Cancelled")
 			}
-			else if (FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.AuthenticationReopenSession) {
+			else if FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.AuthenticationReopenSession {
 				print("Invalid Session")
 			}
 		}
 	}
 	
 	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-		let wasHandled:Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+		
+		if SPTAuth.defaultInstance().canHandleURL(url) {
+			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { (error, session) -> Void in
+				if error != nil {
+					print("*** Auth error: \(error)");
+					return
+				}
+				print(session)
+			})
+			
+			return true
+		}
+		
+		let wasHandled: Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
 		return wasHandled
 	}
 }

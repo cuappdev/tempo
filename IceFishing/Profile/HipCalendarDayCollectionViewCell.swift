@@ -24,7 +24,7 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
             dayLabel.textColor = UIColor.whiteColor()
             dayInnerCircleView.backgroundColor = noPostColor
             
-            if (isToday()) {
+            if isToday() {
                 dayLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 15.0)
             } else {
                 dayLabel.font = UIFont(name: "HelveticaNeue-Light", size: 12.0)

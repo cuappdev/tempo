@@ -25,7 +25,7 @@ class SideBarTableViewCell: UITableViewCell {
     
     // Custom selected cell view
     override func setSelected(selected: Bool, animated: Bool) {
-        if (selected) {
+        if selected {
             self.contentView.backgroundColor = UIColor.iceLightGray
             selectedCellView.hidden = false
         } else {

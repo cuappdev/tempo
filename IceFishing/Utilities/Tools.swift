@@ -42,7 +42,7 @@ class Tools: UIView, UIActionSheetDelegate, FBTweakViewControllerDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShown"), name:UIKeyboardWillShowNotification , object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDismissed"), name:UIKeyboardWillHideNotification , object: nil)
-//        if ( self ) {
+//        if self {
 //            NSNotificationCenter		*center = [NSNotificationCenter defaultCenter];
 //            [center addObserver:self selector:@selector(noticeShowKeyboard:) name:UIKeyboardDidShowNotification object:nil];
 //            [center addObserver:self selector:@selector(noticeHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];

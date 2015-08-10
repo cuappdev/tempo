@@ -10,7 +10,7 @@ import Foundation
 
 extension UIColor {
 	class var iceDarkRed: UIColor {
-        return UIColor(red: 187/255.0, green: 61/255.0, blue: 52/255.0, alpha: 1.0)
+        return UIColor(red: 154/255.0, green: 57/255.0, blue: 54/255.0, alpha: 1.0)
     }
     
 	class var iceDarkGray: UIColor {

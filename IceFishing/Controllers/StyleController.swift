@@ -10,17 +10,18 @@ import UIKit
 
 class StyleController {
 	class func applyStyles() {
+		// UIKit appearances
+		UINavigationBar.appearance().barTintColor = UIColor.iceDarkRed
+		UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+		UINavigationBar.appearance().barStyle = .Black
+		UINavigationBar.appearance().translucent = false
+		
 		UISearchBar.appearance().backgroundColor = UIColor.iceDarkRed
 		UISearchBar.appearance().barTintColor = UIColor.whiteColor()
 		UISearchBar.appearance().tintColor = UIColor.whiteColor()
 		UISearchBar.appearance().translucent = false
 		UISearchBar.appearance().placeholder = "Search"
 		UISearchBar.appearance().searchBarStyle = UISearchBarStyle.Minimal
-		
-		UINavigationBar.appearance().barTintColor = UIColor.iceDarkRed
-		UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-		UINavigationBar.appearance().barStyle = .Black
-		UINavigationBar.appearance().translucent = false
 		
 		UITableView.appearance().backgroundColor = UIColor.iceLightGray
 		UITableView.appearance().separatorColor = UIColor.clearColor()
@@ -31,6 +32,9 @@ class StyleController {
 		
 		UITableViewCell.appearance().backgroundColor = UIColor.iceLightGray
 		
+		
+		// User defined appearances
+		PostButton.appearance().backgroundColor = UIColor.iceDarkRed
 		SearchPostView.appearance().backgroundColor = UIColor.iceLightGray
 	}
 }

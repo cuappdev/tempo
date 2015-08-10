@@ -26,6 +26,16 @@
 				<string>fb1618111635067060</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.cuappdev.IceFishing.spotify-auth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>icefishing-login</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>

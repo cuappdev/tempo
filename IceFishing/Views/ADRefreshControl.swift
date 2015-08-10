@@ -69,7 +69,7 @@ class ADRefreshControl: NSObject {
         self.refreshColorView.frame = refreshBounds;
         
         // If we're refreshing and the animation is not playing, then play the animation
-        if (self.refreshControl!.refreshing && !self.isRefreshAnimating) {
+        if self.refreshControl!.refreshing && !self.isRefreshAnimating {
             self.animateRefreshView()
         }
         
@@ -107,9 +107,9 @@ class ADRefreshControl: NSObject {
             },
             completion: { finished in
                 // If still refreshing, keep spinning, else reset
-                if (self.refreshControl.refreshing) {
+                if self.refreshControl.refreshing {
                     self.animateRefreshView()
-                }else {
+                } else {
                     self.resetAnimation()
                 }
             }

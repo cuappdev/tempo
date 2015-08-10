@@ -29,9 +29,9 @@ class SignInViewController: UIViewController {
             appDelegate.sessionStateChanged(session, state: state, error: error)
             
             // Request FB user info
-            if (session.isOpen) {
+            if session.isOpen {
                 // Check for old or new user
-                if (User.currentUser.name == User.currentUser.username) {
+                if User.currentUser.name == User.currentUser.username {
                     let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
                     self.presentViewController(usernameVC, animated: false, completion: nil)
                 } else {

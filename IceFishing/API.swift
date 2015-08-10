@@ -44,7 +44,7 @@ enum Router: URLStringConvertible {
             case .History(let userID):
                 return "/\(userID)/posts"
             case .Likes(let userID):
-                if (userID != nil) {
+                if userID != nil {
                     return "/users/\(userID!)/likes"
                 }
                 return "/likes"
@@ -97,7 +97,7 @@ class API {
         // Other times you can simply reference the saved user object, instead of pinging facebook
         let userRequest : FBRequest = FBRequest.requestForMe()
         userRequest.startWithCompletionHandler { [unowned self] (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-            if (error == nil) {
+            if error == nil {
                 let user = [
                     "email": result["email"] as! String,
                     "name": result["name"] as! String,

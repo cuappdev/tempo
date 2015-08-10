@@ -26,7 +26,7 @@ class UsernameViewController: UIViewController {
 		guard let username = usernameTextField.text else { print("No Username"); return}
 			
         API.sharedAPI.usernameIsValid(username) { success in
-            if (success) {
+            if success {
                 // Username available
                 User.currentUser.username = username
                 API.sharedAPI.updateCurrentUser(username) { user in }

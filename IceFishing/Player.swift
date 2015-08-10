@@ -21,7 +21,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
         didSet {
             oldValue?.pause()
             if let oldDelegate = oldValue?.delegate as? Player {
-                if (self == oldDelegate) {
+                if self == oldDelegate {
                     oldValue?.delegate = nil
                 }
             }
@@ -46,15 +46,15 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
     
     func prepareToPlay() {
-        if (player == nil) {
-            if (fileURL.fileURL) {
+        if player == nil {
+            if fileURL.fileURL {
                 do {
                     player = try AVAudioPlayer(contentsOfURL: fileURL)
                 } catch _ {
                     player = nil
                 }
                 player?.prepareToPlay()
-            } else if (currentConnection == nil) {
+            } else if currentConnection == nil {
                 // get cached data
                 let request = NSURLRequest(URL: fileURL,
                     cachePolicy: NSURLRequestCachePolicy.ReturnCacheDataElseLoad,
@@ -69,7 +69,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     func play(notify: Bool) {
         prepareToPlay()
         finishedPlaying = false
-        if (player == nil) {
+        if player == nil {
             shouldAutoplay = true
             shouldNotify = notify
         } else {
@@ -106,7 +106,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
     
     func togglePlaying() {
-        if (self.isPlaying()) {
+        if self.isPlaying() {
             self.pause(true)
         } else {
             self.play(true)
@@ -191,7 +191,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
         totalData = nil
         currentConnection = nil
         
-        if (shouldAutoplay) {
+        if shouldAutoplay {
             player?.play()
             if shouldNotify {
                 NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)

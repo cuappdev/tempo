@@ -382,7 +382,7 @@ public class MarqueeLabel: UILabel {
         switch type {
         case .Continuous, .ContinuousReverse:
             let awayLabelOffset: CGFloat
-            if (type == .Continuous) {
+            if type == .Continuous {
                 homeLabelFrame = CGRectIntegral(CGRectMake(leadingBuffer, 0.0, expectedLabelSize.width, bounds.size.height))
                 awayLabelOffset = -(homeLabelFrame.size.width + minTrailing)
                 awayLabelFrame = CGRectIntegral(CGRectOffset(homeLabelFrame, awayLabelOffset, 0.0))
@@ -393,7 +393,7 @@ public class MarqueeLabel: UILabel {
             }
             
             var sublabels = allSublabels()
-            if (sublabels.count < 2) {
+            if sublabels.count < 2 {
                 let sublabelFrame = CGRectIntegral(CGRectOffset(homeLabelFrame, -awayLabelOffset, 0.0))
                 let secondSublabel = UILabel(frame: sublabelFrame)
                 secondSublabel.tag = 701
@@ -600,9 +600,9 @@ public class MarqueeLabel: UILabel {
             // 2) The instance is still attached to a window - this completion block is called for
             //    many reasons, including if the animation is removed due to the view being removed
             //    from the UIWindow (typically when the view controller is no longer the "top" view)
-            if (self.window != nil && self.sublabel.layer.animationForKey("position") == nil) {
+            if self.window != nil && self.sublabel.layer.animationForKey("position") == nil {
                 // Begin again, if conditions met
-                if (self.labelShouldScroll() && !self.tapToScroll && !self.holdScrolling) {
+                if self.labelShouldScroll() && !self.tapToScroll && !self.holdScrolling {
                     // Perform completion callback
                     callback(self)(interval: interval, delay: delay)
                 }
@@ -694,7 +694,7 @@ public class MarqueeLabel: UILabel {
     
     private func applyGradientMask(fadeLength: CGFloat, animated: Bool) {
         // Check for zero-length fade
-        if (fadeLength <= 0.0) {
+        if fadeLength <= 0.0 {
             removeGradientMask()
             return
         }
@@ -722,7 +722,7 @@ public class MarqueeLabel: UILabel {
         var trailingFadeLength: CGFloat = fadeLength
         
         // No fade if labelized, or if no scrolling is needed
-        if (labelize || !labelShouldScroll()) {
+        if labelize || !labelShouldScroll() {
             leadingFadeLength = 0.0
             trailingFadeLength = 0.0
         }
@@ -744,7 +744,7 @@ public class MarqueeLabel: UILabel {
         let rightFadePoint: CGFloat = rightFadeLength/self.bounds.size.width
         
         let adjustedLocations = [0.0, leftFadePoint, 1.0 - rightFadePoint, 1.0]
-        if (animated) {
+        if animated {
             // Create animation for gradient change
             let animation = CABasicAnimation(keyPath: "locations")
             animation.fromValue = gradientMask.locations
@@ -1238,7 +1238,7 @@ private extension UIResponder {
         if let nextResponder = self.nextResponder() {
             if nextResponder.isKindOfClass(UIViewController) {
                 return nextResponder
-            } else if (nextResponder.isKindOfClass(UIView)) {
+            } else if nextResponder.isKindOfClass(UIView) {
                 return nextResponder.traverseResponderChainForFirstViewController()
             }
         }
@@ -1277,14 +1277,14 @@ extension CAMediaTimingFunction {
             // Calculate f(t0)
             f0 = YforCurveAt(t0, controlPoints:controlPoints) - y_0
             // Check if this is close (enough)
-            if (fabs(f0) < epsilon) {
+            if fabs(f0) < epsilon {
                 // Done!
                 return t0
             }
             // Else continue Newton's Method
             df0 = derivativeCurveYValueAt(t0, controlPoints:controlPoints)
             // Check if derivative is small or zero ( http://en.wikipedia.org/wiki/Newton's_method#Failure_analysis )
-            if (fabs(df0) < 1e-6) {
+            if fabs(df0) < 1e-6 {
                 break
             }
             // Else recalculate t1

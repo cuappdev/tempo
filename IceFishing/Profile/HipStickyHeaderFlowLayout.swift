@@ -18,7 +18,7 @@ class HipStickyHeaderFlowLayout: UICollectionViewFlowLayout {
 		let missingSections = NSMutableIndexSet()
 		
 		for attribute in layoutAttributes {
-			if (attribute.representedElementCategory == .Cell) {
+			if attribute.representedElementCategory == .Cell {
 				missingSections.addIndex(attribute.indexPath.section)
 			}
 		}
@@ -48,7 +48,7 @@ class HipStickyHeaderFlowLayout: UICollectionViewFlowLayout {
 					let lastCellIndexPath = NSIndexPath(forItem: max(0, (numberOfItemsInSection - 1)), inSection: section)
 					
 					let (firstCellAttributes, lastCellAttributes): (UICollectionViewLayoutAttributes!, UICollectionViewLayoutAttributes!) = {
-						if (self.collectionView!.numberOfItemsInSection(section) > 0) {
+						if self.collectionView!.numberOfItemsInSection(section) > 0 {
 							return (
 								self.layoutAttributesForItemAtIndexPath(firstCellIndexPath),
 								self.layoutAttributesForItemAtIndexPath(lastCellIndexPath))
