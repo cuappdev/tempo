@@ -101,9 +101,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
             User.currentUser.followersCount = User.currentUser.followersCount + 1
             // TODO: Update following
-//            API.sharedAPI.updateFollowings(User.currentUser.id, unfollow: false) { bool in
-//                println(bool)
-//            }
+            API.sharedAPI.updateFollowings(User.currentUser.id, unfollow: false) { bool in
+                print(bool)
+            }
         } else {
             isFollowing = false
             followButtonLabel.setTitle("FOLLOW", forState: .Normal)

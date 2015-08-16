@@ -161,7 +161,7 @@ class API {
     
     func updateFollowings(userID: String, unfollow: Bool, completion: [String: Bool] -> Void) {
         let map: [String: Bool] -> [String: Bool]? = { $0 }
-        post(.Followings, params: ["user_id": userID, "unfollow": unfollow, "session_code": sessionCode], map: map, completion: completion)
+        post(.Followings, params: ["followed_id": Int(userID)!, "unfollow": unfollow, "session_code": sessionCode], map: map, completion: completion)
     }
     
     func updatePost(userID: String, song: Song, completion: [String: AnyObject] -> Void) {

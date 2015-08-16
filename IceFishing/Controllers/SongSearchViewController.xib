@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
@@ -7,8 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SongSearchViewController" customModule="IceFishing" customModuleProvider="target">
             <connections>
-                <outlet property="bottomConstraint" destination="qaz-sJ-nkH" id="BC9-2I-Lyu"/>
-                <outlet property="postViewContainer" destination="X8f-OG-bA7" id="w2n-bE-JSr"/>
                 <outlet property="searchBarContainer" destination="37W-Lh-yGS" id="xOq-46-Bqf"/>
                 <outlet property="tableView" destination="2LV-ND-hwh" id="qD4-VQ-WUu"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bzz-2z-AKI"/>
@@ -24,13 +22,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Cgx-UV-kjZ"/>
-                        <constraint firstAttribute="width" constant="389" id="Eov-fR-ayz"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="Eov-fR-ayz"/>
-                        </mask>
-                    </variation>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2LV-ND-hwh">
                     <rect key="frame" x="0.0" y="44" width="389" height="556"/>
@@ -40,34 +32,19 @@
                         <outlet property="delegate" destination="-1" id="vBa-wv-GDi"/>
                     </connections>
                 </tableView>
-                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X8f-OG-bA7">
-                    <rect key="frame" x="0.0" y="550" width="389" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="vgI-1e-Oaq"/>
-                    </constraints>
-                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="2LV-ND-hwh" firstAttribute="top" secondItem="37W-Lh-yGS" secondAttribute="bottom" id="31p-v7-A25"/>
-                <constraint firstAttribute="bottom" secondItem="X8f-OG-bA7" secondAttribute="bottom" id="NgK-Yo-c6k"/>
                 <constraint firstItem="2LV-ND-hwh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="PSP-NI-hLL"/>
                 <constraint firstAttribute="trailing" secondItem="37W-Lh-yGS" secondAttribute="trailing" id="U9g-ba-8l1"/>
-                <constraint firstItem="X8f-OG-bA7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Wxv-8l-Isc"/>
                 <constraint firstItem="37W-Lh-yGS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="YNo-rX-FVD"/>
-                <constraint firstAttribute="trailing" secondItem="X8f-OG-bA7" secondAttribute="trailing" id="bVl-Ab-ZG7"/>
-                <constraint firstItem="X8f-OG-bA7" firstAttribute="top" secondItem="2LV-ND-hwh" secondAttribute="bottom" id="fql-7Q-7i6"/>
                 <constraint firstAttribute="bottom" secondItem="2LV-ND-hwh" secondAttribute="bottom" id="qaz-sJ-nkH"/>
                 <constraint firstItem="37W-Lh-yGS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="u1q-lX-DY0"/>
                 <constraint firstAttribute="trailing" secondItem="2LV-ND-hwh" secondAttribute="trailing" id="whH-hV-6hi"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="fql-7Q-7i6"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="284.5" y="355"/>
         </view>
     </objects>

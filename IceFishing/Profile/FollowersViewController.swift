@@ -20,13 +20,9 @@ class FollowersViewController: UITableViewController {
             self.followers = users
             self.tableView.reloadData()
         }
-        
-        tableView.backgroundColor = UIColor.iceDarkGray
+		
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
-    
-        tableView.separatorStyle = .None
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed
+		
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile

@@ -28,12 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		StyleController.applyStyles()
 		
-		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
-		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")
-		SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistReadPrivateScope]
+//		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
+//		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")
+//		SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistReadPrivateScope]
 		
-		let loginURL = SPTAuth.defaultInstance().loginURL
-		application.performSelector("openURL:", withObject: loginURL, afterDelay: 0.5)
+//		let loginURL = SPTAuth.defaultInstance().loginURL
+//		application.performSelector("openURL:", withObject: loginURL, afterDelay: 0.5)
 		
 		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		self.window!.backgroundColor = UIColor.iceLightGray
@@ -113,6 +113,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+		let wasHandled: Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+		if wasHandled {
+			return true
+		}
 		
 		if SPTAuth.defaultInstance().canHandleURL(url) {
 			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { (error, session) -> Void in
@@ -126,7 +130,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			return true
 		}
 		
-		let wasHandled: Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
 		return wasHandled
 	}
 }
