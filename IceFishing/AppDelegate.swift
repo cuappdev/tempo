@@ -121,7 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if SPTAuth.defaultInstance().canHandleURL(url) {
 			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { (error, session) -> Void in
 				if error != nil {
-					print("*** Auth error: \(error)");
+					print("*** Auth error: \(error)")
 					return
 				}
 				print(session)

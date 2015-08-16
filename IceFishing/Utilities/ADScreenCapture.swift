@@ -96,7 +96,7 @@ class ADScreenCapture: UIView {
 		
 		let layer = UIApplication.sharedApplication().keyWindow?.layer as CALayer!
 		let scale = UIScreen.mainScreen().scale
-		UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
+		UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale)
 		
 		guard let context = UIGraphicsGetCurrentContext() else { print("Can't create context: " + __FUNCTION__); return }
 		
@@ -126,7 +126,7 @@ class ADScreenCapture: UIView {
 		
 		let layer = UIApplication.sharedApplication().keyWindow?.layer as CALayer!
 		let scale = UIScreen.mainScreen().scale
-		UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
+		UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale)
 		
 		guard let context = UIGraphicsGetCurrentContext() else { print("Can't create context: " + __FUNCTION__); return }
 		layer.renderInContext(context)

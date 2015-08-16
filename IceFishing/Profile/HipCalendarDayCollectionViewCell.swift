@@ -56,7 +56,7 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
     }
     
     private func HipCalendarDayStringFromDate(date: NSDate) -> String {
-        return String(format: "%d", date.day());
+        return String(format: "%d", date.day())
     }
     
 }

@@ -46,10 +46,10 @@ class ADRefreshControl: NSObject {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
         // Get the current size of the refresh controller
-        var refreshBounds = self.refreshControl.bounds;
+        var refreshBounds = self.refreshControl.bounds
         
         // Distance the table has been pulled >= 0
-        let newPullDistance = max(0.0, -self.refreshControl.frame.origin.y);
+        let newPullDistance = max(0.0, -self.refreshControl.frame.origin.y)
         
         if(!isRefreshAnimating) {
             if(newPullDistance < pullDistance) {
@@ -64,9 +64,9 @@ class ADRefreshControl: NSObject {
         graphicView.center = CGPointMake(refreshBounds.size.width/2.0, pullDistance / 2.0)
         
         // Set the encompassing view's frames
-        refreshBounds.size.height = pullDistance;
+        refreshBounds.size.height = pullDistance
         
-        self.refreshColorView.frame = refreshBounds;
+        self.refreshColorView.frame = refreshBounds
         
         // If we're refreshing and the animation is not playing, then play the animation
         if self.refreshControl!.refreshing && !self.isRefreshAnimating {
@@ -87,7 +87,7 @@ class ADRefreshControl: NSObject {
         }
         
         // Flag that we are animating
-        self.isRefreshAnimating = true;
+        self.isRefreshAnimating = true
         
         UIView.animateWithDuration(
             Double(0.5),

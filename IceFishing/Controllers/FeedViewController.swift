@@ -48,44 +48,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	var pinViewGestureRecognizer: UITapGestureRecognizer!
 	var lastContentOffset: CGFloat!  //Deals with pinView detection
 	
-	private func updateNowPlayingInfo() {
-		let session = AVAudioSession.sharedInstance()
-		
-		if let post = self.currentlyPlayingPost {
-			// state change, update play information
-			let center = MPNowPlayingInfoCenter.defaultCenter()
-			if post.player.progress != 1.0 {
-				do {
-					try session.setCategory(AVAudioSessionCategoryPlayback)
-				} catch _ {
-				}
-				do {
-					try session.setActive(true)
-				} catch _ {
-				}
-				UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
-				
-				let artwork = post.song.fetchArtwork() ?? UIImage(named: "Sexy")!
-				center.nowPlayingInfo = [
-					MPMediaItemPropertyTitle:  post.song.title,
-					MPMediaItemPropertyArtist: post.song.artist,
-					MPMediaItemPropertyAlbumTitle: post.song.album,
-					MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: artwork),
-					MPMediaItemPropertyPlaybackDuration: post.player.duration,
-					MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
-					MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying() ? post.player.rate : 0.0,
-					MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
-					MPNowPlayingInfoPropertyPlaybackQueueCount: posts.count ]
-			} else {
-				UIApplication.sharedApplication().endReceivingRemoteControlEvents()
-				do {
-					try session.setActive(false)
-				} catch _ {
-				}
-				center.nowPlayingInfo = nil
-			}
-		}
-	}
+	// MARK: - Lifecycle Methods
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -124,7 +87,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 			}
 		}
 		
-		//!TODO: fetch the largest artwork image for lockscreen in Post
+		// TODO: fetch the largest artwork image for lockscreen in Post
 		let center = MPRemoteCommandCenter.sharedCommandCenter()
 		center.playCommand.addTargetWithHandler { [weak self] _ -> MPRemoteCommandHandlerStatus in
 			if let player = self?.currentlyPlayingPost?.player {
@@ -159,7 +122,6 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 				}
 				return .Success
 			}
-			
 			return .NoSuchContent
 		}
 		
@@ -179,7 +141,6 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		refreshControl = UIRefreshControl()
 		customRefresh = ADRefreshControl(refreshControl: refreshControl!, tableView: self.tableView)
 		refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
-		//refreshControl?.attributedTitle = NSAttributedString(string: "Last Updated on \(NSDate())", attributes: [ NSForegroundColorAttributeName: UIColor.whiteColor() ])
 		
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
@@ -202,10 +163,10 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		
 		topPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: tableView.rowHeight)
 		topPinViewContainer.center = CGPoint(x: view.center.x, y: navigationController!.navigationBar.frame.maxY + topPinViewContainer.frame.height/2)
-		parentViewController!.view.addSubview(topPinViewContainer)
+		view.superview!.addSubview(topPinViewContainer)
 		bottomPinViewContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: tableView.rowHeight)
 		bottomPinViewContainer.center = CGPoint(x: view.center.x, y: view.frame.height - topPinViewContainer.frame.height/2)
-		parentViewController!.view.addSubview(bottomPinViewContainer)
+		view.superview!.addSubview(bottomPinViewContainer)
 		
 		topPinViewContainer.hidden = true
 		bottomPinViewContainer.hidden = true
@@ -213,19 +174,14 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		pinView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: tableView.rowHeight)
 	}
 	
-	func togglePlay() {
-		pinView.post?.player.togglePlaying()
-	}
+	// MARK: - UIRefreshControl
 	
-	//MARK: - UIRefreshControl
-	// Should be dumping old songs after 1 day? Not currently doing that
 	func refreshFeed() {
-		API.sharedAPI.fetchFeedOfEveryone {
-			[weak self] in
+		API.sharedAPI.fetchFeedOfEveryone { [weak self] in
 			self?.posts = $0
 			self?.tableView.reloadData()
 			
-			let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)));
+			let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
 			dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
 				// When done requesting/reloading/processing invoke endRefreshing, to close the control
 				self!.refreshControl!.endRefreshing()
@@ -270,6 +226,49 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		lastContentOffset = tableView.contentOffset.y
 		customRefresh.scrollViewDidScroll(scrollView)
 	}
+	
+	private func updateNowPlayingInfo() {
+		let session = AVAudioSession.sharedInstance()
+		
+		if let post = self.currentlyPlayingPost {
+			// state change, update play information
+			let center = MPNowPlayingInfoCenter.defaultCenter()
+			if post.player.progress != 1.0 {
+				do {
+					try session.setCategory(AVAudioSessionCategoryPlayback)
+				} catch _ {
+				}
+				do {
+					try session.setActive(true)
+				} catch _ {
+				}
+				UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+				
+				let artwork = post.song.fetchArtwork() ?? UIImage(named: "Sexy")!
+				center.nowPlayingInfo = [
+					MPMediaItemPropertyTitle: post.song.title,
+					MPMediaItemPropertyArtist: post.song.artist,
+					MPMediaItemPropertyAlbumTitle: post.song.album,
+					MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: artwork),
+					MPMediaItemPropertyPlaybackDuration: post.player.duration,
+					MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
+					MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying() ? post.player.rate : 0.0,
+					MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
+					MPNowPlayingInfoPropertyPlaybackQueueCount: posts.count ]
+			} else {
+				UIApplication.sharedApplication().endReceivingRemoteControlEvents()
+				do {
+					try session.setActive(false)
+				} catch _ {
+				}
+				center.nowPlayingInfo = nil
+			}
+		}
+	}
+	
+	func togglePlay() {
+		pinView.post?.player.togglePlaying()
+	}
 
 	func cellPin() {
 		if let selectedRow = currentlyPlayingIndexPath { //If a row is selected
@@ -310,8 +309,8 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		plusButton.frame = CGRectMake(0, 0, image.size.width, image.size.height)
 		plusButton.setImage(image, forState: .Normal)
 		plusButton.imageView!.contentMode = .Center
-		plusButton.imageView!.clipsToBounds = false;
-		plusButton.adjustsImageWhenHighlighted = false;
+		plusButton.imageView!.clipsToBounds = false
+		plusButton.adjustsImageWhenHighlighted = false
 		plusButton.addTarget(self, action: "plusButtonTapped", forControlEvents: .TouchUpInside)
 		
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: plusButton)
