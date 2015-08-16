@@ -17,17 +17,21 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 	
 	let cellIdentifier = "SongSearchTableViewCell"
 	
+	@IBOutlet weak var searchBarContainer: UIView!
+	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var postButtonContainer: UIView!
+	
 	weak var delegate: SongSearchDelegate?
 	
 	var results: [Post] = []
 	let kSearchBase: String = "https://api.spotify.com/v1/search?type=track&q="
 	var activePlayer: Player?
 	var lastRequest: Request?
-	var backgroundView: UIView!
-	var selectedSong: Song?
-	
-	@IBOutlet weak var searchBarContainer: UIView!
-	@IBOutlet weak var tableView: UITableView!
+	var selectedSong: Song? {
+		didSet {
+			postButtonContainer.hidden = selectedSong == nil
+		}
+	}
 	
 	var searchBar = UISearchBar()
 	lazy var postButton: PostButton = {
@@ -35,6 +39,9 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		button.addTarget(self, action: "submitSong", forControlEvents: .TouchUpInside)
 		return button
 	}()
+	
+	
+	// MARK: - Lifecycle Methods
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -121,19 +128,17 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		activePlayer = cell.postView.post?.player
 	}
 	
-	func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return searchBar.isFirstResponder() || selectedSong == nil ? 0 : 50
-	}
-	
-	func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-		return selectedSong == nil ? nil : postButton
-	}
+	// MARK: - Song Request Methods
 	
 	func selectSong(song: Song) {
+		if postButton.superview == nil {
+			postButton.translatesAutoresizingMaskIntoConstraints = false
+			postButtonContainer.addSubview(postButton)
+			NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsToFillSuperview(postButton))
+		}
 		postButton.title = "\(song.title) - \(song.artist)"
 		selectedSong = song
 		searchBar.resignFirstResponder()
-		tableView.reloadData()
 	}
 	
 	func submitSong() {
@@ -143,12 +148,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 	
 	func update(searchText: String) {
 		lastRequest?.cancel()
-		
-		if searchText.characters.count != 0 {
-			initiateRequest(searchText)
-		} else {
-			clearResults()
-		}
+		searchText.characters.count != 0 ? initiateRequest(searchText) : clearResults()
 	}
 	
 	func initiateRequest(term: String) {
@@ -172,6 +172,15 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		tableView.reloadData()
 	}
 	
+	func clearResults() {
+		results = []
+		selectedSong = nil
+		activePlayer?.pause(true)
+		activePlayer = nil
+		searchBar.text = nil
+		tableView.reloadData()
+	}
+	
 	// MARK: - UISearchBarDelegete
 	
 	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -180,15 +189,6 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 	
 	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
-	}
-	
-	func clearResults() {
-		results = []
-		selectedSong = nil
-		activePlayer?.pause(true)
-		activePlayer = nil
-		searchBar.text = nil
-		tableView.reloadData()
 	}
 	
 	// MARK: - Notifications
@@ -207,7 +207,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		let duration = (notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
 		
 		UIView.animateWithDuration(duration) {
-			self.tableView.contentInset = UIEdgeInsetsZero
+			self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.searchBar.frame.height, right: 0)
 			self.view.layoutIfNeeded()
 		}
 	}
