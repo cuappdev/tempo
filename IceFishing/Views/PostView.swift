@@ -44,8 +44,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 switch type {
                 case .Feed:
                     profileNameLabel?.text = post.user.name
-                    descriptionLabel?.text = post.song.title + " · " + post.song.artist
-                    likesLabel?.text = String(post.likes) + " likes"
+                    descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
+                    likesLabel?.text = "\(post.likes) likes"
+					SpotifyController.sharedController.isSpotifySignedIn {
+						print($0)
+						self.addButton?.hidden = !$0
+					}
                     break
                 case .Search:
                     profileNameLabel?.text = post.song.title
@@ -54,7 +58,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     break
                 }
                 
-                if type != .Search {
+                if type == .Feed {
                     post.user.loadImage {
                         avatarImageView?.image = $0
                     }

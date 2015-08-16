@@ -172,6 +172,10 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		bottomPinViewContainer.hidden = true
 		
 		pinView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: tableView.rowHeight)
+		
+		if let indexPaths = tableView.indexPathsForVisibleRows {
+			tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+		}
 	}
 	
 	// MARK: - UIRefreshControl

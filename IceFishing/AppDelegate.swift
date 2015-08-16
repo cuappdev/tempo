@@ -11,14 +11,17 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	
+	let spotifyUserDefaultsKey = "SpotifyUserDefaultsKey"
+	
 	var window: UIWindow?
 	var tools: Tools!
-	var revealVC = SWRevealViewController()
-	var sidebarVC: SideBarViewController = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
-	var feedVC: FeedViewController = FeedViewController(nibName: "FeedViewController", bundle: nil)
-	var peopleVC: PeopleSearchViewController = PeopleSearchViewController()
-	var likedVC: LikedTableViewController = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
-	var navigationController = UINavigationController()
+	let revealVC = SWRevealViewController()
+	let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
+	let feedVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
+	let peopleVC = PeopleSearchViewController()
+	let likedVC = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
+	let spotifyVC = SpotifyViewController(nibName: "SpotifyViewController", bundle: nil)
+	let navigationController = UINavigationController()
 	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
@@ -28,9 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		StyleController.applyStyles()
 		
-//		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
-//		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")
-//		SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistReadPrivateScope]
+//		let appDomain = NSBundle.mainBundle().bundleIdentifier!;
+//		NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain);
+		
+		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
+		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")
+		SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistReadPrivateScope]
+		SPTAuth.defaultInstance().sessionUserDefaultsKey = spotifyUserDefaultsKey
 		
 //		let loginURL = SPTAuth.defaultInstance().loginURL
 //		application.performSelector("openURL:", withObject: loginURL, afterDelay: 0.5)
@@ -62,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				SideBarElement(title: "Feed", viewController: feedVC, image: UIImage(named: "Feed-Icon")),
 				SideBarElement(title: "People", viewController: peopleVC, image: UIImage(named: "People-Icon")),
 				SideBarElement(title: "Liked", viewController: likedVC, image: UIImage(named: "Liked-Icon")),
-				SideBarElement(title: "Spotify", viewController: feedVC, image: UIImage(named: "Spotify-Icon"))
+				SideBarElement(title: "Spotify", viewController: spotifyVC, image: UIImage(named: "Spotify-Icon"))
 			]
 			sidebarVC.selectionHandler = {
 				[weak self]
@@ -97,16 +104,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		
 		// Error Messages
-		if state == FBSessionState.Closed || state == FBSessionState.ClosedLoginFailed {
+		if state == .Closed || state == .ClosedLoginFailed {
 			print("Session Closed")
 		}
 		if FBErrorUtility.shouldNotifyUserForError(error) == true {
 			print("Error")
 		} else {
-			if FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.UserCancelled {
+			if FBErrorUtility.errorCategoryForError(error) == .UserCancelled {
 				print("Login Cancelled")
 			}
-			else if FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.AuthenticationReopenSession {
+			else if FBErrorUtility.errorCategoryForError(error) == .AuthenticationReopenSession {
 				print("Invalid Session")
 			}
 		}

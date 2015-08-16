@@ -16,6 +16,7 @@
 		1D5F56E01B71B68400BF0F04 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA48FFA1B71B5280085732F /* SwiftyJSON.framework */; };
 		1D5F56E21B71B6CD00BF0F04 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5F56E11B71B6CD00BF0F04 /* Spotify.framework */; };
 		1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */; };
+		1D653F3E1B81451700F54455 /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D653F3D1B81451700F54455 /* SpotifyController.swift */; };
 		1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */; };
 		1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9C11AACC4C0007822B0 /* Images.xcassets */; };
 		1D802AB51B786351005A96D1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D802AB41B786350005A96D1 /* AVFoundation.framework */; };
@@ -104,6 +105,7 @@
 		1D2CA85D1B720290004EAEAB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = IceFishing/Vendor/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		1D5F56E11B71B6CD00BF0F04 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spotify.framework; path = "Carthage/Checkouts/ios-sdk/Spotify.framework"; sourceTree = "<group>"; };
 		1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
+		1D653F3D1B81451700F54455 /* SpotifyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
 		1D72D9B51AACC4C0007822B0 /* IceFishing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IceFishing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D72D9B91AACC4C0007822B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				7F8A7B101AF8225900622018 /* PeopleSearchViewController.swift */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
 				FAB564721AF6A8C9001059DF /* LikedTableViewController.xib */,
+				1D653F3D1B81451700F54455 /* SpotifyController.swift */,
 				1DE649C11B78590800DA5499 /* SpotifyViewController.swift */,
 				1DE649C21B78590800DA5499 /* SpotifyViewController.xib */,
 				FA674C0E1AF917A200C14463 /* ViewController+Bar.swift */,
@@ -597,6 +600,7 @@
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,
 				95711F1D1AF4774D002167EB /* FBTweak.m in Sources */,
 				1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */,
+				1D653F3E1B81451700F54455 /* SpotifyController.swift in Sources */,
 				FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */,
 				95711F231AF4774D002167EB /* FBTweakViewController.m in Sources */,
 				95711F2C1AF47769002167EB /* Tweaks.swift in Sources */,
