@@ -11,20 +11,18 @@ import Foundation
 extension UIViewController {
     func beginIceFishing() {        
         //—————————————from MAIN VC——————————————————
-        navigationItem.title = self.title
+        navigationItem.title = title
         
         // Add hamburger menu to the left side of the navbar
 		let image = UIImage(named: "Hamburger-Menu")!
         let menuButton = UIButton(frame: CGRect(origin: CGPointZero, size: image.size))
         menuButton.setImage(image, forState: .Normal)
-        menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
+        menuButton.addTarget(revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
         
         // Pop out sidebar when hamburger menu tapped
         if revealViewController() != nil {
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-			revealViewController().panGestureRecognizer()
-			revealViewController().tapGestureRecognizer()
+            view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
     }
 }

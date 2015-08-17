@@ -39,9 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistReadPrivateScope]
 		SPTAuth.defaultInstance().sessionUserDefaultsKey = spotifyUserDefaultsKey
 		
-//		let loginURL = SPTAuth.defaultInstance().loginURL
-//		application.performSelector("openURL:", withObject: loginURL, afterDelay: 0.5)
-		
 		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		self.window!.backgroundColor = UIColor.iceLightGray
 		self.window!.makeKeyAndVisible()

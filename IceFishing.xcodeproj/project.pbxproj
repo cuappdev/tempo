@@ -21,6 +21,7 @@
 		1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9C11AACC4C0007822B0 /* Images.xcassets */; };
 		1D802AB51B786351005A96D1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D802AB41B786350005A96D1 /* AVFoundation.framework */; };
 		1D802AB71B78635A005A96D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D802AB61B78635A005A96D1 /* SystemConfiguration.framework */; };
+		1D9991751B81E2F70005A376 /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9991741B81E2F70005A376 /* MarqueeLabel.swift */; };
 		1DA44FC61B6D84D1009EC2BD /* PostButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA44FC51B6D84D1009EC2BD /* PostButton.swift */; };
 		1DA48FFB1B71B5280085732F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA48FF91B71B5280085732F /* Alamofire.framework */; };
 		1DB283901B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */; };
@@ -86,7 +87,6 @@
 		FA1E1A781ADB06A3007C823C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A771ADB06A3007C823C /* Post.swift */; };
 		FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7B1ADB072A007C823C /* Song.swift */; };
 		FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7D1ADB0818007C823C /* PostView.swift */; };
-		FA5B131D1AE864DE003C490C /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5B131C1AE864DE003C490C /* MarqueeLabel.swift */; };
 		FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C061AF9105E00C14463 /* ADRefreshControl.swift */; };
 		FA674C0F1AF917A200C14463 /* ViewController+Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C0E1AF917A200C14463 /* ViewController+Bar.swift */; };
 		FAB564731AF6A8C9001059DF /* LikedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */; };
@@ -114,6 +114,7 @@
 		1D72D9D01AACC4C0007822B0 /* IceFishingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceFishingTests.swift; sourceTree = "<group>"; };
 		1D802AB41B786350005A96D1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1D802AB61B78635A005A96D1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1D9991741B81E2F70005A376 /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
 		1DA44FC51B6D84D1009EC2BD /* PostButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostButton.swift; sourceTree = "<group>"; };
 		1DA48FF91B71B5280085732F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		1DA48FFA1B71B5280085732F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
@@ -198,7 +199,6 @@
 		FA1E1A771ADB06A3007C823C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
 		FA1E1A7B1ADB072A007C823C /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Models/Song.swift; sourceTree = "<group>"; };
 		FA1E1A7D1ADB0818007C823C /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
-		FA5B131C1AE864DE003C490C /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
 		FA674C061AF9105E00C14463 /* ADRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRefreshControl.swift; sourceTree = "<group>"; };
 		FA674C0E1AF917A200C14463 /* ViewController+Bar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ViewController+Bar.swift"; path = "IceFishing/Utilities/ViewController+Bar.swift"; sourceTree = SOURCE_ROOT; };
 		FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikedTableViewController.swift; sourceTree = "<group>"; };
@@ -261,7 +261,7 @@
 		1D65392E1AD0E23800E82627 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FA5B131C1AE864DE003C490C /* MarqueeLabel.swift */,
+				1D9991741B81E2F70005A376 /* MarqueeLabel.swift */,
 				FA1E1A7D1ADB0818007C823C /* PostView.swift */,
 				BA24C57C1AF866630066C2ED /* SearchPostView.swift */,
 				FA171CBF1AF1D758007B40AF /* FeedImageView.swift */,
@@ -645,11 +645,11 @@
 				BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */,
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
-				FA5B131D1AE864DE003C490C /* MarqueeLabel.swift in Sources */,
 				7F8A7B111AF8225900622018 /* PeopleSearchViewController.swift in Sources */,
 				95711F1E1AF4774D002167EB /* FBTweakCategory.m in Sources */,
 				D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */,
 				D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */,
+				1D9991751B81E2F70005A376 /* MarqueeLabel.swift in Sources */,
 				D148F4AA1AF03EB4009AB073 /* PostHistoryTableViewController.swift in Sources */,
 				6DEE0FDA1AC34811005552F9 /* User.swift in Sources */,
 			);

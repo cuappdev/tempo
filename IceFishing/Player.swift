@@ -13,7 +13,7 @@ let PlayerDidChangeStateNotification = "PlayerDidChangeState"
 let PlayerDidSeekNotification = "PlayerDidSeek"
 let PlayerDidFinishPlayingNotification = "PlayerDidFinishPlaying"
 
-class Player: NSObject, AVAudioPlayerDelegate {
+class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
     var downloadCallback: ((progress: Double) -> ())?
     
     private var currentConnection: NSURLConnection?
@@ -198,6 +198,10 @@ class Player: NSObject, AVAudioPlayerDelegate {
             }
         }
     }
+	
+	func connection(connection: NSURLConnection, didFailWithError error: NSError) {
+		print(__FUNCTION__ + " \(error)")
+	}
     
     // MARK: AVAudioPlayerDelegate
     

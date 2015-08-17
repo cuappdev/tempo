@@ -17,14 +17,10 @@ class SpotifyViewController: UIViewController {
 
 		beginIceFishing()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
+		
 		if let session = SPTAuth.defaultInstance().session {
 			print("We have a session")
 			print("Expires on :\(session.expirationDate)")
@@ -33,8 +29,9 @@ class SpotifyViewController: UIViewController {
 				label.text = "Session is valid"
 			} else {
 				print("Session isn't valid")
-				SPTAuth.defaultInstance().renewSession(session, callback: { (error, session) -> Void in
+				SPTAuth.defaultInstance().renewSession(session, callback: { (error, newSession) -> Void in
 					if error == nil {
+						SPTAuth.defaultInstance().session = newSession
 						print("Session was renewed")
 					} else {
 						print(error)

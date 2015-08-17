@@ -46,8 +46,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
                     likesLabel?.text = "\(post.likes) likes"
-					SpotifyController.sharedController.isSpotifySignedIn {
-						print($0)
+					SpotifyController.sharedController.isSpotifySignedIn {// Audit this model object as it's becoming a monster
 						self.addButton?.hidden = !$0
 					}
                     break
@@ -91,7 +90,13 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             }
         }
     }
-    
+	
+	func updateAddButton() {
+		SpotifyController.sharedController.isSpotifySignedIn {
+			addButton?.hidden = !$0
+		}
+	}
+	
     private func setUpTimer() {
         if self.updateTimer == nil && self.post?.player.isPlaying() ?? false {
             // 60 fps
@@ -159,9 +164,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     dynamic private func timerFired(timer: NSTimer) {
-//        if self.post?.player.isPlaying() ?? false {
+        if self.post?.player.isPlaying() ?? false {
             self.setNeedsDisplay()
-//        }
+        }
     }
     
     override func layoutSubviews() {
@@ -216,7 +221,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             }
             
             if !label.textColor.isEqual(color) {
-                UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+                UIView.transitionWithView(label, duration: duration, options: .TransitionCrossDissolve, animations: {
                     label.textColor = color
                     }, completion: {
                         (success) in

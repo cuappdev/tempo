@@ -23,7 +23,7 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Right-Arrow" translatesAutoresizingMaskIntoConstraints="NO" id="BPm-zU-tXJ">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow-Right" translatesAutoresizingMaskIntoConstraints="NO" id="BPm-zU-tXJ">
                     <rect key="frame" x="560" y="20" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="dBs-lb-mxR"/>
@@ -74,6 +74,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Right-Arrow" width="32" height="32"/>
+        <image name="Arrow-Right" width="32" height="32"/>
     </resources>
 </document>

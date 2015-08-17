@@ -19,13 +19,13 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		let vc = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
 		vc.delegate = self
 		return vc
-	}()
+		}()
 	
 	var currentlyPlayingIndexPath: NSIndexPath? {
 		didSet {
-			if currentlyPlayingIndexPath?.isEqual(oldValue) ?? false { // Same index path tapped
+			if let row = currentlyPlayingIndexPath?.row where currentlyPlayingPost?.isEqual(posts[row]) ?? false {
 				currentlyPlayingPost?.player.togglePlaying()
-			} else { // Different cell tapped
+			} else {
 				currentlyPlayingPost?.player.pause(true)
 				currentlyPlayingPost?.player.progress = 1.0 // Fill cell as played
 				
@@ -135,7 +135,6 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		
 		//—————————————from MAIN VC——————————————————
 		title = "Feed"
-		beginIceFishing()
 		setupAddButton()
 		refreshControl = UIRefreshControl()
 		customRefresh = ADRefreshControl(refreshControl: refreshControl!)
@@ -159,6 +158,8 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
+		beginIceFishing()
+		
 		topPinViewContainer.frame = CGRectMake(0, tableView.frame.minY, view.frame.width, tableView.rowHeight)
 		view.superview!.addSubview(topPinViewContainer)
 		bottomPinViewContainer.frame = CGRectMake(0, tableView.frame.maxY-tableView.rowHeight, view.frame.width, tableView.rowHeight)
@@ -169,8 +170,9 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		
 		pinView.frame = CGRectMake(0, 0, view.frame.width, tableView.rowHeight)
 		
-		if let indexPaths = tableView.indexPathsForVisibleRows {
-			tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+		// Used to update Spotify + button, not very elegant solution
+		for cell in (tableView.visibleCells as? [FeedTableViewCell])! {
+			cell.postView.updateAddButton()
 		}
 	}
 	
@@ -214,12 +216,15 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	
 	func pinIfNeeded() {
 		guard let selected = currentlyPlayingIndexPath else { return }
+		if pinView.postView.post != posts[selected.row] {
+			pinView.postView.post = posts[selected.row]
+		}
 		guard let selectedCell = tableView.cellForRowAtIndexPath(selected) else { return }
-		pinView.postView.post = posts[selected.row]
 		if selectedCell.frame.minY < tableView.contentOffset.y {
 			topPinViewContainer.addSubview(pinView)
 			topPinViewContainer.hidden = false
 		} else if selectedCell.frame.maxY > tableView.contentOffset.y + tableView.frame.height {
+			pinView.postView.post = posts[selected.row]
 			bottomPinViewContainer.addSubview(pinView)
 			bottomPinViewContainer.hidden = false
 		} else {
@@ -307,9 +312,9 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	// MARK: - SongSearchDelegate
 	
 	func didSelectSong(song: Song) {
-		API.sharedAPI.updatePost(User.currentUser.id, song: song) { _ in
-			self.posts.insert(Post(song: song, user: User.currentUser, date: NSDate(), likes: 0), atIndex: 0)
-			self.tableView.reloadData()
+		self.posts.insert(Post(song: song, user: User.currentUser, date: NSDate(), likes: 0), atIndex: 0)
+		API.sharedAPI.updatePost(User.currentUser.id, song: song) { [weak self] _ in
+			self?.tableView.reloadData()
 		}
 	}
 }

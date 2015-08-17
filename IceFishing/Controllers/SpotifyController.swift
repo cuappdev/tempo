@@ -15,7 +15,7 @@ class SpotifyController {
 			if session.isValid() {
 				completion(true)
 			} else {
-				SPTAuth.defaultInstance().renewSession(session, callback: { (error, _) -> Void in
+				SPTAuth.defaultInstance().renewSession(session, callback: { (error, session) -> Void in
 					if error != nil {
 						completion(false)
 					} else {
