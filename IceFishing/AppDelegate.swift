@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var tools: Tools!
 	let revealVC = SWRevealViewController()
 	let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
-	let feedVC = FeedViewController(nibName: "FeedViewController", bundle: nil)
+	let feedVC = FeedViewController()
 	let peopleVC = PeopleSearchViewController()
 	let likedVC = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
 	let spotifyVC = SpotifyViewController(nibName: "SpotifyViewController", bundle: nil)

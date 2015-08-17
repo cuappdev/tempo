@@ -19,7 +19,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		let vc = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
 		vc.delegate = self
 		return vc
-	}()
+		}()
 	
 	var currentlyPlayingIndexPath: NSIndexPath? {
 		didSet {
@@ -44,7 +44,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	
 	var topPinViewContainer: UIView = UIView()
 	var bottomPinViewContainer: UIView = UIView()
-	@IBOutlet var pinView: PostView!
+	var pinView = NSBundle.mainBundle().loadNibNamed("FeedTableViewCell", owner: nil, options: nil)[0] as! FeedTableViewCell
 	var pinViewGestureRecognizer: UITapGestureRecognizer!
 	var lastContentOffset: CGFloat!  //Deals with pinView detection
 	
@@ -215,14 +215,13 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	override func scrollViewDidScroll(scrollView: UIScrollView) {
 		let lastCell = NSIndexPath(forRow: posts.count-1, inSection: 0)
 		
-		if let playingIndexPath = currentlyPlayingIndexPath {
-			if tableView.indexPathsForVisibleRows != nil {
-				if let cellSelected = tableView.cellForRowAtIndexPath(playingIndexPath) {
-					let offsetY = tableView.contentOffset.y
-					if lastCell == playingIndexPath && cellSelected.frame.maxY - offsetY < parentViewController!.view.frame.height {
-						if offsetY > lastContentOffset {
-							bottomPinViewContainer.hidden = true
-						}
+		guard let playingIndexPath = currentlyPlayingIndexPath else { return }
+		if tableView.indexPathsForVisibleRows != nil {
+			if let cellSelected = tableView.cellForRowAtIndexPath(playingIndexPath) {
+				let offsetY = tableView.contentOffset.y
+				if lastCell == playingIndexPath && cellSelected.frame.maxY - offsetY < parentViewController!.view.frame.height {
+					if offsetY > lastContentOffset {
+						bottomPinViewContainer.hidden = true
 					}
 				}
 			}
@@ -271,23 +270,23 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	}
 	
 	func togglePlay() {
-		pinView.post?.player.togglePlaying()
+		pinView.postView.post?.player.togglePlaying()
 	}
-
+	
 	func cellPin() {
 		if let selectedRow = currentlyPlayingIndexPath { //If a row is selected
 			if let rowsICanSee = tableView.indexPathsForVisibleRows { //Rows Seen
 				if let cellSelected = tableView.cellForRowAtIndexPath(selectedRow) as? FeedTableViewCell {
 					if cellSelected.frame.minY - tableView.contentOffset.y < navigationController!.navigationBar.frame.maxY || rowsICanSee.last == selectedRow { //If the cell is the top or bottom
 						if cellSelected.frame.minY - tableView.contentOffset.y < navigationController!.navigationBar.frame.maxY {
-							pinView.post = posts[selectedRow.row]
+							pinView.postView.post = posts[selectedRow.row]
 							pinView.layoutIfNeeded()
 							topPinViewContainer.addSubview(pinView)
 							pinView.addGestureRecognizer(pinViewGestureRecognizer)
 							topPinViewContainer.hidden = false
 							
 						} else if cellSelected.frame.maxY - tableView.contentOffset.y > parentViewController!.view.frame.height {
-							pinView.post = posts[selectedRow.row]
+							pinView.postView.post = posts[selectedRow.row]
 							pinView.layoutIfNeeded()
 							bottomPinViewContainer.addSubview(pinView)
 							pinView.addGestureRecognizer(pinViewGestureRecognizer)
@@ -298,7 +297,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 						if selectedRow.compare(rowsICanSee.first!) != selectedRow.compare(rowsICanSee.last!) { //If they're equal then the thing is not on screen
 							topPinViewContainer.hidden = true
 							bottomPinViewContainer.hidden = true
-							pinView.post = nil
+							pinView.postView.post = nil
 							pinView.removeFromSuperview()
 						}
 					}
@@ -343,8 +342,8 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	// MARK: - SongSearchDelegate
 	
 	func didSelectSong(song: Song) {
-		posts.insert(Post(song: song, user: User.currentUser, date: NSDate(), likes: 0), atIndex: 0)
-		API.sharedAPI.updatePost(User.currentUser.id, song: song) { song in
+		API.sharedAPI.updatePost(User.currentUser.id, song: song) { _ in
+			self.posts.insert(Post(song: song, user: User.currentUser, date: NSDate(), likes: 0), atIndex: 0)
 			self.tableView.reloadData()
 		}
 	}

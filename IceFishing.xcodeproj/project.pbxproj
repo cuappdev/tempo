@@ -43,7 +43,6 @@
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
 		7F8A7B111AF8225900622018 /* PeopleSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8A7B101AF8225900622018 /* PeopleSearchViewController.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
-		7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */; };
 		95711F171AF4774D002167EB /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95711EFB1AF4774D002167EB /* _FBTweakArrayViewController.m */; };
 		95711F181AF4774D002167EB /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 95711EFD1AF4774D002167EB /* _FBTweakBindObserver.m */; };
 		95711F191AF4774D002167EB /* _FBTweakCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95711EFF1AF4774D002167EB /* _FBTweakCategoryViewController.m */; };
@@ -137,7 +136,6 @@
 		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		7F8A7B101AF8225900622018 /* PeopleSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleSearchViewController.swift; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
-		7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
 		95711EFA1AF4774D002167EB /* _FBTweakArrayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakArrayViewController.h; sourceTree = "<group>"; };
 		95711EFB1AF4774D002167EB /* _FBTweakArrayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakArrayViewController.m; sourceTree = "<group>"; };
 		95711EFC1AF4774D002167EB /* _FBTweakBindObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakBindObserver.h; sourceTree = "<group>"; };
@@ -233,7 +231,6 @@
 				1DCB96121AED5EA7007F6A4B /* APIViewController.swift */,
 				1DCB96131AED5EA7007F6A4B /* APIViewController.xib */,
 				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
-				7FEBA4CC1ADDCE0E0045B23B /* FeedViewController.xib */,
 				BAE499D51AD5F33B003214C0 /* SongSearchViewController.swift */,
 				1D22EE6E1B76D0C6006C54A9 /* SongSearchViewController.xib */,
 				1D1DD7151AE492B50066AB39 /* SubmitBugViewController.swift */,
@@ -563,7 +560,6 @@
 				D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */,
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
 				D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */,
-				7FEBA4CD1ADDCE0E0045B23B /* FeedViewController.xib in Resources */,
 				FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */,
 				D11740081AF8574900302FFD /* ProfileViewController.xib in Resources */,
 				1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */,
