@@ -73,9 +73,9 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		let textFieldInsideSearchBar = searchBar.valueForKey("_searchField") as? UITextField
 		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
 		
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
+		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
 			self.searchBar.layer.transform = CATransform3DIdentity
-		}, completion: nil)
+		}
 		
 		searchBar.becomeFirstResponder()
 	}

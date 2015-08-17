@@ -63,13 +63,13 @@
                                     <constraint firstAttribute="height" constant="30" id="3F1-sB-VvE"/>
                                     <constraint firstAttribute="width" constant="30" id="LDw-C6-eoZ"/>
                                 </constraints>
-                                <state key="normal" image="Liked">
+                                <state key="normal" image="Heart">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OvL-PV-iIp">
                                 <rect key="frame" x="268" y="44" width="30" height="30"/>
-                                <state key="normal" image="Add-Icon">
+                                <state key="normal" image="Add">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
@@ -134,7 +134,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Add-Icon" width="15" height="15"/>
-        <image name="Liked" width="20" height="20"/>
+        <image name="Add" width="15" height="15"/>
+        <image name="Heart" width="23" height="23"/>
     </resources>
 </document>

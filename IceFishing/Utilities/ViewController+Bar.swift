@@ -14,8 +14,9 @@ extension UIViewController {
         navigationItem.title = self.title
         
         // Add hamburger menu to the left side of the navbar
-        let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height * 0.65))
-        menuButton.setImage(UIImage(named: "Hamburger-Menu-Icon"), forState: .Normal)
+		let image = UIImage(named: "Hamburger-Menu")!
+        let menuButton = UIButton(frame: CGRect(origin: CGPointZero, size: image.size))
+        menuButton.setImage(image, forState: .Normal)
         menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
         
@@ -26,4 +27,10 @@ extension UIViewController {
 			revealViewController().tapGestureRecognizer()
         }
     }
+}
+
+extension UIView {
+	class func animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void) {
+		animateWithDuration(duration, delay: delay, usingSpringWithDamping: dampingRatio, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
+	}
 }

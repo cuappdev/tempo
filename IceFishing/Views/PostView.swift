@@ -283,7 +283,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 post.like()
 				// TODO: Currently difficult to check against model for liked songs
 				// Should add logic for if a post is liked by you (currently there is none)
-				likedButton?.setImage(UIImage(named: "Liked-Icon-Red"), forState: .Normal)
+				likedButton?.setImage(UIImage(named: "Heart-Red"), forState: .Normal)
                 print("Liking")
             } else if hitView == addButton {
                 print("Adding")
