@@ -8,23 +8,31 @@
 
 class SpotifyController {
 	
+	let spotifyPlaylistURIKey = "SpotifyPlaylistURIKey"
+	
 	static let sharedController: SpotifyController = SpotifyController()
 	
-	func isSpotifySignedIn(completion: Bool -> Void) {
+	func spotifyIsAvailable(completion: Bool -> Void) {
 		if let session = SPTAuth.defaultInstance().session {
 			if session.isValid() {
 				completion(true)
 			} else {
-				SPTAuth.defaultInstance().renewSession(session, callback: { error, session in
-					if error != nil {
-						completion(false)
-					} else {
-						completion(true)
-					}
-				})
+				SPTAuth.defaultInstance().renewSession(session) { error, _ in
+					completion(error == nil)
+				}
 			}
 		} else {
 			completion(false)
+		}
+	}
+	
+	func createPlaylist() {
+		SPTPlaylistList.createPlaylistWithName("IceFishing", publicFlag: false, session: SPTAuth.defaultInstance().session) { error, snapshot in
+			if error != nil {
+				print(error)
+			} else {
+				
+			}
 		}
 	}
 }

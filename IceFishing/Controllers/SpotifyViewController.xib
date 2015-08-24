@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8173.3" systemVersion="15A263e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
     </dependencies>
     <objects>
@@ -18,22 +17,35 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCy-rO-jND">
                     <rect key="frame" x="250" y="285" width="100" height="30"/>
+                    <animations/>
                     <state key="normal" title="Sign In Spotify"/>
                     <connections>
-                        <action selector="loginToSpotify:" destination="-1" eventType="touchUpInside" id="wfm-mb-CII"/>
+                        <action selector="loginToSpotify" destination="-1" eventType="touchUpInside" id="Vyn-uO-bV8"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current session status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKM-DO-mqs">
                     <rect key="frame" x="214" y="323" width="172" height="20.5"/>
+                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cr0-EQ-mvH">
+                    <rect key="frame" x="208" y="373" width="184" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Create &quot;IceFishing&quot; Playlist"/>
+                    <connections>
+                        <action selector="createIceFishingPlaylist" destination="-1" eventType="touchUpInside" id="7Qi-35-B2C"/>
+                    </connections>
+                </button>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="hCy-rO-jND" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="6Ym-6X-vuy"/>
                 <constraint firstItem="KKM-DO-mqs" firstAttribute="top" secondItem="hCy-rO-jND" secondAttribute="bottom" constant="8" id="TR0-aq-tsn"/>
+                <constraint firstItem="cr0-EQ-mvH" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="UaP-KD-ccc"/>
+                <constraint firstItem="cr0-EQ-mvH" firstAttribute="top" secondItem="KKM-DO-mqs" secondAttribute="bottom" constant="30" id="b5O-Wm-HG1"/>
                 <constraint firstItem="KKM-DO-mqs" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fHQ-P9-y3b"/>
                 <constraint firstItem="hCy-rO-jND" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="zJe-aP-wrI"/>
             </constraints>

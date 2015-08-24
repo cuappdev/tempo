@@ -46,7 +46,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
                     likesLabel?.text = "\(post.likes) likes"
-					SpotifyController.sharedController.isSpotifySignedIn {// Audit this model object as it's becoming a monster
+					SpotifyController.sharedController.spotifyIsAvailable {// Audit this model object as it's becoming a monster
 						self.addButton?.hidden = !$0
 					}
                     break
@@ -90,7 +90,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
 	
 	func updateAddButton() {
-		SpotifyController.sharedController.isSpotifySignedIn {
+		SpotifyController.sharedController.spotifyIsAvailable {
 			addButton?.hidden = !$0
 		}
 	}

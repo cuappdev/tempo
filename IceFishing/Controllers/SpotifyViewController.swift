@@ -11,39 +11,27 @@ import UIKit
 class SpotifyViewController: UIViewController {
 	
 	@IBOutlet var label: UILabel!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-		beginIceFishing()
-    }
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		if let session = SPTAuth.defaultInstance().session {
-			print("We have a session")
-			print("Expires on :\(session.expirationDate)")
-			if session.isValid() {
-				print("Session is valid")
-				label.text = "Session is valid"
-			} else {
-				print("Session isn't valid")
-				SPTAuth.defaultInstance().renewSession(session, callback: { error, newSession in
-					if error == nil {
-						SPTAuth.defaultInstance().session = newSession
-						print("Session was renewed")
-					} else {
-						print(error)
-					}
-				})
-			}
-			
+		beginIceFishing()
+		updateSpotifyState()
+	}
+	
+	// Can be called after successful login to Spotify SDK
+	func updateSpotifyState() {
+		SpotifyController.sharedController.spotifyIsAvailable { [weak self] in
+			self?.label.text = $0 ? "Session is valid" : "No valid Spotify session"
 		}
 	}
 	
-	@IBAction func loginToSpotify(sender: UIButton) {
+	@IBAction func loginToSpotify() {
 		let loginURL = SPTAuth.defaultInstance().loginURL
 		UIApplication.sharedApplication().openURL(loginURL)
+	}
+	
+	@IBAction func createIceFishingPlaylist() {
+		SpotifyController.sharedController.createPlaylist()
 	}
 }

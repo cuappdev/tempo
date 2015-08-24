@@ -11,8 +11,6 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	
-	let spotifyUserDefaultsKey = "SpotifyUserDefaultsKey"
-	
 	var window: UIWindow?
 	var tools: Tools!
 	let revealVC = SWRevealViewController()
@@ -37,8 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
 		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")
-		SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistReadPrivateScope]
-		SPTAuth.defaultInstance().sessionUserDefaultsKey = spotifyUserDefaultsKey
+		SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPrivateScope]
+		SPTAuth.defaultInstance().sessionUserDefaultsKey = "SpotifyUserDefaultsKey"
 		
 		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		self.window!.backgroundColor = UIColor.iceLightGray
@@ -118,18 +116,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-		let wasHandled: Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+		let wasHandled = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
 		if wasHandled {
 			return true
 		}
 		
 		if SPTAuth.defaultInstance().canHandleURL(url) {
-			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { error, session in
+			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { [weak self] error, session in
 				if error != nil {
 					print("*** Auth error: \(error)")
-					return
+				} else {
+					self?.spotifyVC.updateSpotifyState()
 				}
-				print(session)
 			})
 			
 			return true
