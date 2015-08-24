@@ -16,8 +16,8 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
     var dayInnerCircleView: UIView!
     
     // Colors
-    var noPostColor : UIColor! = UIColor.iceDarkGray
-    var circleColor : UIColor! = UIColor.iceDarkRed   
+    let noPostColor = UIColor.iceDarkGray
+    let circleColor = UIColor.iceDarkRed
     var date: NSDate! {
         didSet {
             dayLabel.text = HipCalendarDayStringFromDate(date)

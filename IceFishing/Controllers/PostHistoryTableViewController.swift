@@ -36,7 +36,7 @@ class PostHistoryTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        let selectedRow: NSIndexPath = NSIndexPath(forRow: index, inSection: 0)
+        let selectedRow = NSIndexPath(forRow: index, inSection: 0)
         self.tableView.selectRowAtIndexPath(selectedRow, animated: true, scrollPosition: UITableViewScrollPosition.Top)
     }
     
@@ -65,9 +65,9 @@ class PostHistoryTableViewController: UITableViewController {
         // cell.songNameLabel.text = self.songNames[indexPath.row]
         // cell.postedSongImage.image = UIImage(named: "self.songPictures[indexPath.row]")
         
-        let formatter: NSDateFormatter = NSDateFormatter()
+        let formatter = NSDateFormatter()
         formatter.dateFormat = "M.dd.YY"
-        let date: String = formatter.stringFromDate(self.postedDates[indexPath.row])
+        let date = formatter.stringFromDate(self.postedDates[indexPath.row])
         cell.datePostedLabel.text = "\(date)"
         
         return cell
@@ -78,7 +78,7 @@ class PostHistoryTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        let selectedCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray
     }
     

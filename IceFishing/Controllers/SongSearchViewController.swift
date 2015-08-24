@@ -60,7 +60,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		
 		searchBarContainer.addSubview(searchBar)
 		var trans = CATransform3DMakeRotation(CGFloat(M_PI_2), 1, 0, 0)
-		trans.m34 = 1.0 / -500
+		trans.m34 = 1.0 / -400
 		searchBar.layer.transform = trans
 		searchBar.layer.anchorPoint = CGPoint(x: 0.5, y: 0)
 	}
@@ -73,9 +73,9 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		let textFieldInsideSearchBar = searchBar.valueForKey("_searchField") as? UITextField
 		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
 		
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
+		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
 			self.searchBar.layer.transform = CATransform3DIdentity
-		}
+		}, completion:nil)
 		
 		searchBar.becomeFirstResponder()
 	}
@@ -153,7 +153,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 	
 	func initiateRequest(term: String) {
 		let searchUrl = kSearchBase + term.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.alphanumericCharacterSet())!
-		lastRequest = Alamofire.request(.GET, searchUrl).responseJSON { (_, _, result) in
+		lastRequest = Alamofire.request(.GET, searchUrl).responseJSON { _, _, result in
 			if let value = result.value as? Dictionary<String, AnyObject> {
 				self.receivedResponse(value)
 			}

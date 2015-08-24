@@ -34,39 +34,39 @@ extension NSDate {
     }
     
     func month() -> Int {
-        let components : NSDateComponents = HipCalendarDateComponents(self)
+        let components = HipCalendarDateComponents(self)
         return components.month
     }
     
     func day() -> Int {
-        let components : NSDateComponents = HipCalendarDateComponents(self)
+        let components = HipCalendarDateComponents(self)
         return components.day
     }
     
     func year() -> Int {
-        let components : NSDateComponents = HipCalendarDateComponents(self)
+        let components = HipCalendarDateComponents(self)
         return components.year
     }
     
     func firstDayOfMonth() -> NSDate {
-        let components : NSDateComponents = HipCalendarDateComponents(self)
+        let components = HipCalendarDateComponents(self)
         components.day = 1
         return HipCalendarDate(components)
     }
     
     func lastDayOfMonth() -> NSDate {
-        let components : NSDateComponents = HipCalendarDateComponents(self)
+        let components = HipCalendarDateComponents(self)
         components.month++
         components.day = 0
         return HipCalendarDate(components)
     }
     
     func numDaysInMonth() -> Int {
-        let calendar : NSCalendar = NSCalendar.currentCalendar()
-        let firstDay : NSDate = self.firstDayOfMonth()
-        let lastDay : NSDate = self.lastDayOfMonth()
+        let calendar = NSCalendar.currentCalendar()
+        let firstDay = self.firstDayOfMonth()
+        let lastDay = self.lastDayOfMonth()
         
-        let components : NSDateComponents = calendar.components(NSCalendarUnit.Day, fromDate: firstDay, toDate: lastDay, options: NSCalendarOptions(rawValue: 0))
+        let components = calendar.components(.Day, fromDate: firstDay, toDate: lastDay, options: NSCalendarOptions(rawValue: 0))
         
         if isCurrentMonth(firstDay) {
             components.day = NSDate().day()

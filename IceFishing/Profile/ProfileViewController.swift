@@ -12,7 +12,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var user: User!
     var isFollowing = false
-    var numFollowing: Int = 0
+    var numFollowing = 0
     var searchNavigationController: UINavigationController!
     
     // Post History Calendar
@@ -20,11 +20,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var startDate = NSDate(dateString:"2015-01-26")
     // Hardcoded dates for testing
     var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-20"), NSDate(dateString:"2015-04-17"), NSDate(dateString:"2015-04-26"), NSDate(dateString:"2015-04-23"), NSDate(dateString:"2015-04-19"), NSDate(dateString:"2015-04-15"), NSDate(dateString:"2015-04-08"), NSDate(dateString:"2015-04-07")]
-    var padding : CGFloat = 5
+    var padding: CGFloat = 5
     
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
-    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var userHandleLabel: UILabel!
     @IBOutlet weak var followButtonLabel: UIButton!
     @IBOutlet weak var followersLabel: UILabel!

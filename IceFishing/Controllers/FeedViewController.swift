@@ -52,25 +52,25 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
+		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification, object: nil, queue: nil) { [weak self] note in
 			if note.object as? Player == self?.currentlyPlayingPost?.player {
 				self?.updateNowPlayingInfo()
 			}
 		}
 		
-		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidSeekNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
+		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidSeekNotification, object: nil, queue: nil) { [weak self] note in
 			if note.object as? Player == self?.currentlyPlayingPost?.player {
 				self?.updateNowPlayingInfo()
 			}
 		}
 		
-		NSNotificationCenter.defaultCenter().addObserverForName(SongDidDownloadArtworkNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
+		NSNotificationCenter.defaultCenter().addObserverForName(SongDidDownloadArtworkNotification, object: nil, queue: nil) { [weak self] note in
 			if note.object as? Song == self?.currentlyPlayingPost?.song {
 				self?.updateNowPlayingInfo()
 			}
 		}
 		
-		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidFinishPlayingNotification, object: nil, queue: nil) { [weak self] (note) -> Void in
+		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidFinishPlayingNotification, object: nil, queue: nil) { [weak self] note in
 			if let current = self?.currentlyPlayingPost {
 				if current.player == note.object as? Player {
 					let path = self!.currentlyPlayingIndexPath
@@ -265,7 +265,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 				UIApplication.sharedApplication().endReceivingRemoteControlEvents()
 				do {
 					try session.setActive(false)
-				} catch _ {
+				} catch {
 				}
 				center.nowPlayingInfo = nil
 			}
@@ -295,10 +295,10 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		}
 		plusButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
 		plusButton.addTarget(active ? songSearchTableViewController : self, action: active ? "dismiss" : "plusButtonTapped", forControlEvents: .TouchUpInside)
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: []) {
+		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
 			let transform = active ? CGAffineTransformMakeRotation(CGFloat(M_PI_4)) : CGAffineTransformIdentity
 			self.plusButton.imageView!.transform = transform
-		}
+		}, completion: nil)
 	}
 	
 	func plusButtonTapped() {

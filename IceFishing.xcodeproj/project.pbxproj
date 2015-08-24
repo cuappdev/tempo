@@ -39,7 +39,7 @@
 		6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */; };
 		6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */; };
 		6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */; };
-		6D3FA6611AD5FD5C00B1320D /* Username.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3FA6601AD5FD5C00B1320D /* Username.xib */; };
+		6D3FA6611AD5FD5C00B1320D /* UsernameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3FA6601AD5FD5C00B1320D /* UsernameViewController.xib */; };
 		6DA5FE4D1AED72F800E795DD /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA5FE4C1AED72F800E795DD /* ColorExtension.swift */; };
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
 		7F8A7B111AF8225900622018 /* PeopleSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8A7B101AF8225900622018 /* PeopleSearchViewController.swift */; };
@@ -88,7 +88,7 @@
 		FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7B1ADB072A007C823C /* Song.swift */; };
 		FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7D1ADB0818007C823C /* PostView.swift */; };
 		FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C061AF9105E00C14463 /* ADRefreshControl.swift */; };
-		FA674C0F1AF917A200C14463 /* ViewController+Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C0E1AF917A200C14463 /* ViewController+Bar.swift */; };
+		FA674C0F1AF917A200C14463 /* ViewController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C0E1AF917A200C14463 /* ViewController+Utilities.swift */; };
 		FAB564731AF6A8C9001059DF /* LikedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */; };
 		FAB564741AF6A8C9001059DF /* LikedTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB564721AF6A8C9001059DF /* LikedTableViewController.xib */; };
 		FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */; };
@@ -129,10 +129,10 @@
 		1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleController.swift; sourceTree = "<group>"; };
 		1DFBFB511B7845E7001DD6AC /* SongSearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongSearchTableViewCell.xib; sourceTree = "<group>"; };
 		1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongSearchTableViewCell.swift; sourceTree = "<group>"; };
-		6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
-		6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowTableViewCell.xib; sourceTree = "<group>"; };
+		6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowTableViewCell.swift; path = ../Profile/FollowTableViewCell.swift; sourceTree = "<group>"; };
+		6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowTableViewCell.xib; path = ../Profile/FollowTableViewCell.xib; sourceTree = "<group>"; };
 		6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
-		6D3FA6601AD5FD5C00B1320D /* Username.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Username.xib; sourceTree = "<group>"; };
+		6D3FA6601AD5FD5C00B1320D /* UsernameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsernameViewController.xib; sourceTree = "<group>"; };
 		6DA5FE4C1AED72F800E795DD /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		7F8A7B101AF8225900622018 /* PeopleSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleSearchViewController.swift; sourceTree = "<group>"; };
@@ -177,7 +177,7 @@
 		C0CF7B971AE425450083606C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		D102A9C51AE889D600C66385 /* SideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
 		D102A9C61AE889D600C66385 /* SideBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarViewController.xib; sourceTree = "<group>"; };
-		D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarTableViewCell.swift; sourceTree = "<group>"; };
+		D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideBarTableViewCell.swift; path = ../Profile/SideBarTableViewCell.swift; sourceTree = "<group>"; };
 		D1173FFF1AF8574400302FFD /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D11740071AF8574900302FFD /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -200,10 +200,10 @@
 		FA1E1A7B1ADB072A007C823C /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Models/Song.swift; sourceTree = "<group>"; };
 		FA1E1A7D1ADB0818007C823C /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		FA674C061AF9105E00C14463 /* ADRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRefreshControl.swift; sourceTree = "<group>"; };
-		FA674C0E1AF917A200C14463 /* ViewController+Bar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ViewController+Bar.swift"; path = "IceFishing/Utilities/ViewController+Bar.swift"; sourceTree = SOURCE_ROOT; };
+		FA674C0E1AF917A200C14463 /* ViewController+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ViewController+Utilities.swift"; path = "IceFishing/Utilities/ViewController+Utilities.swift"; sourceTree = SOURCE_ROOT; };
 		FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikedTableViewController.swift; sourceTree = "<group>"; };
 		FAB564721AF6A8C9001059DF /* LikedTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LikedTableViewController.xib; sourceTree = "<group>"; };
-		FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarTableViewCell.xib; sourceTree = "<group>"; };
+		FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SideBarTableViewCell.xib; path = ../Profile/SideBarTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +227,7 @@
 		1D046D8C1AB6953600D0354B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6DEE0FC31AC34811005552F9 /* Profile */,
 				BA257E251ABA3FBC00D939B0 /* SWRevealViewController */,
 				1DCB96121AED5EA7007F6A4B /* APIViewController.swift */,
 				1DCB96131AED5EA7007F6A4B /* APIViewController.xib */,
@@ -240,7 +241,7 @@
 				1D653F3D1B81451700F54455 /* SpotifyController.swift */,
 				1DE649C11B78590800DA5499 /* SpotifyViewController.swift */,
 				1DE649C21B78590800DA5499 /* SpotifyViewController.xib */,
-				FA674C0E1AF917A200C14463 /* ViewController+Bar.swift */,
+				FA674C0E1AF917A200C14463 /* ViewController+Utilities.swift */,
 				1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */,
 			);
 			path = Controllers;
@@ -295,7 +296,6 @@
 				1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */,
 				FA1A91301AC3899E00774EF3 /* Player.swift */,
 				FA1E1A7A1ADB06A8007C823C /* Models */,
-				6DEE0FC31AC34811005552F9 /* Profile */,
 				1D046D8C1AB6953600D0354B /* Controllers */,
 				1D65392E1AD0E23800E82627 /* Views */,
 				1D1DD7101AE492750066AB39 /* Utilities */,
@@ -337,6 +337,10 @@
 		1D802AB81B7873A5005A96D1 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */,
+				6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */,
+				D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */,
+				FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */,
 				1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */,
 				1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */,
 				1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */,
@@ -388,17 +392,14 @@
 				D17395731ADB080900A53AEE /* FollowersViewController.xib */,
 				D17395761ADB081C00A53AEE /* FollowingViewController.swift */,
 				D17395771ADB081C00A53AEE /* FollowingViewController.xib */,
-				6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */,
-				6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */,
 				D102A9C51AE889D600C66385 /* SideBarViewController.swift */,
 				D102A9C61AE889D600C66385 /* SideBarViewController.xib */,
-				D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */,
-				FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */,
 				6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */,
-				6D3FA6601AD5FD5C00B1320D /* Username.xib */,
+				6D3FA6601AD5FD5C00B1320D /* UsernameViewController.xib */,
 				D148F4991AF0349A009AB073 /* Post History Calendar */,
 			);
-			path = Profile;
+			name = Profile;
+			path = ../Profile;
 			sourceTree = "<group>";
 		};
 		95711F2A1AF47755002167EB /* FBTweak */ = {
@@ -551,7 +552,7 @@
 				D148F4AB1AF03EB4009AB073 /* PostHistoryTableViewController.xib in Resources */,
 				D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */,
 				1DB476481AEF24670066014F /* PostButton.xib in Resources */,
-				6D3FA6611AD5FD5C00B1320D /* Username.xib in Resources */,
+				6D3FA6611AD5FD5C00B1320D /* UsernameViewController.xib in Resources */,
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
 				1D22EE6F1B76D0C6006C54A9 /* SongSearchViewController.xib in Resources */,
 				1DC9BBA01AE805A00033E970 /* FeedTableViewCell.xib in Resources */,
@@ -638,7 +639,7 @@
 				D17395781ADB081C00A53AEE /* FollowingViewController.swift in Sources */,
 				D148F4AE1AF03EF5009AB073 /* PostHistoryTableViewCell.swift in Sources */,
 				D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */,
-				FA674C0F1AF917A200C14463 /* ViewController+Bar.swift in Sources */,
+				FA674C0F1AF917A200C14463 /* ViewController+Utilities.swift in Sources */,
 				95711F181AF4774D002167EB /* _FBTweakBindObserver.m in Sources */,
 				95711F321AF477BD002167EB /* Tools.swift in Sources */,
 				95711F201AF4774D002167EB /* FBTweakInline.m in Sources */,
@@ -766,7 +767,7 @@
 					"$(PROJECT_DIR)/Carthage/Checkouts/ios-sdk",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.IceFishing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -793,7 +794,7 @@
 					"$(PROJECT_DIR)/Carthage/Checkouts/ios-sdk",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.IceFishing;
 				PRODUCT_NAME = "$(TARGET_NAME)";

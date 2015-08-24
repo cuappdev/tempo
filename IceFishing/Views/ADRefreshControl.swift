@@ -8,15 +8,15 @@
 
 import UIKit
 
-class ADRefreshControl: NSObject {
+class ADRefreshControl {
 	
 	var refreshControl: UIRefreshControl!
-	var graphic = UIImage(named: "Vinyl-Red")
 	var graphicView: UIImageView!
 	var refreshColorView: UIView!
 	var isRefreshAnimating = false
 	var timesAnimationLooped = 0
 	var pullDistance: CGFloat = 0
+	var colorIndex = 0
 	
 	init(refreshControl: UIRefreshControl) {
 		
@@ -28,7 +28,7 @@ class ADRefreshControl: NSObject {
 		refreshColorView.alpha = 0.30
 		
 		// Create the graphic image views
-		graphicView = UIImageView(image: graphic)
+		graphicView = UIImageView(image: UIImage(named: "Vinyl-Red"))
 		graphicView.frame = CGRectMake(0, 0, 45, 45)
 		
 		// Add the graphics to the loading view
@@ -76,11 +76,6 @@ class ADRefreshControl: NSObject {
 		
 		var colorArray = [UIColor.redColor(), UIColor.blueColor(), UIColor.purpleColor(), UIColor.cyanColor(), UIColor.orangeColor(), UIColor.magentaColor()]
 		
-		// In Swift, static variables must be members of a struct or class
-		struct ColorIndex {
-			static var colorIndex = 0
-		}
-		
 		// Flag that we are animating
 		self.isRefreshAnimating = true
 		
@@ -93,8 +88,8 @@ class ADRefreshControl: NSObject {
 				self.graphicView.transform = CGAffineTransformScale(self.graphicView.transform, 1/1.3, 1/1.3)
 			}
 			// Change the background color
-			self.refreshColorView.backgroundColor = colorArray[ColorIndex.colorIndex]
-			ColorIndex.colorIndex = (ColorIndex.colorIndex + 1) % colorArray.count
+			self.refreshColorView.backgroundColor = colorArray[self.colorIndex]
+			self.colorIndex = (self.colorIndex + 1) % colorArray.count
 		}, completion: { finished in
 			// If still refreshing, keep spinning, else reset
 			if self.refreshControl.refreshing {

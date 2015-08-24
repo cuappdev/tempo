@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	let navigationController = UINavigationController()
 	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+		// TODO: Figure out a way to get rid of this, since it's deprecated
 		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
 		
 		let URLCache = NSURLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
@@ -44,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		self.window!.makeKeyAndVisible()
 		
 		if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded {
-			FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false, completionHandler: { (session, state, error) -> Void in
+			FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false, completionHandler: { session, state, error in
 				self.sessionStateChanged(session, state: state, error: error)
 			})
 		}
@@ -123,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		
 		if SPTAuth.defaultInstance().canHandleURL(url) {
-			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { (error, session) -> Void in
+			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { error, session in
 				if error != nil {
 					print("*** Auth error: \(error)")
 					return

@@ -83,7 +83,7 @@ class SubmitBugViewController: UIViewController {
         ]
         
         Alamofire.request(.POST, "https://slack.com/api/chat.postMessage", parameters: parameters)
-            .response { (request, response, JSON, error) in
+            .response { request, response, JSON, error in
                 print("REQUEST \(request)")
                 print("RESPONSE \(response)")
                 print("JSON \(JSON)")
@@ -107,10 +107,10 @@ class SubmitBugViewController: UIViewController {
         let imageData = fileContents as NSData!
         let urlRequest = urlRequestWithComponents("https://slack.com/api/files.upload", parameters: parameters, data: imageData)
         Alamofire.upload(urlRequest.0, data: urlRequest.1)
-            .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
+            .progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
                 print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
             }
-            .responseJSON { (request, response, result) in
+            .responseJSON { request, response, result in
                 print("REQUEST \(request)")
                 print("RESPONSE \(response)")
                 print("JSON \(result.value)")
@@ -135,10 +135,10 @@ class SubmitBugViewController: UIViewController {
         let movieData = fileContents as NSData!
         let urlRequest = urlRequestWithComponents("https://slack.com/api/files.upload", parameters: parameters, data: movieData)
         Alamofire.upload(urlRequest.0, data: urlRequest.1)
-            .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
+            .progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
                 print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
             }
-            .responseJSON { (request, response, result) in
+            .responseJSON { request, response, result in
                 print("REQUEST \(request)")
                 print("RESPONSE \(response)")
                 print("JSON \(result.value)")

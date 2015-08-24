@@ -32,7 +32,6 @@ class StyleController {
 		
 		UITableViewCell.appearance().backgroundColor = UIColor.iceLightGray
 		
-		
 		// User defined appearances
 		PostButton.appearance().backgroundColor = UIColor.iceDarkRed
 		SearchPostView.appearance().backgroundColor = UIColor.iceLightGray

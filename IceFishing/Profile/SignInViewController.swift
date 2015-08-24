@@ -22,7 +22,7 @@ class SignInViewController: UIViewController {
             
         // Open a session with the login UI
         FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: true, completionHandler: {
-            (session:FBSession!, state:FBSessionState, error:NSError!) in
+            session, state, error in
             
             // Handle session state changes
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

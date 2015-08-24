@@ -12,7 +12,7 @@ class HipStickyHeaderFlowLayout: UICollectionViewFlowLayout {
 	
 	override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
 		
-		var layoutAttributes: [UICollectionViewLayoutAttributes] = super.layoutAttributesForElementsInRect(rect)!
+		var layoutAttributes = super.layoutAttributesForElementsInRect(rect)!
 		let contentOffset = collectionView!.contentOffset
 		
 		let missingSections = NSMutableIndexSet()

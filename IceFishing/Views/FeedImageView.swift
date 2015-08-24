@@ -17,7 +17,7 @@ class FeedImageView: UIImageView {
 			}
 			
 			if let imageURL = imageURL {
-				loadImageAsync(imageURL) { [weak self] (image, error) -> () in
+				loadImageAsync(imageURL) { [weak self] image, error in
 					// This approach is lame and should be moved to cancelable requests
 					if self?.imageURL == imageURL && error == nil {
 						self?.image = image

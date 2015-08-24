@@ -37,12 +37,12 @@ class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
         self.fileURL = fileURL
     }
     
-    class func keyPathsForValuesAffectingCurrentTime(key: NSString) -> NSSet {
-        return NSSet(objects: "player.currentTime")
+    class func keyPathsForValuesAffectingCurrentTime(key: String) -> Set<String> {
+        return Set(["player.currentTime"])
     }
     
-    class func keyPathsForValuesAffectingProgress() -> NSSet {
-        return NSSet(objects: "currentTime")
+    class func keyPathsForValuesAffectingProgress() -> Set<String> {
+        return Set(["currentTime"])
     }
     
     func prepareToPlay() {

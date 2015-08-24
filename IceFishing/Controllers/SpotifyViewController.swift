@@ -29,7 +29,7 @@ class SpotifyViewController: UIViewController {
 				label.text = "Session is valid"
 			} else {
 				print("Session isn't valid")
-				SPTAuth.defaultInstance().renewSession(session, callback: { (error, newSession) -> Void in
+				SPTAuth.defaultInstance().renewSession(session, callback: { error, newSession in
 					if error == nil {
 						SPTAuth.defaultInstance().session = newSession
 						print("Session was renewed")

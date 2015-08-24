@@ -10,7 +10,7 @@ import UIKit
 
 class HipCalendarCollectionReusableView: UICollectionReusableView {
     
-    var dateFormat: String! = "MMM"
+    let dateFormat = "MMM"
     var titleLabel: UILabel!
     var firstDayOfMonth: NSDate! {
         didSet {
@@ -23,7 +23,7 @@ class HipCalendarCollectionReusableView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        var rect: CGRect = CGRectMake(0, 0, self.bounds.width/11, self.bounds.height)
+        var rect = CGRectMake(0, 0, self.bounds.width/11, self.bounds.height)
         rect.origin.y = 0.4*frame.size.height
         
         titleLabel = UILabel(frame: rect)
