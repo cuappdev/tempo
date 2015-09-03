@@ -144,9 +144,8 @@ public class MarqueeLabel: UILabel {
     private(set) var sublabel = UILabel()
     private var animationDuration: CGFloat = 0.0
 
-    private var homeLabelFrame: CGRect = CGRect.zeroRect
-    private var awayLabelFrame: CGRect = CGRect.zeroRect
-    
+    private var homeLabelFrame: CGRect = CGRect.zero
+    private var awayLabelFrame: CGRect = CGRect.zero
 
     //
     // MARK: - Class Functions and Helpers
@@ -253,7 +252,7 @@ public class MarqueeLabel: UILabel {
         // Create sublabel
         sublabel = UILabel(frame: self.bounds)
         sublabel.tag = 700
-        sublabel.layer.anchorPoint = CGPoint.zeroPoint
+        sublabel.layer.anchorPoint = CGPoint.zero
 
         // Add sublabel
         addSubview(sublabel)
@@ -353,9 +352,8 @@ public class MarqueeLabel: UILabel {
             sublabel.textAlignment = super.textAlignment
             sublabel.lineBreakMode = super.lineBreakMode
             
-            var unusedFrame = CGRect.zeroRect
-            var labelFrame = CGRect.zeroRect
-            
+            var unusedFrame = CGRect.zero
+            var labelFrame = CGRect.zero
             switch type {
             case .ContinuousReverse, .RightLeft:
                 CGRectDivide(bounds, &unusedFrame, &labelFrame, leadingBuffer, CGRectEdge.MaxXEdge)
@@ -952,8 +950,8 @@ public class MarqueeLabel: UILabel {
     
     public func resetLabel() {
         returnLabelToHome()
-        homeLabelFrame = CGRect.nullRect
-        awayLabelFrame = CGRect.nullRect
+        homeLabelFrame = CGRect.null
+        awayLabelFrame = CGRect.null
     }
     
     public func shutdownLabel() {

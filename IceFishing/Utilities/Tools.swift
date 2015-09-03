@@ -82,20 +82,20 @@ class Tools: UIView, UIActionSheetDelegate, FBTweakViewControllerDelegate {
 //                }
 //                break
             case 1:
-                print("Submit Screenshot", appendNewline: false)
+                print("Submit Screenshot", terminator: "")
                 if(!screenCapture.isRecording) {
                     screenCapture.takeOneScreenshot()
                 }
                 break
             case 2:
-                print("Submit Message", appendNewline: false)
+                print("Submit Message", terminator: "")
                 if(!screenCapture.isRecording) {
                     let vc = SubmitBugViewController()
                     self.screenCapture.viewController.presentViewController(vc, animated: true, completion: nil)
                 }
                 break
             case 3:
-                print("Tweaks", appendNewline: false)
+                print("Tweaks", terminator: "")
                 if(!displayingTweaks) {
                     fbTweaks = FBTweakViewController(store: FBTweakStore.sharedInstance())
                     fbTweaks.tweaksDelegate = self

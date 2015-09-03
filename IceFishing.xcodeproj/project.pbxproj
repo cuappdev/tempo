@@ -102,7 +102,7 @@
 		1D22EE6E1B76D0C6006C54A9 /* SongSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongSearchViewController.xib; sourceTree = "<group>"; };
 		1D2CA85C1B720290004EAEAB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = IceFishing/Vendor/FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		1D2CA85D1B720290004EAEAB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = IceFishing/Vendor/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
-		1D5F56E11B71B6CD00BF0F04 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spotify.framework; path = "Carthage/Checkouts/ios-sdk/Spotify.framework"; sourceTree = "<group>"; };
+		1D5F56E11B71B6CD00BF0F04 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spotify.framework; path = Carthage/Build/iOS/Spotify.framework; sourceTree = "<group>"; };
 		1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		1D653F3D1B81451700F54455 /* SpotifyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
 		1D72D9B51AACC4C0007822B0 /* IceFishing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IceFishing.app; sourceTree = BUILT_PRODUCTS_DIR; };

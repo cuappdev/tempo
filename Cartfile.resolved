@@ -1,3 +1,2 @@
-github "Alamofire/Alamofire" "7ba13295c5fbba1049ac5d8a4c8c6db6f50ad066"
-github "SwiftyJSON/SwiftyJSON" "45ca854ce75948858f65e31fbc58cbf214669250"
-github "lucasderraugh/ios-sdk" "50e262cad287c3ad134e43f94798002a023a822d"
+github "Alamofire/Alamofire" "1bc35abfa7c167ba54af4e87158af7945cc9984e"
+github "SwiftyJSON/SwiftyJSON" "f269523ac572979245baa99c8475eab73caf1e9b"
