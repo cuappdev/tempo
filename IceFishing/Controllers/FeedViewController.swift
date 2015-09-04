@@ -42,9 +42,9 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	}
 	var currentlyPlayingPost: Post?
 	
-	var topPinViewContainer: UIView = UIView()
-	var bottomPinViewContainer: UIView = UIView()
-	var pinView = NSBundle.mainBundle().loadNibNamed("FeedTableViewCell", owner: nil, options: nil)[0] as! FeedTableViewCell
+	let topPinViewContainer = UIView()
+	let bottomPinViewContainer = UIView()
+	let pinView = NSBundle.mainBundle().loadNibNamed("FeedTableViewCell", owner: nil, options: nil)[0] as! FeedTableViewCell
 	var pinViewGestureRecognizer: UITapGestureRecognizer!
 	
 	// MARK: - Lifecycle Methods
@@ -124,13 +124,8 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 			return .NoSuchContent
 		}
 		
-		center.seekForwardCommand.addTargetWithHandler { _ in
-			return .Success
-		}
-		
-		center.seekBackwardCommand.addTargetWithHandler { _ in
-			return .Success
-		}
+		center.seekForwardCommand.addTargetWithHandler { _ in .Success }
+		center.seekBackwardCommand.addTargetWithHandler { _ in .Success }
 		
 		
 		//—————————————from MAIN VC——————————————————
