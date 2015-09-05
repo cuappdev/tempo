@@ -10,15 +10,14 @@ import UIKit
 
 class PeopleSearchViewController: UITableViewController, UISearchBarDelegate, UISearchDisplayDelegate, UITextFieldDelegate {
 
-    var searchBar: UITextField!
     var users: [User] = []
-    var tapGesture: UITapGestureRecognizer!
+    //var tapGesture: UITapGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tapGesture = UITapGestureRecognizer(target: self, action: "dismissKeyboard:")
-        tapGesture.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tapGesture)
+        //tapGesture = UITapGestureRecognizer(target: self, action: "dismissKeyboard:")
+        //tapGesture.cancelsTouchesInView = false
+        //self.view.addGestureRecognizer(tapGesture)
         
         beginIceFishing()
         
@@ -27,23 +26,6 @@ class PeopleSearchViewController: UITableViewController, UISearchBarDelegate, UI
         
         // Reload the table
         self.tableView.reloadData()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        if let navBar = self.navigationController?.navigationBar {
-            
-            searchBar = UITextField(frame: CGRect(x: 0, y: 0, width: navBar.frame.width*0.66, height: navBar.frame.height/2))
-            searchBar.center = navBar.center
-            searchBar.textColor = UIColor.whiteColor()
-            searchBar.backgroundColor = UIColor.iceDarkRed
-            searchBar.placeholder = "Search for your friends!"
-            searchBar.textAlignment = NSTextAlignment.Center
-            searchBar.delegate = self
-            searchBar.addTarget(self, action: "search:", forControlEvents: UIControlEvents.EditingChanged)
-			
-			// Don't do this
-            self.navigationController?.view.addSubview(searchBar)
-        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -76,30 +58,11 @@ class PeopleSearchViewController: UITableViewController, UISearchBarDelegate, UI
         let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
         profileVC.user = users[indexPath.row]
-        searchBar.removeFromSuperview()
-        self.navigationController?.pushViewController(profileVC, animated: true)
+          self.navigationController?.pushViewController(profileVC, animated: true)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-    
-    func dismissKeyboard(sender: UITapGestureRecognizer) {
-        searchBar.resignFirstResponder()
-    }
-
-    func search(sender: UITextField) {
-        if searchBar.text == "" {
-            users = []
-            self.tableView.reloadData()
-        }
-        else {
-            API.sharedAPI.searchUsers(searchBar.text!.lowercaseString, completion: { users in
-                self.users = users
-                print("In here")
-                self.tableView.reloadData()
-            })
-        }
     }
 }
