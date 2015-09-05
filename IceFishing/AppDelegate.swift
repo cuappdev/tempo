@@ -64,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			sidebarVC.elements = [
 				SideBarElement(title: "Feed", viewController: feedVC, image: UIImage(named: "Feed")),
 				SideBarElement(title: "People", viewController: peopleVC, image: UIImage(named: "People")),
-				SideBarElement(title: "Liked", viewController: likedVC, image: UIImage(named: "Heart")),
+				SideBarElement(title: "Liked", viewController: likedVC, image: UIImage(named: "Heart-Menu")),
 				SideBarElement(title: "Spotify", viewController: spotifyVC, image: UIImage(named: "Spotify"))
 			]
 			sidebarVC.selectionHandler = {
