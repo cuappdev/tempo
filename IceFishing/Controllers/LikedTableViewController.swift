@@ -13,9 +13,16 @@ class LikedTableViewController: UITableViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.title = "Liked"
         beginIceFishing()
+        
+        API.sharedAPI.fetchLikes(User.currentUser.id, completion: {
+            print("Songs: \($0)")
+        })
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
         API.sharedAPI.fetchLikes(User.currentUser.id, completion: {
             print("Songs: \($0)")

@@ -15,6 +15,7 @@ class PeopleSearchViewController: UITableViewController, UISearchBarDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "People Search"
         //tapGesture = UITapGestureRecognizer(target: self, action: "dismissKeyboard:")
         //tapGesture.cancelsTouchesInView = false
         //self.view.addGestureRecognizer(tapGesture)

@@ -14,7 +14,7 @@ class SpotifyViewController: UIViewController {
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-		
+		title = "Spotify"
 		beginIceFishing()
 		updateSpotifyState()
 	}
