@@ -51,18 +51,24 @@ class Post: NSObject {
             return "just now"
         }
         let minutes: Int = Int(seconds/60)
-        if minutes < 60 {
+        if minutes == 1 {
             return "\(minutes) min"
         }
+        if minutes < 60 {
+            return "\(minutes) mins"
+        }
         let hours: Int = minutes/60
-        if hours < 24 {
+        if hours == 1 {
             return "\(hours) hr"
         }
-        let days: Int = hours/24
-        if days < 30 {
-            return "\(days) days"
+        if hours < 24 {
+            return "\(hours) hrs"
         }
-        return "..."
+        let days: Int = hours/24
+        if days == 1 {
+            return "\(days) day"
+        }
+        return "\(days) days"
     }
     
     override var description: String {

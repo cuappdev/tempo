@@ -64,6 +64,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
         }
 		
+        if User.currentUser.username == user.username {
+            followButtonLabel.hidden = true
+        }
+        
 		// Post History Calendar
         separator.backgroundColor = UIColor.iceDarkRed
         
