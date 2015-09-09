@@ -283,11 +283,19 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             let tapPoint = sender.locationInView(self)
             let hitView = self.hitTest(tapPoint, withEvent: nil)
             if hitView == likedButton {
-                post.like()
 				// TODO: Currently difficult to check against model for liked songs
 				// Should add logic for if a post is liked by you (currently there is none)
-				likedButton?.setImage(UIImage(named: "Heart-Red"), forState: .Normal)
-                print("Liking")
+                if (post.postID != 1.stringValue){
+                    post.like()
+                    likesLabel?.text = "\(post.likes+1) likes"
+                    likedButton?.setImage(UIImage(named: "Heart-Red"), forState: .Normal)
+                    print("Liking")
+                } else {
+                    post.unlike()
+                    likesLabel?.text = "\(post.likes-1) likes"
+                    likedButton?.setImage(UIImage(named: "Heart"), forState: .Normal)
+                    print("Unliking")
+                }
             } else if hitView == addButton {
                 print("Adding")
             } else if post.player.isPlaying() {
