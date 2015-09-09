@@ -5,6 +5,7 @@
 ## Build generated
 build/
 DerivedData
+IceFishing/Vendor/
 
 ## Various settings
 *.pbxuser
