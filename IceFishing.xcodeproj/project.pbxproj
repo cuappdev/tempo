@@ -36,6 +36,10 @@
 		1DFD735E1BA0DC50008D9FD8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; };
 		1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */; settings = {ASSET_TAGS = (); }; };
 		1DFD73731BA0DCAB008D9FD8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; };
+		1DFD73811BA0EE7B008D9FD8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; };
+		1DFD73821BA0EE7B008D9FD8 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1DFD738B1BA0EE94008D9FD8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; };
+		1DFD738C1BA0EE94008D9FD8 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */; };
 		6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */; };
 		6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */; };
@@ -165,7 +169,36 @@
 			remoteGlobalIDString = E4D7CCE81B9465A700EE7221;
 			remoteInfo = "SwiftyJSON watchOS";
 		};
+		1DFD73831BA0EE7B008D9FD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1DFD73611BA0DC9F008D9FD8 /* SwiftyJSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E4FEFDA19575BE100351305;
+			remoteInfo = "SwiftyJSON iOS";
+		};
+		1DFD738D1BA0EE94008D9FD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1DFD734C1BA0DC21008D9FD8 /* Alamofire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F8111E3219A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1DFD738A1BA0EE7B008D9FD8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1DFD73821BA0EE7B008D9FD8 /* SwiftyJSON.framework in Embed Frameworks */,
+				1DFD738C1BA0EE94008D9FD8 /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1D1DD7121AE492750066AB39 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -284,6 +317,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DFD73811BA0EE7B008D9FD8 /* SwiftyJSON.framework in Frameworks */,
+				1DFD738B1BA0EE94008D9FD8 /* Alamofire.framework in Frameworks */,
 				1DFD73731BA0DCAB008D9FD8 /* SwiftyJSON.framework in Frameworks */,
 				1DFD735E1BA0DC50008D9FD8 /* Alamofire.framework in Frameworks */,
 				1D802AB71B78635A005A96D1 /* SystemConfiguration.framework in Frameworks */,
@@ -592,10 +627,13 @@
 				1D72D9B11AACC4C0007822B0 /* Sources */,
 				1D72D9B21AACC4C0007822B0 /* Frameworks */,
 				1D72D9B31AACC4C0007822B0 /* Resources */,
+				1DFD738A1BA0EE7B008D9FD8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1DFD73841BA0EE7B008D9FD8 /* PBXTargetDependency */,
+				1DFD738E1BA0EE94008D9FD8 /* PBXTargetDependency */,
 			);
 			name = IceFishing;
 			productName = IceFishing;
@@ -818,6 +856,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		1DFD73841BA0EE7B008D9FD8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftyJSON iOS";
+			targetProxy = 1DFD73831BA0EE7B008D9FD8 /* PBXContainerItemProxy */;
+		};
+		1DFD738E1BA0EE94008D9FD8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Alamofire iOS";
+			targetProxy = 1DFD738D1BA0EE94008D9FD8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		1D72D9C31AACC4C0007822B0 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
@@ -918,6 +969,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -946,6 +998,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
