@@ -744,9 +744,7 @@ const int FrontViewPositionNone = 0xff;
     _userInteractionStore = _contentView.userInteractionEnabled;
 }
 
-
-- (NSUInteger)supportedInterfaceOrientations
-{
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     // we could have simply not implemented this, but we choose to call super to make explicit that we
     // want the default behavior.
     return [super supportedInterfaceOrientations];

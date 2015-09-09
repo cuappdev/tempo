@@ -10,7 +10,7 @@ import UIKit
 
 class HipCalendarCollectionReusableView: UICollectionReusableView {
     
-    var dateFormat: String! = "MMM YYYY"
+    let dateFormat = "MMM"
     var titleLabel: UILabel!
     var firstDayOfMonth: NSDate! {
         didSet {
@@ -23,18 +23,18 @@ class HipCalendarCollectionReusableView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        var rect: CGRect = self.bounds
-        rect.size.height = 30.0
-        rect.origin.y = frame.size.height - rect.size.height
+        var rect = CGRectMake(0, 0, self.bounds.width/11, self.bounds.height)
+        rect.origin.y = 0.4*frame.size.height
         
         titleLabel = UILabel(frame: rect)
+        titleLabel.textColor = UIColor.iceDarkRed
+        titleLabel.font = UIFont(name: "HelveticaNeue", size: 12)!
         titleLabel.textAlignment = NSTextAlignment.Center
-        titleLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)!
-        titleLabel.textColor = UIColor.iceDarkRed()
+        titleLabel.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
         self.addSubview(titleLabel)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

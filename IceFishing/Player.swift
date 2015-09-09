@@ -13,7 +13,7 @@ let PlayerDidChangeStateNotification = "PlayerDidChangeState"
 let PlayerDidSeekNotification = "PlayerDidSeek"
 let PlayerDidFinishPlayingNotification = "PlayerDidFinishPlaying"
 
-class Player: NSObject, AVAudioPlayerDelegate {
+class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
     var downloadCallback: ((progress: Double) -> ())?
     
     private var currentConnection: NSURLConnection?
@@ -21,7 +21,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
         didSet {
             oldValue?.pause()
             if let oldDelegate = oldValue?.delegate as? Player {
-                if (self == oldDelegate) {
+                if self == oldDelegate {
                     oldValue?.delegate = nil
                 }
             }
@@ -37,19 +37,24 @@ class Player: NSObject, AVAudioPlayerDelegate {
         self.fileURL = fileURL
     }
     
-    class func keyPathsForValuesAffectingCurrentTime(key: NSString) -> NSSet {
-        return NSSet(objects: "player.currentTime")
+    class func keyPathsForValuesAffectingCurrentTime(key: String) -> Set<String> {
+        return Set(["player.currentTime"])
     }
     
-    class func keyPathsForValuesAffectingProgress() -> NSSet {
-        return NSSet(objects: "currentTime")
+    class func keyPathsForValuesAffectingProgress() -> Set<String> {
+        return Set(["currentTime"])
     }
     
     func prepareToPlay() {
-        if (player == nil) {
-            if (fileURL.fileURL) {
-                player = AVAudioPlayer(contentsOfURL: fileURL, error: nil)
-            } else if (currentConnection == nil) {
+        if player == nil {
+            if fileURL.fileURL {
+                do {
+                    player = try AVAudioPlayer(contentsOfURL: fileURL)
+                } catch _ {
+                    player = nil
+                }
+                player?.prepareToPlay()
+            } else if currentConnection == nil {
                 // get cached data
                 let request = NSURLRequest(URL: fileURL,
                     cachePolicy: NSURLRequestCachePolicy.ReturnCacheDataElseLoad,
@@ -58,24 +63,20 @@ class Player: NSObject, AVAudioPlayerDelegate {
             }
         }
     }
-    
-    func destroy() {
-        self.player = nil
-        NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
-    }
-    
+
     private var shouldAutoplay = false
+    private var shouldNotify = false
     func play(notify: Bool) {
         prepareToPlay()
         finishedPlaying = false
-        if (player == nil) {
+        if player == nil {
             shouldAutoplay = true
+            shouldNotify = notify
         } else {
             player?.play()
-        }
-        
-        if notify {
-            NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
+            if notify {
+                NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
+            }
         }
     }
     
@@ -91,6 +92,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     func pause(notify: Bool) {
         player?.pause()
         shouldAutoplay = false
+
         if notify {
             NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
         }
@@ -104,7 +106,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
     
     func togglePlaying() {
-        if (self.isPlaying()) {
+        if self.isPlaying() {
             self.pause(true)
         } else {
             self.play(true)
@@ -146,14 +148,14 @@ class Player: NSObject, AVAudioPlayerDelegate {
                 return 1.0
             }
             
-            if let player = player {
+            if let _ = player {
                 return currentTime / duration
             }
             return 0.0
         }
         
         set {
-            if let player = player {
+            if let _ = player {
                 if newValue == 1.0 {
                     finishedPlaying = true
                 }
@@ -180,22 +182,33 @@ class Player: NSObject, AVAudioPlayerDelegate {
     
     func connectionDidFinishLoading(connection: NSURLConnection) {
         downloadCallback?(progress: 1.0)
-        player = AVAudioPlayer(data: totalData, error: nil)
+        do {
+            player = try AVAudioPlayer(data: totalData!)
+        } catch _ {
+            player = nil
+        }
+        player?.prepareToPlay()
         totalData = nil
         currentConnection = nil
         
-        if (shouldAutoplay == true) {
+        if shouldAutoplay {
             player?.play()
+            if shouldNotify {
+                NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
+            }
         }
     }
+	
+	func connection(connection: NSURLConnection, didFailWithError error: NSError) {
+		print(__FUNCTION__ + " \(error)")
+	}
     
     // MARK: AVAudioPlayerDelegate
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         pause(true)
         finishedPlaying = true
         NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
         // we finished playing, destroy the object
-        destroy()
     }
 }

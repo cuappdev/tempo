@@ -8,34 +8,33 @@
 
 import UIKit
 
-class FollowersViewController: UITableViewController, UIScrollViewDelegate {
-    
-    var followersPics: [String]!
-    var followers: [String] = ["Adam", "Adler", "Alexander", "Andrew", "Annie", "Ashton", "Austin", "Brendan", "Brian", "Dennis"]
-    var followerHandles: [String] = ["adam", "adler", "alexander", "andrew", "annie", "ashton", "austin", "brendan", "brian", "dennis"]
-    var numFollowers: [Int] = [10, 229, 38, 40, 100, 374, 2731, 384, 12, 293]
-    
+class FollowersViewController: UITableViewController {
+
+    var followers: [User] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.backgroundColor = UIColor.iceDarkGray()
+        // TODO: For testing purposes (delete when test user is made)
+        API.sharedAPI.searchUsers("a") { users in
+            self.followers = users
+            self.tableView.reloadData()
+        }
+		
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
-    
-        tableView.separatorStyle = .None
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed()
+		
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Add back button to profile
-        var backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 45, height: navigationController!.navigationBar.frame.height))
-        backButton.setImage(UIImage(named: "Profile-Icon"), forState: .Normal)
-        backButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height))
+        backButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
+        backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
-    // Return to profile view
-    func dismiss() {
-        dismissViewControllerAnimated(true, completion: nil)
+    // Return to previous view
+    func popToPrevious() {
+        navigationController?.popViewControllerAnimated(true)
     }
     
     // TableView Methods
@@ -46,20 +45,28 @@ class FollowersViewController: UITableViewController, UIScrollViewDelegate {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
-        cell.userImage.image = UIImage(named: "Sexy")
-        cell.userName.text = self.followers[indexPath.row]
-        cell.userHandle.text = "@\(self.followerHandles[indexPath.row])"
-        cell.numFollowLabel.text = "\(self.numFollowers[indexPath.row]) followers"
+        
+        let user = followers[indexPath.row]
+        cell.userName.text = user.name
+        cell.userHandle.text = "@\(user.username)"
+        cell.numFollowLabel.text = "\(user.followersCount) followers"
+        user.loadImage {
+            cell.userImage.image = $0
+        }
         
         return cell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CGFloat(80)
+        return 80
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor.iceLightGray()
+        let selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        selectedCell.contentView.backgroundColor = UIColor.iceLightGray
+		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        profileVC.title = "Profile"
+        profileVC.user = followers[indexPath.row]
+        self.navigationController?.pushViewController(profileVC, animated: true)
     }
 }

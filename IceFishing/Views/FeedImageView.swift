@@ -9,25 +9,27 @@
 import UIKit
 
 class FeedImageView: UIImageView {
-    var placeholderImage: UIImage?
-    var imageURL: NSURL? {
-        didSet {
-            if (imageURL == oldValue) {
-                return
-            }
-            
-            image = placeholderImage
-            if let imageURL = imageURL {
-                loadImageAsync(imageURL, { [weak self] (image, error) -> () in
-                    self?.image = image
-                })
-            }
-        }
-    }
-    private(set) var progressIndicator = UIProgressView(frame: CGRectZero)
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        progressIndicator.frame = bounds
-    }
+	var placeholderImage: UIImage?
+	var imageURL: NSURL? {
+		didSet {
+			if imageURL == oldValue {
+				return
+			}
+			
+			if let imageURL = imageURL {
+				loadImageAsync(imageURL) { [weak self] image, error in
+					// This approach is lame and should be moved to cancelable requests
+					if self?.imageURL == imageURL && error == nil {
+						self?.image = image
+					}
+				}
+			}
+		}
+	}
+	private(set) var progressIndicator = UIProgressView(frame: CGRectZero)
+	
+	//    override func layoutSubviews() {
+	//        super.layoutSubviews()
+	//        progressIndicator.frame = bounds
+	//    }
 }

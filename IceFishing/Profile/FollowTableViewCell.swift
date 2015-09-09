@@ -9,7 +9,7 @@
 import UIKit
 
 class FollowTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userHandle: UILabel!
@@ -17,16 +17,23 @@ class FollowTableViewCell: UITableViewCell {
     @IBOutlet weak var separator: UIView!
     
     override func didMoveToSuperview() {
-        //selectionStyle = .None
-        self.backgroundColor = UIColor.iceDarkGray()
-        separator.backgroundColor = UIColor.iceLightGray()
+        selectionStyle = .None
+        self.backgroundColor = UIColor.iceDarkGray
+        separator.backgroundColor = UIColor.iceLightGray
         
         userImage.layer.cornerRadius = userImage.bounds.size.width/2
         userImage.clipsToBounds = true
+    }
+    
+    @IBAction func userImageClicked(sender: UIButton) {
         
-        userImage.userInteractionEnabled = true
-        userName.userInteractionEnabled = true
+        
+        
     }
 
+    // Custom selected cell view
+    override func setSelected(selected: Bool, animated: Bool) {
+		contentView.backgroundColor = selected ? UIColor.iceLightGray : UIColor.clearColor()
+    }
 }
 

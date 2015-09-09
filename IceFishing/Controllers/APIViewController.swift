@@ -10,22 +10,12 @@ import UIKit
 
 class APIViewController: UIViewController {
 
+	// TODO: Work on this as a test class for API calls
+	// TODO: Create unit tests for API
+	
     @IBAction func sendRequest(sender: AnyObject) {
-//        API.sharedAPI.userNameIsValid("lucasderraugh") { isValid in
-//            println("Valid Username: \(isValid)")
-//        }
-        
-        API.sharedAPI.getCurrentUser { currentUser in
-            println(currentUser)
-//            API.sharedAPI.fetchUser(currentUser.id) {
-//                println($0)
-//            }
-            API.sharedAPI.updatePost(User.currentUser.id, song: Song(spotifyURI: "spotify:track:5EYdTPdJD74r9EVZBztqGG")) {
-                println($0)
-            }
-//            API.sharedAPI.fetchFeedOfEveryone {
-//                println($0)
-//            }
+		API.sharedAPI.getCurrentUser { currentUser in
+            print(currentUser)
         }
     }
     
@@ -33,7 +23,31 @@ class APIViewController: UIViewController {
         super.init(nibName: "APIViewController", bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+	
+	func checkForValidUser(username: String) {
+		API.sharedAPI.usernameIsValid("lucasderraugh") { isValid in
+			print("Valid Username: \(isValid)")
+		}
+	}
+	
+	func updatePost() {
+		API.sharedAPI.updatePost(User.currentUser.id, song: Song(spotifyURI: "spotify:track:5EYdTPdJD74r9EVZBztqGG")) {
+			print($0)
+		}
+	}
+	
+	func fetchUser() {
+		API.sharedAPI.fetchUser(User.currentUser.id) {
+			print($0)
+		}
+	}
+	
+	func fetchFeedOfEveryone() {
+		API.sharedAPI.fetchFeedOfEveryone {
+			print($0)
+		}
+	}
 }
