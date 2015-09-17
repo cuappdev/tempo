@@ -20,8 +20,8 @@ protocol SongSearchDelegate: class {
 
 class SongSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 	
-	var cellIdentifier = "SongSearchTableViewCell"
-    var searchType = SearchType.Song
+	var cellIdentifier = "UserTableViewCell"
+    var searchType = SearchType.User
     var users: [User] = []
 	
 	@IBOutlet weak var searchBarContainer: UIView!
@@ -51,6 +51,8 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
+        beginIceFishing()
         
         if searchType == .Song {
             title = "Post your song of the day!"

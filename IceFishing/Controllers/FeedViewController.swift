@@ -301,6 +301,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		
 		songSearchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
 		songSearchTableViewController.navigationItem.leftBarButtonItem = navigationItem.leftBarButtonItem
+        songSearchTableViewController.searchType = .Song
 		navigationController?.pushViewController(songSearchTableViewController, animated: false)
 	}
 	

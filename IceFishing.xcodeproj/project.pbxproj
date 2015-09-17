@@ -34,7 +34,7 @@
 		1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DFBFB511B7845E7001DD6AC /* SongSearchTableViewCell.xib */; };
 		1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */; };
 		1DFD735E1BA0DC50008D9FD8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; };
-		1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */; settings = {ASSET_TAGS = (); }; };
+		1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */; };
 		1DFD73731BA0DCAB008D9FD8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; };
 		1DFD73811BA0EE7B008D9FD8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; };
 		1DFD73821BA0EE7B008D9FD8 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -46,7 +46,6 @@
 		6D3FA6611AD5FD5C00B1320D /* UsernameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3FA6601AD5FD5C00B1320D /* UsernameViewController.xib */; };
 		6DA5FE4D1AED72F800E795DD /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA5FE4C1AED72F800E795DD /* ColorExtension.swift */; };
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
-		7F8A7B111AF8225900622018 /* PeopleSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8A7B101AF8225900622018 /* PeopleSearchViewController.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
 		95711F171AF4774D002167EB /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95711EFB1AF4774D002167EB /* _FBTweakArrayViewController.m */; };
 		95711F181AF4774D002167EB /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 95711EFD1AF4774D002167EB /* _FBTweakBindObserver.m */; };
@@ -86,6 +85,8 @@
 		D17395791ADB081C00A53AEE /* FollowingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395771ADB081C00A53AEE /* FollowingViewController.xib */; };
 		D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395881ADF360C00A53AEE /* SignInViewController.swift */; };
 		D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395891ADF360C00A53AEE /* SignInViewController.xib */; };
+		D1983C191BA9E8CE00E42D8F /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1983C171BA9E8CE00E42D8F /* UserTableViewCell.swift */; };
+		D1983C1A1BA9E8CE00E42D8F /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1983C181BA9E8CE00E42D8F /* UserTableViewCell.xib */; };
 		FA171CC01AF1D758007B40AF /* FeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA171CBF1AF1D758007B40AF /* FeedImageView.swift */; };
 		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
 		FA1E1A781ADB06A3007C823C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A771ADB06A3007C823C /* Post.swift */; };
@@ -241,7 +242,6 @@
 		6D3FA6601AD5FD5C00B1320D /* UsernameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsernameViewController.xib; sourceTree = "<group>"; };
 		6DA5FE4C1AED72F800E795DD /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
-		7F8A7B101AF8225900622018 /* PeopleSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleSearchViewController.swift; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		95711EFA1AF4774D002167EB /* _FBTweakArrayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakArrayViewController.h; sourceTree = "<group>"; };
 		95711EFB1AF4774D002167EB /* _FBTweakArrayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakArrayViewController.m; sourceTree = "<group>"; };
@@ -300,6 +300,8 @@
 		D17395771ADB081C00A53AEE /* FollowingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowingViewController.xib; sourceTree = "<group>"; };
 		D17395881ADF360C00A53AEE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		D17395891ADF360C00A53AEE /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
+		D1983C171BA9E8CE00E42D8F /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		D1983C181BA9E8CE00E42D8F /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
 		FA171CBF1AF1D758007B40AF /* FeedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedImageView.swift; sourceTree = "<group>"; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FA1E1A771ADB06A3007C823C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
@@ -343,7 +345,6 @@
 				BAE499D51AD5F33B003214C0 /* SongSearchViewController.swift */,
 				1D22EE6E1B76D0C6006C54A9 /* SongSearchViewController.xib */,
 				1D1DD7151AE492B50066AB39 /* SubmitBugViewController.swift */,
-				7F8A7B101AF8225900622018 /* PeopleSearchViewController.swift */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
 				FAB564721AF6A8C9001059DF /* LikedTableViewController.xib */,
 				1D653F3D1B81451700F54455 /* SpotifyController.swift */,
@@ -451,6 +452,8 @@
 				FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */,
 				1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */,
 				1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */,
+				D1983C171BA9E8CE00E42D8F /* UserTableViewCell.swift */,
+				D1983C181BA9E8CE00E42D8F /* UserTableViewCell.xib */,
 				1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */,
 				1DFBFB511B7845E7001DD6AC /* SongSearchTableViewCell.xib */,
 			);
@@ -653,7 +656,7 @@
 				TargetAttributes = {
 					1D72D9B41AACC4C0007822B0 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = FP44AY6HHW;
+						DevelopmentTeam = S9S784A2B4;
 					};
 				};
 			};
@@ -776,6 +779,7 @@
 				1DE649C41B78590800DA5499 /* SpotifyViewController.xib in Resources */,
 				1DCB96151AED5EA7007F6A4B /* APIViewController.xib in Resources */,
 				D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */,
+				D1983C1A1BA9E8CE00E42D8F /* UserTableViewCell.xib in Resources */,
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
 				D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */,
 				FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */,
@@ -793,6 +797,7 @@
 			files = (
 				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,
+				D1983C191BA9E8CE00E42D8F /* UserTableViewCell.swift in Sources */,
 				95711F1D1AF4774D002167EB /* FBTweak.m in Sources */,
 				1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */,
 				1D653F3E1B81451700F54455 /* SpotifyController.swift in Sources */,
@@ -844,7 +849,6 @@
 				BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */,
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
-				7F8A7B111AF8225900622018 /* PeopleSearchViewController.swift in Sources */,
 				95711F1E1AF4774D002167EB /* FBTweakCategory.m in Sources */,
 				D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */,
 				D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */,
