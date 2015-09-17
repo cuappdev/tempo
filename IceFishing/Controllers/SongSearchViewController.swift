@@ -9,13 +9,20 @@
 import UIKit
 import Alamofire
 
+enum SearchType {
+    case Song
+    case User
+}
+
 protocol SongSearchDelegate: class {
 	func didSelectSong(song: Song)
 }
 
 class SongSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 	
-	let cellIdentifier = "SongSearchTableViewCell"
+	var cellIdentifier = "SongSearchTableViewCell"
+    var searchType = SearchType.Song
+    var users: [User] = []
 	
 	@IBOutlet weak var searchBarContainer: UIView!
 	@IBOutlet weak var tableView: UITableView!
@@ -40,12 +47,19 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		return button
 	}()
 	
-	
 	// MARK: - Lifecycle Methods
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		title = "Post your song of the day!"
+        
+        if searchType == .Song {
+            title = "Post your song of the day!"
+            cellIdentifier = "SongSearchTableViewCell"
+        } else {
+            title = "Search Users"
+            cellIdentifier = "UserTableViewCell"
+        }
+		
 		view.backgroundColor = UIColor.iceLightGray
 		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
 		
@@ -98,35 +112,82 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 	// MARK: - UITableViewDataSource
 	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return results.count
+        if searchType == .Song {
+            return results.count
+        } else {
+            return users.count
+        }
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! SongSearchTableViewCell
-		let post = results[indexPath.row]
-		cell.postView.post = post
-		cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
-		return cell
+        if searchType == .Song {
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! SongSearchTableViewCell
+            let post = results[indexPath.row]
+            cell.postView.post = post
+            cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UserTableViewCell
+            let user = users[indexPath.row]
+            cell.userName.text = user.name
+            cell.numFollowers.text = "Followers: \(user.followersCount)"
+            user.loadImage {
+                cell.userImage.setImage($0, forState: .Normal)
+            }
+            
+            return cell
+        }
 	}
 	
 	// MARK: - UITableViewDelegate
 	
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		tableView.deselectRowAtIndexPath(indexPath, animated: true)
-		
-		let post = results[indexPath.row]
-		selectSong(post.song)
-		
-		let cell = tableView.cellForRowAtIndexPath(indexPath) as! SongSearchTableViewCell
-		
-		if activePlayer != nil && activePlayer != cell.postView.post?.player {
-			activePlayer!.pause(true)
-			activePlayer = nil
-		}
-		
-		cell.postView.post?.player.togglePlaying()
-		activePlayer = cell.postView.post?.player
+        if searchType == .Song {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! SongSearchTableViewCell
+            let post = results[indexPath.row]
+            selectSong(post.song)
+            
+            if activePlayer != nil && activePlayer != cell.postView.post?.player {
+                activePlayer!.pause(true)
+                activePlayer = nil
+            }
+            
+            cell.postView.post?.player.togglePlaying()
+            activePlayer = cell.postView.post?.player
+        }
 	}
+    
+    // MARK: - General Request Methods
+    
+    func update(searchText: String) {
+        if searchType == .Song {
+            lastRequest?.cancel()
+            searchText.characters.count != 0 ? initiateRequest(searchText) : clearResults()
+        } else {
+            searchText.characters.count != 0 ? reloadUserData(searchText) : clearResults()
+        }
+    }
+    
+    func clearResults() {
+        results = []
+        users = []
+        selectedSong = nil
+        activePlayer?.pause(true)
+        activePlayer = nil
+        searchBar.text = nil
+        tableView.reloadData()
+    }
+    
+    // MARK: - User Request Methods
+    
+    func reloadUserData(searchText: String) {
+        API.sharedAPI.searchUsers(searchText) { users in
+            self.users = users
+            self.tableView.reloadData()
+        }
+    }
 	
 	// MARK: - Song Request Methods
 	
@@ -144,11 +205,6 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 	func submitSong() {
 		self.delegate?.didSelectSong(selectedSong!)
 		dismiss()
-	}
-	
-	func update(searchText: String) {
-		lastRequest?.cancel()
-		searchText.characters.count != 0 ? initiateRequest(searchText) : clearResults()
 	}
 	
 	func initiateRequest(term: String) {
@@ -169,15 +225,6 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 			return Post(song: song, user: User.currentUser, date: nil, likes: 0)
 		}
 		
-		tableView.reloadData()
-	}
-	
-	func clearResults() {
-		results = []
-		selectedSong = nil
-		activePlayer?.pause(true)
-		activePlayer = nil
-		searchBar.text = nil
 		tableView.reloadData()
 	}
 	
