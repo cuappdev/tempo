@@ -16,17 +16,15 @@ class UserTableViewCell: UITableViewCell {
     @IBOutlet weak var numFollowing: UILabel!
     @IBOutlet weak var separator: UIView!
     
-    override func didMoveToSuperview() {
-        selectionStyle = .None
-        self.backgroundColor = UIColor.iceDarkGray
-        separator.backgroundColor = UIColor.iceLightGray
-        
-        userImage.layer.cornerRadius = userImage.bounds.size.width/2
-        userImage.clipsToBounds = true
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
+		
+		selectionStyle = .None
+		self.backgroundColor = UIColor.iceDarkGray
+		separator.backgroundColor = UIColor.iceLightGray
+		
+		userImage.layer.cornerRadius = userImage.bounds.size.width/2
+		userImage.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
