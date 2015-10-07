@@ -14,6 +14,8 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	var posts: [Post] = []
 	var customRefresh:ADRefreshControl!
 	var plusButton: UIButton!
+    var savedSongAlertView: SavedSongView!
+
 	
 	lazy var songSearchTableViewController: SongSearchViewController = {
 		let vc = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
@@ -196,6 +198,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.post?.player.prepareToPlay()
+        cell.referenceFeedViewController = self
 		return cell
 	}
 	
@@ -280,7 +283,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		plusButton.imageView!.clipsToBounds = false
 		plusButton.adjustsImageWhenHighlighted = false
 		plusButton.addTarget(self, action: "plusButtonTapped", forControlEvents: .TouchUpInside)
-		
+        
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: plusButton)
 	}
 	
@@ -313,4 +316,23 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 			self?.tableView.reloadData()
 		}
 	}
+    
+    // - Save song button clicked
+    
+    func saveButtonClicked() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+        savedSongAlertView = NSBundle.mainBundle().loadNibNamed("SavedSongView", owner: self, options: nil).first! as! SavedSongView
+        savedSongAlertView.center = CGPointMake(screenWidth / 2, screenHeight / 2.2)
+        savedSongAlertView.layer.cornerRadius = 10
+        self.view.addSubview(savedSongAlertView)
+        _ = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(1.0), target: self, selector: "timeExpired", userInfo: nil, repeats: false)
+    }
+    
+    func timeExpired() {
+        UIView.animateWithDuration(0.5, animations: {
+            self.savedSongAlertView.alpha = 0.0
+            }, completion: {(value: Bool) in self.savedSongAlertView.removeFromSuperview()})
+    }
 }
