@@ -103,19 +103,19 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         if !isFollowing {
             isFollowing = true
             followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-            User.currentUser.followersCount = User.currentUser.followersCount + 1
+            User.currentUser.followersCount++
             // TODO: Update following
-            API.sharedAPI.updateFollowings(User.currentUser.id, unfollow: false) { bool in
+            API.sharedAPI.updateFollowings(user.id, unfollow: false) { bool in
                 print(bool)
             }
         } else {
             isFollowing = false
             followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-            User.currentUser.followersCount = User.currentUser.followersCount - 1
+            User.currentUser.followersCount--
             // TODO: Update following
-//            API.sharedAPI.updateFollowings(User.currentUser.id, unfollow: true) { bool in
-//                println(bool)
-//            }
+            API.sharedAPI.updateFollowings(user.id, unfollow: true) { bool in
+                print(bool)
+            }
         }
 //        numFollowersLabel.text = "\(User.currentUser.followersCount)"
         print(User.currentUser.followers)

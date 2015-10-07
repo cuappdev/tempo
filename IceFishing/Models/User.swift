@@ -18,7 +18,7 @@ class User: NSObject, NSCoding {
 	var email: String = "temp@example.com"
 	var fbid: String = ""
 	var followers: [String] = []
-	var followersCount: Int!
+	var followersCount: Int = 0
 	var hipsterScore = 0
 	var id: String = ""
 	var likeCount: Int!
