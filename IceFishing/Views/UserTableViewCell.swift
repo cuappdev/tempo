@@ -10,6 +10,7 @@ import UIKit
 
 class UserTableViewCell: UITableViewCell {
 
+    var user: User!
     @IBOutlet weak var userImage: UIButton!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var numFollowers: UILabel!

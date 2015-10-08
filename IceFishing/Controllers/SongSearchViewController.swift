@@ -159,6 +159,11 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
             cell.postView.post?.player.togglePlaying()
             activePlayer = cell.postView.post?.player
         }
+        else {
+            let profileView = ProfileViewController()
+            profileView.user = users[indexPath.row]
+            navigationController?.pushViewController(profileView, animated: true)
+        }
 	}
     
     // MARK: - General Request Methods
