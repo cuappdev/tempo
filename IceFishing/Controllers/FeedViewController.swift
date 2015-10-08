@@ -320,19 +320,21 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	// - Save song button clicked
 	
 	func saveButtonClicked() {
-		let screenSize: CGRect = UIScreen.mainScreen().bounds
+		let screenSize = UIScreen.mainScreen().bounds
 		let screenWidth = screenSize.width
 		let screenHeight = screenSize.height
-		savedSongAlertView = NSBundle.mainBundle().loadNibNamed("SavedSongView", owner: self, options: nil).first! as! SavedSongView
+		savedSongAlertView = SavedSongView.instanceFromNib()
 		savedSongAlertView.center = CGPointMake(screenWidth / 2, screenHeight / 2.2)
 		savedSongAlertView.layer.cornerRadius = 10
-		self.view.addSubview(savedSongAlertView)
+		view.addSubview(savedSongAlertView)
 		_ = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(1.0), target: self, selector: "timeExpired", userInfo: nil, repeats: false)
 	}
 	
 	func timeExpired() {
 		UIView.animateWithDuration(0.5, animations: {
 			self.savedSongAlertView.alpha = 0.0
-			}, completion: {(value: Bool) in self.savedSongAlertView.removeFromSuperview()})
+		}, completion: { _ in
+			self.savedSongAlertView.removeFromSuperview()
+		})
 	}
 }

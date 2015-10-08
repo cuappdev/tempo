@@ -10,12 +10,8 @@ import UIKit
 
 class SavedSongView: UIView {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
+	class func instanceFromNib() -> SavedSongView {
+		return UINib(nibName: "SavedSongView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! SavedSongView
+	}
 
 }

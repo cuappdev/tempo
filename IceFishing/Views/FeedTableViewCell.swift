@@ -13,8 +13,7 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet var postView: PostView!
     
     weak var referenceFeedViewController: FeedViewController!
-    var savedSongAlertView: SavedSongView!
-    
+	
     @IBAction func saveButtonClicked(sender: UIButton) {
         referenceFeedViewController.saveButtonClicked()
     }
