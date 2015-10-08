@@ -14,6 +14,8 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	var posts: [Post] = []
 	var customRefresh:ADRefreshControl!
 	var plusButton: UIButton!
+	var savedSongAlertView: SavedSongView!
+	
 	
 	lazy var songSearchTableViewController: SongSearchViewController = {
 		let vc = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
@@ -196,6 +198,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.post?.player.prepareToPlay()
+		cell.referenceFeedViewController = self
 		return cell
 	}
 	
@@ -293,7 +296,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
 			let transform = active ? CGAffineTransformMakeRotation(CGFloat(M_PI_4)) : CGAffineTransformIdentity
 			self.plusButton.imageView!.transform = transform
-		}, completion: nil)
+			}, completion: nil)
 	}
 	
 	func plusButtonTapped() {
@@ -301,7 +304,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		
 		songSearchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
 		songSearchTableViewController.navigationItem.leftBarButtonItem = navigationItem.leftBarButtonItem
-        songSearchTableViewController.searchType = .Song
+		songSearchTableViewController.searchType = .Song
 		navigationController?.pushViewController(songSearchTableViewController, animated: false)
 	}
 	
@@ -312,5 +315,26 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		API.sharedAPI.updatePost(User.currentUser.id, song: song) { [weak self] _ in
 			self?.tableView.reloadData()
 		}
+	}
+	
+	// - Save song button clicked
+	
+	func saveButtonClicked() {
+		let screenSize = UIScreen.mainScreen().bounds
+		let screenWidth = screenSize.width
+		let screenHeight = screenSize.height
+		savedSongAlertView = SavedSongView.instanceFromNib()
+		savedSongAlertView.center = CGPointMake(screenWidth / 2, screenHeight / 2.2)
+		savedSongAlertView.layer.cornerRadius = 10
+		view.addSubview(savedSongAlertView)
+		_ = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(1.0), target: self, selector: "timeExpired", userInfo: nil, repeats: false)
+	}
+	
+	func timeExpired() {
+		UIView.animateWithDuration(0.5, animations: {
+			self.savedSongAlertView.alpha = 0.0
+		}, completion: { _ in
+			self.savedSongAlertView.removeFromSuperview()
+		})
 	}
 }

@@ -40,6 +40,8 @@
 		1DFD73821BA0EE7B008D9FD8 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1DFD738B1BA0EE94008D9FD8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; };
 		1DFD738C1BA0EE94008D9FD8 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60256C0F1BC1BC7900B52FDD /* SavedSongView.xib */; settings = {ASSET_TAGS = (); }; };
+		60256C1A1BC1BFA900B52FDD /* SavedSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60256C191BC1BFA900B52FDD /* SavedSongView.swift */; settings = {ASSET_TAGS = (); }; };
 		6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */; };
 		6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */; };
 		6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */; };
@@ -236,13 +238,15 @@
 		1DFD734C1BA0DC21008D9FD8 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spotify.framework; path = "ios-sdk/Spotify.framework"; sourceTree = "<group>"; };
 		1DFD73611BA0DC9F008D9FD8 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
+		60256C0F1BC1BC7900B52FDD /* SavedSongView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SavedSongView.xib; sourceTree = "<group>"; };
+		60256C191BC1BFA900B52FDD /* SavedSongView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedSongView.swift; sourceTree = "<group>"; };
 		6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowTableViewCell.swift; path = ../Profile/FollowTableViewCell.swift; sourceTree = "<group>"; };
 		6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowTableViewCell.xib; path = ../Profile/FollowTableViewCell.xib; sourceTree = "<group>"; };
 		6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
 		6D3FA6601AD5FD5C00B1320D /* UsernameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsernameViewController.xib; sourceTree = "<group>"; };
 		6DA5FE4C1AED72F800E795DD /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
-		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; usesTabs = 1; };
 		95711EFA1AF4774D002167EB /* _FBTweakArrayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakArrayViewController.h; sourceTree = "<group>"; };
 		95711EFB1AF4774D002167EB /* _FBTweakArrayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakArrayViewController.m; sourceTree = "<group>"; };
 		95711EFC1AF4774D002167EB /* _FBTweakBindObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakBindObserver.h; sourceTree = "<group>"; };
@@ -375,6 +379,8 @@
 				FA1E1A7D1ADB0818007C823C /* PostView.swift */,
 				BA24C57C1AF866630066C2ED /* SearchPostView.swift */,
 				FA171CBF1AF1D758007B40AF /* FeedImageView.swift */,
+				60256C0F1BC1BC7900B52FDD /* SavedSongView.xib */,
+				60256C191BC1BFA900B52FDD /* SavedSongView.swift */,
 				1D802AB81B7873A5005A96D1 /* Cells */,
 				1DB283911B6D969A00134FEA /* Controls */,
 			);
@@ -389,6 +395,7 @@
 				1D72D9B61AACC4C0007822B0 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		1D72D9B61AACC4C0007822B0 /* Products */ = {
 			isa = PBXGroup;
@@ -781,6 +788,7 @@
 				D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */,
 				D1983C1A1BA9E8CE00E42D8F /* UserTableViewCell.xib in Resources */,
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
+				60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */,
 				D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */,
 				FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */,
 				D11740081AF8574900302FFD /* ProfileViewController.xib in Resources */,
@@ -818,6 +826,7 @@
 				1DCB96141AED5EA7007F6A4B /* APIViewController.swift in Sources */,
 				1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */,
 				95711F221AF4774D002167EB /* FBTweakStore.m in Sources */,
+				60256C1A1BC1BFA900B52FDD /* SavedSongView.swift in Sources */,
 				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,
 				FAB564731AF6A8C9001059DF /* LikedTableViewController.swift in Sources */,
 				6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */,
