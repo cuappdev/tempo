@@ -12,16 +12,18 @@ import SwiftyJSON
 class Post: NSObject {
     let user: User
     var player: Player!
-    let song: Song
-    var date: NSDate?
-    var likes: Int
-    var postID = ""
-    
-    init(song: Song, user: User, date: NSDate?, likes: Int) {
+	let song: Song
+    let date: NSDate?
+    private(set) var likes: Int
+	private(set) var isLiked: Bool = false
+	private(set) var postID: String = ""
+	
+	init(song: Song, user: User, date: NSDate? = nil, likes: Int = 0, isLiked: Bool = false) {
         self.song = song
         self.user = user
         self.date = date
         self.likes = likes
+		self.isLiked = isLiked
         
         if let previewURL = song.previewURL {
             player = Player(fileURL: previewURL)
@@ -37,34 +39,35 @@ class Post: NSObject {
         let user = User(json: json["user"])
         let dateString = json["created_at"].stringValue
         let likes = json["like_count"].intValue
+		let isLiked = json["post"]["is_liked"].boolValue
         let date = NSDateFormatter.parsingDateFormatter.dateFromString(dateString)
                 
-        self.init(song: Song(spotifyURI: songID), user: user, date: date, likes: likes)
-        
+		self.init(song: Song(spotifyURI: songID), user: user, date: date, likes: likes, isLiked: isLiked)
+		
         postID = json["id"].stringValue
     }
     
     func relativeDate() -> String {
         let now = NSDate()
-        let seconds = now.timeIntervalSinceDate(self.date!)
+        let seconds = Int(now.timeIntervalSinceDate(self.date!))
         if seconds < 60 {
             return "just now"
         }
-        let minutes: Int = Int(seconds/60)
+        let minutes = seconds / 60
         if minutes == 1 {
             return "\(minutes) min"
         }
         if minutes < 60 {
             return "\(minutes) mins"
         }
-        let hours: Int = minutes/60
+        let hours: Int = minutes / 60
         if hours == 1 {
             return "\(hours) hr"
         }
         if hours < 24 {
             return "\(hours) hrs"
         }
-        let days: Int = hours/24
+        let days: Int = hours / 24
         if days == 1 {
             return "\(days) day"
         }
@@ -74,26 +77,16 @@ class Post: NSObject {
     override var description: String {
         return "\(song.title) posted by \(user.name)"
     }
-    
-    func like() {
-        API.sharedAPI.updateLikes(postID, unlike: false, completion: {
-            (response) in
-            if let _ = response["success"] {
-                print("successfully liked")
-            } else {
-                print("failed to like post")
-            }
-        })
-    }
-    
-    func unlike() {
-        API.sharedAPI.updateLikes(postID, unlike: true, completion: {
-            (response) in
-            if let _ = response["success"] {
-                
-            } else {
-                print("failed to like post")
-            }
-        })
-    }
+	
+	func toggleLike() {
+		isLiked = !isLiked
+		API.sharedAPI.updateLikes(postID, unlike: !isLiked) {
+			(response) in
+			if let _ = response["success"] {
+				
+			} else {
+				print("failed to like post")
+			}
+		}
+	}
 }

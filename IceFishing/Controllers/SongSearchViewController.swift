@@ -229,7 +229,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		
 		results = items.map {
 			let song = Song(responseDictionary: $0)
-			return Post(song: song, user: User.currentUser, date: nil, likes: 0)
+			return Post(song: song, user: User.currentUser)
 		}
 		
 		tableView.reloadData()

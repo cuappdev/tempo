@@ -46,6 +46,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
                     likesLabel?.text = "\(post.likes) likes"
+					let imageName = post.isLiked ? "Heart-Red" : "Heart"
+					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					SpotifyController.sharedController.spotifyIsAvailable {// Audit this model object as it's becoming a monster
 						self.addButton?.hidden = !$0
 					}
@@ -278,32 +280,23 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         return true
     }
     
-    func postViewPressed(sender: UITapGestureRecognizer) {
-        if let post = post {
-            let tapPoint = sender.locationInView(self)
-            let hitView = self.hitTest(tapPoint, withEvent: nil)
-            if hitView == likedButton {
-				// TODO: Currently difficult to check against model for liked songs
-				// Should add logic for if a post is liked by you (currently there is none)
-                if (post.postID != 1.stringValue){
-                    post.like()
-                    likesLabel?.text = "\(post.likes+1) likes"
-                    likedButton?.setImage(UIImage(named: "Heart-Red"), forState: .Normal)
-                    print("Liking")
-                } else {
-                    post.unlike()
-                    likesLabel?.text = "\(post.likes-1) likes"
-                    likedButton?.setImage(UIImage(named: "Heart"), forState: .Normal)
-                    print("Unliking")
-                }
-            } else if hitView == addButton {
-                print("Adding")
-            } else if post.player.isPlaying() {
-                if hitView == avatarImageView || hitView == self.profileNameLabel {
-                    // GO TO PROFILE VIEW CONTROLLER
-                    print(post.user.fbid) 
-                }
-            }
-        }
-    }
+	func postViewPressed(sender: UITapGestureRecognizer) {
+		guard let post = post else { return }
+		let tapPoint = sender.locationInView(self)
+		let hitView = self.hitTest(tapPoint, withEvent: nil)
+		if hitView == likedButton {
+			post.toggleLike()
+			let name = post.isLiked ? "Heart-Red" : "Heart"
+			let likeCount = post.likes + (post.isLiked ? 1 : -1)
+			likesLabel?.text = "\(likeCount) likes"
+			likedButton?.setImage(UIImage(named: name), forState: .Normal)
+		} else if hitView == addButton {
+			print("Adding")
+		} else if post.player.isPlaying() {
+			if hitView == avatarImageView || hitView == self.profileNameLabel {
+				// GO TO PROFILE VIEW CONTROLLER
+				print(post.user.fbid)
+			}
+		}
+	}
 }
