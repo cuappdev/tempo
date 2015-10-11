@@ -27,8 +27,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var userHandleLabel: UILabel!
     @IBOutlet weak var followButtonLabel: UIButton!
-    @IBOutlet weak var followersLabel: UILabel!
-    @IBOutlet weak var followingLabel: UILabel!
+	@IBOutlet weak var followersButton: UIButton!
+	@IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var divider: UIView!
     @IBOutlet weak var separator: UIView!
 	@IBOutlet weak var collectionView: UICollectionView!
@@ -66,8 +66,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
         if User.currentUser.username == user.username {
             followButtonLabel.hidden = true
-        }
-        
+		}
+		
+		followingButton.setTitle("\(user.followingCount) Following", forState: .Normal)
+		followersButton.setTitle("\(user.followersCount) Followers", forState: .Normal)
+		
 		// Post History Calendar
         separator.backgroundColor = UIColor.iceDarkRed
         
@@ -99,7 +102,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     // <------------------------FOLLOW BUTTONS------------------------>
     
-    @IBAction func followButton(sender: UIButton) {
+    @IBAction func followButtonPressed(sender: UIButton) {
         if !isFollowing {
             isFollowing = true
             followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
@@ -121,13 +124,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         print(User.currentUser.followers)
     }
     
-    @IBAction func followersButton(sender: UIButton) {
+    @IBAction func followersButtonPressed(sender: UIButton) {
         let followersVC = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
         followersVC.title = "Followers"
         navigationController?.pushViewController(followersVC, animated: true)
     }
 
-    @IBAction func followingButton(sender: UIButton) {
+    @IBAction func followingButtonPressed(sender: UIButton) {
         let followingVC = FollowingViewController(nibName: "FollowingViewController", bundle: nil)
         followingVC.title = "Following"
         navigationController?.pushViewController(followingVC, animated: true)

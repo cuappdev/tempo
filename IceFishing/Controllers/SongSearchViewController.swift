@@ -134,6 +134,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
             let user = users[indexPath.row]
             cell.userName.text = user.name
             cell.numFollowers.text = "Followers: \(user.followersCount)"
+			cell.numFollowing.text = "Following: \(user.followingCount)"
             user.loadImage {
                 cell.userImage.setBackgroundImage($0, forState: .Normal)
             }
