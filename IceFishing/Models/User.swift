@@ -13,18 +13,19 @@ class User: NSObject, NSCoding {
 	
 	static var currentUser: User = User()
 	
-	var caption : String = ""
-	var createdAt: String = ""
-	var email: String = "temp@example.com"
-	var fbid: String = ""
+	var caption = ""
+	var createdAt = ""
+	var email = "temp@example.com"
+	var fbid = ""
 	var followers: [String] = []
-	var followersCount: Int!
+	var followersCount = 0
+	var followingCount = 0
 	var hipsterScore = 0
-	var id: String = ""
-	var likeCount: Int!
-	var locationID: String = ""
-	var firstName: String = ""
-	var lastName: String = ""
+	var id = ""
+	var likeCount = 0
+	var locationID = ""
+	var firstName = ""
+	var lastName = ""
 	var name: String {
 		set(newName) {
 			let fullName = newName.characters.split { $0 == " " }.map { String($0) }
@@ -70,6 +71,7 @@ class User: NSObject, NSCoding {
 		fbid = json["fbid"].stringValue
 		followers = json["followers"].arrayObject as? [String] ?? []
 		followersCount = json["followers_count"].intValue
+		followingCount = json["followings_count"].intValue
 		hipsterScore = json["hipster_score"].intValue
 		id = json["id"].stringValue
 		likeCount = json["like_count"].intValue

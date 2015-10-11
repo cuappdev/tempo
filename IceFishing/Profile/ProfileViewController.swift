@@ -27,8 +27,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var userHandleLabel: UILabel!
     @IBOutlet weak var followButtonLabel: UIButton!
-    @IBOutlet weak var followersLabel: UILabel!
-    @IBOutlet weak var followingLabel: UILabel!
+	@IBOutlet weak var followersButton: UIButton!
+	@IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var divider: UIView!
     @IBOutlet weak var separator: UIView!
 	@IBOutlet weak var collectionView: UICollectionView!
@@ -66,8 +66,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
         if User.currentUser.username == user.username {
             followButtonLabel.hidden = true
-        }
-        
+		}
+		
+		followingButton.setTitle("\(user.followingCount) Following", forState: .Normal)
+		followersButton.setTitle("\(user.followersCount) Followers", forState: .Normal)
+		
 		// Post History Calendar
         separator.backgroundColor = UIColor.iceDarkRed
         
@@ -99,35 +102,35 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     // <------------------------FOLLOW BUTTONS------------------------>
     
-    @IBAction func followButton(sender: UIButton) {
+    @IBAction func followButtonPressed(sender: UIButton) {
         if !isFollowing {
             isFollowing = true
             followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-            User.currentUser.followersCount = User.currentUser.followersCount + 1
+            User.currentUser.followersCount++
             // TODO: Update following
-            API.sharedAPI.updateFollowings(User.currentUser.id, unfollow: false) { bool in
+            API.sharedAPI.updateFollowings(user.id, unfollow: false) { bool in
                 print(bool)
             }
         } else {
             isFollowing = false
             followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-            User.currentUser.followersCount = User.currentUser.followersCount - 1
+            User.currentUser.followersCount--
             // TODO: Update following
-//            API.sharedAPI.updateFollowings(User.currentUser.id, unfollow: true) { bool in
-//                println(bool)
-//            }
+            API.sharedAPI.updateFollowings(user.id, unfollow: true) { bool in
+                print(bool)
+            }
         }
 //        numFollowersLabel.text = "\(User.currentUser.followersCount)"
         print(User.currentUser.followers)
     }
     
-    @IBAction func followersButton(sender: UIButton) {
+    @IBAction func followersButtonPressed(sender: UIButton) {
         let followersVC = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
         followersVC.title = "Followers"
         navigationController?.pushViewController(followersVC, animated: true)
     }
 
-    @IBAction func followingButton(sender: UIButton) {
+    @IBAction func followingButtonPressed(sender: UIButton) {
         let followingVC = FollowingViewController(nibName: "FollowingViewController", bundle: nil)
         followingVC.title = "Following"
         navigationController?.pushViewController(followingVC, animated: true)

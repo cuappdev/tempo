@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A279b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController" customModule="IceFishing" customModuleProvider="target">
@@ -9,6 +10,8 @@
                 <outlet property="collectionView" destination="dLY-tp-6O0" id="jKr-5b-fzi"/>
                 <outlet property="divider" destination="vN1-g8-9nx" id="AeO-Fp-iBt"/>
                 <outlet property="followButtonLabel" destination="ZCl-Em-Qfi" id="YHr-Zk-7tH"/>
+                <outlet property="followersButton" destination="DOA-0f-C6w" id="8aJ-Pa-aps"/>
+                <outlet property="followingButton" destination="lZf-dZ-xpF" id="Oex-8w-q1Q"/>
                 <outlet property="nameLabel" destination="UCx-Gl-jLS" id="SFI-q1-yoE"/>
                 <outlet property="profilePictureView" destination="4qp-8z-VHa" id="htL-Wb-QrP"/>
                 <outlet property="separator" destination="dTq-gI-bEe" id="bCL-Z2-vUS"/>
@@ -23,6 +26,7 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZCl-Em-Qfi">
                     <rect key="frame" x="251" y="156" width="98.5" height="29"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.1647058824" green="0.1764705882" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="29.5" id="tae-82-k4e"/>
@@ -34,28 +38,31 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="followButton:" destination="-1" eventType="touchUpInside" id="igM-V4-3vW"/>
+                        <action selector="followButtonPressed:" destination="-1" eventType="touchUpInside" id="z9E-m6-h0z"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOA-0f-C6w">
                     <rect key="frame" x="0.0" y="205" width="299.5" height="46"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.16470588235294117" green="0.1764705882352941" blue="0.18823529411764706" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="20 Followers">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="followersButton:" destination="-1" eventType="touchUpInside" id="R92-Bo-sJT"/>
+                        <action selector="followersButtonPressed:" destination="-1" eventType="touchUpInside" id="6hv-iL-Svw"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCx-Gl-jLS">
                     <rect key="frame" x="263" y="91" width="75" height="37"/>
+                    <animations/>
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="27"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4qp-8z-VHa">
                     <rect key="frame" x="263" y="8" width="75" height="75"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="0s2-LG-LxS"/>
                         <constraint firstAttribute="width" constant="75" id="eGa-We-slo"/>
@@ -63,12 +70,14 @@
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@userhandle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ez5-PU-GUQ">
                     <rect key="frame" x="256" y="128" width="89" height="20.5"/>
+                    <animations/>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                     <color key="textColor" red="0.68627450980392157" green="0.73333333333333328" blue="0.81176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lZf-dZ-xpF">
                     <rect key="frame" x="300" y="205" width="300" height="46"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.1647058824" green="0.1764705882" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="VrG-le-vY3"/>
@@ -77,11 +86,12 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="followingButton:" destination="-1" eventType="touchUpInside" id="F7m-7Y-dSC"/>
+                        <action selector="followingButtonPressed:" destination="-1" eventType="touchUpInside" id="dLO-SZ-Vdr"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vN1-g8-9nx">
                     <rect key="frame" x="299" y="205" width="1" height="46"/>
+                    <animations/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="1" id="l9w-r3-RP5"/>
@@ -89,6 +99,7 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FCU-TD-VAX">
                     <rect key="frame" x="258" y="259" width="83" height="29"/>
+                    <animations/>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
                     <state key="normal" title="POST HISTORY">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -100,6 +111,7 @@
                 </button>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="dLY-tp-6O0">
                     <rect key="frame" x="0.0" y="296" width="600" height="304"/>
+                    <animations/>
                     <collectionViewLayout key="collectionViewLayout" id="sBQ-9j-yh8" customClass="HipStickyHeaderFlowLayout" customModule="IceFishing" customModuleProvider="target"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="xlG-5V-ER6"/>
@@ -108,12 +120,14 @@
                 </collectionView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTq-gI-bEe">
                     <rect key="frame" x="25" y="296" width="1" height="304"/>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="1" id="od2-9f-mDe"/>
                     </constraints>
                 </view>
             </subviews>
+            <animations/>
             <color key="backgroundColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="dLY-tp-6O0" firstAttribute="bottom" secondItem="dTq-gI-bEe" secondAttribute="bottom" id="8ZC-OE-Izg"/>

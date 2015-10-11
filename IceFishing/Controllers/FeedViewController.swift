@@ -311,7 +311,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	// MARK: - SongSearchDelegate
 	
 	func didSelectSong(song: Song) {
-		self.posts.insert(Post(song: song, user: User.currentUser, date: NSDate(), likes: 0), atIndex: 0)
+		self.posts.insert(Post(song: song, user: User.currentUser, date: NSDate()), atIndex: 0)
 		API.sharedAPI.updatePost(User.currentUser.id, song: song) { [weak self] _ in
 			self?.tableView.reloadData()
 		}

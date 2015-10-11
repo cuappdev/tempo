@@ -134,6 +134,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
             let user = users[indexPath.row]
             cell.userName.text = user.name
             cell.numFollowers.text = "Followers: \(user.followersCount)"
+			cell.numFollowing.text = "Following: \(user.followingCount)"
             user.loadImage {
                 cell.userImage.setBackgroundImage($0, forState: .Normal)
             }
@@ -229,7 +230,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 		
 		results = items.map {
 			let song = Song(responseDictionary: $0)
-			return Post(song: song, user: User.currentUser, date: nil, likes: 0)
+			return Post(song: song, user: User.currentUser)
 		}
 		
 		tableView.reloadData()
