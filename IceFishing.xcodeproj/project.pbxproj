@@ -81,10 +81,8 @@
 		D148F4AE1AF03EF5009AB073 /* PostHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */; };
 		D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */; };
 		D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14A31581AF53218005153E6 /* HipStickyHeaderFlowLayout.swift */; };
-		D17395741ADB080900A53AEE /* FollowersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395721ADB080900A53AEE /* FollowersViewController.swift */; };
-		D17395751ADB080900A53AEE /* FollowersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395731ADB080900A53AEE /* FollowersViewController.xib */; };
-		D17395781ADB081C00A53AEE /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395761ADB081C00A53AEE /* FollowingViewController.swift */; };
-		D17395791ADB081C00A53AEE /* FollowingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395771ADB081C00A53AEE /* FollowingViewController.xib */; };
+		D17395741ADB080900A53AEE /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395721ADB080900A53AEE /* UsersViewController.swift */; };
+		D17395751ADB080900A53AEE /* UsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395731ADB080900A53AEE /* UsersViewController.xib */; };
 		D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395881ADF360C00A53AEE /* SignInViewController.swift */; };
 		D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395891ADF360C00A53AEE /* SignInViewController.xib */; };
 		D1983C191BA9E8CE00E42D8F /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1983C171BA9E8CE00E42D8F /* UserTableViewCell.swift */; };
@@ -298,10 +296,8 @@
 		D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHistoryTableViewCell.xib; sourceTree = "<group>"; };
 		D14A31581AF53218005153E6 /* HipStickyHeaderFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipStickyHeaderFlowLayout.swift; sourceTree = "<group>"; };
-		D17395721ADB080900A53AEE /* FollowersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowersViewController.swift; sourceTree = "<group>"; };
-		D17395731ADB080900A53AEE /* FollowersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowersViewController.xib; sourceTree = "<group>"; };
-		D17395761ADB081C00A53AEE /* FollowingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
-		D17395771ADB081C00A53AEE /* FollowingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowingViewController.xib; sourceTree = "<group>"; };
+		D17395721ADB080900A53AEE /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
+		D17395731ADB080900A53AEE /* UsersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsersViewController.xib; sourceTree = "<group>"; };
 		D17395881ADF360C00A53AEE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		D17395891ADF360C00A53AEE /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		D1983C171BA9E8CE00E42D8F /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
@@ -530,10 +526,8 @@
 				D17395891ADF360C00A53AEE /* SignInViewController.xib */,
 				D1173FFF1AF8574400302FFD /* ProfileViewController.swift */,
 				D11740071AF8574900302FFD /* ProfileViewController.xib */,
-				D17395721ADB080900A53AEE /* FollowersViewController.swift */,
-				D17395731ADB080900A53AEE /* FollowersViewController.xib */,
-				D17395761ADB081C00A53AEE /* FollowingViewController.swift */,
-				D17395771ADB081C00A53AEE /* FollowingViewController.xib */,
+				D17395721ADB080900A53AEE /* UsersViewController.swift */,
+				D17395731ADB080900A53AEE /* UsersViewController.xib */,
 				D102A9C51AE889D600C66385 /* SideBarViewController.swift */,
 				D102A9C61AE889D600C66385 /* SideBarViewController.xib */,
 				6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */,
@@ -773,9 +767,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D17395751ADB080900A53AEE /* FollowersViewController.xib in Resources */,
+				D17395751ADB080900A53AEE /* UsersViewController.xib in Resources */,
 				FAB564741AF6A8C9001059DF /* LikedTableViewController.xib in Resources */,
-				D17395791ADB081C00A53AEE /* FollowingViewController.xib in Resources */,
 				D148F4AB1AF03EB4009AB073 /* PostHistoryTableViewController.xib in Resources */,
 				D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */,
 				1DB476481AEF24670066014F /* PostButton.xib in Resources */,
@@ -814,7 +807,7 @@
 				95711F2C1AF47769002167EB /* Tweaks.swift in Sources */,
 				95711F1C1AF4774D002167EB /* _FBTweakTableViewCell.m in Sources */,
 				1DB283901B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift in Sources */,
-				D17395741ADB080900A53AEE /* FollowersViewController.swift in Sources */,
+				D17395741ADB080900A53AEE /* UsersViewController.swift in Sources */,
 				95711F301AF4778C002167EB /* ADScreenCapture.swift in Sources */,
 				1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */,
 				1DE649C31B78590800DA5499 /* SpotifyViewController.swift in Sources */,
@@ -848,7 +841,6 @@
 				FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */,
 				D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */,
 				6DA5FE4D1AED72F800E795DD /* ColorExtension.swift in Sources */,
-				D17395781ADB081C00A53AEE /* FollowingViewController.swift in Sources */,
 				D148F4AE1AF03EF5009AB073 /* PostHistoryTableViewCell.swift in Sources */,
 				D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */,
 				FA674C0F1AF917A200C14463 /* ViewController+Utilities.swift in Sources */,

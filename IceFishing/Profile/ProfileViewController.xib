@@ -9,7 +9,7 @@
             <connections>
                 <outlet property="collectionView" destination="dLY-tp-6O0" id="jKr-5b-fzi"/>
                 <outlet property="divider" destination="vN1-g8-9nx" id="AeO-Fp-iBt"/>
-                <outlet property="followButtonLabel" destination="ZCl-Em-Qfi" id="YHr-Zk-7tH"/>
+                <outlet property="followButton" destination="ZCl-Em-Qfi" id="ICR-Dv-Q7B"/>
                 <outlet property="followersButton" destination="DOA-0f-C6w" id="8aJ-Pa-aps"/>
                 <outlet property="followingButton" destination="lZf-dZ-xpF" id="Oex-8w-q1Q"/>
                 <outlet property="nameLabel" destination="UCx-Gl-jLS" id="SFI-q1-yoE"/>

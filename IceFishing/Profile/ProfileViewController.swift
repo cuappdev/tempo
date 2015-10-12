@@ -10,23 +10,20 @@ import UIKit
 
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var user: User!
+    var user: User = User.currentUser
     var isFollowing = false
-    var numFollowing = 0
-    var searchNavigationController: UINavigationController!
     
     // Post History Calendar
-    var calendar : NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+    var calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
     var startDate = NSDate(dateString:"2015-01-26")
-    // Hardcoded dates for testing
-    var postedDates: [NSDate]! = [NSDate(dateString:"2015-04-20"), NSDate(dateString:"2015-04-17"), NSDate(dateString:"2015-04-26"), NSDate(dateString:"2015-04-23"), NSDate(dateString:"2015-04-19"), NSDate(dateString:"2015-04-15"), NSDate(dateString:"2015-04-08"), NSDate(dateString:"2015-04-07")]
+    var postedDates: [NSDate] = []
     var padding: CGFloat = 5
     
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var userHandleLabel: UILabel!
-    @IBOutlet weak var followButtonLabel: UIButton!
+    @IBOutlet weak var followButton: UIButton!
 	@IBOutlet weak var followersButton: UIButton!
 	@IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var divider: UIView!
@@ -36,11 +33,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO: Uncomment when API done
-        //        API.sharedAPI.fetchPosts(User.currentUser.id) { post in
-        //            postedDates = post.date // dates user posted song
-        //        }
-        
+        // TODO: Backend route is currently wrong
+		API.sharedAPI.fetchPosts(User.currentUser.id) { post in
+			self.postedDates = post.map { $0.date! }
+			self.collectionView.reloadData()
+		}
+		
         // Profile Info
 		title = "Profile"
 		beginIceFishing()
@@ -54,18 +52,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true
-        
-        // Followers & Following
-        followButtonLabel.setTitle("\(user.followersCount)", forState: .Normal)
 		
-        if !isFollowing {
-            followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-        } else {
-            followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-        }
+		followButton.setTitle(isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
 		
         if User.currentUser.username == user.username {
-            followButtonLabel.hidden = true
+            followButton.hidden = true
 		}
 		
 		followingButton.setTitle("\(user.followingCount) Following", forState: .Normal)
@@ -101,41 +92,42 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     // <------------------------FOLLOW BUTTONS------------------------>
-    
+	
+	// TODO: Currently no checks against whether already followed
     @IBAction func followButtonPressed(sender: UIButton) {
         if !isFollowing {
             isFollowing = true
-            followButtonLabel.setTitle("FOLLOWING", forState: .Normal)
-            User.currentUser.followersCount++
-            // TODO: Update following
+            followButton.setTitle("FOLLOWING", forState: .Normal)
+            User.currentUser.followingCount++
             API.sharedAPI.updateFollowings(user.id, unfollow: false) { bool in
                 print(bool)
             }
         } else {
             isFollowing = false
-            followButtonLabel.setTitle("FOLLOW", forState: .Normal)
-            User.currentUser.followersCount--
-            // TODO: Update following
+            followButton.setTitle("FOLLOW", forState: .Normal)
+            User.currentUser.followingCount--
             API.sharedAPI.updateFollowings(user.id, unfollow: true) { bool in
                 print(bool)
             }
         }
-//        numFollowersLabel.text = "\(User.currentUser.followersCount)"
-        print(User.currentUser.followers)
     }
     
     @IBAction func followersButtonPressed(sender: UIButton) {
-        let followersVC = FollowersViewController(nibName: "FollowersViewController", bundle: nil)
-        followersVC.title = "Followers"
-        navigationController?.pushViewController(followersVC, animated: true)
+		displayUsers(.Followers)
     }
 
     @IBAction func followingButtonPressed(sender: UIButton) {
-        let followingVC = FollowingViewController(nibName: "FollowingViewController", bundle: nil)
-        followingVC.title = "Following"
-        navigationController?.pushViewController(followingVC, animated: true)
+        displayUsers(.Following)
     }
-    
+	
+	private func displayUsers(displayType: DisplayType) {
+		let followersVC = UsersViewController(nibName: "UsersViewController", bundle: nil)
+		followersVC.displayType = displayType
+		followersVC.user = user
+		followersVC.title = String(displayType)
+		navigationController?.pushViewController(followersVC, animated: true)
+	}
+	
     // <------------------------POST HISTORY------------------------>
     
     // When post history label clicked
@@ -150,8 +142,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         components.day = date.numDaysInMonth() - indexPath.item
         return NSDate.dateFromComponents(components)
     }
-    
-    // Cell
+	
+	// MARK: - UICollectionViewDataSource
+	
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let date = dateForIndexPath(indexPath)
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
@@ -165,8 +158,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         return cell
     }
-    
-    // Section Header
+	
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
         if kind == UICollectionElementKindSectionHeader {
@@ -179,8 +171,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         return UICollectionReusableView()
     }
-    
-    // MARK: UICollectionViewDataSource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return startDate.numberOfMonths(NSDate())
@@ -197,7 +187,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         return numberOfDays
     }
     
-    // MARK: UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let date = dateForIndexPath(indexPath)
@@ -211,7 +201,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         navigationController?.pushViewController(postHistoryVC, animated: true)
     }
     
-    // MARK: UICollectionViewDelegateFlowLayout
+    // MARK: - UICollectionViewDelegateFlowLayout
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSizeMake(collectionView.frame.width - padding * 2, 30)

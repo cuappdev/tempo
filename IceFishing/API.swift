@@ -17,6 +17,8 @@ enum Router: URLStringConvertible {
 	case Sessions
 	case UserSearch
 	case Users(String)
+	case Followers(String)
+	case Following(String)
 	case Feed(String)
 	case FeedEveryone
 	case History(String)
@@ -37,6 +39,10 @@ enum Router: URLStringConvertible {
 				return "/users.json"
 			case .Users(let userID):
 				return "/users/\(userID)"
+			case .Followers(let userID):
+				return "/users/\(userID)/followers"
+			case .Following(let userID):
+				return "/users/\(userID)/following"
 			case .Feed(let userID):
 				return "/\(userID)/feed"
 			case .FeedEveryone:
@@ -131,6 +137,22 @@ class API {
 	func fetchUser(userID: String, completion: User -> Void) {
 		let map: [String: AnyObject] -> User? = { User(json: JSON($0)) }
 		get(.Users(userID), params: ["session_code": sessionCode], map: map, completion: completion)
+	}
+	
+	func fetchFollowers(userID: String, completion: [User] -> Void) {
+		let map: [String: AnyObject] -> [User]? = {
+			guard let followers = $0["followers"] as? [[String: AnyObject]] else { return nil }
+			return followers.map { User(json: JSON($0)) }
+		}
+		get(.Followers(userID), params: ["session_code": sessionCode], map: map, completion: completion)
+	}
+	
+	func fetchFollowing(userID: String, completion: [User] -> Void) {
+		let map: [String: AnyObject] -> [User]? = {
+			guard let following = $0["following"] as? [[String: AnyObject]] else { return nil }
+			return following.map { User(json: JSON($0)) }
+		}
+		get(.Following(userID), params: ["session_code": sessionCode], map: map, completion: completion)
 	}
 	
 	func fetchFeed(userID: String, completion: [Post] -> Void) {
