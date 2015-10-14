@@ -59,7 +59,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
             cellIdentifier = "SongSearchTableViewCell"
         } else {
             title = "Search Users"
-            cellIdentifier = "UserTableViewCell"
+            cellIdentifier = "FollowTableViewCell"
         }
 		
 		view.backgroundColor = UIColor.iceLightGray
@@ -130,13 +130,13 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
             
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UserTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! FollowTableViewCell
             let user = users[indexPath.row]
             cell.userName.text = user.name
-            cell.numFollowers.text = "Followers: \(user.followersCount)"
-			cell.numFollowing.text = "Following: \(user.followingCount)"
+			cell.userHandle.text = "@" + user.username
+            cell.numFollowLabel.text = "Followers: \(user.followersCount)"
             user.loadImage {
-                cell.userImage.setBackgroundImage($0, forState: .Normal)
+                cell.userImage.image = $0
             }
 			
             return cell
