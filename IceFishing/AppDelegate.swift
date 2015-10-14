@@ -21,6 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	let spotifyVC = SpotifyViewController(nibName: "SpotifyViewController", bundle: nil)
 	let navigationController = UINavigationController()
 	
+	//slack info
+	let slackChannel = "C04C10672"
+	let slackToken = "xoxp-2342414247-2693337898-4405497914-7cb1a7"
+	let slackUsername = "Bug Report Bot"
+	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// TODO: Figure out a way to get rid of this, since it's deprecated
 		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
@@ -49,6 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		
 		toggleRootVC()
+		
+		//declaration of tools remains active in background while app runs
+		tools = Tools(rootViewController: self.window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
 		
 		return true
 	}
@@ -84,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			
 			self.window!.rootViewController = revealVC
 		}
-		tools = Tools(rootViewController: self.window!.rootViewController!)
+		
 	}
 	
 	// Facebook Session

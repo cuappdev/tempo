@@ -5,7 +5,6 @@
 #import "SWRevealViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Spotify/Spotify.h>
-#import "CEMovieMaker.h"
 
 #import "FBTweak.h"
 #import "FBTweakStore.h"
