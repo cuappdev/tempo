@@ -26,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	let slackToken = "xoxp-2342414247-2693337898-4405497914-7cb1a7"
 	let slackUsername = "Bug Report Bot"
 	
+	//tools
+	let toolsEnabled = true
+	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// TODO: Figure out a way to get rid of this, since it's deprecated
 		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
@@ -56,7 +59,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		toggleRootVC()
 		
 		//declaration of tools remains active in background while app runs
-		tools = Tools(rootViewController: self.window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
+		if toolsEnabled {
+			tools = Tools(rootViewController: self.window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
+		}
 		
 		return true
 	}

@@ -787,12 +787,9 @@
 				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
 				952F0FF01BCF20E100C53522 /* _FBTweakBindObserver.m in Sources */,
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,
-<<<<<<< HEAD
 				95711F1D1AF4774D002167EB /* FBTweak.m in Sources */,
-=======
 				952F0FF41BCF20E100C53522 /* _FBTweakTableViewCell.m in Sources */,
 				D1983C191BA9E8CE00E42D8F /* UserTableViewCell.swift in Sources */,
->>>>>>> 4ab10f0... Update Toools implementation
 				1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */,
 				1D653F3E1B81451700F54455 /* SpotifyController.swift in Sources */,
 				FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */,
