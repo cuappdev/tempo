@@ -85,8 +85,6 @@
 		D17395751ADB080900A53AEE /* UsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395731ADB080900A53AEE /* UsersViewController.xib */; };
 		D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395881ADF360C00A53AEE /* SignInViewController.swift */; };
 		D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395891ADF360C00A53AEE /* SignInViewController.xib */; };
-		D1983C191BA9E8CE00E42D8F /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1983C171BA9E8CE00E42D8F /* UserTableViewCell.swift */; };
-		D1983C1A1BA9E8CE00E42D8F /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1983C181BA9E8CE00E42D8F /* UserTableViewCell.xib */; };
 		FA171CC01AF1D758007B40AF /* FeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA171CBF1AF1D758007B40AF /* FeedImageView.swift */; };
 		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
 		FA1E1A781ADB06A3007C823C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A771ADB06A3007C823C /* Post.swift */; };
@@ -300,8 +298,6 @@
 		D17395731ADB080900A53AEE /* UsersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsersViewController.xib; sourceTree = "<group>"; };
 		D17395881ADF360C00A53AEE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		D17395891ADF360C00A53AEE /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
-		D1983C171BA9E8CE00E42D8F /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
-		D1983C181BA9E8CE00E42D8F /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
 		FA171CBF1AF1D758007B40AF /* FeedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedImageView.swift; sourceTree = "<group>"; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FA1E1A771ADB06A3007C823C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
@@ -455,8 +451,6 @@
 				FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */,
 				1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */,
 				1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */,
-				D1983C171BA9E8CE00E42D8F /* UserTableViewCell.swift */,
-				D1983C181BA9E8CE00E42D8F /* UserTableViewCell.xib */,
 				1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */,
 				1DFBFB511B7845E7001DD6AC /* SongSearchTableViewCell.xib */,
 			);
@@ -657,7 +651,7 @@
 				TargetAttributes = {
 					1D72D9B41AACC4C0007822B0 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = S9S784A2B4;
+						DevelopmentTeam = 5NWK7858VS;
 					};
 				};
 			};
@@ -779,7 +773,6 @@
 				1DE649C41B78590800DA5499 /* SpotifyViewController.xib in Resources */,
 				1DCB96151AED5EA7007F6A4B /* APIViewController.xib in Resources */,
 				D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */,
-				D1983C1A1BA9E8CE00E42D8F /* UserTableViewCell.xib in Resources */,
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
 				60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */,
 				D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */,
@@ -798,7 +791,6 @@
 			files = (
 				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,
-				D1983C191BA9E8CE00E42D8F /* UserTableViewCell.swift in Sources */,
 				95711F1D1AF4774D002167EB /* FBTweak.m in Sources */,
 				1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */,
 				1D653F3E1B81451700F54455 /* SpotifyController.swift in Sources */,
