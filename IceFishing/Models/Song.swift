@@ -93,7 +93,6 @@ class Song: NSObject {
 			artist = json["artist"].stringValue
 			spotifyID = json["id"].stringValue
 		}
-		
 	}
 	
 	private func setSongID(id: String) {

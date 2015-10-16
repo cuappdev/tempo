@@ -33,13 +33,11 @@ class LikedTableViewController: UITableViewController  {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return results.count
     }
@@ -55,13 +53,10 @@ class LikedTableViewController: UITableViewController  {
 	
 	func retrieveLikedSongs() {
 		API.sharedAPI.fetchLikes(User.currentUser.id) {
-			self.receivedResponse($0)
+			let songList: [Song] = $0
+			self.results = songList.map { Post(song: $0, user: User.currentUser) }
+			self.tableView.reloadData()
 		}
-	}
-	
-	func receivedResponse(songList: [Song]) {
-		results = songList.map { Post(song: $0, user: User.currentUser) }
-		tableView.reloadData()
 	}
 	
 
