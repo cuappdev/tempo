@@ -9,24 +9,20 @@
 import UIKit
 
 class LikedTableViewController: UITableViewController  {
+	
+	var results: [Post] = []
+	let cellIdentifier = "SongSearchTableViewCell"
         
     override func viewDidLoad() {
         super.viewDidLoad()
-
+		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         self.title = "Liked"
         beginIceFishing()
-        
-        API.sharedAPI.fetchLikes(User.currentUser.id, completion: {
-            print("Songs: \($0)")
-        })
-    }
+	}
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        API.sharedAPI.fetchLikes(User.currentUser.id, completion: {
-            print("Songs: \($0)")
-        })
+        retrieveLikedSongs()
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,26 +33,30 @@ class LikedTableViewController: UITableViewController  {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+        return results.count
     }
-
-    /*
+	
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
-        return cell
+		let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! SongSearchTableViewCell
+		let post = results[indexPath.row]
+		cell.postView.post = post
+		cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
+		
+		return cell
     }
-    */
+	
+	func retrieveLikedSongs() {
+		API.sharedAPI.fetchLikes(User.currentUser.id) {
+			let songList: [Song] = $0
+			self.results = songList.map { Post(song: $0, user: User.currentUser) }
+			self.tableView.reloadData()
+		}
+	}
+	
 
     /*
     // Override to support conditional editing of the table view.
