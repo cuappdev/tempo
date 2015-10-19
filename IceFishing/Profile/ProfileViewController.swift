@@ -17,7 +17,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
     var startDate = NSDate(dateString:"2015-01-26")
     var postedDates: [NSDate] = []
+	var postedDays: [String] = []
     var padding: CGFloat = 5
+	var dateFormatter = NSDateFormatter()
     
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
@@ -34,8 +36,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
         
         // TODO: Backend route is currently wrong
-		API.sharedAPI.fetchPosts(User.currentUser.id) { post in
+		dateFormatter.dateFormat = "dd-MM-yyyy"
+		API.sharedAPI.fetchPosts(self.user.id) { post in
 			self.postedDates = post.map { $0.date! }
+			self.postedDays = self.postedDates.map { self.dateFormatter.stringFromDate($0) }
 			self.collectionView.reloadData()
 		}
 		
@@ -150,8 +154,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
         cell.date = date
         cell.userInteractionEnabled = false
-
-        if postedDates.contains(cell.date) {
+		
+        if postedDays.contains(dateFormatter.stringFromDate(cell.date)) {
             cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed
 			cell.userInteractionEnabled = true
         }
