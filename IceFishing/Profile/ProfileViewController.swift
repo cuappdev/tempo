@@ -44,22 +44,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			self.collectionView.reloadData()
 			for likes in self.postedLikes {
 				self.avgLikes += Float(likes)
-				print("totalLikes: \(self.avgLikes)")
 			}
-			
-			print("Number of posts: \(self.postedLikes.count)")
 			self.avgLikes /= Float(self.postedLikes.count)
-			
 		}
 		
-//		for likes in postedLikes {
-//			avgLikes += Float(likes)
-//			print("totalLikes: \(avgLikes)")
-//		}
-//		
-//		print("Number of posts: \(postedLikes.count)")
-//		avgLikes /= Float(postedLikes.count)
-//		
         // Profile Info
 		title = "Profile"
 		beginIceFishing()
@@ -164,32 +152,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         return NSDate.dateFromComponents(components)
     }
 	
-	// MARK: - UICollectionViewDataSource
-	
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let date = dateForIndexPath(indexPath)
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
-        cell.date = date
-        cell.userInteractionEnabled = false
+	private func determineAlpha(likes: Int) -> CGFloat {
+		let ratio = Float(likes) / avgLikes
 		
-        if postedDays.contains(cell.date.day()) {
-            //cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed
-			let alpha = determineAlpha(postedLikes[indexPath.row]) //postedLikes[x] should never == 0
-			print("alpha: \(alpha)")
-		
-			cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed.colorWithAlphaComponent(alpha)
-			cell.userInteractionEnabled = true
-        }
-        
-        return cell
-    }
-	
-	func determineAlpha(likes: Int) -> CGFloat {
-		let floatLikes = Float(likes)
-		let ratio = floatLikes / avgLikes
-		print ("floatlikes: \(floatLikes)")
-		print ("avglikes: \(avgLikes)")
-		print("ratio: \(ratio)")
 		if (ratio <= 0.2) {
 			return 1
 		} else if ratio <= 0.4 {
@@ -209,8 +174,24 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		} else if ratio <= 3.0 {
 			return 0.60
 		} else { return 0.5 }
-		
 	}
+	
+	// MARK: - UICollectionViewDataSource
+	
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let date = dateForIndexPath(indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
+        cell.date = date
+        cell.userInteractionEnabled = false
+		
+		if let index = postedDays.indexOf(cell.date.day()) where (cell.date.month() == postedDates[index].month() && cell.date.year() == postedDates[index].year()) {
+			let alpha = determineAlpha(postedLikes[index])
+			cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed.colorWithAlphaComponent(alpha)
+			cell.userInteractionEnabled = true
+        }
+		
+        return cell
+    }
 	
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
@@ -244,13 +225,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let date = dateForIndexPath(indexPath)
-        let index = postedDates.indexOf(date) as Int?
-        
+			
         // Push to TableView with posted songs and dates
         let postHistoryVC = PostHistoryTableViewController(nibName: "PostHistoryTableViewController", bundle: nil)
         postHistoryVC.postedDates = postedDates
         postHistoryVC.selectedDate = date
-        postHistoryVC.index = index!
+		if let index = postedDates.indexOf(date) {
+			postHistoryVC.index = index
+		}
         navigationController?.pushViewController(postHistoryVC, animated: true)
     }
     
@@ -266,6 +248,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		let dayHeight = dayWidth
         return CGSize(width: dayWidth, height: dayHeight)
     }
-    
+
 }
 
