@@ -18,7 +18,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var startDate = NSDate(dateString:"2015-01-26")
     var postedDates: [NSDate] = []
 	var postedDays: [Int] = []
+	var postedLikes: [Int] = []
     var padding: CGFloat = 5
+	var avgLikes: Float = 0
 	
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
@@ -38,9 +40,26 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		API.sharedAPI.fetchPosts(self.user.id) { post in
 			self.postedDates = post.map { $0.date! }
 			self.postedDays = self.postedDates.map { $0.day() }
+			self.postedLikes = post.map{ $0.likes }
 			self.collectionView.reloadData()
+			for likes in self.postedLikes {
+				self.avgLikes += Float(likes)
+				print("totalLikes: \(self.avgLikes)")
+			}
+			
+			print("Number of posts: \(self.postedLikes.count)")
+			self.avgLikes /= Float(self.postedLikes.count)
+			
 		}
 		
+//		for likes in postedLikes {
+//			avgLikes += Float(likes)
+//			print("totalLikes: \(avgLikes)")
+//		}
+//		
+//		print("Number of posts: \(postedLikes.count)")
+//		avgLikes /= Float(postedLikes.count)
+//		
         // Profile Info
 		title = "Profile"
 		beginIceFishing()
@@ -154,12 +173,44 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         cell.userInteractionEnabled = false
 		
         if postedDays.contains(cell.date.day()) {
-            cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed
+            //cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed
+			let alpha = determineAlpha(postedLikes[indexPath.row]) //postedLikes[x] should never == 0
+			print("alpha: \(alpha)")
+		
+			cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed.colorWithAlphaComponent(alpha)
 			cell.userInteractionEnabled = true
         }
         
         return cell
     }
+	
+	func determineAlpha(likes: Int) -> CGFloat {
+		let floatLikes = Float(likes)
+		let ratio = floatLikes / avgLikes
+		print ("floatlikes: \(floatLikes)")
+		print ("avglikes: \(avgLikes)")
+		print("ratio: \(ratio)")
+		if (ratio <= 0.2) {
+			return 1
+		} else if ratio <= 0.4 {
+			return 0.95
+		} else if ratio <= 0.6 {
+			return 0.90
+		} else if ratio <= 0.8 {
+			return 0.85
+		} else if ratio <= 1.0 {
+			return 0.80
+		} else if ratio <= 1.5 {
+			return 0.75
+		} else if ratio <= 2.0 {
+			return 0.70
+		} else if ratio <= 2.5 {
+			return 0.65
+		} else if ratio <= 3.0 {
+			return 0.60
+		} else { return 0.5 }
+		
+	}
 	
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
