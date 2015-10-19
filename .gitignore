@@ -17,6 +17,7 @@ IceFishing/Vendor/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata
+.DS_Store
 
 ## Other
 *.xccheckout
