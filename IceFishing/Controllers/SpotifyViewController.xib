@@ -87,7 +87,7 @@
                 <constraint firstItem="hCy-rO-jND" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="zJe-aP-wrI"/>
                 <constraint firstItem="mPq-C5-plJ" firstAttribute="top" secondItem="6Dl-Dt-Cf4" secondAttribute="bottom" constant="20" id="zOQ-uH-uu3"/>
             </constraints>
-            <point key="canvasLocation" x="815" y="387"/>
+            <point key="canvasLocation" x="1115" y="292"/>
         </view>
     </objects>
 </document>

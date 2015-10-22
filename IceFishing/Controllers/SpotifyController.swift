@@ -53,6 +53,37 @@ class SpotifyController {
         UIApplication.sharedApplication().openURL(spotifyUserURL)
     }
     
+    func saveSpotifyTrack(track: Post) {
+        let spotifyTrackURI = NSURL(string: "spotify:track:" + track.song.spotifyID)
+        
+        do {
+            let currentTrackRequest = try SPTTrack.createRequestForTrack(spotifyTrackURI, withAccessToken: SPTAuth.defaultInstance().session.accessToken, market: nil)
+            let data = try NSURLConnection.sendSynchronousRequest(currentTrackRequest, returningResponse: nil)
+            let json = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
+            let track = try SPTTrack.tracksFromDecodedJSON(json)
+            SPTYourMusic.saveTracks(track, forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken, callback: { (error, result) -> Void in
+                if error != nil {
+                    print(error)
+                } else {
+                    print(result)
+                }
+            })
+        } catch let error as NSError {
+            print(error)
+        }
+        
+    }
+    
+    func createSpotifyPlaylist() {
+        SPTPlaylistList.createPlaylistWithName("IceFishing", publicFlag: false, session: SPTAuth.defaultInstance().session) { error, snapshot in
+            if error != nil {
+                print(error)
+            } else {
+                
+            }
+        }
+    }
+    
     func closeCurrentSpotifySession() {
         SPTAuth.defaultInstance().session = nil
     }
