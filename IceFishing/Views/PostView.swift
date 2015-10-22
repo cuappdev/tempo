@@ -61,7 +61,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 
                 if type == .Feed {
                     post.user.loadImage {
-                        avatarImageView?.image = $0
+                        self.avatarImageView?.image = $0
                     }
                 }
                 
@@ -93,7 +93,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	
 	func updateAddButton() {
 		SpotifyController.sharedController.spotifyIsAvailable {
-			addButton?.hidden = !$0
+			self.addButton?.hidden = !$0
 		}
 	}
 	

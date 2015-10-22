@@ -31,15 +31,13 @@
 		1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */; };
 		1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DFBFB511B7845E7001DD6AC /* SongSearchTableViewCell.xib */; };
 		1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */; };
-		1DFD735E1BA0DC50008D9FD8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; };
 		1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */; };
-		1DFD73731BA0DCAB008D9FD8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; };
 		1DFD73811BA0EE7B008D9FD8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; };
 		1DFD73821BA0EE7B008D9FD8 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1DFD738B1BA0EE94008D9FD8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; };
 		1DFD738C1BA0EE94008D9FD8 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60256C0F1BC1BC7900B52FDD /* SavedSongView.xib */; settings = {ASSET_TAGS = (); }; };
-		60256C1A1BC1BFA900B52FDD /* SavedSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60256C191BC1BFA900B52FDD /* SavedSongView.swift */; settings = {ASSET_TAGS = (); }; };
+		60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60256C0F1BC1BC7900B52FDD /* SavedSongView.xib */; };
+		60256C1A1BC1BFA900B52FDD /* SavedSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60256C191BC1BFA900B52FDD /* SavedSongView.swift */; };
 		6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */; };
 		6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */; };
 		6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */; };
@@ -47,23 +45,23 @@
 		6DA5FE4D1AED72F800E795DD /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA5FE4C1AED72F800E795DD /* ColorExtension.swift */; };
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
-		952F0FEE1BCF20E100C53522 /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FCC1BCF20E100C53522 /* ADScreenCapture.swift */; settings = {ASSET_TAGS = (); }; };
-		952F0FEF1BCF20E100C53522 /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FCF1BCF20E100C53522 /* _FBTweakArrayViewController.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FF01BCF20E100C53522 /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD11BCF20E100C53522 /* _FBTweakBindObserver.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FF11BCF20E100C53522 /* _FBTweakCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD31BCF20E100C53522 /* _FBTweakCategoryViewController.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FF21BCF20E100C53522 /* _FBTweakCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD51BCF20E100C53522 /* _FBTweakCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FF31BCF20E100C53522 /* _FBTweakDictionaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD71BCF20E100C53522 /* _FBTweakDictionaryViewController.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FF41BCF20E100C53522 /* _FBTweakTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD91BCF20E100C53522 /* _FBTweakTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FF51BCF20E100C53522 /* FBTweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FDC1BCF20E100C53522 /* FBTweak.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FF61BCF20E100C53522 /* FBTweakCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FDE1BCF20E100C53522 /* FBTweakCategory.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FF71BCF20E100C53522 /* FBTweakCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE01BCF20E100C53522 /* FBTweakCollection.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FF81BCF20E100C53522 /* FBTweakInline.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE31BCF20E100C53522 /* FBTweakInline.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FF91BCF20E100C53522 /* FBTweakShakeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE61BCF20E100C53522 /* FBTweakShakeWindow.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FFA1BCF20E100C53522 /* FBTweakStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE81BCF20E100C53522 /* FBTweakStore.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FFB1BCF20E100C53522 /* FBTweakViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEA1BCF20E100C53522 /* FBTweakViewController.m */; settings = {ASSET_TAGS = (); }; };
-		952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		952F0FFD1BCF20E100C53522 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEC1BCF20E100C53522 /* Tools.swift */; settings = {ASSET_TAGS = (); }; };
-		952F0FFE1BCF20E100C53522 /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FED1BCF20E100C53522 /* Tweaks.swift */; settings = {ASSET_TAGS = (); }; };
+		952F0FEE1BCF20E100C53522 /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FCC1BCF20E100C53522 /* ADScreenCapture.swift */; };
+		952F0FEF1BCF20E100C53522 /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FCF1BCF20E100C53522 /* _FBTweakArrayViewController.m */; };
+		952F0FF01BCF20E100C53522 /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD11BCF20E100C53522 /* _FBTweakBindObserver.m */; };
+		952F0FF11BCF20E100C53522 /* _FBTweakCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD31BCF20E100C53522 /* _FBTweakCategoryViewController.m */; };
+		952F0FF21BCF20E100C53522 /* _FBTweakCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD51BCF20E100C53522 /* _FBTweakCollectionViewController.m */; };
+		952F0FF31BCF20E100C53522 /* _FBTweakDictionaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD71BCF20E100C53522 /* _FBTweakDictionaryViewController.m */; };
+		952F0FF41BCF20E100C53522 /* _FBTweakTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD91BCF20E100C53522 /* _FBTweakTableViewCell.m */; };
+		952F0FF51BCF20E100C53522 /* FBTweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FDC1BCF20E100C53522 /* FBTweak.m */; };
+		952F0FF61BCF20E100C53522 /* FBTweakCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FDE1BCF20E100C53522 /* FBTweakCategory.m */; };
+		952F0FF71BCF20E100C53522 /* FBTweakCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE01BCF20E100C53522 /* FBTweakCollection.m */; };
+		952F0FF81BCF20E100C53522 /* FBTweakInline.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE31BCF20E100C53522 /* FBTweakInline.m */; };
+		952F0FF91BCF20E100C53522 /* FBTweakShakeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE61BCF20E100C53522 /* FBTweakShakeWindow.m */; };
+		952F0FFA1BCF20E100C53522 /* FBTweakStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE81BCF20E100C53522 /* FBTweakStore.m */; };
+		952F0FFB1BCF20E100C53522 /* FBTweakViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEA1BCF20E100C53522 /* FBTweakViewController.m */; };
+		952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */; };
+		952F0FFD1BCF20E100C53522 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEC1BCF20E100C53522 /* Tools.swift */; };
+		952F0FFE1BCF20E100C53522 /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FED1BCF20E100C53522 /* Tweaks.swift */; };
 		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
 		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
 		BAE499D61AD5F33B003214C0 /* SongSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE499D51AD5F33B003214C0 /* SongSearchViewController.swift */; };
@@ -314,8 +312,6 @@
 			files = (
 				1DFD73811BA0EE7B008D9FD8 /* SwiftyJSON.framework in Frameworks */,
 				1DFD738B1BA0EE94008D9FD8 /* Alamofire.framework in Frameworks */,
-				1DFD73731BA0DCAB008D9FD8 /* SwiftyJSON.framework in Frameworks */,
-				1DFD735E1BA0DC50008D9FD8 /* Alamofire.framework in Frameworks */,
 				1D802AB71B78635A005A96D1 /* SystemConfiguration.framework in Frameworks */,
 				1D802AB51B786351005A96D1 /* AVFoundation.framework in Frameworks */,
 				1D2CA85E1B720290004EAEAB /* Bolts.framework in Frameworks */,
@@ -641,7 +637,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = CUAppDev;
 				TargetAttributes = {
 					1D72D9B41AACC4C0007822B0 = {
@@ -787,9 +783,7 @@
 				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
 				952F0FF01BCF20E100C53522 /* _FBTweakBindObserver.m in Sources */,
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,
-				95711F1D1AF4774D002167EB /* FBTweak.m in Sources */,
 				952F0FF41BCF20E100C53522 /* _FBTweakTableViewCell.m in Sources */,
-				D1983C191BA9E8CE00E42D8F /* UserTableViewCell.swift in Sources */,
 				1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */,
 				1D653F3E1B81451700F54455 /* SpotifyController.swift in Sources */,
 				FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */,
@@ -977,8 +971,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "IceFishing/IceFishing-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Debug;
 		};
@@ -1004,7 +997,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "IceFishing/IceFishing-Bridging-Header.h";
-				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
