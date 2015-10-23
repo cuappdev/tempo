@@ -12,6 +12,7 @@ import MediaPlayer
 enum ViewType: Int {
     case Feed
     case Search
+	case History
 }
 
 class PostView: UIView, UIGestureRecognizerDelegate {
@@ -42,7 +43,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             // update stuff
             if let post = post {
                 switch type {
-                case .Feed:
+                case .Feed, .History:
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
                     likesLabel?.text = "\(post.likes) likes"
@@ -64,6 +65,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                         self.avatarImageView?.image = $0
                     }
                 }
+				else if type == .History {
+					avatarImageView!.imageURL = post.song.smallArtworkURL
+				}
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute

@@ -16,6 +16,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     // Post History Calendar
     var calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
     var startDate = NSDate(dateString:"2015-01-26")
+	var posts: [Post] = []
     var postedDates: [NSDate] = []
 	var postedDays: [Int] = []
 	var postedLikes: [Int] = []
@@ -38,6 +39,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         // TODO: Backend route is currently wrong
 		API.sharedAPI.fetchPosts(self.user.id) { post in
+			self.posts = post
 			self.postedDates = post.map { $0.date! }
 			self.postedDays = self.postedDates.map { $0.day() }
 			self.postedLikes = post.map{ $0.likes }
@@ -182,7 +184,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let date = dateForIndexPath(indexPath)
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
         cell.date = date
-        cell.userInteractionEnabled = false
 		
 		if let index = postedDays.indexOf(cell.date.day()) where (cell.date.month() == postedDates[index].month() && cell.date.year() == postedDates[index].year()) {
 			let alpha = determineAlpha(postedLikes[index])
@@ -228,9 +229,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			
         // Push to TableView with posted songs and dates
         let postHistoryVC = PostHistoryTableViewController(nibName: "PostHistoryTableViewController", bundle: nil)
+		postHistoryVC.posts = posts
         postHistoryVC.postedDates = postedDates
-        postHistoryVC.selectedDate = date
-		if let index = postedDates.indexOf(date) {
+		postHistoryVC.songLikes = postedLikes
+		if let index = postedDays.indexOf(date.day()) {
 			postHistoryVC.index = index
 		}
         navigationController?.pushViewController(postHistoryVC, animated: true)
