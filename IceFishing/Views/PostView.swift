@@ -43,7 +43,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             // update stuff
             if let post = post {
                 switch type {
-                case .Feed, .History:
+                case .Feed:
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
                     likesLabel?.text = "\(post.likes) likes"
@@ -53,6 +53,18 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 						self.addButton?.hidden = !$0
 					}
                     break
+				case .History:
+					profileNameLabel?.text = post.user.name
+					descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
+					likesLabel?.text = "\(post.likes) likes"
+					let imageName = post.isLiked ? "Heart-Red" : "Heart"
+					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
+					SpotifyController.sharedController.spotifyIsAvailable {// Audit this model object as it's becoming a monster
+						self.addButton?.hidden = !$0
+					}
+					addButton!.hidden = true
+					likedButton!.hidden = true
+					break
                 case .Search:
                     profileNameLabel?.text = post.song.title
                     descriptionLabel?.text = post.song.artist
