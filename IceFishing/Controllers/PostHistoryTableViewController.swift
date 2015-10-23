@@ -12,9 +12,6 @@ import MediaPlayer
 class PostHistoryTableViewController: UITableViewController {
 	
 	var posts: [Post] = []
-	var songArtURLS: [NSURL?] = []
-    var songArtists: [String]! = []
-    var songNames: [String]! = []
 	var songLikes: [Int] = []
     var postedDates: [NSDate]! = []
     var index: Int?
@@ -40,10 +37,6 @@ class PostHistoryTableViewController: UITableViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-
-		songNames = posts.map { $0.song.title }
-		songArtists = posts.map { $0.song.artist }
-		songArtURLS = posts.map { $0.song.smallArtworkURL! }
 	
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.iceDarkGray
@@ -151,7 +144,7 @@ class PostHistoryTableViewController: UITableViewController {
     // TableView Methods
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.postedDates.count
+        return self.posts.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
