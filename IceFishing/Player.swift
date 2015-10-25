@@ -17,6 +17,13 @@ class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
     var downloadCallback: ((progress: Double) -> ())?
     
     private var currentConnection: NSURLConnection?
+    static private var player: Player? {
+        didSet {
+            if Player.player != oldValue {
+                oldValue?.pause(true)
+            }
+        }
+    }
     private var player: AVAudioPlayer? {
         didSet {
             oldValue?.pause()
@@ -35,6 +42,14 @@ class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
         super.init()
         // hack to enable did set
         self.fileURL = fileURL
+		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
+			object: self, queue: nil) { [weak self] (note) -> Void in
+				if let _ = self {
+					if self!.isPlaying() {
+						Player.player = self!
+					}
+				}
+		}
     }
     
     class func keyPathsForValuesAffectingCurrentTime(key: String) -> Set<String> {
@@ -204,7 +219,7 @@ class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
 	}
     
     // MARK: AVAudioPlayerDelegate
-    
+	
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         pause(true)
         finishedPlaying = true
