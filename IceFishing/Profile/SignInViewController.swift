@@ -30,13 +30,15 @@ class SignInViewController: UIViewController {
             
             // Request FB user info
             if session.isOpen {
-                // Check for old or new user
+                // TODO: find a more reliable way to check for new users
                 if User.currentUser.name == User.currentUser.username {
+					// New user
                     let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
                     self.presentViewController(usernameVC, animated: false, completion: nil)
                 } else {
-                     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                     appDelegate.toggleRootVC()
+					// Old user
+					let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+					appDelegate.toggleRootVC()
                 }
             }
         })
