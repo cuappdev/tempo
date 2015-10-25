@@ -106,7 +106,7 @@ class API {
 				let user = [
 					"email": result["email"] as! String,
 					"name": result["name"] as! String,
-					"username": result["name"] as! String,
+					"username": "",
 					"fbid": result["id"] as! String
 				]
 				self.post(.Sessions, params: ["user": user], map: map, completion: completion)

@@ -21,7 +21,12 @@ class UsernameViewController: UIViewController {
 		let charSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_").invertedSet
 		let invalidChars = username.rangeOfCharacterFromSet(charSet)
 		
-		if invalidChars == nil {
+		if username == "" {
+			showErrorAlert("Empty field", message: "Username must have at least one character.", actionTitle: "Try again")
+		} else if invalidChars == nil {
+			// Username contains some invalid characters
+			showErrorAlert("Invalid characters", message: "Only underscores and alphanumeric characters are allowed.", actionTitle: "Try again")
+		} else {
 			// Username contains only valid characters
 			API.sharedAPI.usernameIsValid(username) { success in
 				if success {
@@ -32,25 +37,19 @@ class UsernameViewController: UIViewController {
 					appDelegate.toggleRootVC()
 				} else {
 					// Username already taken (prompt user with error alert in UsernameVC)
-					let errorAlert = UIAlertController(title: "Sorry!", message: "Username is taken.", preferredStyle: UIAlertControllerStyle.Alert)
-					errorAlert.addAction(UIAlertAction(title: "Try again", style: UIAlertActionStyle.Default, handler: nil))
-					self.presentViewController(errorAlert, animated: true, completion: nil)
-					self.clearTextField()
+					self.showErrorAlert("Sorry", message: "Username is taken.", actionTitle: "Try again")
 				}
 			}
-		} else {
-			// Username contains some invalid characters
-			let errorAlert = UIAlertController(title: "Sorry!", message: "Only underscores and alphanumeric characters are allowed.", preferredStyle: UIAlertControllerStyle.Alert)
-			errorAlert.addAction(UIAlertAction(title: "Try again", style: UIAlertActionStyle.Default, handler: nil))
-			self.presentViewController(errorAlert, animated: true, completion: nil)
-			self.clearTextField()
 		}
 	
     }
 	
-    func clearTextField() {
-        usernameTextField.text = ""
-    }
+	func showErrorAlert(title: String, message: String, actionTitle: String) {
+		let errorAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+		errorAlert.addAction(UIAlertAction(title: actionTitle, style: UIAlertActionStyle.Default, handler: nil))
+		presentViewController(errorAlert, animated: true, completion: nil)
+		usernameTextField.text = ""
+	}
 	
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)

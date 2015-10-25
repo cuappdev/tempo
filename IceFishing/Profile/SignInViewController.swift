@@ -30,8 +30,7 @@ class SignInViewController: UIViewController {
             
             // Request FB user info
             if session.isOpen {
-                // TODO: find a more reliable way to check for new users
-                if User.currentUser.name == User.currentUser.username {
+                if User.currentUser.username == "" {
 					// New user
                     let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
                     self.presentViewController(usernameVC, animated: false, completion: nil)
