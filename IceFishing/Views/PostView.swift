@@ -54,16 +54,14 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					}
                     break
 				case .History:
-					profileNameLabel?.text = post.user.name
-					descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
+					profileNameLabel?.text = post.song.artist
+					descriptionLabel?.text = "\(post.song.title)"
 					likesLabel?.text = "\(post.likes) likes"
 					let imageName = post.isLiked ? "Heart-Red" : "Heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					SpotifyController.sharedController.spotifyIsAvailable {// Audit this model object as it's becoming a monster
 						self.addButton?.hidden = !$0
 					}
-					addButton!.hidden = true
-					likedButton!.hidden = true
 					break
                 case .Search:
                     profileNameLabel?.text = post.song.title
@@ -83,7 +81,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
-                print(post.date)
+                //print(post.date)
 				
                 if let _ = post.date {
                     let dateFormatter = NSDateFormatter()
