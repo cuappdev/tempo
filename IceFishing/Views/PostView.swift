@@ -9,8 +9,9 @@
 import UIKit
 import MediaPlayer
 
-protocol PostViewDelegate {
+@objc protocol PostViewDelegate {
 	func didTapAddButtonForCell()
+	optional func showUserProfile(user:User)
 }
 
 enum ViewType: Int {
@@ -312,9 +313,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 		} else if hitView == addButton {
 			print("Adding")
 			delegate!.didTapAddButtonForCell()
-		} else if post.player.isPlaying() {
+		} else {
+            //Push profile viewcontroller when user avatar/name touched in feed
 			if hitView == avatarImageView || hitView == self.profileNameLabel {
 				// GO TO PROFILE VIEW CONTROLLER
+				delegate!.showUserProfile!(post.user)
 				print(post.user.fbid)
 			}
 		}
