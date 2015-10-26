@@ -346,6 +346,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 		profileVC.title = "Profile"
 		profileVC.user = user
+		profileVC.backButtonEnabled = true
 		self.navigationController?.pushViewController(profileVC, animated: true)
 	}
 }
