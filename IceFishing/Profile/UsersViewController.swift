@@ -13,16 +13,39 @@ enum DisplayType: String {
 	case Following = "Following"
 }
 
-class UsersViewController: UITableViewController {
+class UsersViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
 
 	var user: User = User.currentUser
 	var displayType: DisplayType = .Followers
 	private var users: [User] = []
+	private var filteredUsers: [User] = []
 	
+	private var searchController: UISearchController!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 		
         tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
+		
+		searchController = UISearchController(searchResultsController: nil)
+		searchController.dimsBackgroundDuringPresentation = false
+		searchController.delegate = self
+		searchController.searchResultsUpdater = self
+		
+		//Formating for search Bar
+		searchController.searchBar.sizeToFit()
+		searchController.searchBar.delegate = self
+		searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+		searchController.searchBar.tintColor = UIColor.iceDarkRed
+		searchController.searchBar.backgroundColor = UIColor.iceDarkRed
+		searchController.searchBar.barTintColor = UIColor.iceDarkRed
+		
+		extendedLayoutIncludesOpaqueBars = true
+		definesPresentationContext = true
+		
+		tableView.tableHeaderView = searchController.searchBar
+		tableView.setContentOffset(CGPoint(x: 0, y: searchController.searchBar.frame.size.height), animated: false)
+
 		
 		let completion: [User] -> Void = {
 			self.users = $0
@@ -46,13 +69,20 @@ class UsersViewController: UITableViewController {
     // TableView Methods
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.users.count
+		if searchController.active{
+			return self.filteredUsers.count
+		} else {
+			return self.users.count
+		}
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
         
-        let user = users[indexPath.row]
+        var user = users[indexPath.row]
+		if searchController.active {
+			user = filteredUsers[indexPath.row]
+		}
         cell.userName.text = user.name
         cell.userHandle.text = "@\(user.username)"
         cell.numFollowLabel.text = "\(user.followersCount) followers"
@@ -72,7 +102,29 @@ class UsersViewController: UITableViewController {
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
-        profileVC.user = users[indexPath.row]
+		if searchController.active {
+			profileVC.user = filteredUsers[indexPath.row]
+		} else {
+			profileVC.user = users[indexPath.row]
+		}
         self.navigationController?.pushViewController(profileVC, animated: true)
     }
+	
+	private func filterContentForSearchText(searchText: String, scope: String = "All") {
+		if searchText == "" {
+			filteredUsers = users
+		} else {
+			let pred = NSPredicate(format: "name contains[cd] %@", searchText)
+			filteredUsers = (users as NSArray).filteredArrayUsingPredicate(pred) as! [User]
+		}
+		tableView.reloadData()
+	}
+	
+	func updateSearchResultsForSearchController(searchController: UISearchController) {
+		filterContentForSearchText(searchController.searchBar.text!)
+	}
+	
+	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+		searchController.searchBar.endEditing(true)
+	}
 }
