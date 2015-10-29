@@ -23,7 +23,7 @@ class UsernameViewController: UIViewController {
 		
 		if username == "" {
 			showErrorAlert("Empty field", message: "Username must have at least one character.", actionTitle: "Try again")
-		} else if invalidChars == nil {
+		} else if invalidChars != nil {
 			// Username contains some invalid characters
 			showErrorAlert("Invalid characters", message: "Only underscores and alphanumeric characters are allowed.", actionTitle: "Try again")
 		} else {
