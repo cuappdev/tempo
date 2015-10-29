@@ -48,7 +48,7 @@ enum Router: URLStringConvertible {
 			case .FeedEveryone:
 				return "/feed.json"
 			case .History(let userID):
-				return "/\(userID)/posts"
+				return "/users/\(userID)/posts"
 			case .Likes(let userID):
 				if userID != nil {
 					return "/users/\(userID!)/likes"

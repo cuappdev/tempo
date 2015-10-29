@@ -15,8 +15,8 @@ class PostHistoryTableViewCell: UITableViewCell {
     @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var numLikesLabel: UILabel!
     @IBOutlet weak var datePostedLabel: UILabel! 
-    @IBOutlet weak var separator: UIView!
-    
+    @IBOutlet weak var separator: PostView!
+	
     override func didMoveToSuperview() {
         selectionStyle = .None
         self.backgroundColor = UIColor.iceDarkGray

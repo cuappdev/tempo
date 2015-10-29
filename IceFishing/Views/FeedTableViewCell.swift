@@ -9,12 +9,5 @@
 import UIKit
 
 class FeedTableViewCell: UITableViewCell {
-    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet var postView: PostView!
-    
-    weak var referenceFeedViewController: FeedViewController!
-	
-    @IBAction func saveButtonClicked(sender: UIButton) {
-        referenceFeedViewController.saveButtonClicked()
-    }
 }

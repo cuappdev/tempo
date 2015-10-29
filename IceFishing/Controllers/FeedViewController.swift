@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class FeedViewController: UITableViewController, SongSearchDelegate {
+class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDelegate {
 	
 	var posts: [Post] = []
 	var customRefresh:ADRefreshControl!
@@ -198,7 +198,8 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.post?.player.prepareToPlay()
-		cell.referenceFeedViewController = self
+		//cell.referenceFeedViewController = self
+		cell.postView.delegate = self
 		return cell
 	}
 	
@@ -319,7 +320,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	
 	// - Save song button clicked
 	
-	func saveButtonClicked() {
+	func didTapAddButtonForCell() {
 		let screenSize = UIScreen.mainScreen().bounds
 		let screenWidth = screenSize.width
 		let screenHeight = screenSize.height
@@ -327,14 +328,14 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		savedSongAlertView.center = CGPointMake(screenWidth / 2, screenHeight / 2.2)
 		savedSongAlertView.layer.cornerRadius = 10
 		view.addSubview(savedSongAlertView)
-		_ = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(1.0), target: self, selector: "timeExpired", userInfo: nil, repeats: false)
-	}
-	
-	func timeExpired() {
-		UIView.animateWithDuration(0.5, animations: {
-			self.savedSongAlertView.alpha = 0.0
-		}, completion: { _ in
-			self.savedSongAlertView.removeFromSuperview()
-		})
+		let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+		dispatch_after(delayTime, dispatch_get_main_queue()) {
+			UIView.animateWithDuration(0.5, animations: {
+				self.savedSongAlertView.alpha = 0.0
+				}, completion: { _ in
+					self.savedSongAlertView.removeFromSuperview()
+			})
+		}
+
 	}
 }

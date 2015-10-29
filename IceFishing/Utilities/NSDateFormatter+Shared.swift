@@ -18,4 +18,10 @@ extension NSDateFormatter {
 		formatter.locale = NSLocale(localeIdentifier: "en_US")
 		return formatter
 	}
+	
+	static var simpleDateFormatter: NSDateFormatter {
+		let formatter = NSDateFormatter()
+		formatter.dateFormat = "M.dd.YY"
+		return formatter
+	}
 }

@@ -9,9 +9,14 @@
 import UIKit
 import MediaPlayer
 
+protocol PostViewDelegate {
+	func didTapAddButtonForCell()
+}
+
 enum ViewType: Int {
     case Feed
     case Search
+	case History
 }
 
 class PostView: UIView, UIGestureRecognizerDelegate {
@@ -28,6 +33,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     var fillColor = UIColor.iceDarkGray
  
     var type: ViewType = .Feed
+	var delegate: PostViewDelegate?
     private var updateTimer: NSTimer?
     private var notificationHandler: AnyObject?
     
@@ -52,6 +58,16 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 						self.addButton?.hidden = !$0
 					}
                     break
+				case .History:
+					profileNameLabel?.text = post.song.artist
+					descriptionLabel?.text = "\(post.song.title)"
+					likesLabel?.text = "\(post.likes) likes"
+					let imageName = post.isLiked ? "Heart-Red" : "Heart"
+					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
+					SpotifyController.sharedController.spotifyIsAvailable {// Audit this model object as it's becoming a monster
+						self.addButton?.hidden = !$0
+					}
+					break
                 case .Search:
                     profileNameLabel?.text = post.song.title
                     descriptionLabel?.text = post.song.artist
@@ -64,10 +80,13 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                         self.avatarImageView?.image = $0
                     }
                 }
+				else if type == .History {
+					avatarImageView!.imageURL = post.song.smallArtworkURL
+				}
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
-                print(post.date)
+                //print(post.date)
 				
                 if let _ = post.date {
                     let dateFormatter = NSDateFormatter()
@@ -292,6 +311,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			likedButton?.setImage(UIImage(named: name), forState: .Normal)
 		} else if hitView == addButton {
 			print("Adding")
+			delegate!.didTapAddButtonForCell()
 		} else if post.player.isPlaying() {
 			if hitView == avatarImageView || hitView == self.profileNameLabel {
 				// GO TO PROFILE VIEW CONTROLLER
