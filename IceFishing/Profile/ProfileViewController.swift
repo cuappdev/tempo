@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var postedDates: [NSDate] = []
 	var postedDays: [Int] = []
 	var postedLikes: [Int] = []
+	var earliestPostDate: NSDate?
     var padding: CGFloat = 5
 	var avgLikes: Float = 0
     
@@ -43,6 +44,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			self.postedDays = self.postedDates.map { $0.day() }
 			self.postedLikes = post.map{ $0.likes }
 			self.collectionView.reloadData()
+			for date in self.postedDates {
+				if self.earliestPostDate == nil || date < self.earliestPostDate {
+					self.earliestPostDate = date
+				}
+			}
 			for likes in self.postedLikes {
 				self.avgLikes += Float(likes)
 			}
@@ -151,7 +157,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     // Helper Methods
     private func dateForIndexPath(indexPath: NSIndexPath) -> NSDate {
         let date = NSDate().dateByAddingMonths(-indexPath.section).lastDayOfMonth()
-        let components : NSDateComponents = date.components()
+        let components: NSDateComponents = date.components()
         components.day = date.numDaysInMonth() - indexPath.item
         return NSDate.dateFromComponents(components)
     }
@@ -197,7 +203,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
 	
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        
         if kind == UICollectionElementKindSectionHeader {
             let firstDayOfMonth = dateForIndexPath(indexPath).firstDayOfMonth()
             let header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! HipCalendarCollectionReusableView
@@ -210,18 +215,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return startDate.numberOfMonths(NSDate())
+		return earliestPostDate?.numberOfMonths(NSDate()) ?? 1
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let firstDayOfMonth = NSDate().firstDayOfMonth().dateByAddingMonths(-section)
-        var numberOfDays = firstDayOfMonth.numDaysInMonth()
-        
-        if firstDayOfMonth.month() == startDate.month() && firstDayOfMonth.year() == startDate.year() {
-            numberOfDays = startDate.numDaysUntilEndDate(firstDayOfMonth.lastDayOfMonth())
-        }
-        
-        return numberOfDays
+		let date = NSDate().firstDayOfMonth().dateByAddingMonths(-section)
+		return date.numDaysInMonth()
     }
     
     // MARK: - UICollectionViewDelegate
