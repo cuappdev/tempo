@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class FeedViewController: UITableViewController, SongSearchDelegate {
+class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDelegate {
 	
 	var posts: [Post] = []
 	var customRefresh:ADRefreshControl!
@@ -198,7 +198,8 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.post?.player.prepareToPlay()
-		cell.referenceFeedViewController = self
+		//cell.referenceFeedViewController = self
+		cell.postView.delegate = self
 		return cell
 	}
 	
@@ -319,7 +320,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate {
 	
 	// - Save song button clicked
 	
-	func saveButtonClicked() {
+	func didTapAddButtonForCell() {
 		let screenSize = UIScreen.mainScreen().bounds
 		let screenWidth = screenSize.width
 		let screenHeight = screenSize.height

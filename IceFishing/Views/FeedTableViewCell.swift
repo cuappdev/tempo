@@ -9,18 +9,5 @@
 import UIKit
 
 class FeedTableViewCell: UITableViewCell {
-    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet var postView: PostView!
-    
-    weak var referenceFeedViewController: FeedViewController?
-	weak var referencePostHistoryViewController: PostHistoryTableViewController?
-	
-    @IBAction func saveButtonClicked(sender: UIButton) {
-		if let viewController = referenceFeedViewController {
-			viewController.saveButtonClicked()
-		}
-		else if let viewController = referencePostHistoryViewController {
-			viewController.saveButtonClicked()
-		}
-    }
 }

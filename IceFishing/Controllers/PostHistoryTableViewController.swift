@@ -9,11 +9,11 @@
 import UIKit
 import MediaPlayer
 
-class PostHistoryTableViewController: UITableViewController {
+class PostHistoryTableViewController: UITableViewController, PostViewDelegate {
 	
 	var posts: [Post] = []
 	var songLikes: [Int] = []
-    var postedDates: [NSDate]! = []
+    var postedDates: [NSDate] = []
     var index: Int?
 	var currentlyPlayingPost: Post?
 	var currentlyPlayingIndexPath: NSIndexPath? {
@@ -72,19 +72,17 @@ class PostHistoryTableViewController: UITableViewController {
     // TableView Methods
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.posts.count
+        return posts.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
-		cell.referencePostHistoryViewController = self
 		cell.postView.type = .History
 		cell.postView.post = posts[indexPath.row]
+		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()
 		
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "M.dd.YY"
-        let date = formatter.stringFromDate(self.postedDates[indexPath.row])
+        let date = NSDateFormatter.simpleDateFormatter.stringFromDate(self.postedDates[indexPath.row])
 		cell.postView.dateLabel!.text = "\(date)"
 		
 		return cell
@@ -95,7 +93,7 @@ class PostHistoryTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedCell = tableView.cellForRowAtIndexPath(indexPath)! as! FeedTableViewCell
+        let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
         selectedCell.postView.backgroundColor = UIColor.iceLightGray
 		currentlyPlayingIndexPath = indexPath
     }
@@ -220,7 +218,7 @@ class PostHistoryTableViewController: UITableViewController {
 		center.seekBackwardCommand.addTargetWithHandler { _ in .Success }
 	}
 	
-	func saveButtonClicked() {
+	func didTapAddButtonForCell() {
 		let screenSize = UIScreen.mainScreen().bounds
 		let screenWidth = screenSize.width
 		let screenHeight = screenSize.height

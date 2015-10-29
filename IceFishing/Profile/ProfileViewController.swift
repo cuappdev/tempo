@@ -37,7 +37,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO: Backend route is currently wrong
 		API.sharedAPI.fetchPosts(self.user.id) { post in
 			self.posts = post
 			self.postedDates = post.map { $0.date! }
@@ -185,7 +184,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
         cell.date = date
 		
-		if let index = postedDays.indexOf(cell.date.day()) where (cell.date.month() == postedDates[index].month() && cell.date.year() == postedDates[index].year()) {
+		if let index = postedDays.indexOf(cell.date.day()) where cell.date.month() == postedDates[index].month() && cell.date.year() == postedDates[index].year() {
 			let alpha = determineAlpha(postedLikes[index])
 			cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed.colorWithAlphaComponent(alpha)
 			cell.userInteractionEnabled = true
