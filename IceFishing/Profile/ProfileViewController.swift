@@ -22,10 +22,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	var postedLikes: [Int] = []
     var padding: CGFloat = 5
 	var avgLikes: Float = 0
-	
-
-	//Navigation
-	var pushNavigationEnabled = false
     
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
@@ -96,16 +92,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
 		let views: [String : AnyObject] = ["pic" : profilePictureView, "topGuide": self.topLayoutGuide]
 		self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
-		
-		//Navigation
-		if pushNavigationEnabled {
-			// Add back button to profile
-			let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
-			backButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
-			backButton.setTitle("Feed", forState: UIControlState.Normal)
-			backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
-			navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-		}
 	}
 
     // Return to profile view
@@ -152,7 +138,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		followersVC.displayType = displayType
 		followersVC.user = user
 		followersVC.title = String(displayType)
-		followersVC.pushNavigationEnabled = pushNavigationEnabled
 		navigationController?.pushViewController(followersVC, animated: true)
 	}
 	

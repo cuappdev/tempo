@@ -218,7 +218,7 @@ class PostHistoryTableViewController: UITableViewController, PostViewDelegate {
 		center.seekBackwardCommand.addTargetWithHandler { _ in .Success }
 	}
 	
-	func didTapAddButtonForCell() {
+	func didTapAddButtonForPostView(postView: PostView) {
 		let screenSize = UIScreen.mainScreen().bounds
 		let screenWidth = screenSize.width
 		let screenHeight = screenSize.height

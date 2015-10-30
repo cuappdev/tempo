@@ -321,7 +321,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 	
 	// - Save song button clicked
 	
-	func didTapAddButtonForCell() {
+	func didTapAddButtonForPostView(postView: PostView) {
 		let screenSize = UIScreen.mainScreen().bounds
 		let screenWidth = screenSize.width
 		let screenHeight = screenSize.height
@@ -343,11 +343,11 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 	//MARK: -
 	//MARK: Navigation
 	
-	func showUserProfile(user:User) {
+	func didTapImageForPostView(postView: PostView) {
+		guard let user = postView.post?.user else { return }
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 		profileVC.title = "Profile"
 		profileVC.user = user
-		profileVC.pushNavigationEnabled = true
 		navigationController?.pushViewController(profileVC, animated: true)
 	}
 }
