@@ -9,7 +9,7 @@
 import Foundation
 
 extension UIViewController {
-	func beginIceFishing() {
+	func addHamburgerMenu() {
 		//—————————————from MAIN VC——————————————————
 		navigationItem.title = title
 		
@@ -19,8 +19,9 @@ extension UIViewController {
 		menuButton.setImage(image, forState: .Normal)
 		menuButton.addTarget(revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
 		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
-		
-		// Pop out sidebar when hamburger menu tapped
+	}
+	
+	func addRevealGesture() {
 		if revealViewController() != nil {
 			view.addGestureRecognizer(revealViewController().panGestureRecognizer())
 		}

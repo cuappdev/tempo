@@ -55,7 +55,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
         // Profile Info
 		title = "Profile"
-		beginIceFishing()
+		if user == User.currentUser {
+			addHamburgerMenu()
+		}
+		addRevealGesture()
 		
         nameLabel.text = user.name
         userHandleLabel.text = "@\(user.username)"

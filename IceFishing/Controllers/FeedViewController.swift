@@ -144,6 +144,9 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 		pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
 		pinViewGestureRecognizer.delegate = pinView.postView
 		pinView.backgroundColor = UIColor.iceLightGray
+		
+		addHamburgerMenu()
+		addRevealGesture()
 	}
 	
 	override func viewWillAppear(animated: Bool) {
@@ -154,8 +157,6 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-		
-		beginIceFishing()
 		
 		topPinViewContainer.frame = CGRectMake(0, tableView.frame.minY, view.frame.width, tableView.rowHeight)
 		view.superview!.addSubview(topPinViewContainer)
