@@ -19,6 +19,9 @@ class UsersViewController: UITableViewController {
 	var displayType: DisplayType = .Followers
 	private var users: [User] = []
 
+	//Navigation
+	var pushNavigationEnabled = false
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -37,11 +40,15 @@ class UsersViewController: UITableViewController {
 		
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
-        // Add back button to profile
-        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height))
-        backButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
-        backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+		//Navigation
+		if pushNavigationEnabled {
+			// Add back button to profile
+			let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
+			backButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
+			backButton.setTitle("Back", forState: UIControlState.Normal)
+			backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
+			navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+		}
     }
 	
     // Return to previous view

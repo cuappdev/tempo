@@ -25,7 +25,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	
 
 	//Navigation
-	var backButtonEnabled = false
+	var pushNavigationEnabled = false
     
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
@@ -95,7 +95,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
 		
 		//Navigation
-		if backButtonEnabled {
+		if pushNavigationEnabled {
 			// Add back button to profile
 			let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: navigationController!.navigationBar.frame.height))
 			backButton.setImage(UIImage(named: "Close-Icon"), forState: .Normal)
@@ -149,6 +149,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		followersVC.displayType = displayType
 		followersVC.user = user
 		followersVC.title = String(displayType)
+		followersVC.pushNavigationEnabled = pushNavigationEnabled
 		navigationController?.pushViewController(followersVC, animated: true)
 	}
 	
