@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	let revealVC = SWRevealViewController()
 	let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
 	let feedVC = FeedViewController()
-    let searchVC = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
+    let searchVC = SearchViewController(nibName: "SearchViewController", bundle: nil)
 	let likedVC = LikedTableViewController(nibName: "LikedTableViewController", bundle: nil)
 	let spotifyVC = SpotifyViewController(nibName: "SpotifyViewController", bundle: nil)
 	let navigationController = UINavigationController()

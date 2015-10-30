@@ -17,8 +17,8 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 	var savedSongAlertView: SavedSongView!
 	
 	
-	lazy var songSearchTableViewController: SongSearchViewController = {
-		let vc = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
+	lazy var searchTableViewController: SearchViewController = {
+		let vc = SearchViewController(nibName: "SearchViewController", bundle: nil)
 		vc.delegate = self
 		return vc
 		}()
@@ -294,7 +294,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 			self.plusButton.imageView?.layer.transform = currentTransform
 		}
 		plusButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
-		plusButton.addTarget(active ? songSearchTableViewController : self, action: active ? "dismiss" : "plusButtonTapped", forControlEvents: .TouchUpInside)
+		plusButton.addTarget(active ? searchTableViewController : self, action: active ? "dismiss" : "plusButtonTapped", forControlEvents: .TouchUpInside)
 		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
 			let transform = active ? CGAffineTransformMakeRotation(CGFloat(M_PI_4)) : CGAffineTransformIdentity
 			self.plusButton.imageView!.transform = transform
@@ -304,10 +304,10 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 	func plusButtonTapped() {
 		rotatePlusButton(true)
 		
-		songSearchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
-		songSearchTableViewController.navigationItem.leftBarButtonItem = navigationItem.leftBarButtonItem
-		songSearchTableViewController.searchType = .Song
-		navigationController?.pushViewController(songSearchTableViewController, animated: false)
+		searchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
+		searchTableViewController.navigationItem.leftBarButtonItem = navigationItem.leftBarButtonItem
+		searchTableViewController.searchType = .Song
+		navigationController?.pushViewController(searchTableViewController, animated: false)
 	}
 	
 	// MARK: - SongSearchDelegate
