@@ -16,8 +16,10 @@ class LikedTableViewController: UITableViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
 		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
-        self.title = "Liked"
-        beginIceFishing()
+        title = "Liked"
+		
+		addHamburgerMenu()
+        addRevealGesture()
 	}
     
     override func viewDidAppear(animated: Bool) {

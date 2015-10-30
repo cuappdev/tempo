@@ -51,8 +51,8 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        
-        beginIceFishing()
+		
+		addRevealGesture()
         
         if searchType == .Song {
             title = "Post your song of the day!"
@@ -60,6 +60,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         } else {
             title = "Search Users"
             cellIdentifier = "FollowTableViewCell"
+			addHamburgerMenu()
         }
 		
 		view.backgroundColor = UIColor.iceLightGray

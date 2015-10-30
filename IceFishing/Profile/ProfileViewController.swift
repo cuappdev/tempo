@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	var postedLikes: [Int] = []
     var padding: CGFloat = 5
 	var avgLikes: Float = 0
-	
+    
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -51,7 +51,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
         // Profile Info
 		title = "Profile"
-		beginIceFishing()
+		if user == User.currentUser {
+			addHamburgerMenu()
+		}
+		addRevealGesture()
 		
         nameLabel.text = user.name
         userHandleLabel.text = "@\(user.username)"
@@ -85,11 +88,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         collectionView.backgroundColor = UIColor.clearColor()
 		collectionView.scrollsToTop = false
 		
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close-Icon"), style: .Plain, target: self, action: "popToRoot")
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close-Icon"), style: .Plain, target: self, action: "popToRoot")
 		
 		let views: [String : AnyObject] = ["pic" : profilePictureView, "topGuide": self.topLayoutGuide]
 		self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
-    }
+	}
 
     // Return to profile view
     func popToRoot() {

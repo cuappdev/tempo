@@ -9,8 +9,9 @@
 import UIKit
 import MediaPlayer
 
-protocol PostViewDelegate {
-	func didTapAddButtonForCell()
+@objc protocol PostViewDelegate {
+	optional func didTapAddButtonForPostView(postView: PostView)
+	optional func didTapImageForPostView(postView: PostView)
 }
 
 enum ViewType: Int {
@@ -33,7 +34,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     var fillColor = UIColor.iceDarkGray
  
     var type: ViewType = .Feed
-	var delegate: PostViewDelegate?
+	weak var delegate: PostViewDelegate?
     private var updateTimer: NSTimer?
     private var notificationHandler: AnyObject?
     
@@ -311,10 +312,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			likedButton?.setImage(UIImage(named: name), forState: .Normal)
 		} else if hitView == addButton {
 			print("Adding")
-			delegate!.didTapAddButtonForCell()
-		} else if post.player.isPlaying() {
+			delegate?.didTapAddButtonForPostView?(self)
+		} else {
+            //Push profile viewcontroller when user avatar/name touched in feed
 			if hitView == avatarImageView || hitView == self.profileNameLabel {
 				// GO TO PROFILE VIEW CONTROLLER
+				delegate?.didTapImageForPostView?(self)
 				print(post.user.fbid)
 			}
 		}

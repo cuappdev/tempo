@@ -144,6 +144,9 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 		pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
 		pinViewGestureRecognizer.delegate = pinView.postView
 		pinView.backgroundColor = UIColor.iceLightGray
+		
+		addHamburgerMenu()
+		addRevealGesture()
 	}
 	
 	override func viewWillAppear(animated: Bool) {
@@ -154,8 +157,6 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-		
-		beginIceFishing()
 		
 		topPinViewContainer.frame = CGRectMake(0, tableView.frame.minY, view.frame.width, tableView.rowHeight)
 		view.superview!.addSubview(topPinViewContainer)
@@ -320,7 +321,7 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 	
 	// - Save song button clicked
 	
-	func didTapAddButtonForCell() {
+	func didTapAddButtonForPostView(postView: PostView) {
 		let screenSize = UIScreen.mainScreen().bounds
 		let screenWidth = screenSize.width
 		let screenHeight = screenSize.height
@@ -337,5 +338,16 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 			})
 		}
 
+	}
+	
+	//MARK: -
+	//MARK: Navigation
+	
+	func didTapImageForPostView(postView: PostView) {
+		guard let user = postView.post?.user else { return }
+		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		profileVC.title = "Profile"
+		profileVC.user = user
+		navigationController?.pushViewController(profileVC, animated: true)
 	}
 }
