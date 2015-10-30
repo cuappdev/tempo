@@ -306,7 +306,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 		if hitView == likedButton {
 			post.toggleLike()
 			let name = post.isLiked ? "Heart-Red" : "Heart"
-			let likeCount = post.likes + (post.isLiked ? 1 : -1)
+			let likeCount = post.likes + (post.isLiked ? 1 : 0)
 			likesLabel?.text = "\(likeCount) likes"
 			likedButton?.setImage(UIImage(named: name), forState: .Normal)
 		} else if hitView == addButton {
