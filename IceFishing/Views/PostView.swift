@@ -311,9 +311,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			likedButton?.setImage(UIImage(named: name), forState: .Normal)
 		} else if hitView == addButton {
 			print("Adding")
+            SpotifyController.sharedController.saveSpotifyTrack(post)
 			delegate?.didTapAddButtonForPostView?(self)
 		} else {
-            //Push profile viewcontroller when user avatar/name touched in feed
 			if hitView == avatarImageView || hitView == self.profileNameLabel {
 				// GO TO PROFILE VIEW CONTROLLER
 				delegate?.didTapImageForPostView?(self)

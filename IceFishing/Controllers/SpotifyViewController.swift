@@ -53,8 +53,16 @@ class SpotifyViewController: UIViewController {
             e.hidden = !loggedIn
         }
     }
-	
+    
 	@IBAction func loginToSpotify() {
+        SPTAuth.defaultInstance().requestedScopes = [
+            SPTAuthPlaylistReadPrivateScope,
+            SPTAuthPlaylistModifyPublicScope,
+            SPTAuthPlaylistModifyPrivateScope,
+            SPTAuthUserLibraryReadScope,
+            SPTAuthUserLibraryModifyScope
+        ]
+
 		let loginURL = SPTAuth.defaultInstance().loginURL
 		UIApplication.sharedApplication().openURL(loginURL)
 	}

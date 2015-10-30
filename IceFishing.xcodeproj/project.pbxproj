@@ -30,7 +30,9 @@
 		1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */; };
 		1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DFBFB511B7845E7001DD6AC /* SongSearchTableViewCell.xib */; };
 		1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */; };
+		1DFD735E1BA0DC50008D9FD8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; };
 		1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */; };
+		1DFD73731BA0DCAB008D9FD8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; };
 		1DFD73811BA0EE7B008D9FD8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; };
 		1DFD73821BA0EE7B008D9FD8 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD736A1BA0DC9F008D9FD8 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1DFD738B1BA0EE94008D9FD8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */; };
@@ -310,7 +312,6 @@
 				1DFD738B1BA0EE94008D9FD8 /* Alamofire.framework in Frameworks */,
 				1D802AB71B78635A005A96D1 /* SystemConfiguration.framework in Frameworks */,
 				1D802AB51B786351005A96D1 /* AVFoundation.framework in Frameworks */,
-				1D2CA85E1B720290004EAEAB /* Bolts.framework in Frameworks */,
 				1D2CA85F1B720290004EAEAB /* FacebookSDK.framework in Frameworks */,
 				1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */,
 			);
@@ -958,6 +959,7 @@
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.IceFishing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -984,6 +986,7 @@
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.IceFishing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
