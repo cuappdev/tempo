@@ -44,14 +44,8 @@ class PostHistoryTableViewController: UITableViewController, PostViewDelegate {
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
         
         navigationItem.title = "Post History"
-        self.navigationController?.navigationBar.barTintColor = UIColor.iceDarkRed
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
-        // Add back button to profile
-        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: navigationController!.navigationBar.frame.height))
-        backButton.setImage(UIImage(named: "Arrow-Left"), forState: .Normal)
-        backButton.addTarget(self, action: "popToPrevious", forControlEvents: .TouchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        addRevealGesture()
 		
 		notifCenterSetup()
 		commandCenterHandler()
