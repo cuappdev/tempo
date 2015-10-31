@@ -8,9 +8,9 @@
 
 import Foundation
 
-private func HipCalendarDate(components: NSDateComponents) -> NSDate {
-    let calendar : NSCalendar = NSCalendar.currentCalendar()
-    return calendar.dateFromComponents(components)!
+private func calendarDate(components: NSDateComponents) -> NSDate {
+	let calendar : NSCalendar = NSCalendar.currentCalendar()
+	return calendar.dateFromComponents(components)!
 }
 
 extension NSDate {
@@ -23,42 +23,39 @@ extension NSDate {
         let date = dateStringFormatter.dateFromString(dateString)
         self.init(timeInterval:0, sinceDate:date!)
     }
-    
-    private func HipCalendarDateComponents(date: NSDate) -> NSDateComponents {
-        let calendar : NSCalendar = NSCalendar.currentCalendar()
-        return calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Day], fromDate:self)
+	
+    private func calendarDateComponents() -> NSDateComponents {
+        let calendar = NSCalendar.currentCalendar()
+        return calendar.components([.Year, .Month, .WeekOfYear, .Day], fromDate:self)
     }
     
     func components() -> NSDateComponents {
-        return HipCalendarDateComponents(self)
+        return calendarDateComponents()
     }
     
     func month() -> Int {
-        let components = HipCalendarDateComponents(self)
-        return components.month
+        return calendarDateComponents().month
     }
     
     func day() -> Int {
-        let components = HipCalendarDateComponents(self)
-        return components.day
+        return calendarDateComponents().day
     }
     
     func year() -> Int {
-        let components = HipCalendarDateComponents(self)
-        return components.year
+        return calendarDateComponents().year
     }
     
     func firstDayOfMonth() -> NSDate {
-        let components = HipCalendarDateComponents(self)
+        let components = calendarDateComponents()
         components.day = 1
-        return HipCalendarDate(components)
+        return calendarDate(components)
     }
     
     func lastDayOfMonth() -> NSDate {
-        let components = HipCalendarDateComponents(self)
+        let components = calendarDateComponents()
         components.month++
         components.day = 0
-        return HipCalendarDate(components)
+        return calendarDate(components)
     }
     
     func numDaysInMonth() -> Int {
@@ -77,21 +74,21 @@ extension NSDate {
     }
     
     func numberOfMonths(endDate: NSDate) -> Int {
-        let calendar : NSCalendar = NSCalendar.currentCalendar()
-        let components : NSDateComponents = calendar.components(NSCalendarUnit.Month, fromDate:self, toDate:endDate, options: NSCalendarOptions(rawValue: 0))
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(.Month, fromDate:self, toDate:endDate, options: NSCalendarOptions(rawValue: 0))
         return components.month + 1
     }
     
     func dateByAddingMonths(months: Int) -> NSDate {
-        let calendar : NSCalendar = NSCalendar.currentCalendar()
-        let components : NSDateComponents = NSDateComponents()
+        let calendar = NSCalendar.currentCalendar()
+        let components = NSDateComponents()
         components.month = months
         return calendar.dateByAddingComponents(components, toDate: self, options: NSCalendarOptions(rawValue: 0))!
     }
     
     func numDaysUntilEndDate(endDate: NSDate) -> Int {
-        let calendar : NSCalendar = NSCalendar.currentCalendar()
-        let components : NSDateComponents = calendar.components(NSCalendarUnit.Day, fromDate:self, toDate:endDate, options: NSCalendarOptions(rawValue: 0))
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(.Day, fromDate:self, toDate:endDate, options: NSCalendarOptions(rawValue: 0))
         return components.day + 1
     }
     
@@ -106,7 +103,17 @@ extension NSDate {
     }
     
     class func dateFromComponents(components: NSDateComponents) -> NSDate {
-        return HipCalendarDate(components)
+        return calendarDate(components)
     }
     
 }
+
+public func ==(lhs: NSDate, rhs: NSDate) -> Bool {
+	return lhs === rhs || lhs.compare(rhs) == .OrderedSame
+}
+
+public func <(lhs: NSDate, rhs: NSDate) -> Bool {
+	return lhs.compare(rhs) == .OrderedAscending
+}
+
+extension NSDate: Comparable { }
