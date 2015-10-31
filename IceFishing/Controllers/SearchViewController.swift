@@ -1,5 +1,5 @@
 //
-//  SongSearchViewController.swift
+//  SearchViewController.swift
 //  IceFishing
 //
 //  Created by Austin Chan on 3/15/15.
@@ -18,7 +18,7 @@ protocol SongSearchDelegate: class {
 	func didSelectSong(song: Song)
 }
 
-class SongSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 	
 	var cellIdentifier = "UserTableViewCell"
     var searchType = SearchType.User
