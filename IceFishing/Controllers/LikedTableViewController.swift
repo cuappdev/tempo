@@ -20,8 +20,9 @@ class LikedTableViewController: UITableViewController, UISearchResultsUpdating, 
     override func viewDidLoad() {
         super.viewDidLoad()
 		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
-        self.title = "Liked"
-        beginIceFishing()
+        title = "Liked"
+		addHamburgerMenu()
+		addRevealGesture()
 		
 		searchController = UISearchController(searchResultsController: nil)
 		searchController.dimsBackgroundDuringPresentation = false
@@ -31,10 +32,8 @@ class LikedTableViewController: UITableViewController, UISearchResultsUpdating, 
 		//Formating for search Bar
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.delegate = self
-		searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
-		searchController.searchBar.tintColor = UIColor.iceDarkRed
-		searchController.searchBar.backgroundColor = UIColor.iceDarkRed
-		searchController.searchBar.barTintColor = UIColor.iceDarkRed
+		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
+		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
 		
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
@@ -47,11 +46,6 @@ class LikedTableViewController: UITableViewController, UISearchResultsUpdating, 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         retrieveLikedSongs()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -107,50 +101,22 @@ class LikedTableViewController: UITableViewController, UISearchResultsUpdating, 
 		searchController.searchBar.endEditing(true)
 	}
 	
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
+	//This allows for the text not to be viewed behind the search bar at the top of the screen
+	private let statusBarView: UIView = {
+		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
+		view.backgroundColor = UIColor.iceDarkRed
+		return view
+	}()
+	
+	func willPresentSearchController(searchController: UISearchController) {
+			self.navigationController?.view.addSubview(self.statusBarView)
+	}
+	
+	func didDismissSearchController(searchController: UISearchController) {
+		statusBarView.removeFromSuperview()
+	}
+	
+	override func preferredStatusBarStyle() -> UIStatusBarStyle {
+		return .LightContent
+	}
 }

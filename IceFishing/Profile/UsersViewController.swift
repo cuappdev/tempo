@@ -35,11 +35,9 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		//Formating for search Bar
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.delegate = self
-		searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
-		searchController.searchBar.tintColor = UIColor.iceDarkRed
-		searchController.searchBar.backgroundColor = UIColor.iceDarkRed
-		searchController.searchBar.barTintColor = UIColor.iceDarkRed
-		
+		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
+		textFieldInsideSearchBar!.textColor = UIColor.whiteColor()
+
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
@@ -82,7 +80,9 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
         var user = users[indexPath.row]
 		if searchController.active {
 			user = filteredUsers[indexPath.row]
+			
 		}
+		print(user.username)
         cell.userName.text = user.name
         cell.userHandle.text = "@\(user.username)"
         cell.numFollowLabel.text = "\(user.followersCount) followers"
@@ -114,7 +114,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		if searchText == "" {
 			filteredUsers = users
 		} else {
-			let pred = NSPredicate(format: "name contains[cd] %@", searchText)
+			let pred = NSPredicate(format: "name contains[cd] %@ OR username contains[cd] %@", searchText, searchText)
 			filteredUsers = (users as NSArray).filteredArrayUsingPredicate(pred) as! [User]
 		}
 		tableView.reloadData()
@@ -126,5 +126,24 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	
 	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
 		searchController.searchBar.endEditing(true)
+	}
+	
+	//This allows for the text not to be viewed behind the search bar at the top of the screen
+	private let statusBarView: UIView = {
+		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
+		view.backgroundColor = UIColor.iceDarkRed
+		return view
+	}()
+	
+	func willPresentSearchController(searchController: UISearchController) {
+		self.navigationController?.view.addSubview(self.statusBarView)
+	}
+	
+	func didDismissSearchController(searchController: UISearchController) {
+		statusBarView.removeFromSuperview()
+	}
+	
+	override func preferredStatusBarStyle() -> UIStatusBarStyle {
+		return .LightContent
 	}
 }
