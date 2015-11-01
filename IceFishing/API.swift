@@ -169,20 +169,20 @@ class API {
 	}
 	
 	func updateLikes(postID: String, unlike: Bool, completion: [String: Bool] -> Void) {
-		let map: [String: Bool] -> [String: Bool]? = { $0 }
-		post(.Likes(nil), params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: map, completion: completion)
+		post(.Likes(nil), params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: { $0 }, completion: completion)
 	}
 	
 	func fetchLikes(userID: String, completion: [Song] -> Void) {
 		let map: [String: [AnyObject]] -> [Song]? = {
-			return $0["songs"]?.map { Song(json: JSON($0)) }
+			let songIDs: [String] = $0["songs"]?.flatMap { $0["spotify_url"] as? String } ?? []
+			return songIDs.map { Song(songID: $0) }
 		}
 		get(.Likes(userID), params: ["session_code": sessionCode], map: map, completion: completion)
 	}
 	
 	func updateFollowings(userID: String, unfollow: Bool, completion: [String: Bool] -> Void) {
-		let map: [String: Bool] -> [String: Bool]? = { $0 }
-		post(.Followings, params: ["followed_id": Int(userID)!, "unfollow": unfollow, "session_code": sessionCode], map: map, completion: completion)
+		guard let id = Int(userID) else { return }
+		post(.Followings, params: ["followed_id": id, "unfollow": unfollow, "session_code": sessionCode], map: { $0 }, completion: completion)
 	}
 	
 	func updatePost(userID: String, song: Song, completion: [String: AnyObject] -> Void) {
