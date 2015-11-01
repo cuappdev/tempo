@@ -166,24 +166,24 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		let ratio = Float(likes) / avgLikes
 		
 		if (ratio <= 0.2) {
-			return 1
+			return 0.5
 		} else if ratio <= 0.4 {
-			return 0.95
-		} else if ratio <= 0.6 {
-			return 0.90
-		} else if ratio <= 0.8 {
-			return 0.85
-		} else if ratio <= 1.0 {
-			return 0.80
-		} else if ratio <= 1.5 {
-			return 0.75
-		} else if ratio <= 2.0 {
-			return 0.70
-		} else if ratio <= 2.5 {
-			return 0.65
-		} else if ratio <= 3.0 {
 			return 0.60
-		} else { return 0.5 }
+		} else if ratio <= 0.6 {
+			return 0.65
+		} else if ratio <= 0.8 {
+			return 0.70
+		} else if ratio <= 1.0 {
+			return 0.75
+		} else if ratio <= 1.5 {
+			return 0.80
+		} else if ratio <= 2.0 {
+			return 0.85
+		} else if ratio <= 2.5 {
+			return 0.90
+		} else if ratio <= 3.0 {
+			return 0.95
+		} else { return 1 }
 	}
 	
 	// MARK: - UICollectionViewDataSource
