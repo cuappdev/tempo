@@ -215,12 +215,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-		return earliestPostDate?.numberOfMonths(NSDate()) ?? 1
+		return earliestPostDate?.firstDayOfMonth().numberOfMonths(NSDate()) ?? 1
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		let date = NSDate().firstDayOfMonth().dateByAddingMonths(-section)
-		return date.numDaysInMonth()
+		return NSDate().firstDayOfMonth().dateByAddingMonths(-section).numDaysInMonth()
     }
     
     // MARK: - UICollectionViewDelegate
