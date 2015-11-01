@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+		
 		API.sharedAPI.fetchPosts(self.user.id) { post in
 			self.posts = post
 			self.postedDates = post.map { $0.date! }
@@ -98,6 +98,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
 		let views: [String : AnyObject] = ["pic" : profilePictureView, "topGuide": self.topLayoutGuide]
 		self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
+		
+		// Accounts for case where we select user from feed image
+		if user.followersCount == 0 {
+			API.sharedAPI.fetchUser(user.id) {
+				self.user = $0
+				self.followingButton.setTitle("\($0.followingCount) Following", forState: .Normal)
+				self.followersButton.setTitle("\($0.followersCount) Followers", forState: .Normal)
+			}
+		}
 	}
 
     // Return to profile view
