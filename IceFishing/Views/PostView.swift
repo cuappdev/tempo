@@ -20,6 +20,11 @@ enum ViewType: Int {
 	case History
 }
 
+enum SavedSongStatus: Int {
+	case NotSaved
+	case Saved
+}
+
 class PostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
     var tapGestureRecognizer: UITapGestureRecognizer?
@@ -34,7 +39,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     var fillColor = UIColor.iceDarkGray
  
     var type: ViewType = .Feed
-	weak var delegate: PostViewDelegate?
+	var songStatus: SavedSongStatus = .NotSaved
+	var delegate: PostViewDelegate?
     private var updateTimer: NSTimer?
     private var notificationHandler: AnyObject?
     
@@ -310,12 +316,25 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			likesLabel?.text = "\(post.likes) likes"
 			likedButton?.setImage(UIImage(named: name), forState: .Normal)
 		} else if hitView == addButton {
-			print("Adding")
-            SpotifyController.sharedController.saveSpotifyTrack(post, completionHandler: { (success) -> Void in
-				if success {
-					self.delegate?.didTapAddButtonForPostView?(self)
-				}
-			})
+			if songStatus == .NotSaved {
+				print("Saving Song")
+				SpotifyController.sharedController.saveSpotifyTrack(post, completionHandler: { (success) -> Void in
+					if success {
+						self.addButton?.setImage(UIImage(named: "Check"), forState: .Normal)
+						self.delegate!.didTapAddButtonForCell(self.songStatus)
+						self.songStatus = .Saved
+					}
+				})
+			} else {
+				print("Removing Song")
+				SpotifyController.sharedController.removeSavedSpotifyTrack(post, completionHandler: { (success) -> Void in
+					if success {
+						self.addButton?.setImage(UIImage(named: "Add"), forState: .Normal)
+						self.delegate!.didTapAddButtonForCell(self.songStatus)
+						self.songStatus = .NotSaved
+					}
+				})
+			}
 		} else if post.player.isPlaying() {
 			if hitView == avatarImageView || hitView == self.profileNameLabel {
 				// GO TO PROFILE VIEW CONTROLLER

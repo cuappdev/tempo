@@ -71,7 +71,26 @@ class SpotifyController {
             
         }
     }
-    
+	
+	func removeSavedSpotifyTrack(track: Post, completionHandler: (success: Bool) -> Void) {
+		let spotifyTrackURI = NSURL(string: "spotify:track:" + track.song.spotifyID)!
+		
+		SPTTrack.trackWithURI(spotifyTrackURI, session: SPTAuth.defaultInstance().session) { (error: NSError!, data: AnyObject!) -> Void in
+			if error != nil {
+				completionHandler(success: false)
+			} else {
+				SPTYourMusic.removeTracksFromSaved([data], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken, callback: { (error, result) -> Void in
+					if error != nil {
+						completionHandler(success: false)
+					} else {
+						completionHandler(success: true)
+					}
+				})
+			}
+			
+		}
+	}
+	
     func createSpotifyPlaylist() {
         SPTPlaylistList.createPlaylistWithName("IceFishing", publicFlag: false, session: SPTAuth.defaultInstance().session) { error, snapshot in
             if error != nil {

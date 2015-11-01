@@ -217,16 +217,25 @@ class PostHistoryTableViewController: UITableViewController, PostViewDelegate {
 		let screenWidth = screenSize.width
 		let screenHeight = screenSize.height
 		savedSongAlertView = SavedSongView.instanceFromNib()
-		savedSongAlertView.center = CGPointMake(screenWidth / 2, screenHeight / 2.5)
+		savedSongAlertView.center = CGPointMake(screenWidth / 2, screenHeight / 2)
 		savedSongAlertView.layer.cornerRadius = 10
-		view.addSubview(savedSongAlertView)
-		let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-		dispatch_after(delayTime, dispatch_get_main_queue()) {
-			UIView.animateWithDuration(0.5, animations: {
-				self.savedSongAlertView.alpha = 0.0
-				}, completion: { _ in
-					self.savedSongAlertView.removeFromSuperview()
-			})
+		savedSongAlertView.alpha = 0.0
+		
+		if status == .NotSaved {
+			savedSongAlertView.saveSongToYourMusic()
+		} else {
+			savedSongAlertView.removeSongfromSaved()
 		}
+		
+		currentWindow?.addSubview(savedSongAlertView)
+		
+		savedSongAlertView.fadeIn(0.5, delay: 0.0, completion: { _ in
+			dispatch_after(delayTime, dispatch_get_main_queue(), {
+				self.savedSongAlertView.fadeOut(0.5, delay: 0.0, completion: { _ in
+					self.savedSongAlertView.removeFromSuperview()
+				})
+			})
+			
+		})
 	}
 }

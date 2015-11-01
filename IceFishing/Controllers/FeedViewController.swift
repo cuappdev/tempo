@@ -331,6 +331,13 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 		savedSongAlertView.center = CGPointMake(screenWidth / 2, screenHeight / 2)
 		savedSongAlertView.layer.cornerRadius = 10
 		savedSongAlertView.alpha = 0.0
+		
+		if status == .NotSaved {
+			savedSongAlertView.saveSongToYourMusic()
+		} else {
+			savedSongAlertView.removeSongfromSaved()
+		}
+		
 		currentWindow?.addSubview(savedSongAlertView)
 		
 		savedSongAlertView.fadeIn(0.5, delay: 0.0, completion: { _ in
@@ -341,7 +348,6 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 			})
 			
 		})
-
 	}
 	
 	//MARK: -
