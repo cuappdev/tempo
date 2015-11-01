@@ -1,45 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view alpha="0.80000000000000004" contentMode="scaleToFill" id="Ed4-kh-z1j" customClass="SavedSongView" customModule="IceFishing" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="110" height="120"/>
+            <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved to Your Music" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7T-JX-G0Q">
-                    <rect key="frame" x="8" y="63" width="94" height="41"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved To Your Music" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7T-JX-G0Q">
+                    <rect key="frame" x="13" y="58" width="94" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="41" id="0Ad-LM-xSo"/>
+                        <constraint firstAttribute="height" constant="50" id="0Ad-LM-xSo"/>
                         <constraint firstAttribute="width" constant="94" id="feL-0e-cCM"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔️" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Yp-hr-31T">
-                    <rect key="frame" x="44" y="34" width="22" height="21"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Saved-Check" translatesAutoresizingMaskIntoConstraints="NO" id="STY-Hz-79l">
+                    <rect key="frame" x="42.5" y="18" width="35" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="KVG-E9-KdN"/>
-                        <constraint firstAttribute="width" constant="22" id="tod-qF-ZRR"/>
+                        <constraint firstAttribute="width" constant="35" id="PUJ-nf-dX8"/>
+                        <constraint firstAttribute="width" secondItem="STY-Hz-79l" secondAttribute="height" id="VJK-Z4-YYO"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="U7T-JX-G0Q" secondAttribute="bottom" constant="16" id="4K6-J5-VfK"/>
+                <constraint firstItem="U7T-JX-G0Q" firstAttribute="top" secondItem="STY-Hz-79l" secondAttribute="bottom" constant="5" id="3UN-aN-xHF"/>
+                <constraint firstAttribute="bottom" secondItem="U7T-JX-G0Q" secondAttribute="bottom" constant="12" id="4K6-J5-VfK"/>
                 <constraint firstItem="U7T-JX-G0Q" firstAttribute="centerX" secondItem="Ed4-kh-z1j" secondAttribute="centerX" id="6T5-5V-w5s"/>
-                <constraint firstItem="6Yp-hr-31T" firstAttribute="centerX" secondItem="Ed4-kh-z1j" secondAttribute="centerX" id="R2b-hl-yhl"/>
                 <constraint firstItem="U7T-JX-G0Q" firstAttribute="centerY" secondItem="Ed4-kh-z1j" secondAttribute="centerY" id="UU5-3W-wJe"/>
-                <constraint firstItem="6Yp-hr-31T" firstAttribute="top" secondItem="Ed4-kh-z1j" secondAttribute="top" constant="34" id="nU2-yv-a9N"/>
-                <constraint firstItem="U7T-JX-G0Q" firstAttribute="top" secondItem="6Yp-hr-31T" secondAttribute="bottom" constant="8" id="oC0-CQ-gFn"/>
+                <constraint firstItem="STY-Hz-79l" firstAttribute="centerX" secondItem="Ed4-kh-z1j" secondAttribute="centerX" id="e1G-E5-EkR"/>
                 <constraint firstItem="U7T-JX-G0Q" firstAttribute="centerX" secondItem="Ed4-kh-z1j" secondAttribute="centerX" id="qUJ-iS-I8w"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -49,7 +46,10 @@
                     <exclude reference="UU5-3W-wJe"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="808" y="55"/>
+            <point key="canvasLocation" x="664" y="55"/>
         </view>
     </objects>
+    <resources>
+        <image name="Saved-Check" width="51" height="54"/>
+    </resources>
 </document>

@@ -53,18 +53,18 @@ class SpotifyController {
         UIApplication.sharedApplication().openURL(spotifyUserURL)
     }
     
-    func saveSpotifyTrack(track: Post) {
+	func saveSpotifyTrack(track: Post, completionHandler: (success: Bool) -> Void) {
         let spotifyTrackURI = NSURL(string: "spotify:track:" + track.song.spotifyID)!
         
         SPTTrack.trackWithURI(spotifyTrackURI, session: SPTAuth.defaultInstance().session) { (error: NSError!, data: AnyObject!) -> Void in
             if error != nil {
-                print(error)
+				completionHandler(success: false)
             } else {
                 SPTYourMusic.saveTracks([data], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken, callback: { (error, result) -> Void in
                     if error != nil {
-                        print(error)
+						completionHandler(success: false)
                     } else {
-                        print(result)
+						completionHandler(success: true)
                     }
                 })
             }
