@@ -23,6 +23,10 @@ class SpotifyViewController: UIViewController {
 		addHamburgerMenu()
 		addRevealGesture()
 		updateSpotifyState()
+		
+		// TODO: For testing purposes only
+		let barButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "showPlaylists")
+		self.navigationItem.rightBarButtonItem = barButton
         
         profilePicture.layer.cornerRadius = profilePicture.frame.size.width/2
         profilePicture.layer.masksToBounds = true
@@ -30,6 +34,11 @@ class SpotifyViewController: UIViewController {
         profilePicture.layer.borderColor = UIColor.whiteColor().CGColor
         createPlaylistSwitch.tintColor = UIColor.iceDarkRed
         createPlaylistSwitch.onTintColor = UIColor.iceDarkRed
+	}
+	
+	func showPlaylists() {
+		let playlistVC = PlaylistTableViewController()
+		self.presentViewController(playlistVC, animated: true, completion: nil)
 	}
 	
 	// Can be called after successful login to Spotify SDK

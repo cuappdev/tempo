@@ -21,6 +21,16 @@ extension UIView {
 	}
 }
 
+func getTopViewController() -> UIViewController {
+	var topVC = UIApplication.sharedApplication().keyWindow?.rootViewController
+	
+	while ((topVC?.presentedViewController) != nil) {
+		topVC = topVC?.presentedViewController
+	}
+	
+	return topVC!
+}
+
 func delay(delay: Double, closure:()->()) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), closure)
 }

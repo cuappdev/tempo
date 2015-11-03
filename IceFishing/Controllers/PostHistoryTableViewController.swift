@@ -217,25 +217,19 @@ class PostHistoryTableViewController: UITableViewController, PostViewDelegate {
 		let screenWidth = screenSize.width
 		let screenHeight = screenSize.height
 		savedSongAlertView = SavedSongView.instanceFromNib()
-		savedSongAlertView.center = CGPointMake(screenWidth / 2, screenHeight / 2)
-		savedSongAlertView.layer.cornerRadius = 10
-		savedSongAlertView.alpha = 0.0
-		
-		if status == .NotSaved {
-			savedSongAlertView.saveSongToYourMusic()
-		} else {
-			savedSongAlertView.removeSongfromSaved()
-		}
-		
-		currentWindow?.addSubview(savedSongAlertView)
-		
-		savedSongAlertView.fadeIn(0.5, delay: 0.0, completion: { _ in
-			dispatch_after(delayTime, dispatch_get_main_queue(), {
-				self.savedSongAlertView.fadeOut(0.5, delay: 0.0, completion: { _ in
-					self.savedSongAlertView.removeFromSuperview()
-				})
-			})
-			
+		savedSongAlertView.showSongStatusPopup(status, playlist: "")
+	}
+	
+	func didLongPressOnCell(post: Post) {
+		SpotifyController.sharedController.spotifyIsAvailable({ (success) -> Void in
+			if success {
+				let topVC = getTopViewController()
+				let playlistVC = PlaylistTableViewController()
+				let tableViewNavigationController = UINavigationController(rootViewController: playlistVC)
+				
+				playlistVC.song = post
+				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
+			}
 		})
 	}
 }

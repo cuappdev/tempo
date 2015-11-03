@@ -23,11 +23,14 @@ enum ViewType: Int {
 enum SavedSongStatus: Int {
 	case NotSaved
 	case Saved
+	case NotSavedToPlaylist
+	case SavedToPlaylist
 }
 
 class PostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
     var tapGestureRecognizer: UITapGestureRecognizer?
+	var longPressGestureRecognizer: UILongPressGestureRecognizer?
     @IBOutlet var profileNameLabel: MarqueeLabel?
     @IBOutlet var avatarImageView: FeedImageView?
     @IBOutlet var descriptionLabel: MarqueeLabel?
@@ -153,7 +156,15 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             tapGestureRecognizer?.cancelsTouchesInView = false
             addGestureRecognizer(tapGestureRecognizer!)
         }
-        
+		
+		if longPressGestureRecognizer == nil {
+			longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "postViewPressed:")
+			longPressGestureRecognizer?.delegate = self
+			longPressGestureRecognizer?.minimumPressDuration = 0.5
+			longPressGestureRecognizer?.cancelsTouchesInView = false
+			addGestureRecognizer(longPressGestureRecognizer!)
+		}
+		
         avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
         avatarImageView?.clipsToBounds = true
         userInteractionEnabled = true
@@ -306,41 +317,47 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         return true
     }
     
-	func postViewPressed(sender: UITapGestureRecognizer) {
+	func postViewPressed(sender: UIGestureRecognizer) {
 		guard let post = post else { return }
-		let tapPoint = sender.locationInView(self)
-		let hitView = self.hitTest(tapPoint, withEvent: nil)
-		if hitView == likedButton {
-			post.toggleLike()
-			let name = post.isLiked ? "Heart-Red" : "Heart"
-			likesLabel?.text = "\(post.likes) likes"
-			likedButton?.setImage(UIImage(named: name), forState: .Normal)
-		} else if hitView == addButton {
-			if songStatus == .NotSaved {
-				print("Saving Song")
-				SpotifyController.sharedController.saveSpotifyTrack(post, completionHandler: { (success) -> Void in
-					if success {
-						self.addButton?.setImage(UIImage(named: "Check"), forState: .Normal)
-						self.delegate!.didTapAddButtonForCell(self.songStatus)
-						self.songStatus = .Saved
-					}
-				})
-			} else {
-				print("Removing Song")
-				SpotifyController.sharedController.removeSavedSpotifyTrack(post, completionHandler: { (success) -> Void in
-					if success {
-						self.addButton?.setImage(UIImage(named: "Add"), forState: .Normal)
-						self.delegate!.didTapAddButtonForCell(self.songStatus)
-						self.songStatus = .NotSaved
-					}
-				})
+		
+		if sender.isKindOfClass(UILongPressGestureRecognizer) {
+			if sender.state == .Began {
+				self.delegate!.didLongPressOnCell(post)
 			}
-		} else if post.player.isPlaying() {
-			if hitView == avatarImageView || hitView == self.profileNameLabel {
-				// GO TO PROFILE VIEW CONTROLLER
-				delegate?.didTapImageForPostView?(self)
-				print(post.user.fbid)
+		} else if sender.isKindOfClass(UITapGestureRecognizer) {
+			let tapPoint = sender.locationInView(self)
+			let hitView = self.hitTest(tapPoint, withEvent: nil)
+			if hitView == likedButton {
+				post.toggleLike()
+				let name = post.isLiked ? "Heart-Red" : "Heart"
+				let likeCount = post.likes + (post.isLiked ? 1 : -1)
+				likesLabel?.text = "\(likeCount) likes"
+				likedButton?.setImage(UIImage(named: name), forState: .Normal)
+			} else if hitView == addButton {
+				if songStatus == .NotSaved {
+					SpotifyController.sharedController.saveSpotifyTrack(post, completionHandler: { (success) -> Void in
+						if success {
+							self.addButton?.setImage(UIImage(named: "Check"), forState: .Normal)
+							self.delegate!.didTapAddButtonForCell(self.songStatus)
+							self.songStatus = .Saved
+						}
+					})
+				} else if songStatus == .Saved {
+					SpotifyController.sharedController.removeSavedSpotifyTrack(post, completionHandler: { (success) -> Void in
+						if success {
+							self.addButton?.setImage(UIImage(named: "Add"), forState: .Normal)
+							self.delegate!.didTapAddButtonForCell(self.songStatus)
+							self.songStatus = .NotSaved
+						}
+					})
+				}
+			} else if post.player.isPlaying() {
+				if hitView == avatarImageView || hitView == self.profileNameLabel {
+					// GO TO PROFILE VIEW CONTROLLER
+					print(post.user.fbid)
+				}
 			}
 		}
 	}
+
 }

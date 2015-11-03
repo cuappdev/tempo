@@ -18,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved to Your Music" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7T-JX-G0Q">
-                    <rect key="frame" x="0.0" y="68" width="130" height="50"/>
+                    <rect key="frame" x="5" y="68" width="120" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="0Ad-LM-xSo"/>
                         <constraint firstAttribute="width" constant="94" id="feL-0e-cCM"/>
@@ -44,9 +44,9 @@
             <constraints>
                 <constraint firstItem="U7T-JX-G0Q" firstAttribute="top" secondItem="STY-Hz-79l" secondAttribute="bottom" constant="5" id="3UN-aN-xHF"/>
                 <constraint firstAttribute="bottom" secondItem="U7T-JX-G0Q" secondAttribute="bottom" constant="12" id="4K6-J5-VfK"/>
-                <constraint firstItem="U7T-JX-G0Q" firstAttribute="leading" secondItem="Ed4-kh-z1j" secondAttribute="leading" id="55g-Ww-eIO"/>
+                <constraint firstItem="U7T-JX-G0Q" firstAttribute="leading" secondItem="Ed4-kh-z1j" secondAttribute="leading" constant="5" id="55g-Ww-eIO"/>
                 <constraint firstItem="U7T-JX-G0Q" firstAttribute="centerX" secondItem="Ed4-kh-z1j" secondAttribute="centerX" id="6T5-5V-w5s"/>
-                <constraint firstAttribute="trailing" secondItem="U7T-JX-G0Q" secondAttribute="trailing" id="GZl-ya-wID"/>
+                <constraint firstAttribute="trailing" secondItem="U7T-JX-G0Q" secondAttribute="trailing" constant="5" id="GZl-ya-wID"/>
                 <constraint firstItem="U7T-JX-G0Q" firstAttribute="centerY" secondItem="Ed4-kh-z1j" secondAttribute="centerY" id="UU5-3W-wJe"/>
                 <constraint firstItem="STY-Hz-79l" firstAttribute="top" secondItem="Ed4-kh-z1j" secondAttribute="top" constant="12" id="Y9z-w5-7As"/>
                 <constraint firstItem="STY-Hz-79l" firstAttribute="centerX" secondItem="Ed4-kh-z1j" secondAttribute="centerX" id="e1G-E5-EkR"/>

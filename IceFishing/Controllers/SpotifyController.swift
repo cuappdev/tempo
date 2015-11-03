@@ -91,6 +91,48 @@ class SpotifyController {
 		}
 	}
 	
+	func getPlaylists(completion:(playlists: [SPTPartialPlaylist]?, error: NSError?) -> Void) {
+		SPTPlaylistList.playlistsForUserWithSession(SPTAuth.defaultInstance().session, callback: { (error: NSError!, data: AnyObject!) -> Void in
+			if error != nil {
+				completion(playlists: nil, error: error)
+			} else {
+				if let playlistData = data {
+					let playlistList = playlistData as? SPTPlaylistList
+					let playlists = (playlistList?.items as? [SPTPartialPlaylist])!
+					completion(playlists: playlists, error: nil)
+				} else {
+					completion(playlists: nil, error: NSError(domain: "Parsing error", code: 404, userInfo: nil))
+				}
+			}
+		})
+	}
+	
+	func addTrackToPlaylist(playlist: SPTPartialPlaylist, track: Post, completionHandler: (success: Bool) -> Void) {
+		let spotifyTrackURI = NSURL(string: "spotify:track:" + track.song.spotifyID)!
+		
+		SPTTrack.trackWithURI(spotifyTrackURI, session: SPTAuth.defaultInstance().session) { (error: NSError!, trackData: AnyObject!) -> Void in
+			if error != nil {
+				completionHandler(success: false)
+			} else {
+				SPTPlaylistSnapshot.playlistWithURI(playlist.uri, session: SPTAuth.defaultInstance().session) { (error: NSError!, playlistData: AnyObject!) -> Void in
+					if error != nil {
+						completionHandler(success: false)
+					} else {
+						let selectedPlaylist = playlistData as! SPTPlaylistSnapshot
+						
+						selectedPlaylist.addTracksToPlaylist([trackData], withSession: SPTAuth.defaultInstance().session, callback: { (error) -> Void in
+							if error != nil {
+								completionHandler(success: false)
+							} else {
+								completionHandler(success: true)
+							}
+						})
+					}
+				}
+			}
+		}
+	}
+	
     func createSpotifyPlaylist() {
         SPTPlaylistList.createPlaylistWithName("IceFishing", publicFlag: false, session: SPTAuth.defaultInstance().session) { error, snapshot in
             if error != nil {
