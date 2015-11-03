@@ -38,11 +38,11 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         let dayInnerCircleViewInset = contentView.bounds.size.height * 0.2
-        dayInnerCircleView = UIView(frame: CGRectInset(contentView.frame, dayInnerCircleViewInset, dayInnerCircleViewInset))
+        dayInnerCircleView = UIView(frame: CGRectInset(contentView.bounds, dayInnerCircleViewInset, dayInnerCircleViewInset))
         dayInnerCircleView.layer.cornerRadius = CGRectGetHeight(dayInnerCircleView.bounds) / 2
         contentView.addSubview(dayInnerCircleView)
         
-        dayLabel = UILabel(frame: self.bounds)
+        dayLabel = UILabel(frame: bounds)
         dayLabel.textAlignment = NSTextAlignment.Center
         contentView.addSubview(dayLabel)
     }

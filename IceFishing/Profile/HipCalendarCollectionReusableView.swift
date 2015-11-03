@@ -25,6 +25,7 @@ class HipCalendarCollectionReusableView: UICollectionReusableView {
         
         var rect = CGRectMake(0, 0, self.bounds.width/11, self.bounds.height)
         rect.origin.y = 0.4*frame.size.height
+		userInteractionEnabled = false
         
         titleLabel = UILabel(frame: rect)
         titleLabel.textColor = UIColor.iceDarkRed
