@@ -34,7 +34,7 @@ class SpotifyController {
 			completion(false)
 		}
 	}
-    
+	
     func getSpotifyUser(session: SPTSession) {
         do {
             let currentUserRequest = try SPTUser.createRequestForCurrentUserWithAccessToken(session.accessToken)

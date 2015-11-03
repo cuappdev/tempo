@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SpotifyViewController: UIViewController {
+class SpotifyViewController: UIViewController, SPTAuthViewDelegate {
 	
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -17,13 +17,15 @@ class SpotifyViewController: UIViewController {
     @IBOutlet weak var goToSpotifyButton: UIButton!
     @IBOutlet weak var logOutSpotifyButton: UIButton!
 	
+	var authViewController: SPTAuthViewController?
+	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		title = "Spotify"
 		addHamburgerMenu()
 		addRevealGesture()
 		updateSpotifyState()
-
+		
         profilePicture.layer.cornerRadius = profilePicture.frame.size.width/2
         profilePicture.layer.masksToBounds = true
         profilePicture.layer.borderWidth = 1.5
@@ -36,11 +38,15 @@ class SpotifyViewController: UIViewController {
 			button.layer.cornerRadius = 5.0
 			button.layer.masksToBounds = true
 		}
-		
 	}
 	
 	// Can be called after successful login to Spotify SDK
 	func updateSpotifyState() {
+		// FIX: Temporary fix for user authentication
+		if let session = SPTAuth.defaultInstance().session {
+			self.loggedInToSpotify(session.isValid())
+		}
+
 		SpotifyController.sharedController.spotifyIsAvailable { (success) -> Void in
 			self.loggedInToSpotify(success)
 			if success {
@@ -62,9 +68,40 @@ class SpotifyViewController: UIViewController {
     }
     
 	@IBAction func loginToSpotify() {
-		let loginURL = SPTAuth.defaultInstance().loginURL
-		delay(0.1) { () -> () in
-			UIApplication.sharedApplication().openURL(loginURL)
+		authViewController = SPTAuthViewController.authenticationViewController()
+		print(authViewController!.view.subviews[0].bounds.size)
+		authViewController!.delegate = self
+		authViewController!.modalPresentationStyle = .OverCurrentContext
+		authViewController!.modalTransitionStyle = .CrossDissolve
+		
+		modalPresentationStyle = .CurrentContext
+		definesPresentationContext = true
+		presentViewController(authViewController!, animated: true, completion: nil)
+	}
+	
+	func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
+		print("Logged in with session: \(session)")
+		updateSpotifyState()
+	}
+	
+	func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!) {
+		if error != nil {
+			print("Failed to login: \(error)")
+		}
+	}
+	
+	func authenticationViewControllerDidCancelLogin(authenticationViewController: SPTAuthViewController!) {
+		print("Login cancelled")
+	}
+	
+	func renewToken() {
+		SPTAuth.defaultInstance().renewSession(SPTAuth.defaultInstance().session) { (error, session) -> Void in
+			if error != nil {
+				print("error: \(error)")
+			} else {
+				SPTAuth.defaultInstance().session = session
+				self.updateSpotifyState()
+			}
 		}
 	}
     

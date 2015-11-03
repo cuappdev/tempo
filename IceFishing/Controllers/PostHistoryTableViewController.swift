@@ -213,21 +213,18 @@ class PostHistoryTableViewController: UITableViewController, PostViewDelegate {
 	}
 	
 	func didTapAddButtonForPostView(postView: PostView) {
-		let screenSize = UIScreen.mainScreen().bounds
-		let screenWidth = screenSize.width
-		let screenHeight = screenSize.height
 		savedSongAlertView = SavedSongView.instanceFromNib()
-		savedSongAlertView.showSongStatusPopup(status, playlist: "")
+		savedSongAlertView.showSongStatusPopup(postView.songStatus, playlist: "")
 	}
 	
-	func didLongPressOnCell(post: Post) {
+	func didLongPressOnCell(postView: PostView) {
 		SpotifyController.sharedController.spotifyIsAvailable({ (success) -> Void in
 			if success {
 				let topVC = getTopViewController()
 				let playlistVC = PlaylistTableViewController()
 				let tableViewNavigationController = UINavigationController(rootViewController: playlistVC)
 				
-				playlistVC.song = post
+				playlistVC.song = postView.post
 				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
 			}
 		})

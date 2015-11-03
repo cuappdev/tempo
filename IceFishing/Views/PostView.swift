@@ -11,6 +11,7 @@ import MediaPlayer
 
 @objc protocol PostViewDelegate {
 	optional func didTapAddButtonForPostView(postView: PostView)
+	optional func didLongPressOnCell(postView: PostView)
 	optional func didTapImageForPostView(postView: PostView)
 }
 
@@ -322,7 +323,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 		
 		if sender.isKindOfClass(UILongPressGestureRecognizer) {
 			if sender.state == .Began {
-				self.delegate!.didLongPressOnCell(post)
+				self.delegate!.didLongPressOnCell!(self)
 			}
 		} else if sender.isKindOfClass(UITapGestureRecognizer) {
 			let tapPoint = sender.locationInView(self)
@@ -338,7 +339,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					SpotifyController.sharedController.saveSpotifyTrack(post, completionHandler: { (success) -> Void in
 						if success {
 							self.addButton?.setImage(UIImage(named: "Check"), forState: .Normal)
-							self.delegate!.didTapAddButtonForCell(self.songStatus)
+							self.delegate!.didTapAddButtonForPostView!(self)
 							self.songStatus = .Saved
 						}
 					})
@@ -346,7 +347,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					SpotifyController.sharedController.removeSavedSpotifyTrack(post, completionHandler: { (success) -> Void in
 						if success {
 							self.addButton?.setImage(UIImage(named: "Add"), forState: .Normal)
-							self.delegate!.didTapAddButtonForCell(self.songStatus)
+							self.delegate!.didTapAddButtonForPostView!(self)
 							self.songStatus = .NotSaved
 						}
 					})

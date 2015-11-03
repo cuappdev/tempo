@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1D1DD7141AE492750066AB39 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1DD7121AE492750066AB39 /* Util.swift */; };
-		1D2CA85E1B720290004EAEAB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2CA85C1B720290004EAEAB /* Bolts.framework */; };
 		1D2CA85F1B720290004EAEAB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2CA85D1B720290004EAEAB /* FacebookSDK.framework */; };
 		1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */; };
 		1D653F3E1B81451700F54455 /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D653F3D1B81451700F54455 /* SpotifyController.swift */; };
@@ -61,7 +60,6 @@
 		952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */; };
 		952F0FFD1BCF20E100C53522 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEC1BCF20E100C53522 /* Tools.swift */; };
 		952F0FFE1BCF20E100C53522 /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FED1BCF20E100C53522 /* Tweaks.swift */; };
-		B085F3B51BE3CBB80000421E /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B085F3B31BE3CBB80000421E /* SearchViewController.swift */; };
 		B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B085F3B41BE3CBB80000421E /* SearchViewController.xib */; };
 		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
 		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
@@ -77,6 +75,7 @@
 		D148F4AE1AF03EF5009AB073 /* PostHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */; };
 		D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */; };
 		D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14A31581AF53218005153E6 /* HipStickyHeaderFlowLayout.swift */; };
+		D14D06B21BE9535400ABA1CF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B085F3B31BE3CBB80000421E /* SearchViewController.swift */; };
 		D160ADFF1BE67406003B0E1A /* PlaylistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D160ADFD1BE67406003B0E1A /* PlaylistTableViewCell.swift */; };
 		D160AE001BE67406003B0E1A /* PlaylistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D160ADFE1BE67406003B0E1A /* PlaylistTableViewCell.xib */; };
 		D160AE021BE677D4003B0E1A /* PlaylistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D160AE011BE677D4003B0E1A /* PlaylistTableViewController.swift */; };
@@ -761,7 +760,6 @@
 				6D3FA6611AD5FD5C00B1320D /* UsernameViewController.xib in Resources */,
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
 				D160AE001BE67406003B0E1A /* PlaylistTableViewCell.xib in Resources */,
-				1D22EE6F1B76D0C6006C54A9 /* SongSearchViewController.xib in Resources */,
 				1DC9BBA01AE805A00033E970 /* FeedTableViewCell.xib in Resources */,
 				1DE649C41B78590800DA5499 /* SpotifyViewController.xib in Resources */,
 				1DCB96151AED5EA7007F6A4B /* APIViewController.xib in Resources */,
@@ -812,6 +810,7 @@
 				952F0FEE1BCF20E100C53522 /* ADScreenCapture.swift in Sources */,
 				952F0FF31BCF20E100C53522 /* _FBTweakDictionaryViewController.m in Sources */,
 				952F0FFB1BCF20E100C53522 /* FBTweakViewController.m in Sources */,
+				D14D06B21BE9535400ABA1CF /* SearchViewController.swift in Sources */,
 				7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */,
 				952F0FFA1BCF20E100C53522 /* FBTweakStore.m in Sources */,
 				D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */,

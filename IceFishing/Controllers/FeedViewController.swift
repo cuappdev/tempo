@@ -322,23 +322,18 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 	// - Save song button clicked
 	
 	func didTapAddButtonForPostView(postView: PostView) {
-		let currentWindow = UIApplication.sharedApplication().keyWindow
-		let screenWidth = currentWindow!.frame.size.width
-		let screenHeight = currentWindow!.frame.size.height
-		let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
-		
 		savedSongAlertView = SavedSongView.instanceFromNib()
-		savedSongAlertView.showSongStatusPopup(status, playlist: "")
+		savedSongAlertView.showSongStatusPopup(postView.songStatus, playlist: "")
 	}
 	
-	func didLongPressOnCell(post: Post) {
+	func didLongPressOnCell(postView: PostView) {
 		SpotifyController.sharedController.spotifyIsAvailable({ (success) -> Void in
 			if success {
 				let topVC = getTopViewController()
 				let playlistVC = PlaylistTableViewController()
 				let tableViewNavigationController = UINavigationController(rootViewController: playlistVC)
 				
-				playlistVC.song = post
+				playlistVC.song = postView.post
 				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
 			}
 		})
