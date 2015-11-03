@@ -149,7 +149,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
 	
 	private func displayUsers(displayType: DisplayType) {
-		let followersVC = UsersViewController(nibName: "UsersViewController", bundle: nil)
+		let followersVC = UsersViewController()
 		followersVC.displayType = displayType
 		followersVC.user = user
 		followersVC.title = String(displayType)
@@ -237,7 +237,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let date = dateForIndexPath(indexPath)
 			
         // Push to TableView with posted songs and dates
-        let postHistoryVC = PostHistoryTableViewController(nibName: "PostHistoryTableViewController", bundle: nil)
+        let postHistoryVC = PostHistoryTableViewController()
 		postHistoryVC.posts = posts
         postHistoryVC.postedDates = postedDates
 		postHistoryVC.songLikes = postedLikes

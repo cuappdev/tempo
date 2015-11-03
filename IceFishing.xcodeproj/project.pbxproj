@@ -74,12 +74,10 @@
 		D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */; };
 		D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4971AF031DB009AB073 /* NSDateExtension.swift */; };
 		D148F4AA1AF03EB4009AB073 /* PostHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */; };
-		D148F4AB1AF03EB4009AB073 /* PostHistoryTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D148F4A91AF03EB4009AB073 /* PostHistoryTableViewController.xib */; };
 		D148F4AE1AF03EF5009AB073 /* PostHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */; };
 		D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */; };
 		D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14A31581AF53218005153E6 /* HipStickyHeaderFlowLayout.swift */; };
 		D17395741ADB080900A53AEE /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395721ADB080900A53AEE /* UsersViewController.swift */; };
-		D17395751ADB080900A53AEE /* UsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395731ADB080900A53AEE /* UsersViewController.xib */; };
 		D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395881ADF360C00A53AEE /* SignInViewController.swift */; };
 		D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395891ADF360C00A53AEE /* SignInViewController.xib */; };
 		FA171CC01AF1D758007B40AF /* FeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA171CBF1AF1D758007B40AF /* FeedImageView.swift */; };
@@ -285,12 +283,10 @@
 		D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarDayCollectionViewCell.swift; sourceTree = "<group>"; };
 		D148F4971AF031DB009AB073 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostHistoryTableViewController.swift; path = ../Controllers/PostHistoryTableViewController.swift; sourceTree = "<group>"; };
-		D148F4A91AF03EB4009AB073 /* PostHistoryTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostHistoryTableViewController.xib; path = ../Controllers/PostHistoryTableViewController.xib; sourceTree = "<group>"; };
 		D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHistoryTableViewCell.xib; sourceTree = "<group>"; };
 		D14A31581AF53218005153E6 /* HipStickyHeaderFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipStickyHeaderFlowLayout.swift; sourceTree = "<group>"; };
 		D17395721ADB080900A53AEE /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
-		D17395731ADB080900A53AEE /* UsersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsersViewController.xib; sourceTree = "<group>"; };
 		D17395881ADF360C00A53AEE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		D17395891ADF360C00A53AEE /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		FA171CBF1AF1D758007B40AF /* FeedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedImageView.swift; sourceTree = "<group>"; };
@@ -513,7 +509,6 @@
 				D1173FFF1AF8574400302FFD /* ProfileViewController.swift */,
 				D11740071AF8574900302FFD /* ProfileViewController.xib */,
 				D17395721ADB080900A53AEE /* UsersViewController.swift */,
-				D17395731ADB080900A53AEE /* UsersViewController.xib */,
 				D102A9C51AE889D600C66385 /* SideBarViewController.swift */,
 				D102A9C61AE889D600C66385 /* SideBarViewController.xib */,
 				6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */,
@@ -585,7 +580,6 @@
 			isa = PBXGroup;
 			children = (
 				D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */,
-				D148F4A91AF03EB4009AB073 /* PostHistoryTableViewController.xib */,
 				D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */,
 				D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */,
 				D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */,
@@ -752,10 +746,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D17395751ADB080900A53AEE /* UsersViewController.xib in Resources */,
 				B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */,
 				FAB564741AF6A8C9001059DF /* LikedTableViewController.xib in Resources */,
-				D148F4AB1AF03EB4009AB073 /* PostHistoryTableViewController.xib in Resources */,
 				D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */,
 				1DB476481AEF24670066014F /* PostButton.xib in Resources */,
 				6D3FA6611AD5FD5C00B1320D /* UsernameViewController.xib in Resources */,
