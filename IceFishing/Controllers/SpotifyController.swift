@@ -14,16 +14,21 @@ class SpotifyController {
 	let spotifyPlaylistURIKey = "SpotifyPlaylistURIKey"
 	static let sharedController: SpotifyController = SpotifyController()
 	
+	/*
+	TODO: Handle Spotify Access Token Expiration
+	
+	Currently, the app gets access tokens that only last for one hour, and once 
+	the token expires, the app crashes upon launch. For now, users will have to login 
+	every time the access token expires. We need to find a way to refresh the tokens
+	before they expire. The Spotify iOS SDK requires developers to run their own token 
+	exchange service to get refresh/swap tokens. This requires some backend changes.
+	*/
+	
 	func spotifyIsAvailable(completion: Bool -> Void) {
 		if let session = SPTAuth.defaultInstance().session {
 			if session.isValid() {
                 getSpotifyUser(session)
 				completion(true)
-			} else {
-				SPTAuth.defaultInstance().renewSession(session) { error, _ in
-                    self.getSpotifyUser(session)
-					completion(error == nil)
-				}
 			}
 		} else {
 			completion(false)

@@ -11,7 +11,7 @@ import UIKit
 class SpotifyViewController: UIViewController {
 	
     @IBOutlet weak var profilePicture: UIImageView!
-    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var loginToSpotifyButton: UIButton!
     @IBOutlet weak var createPlaylistSwitch: UISwitch!
     @IBOutlet weak var goToSpotifyButton: UIButton!
@@ -23,40 +23,38 @@ class SpotifyViewController: UIViewController {
 		addHamburgerMenu()
 		addRevealGesture()
 		updateSpotifyState()
-		
-		// TODO: For testing purposes only
-		let barButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "showPlaylists")
-		self.navigationItem.rightBarButtonItem = barButton
-        
+
         profilePicture.layer.cornerRadius = profilePicture.frame.size.width/2
         profilePicture.layer.masksToBounds = true
         profilePicture.layer.borderWidth = 1.5
         profilePicture.layer.borderColor = UIColor.whiteColor().CGColor
         createPlaylistSwitch.tintColor = UIColor.iceDarkRed
         createPlaylistSwitch.onTintColor = UIColor.iceDarkRed
-	}
-	
-	func showPlaylists() {
-		let playlistVC = PlaylistTableViewController()
-		self.presentViewController(playlistVC, animated: true, completion: nil)
+		
+		for button in [loginToSpotifyButton, goToSpotifyButton, logOutSpotifyButton] {
+			button.backgroundColor = UIColor.iceDarkRed
+			button.layer.cornerRadius = 5.0
+			button.layer.masksToBounds = true
+		}
+		
 	}
 	
 	// Can be called after successful login to Spotify SDK
 	func updateSpotifyState() {
-		SpotifyController.sharedController.spotifyIsAvailable { [weak self] in
-            self!.loggedInToSpotify($0)
-            if $0 {
-                let currentSpotifyUser = User.currentUser.currentSpotifyUser
-                self!.usernameLabel.text = "Logged in as \(currentSpotifyUser!.username)"
-                currentSpotifyUser!.loadImage {
-                    self?.profilePicture.image = $0
-                }
-            }
+		SpotifyController.sharedController.spotifyIsAvailable { (success) -> Void in
+			self.loggedInToSpotify(success)
+			if success {
+				let currentSpotifyUser = User.currentUser.currentSpotifyUser
+				self.nameLabel.text = currentSpotifyUser!.name
+				currentSpotifyUser!.loadImage {
+					self.profilePicture.image = $0
+				}
+			}
 		}
 	}
     
     func loggedInToSpotify(loggedIn: Bool) {
-        let elements = [profilePicture, usernameLabel, createPlaylistSwitch, goToSpotifyButton, logOutSpotifyButton]
+        let elements = [profilePicture, nameLabel, createPlaylistSwitch, goToSpotifyButton, logOutSpotifyButton]
         loginToSpotifyButton.hidden = loggedIn
         for e in elements {
             e.hidden = !loggedIn
@@ -64,16 +62,10 @@ class SpotifyViewController: UIViewController {
     }
     
 	@IBAction func loginToSpotify() {
-        SPTAuth.defaultInstance().requestedScopes = [
-            SPTAuthPlaylistReadPrivateScope,
-            SPTAuthPlaylistModifyPublicScope,
-            SPTAuthPlaylistModifyPrivateScope,
-            SPTAuthUserLibraryReadScope,
-            SPTAuthUserLibraryModifyScope
-        ]
-
 		let loginURL = SPTAuth.defaultInstance().loginURL
-		UIApplication.sharedApplication().openURL(loginURL)
+		delay(0.1) { () -> () in
+			UIApplication.sharedApplication().openURL(loginURL)
+		}
 	}
     
     @IBAction func toggleCreatePlaylistSwitch(sender: UISwitch) {

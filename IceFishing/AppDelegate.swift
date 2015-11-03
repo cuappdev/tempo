@@ -43,8 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
 		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")
-		SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPrivateScope]
 		SPTAuth.defaultInstance().sessionUserDefaultsKey = "SpotifyUserDefaultsKey"
+		SPTAuth.defaultInstance().requestedScopes = [
+			SPTAuthPlaylistReadPrivateScope,
+			SPTAuthPlaylistModifyPublicScope,
+			SPTAuthPlaylistModifyPrivateScope,
+			SPTAuthUserLibraryReadScope,
+			SPTAuthUserLibraryModifyScope
+		]
 		
 		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		self.window!.backgroundColor = UIColor.iceLightGray

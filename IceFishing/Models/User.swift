@@ -147,7 +147,7 @@ class CurrentSpotifyUser: NSObject, NSCoding {
         name = json["display_name"].stringValue
         username = json["id"].stringValue
         let images = json["images"].arrayValue
-        imageURLString = images[0]["url"].stringValue
+		imageURLString = images.isEmpty ? "" : images[0]["url"].stringValue
         let externalURLs = json["external_urls"].dictionaryValue
         spotifyUserURLString = externalURLs["spotify"]!.stringValue
         loadImage {
