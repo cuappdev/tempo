@@ -147,12 +147,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		navigationController?.pushViewController(followersVC, animated: true)
 	}
 	
-	private func displayUsers(displayType: DisplayType) {
-		let followersVC = UsersViewController()
-		followersVC.displayType = displayType
-		followersVC.user = user
-		followersVC.title = String(displayType)
-		navigationController?.pushViewController(followersVC, animated: true)
 	@IBAction func userHandleButtonClicked(sender: UIButton) {
 		let editAlert = UIAlertController(title: "Edit Username", message: "This is how you appear to other users.", preferredStyle: UIAlertControllerStyle.Alert)
 		editAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
