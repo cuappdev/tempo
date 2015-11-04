@@ -45,6 +45,7 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
         dayLabel = UILabel(frame: bounds)
         dayLabel.textAlignment = NSTextAlignment.Center
         contentView.addSubview(dayLabel)
+		userInteractionEnabled = false
     }
     
     required init?(coder aDecoder: NSCoder) {

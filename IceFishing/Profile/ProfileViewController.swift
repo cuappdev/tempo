@@ -15,7 +15,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     // Post History Calendar
     var calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-    var startDate = NSDate(dateString:"2015-01-26")
 	var posts: [Post] = []
     var postedDates: [NSDate] = []
 	var postedDays: [Int] = []
