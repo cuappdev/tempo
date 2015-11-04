@@ -14,6 +14,7 @@ enum Router: URLStringConvertible {
 	static let baseURLString = "http://icefishing-web.herokuapp.com"
 	case Root
 	case ValidUsername
+	case ValidFBID
 	case Sessions
 	case UserSearch
 	case Users(String)
@@ -33,6 +34,8 @@ enum Router: URLStringConvertible {
 				return "/"
 			case .ValidUsername:
 				return "/users/valid_username"
+			case .ValidFBID:
+				return "/users/valid_fbid"
 			case .Sessions:
 				return "/sessions"
 			case .UserSearch:
@@ -89,7 +92,12 @@ class API {
 		get(.ValidUsername, params: ["username": username], map: map, completion: completion)
 	}
 	
-	func getCurrentUser(completion: User -> Void) {
+	func fbIdIsValid(fbid: String, completion: Bool -> Void) {
+		let map: [String: Bool] -> Bool? = { $0["is_valid"] }
+		get(.ValidFBID, params: ["fbid": fbid], map: map, completion: completion)
+	}
+	
+	func getCurrentUser(username: String, completion: User -> Void) {
 		let map: [String: AnyObject] -> User? = {
 			if let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
 				self.sessionCode = code
@@ -98,15 +106,14 @@ class API {
 			}
 			return nil
 		}
-		// TODO: This call should probably be removed and in place only called by signin folks after login
-		// Other times you can simply reference the saved user object, instead of pinging facebook
+		
 		let userRequest = FBRequest.requestForMe()
 		userRequest.startWithCompletionHandler { [unowned self] (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
 			if error == nil {
 				let user = [
 					"email": result["email"] as! String,
 					"name": result["name"] as! String,
-					"username": "",
+					"username": username,
 					"fbid": result["id"] as! String
 				]
 				self.post(.Sessions, params: ["user": user], map: map, completion: completion)

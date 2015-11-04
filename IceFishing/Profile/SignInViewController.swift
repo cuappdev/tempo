@@ -27,19 +27,6 @@ class SignInViewController: UIViewController {
             // Handle session state changes
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.sessionStateChanged(session, state: state, error: error)
-            
-            // Request FB user info
-            if session.isOpen {
-                if User.currentUser.username == "" {
-					// New user
-                    let usernameVC = UsernameViewController(nibName: "Username", bundle: nil)
-                    self.presentViewController(usernameVC, animated: false, completion: nil)
-                } else {
-					// Old user
-					let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-					appDelegate.toggleRootVC()
-                }
-            }
         })
         
     }

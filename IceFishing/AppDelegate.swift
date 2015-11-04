@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				self.sessionStateChanged(session, state: state, error: error)
 			})
 		}
-		
+
 		toggleRootVC()
 		
 		//declaration of tools remains active in background while app runs
@@ -113,8 +113,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			FBSession.activeSession().closeAndClearTokenInformation()
 		} else {
 			if state == FBSessionState.Open {
-				print("Session Opened")
-				API.sharedAPI.getCurrentUser { _ in }
+				let userRequest = FBRequest.requestForMe()
+
+				userRequest.startWithCompletionHandler { (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+					if error == nil {
+						let fbid = result["id"] as! String
+						API.sharedAPI.fbIdIsValid(fbid, completion: { (newUser) -> Void in
+							if newUser {
+								let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
+								usernameVC.name = result["name"] as! String
+								usernameVC.fbID = result["id"] as! String
+								let navController = UINavigationController(rootViewController: usernameVC)
+								self.window!.rootViewController = navController
+							} else {
+								API.sharedAPI.getCurrentUser("") { _ in
+									let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+									appDelegate.toggleRootVC()
+								}
+							}
+						})
+					}
+				}
 			}
 		}
 		

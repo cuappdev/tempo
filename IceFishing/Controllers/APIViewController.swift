@@ -14,7 +14,7 @@ class APIViewController: UIViewController {
 	// TODO: Create unit tests for API
 	
     @IBAction func sendRequest(sender: AnyObject) {
-		API.sharedAPI.getCurrentUser { currentUser in
+		API.sharedAPI.getCurrentUser("") { currentUser in
             print(currentUser)
         }
     }
