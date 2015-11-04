@@ -46,7 +46,8 @@ class SpotifyController {
                 print(error)
                 data = nil
             }
-            let jsonDict = JSON(data: data!, options: NSJSONReadingOptions(rawValue: 0), error: &error)
+			guard let unwrappedData = data else { return }
+            let jsonDict = JSON(data: unwrappedData, options: NSJSONReadingOptions(rawValue: 0), error: &error)
             User.currentUser.currentSpotifyUser = CurrentSpotifyUser(json: jsonDict)
         } catch let error as NSError {
             print(error)

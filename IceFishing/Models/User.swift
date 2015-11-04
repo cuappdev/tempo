@@ -51,7 +51,8 @@ class User: NSObject, NSCoding {
 			let request = NSURLRequest(URL: self.fbImageURL, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 			
 			NSURLSession.sharedSession().dataTaskWithRequest(request) { data, _, _ in
-				self.profileImage = UIImage(data: data!)
+				guard let unwrappedData = data else { return }
+				self.profileImage = UIImage(data: unwrappedData)
 				if let image = self.profileImage {
 					dispatch_async(dispatch_get_main_queue()) {
 						completion(image)
@@ -162,7 +163,8 @@ class CurrentSpotifyUser: NSObject, NSCoding {
             let request = NSURLRequest(URL: self.image, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
             
             NSURLSession.sharedSession().dataTaskWithRequest(request) { data, _, _ in
-                self.profileImage = UIImage(data: data!)
+				guard let unwrappedData = data else { return }
+                self.profileImage = UIImage(data: unwrappedData)
                 if let image = self.profileImage {
                     dispatch_async(dispatch_get_main_queue()) {
                         completion(image)
