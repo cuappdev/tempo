@@ -174,6 +174,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 				self.showErrorAlert("Oh no!", message: "Username must have at least one character.", actionTitle: "Try again")
 			} else if invalidChars != nil {
 				self.showErrorAlert("Invalid characters", message: "Only underscores and alphanumeric characters are allowed.", actionTitle: "Try again")
+			} else if newUsername == User.currentUser.username {
+				// Same username, so do nothing
 			} else {
 				API.sharedAPI.usernameIsValid(newUsername) { success in
 					if (success) {
