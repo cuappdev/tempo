@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var userHandleLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var followButton: UIButton!
 	@IBOutlet weak var followersButton: UIButton!
 	@IBOutlet weak var followingButton: UIButton!
@@ -58,11 +58,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		title = "Profile"
 		if user == User.currentUser {
 			addHamburgerMenu()
+			followButton.addTarget(self, action: "userHandleButtonClicked:", forControlEvents: .TouchUpInside)
+		} else {
+			followButton.addTarget(self, action: "followButtonPressed:", forControlEvents: .TouchUpInside)
 		}
+		
 		addRevealGesture()
 		
         nameLabel.text = user.name
-        userHandleLabel.text = "@\(user.username)"
+		usernameLabel.text = user.username
         user.loadImage {
             self.profilePictureView.image = $0
         }
@@ -74,7 +78,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		followButton.setTitle(isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
 		
         if User.currentUser.username == user.username {
-            followButton.hidden = true
+            followButton.setTitle("EDIT", forState: .Normal)
 		}
 		
 		followingButton.setTitle("\(user.followingCount) Following", forState: .Normal)
@@ -140,13 +144,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     @IBAction func followersButtonPressed(sender: UIButton) {
-		displayUsers(.Followers)
-    }
-
-    @IBAction func followingButtonPressed(sender: UIButton) {
-        displayUsers(.Following)
+        displayUsers(.Followers)
     }
 	
+	@IBAction func followingButtonPressed(sender: UIButton) {
+		displayUsers(.Following)
+	}
+
 	private func displayUsers(displayType: DisplayType) {
 		let followersVC = UsersViewController()
 		followersVC.displayType = displayType
@@ -155,13 +159,53 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		navigationController?.pushViewController(followersVC, animated: true)
 	}
 	
+	@IBAction func userHandleButtonClicked(sender: UIButton) {
+		let editAlert = UIAlertController(title: "Edit Username", message: "This is how you appear to other users.", preferredStyle: .Alert)
+		editAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+		editAlert.addTextFieldWithConfigurationHandler { textField in
+			textField.placeholder = "New username"
+			textField.textAlignment = .Center
+		}
+		editAlert.addAction(UIAlertAction(title: "Save", style: .Default) { action -> Void in
+			let newUsername = editAlert.textFields!.first!.text!
+			let charSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_").invertedSet
+			let invalidChars = newUsername.rangeOfCharacterFromSet(charSet)
+			
+			if (newUsername == "") {
+				self.showErrorAlert("Oh no!", message: "Username must have at least one character.", actionTitle: "Try again")
+			} else if invalidChars != nil {
+				self.showErrorAlert("Invalid characters", message: "Only underscores and alphanumeric characters are allowed.", actionTitle: "Try again")
+			} else {
+				let oldUsername = User.currentUser.username
+				
+				if newUsername.lowercaseString != oldUsername.lowercaseString {
+					API.sharedAPI.updateCurrentUser(newUsername) { (success) -> Void in
+						if success {
+							self.usernameLabel.text = User.currentUser.username
+						} else {
+							self.showErrorAlert("Sorry!", message: "Username is taken.", actionTitle: "Try again")
+						}
+						
+					}
+				}
+			}
+		})
+		self.presentViewController(editAlert, animated: true, completion: nil)
+	}
+	
+	func showErrorAlert(title: String, message: String, actionTitle: String) {
+		let errorAlert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+		errorAlert.addAction(UIAlertAction(title: actionTitle, style: .Default, handler: nil))
+		presentViewController(errorAlert, animated: true, completion: nil)
+	}
+	
     // <------------------------POST HISTORY------------------------>
-    
+	
     // When post history label clicked
     @IBAction func scrollToTop(sender: UIButton) {
         collectionView.setContentOffset(CGPointZero, animated: true)
     }
-    
+	
     // Helper Methods
     private func dateForIndexPath(indexPath: NSIndexPath) -> NSDate {
         let date = NSDate().dateByAddingMonths(-indexPath.section).lastDayOfMonth()
