@@ -160,13 +160,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	}
 	
 	@IBAction func userHandleButtonClicked(sender: UIButton) {
-		let editAlert = UIAlertController(title: "Edit Username", message: "This is how you appear to other users.", preferredStyle: UIAlertControllerStyle.Alert)
-		editAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+		let editAlert = UIAlertController(title: "Edit Username", message: "This is how you appear to other users.", preferredStyle: .Alert)
+		editAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		editAlert.addTextFieldWithConfigurationHandler { textField in
 			textField.placeholder = "New username"
-			textField.textAlignment = NSTextAlignment.Center
+			textField.textAlignment = .Center
 		}
-		editAlert.addAction(UIAlertAction(title: "Save", style: UIAlertActionStyle.Default) { action -> Void in
+		editAlert.addAction(UIAlertAction(title: "Save", style: .Default) { action -> Void in
 			let newUsername = editAlert.textFields!.first!.text!
 			let charSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_").invertedSet
 			let invalidChars = newUsername.rangeOfCharacterFromSet(charSet)

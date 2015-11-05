@@ -75,8 +75,8 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
 	}
 	
 	func showErrorAlert(title: String, message: String, actionTitle: String) {
-		let errorAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-		errorAlert.addAction(UIAlertAction(title: actionTitle, style: UIAlertActionStyle.Default, handler: nil))
+		let errorAlert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+		errorAlert.addAction(UIAlertAction(title: actionTitle, style: .Default, handler: nil))
 		presentViewController(errorAlert, animated: true, completion: nil)
 		usernameTextField.text = ""
 	}
