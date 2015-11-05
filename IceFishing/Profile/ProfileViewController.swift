@@ -176,17 +176,17 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			} else if invalidChars != nil {
 				self.showErrorAlert("Invalid characters", message: "Only underscores and alphanumeric characters are allowed.", actionTitle: "Try again")
 			} else {
-				print("check username validity")
-				API.sharedAPI.usernameIsValid(newUsername) { success in
-					let oldUsername = User.currentUser.username
-					if newUsername.lowercaseString != oldUsername.lowercaseString {
-						if (success) {
+				let oldUsername = User.currentUser.username
+				
+				if newUsername.lowercaseString != oldUsername.lowercaseString {
+					API.sharedAPI.updateCurrentUser(newUsername) { (success) -> Void in
+						if success {
 							User.currentUser.username = newUsername
-							API.sharedAPI.updateCurrentUser(newUsername) { user in }
 							self.usernameLabel.text = User.currentUser.username
 						} else {
 							self.showErrorAlert("Sorry!", message: "Username is taken.", actionTitle: "Try again")
 						}
+						
 					}
 				}
 			}

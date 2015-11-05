@@ -122,13 +122,10 @@ class API {
 	}
 	
 	func updateCurrentUser(changedUsername: String, didSucceed: Bool -> Void) {
-		let map: [String: Int] -> Bool? = {
-			if $0["user"] != nil {
-				User.currentUser.username = changedUsername
-				print("User: \(User.currentUser)")
-				return true
-			}
-			return false
+		let map: [String: Bool] -> Bool? = {
+			guard let success = $0["success"] where success != false else { return false }
+			User.currentUser.username = changedUsername
+			return true
 		}
 		let changes = ["username": changedUsername]
 		patch(.Users(User.currentUser.id), params: ["user": changes, "session_code": sessionCode], map: map, completion: didSucceed)
