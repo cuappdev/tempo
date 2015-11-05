@@ -9,7 +9,7 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate {
 	
 	var window: UIWindow?
 	var tools: Tools!
@@ -100,6 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					self?.revealVC.setFrontViewPosition(.Left, animated: true)
 				}
 			}
+			revealVC.delegate = self
 			
 			self.window!.rootViewController = revealVC
 		}
@@ -153,5 +154,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		
 		return wasHandled
+	}
+	
+	// MARK: - SWRevealDelegate
+	
+	func revealController(revealController: SWRevealViewController!, willMoveToPosition position: FrontViewPosition) {
+		UIApplication.sharedApplication().sendAction("resignFirstResponder", to: nil, from: nil, forEvent: nil)
 	}
 }
