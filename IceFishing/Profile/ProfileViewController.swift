@@ -58,6 +58,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		title = "Profile"
 		if user == User.currentUser {
 			addHamburgerMenu()
+			userHandleButton.enabled = true
+		} else {
+			userHandleButton.enabled = false
 		}
 		addRevealGesture()
 		
@@ -137,7 +140,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 print(bool)
             }
         }
-    } 
+    }
+    
+    @IBAction func followersButtonPressed(sender: UIButton) {
+        displayUsers(.Followers)
+    }
+	
+	@IBAction func followingButtonPressed(sender: UIButton) {
+		displayUsers(.Following)
+	}
 
 	private func displayUsers(displayType: DisplayType) {
 		let followersVC = UsersViewController()
