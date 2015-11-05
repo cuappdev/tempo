@@ -33,11 +33,10 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
 			API.sharedAPI.usernameIsValid(username) { success in
 				if success {
 					// Username available
-					User.currentUser.username = username
-					API.sharedAPI.getCurrentUser(username, completion: { _ in
+					API.sharedAPI.getCurrentUser(username) { _ in
 						let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 						appDelegate.toggleRootVC()
-					})
+					}
 				} else {
 					// Username already taken (prompt user with error alert in UsernameVC)
 					self.showErrorAlert("Sorry!", message: "Username is taken.", actionTitle: "Try again")
@@ -73,10 +72,6 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
 				self.userProfilePicture.image = userImage
 			}
 		}
-	}
-	
-	override func viewDidAppear(animated: Bool) {
-		print(User.currentUser)
 	}
 	
 	func showErrorAlert(title: String, message: String, actionTitle: String) {

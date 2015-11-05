@@ -181,7 +181,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 				if newUsername.lowercaseString != oldUsername.lowercaseString {
 					API.sharedAPI.updateCurrentUser(newUsername) { (success) -> Void in
 						if success {
-							User.currentUser.username = newUsername
 							self.usernameLabel.text = User.currentUser.username
 						} else {
 							self.showErrorAlert("Sorry!", message: "Username is taken.", actionTitle: "Try again")
@@ -195,8 +194,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	}
 	
 	func showErrorAlert(title: String, message: String, actionTitle: String) {
-		let errorAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-		errorAlert.addAction(UIAlertAction(title: actionTitle, style: UIAlertActionStyle.Default, handler: nil))
+		let errorAlert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+		errorAlert.addAction(UIAlertAction(title: actionTitle, style: .Default, handler: nil))
 		presentViewController(errorAlert, animated: true, completion: nil)
 	}
 	
