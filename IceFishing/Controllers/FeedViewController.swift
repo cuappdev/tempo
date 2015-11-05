@@ -9,9 +9,8 @@
 import UIKit
 import MediaPlayer
 
-class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDelegate {
+class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
 	
-	var posts: [Post] = []
 	var customRefresh:ADRefreshControl!
 	var plusButton: UIButton!
 	var savedSongAlertView: SavedSongView!
@@ -23,27 +22,6 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 		return vc
 		}()
 	
-	var currentlyPlayingIndexPath: NSIndexPath? {
-		didSet {
-			if let row = currentlyPlayingIndexPath?.row where currentlyPlayingPost?.isEqual(posts[row]) ?? false {
-				currentlyPlayingPost?.player.togglePlaying()
-			} else {
-				currentlyPlayingPost?.player.pause(true)
-				currentlyPlayingPost?.player.progress = 1.0 // Fill cell as played
-				
-				if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-					currentlyPlayingPost = posts[currentlyPlayingIndexPath.row]
-					currentlyPlayingPost!.player.play(true)
-				} else {
-					currentlyPlayingPost = nil
-				}
-			}
-			tableView.selectRowAtIndexPath(currentlyPlayingIndexPath, animated: false, scrollPosition: .None)
-			pinIfNeeded()
-		}
-	}
-	var currentlyPlayingPost: Post?
-	
 	let topPinViewContainer = UIView()
 	let bottomPinViewContainer = UIView()
 	let pinView = NSBundle.mainBundle().loadNibNamed("FeedTableViewCell", owner: nil, options: nil)[0] as! FeedTableViewCell
@@ -54,81 +32,8 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification, object: nil, queue: nil) { [weak self] note in
-			if note.object as? Player == self?.currentlyPlayingPost?.player {
-				self?.updateNowPlayingInfo()
-			}
-		}
-		
-		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidSeekNotification, object: nil, queue: nil) { [weak self] note in
-			if note.object as? Player == self?.currentlyPlayingPost?.player {
-				self?.updateNowPlayingInfo()
-			}
-		}
-		
-		NSNotificationCenter.defaultCenter().addObserverForName(SongDidDownloadArtworkNotification, object: nil, queue: nil) { [weak self] note in
-			if note.object as? Song == self?.currentlyPlayingPost?.song {
-				self?.updateNowPlayingInfo()
-			}
-		}
-		
-		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidFinishPlayingNotification, object: nil, queue: nil) { [weak self] note in
-			if let current = self?.currentlyPlayingPost {
-				if current.player == note.object as? Player {
-					let path = self!.currentlyPlayingIndexPath
-					if let path = path {
-						var row = path.row + 1
-						if row >= self!.posts.count {
-							row = 0
-						}
-						
-						self?.currentlyPlayingIndexPath = NSIndexPath(forRow: row, inSection: path.section)
-					}
-				}
-			}
-		}
-		
-		// TODO: fetch the largest artwork image for lockscreen in Post
-		let center = MPRemoteCommandCenter.sharedCommandCenter()
-		center.playCommand.addTargetWithHandler { [weak self] _ in
-			if let player = self?.currentlyPlayingPost?.player {
-				player.play(true)
-				return .Success
-			}
-			return .NoSuchContent
-		}
-		
-		center.pauseCommand.addTargetWithHandler { [weak self] _ in
-			if let player = self?.currentlyPlayingPost?.player {
-				player.pause(true)
-				return .Success
-			}
-			return .NoSuchContent
-		}
-		
-		center.nextTrackCommand.addTargetWithHandler { [weak self] _ in
-			if let path = self?.currentlyPlayingIndexPath {
-				if path.row < self!.posts.count - 1 {
-					self?.currentlyPlayingIndexPath = NSIndexPath(forRow: path.row + 1, inSection: path.section)
-					return .Success
-				}
-			}
-			return .NoSuchContent
-		}
-		
-		center.previousTrackCommand.addTargetWithHandler { [weak self] _ in
-			if let path = self?.currentlyPlayingIndexPath {
-				if path.row > 0 {
-					self?.currentlyPlayingIndexPath = NSIndexPath(forRow: path.row - 1, inSection: path.section)
-				}
-				return .Success
-			}
-			return .NoSuchContent
-		}
-		
-		center.seekForwardCommand.addTargetWithHandler { _ in .Success }
-		center.seekBackwardCommand.addTargetWithHandler { _ in .Success }
-		
+		notifCenterSetup()
+		commandCenterHandler()
 		
 		//—————————————from MAIN VC——————————————————
 		title = "Feed"
