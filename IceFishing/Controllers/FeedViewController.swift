@@ -322,22 +322,21 @@ class FeedViewController: UITableViewController, SongSearchDelegate, PostViewDel
 	// - Save song button clicked
 	
 	func didTapAddButtonForPostView(postView: PostView) {
-		let screenSize = UIScreen.mainScreen().bounds
-		let screenWidth = screenSize.width
-		let screenHeight = screenSize.height
 		savedSongAlertView = SavedSongView.instanceFromNib()
-		savedSongAlertView.center = CGPointMake(screenWidth / 2, screenHeight / 2.2)
-		savedSongAlertView.layer.cornerRadius = 10
-		view.addSubview(savedSongAlertView)
-		let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-		dispatch_after(delayTime, dispatch_get_main_queue()) {
-			UIView.animateWithDuration(0.5, animations: {
-				self.savedSongAlertView.alpha = 0.0
-				}, completion: { _ in
-					self.savedSongAlertView.removeFromSuperview()
-			})
-		}
-
+		savedSongAlertView.showSongStatusPopup(postView.songStatus, playlist: "")
+	}
+	
+	func didLongPressOnCell(postView: PostView) {
+		SpotifyController.sharedController.spotifyIsAvailable({ (success) -> Void in
+			if success {
+				let topVC = getTopViewController()
+				let playlistVC = PlaylistTableViewController()
+				let tableViewNavigationController = UINavigationController(rootViewController: playlistVC)
+				
+				playlistVC.song = postView.post
+				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
+			}
+		})
 	}
 	
 	//MARK: -

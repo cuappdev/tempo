@@ -12,6 +12,7 @@ import SwiftyJSON
 class User: NSObject, NSCoding {
 	
 	static var currentUser: User = User()
+    var currentSpotifyUser: CurrentSpotifyUser?
 	
 	var caption = ""
 	var createdAt = ""
@@ -50,7 +51,8 @@ class User: NSObject, NSCoding {
 			let request = NSURLRequest(URL: self.fbImageURL, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 			
 			NSURLSession.sharedSession().dataTaskWithRequest(request) { data, _, _ in
-				self.profileImage = UIImage(data: data!)
+				guard let unwrappedData = data else { return }
+				self.profileImage = UIImage(data: unwrappedData)
 				if let image = self.profileImage {
 					dispatch_async(dispatch_get_main_queue()) {
 						completion(image)
@@ -123,5 +125,71 @@ class User: NSObject, NSCoding {
 		aCoder.encodeObject(updatedAt, forKey: "updated_at")
 		aCoder.encodeObject(username, forKey: "username")
 	}
+}
+
+class CurrentSpotifyUser: NSObject, NSCoding {
+
+    var name: String = ""
+    var username: String = ""
+    var imageURLString: String = ""
+    var spotifyUserURLString: String = ""
+    var spotifyUserURL: NSURL {
+        return NSURL(string: spotifyUserURLString)!
+    }
+    private var image: NSURL {
+        return NSURL(string: imageURLString)!
+    }
+    private var profileImage: UIImage?
+    
+    override init() {}
+    
+    init(json: JSON) {
+        super.init()
+        name = json["display_name"].stringValue
+        username = json["id"].stringValue
+        let images = json["images"].arrayValue
+		imageURLString = images.isEmpty ? "" : images[0]["url"].stringValue
+        let externalURLs = json["external_urls"].dictionaryValue
+        spotifyUserURLString = externalURLs["spotify"]!.stringValue
+        loadImage {
+            self.profileImage = $0
+        }
+    }
+    
+    func loadImage(completion:(UIImage -> Void)) {
+        if let image = profileImage {
+            completion(image)
+        } else {
+            let request = NSURLRequest(URL: self.image, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+            
+            NSURLSession.sharedSession().dataTaskWithRequest(request) { data, _, _ in
+				guard let unwrappedData = data else { return }
+                self.profileImage = UIImage(data: unwrappedData)
+                if let image = self.profileImage {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completion(image)
+                    }
+                }
+            }.resume()
+        }
+    }
+    
+    override var description: String {
+        return "Name: \(name)| Username: \(username)"
+    }
+    
+    // Extend NSCoding
+    // MARK: - NSCoding
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init()
+        name = aDecoder.decodeObjectForKey("name") as! String
+        username = aDecoder.decodeObjectForKey("username") as! String
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(name, forKey: "name")
+        aCoder.encodeObject(username, forKey: "username")
+    }
 }
 
