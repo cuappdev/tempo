@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     // Outlets
     @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var userHandleButton: UIButton!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var followButton: UIButton!
 	@IBOutlet weak var followersButton: UIButton!
 	@IBOutlet weak var followingButton: UIButton!
@@ -58,14 +58,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		title = "Profile"
 		if user == User.currentUser {
 			addHamburgerMenu()
-			userHandleButton.enabled = true
+			followButton.addTarget(self, action: "userHandleButtonClicked:", forControlEvents: .TouchUpInside)
 		} else {
-			userHandleButton.enabled = false
+			followButton.addTarget(self, action: "followButtonPressed:", forControlEvents: .TouchUpInside)
 		}
+		
 		addRevealGesture()
 		
         nameLabel.text = user.name
-		userHandleButton.setTitle("@\(user.username)", forState: .Normal)
+		usernameLabel.text = user.username
         user.loadImage {
             self.profilePictureView.image = $0
         }
@@ -77,7 +78,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		followButton.setTitle(isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
 		
         if User.currentUser.username == user.username {
-            followButton.hidden = true
+            followButton.setTitle("EDIT", forState: .Normal)
 		}
 		
 		followingButton.setTitle("\(user.followingCount) Following", forState: .Normal)
@@ -182,7 +183,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 						if (success) {
 							User.currentUser.username = newUsername
 							API.sharedAPI.updateCurrentUser(newUsername) { user in }
-							self.userHandleButton.setTitle("@\(User.currentUser.username)", forState: UIControlState.Normal)
+							self.usernameLabel.text = User.currentUser.username
 						} else {
 							self.showErrorAlert("Sorry!", message: "Username is taken.", actionTitle: "Try again")
 						}
