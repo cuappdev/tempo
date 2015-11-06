@@ -9,19 +9,25 @@
 import UIKit
 import MediaPlayer
 
-class PlayerTableViewController: UITableViewController {
-    var posts: [Post] = []
+class PlayerTableViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
+	var searchController: UISearchController!
+	var posts: [Post] = []
+	var filteredPosts: [Post] = []
     var currentlyPlayingPost: Post?
     var currentlyPlayingIndexPath: NSIndexPath? {
         didSet {
-            if let row = currentlyPlayingIndexPath?.row where currentlyPlayingPost?.isEqual(posts[row]) ?? false {
+			var array = posts
+			if self.searchController.active {
+				array = filteredPosts
+			}
+            if let row = currentlyPlayingIndexPath?.row where currentlyPlayingPost?.isEqual(array[row]) ?? false {
                 currentlyPlayingPost?.player.togglePlaying()
             } else {
                 currentlyPlayingPost?.player.pause(true)
                 currentlyPlayingPost?.player.progress = 1.0 // Fill cell as played
                 
                 if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-                    currentlyPlayingPost = posts[currentlyPlayingIndexPath.row]
+                    currentlyPlayingPost = array[currentlyPlayingIndexPath.row]
                     currentlyPlayingPost!.player.play(true)
                 } else {
                     currentlyPlayingPost = nil
@@ -30,21 +36,37 @@ class PlayerTableViewController: UITableViewController {
             tableView.selectRowAtIndexPath(currentlyPlayingIndexPath, animated: false, scrollPosition: .None)
         }
     }
-    
+
+	var savedSongAlertView: SavedSongView!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		//Search Bar
+		searchController = UISearchController(searchResultsController: nil)
+		searchController.dimsBackgroundDuringPresentation = false
+		searchController.delegate = self
+		searchController.searchResultsUpdater = self
+		searchController.searchBar.sizeToFit()
+		searchController.searchBar.delegate = self
+		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
+		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
     }
-    
+	
     // MARK: - Table view data source
-    
+	
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
-    }
-    
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if searchController.active {
+			return filteredPosts.count
+		} else {
+			return posts.count
+		}
+	}
+	
     private func updateNowPlayingInfo() {
         let session = AVAudioSession.sharedInstance()
         
@@ -63,6 +85,11 @@ class PlayerTableViewController: UITableViewController {
                 UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
                 
                 let artwork = post.song.fetchArtwork() ?? UIImage(named: "Sexy")!
+				var count = posts.count
+				if searchController.active {
+					count = filteredPosts.count
+				}
+				
                 center.nowPlayingInfo = [
                     MPMediaItemPropertyTitle: post.song.title,
                     MPMediaItemPropertyArtist: post.song.artist,
@@ -72,7 +99,7 @@ class PlayerTableViewController: UITableViewController {
                     MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
                     MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying() ? post.player.rate : 0.0,
                     MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
-                    MPNowPlayingInfoPropertyPlaybackQueueCount: posts.count ]
+                    MPNowPlayingInfoPropertyPlaybackQueueCount: count ]
             } else {
                 UIApplication.sharedApplication().endReceivingRemoteControlEvents()
                 do {
@@ -109,7 +136,11 @@ class PlayerTableViewController: UITableViewController {
                     let path = self!.currentlyPlayingIndexPath
                     if let path = path {
                         var row = path.row + 1
-                        if row >= self!.posts.count {
+						var count = self!.posts.count
+						if self!.searchController.active {
+							count = self!.filteredPosts.count
+						}
+                        if row >= count {
                             row = 0
                         }
                         
@@ -140,8 +171,12 @@ class PlayerTableViewController: UITableViewController {
         }
         
         center.nextTrackCommand.addTargetWithHandler { [weak self] _ in
+			var count = self!.posts.count
+			if self!.searchController.active {
+				count = self!.filteredPosts.count
+			}
             if let path = self?.currentlyPlayingIndexPath {
-                if path.row < self!.posts.count - 1 {
+                if path.row < count - 1 {
                     self?.currentlyPlayingIndexPath = NSIndexPath(forRow: path.row + 1, inSection: path.section)
                     return .Success
                 }
@@ -162,4 +197,63 @@ class PlayerTableViewController: UITableViewController {
         center.seekForwardCommand.addTargetWithHandler { _ in .Success }
         center.seekBackwardCommand.addTargetWithHandler { _ in .Success }
     }
+	
+	// MARK: - Search Stuff
+	
+	private func filterContentForSearchText(searchText: String, scope: String = "All") {
+		if searchText == "" {
+			filteredPosts = posts
+		} else {
+			let pred = NSPredicate(format: "song.title contains[cd] %@ OR song.artist contains[cd] %@", searchText, searchText)
+			filteredPosts = (posts as NSArray).filteredArrayUsingPredicate(pred) as! [Post]
+		}
+		tableView.reloadData()
+	}
+	
+	func updateSearchResultsForSearchController(searchController: UISearchController) {
+		filterContentForSearchText(searchController.searchBar.text!)
+	}
+	
+	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+		searchController.searchBar.endEditing(true)
+	}
+	
+	//This allows for the text not to be viewed behind the search bar at the top of the screen
+	private let statusBarView: UIView = {
+		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
+		view.backgroundColor = UIColor.iceDarkRed
+		return view
+	}()
+	
+	func willPresentSearchController(searchController: UISearchController) {
+		self.navigationController?.view.addSubview(self.statusBarView)
+	}
+	
+	func didDismissSearchController(searchController: UISearchController) {
+		statusBarView.removeFromSuperview()
+	}
+	
+	override func preferredStatusBarStyle() -> UIStatusBarStyle {
+		return .LightContent
+	}
+	
+	// MARK: - Save song button clicked
+	
+	func didTapAddButtonForPostView(postView: PostView) {
+		savedSongAlertView = SavedSongView.instanceFromNib()
+		savedSongAlertView.showSongStatusPopup(postView.songStatus, playlist: "")
+	}
+	
+	func didLongPressOnCell(postView: PostView) {
+		SpotifyController.sharedController.spotifyIsAvailable({ (success) -> Void in
+			if success {
+				let topVC = getTopViewController()
+				let playlistVC = PlaylistTableViewController()
+				let tableViewNavigationController = UINavigationController(rootViewController: playlistVC)
+				
+				playlistVC.song = postView.post
+				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
+			}
+		})
+	}
 }

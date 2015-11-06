@@ -12,9 +12,7 @@ import MediaPlayer
 class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
 	
 	var customRefresh:ADRefreshControl!
-	var plusButton: UIButton!
-	var savedSongAlertView: SavedSongView!
-	
+	var plusButton: UIButton!	
 	
 	lazy var searchTableViewController: SearchViewController = {
 		let vc = SearchViewController(nibName: "SearchViewController", bundle: nil)
@@ -96,10 +94,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	
 	// MARK: - UITableViewDataSource
 	
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return posts.count
-	}
-	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
 		cell.postView.post = posts[indexPath.row]
@@ -135,45 +129,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		} else {
 			topPinViewContainer.hidden = true
 			bottomPinViewContainer.hidden = true
-		}
-	}
-	
-	private func updateNowPlayingInfo() {
-		let session = AVAudioSession.sharedInstance()
-		
-		if let post = self.currentlyPlayingPost {
-			// state change, update play information
-			let center = MPNowPlayingInfoCenter.defaultCenter()
-			if post.player.progress != 1.0 {
-				do {
-					try session.setCategory(AVAudioSessionCategoryPlayback)
-				} catch _ {
-				}
-				do {
-					try session.setActive(true)
-				} catch _ {
-				}
-				UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
-				
-				let artwork = post.song.fetchArtwork() ?? UIImage(named: "Sexy")!
-				center.nowPlayingInfo = [
-					MPMediaItemPropertyTitle: post.song.title,
-					MPMediaItemPropertyArtist: post.song.artist,
-					MPMediaItemPropertyAlbumTitle: post.song.album,
-					MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: artwork),
-					MPMediaItemPropertyPlaybackDuration: post.player.duration,
-					MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
-					MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying() ? post.player.rate : 0.0,
-					MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
-					MPNowPlayingInfoPropertyPlaybackQueueCount: posts.count ]
-			} else {
-				UIApplication.sharedApplication().endReceivingRemoteControlEvents()
-				do {
-					try session.setActive(false)
-				} catch {
-				}
-				center.nowPlayingInfo = nil
-			}
 		}
 	}
 	
@@ -224,28 +179,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		}
 	}
 	
-	// - Save song button clicked
-	
-	func didTapAddButtonForPostView(postView: PostView) {
-		savedSongAlertView = SavedSongView.instanceFromNib()
-		savedSongAlertView.showSongStatusPopup(postView.songStatus, playlist: "")
-	}
-	
-	func didLongPressOnCell(postView: PostView) {
-		SpotifyController.sharedController.spotifyIsAvailable({ (success) -> Void in
-			if success {
-				let topVC = getTopViewController()
-				let playlistVC = PlaylistTableViewController()
-				let tableViewNavigationController = UINavigationController(rootViewController: playlistVC)
-				
-				playlistVC.song = postView.post
-				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
-			}
-		})
-	}
-	
-	//MARK: -
-	//MARK: Navigation
+	//MARK: - Navigation
 	
 	func didTapImageForPostView(postView: PostView) {
 		guard let user = postView.post?.user else { return }
