@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		API.sharedAPI.fetchPosts(self.user.id) { post in
+		API.sharedAPI.fetchPosts(user.id) { post in
 			self.posts = post
 			self.postedDates = post.map { $0.date! }
 			self.postedDays = self.postedDates.map { $0.day() }
