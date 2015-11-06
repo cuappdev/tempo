@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate {
@@ -65,10 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		window!.backgroundColor = UIColor.iceLightGray
 		window!.makeKeyAndVisible()
 		
-		if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded {
-			FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false) { session, state, error in
-				self.sessionStateChanged(session, state: state, error: error)
-			}
+		FBSDKProfile.enableUpdatesOnAccessTokenChange(true)
+		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+		
+		if FBSDKAccessToken.currentAccessToken() != nil {
+			fbSessionStateChanged(nil)
 		}
 		
 		// Check if it's launched from Quick Action
@@ -82,7 +85,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		}
 		
 		setFirstVC()
-		
 		toggleRootVC()
 		
 		//declaration of tools remains active in background while app runs
@@ -94,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func toggleRootVC() {
-		if !FBSession.activeSession().isOpen {
+		if FBSDKAccessToken.currentAccessToken() == nil {
 			let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
 			window!.rootViewController = signInVC
 		} else {
@@ -156,19 +158,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 	}
 	
+	func loginToFacebook() {
+		let fbLoginManager = FBSDKLoginManager.init()
+		fbLoginManager.logOut()
+		fbLoginManager.logInWithReadPermissions(["public_profile", "email", "user_friends"], fromViewController: nil, handler: { (loginResult, error) -> Void in
+			if error != nil {
+				print("Facebook login error: \(error)")
+			} else if loginResult.isCancelled {
+				print("FB Login Cancelled")
+			} else {
+				self.fbSessionStateChanged(error)
+			}
+		})
+	}
+	
 	// Facebook Session
-	func sessionStateChanged(session : FBSession, state : FBSessionState, error : NSError?)
+	func fbSessionStateChanged(error : NSError?)
 	{
 		if error != nil {
-			FBSession.activeSession().closeAndClearTokenInformation()
+			FBSDKAccessToken.setCurrentAccessToken(nil)
 		} else {
-			if state == FBSessionState.Open {
-				let userRequest = FBRequest.requestForMe()
+			if FBSDKAccessToken.currentAccessToken() != nil {
+				let userRequest = FBSDKGraphRequest(graphPath: "me",
+					parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
 				
-				userRequest.startWithCompletionHandler { connection, result, error in
-					if error == nil {
+				userRequest.startWithCompletionHandler({ (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+					if error != nil {
+						print("Error getting Facebook user: \(error)")
+					} else {
 						let fbid = result["id"] as! String
-						API.sharedAPI.fbIdIsValid(fbid) { newUser in
+						API.sharedAPI.fbIdIsValid(fbid) { (newUser) -> Void in
 							if newUser {
 								let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
 								usernameVC.name = result["name"] as! String
@@ -187,32 +206,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 							}
 						}
 					}
-				}
-			}
-		}
-		
-		// Error Messages
-		if state == .Closed || state == .ClosedLoginFailed {
-			print("Session Closed")
-		}
-		if FBErrorUtility.shouldNotifyUserForError(error) == true {
-			print("Error")
-		} else {
-			if FBErrorUtility.errorCategoryForError(error) == .UserCancelled {
-				print("Login Cancelled")
-			}
-			else if FBErrorUtility.errorCategoryForError(error) == .AuthenticationReopenSession {
-				print("Invalid Session")
+				})
 			}
 		}
 	}
 	
 	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-		let wasHandled = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
-		if wasHandled {
-			return true
-		}
-		
 		if SPTAuth.defaultInstance().canHandleURL(url) {
 			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { [weak self] error, session in
 				if error != nil {
@@ -225,7 +224,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			return true
 		}
 		
-		return wasHandled
+		return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+	}
+	
+	func applicationDidBecomeActive(application: UIApplication) {
+		FBSDKAppEvents.activateApp()
 	}
 	
 	// MARK: - SWRevealDelegate

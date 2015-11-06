@@ -3,7 +3,9 @@
 //
 
 #import "SWRevealViewController.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 #import <Spotify/Spotify.h>
 
 #import "FBTweak.h"

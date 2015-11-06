@@ -20,41 +20,40 @@ struct SideBarElement {
 	}
 }
 
-class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBLoginViewDelegate {
-	var selectionHandler: (UIViewController? -> ())?
-	
-	var searchNavigationController: UINavigationController!
-	var elements: [SideBarElement] = []
-	var button: UIButton!
-	
-	var preselectedIndex: Int? // -1 is profile
-	
-	@IBOutlet weak var profilePicture: UIImageView!
-	@IBOutlet weak var nameLabel: UILabel!
-	@IBOutlet weak var usernameLabel: UILabel!
-	@IBOutlet weak var categoryTableView: UITableView!
-	@IBOutlet weak var profileView: UIView!
-	@IBOutlet weak var divider: UIView!
-	@IBOutlet weak var sideView: UIView!
-	
-	@IBAction func logOut(sender: UIButton) {
-		FBSession.activeSession().closeAndClearTokenInformation()
-		let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-		appDelegate.toggleRootVC()
-	}
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
-		categoryTableView.registerNib(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
-		
-		// Formatting
-		categoryTableView.separatorStyle = .None
-		categoryTableView.scrollEnabled = false
-		categoryTableView.backgroundColor = UIColor.iceDarkGray
-		profileView.backgroundColor = UIColor.iceDarkGray
-		view.backgroundColor = UIColor.iceDarkGray
-		divider.backgroundColor = UIColor.iceLightGray
+class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var selectionHandler: (UIViewController? -> ())?
+    
+    var searchNavigationController: UINavigationController!
+    var elements: [SideBarElement] = []
+    var button: UIButton!
+    
+    @IBOutlet weak var profilePicture: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var categoryTableView: UITableView!
+    @IBOutlet weak var profileView: UIView!
+    @IBOutlet weak var divider: UIView!
+    @IBOutlet weak var sideView: UIView!
+    
+    @IBAction func logOut(sender: UIButton) {
+		FBSDKAccessToken.setCurrentAccessToken(nil)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.toggleRootVC()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        categoryTableView.registerNib(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
+        
+        // Formatting
+        categoryTableView.separatorStyle = .None
+        categoryTableView.scrollEnabled = false
+        categoryTableView.backgroundColor = UIColor.iceDarkGray
+        profileView.backgroundColor = UIColor.iceDarkGray
+        view.backgroundColor = UIColor.iceDarkGray
+        divider.backgroundColor = UIColor.iceLightGray
+
 		sideView.hidden = true
 		sideView.backgroundColor = UIColor.iceDarkRed
 		

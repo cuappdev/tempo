@@ -113,9 +113,10 @@ class API {
 			}
 			return nil
 		}
-		
-		let userRequest = FBRequest.requestForMe()
-		userRequest.startWithCompletionHandler { [unowned self] _, result, error in
+
+		let userRequest = FBSDKGraphRequest(graphPath: "me",
+			parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
+		userRequest.startWithCompletionHandler { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
 			if error == nil {
 				let user = [
 					"email": result["email"] as! String,

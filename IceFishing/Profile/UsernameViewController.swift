@@ -47,7 +47,7 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
     }
 	
     @IBAction func logOut(sender: UIButton) {
-		FBSession.activeSession().closeAndClearTokenInformation()
+		FBSDKAccessToken.setCurrentAccessToken(nil)
 		let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 		appDelegate.toggleRootVC()
     }
