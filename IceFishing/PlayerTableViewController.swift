@@ -55,6 +55,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.setContentOffset(CGPoint(x: 0, y: searchController.searchBar.frame.size.height), animated: false)
 		tableView.clipsToBounds = true
+		tableView.backgroundView = UIView() // Fix color above search bar
     }
 	
     // MARK: - Table view data source

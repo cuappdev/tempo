@@ -42,8 +42,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		definesPresentationContext = true
 		
 		tableView.tableHeaderView = searchController.searchBar
-//		tableView.setContentOffset(CGPoint(x: 0, y: searchController.searchBar.frame.size.height), animated: false)
-
+		tableView.backgroundView = UIView() // Fix color above search bar
 		
 		let completion: [User] -> Void = {
 			self.users = $0
