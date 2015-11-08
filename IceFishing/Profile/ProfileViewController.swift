@@ -66,7 +66,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		addRevealGesture()
 		
         nameLabel.text = user.name
-		usernameLabel.text = user.username
+		usernameLabel.text = "@" + user.username
         user.loadImage {
             self.profilePictureView.image = $0
         }

@@ -14,7 +14,6 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 	var songLikes: [Int] = []
     var postedDates: [NSDate] = []
     var index: Int?
-	var savedSongAlertView: SavedSongView!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +43,6 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     }
     
     // TableView Methods
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
-    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
@@ -62,31 +57,9 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		return cell
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80
-    }
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
         selectedCell.postView.backgroundColor = UIColor.iceLightGray
 		currentlyPlayingIndexPath = indexPath
     }
-	
-	func didTapAddButtonForPostView(postView: PostView) {
-		savedSongAlertView = SavedSongView.instanceFromNib()
-		savedSongAlertView.showSongStatusPopup(postView.songStatus, playlist: "")
-	}
-	
-	func didLongPressOnCell(postView: PostView) {
-		SpotifyController.sharedController.spotifyIsAvailable({ (success) -> Void in
-			if success {
-				let topVC = getTopViewController()
-				let playlistVC = PlaylistTableViewController()
-				let tableViewNavigationController = UINavigationController(rootViewController: playlistVC)
-				
-				playlistVC.song = postView.post
-				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
-			}
-		})
-	}
 }
