@@ -51,6 +51,10 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		searchController.searchBar.delegate = self
 		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
 		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+		
+		tableView.tableHeaderView = searchController.searchBar
+		tableView.setContentOffset(CGPoint(x: 0, y: searchController.searchBar.frame.size.height), animated: false)
+		tableView.clipsToBounds = true
     }
 	
     // MARK: - Table view data source

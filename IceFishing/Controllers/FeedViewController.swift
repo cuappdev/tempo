@@ -26,7 +26,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	var pinViewGestureRecognizer: UITapGestureRecognizer!
 	
 	// MARK: - Lifecycle Methods
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -36,10 +35,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		//—————————————from MAIN VC——————————————————
 		title = "Feed"
 		setupAddButton()
-		refreshControl = UIRefreshControl()
-		customRefresh = ADRefreshControl(refreshControl: refreshControl!)
-		refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
-		
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
 		refreshFeed()
@@ -50,6 +45,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		
 		addHamburgerMenu()
 		addRevealGesture()
+		
+		tableView.tableHeaderView = nil
 	}
 	
 	override func viewWillAppear(animated: Bool) {
@@ -110,6 +107,15 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	
 	override func scrollViewDidScroll(scrollView: UIScrollView) {
 		pinIfNeeded()
+		
+		//! This gets called before viewDidLoad, maybe this should be created in init
+		//! instead of didLoad or here.
+		if customRefresh == nil {
+			refreshControl = UIRefreshControl()
+			customRefresh = ADRefreshControl(refreshControl: refreshControl!)
+			refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
+		}
+		
 		customRefresh.scrollViewDidScroll(scrollView)
 	}
 	
