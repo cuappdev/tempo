@@ -65,9 +65,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     likesLabel?.text = "\(post.likes) likes"
 					let imageName = post.isLiked ? "Heart-Red" : "Heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
-					SpotifyController.sharedController.spotifyIsAvailable {// Audit this model object as it's becoming a monster
-						self.addButton?.hidden = !$0
-					}
+					updateAddButton()
                     break
 				case .History:
 					profileNameLabel?.text = post.song.artist
@@ -75,9 +73,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					likesLabel?.text = "\(post.likes) likes"
 					let imageName = post.isLiked ? "Heart-Red" : "Heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
-					SpotifyController.sharedController.spotifyIsAvailable {// Audit this model object as it's becoming a monster
-						self.addButton?.hidden = !$0
-					}
+					updateAddButton()
 					break
                 case .Search:
                     profileNameLabel?.text = post.song.title
@@ -122,8 +118,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
 	
 	func updateAddButton() {
-		SpotifyController.sharedController.spotifyIsAvailable {
-			self.addButton?.hidden = !$0
+		addButton!.hidden = true
+		SpotifyController.sharedController.spotifyIsAvailable { (success) -> Void in
+			if success {
+				self.addButton!.hidden = false
+			}
 		}
 	}
 	
