@@ -24,10 +24,7 @@ class LikedTableViewController: PlayerTableViewController  {
         
         extendedLayoutIncludesOpaqueBars = true
         definesPresentationContext = true
-        
-        tableView.tableHeaderView = searchController.searchBar
-        tableView.setContentOffset(CGPoint(x: 0, y: searchController.searchBar.frame.size.height), animated: false)
-        
+		
     }
     
     override func viewDidAppear(animated: Bool) {
