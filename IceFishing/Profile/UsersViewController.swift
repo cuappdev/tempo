@@ -42,7 +42,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		definesPresentationContext = true
 		
 		tableView.tableHeaderView = searchController.searchBar
-		tableView.setContentOffset(CGPoint(x: 0, y: searchController.searchBar.frame.size.height), animated: false)
+//		tableView.setContentOffset(CGPoint(x: 0, y: searchController.searchBar.frame.size.height), animated: false)
 
 		
 		let completion: [User] -> Void = {
