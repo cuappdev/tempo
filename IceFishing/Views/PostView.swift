@@ -30,8 +30,8 @@ enum SavedSongStatus: Int {
 
 class PostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
-    var tapGestureRecognizer: UITapGestureRecognizer?
-	var longPressGestureRecognizer: UILongPressGestureRecognizer?
+    private var tapGestureRecognizer: UITapGestureRecognizer?
+	private var longPressGestureRecognizer: UILongPressGestureRecognizer?
     @IBOutlet var profileNameLabel: MarqueeLabel?
     @IBOutlet var avatarImageView: FeedImageView?
     @IBOutlet var descriptionLabel: MarqueeLabel?
@@ -40,7 +40,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var likesLabel: UILabel?
     @IBOutlet var likedButton: UIButton?
     @IBOutlet var addButton: UIButton?
-    var fillColor = UIColor.iceDarkGray
+    let fillColor = UIColor.iceDarkGray
  
     var type: ViewType = .Feed
 	var songStatus: SavedSongStatus = .NotSaved
@@ -228,9 +228,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         }
 
         if let post = post {
-            var color: UIColor!
-            let duration = NSTimeInterval(0.3) as NSTimeInterval
-            let label = self.profileNameLabel!
+            let color: UIColor
+            let duration = NSTimeInterval(0.3)
             if post.player.isPlaying() {
                 color = UIColor.iceDarkRed
 				if let layer = avatarLayer {
@@ -257,12 +256,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 //                }
 
             }
-            
+			
+			guard let label = self.profileNameLabel else { return }
             if !label.textColor.isEqual(color) {
                 UIView.transitionWithView(label, duration: duration, options: .TransitionCrossDissolve, animations: {
                     label.textColor = color
-                    }, completion: {
-                        (success) in
+                    }, completion: { _ in
                         label.textColor = color
                 })
             }
@@ -323,7 +322,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 		
 		if sender.isKindOfClass(UILongPressGestureRecognizer) {
 			if sender.state == .Began {
-				self.delegate!.didLongPressOnCell!(self)
+				self.delegate?.didLongPressOnCell?(self)
 			}
 		} else if sender.isKindOfClass(UITapGestureRecognizer) {
 			let tapPoint = sender.locationInView(self)
@@ -335,27 +334,24 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 				likedButton?.setImage(UIImage(named: name), forState: .Normal)
 			} else if hitView == addButton {
 				if songStatus == .NotSaved {
-					SpotifyController.sharedController.saveSpotifyTrack(post, completionHandler: { (success) -> Void in
+					SpotifyController.sharedController.saveSpotifyTrack(post, completionHandler: { success in
 						if success {
 							self.addButton?.setImage(UIImage(named: "Check"), forState: .Normal)
-							self.delegate!.didTapAddButtonForPostView!(self)
+							self.delegate?.didTapAddButtonForPostView?(self)
 							self.songStatus = .Saved
 						}
 					})
 				} else if songStatus == .Saved {
-					SpotifyController.sharedController.removeSavedSpotifyTrack(post, completionHandler: { (success) -> Void in
+					SpotifyController.sharedController.removeSavedSpotifyTrack(post, completionHandler: { success in
 						if success {
 							self.addButton?.setImage(UIImage(named: "Add"), forState: .Normal)
-							self.delegate!.didTapAddButtonForPostView!(self)
+							self.delegate?.didTapAddButtonForPostView?(self)
 							self.songStatus = .NotSaved
 						}
 					})
 				}
-			} else if post.player.isPlaying() {
-				if hitView == avatarImageView || hitView == self.profileNameLabel {
-					// GO TO PROFILE VIEW CONTROLLER
-					print(post.user.fbid)
-				}
+			} else if hitView == avatarImageView {
+				delegate?.didTapImageForPostView?(self)
 			}
 		}
 	}
