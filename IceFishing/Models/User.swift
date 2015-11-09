@@ -18,6 +18,7 @@ class User: NSObject, NSCoding {
 	var createdAt = ""
 	var email = "temp@example.com"
 	var fbid = ""
+	var isFollowing = false
 	var followers: [String] = []
 	var followersCount = 0
 	var followingCount = 0
@@ -71,6 +72,7 @@ class User: NSObject, NSCoding {
 		createdAt = json["created_at"].stringValue
 		email = json["email"].stringValue
 		fbid = json["fbid"].stringValue
+		isFollowing = json["is_following"].boolValue
 		followers = json["followers"].arrayObject as? [String] ?? []
 		followersCount = json["followers_count"].intValue
 		followingCount = json["followings_count"].intValue
