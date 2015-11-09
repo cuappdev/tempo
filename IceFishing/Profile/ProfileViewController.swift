@@ -11,7 +11,6 @@ import UIKit
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var user: User = User.currentUser
-    var isFollowing = false
     
     // Post History Calendar
     var calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
@@ -75,14 +74,23 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true
 		
-		followButton.setTitle(isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
-		
         if User.currentUser.username == user.username {
-            followButton.setTitle("EDIT", forState: .Normal)
+			followButton.setTitle("EDIT", forState: .Normal)
+		} else {
+			followButton.hidden = true
+			followButton.alpha = 0
+			
+			API.sharedAPI.fetchUser(user.id) {
+				self.user = $0
+				self.updateFollowingUI()
+				self.followButton.hidden = false
+				UIView.animateWithDuration(0.25) {
+					self.followButton.alpha = 1
+				}
+			}
 		}
 		
-		followingButton.setTitle("\(user.followingCount) Following", forState: .Normal)
-		followersButton.setTitle("\(user.followersCount) Followers", forState: .Normal)
+		updateFollowingUI()
 		
 		// Post History Calendar
         separator.backgroundColor = UIColor.iceDarkRed
@@ -97,19 +105,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         collectionView.backgroundColor = UIColor.clearColor()
 		collectionView.scrollsToTop = false
 		
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close-Icon"), style: .Plain, target: self, action: "popToRoot")
-		
 		let views: [String : AnyObject] = ["pic" : profilePictureView, "topGuide": self.topLayoutGuide]
 		self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
-		
-		// Accounts for case where we select user from feed image
-		if user.followersCount == 0 {
-			API.sharedAPI.fetchUser(user.id) {
-				self.user = $0
-				self.followingButton.setTitle("\($0.followingCount) Following", forState: .Normal)
-				self.followersButton.setTitle("\($0.followersCount) Followers", forState: .Normal)
-			}
-		}
 	}
 
     // Return to profile view
@@ -126,22 +123,20 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	
 	// TODO: Currently no checks against whether already followed
     @IBAction func followButtonPressed(sender: UIButton) {
-        if !isFollowing {
-            isFollowing = true
-            followButton.setTitle("FOLLOWING", forState: .Normal)
-            User.currentUser.followingCount++
-            API.sharedAPI.updateFollowings(user.id, unfollow: false) { bool in
-                print(bool)
-            }
-        } else {
-            isFollowing = false
-            followButton.setTitle("FOLLOW", forState: .Normal)
-            User.currentUser.followingCount--
-            API.sharedAPI.updateFollowings(user.id, unfollow: true) { bool in
-                print(bool)
-            }
-        }
+		user.isFollowing = !user.isFollowing
+		user.isFollowing ? User.currentUser.followingCount++ : User.currentUser.followingCount--
+		user.isFollowing ? user.followersCount++ : user.followersCount--
+		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing) {
+			print($0)
+		}
+		updateFollowingUI()
     }
+	
+	func updateFollowingUI() {
+		followingButton.setTitle("\(user.followingCount) Following", forState: .Normal)
+		followersButton.setTitle("\(user.followersCount) Followers", forState: .Normal)
+		followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
+	}
     
     @IBAction func followersButtonPressed(sender: UIButton) {
         displayUsers(.Followers)
