@@ -30,16 +30,11 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		commandCenterHandler()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
 		if index != nil {
 			let selectedRow = NSIndexPath(forRow: index!, inSection: 0)
 			self.tableView.scrollToRowAtIndexPath(selectedRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
 		}
-    }
-    
-    // Return to profile view
-    func popToPrevious() {
-        navigationController?.popViewControllerAnimated(true)
     }
     
     // TableView Methods

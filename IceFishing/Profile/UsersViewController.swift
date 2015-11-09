@@ -54,13 +54,6 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		} else {
 			API.sharedAPI.fetchFollowing(user.id, completion: completion)
 		}
-		
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-    }
-	
-    // Return to previous view
-    func popToPrevious() {
-        navigationController?.popViewControllerAnimated(true)
     }
     
     // TableView Methods

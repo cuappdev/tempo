@@ -112,14 +112,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         navigationController?.popToRootViewControllerAnimated(true)
     }
     
-    // Return to previous view
-    func popToPrevious() {
-        navigationController?.popViewControllerAnimated(true)
-    }
-    
     // <------------------------FOLLOW BUTTONS------------------------>
 	
-	// TODO: Currently no checks against whether already followed
     @IBAction func followButtonPressed(sender: UIButton) {
 		user.isFollowing = !user.isFollowing
 		user.isFollowing ? User.currentUser.followingCount++ : User.currentUser.followingCount--

@@ -52,9 +52,10 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
 		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
 		
+		extendedLayoutIncludesOpaqueBars = true
+		definesPresentationContext = true
+		
 		tableView.tableHeaderView = searchController.searchBar
-		tableView.setContentOffset(CGPoint(x: 0, y: searchController.searchBar.frame.size.height), animated: false)
-		tableView.clipsToBounds = true
 		tableView.backgroundView = UIView() // Fix color above search bar
     }
 	
