@@ -118,9 +118,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		user.isFollowing = !user.isFollowing
 		user.isFollowing ? User.currentUser.followingCount++ : User.currentUser.followingCount--
 		user.isFollowing ? user.followersCount++ : user.followersCount--
-		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing) {
-			print($0)
-		}
+		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
 		updateFollowingUI()
     }
 	

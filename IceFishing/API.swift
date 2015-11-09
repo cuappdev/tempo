@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-enum Router: URLStringConvertible {
+private enum Router: URLStringConvertible {
 	static let baseURLString = "http://icefishing-web.herokuapp.com"
 	case Root
 	case ValidUsername
@@ -74,7 +74,7 @@ class API {
 	static let sharedAPI: API = API()
 	
 	// Mappings
-	let postMapping: [String: [AnyObject]] -> [Post]? = {
+	private let postMapping: [String: [AnyObject]] -> [Post]? = {
 		$0["posts"]?.map { Post(json: JSON($0)) }
 	}
 	
@@ -172,7 +172,7 @@ class API {
 		get(.History(userID), params: ["id": userID, "session_code": sessionCode], map: postMapping, completion: completion)
 	}
 	
-	func updateLikes(postID: String, unlike: Bool, completion: [String: Bool] -> Void) {
+	func updateLikes(postID: String, unlike: Bool, completion: ([String: Bool] -> Void)? = nil) {
 		post(.Likes(nil), params: ["post_id": postID, "unlike": unlike, "session_code": sessionCode], map: { $0 }, completion: completion)
 	}
 	
@@ -184,7 +184,7 @@ class API {
 		get(.Likes(userID), params: ["session_code": sessionCode], map: map, completion: completion)
 	}
 	
-	func updateFollowings(userID: String, unfollow: Bool, completion: [String: Bool] -> Void) {
+	func updateFollowings(userID: String, unfollow: Bool, completion: ([String: Bool] -> Void)? = nil) {
 		guard let id = Int(userID) else { return }
 		post(.Followings, params: ["followed_id": id, "unfollow": unfollow, "session_code": sessionCode], map: { $0 }, completion: completion)
 	}
@@ -201,25 +201,25 @@ class API {
 	
 	// MARK: - Private Methods
 	
-	private func post<O, T>(router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
+	private func post<O, T>(router: Router, params: [String: AnyObject], map: O -> T?, completion: (T -> Void)?) {
 		makeNetworkRequest(.POST, router: router, params: params, map: map, completion: completion)
 	}
 	
-	private func get<O, T>(router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
+	private func get<O, T>(router: Router, params: [String: AnyObject], map: O -> T?, completion: (T -> Void)?) {
 		makeNetworkRequest(.GET, router: router, params: params, map: map, completion: completion)
 	}
 	
-	private func patch<O, T>(router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
+	private func patch<O, T>(router: Router, params: [String: AnyObject], map: O -> T?, completion: (T -> Void)?) {
 		makeNetworkRequest(.PATCH, router: router, params: params, map: map, completion: completion)
 	}
 	
-	private func makeNetworkRequest<O, T>(method: Alamofire.Method, router: Router, params: [String: AnyObject], map: O -> T?, completion: T -> Void) {
+	private func makeNetworkRequest<O, T>(method: Alamofire.Method, router: Router, params: [String: AnyObject], map: O -> T?, completion: (T -> Void)?) {
 		Alamofire
 			.request(method, router, parameters: params)
 			.responseJSON { request, response, result in
 				if let json = result.value as? O {
 					if let obj = map(json) {
-						completion(obj)
+						completion?(obj)
 						print(json)
 					}
 				} else {
