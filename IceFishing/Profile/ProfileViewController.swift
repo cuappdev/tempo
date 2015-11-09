@@ -57,11 +57,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		title = "Profile"
 		if user == User.currentUser {
 			addHamburgerMenu()
-			followButton.addTarget(self, action: "userHandleButtonClicked:", forControlEvents: .TouchUpInside)
-		} else {
-			followButton.addTarget(self, action: "followButtonPressed:", forControlEvents: .TouchUpInside)
 		}
-		
 		addRevealGesture()
 		
         nameLabel.text = user.name
@@ -76,9 +72,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
         if User.currentUser.username == user.username {
 			followButton.setTitle("EDIT", forState: .Normal)
+			followButton.addTarget(self, action: "userHandleButtonClicked:", forControlEvents: .TouchUpInside)
 		} else {
 			followButton.hidden = true
 			followButton.alpha = 0
+			followButton.addTarget(self, action: "followButtonPressed:", forControlEvents: .TouchUpInside)
 			
 			API.sharedAPI.fetchUser(user.id) {
 				self.user = $0
@@ -133,9 +131,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
 	
 	func updateFollowingUI() {
+		if User.currentUser.username != user.username {
+			followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
+		}
 		followingButton.setTitle("\(user.followingCount) Following", forState: .Normal)
 		followersButton.setTitle("\(user.followersCount) Followers", forState: .Normal)
-		followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
 	}
     
     @IBAction func followersButtonPressed(sender: UIButton) {
