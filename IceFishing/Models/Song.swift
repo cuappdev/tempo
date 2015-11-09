@@ -22,10 +22,10 @@ class Song: NSObject {
 	private var largeArtwork: UIImage?
 	func fetchArtwork() -> UIImage? {
 		if largeArtwork == nil && largeArtworkURL != nil {
-			loadImageAsync(largeArtworkURL!, completion: { [weak self] (image, error) -> () in
+			loadImageAsync(largeArtworkURL!) { [weak self] image, error -> () in
 				self?.largeArtwork = image
 				NSNotificationCenter.defaultCenter().postNotificationName(SongDidDownloadArtworkNotification, object: self)
-				})
+			}
 		}
 		return largeArtwork
 	}

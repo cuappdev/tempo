@@ -333,21 +333,21 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 				likedButton?.setImage(UIImage(named: name), forState: .Normal)
 			} else if hitView == addButton {
 				if songStatus == .NotSaved {
-					SpotifyController.sharedController.saveSpotifyTrack(post, completionHandler: { success in
+					SpotifyController.sharedController.saveSpotifyTrack(post) { success in
 						if success {
 							self.addButton?.setImage(UIImage(named: "Check"), forState: .Normal)
 							self.delegate?.didTapAddButtonForPostView?(self)
 							self.songStatus = .Saved
 						}
-					})
+					}
 				} else if songStatus == .Saved {
-					SpotifyController.sharedController.removeSavedSpotifyTrack(post, completionHandler: { success in
+					SpotifyController.sharedController.removeSavedSpotifyTrack(post) { success in
 						if success {
 							self.addButton?.setImage(UIImage(named: "Add"), forState: .Normal)
 							self.delegate?.didTapAddButtonForPostView?(self)
 							self.songStatus = .NotSaved
 						}
-					})
+					}
 				}
 			} else if hitView == avatarImageView {
 				delegate?.didTapImageForPostView?(self)

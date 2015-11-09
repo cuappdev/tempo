@@ -57,9 +57,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		self.window!.makeKeyAndVisible()
 		
 		if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded {
-			FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false, completionHandler: { session, state, error in
+			FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false) { session, state, error in
 				self.sessionStateChanged(session, state: state, error: error)
-			})
+			}
 		}
 
 		toggleRootVC()
@@ -119,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				userRequest.startWithCompletionHandler { (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
 					if error == nil {
 						let fbid = result["id"] as! String
-						API.sharedAPI.fbIdIsValid(fbid, completion: { (newUser) -> Void in
+						API.sharedAPI.fbIdIsValid(fbid) { newUser -> Void in
 							if newUser {
 								let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
 								usernameVC.name = result["name"] as! String
@@ -132,7 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 									appDelegate.toggleRootVC()
 								}
 							}
-						})
+						}
 					}
 				}
 			}
