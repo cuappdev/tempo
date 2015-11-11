@@ -36,7 +36,7 @@ class Song: NSObject {
 	init(songID: String) {
 		super.init()
 		spotifyID = songID
-		self.setSongID(songID)
+		setSongID(songID)
 	}
 	
 	convenience init(spotifyURI: String) {
@@ -112,20 +112,6 @@ class Song: NSObject {
 		} else {
 			print("got error: %@", (error!).description)
 		}
-//		NSURLSession.sharedSession().dataTaskWithRequest(request) { [weak self] data, _, _ in
-//			if let data = data {
-//				var error:NSError? = nil
-//				let json = JSON(data: data, options: NSJSONReadingOptions(rawValue: 0), error: &error)
-//				if error != nil {
-//					print(error)
-//				} else {
-//					dispatch_async(dispatch_get_main_queue()) {
-//						self?.initializeFromResponse(json)
-//						print(self)
-//					}
-//				}
-//			}
-//		}.resume()
 	}
 	
 	override init() {

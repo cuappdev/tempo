@@ -38,18 +38,18 @@ class ADRefreshControl {
 		refreshControl.tintColor = UIColor.clearColor()
 		
 		// Add the loading and colors views to our refresh control
-		refreshControl.addSubview(self.refreshColorView)
+		refreshControl.addSubview(refreshColorView)
 	}
 	
 	func scrollViewDidScroll(scrollView: UIScrollView) {
 		
 		// Get the current size of the refresh controller
-		var refreshBounds = self.refreshControl.bounds
+		var refreshBounds = refreshControl.bounds
 		
 		// Distance the table has been pulled >= 0
-		let newPullDistance = max(0.0, -self.refreshControl.frame.origin.y)
+		let newPullDistance = max(0.0, -refreshControl.frame.origin.y)
 		
-		if(!isRefreshAnimating) {
+		if !isRefreshAnimating {
 			let direction = newPullDistance < pullDistance ? -10.0 : 10.0
 			graphicView.transform = CGAffineTransformRotate(graphicView.transform, CGFloat(direction * M_PI/180))
 		}
@@ -61,11 +61,11 @@ class ADRefreshControl {
 		// Set the encompassing view's frames
 		refreshBounds.size.height = pullDistance
 		
-		self.refreshColorView.frame = refreshBounds
+		refreshColorView.frame = refreshBounds
 		
 		// If we're refreshing and the animation is not playing, then play the animation
-		if self.refreshControl!.refreshing && !self.isRefreshAnimating {
-			self.animateRefreshView()
+		if refreshControl!.refreshing && !isRefreshAnimating {
+			animateRefreshView()
 		}
 		
 	}
@@ -77,12 +77,12 @@ class ADRefreshControl {
 		var colorArray = [UIColor.redColor(), UIColor.blueColor(), UIColor.purpleColor(), UIColor.cyanColor(), UIColor.orangeColor(), UIColor.magentaColor()]
 		
 		// Flag that we are animating
-		self.isRefreshAnimating = true
+		isRefreshAnimating = true
 		
 		UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveLinear, animations: {
 			// Rotate the spinner by M_PI_2 = PI/2 = 90 degrees
 			self.graphicView.transform = CGAffineTransformRotate(self.graphicView.transform, CGFloat(-1 * M_PI_2))
-			if(self.timesAnimationLooped % 2 == 0) {
+			if self.timesAnimationLooped % 2 == 0 {
 				self.graphicView.transform = CGAffineTransformScale(self.graphicView.transform, 1.30, 1.30)
 			} else {
 				self.graphicView.transform = CGAffineTransformScale(self.graphicView.transform, 1/1.3, 1/1.3)
@@ -104,12 +104,12 @@ class ADRefreshControl {
 	func resetAnimation() {
 		
 		// Reset our flags and background color
-		if(self.timesAnimationLooped % 2 != 0) {
-			self.graphicView.transform = CGAffineTransformScale(self.graphicView.transform, 1/1.3, 1/1.3)
+		if timesAnimationLooped % 2 != 0 {
+			graphicView.transform = CGAffineTransformScale(graphicView.transform, 1/1.3, 1/1.3)
 		}
 		timesAnimationLooped = 0
-		self.isRefreshAnimating = false
-		self.refreshColorView.backgroundColor = UIColor.clearColor()
+		isRefreshAnimating = false
+		refreshColorView.backgroundColor = UIColor.clearColor()
 		
 	}
 	

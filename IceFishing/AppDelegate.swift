@@ -52,9 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			SPTAuthUserLibraryModifyScope
 		]
 		
-		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-		self.window!.backgroundColor = UIColor.iceLightGray
-		self.window!.makeKeyAndVisible()
+		window = UIWindow(frame: UIScreen.mainScreen().bounds)
+		window!.backgroundColor = UIColor.iceLightGray
+		window!.makeKeyAndVisible()
 		
 		if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded {
 			FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false) { session, state, error in
@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		//declaration of tools remains active in background while app runs
 		if toolsEnabled {
-			tools = Tools(rootViewController: self.window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
+			tools = Tools(rootViewController: window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
 		}
 		
 		return true
@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func toggleRootVC() {
 		if !FBSession.activeSession().isOpen {
 			let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
-			self.window!.rootViewController = signInVC
+			window!.rootViewController = signInVC
 		} else {
 			navigationController.setViewControllers([feedVC], animated: false)
 			revealVC.setFrontViewController(navigationController, animated: false)
@@ -102,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			}
 			revealVC.delegate = self
 			
-			self.window!.rootViewController = revealVC
+			window!.rootViewController = revealVC
 		}
 		
 	}
@@ -116,10 +116,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			if state == FBSessionState.Open {
 				let userRequest = FBRequest.requestForMe()
 
-				userRequest.startWithCompletionHandler { (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+				userRequest.startWithCompletionHandler { connection, result, error in
 					if error == nil {
 						let fbid = result["id"] as! String
-						API.sharedAPI.fbIdIsValid(fbid) { newUser -> Void in
+						API.sharedAPI.fbIdIsValid(fbid) { newUser in
 							if newUser {
 								let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
 								usernameVC.name = result["name"] as! String

@@ -44,10 +44,10 @@ class SpotifyViewController: UIViewController, SPTAuthViewDelegate {
 	func updateSpotifyState() {
 		// FIX: Temporary fix for user authentication
 		if let session = SPTAuth.defaultInstance().session {
-			self.loggedInToSpotify(session.isValid())
+			loggedInToSpotify(session.isValid())
 		}
 
-		SpotifyController.sharedController.spotifyIsAvailable { (success) -> Void in
+		SpotifyController.sharedController.spotifyIsAvailable { success in
 			self.loggedInToSpotify(success)
 			if success {
 				let currentSpotifyUser = User.currentUser.currentSpotifyUser
@@ -95,7 +95,7 @@ class SpotifyViewController: UIViewController, SPTAuthViewDelegate {
 	}
 	
 	func renewToken() {
-		SPTAuth.defaultInstance().renewSession(SPTAuth.defaultInstance().session) { (error, session) -> Void in
+		SPTAuth.defaultInstance().renewSession(SPTAuth.defaultInstance().session) { error, session in
 			if error != nil {
 				print("error: \(error)")
 			} else {

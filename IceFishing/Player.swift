@@ -43,7 +43,7 @@ class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
         // hack to enable did set
         self.fileURL = fileURL
 		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
-			object: self, queue: nil) { [weak self] (note) -> Void in
+			object: self, queue: nil) { [weak self] _ in
 				if let _ = self {
 					if self!.isPlaying() {
 						Player.player = self!
@@ -121,10 +121,10 @@ class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
     }
     
     func togglePlaying() {
-        if self.isPlaying() {
-            self.pause(true)
+        if isPlaying() {
+            pause(true)
         } else {
-            self.play(true)
+            play(true)
         }
     }
     

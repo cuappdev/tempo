@@ -59,7 +59,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
     // TableView Methods
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if searchController.active{
+		if searchController.active {
 			return self.filteredUsers.count
 		} else {
 			return self.users.count
@@ -99,7 +99,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		} else {
 			profileVC.user = users[indexPath.row]
 		}
-        self.navigationController?.pushViewController(profileVC, animated: true)
+        navigationController?.pushViewController(profileVC, animated: true)
     }
 	
 	private func filterContentForSearchText(searchText: String, scope: String = "All") {
@@ -128,7 +128,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	}()
 	
 	func willPresentSearchController(searchController: UISearchController) {
-		self.navigationController?.view.addSubview(self.statusBarView)
+		navigationController?.view.addSubview(statusBarView)
 	}
 	
 	func didDismissSearchController(searchController: UISearchController) {

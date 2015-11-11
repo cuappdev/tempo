@@ -51,7 +51,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         categoryTableView.scrollEnabled = false
         categoryTableView.backgroundColor = UIColor.iceDarkGray
         profileView.backgroundColor = UIColor.iceDarkGray
-        self.view.backgroundColor = UIColor.iceDarkGray
+        view.backgroundColor = UIColor.iceDarkGray
         divider.backgroundColor = UIColor.iceLightGray
 		sideView.hidden = true
         sideView.backgroundColor = UIColor.iceDarkRed
@@ -65,9 +65,9 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Add button to profile view
         button = UIButton(type: UIButtonType.System)
-        button.frame = self.profileView.bounds
+        button.frame = profileView.bounds
         button.addTarget(self, action: "pushToProfile:", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(button)
+        view.addSubview(button)
         
         categoryTableView.reloadData()
         // mark first item selected cuz it is
@@ -92,13 +92,13 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		let loginVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 		loginVC.user = User.currentUser
         selectionHandler?(loginVC)
-        self.categoryTableView.selectRowAtIndexPath(nil, animated: false, scrollPosition: .None)
+        categoryTableView.selectRowAtIndexPath(nil, animated: false, scrollPosition: .None)
     }
     
     // TableView Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.elements.count
+        return elements.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

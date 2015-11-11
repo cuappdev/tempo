@@ -50,12 +50,12 @@ class HipStickyHeaderFlowLayout: UICollectionViewFlowLayout {
 					let (firstCellAttributes, lastCellAttributes): (UICollectionViewLayoutAttributes!, UICollectionViewLayoutAttributes!) = {
 						if self.collectionView!.numberOfItemsInSection(section) > 0 {
 							return (
-								self.layoutAttributesForItemAtIndexPath(firstCellIndexPath),
-								self.layoutAttributesForItemAtIndexPath(lastCellIndexPath))
+								layoutAttributesForItemAtIndexPath(firstCellIndexPath),
+								layoutAttributesForItemAtIndexPath(lastCellIndexPath))
 						} else {
 							return (
-								self.layoutAttributesForSupplementaryViewOfKind(UICollectionElementKindSectionHeader, atIndexPath: firstCellIndexPath),
-								self.layoutAttributesForSupplementaryViewOfKind(UICollectionElementKindSectionFooter, atIndexPath: lastCellIndexPath))
+								layoutAttributesForSupplementaryViewOfKind(UICollectionElementKindSectionHeader, atIndexPath: firstCellIndexPath),
+								layoutAttributesForSupplementaryViewOfKind(UICollectionElementKindSectionFooter, atIndexPath: lastCellIndexPath))
 						}
 					}()
 					var origin = attribute.frame.origin

@@ -32,19 +32,6 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
                 profileNameLabel?.text = post.song.title
                 descriptionLabel?.text = post.song.artist
                 
-                //! TODO: Write something that makes this nice and relative
-                //! that updates every minute
-                
-                if let date = post.date {
-                    let dateFormatter = NSDateFormatter()
-                    // dateFormatter.doesRelativeDateFormatting = true
-                    dateFormatter.dateStyle = .NoStyle
-                    dateFormatter.timeStyle = .ShortStyle
-                    dateLabel?.text = dateFormatter.stringFromDate(date)
-                } else {
-                    dateLabel?.text = ""
-                }
-                
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
                     object: post.player,
                     queue: nil, usingBlock: { [weak self] note in
@@ -119,8 +106,8 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     }
     
     dynamic private func timerFired(timer: NSTimer) {
-        if self.post?.player.isPlaying() ?? false {
-            self.setNeedsDisplay()
+        if post?.player.isPlaying() ?? false {
+            setNeedsDisplay()
         }
     }
     
@@ -133,7 +120,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         if let post = post {
             var color: UIColor!
             let duration = NSTimeInterval(0.3) as NSTimeInterval
-            let label = self.profileNameLabel!
+            let label = profileNameLabel!
             if post.player.isPlaying() {
                 color = UIColor.iceDarkRed
                 // Will scroll labels
@@ -147,10 +134,9 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
             }
             
             if !label.textColor.isEqual(color) {
-                UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+                UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
                     label.textColor = color
-                    }, completion: {
-                        (success) in
+                    }, completion: { _ in
                         label.textColor = color
                 })
             }
@@ -170,7 +156,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         let progress = Double(xTranslation/cellWidth)
         post?.player.progress = progress
         
-        self.setNeedsDisplay()
+        setNeedsDisplay()
     }
     
     override func drawRect(rect: CGRect) {
@@ -181,9 +167,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         super.drawRect(rect)
         UIColor.iceDarkGray.setFill()
         CGContextFillRect(UIGraphicsGetCurrentContext(),
-            CGRect(x: 0, y: 0,
-                width: self.bounds.size.width * CGFloat(progress),
-                height: self.bounds.size.height))
+            CGRect(x: 0, y: 0, width: bounds.width * CGFloat(progress), height: bounds.height))
     }
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -191,7 +175,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
             if let player = post?.player {
                 var offsetY:CGFloat = 0.0
                 var offsetX:CGFloat = 0.0
-                if let superview = self.superview?.superview?.superview as? UIScrollView {
+                if let superview = superview?.superview?.superview as? UIScrollView {
                     offsetY = superview.contentOffset.y
                     offsetX = superview.contentOffset.x
                 }
@@ -212,9 +196,9 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         if let post = post {
             if post.player.isPlaying() {
                 let tapPoint = sender.locationInView(self)
-                let hitView = self.hitTest(tapPoint, withEvent: nil)
+                let hitView = hitTest(tapPoint, withEvent: nil)
                 
-                if hitView == avatarImageView || hitView == self.profileNameLabel {
+                if hitView == avatarImageView || hitView == profileNameLabel {
                     // GO TO PROFILE VIEW CONTROLLER=
                 }
             }

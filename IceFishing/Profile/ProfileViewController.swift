@@ -103,8 +103,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         collectionView.backgroundColor = UIColor.clearColor()
 		collectionView.scrollsToTop = false
 		
-		let views: [String : AnyObject] = ["pic" : profilePictureView, "topGuide": self.topLayoutGuide]
-		self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
+		let views: [String : AnyObject] = ["pic" : profilePictureView, "topGuide": topLayoutGuide]
+		view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
 	}
 
     // Return to profile view
@@ -153,12 +153,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			textField.placeholder = "New username"
 			textField.textAlignment = .Center
 		}
-		editAlert.addAction(UIAlertAction(title: "Save", style: .Default) { action -> Void in
+		editAlert.addAction(UIAlertAction(title: "Save", style: .Default) { _ in
 			let newUsername = editAlert.textFields!.first!.text!
 			let charSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_").invertedSet
 			let invalidChars = newUsername.rangeOfCharacterFromSet(charSet)
 			
-			if (newUsername == "") {
+			if newUsername == "" {
 				self.showErrorAlert("Oh no!", message: "Username must have at least one character.", actionTitle: "Try again")
 			} else if invalidChars != nil {
 				self.showErrorAlert("Invalid characters", message: "Only underscores and alphanumeric characters are allowed.", actionTitle: "Try again")
@@ -166,7 +166,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 				let oldUsername = User.currentUser.username
 				
 				if newUsername.lowercaseString != oldUsername.lowercaseString {
-					API.sharedAPI.updateCurrentUser(newUsername) { (success) -> Void in
+					API.sharedAPI.updateCurrentUser(newUsername) { success in
 						if success {
 							self.usernameLabel.text = User.currentUser.username
 						} else {
@@ -177,7 +177,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 				}
 			}
 		})
-		self.presentViewController(editAlert, animated: true, completion: nil)
+		presentViewController(editAlert, animated: true, completion: nil)
 	}
 	
 	func showErrorAlert(title: String, message: String, actionTitle: String) {
@@ -204,7 +204,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	private func determineAlpha(likes: Int) -> CGFloat {
 		let ratio = Float(likes) / avgLikes
 		
-		if (ratio <= 0.2) {
+		if ratio <= 0.2 {
 			return 0.5
 		} else if ratio <= 0.4 {
 			return 0.60

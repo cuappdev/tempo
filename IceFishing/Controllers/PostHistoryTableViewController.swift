@@ -33,7 +33,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     override func viewDidAppear(animated: Bool) {
 		if index != nil {
 			let selectedRow = NSIndexPath(forRow: index!, inSection: 0)
-			self.tableView.scrollToRowAtIndexPath(selectedRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+			tableView.scrollToRowAtIndexPath(selectedRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
 		}
     }
     
@@ -46,7 +46,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()
 		
-        let date = NSDateFormatter.simpleDateFormatter.stringFromDate(self.postedDates[indexPath.row])
+        let date = NSDateFormatter.simpleDateFormatter.stringFromDate(postedDates[indexPath.row])
 		cell.postView.dateLabel!.text = "\(date)"
 		
 		return cell

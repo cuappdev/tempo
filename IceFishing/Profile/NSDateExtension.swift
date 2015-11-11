@@ -15,18 +15,14 @@ private func calendarDate(components: NSDateComponents) -> NSDate {
 
 extension NSDate {
     
-    convenience
-    init(dateString:String) {
-        let dateStringFormatter = NSDateFormatter()
-        dateStringFormatter.dateFormat = "yyyy-MM-dd"
-        dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        let date = dateStringFormatter.dateFromString(dateString)
-        self.init(timeInterval:0, sinceDate:date!)
+    convenience init(dateString: String) {
+        let date = NSDateFormatter.yearMonthDayFormatter.dateFromString(dateString)
+        self.init(timeInterval: 0, sinceDate: date!)
     }
 	
     private func calendarDateComponents() -> NSDateComponents {
         let calendar = NSCalendar.currentCalendar()
-        return calendar.components([.Year, .Month, .WeekOfYear, .Day], fromDate:self)
+        return calendar.components([.Year, .Month, .WeekOfYear, .Day], fromDate: self)
     }
     
     func components() -> NSDateComponents {
@@ -60,8 +56,8 @@ extension NSDate {
     
     func numDaysInMonth() -> Int {
         let calendar = NSCalendar.currentCalendar()
-        let firstDay = self.firstDayOfMonth()
-        let lastDay = self.lastDayOfMonth()
+        let firstDay = firstDayOfMonth()
+        let lastDay = lastDayOfMonth()
         
         let components = calendar.components(.Day, fromDate: firstDay, toDate: lastDay, options: NSCalendarOptions(rawValue: 0))
         
@@ -75,7 +71,7 @@ extension NSDate {
     
     func numberOfMonths(endDate: NSDate) -> Int {
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(.Month, fromDate:self, toDate:endDate, options: NSCalendarOptions(rawValue: 0))
+        let components = calendar.components(.Month, fromDate: self, toDate: endDate, options: NSCalendarOptions(rawValue: 0))
         return components.month + 1
     }
     
@@ -88,18 +84,12 @@ extension NSDate {
     
     func numDaysUntilEndDate(endDate: NSDate) -> Int {
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(.Day, fromDate:self, toDate:endDate, options: NSCalendarOptions(rawValue: 0))
+        let components = calendar.components(.Day, fromDate: self, toDate: endDate, options: NSCalendarOptions(rawValue: 0))
         return components.day + 1
     }
     
     func isCurrentMonth(date: NSDate) -> Bool {
         return (date.month() == NSDate().month() && date.year() == NSDate().year())
-    }
-    
-    func timeDescription(format: String) -> String {
-        let formatter: NSDateFormatter =  NSDateFormatter()
-        formatter.dateFormat = format
-        return formatter.stringFromDate(self)
     }
     
     class func dateFromComponents(components: NSDateComponents) -> NSDate {

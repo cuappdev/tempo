@@ -31,22 +31,22 @@ class Tools: UIView, FBTweakViewControllerDelegate {
 		popup = UIAlertController(title: "Tools", message: nil, preferredStyle: .ActionSheet)
 		
 		//create message action option
-		let submitMessage = UIAlertAction(title: "Submit Message", style: .Default) { (action) in
+		let submitMessage = UIAlertAction(title: "Submit Message", style: .Default) { _ in
 			let vc = SubmitBugViewController(toolsController: self, channel: slackChannel, token: slackToken, username: slackUsername)
 			self.rootViewController.presentViewController(vc, animated: true, completion: nil)
 		}
 		popup.addAction(submitMessage)
 		
 		//create screenshot action option
-		let submitScreenshot = UIAlertAction(title: "Submit Screenshot", style: .Default) { (action) in
+		let submitScreenshot = UIAlertAction(title: "Submit Screenshot", style: .Default) { _ in
 			let vc = SubmitBugViewController(toolsController: self, screenshot: self.screenCapture.getScreenshot(), channel: slackChannel, token: slackToken, username: slackUsername)
 			self.rootViewController.presentViewController(vc, animated: true, completion: nil)
 		}
 		popup.addAction(submitScreenshot)
 		
 		//create tweaks action option
-		let openTweaks = UIAlertAction(title: "Tweaks", style: .Default) { (action) in
-			if(!self.displayingTweaks) {
+		let openTweaks = UIAlertAction(title: "Tweaks", style: .Default) { _ in
+			if !self.displayingTweaks {
 				self.fbTweaks = FBTweakViewController(store: FBTweakStore.sharedInstance())
 				self.fbTweaks.tweaksDelegate = self
 				self.rootViewController.presentViewController(self.fbTweaks, animated: true) {
@@ -63,7 +63,7 @@ class Tools: UIView, FBTweakViewControllerDelegate {
 		
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "assignFirstResponder", name: "AssignToolsAsFirstResponder", object: nil)
-		self.becomeFirstResponder()
+		becomeFirstResponder()
 		
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown", name:UIKeyboardWillShowNotification , object: nil)
@@ -80,7 +80,7 @@ class Tools: UIView, FBTweakViewControllerDelegate {
 	
 	func assignFirstResponder() {
 		if !keyboardIsShowing {
-			self.becomeFirstResponder()
+			becomeFirstResponder()
 		}
 	}
 	

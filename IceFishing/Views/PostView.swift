@@ -17,7 +17,6 @@ import MediaPlayer
 
 enum ViewType: Int {
     case Feed
-    case Search
 	case History
 }
 
@@ -75,11 +74,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					updateAddButton()
 					break
-                case .Search:
-                    profileNameLabel?.text = post.song.title
-                    descriptionLabel?.text = post.song.artist
-                    likesLabel?.text = ""
-                    break
                 }
                 
                 if type == .Feed {
@@ -93,18 +87,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
-                //print(post.date)
-				
-                if let _ = post.date {
-                    let dateFormatter = NSDateFormatter()
-                    // dateFormatter.doesRelativeDateFormatting = true
-                    dateFormatter.dateStyle = .NoStyle
-                    dateFormatter.timeStyle = .ShortStyle
-                    //dateLabel?.text = dateFormatter.stringFromDate(date)
-                    dateLabel?.text = post.relativeDate()
-                } else {
-                    dateLabel?.text = ""
-                }
+				dateLabel?.text = post.relativeDate()
                 
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
                     object: post.player,
@@ -119,7 +102,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	
 	func updateAddButton() {
 		addButton!.hidden = true
-		SpotifyController.sharedController.spotifyIsAvailable { (success) -> Void in
+		SpotifyController.sharedController.spotifyIsAvailable { success in
 			if success {
 				self.addButton!.hidden = false
 			}
@@ -127,17 +110,17 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	}
 	
     private func setUpTimer() {
-        if self.updateTimer == nil && self.post?.player.isPlaying() ?? false {
+        if updateTimer == nil && post?.player.isPlaying() ?? false {
             // 60 fps
-            self.updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
+            updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
                 target: self, selector: Selector("timerFired:"),
                 userInfo: nil,
                 repeats: true)
 
-            NSRunLoop.currentRunLoop().addTimer(self.updateTimer!, forMode: NSRunLoopCommonModes)
-        } else if !(self.post?.player.isPlaying() ?? false) {
-            self.updateTimer?.invalidate()
-            self.updateTimer = nil
+            NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
+        } else if !(post?.player.isPlaying() ?? false) {
+            updateTimer?.invalidate()
+            updateTimer = nil
         }
         
     }
@@ -201,8 +184,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     dynamic private func timerFired(timer: NSTimer) {
-        if self.post?.player.isPlaying() ?? false {
-            self.setNeedsDisplay()
+        if post?.player.isPlaying() ?? false {
+            setNeedsDisplay()
         }
     }
     
@@ -256,7 +239,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 
             }
 			
-			guard let label = self.profileNameLabel else { return }
+			guard let label = profileNameLabel else { return }
             if !label.textColor.isEqual(color) {
                 UIView.transitionWithView(label, duration: duration, options: .TransitionCrossDissolve, animations: {
                     label.textColor = color
@@ -280,7 +263,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         let progress = Double(xTranslation/cellWidth)
         post?.player.progress = progress
         
-        self.setNeedsDisplay()
+        setNeedsDisplay()
     }
     
     override func drawRect(rect: CGRect) {
@@ -289,9 +272,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         super.drawRect(rect)
         fillColor.setFill()
         CGContextFillRect(UIGraphicsGetCurrentContext(),
-            CGRect(x: 0, y: 0,
-                width: self.bounds.size.width * CGFloat(progress),
-                height: self.bounds.size.height))
+            CGRect(x: 0, y: 0, width: bounds.width * CGFloat(progress), height: bounds.height))
     }
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -299,11 +280,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             if let player = post?.player {
                 var offsetY:CGFloat = 0.0
                 var offsetX:CGFloat = 0.0
-                if let superview = self.superview?.superview?.superview as? UIScrollView {
+                if let superview = superview?.superview?.superview as? UIScrollView {
                     offsetY = superview.contentOffset.y
                     offsetX = superview.contentOffset.x
                 }
-                let translation = self.progressGestureRecognizer?.translationInView(self)
+                let translation = progressGestureRecognizer?.translationInView(self)
                 
                 if let translation = translation {
                     return ((fabs(translation.x) > fabs(translation.y)) &&
@@ -321,11 +302,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 		
 		if sender.isKindOfClass(UILongPressGestureRecognizer) {
 			if sender.state == .Began {
-				self.delegate?.didLongPressOnCell?(self)
+				delegate?.didLongPressOnCell?(self)
 			}
 		} else if sender.isKindOfClass(UITapGestureRecognizer) {
 			let tapPoint = sender.locationInView(self)
-			let hitView = self.hitTest(tapPoint, withEvent: nil)
+			let hitView = hitTest(tapPoint, withEvent: nil)
 			if hitView == likedButton {
 				post.toggleLike()
 				let name = post.isLiked ? "Heart-Red" : "Heart"

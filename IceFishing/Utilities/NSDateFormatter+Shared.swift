@@ -10,7 +10,6 @@ import Foundation
 
 extension NSDateFormatter {
 	
-	// All formatter types should be in here
 	static var parsingDateFormatter: NSDateFormatter {
 		let formatter = NSDateFormatter()
 		formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
@@ -22,6 +21,19 @@ extension NSDateFormatter {
 	static var simpleDateFormatter: NSDateFormatter {
 		let formatter = NSDateFormatter()
 		formatter.dateFormat = "M.dd.YY"
+		return formatter
+	}
+	
+	static var yearMonthDayFormatter: NSDateFormatter {
+		let formatter = NSDateFormatter()
+		formatter.dateFormat = "yyyy-MM-dd"
+		formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		return formatter
+	}
+	
+	static var monthFormatter: NSDateFormatter {
+		let formatter = NSDateFormatter()
+		formatter.dateFormat = "MMM"
 		return formatter
 	}
 }

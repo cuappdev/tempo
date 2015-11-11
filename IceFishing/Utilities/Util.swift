@@ -25,7 +25,7 @@ extension UIView {
 func getTopViewController() -> UIViewController {
 	var topVC = UIApplication.sharedApplication().keyWindow?.rootViewController
 	
-	while ((topVC?.presentedViewController) != nil) {
+	while topVC?.presentedViewController != nil {
 		topVC = topVC?.presentedViewController
 	}
 	

@@ -70,7 +70,7 @@ class SubmitBugViewController: UIViewController {
         //create text view for entering message
         textView = UITextView(frame: CGRectMake(0, 50, view.frame.width, 250))
         textView.font = UIFont.systemFontOfSize(16)
-        self.view.addSubview(textView)
+        view.addSubview(textView)
         
         //display keyboard as soon as view appears
         textView.becomeFirstResponder()
@@ -102,7 +102,7 @@ class SubmitBugViewController: UIViewController {
         request.HTTPBody = parameters.dataUsingEncoding(NSUTF8StringEncoding)
         
         //asynchronously send url request through NSURLSession
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
             if error == nil {
                 print("ERROR \(error)")
             } else {
@@ -134,7 +134,7 @@ class SubmitBugViewController: UIViewController {
         makeMultipartFormDataRequest(NSURL(string: "https://slack.com/api/files.upload?")!, parameters: parameters, data: imageData)
         
         //after request is sent we can dismiss view controller
-        dismissViewControllerAnimated(true) { () -> Void in
+        dismissViewControllerAnimated(true) {
             self.toolsController.assignFirstResponder()
         }
     }
@@ -167,7 +167,7 @@ class SubmitBugViewController: UIViewController {
         mutableURLRequest.HTTPBody = uploadData
         
         //asynchronously send url request through NSURLSession
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(mutableURLRequest) { (data, response, error) -> Void in
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(mutableURLRequest) { data, _, error in
             if error == nil {
                 print("ERROR \(error)")
             } else {
@@ -180,7 +180,7 @@ class SubmitBugViewController: UIViewController {
     func cancel() {
         //cancel button was pressed, remove screenshot submission form from view hierarchy
         textView.endEditing(true)
-        dismissViewControllerAnimated(true) { () -> Void in
+        dismissViewControllerAnimated(true) {
             self.toolsController.assignFirstResponder()
         }
     }

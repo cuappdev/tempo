@@ -212,7 +212,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	}
 	
 	func submitSong() {
-		self.delegate?.didSelectSong(selectedSong!)
+		delegate?.didSelectSong(selectedSong!)
 		dismiss()
 	}
 	

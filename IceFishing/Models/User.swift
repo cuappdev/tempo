@@ -49,7 +49,7 @@ class User: NSObject, NSCoding {
 		if let image = profileImage {
 			completion(image)
 		} else {
-			let request = NSURLRequest(URL: self.fbImageURL, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+			let request = NSURLRequest(URL: fbImageURL, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 			
 			NSURLSession.sharedSession().dataTaskWithRequest(request) { data, _, _ in
 				guard let unwrappedData = data else { return }

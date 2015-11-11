@@ -52,7 +52,7 @@ class SavedSongView: UIView {
 		
 		currentWindow?.addSubview(self)
 		
-		self.fadeIn(0.5, delay: 0.0) { _ in
+		fadeIn(0.5, delay: 0.0) { _ in
 			dispatch_after(delayTime, dispatch_get_main_queue()) {
 				self.fadeOut(0.5, delay: 0.0) { _ in
 					self.removeFromSuperview()

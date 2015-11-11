@@ -17,7 +17,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
     var currentlyPlayingIndexPath: NSIndexPath? {
         didSet {
 			var array = posts
-			if self.searchController.active {
+			if searchController.active {
 				array = filteredPosts
 			}
             if let row = currentlyPlayingIndexPath?.row where currentlyPlayingPost?.isEqual(array[row]) ?? false {
@@ -76,7 +76,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
     private func updateNowPlayingInfo() {
         let session = AVAudioSession.sharedInstance()
         
-        if let post = self.currentlyPlayingPost {
+        if let post = currentlyPlayingPost {
             // state change, update play information
             let center = MPNowPlayingInfoCenter.defaultCenter()
             if post.player.progress != 1.0 {
@@ -232,7 +232,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	}()
 	
 	func willPresentSearchController(searchController: UISearchController) {
-		self.navigationController?.view.addSubview(self.statusBarView)
+		navigationController?.view.addSubview(statusBarView)
 	}
 	
 	func didDismissSearchController(searchController: UISearchController) {
@@ -251,7 +251,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	}
 	
 	func didLongPressOnCell(postView: PostView) {
-		SpotifyController.sharedController.spotifyIsAvailable({ (success) -> Void in
+		SpotifyController.sharedController.spotifyIsAvailable { success in
 			if success {
 				let topVC = getTopViewController()
 				let playlistVC = PlaylistTableViewController()
@@ -260,6 +260,6 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 				playlistVC.song = postView.post
 				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
 			}
-		})
+		}
 	}
 }

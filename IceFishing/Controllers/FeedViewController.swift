@@ -95,7 +95,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.post?.player.prepareToPlay()
-		//cell.referenceFeedViewController = self
 		cell.postView.delegate = self
 		return cell
 	}
@@ -156,8 +155,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	}
 	
 	func rotatePlusButton(active: Bool) {
-		if let currentTransform = (self.plusButton.imageView!.layer.presentationLayer() as? CALayer)?.transform {
-			self.plusButton.imageView?.layer.transform = currentTransform
+		if let currentTransform = (plusButton.imageView!.layer.presentationLayer() as? CALayer)?.transform {
+			plusButton.imageView?.layer.transform = currentTransform
 		}
 		plusButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
 		plusButton.addTarget(active ? searchTableViewController : self, action: active ? "dismiss" : "plusButtonTapped", forControlEvents: .TouchUpInside)
@@ -179,7 +178,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	// MARK: - SongSearchDelegate
 	
 	func didSelectSong(song: Song) {
-		self.posts.insert(Post(song: song, user: User.currentUser, date: NSDate()), atIndex: 0)
+		posts.insert(Post(song: song, user: User.currentUser, date: NSDate()), atIndex: 0)
 		API.sharedAPI.updatePost(User.currentUser.id, song: song) { [weak self] _ in
 			self?.tableView.reloadData()
 		}

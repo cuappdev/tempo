@@ -24,14 +24,14 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
     }
 	
 	override func viewDidAppear(animated: Bool) {
-		SpotifyController.sharedController.getPlaylists({ (playlists, error) -> Void in
+		SpotifyController.sharedController.getPlaylists { playlists, error in
 			guard error == nil else {
 				return
 			}
 			
 			self.playlists = playlists!
 			self.tableView.reloadData()
-		})
+		}
 	}
 	
 	func dismissVC() {
@@ -75,7 +75,7 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		let playlist = playlists[indexPath.row]
 		
-		SpotifyController.sharedController.addTrackToPlaylist(playlist, track: song!) { (success) -> Void in
+		SpotifyController.sharedController.addTrackToPlaylist(playlist, track: song!) { success in
 			if success {
 				self.savedSongAlertView = SavedSongView.instanceFromNib()
 				self.savedSongAlertView.showSongStatusPopup(.NotSavedToPlaylist, playlist: playlist.name)

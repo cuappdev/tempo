@@ -10,11 +10,10 @@ import UIKit
 
 class HipCalendarCollectionReusableView: UICollectionReusableView {
     
-    let dateFormat = "MMM"
     var titleLabel: UILabel!
     var firstDayOfMonth: NSDate! {
         didSet {
-            self.titleLabel.text = firstDayOfMonth.timeDescription(dateFormat).uppercaseString
+            titleLabel.text = NSDateFormatter.monthFormatter.stringFromDate(firstDayOfMonth).uppercaseString
         }
     }
     
@@ -23,7 +22,7 @@ class HipCalendarCollectionReusableView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        var rect = CGRectMake(0, 0, self.bounds.width/11, self.bounds.height)
+        var rect = CGRectMake(0, 0, bounds.width/11, bounds.height)
         rect.origin.y = 0.4*frame.size.height
 		userInteractionEnabled = false
         
@@ -32,7 +31,7 @@ class HipCalendarCollectionReusableView: UICollectionReusableView {
         titleLabel.font = UIFont(name: "HelveticaNeue", size: 12)!
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
-        self.addSubview(titleLabel)
+        addSubview(titleLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {

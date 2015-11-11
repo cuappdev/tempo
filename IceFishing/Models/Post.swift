@@ -48,8 +48,9 @@ class Post: NSObject {
     }
     
     func relativeDate() -> String {
+		guard let date = date else { return "" }
         let now = NSDate()
-        let seconds = Int(now.timeIntervalSinceDate(self.date!))
+        let seconds = Int(now.timeIntervalSinceDate(date))
         if seconds < 60 {
             return "just now"
         }

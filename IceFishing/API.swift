@@ -108,7 +108,7 @@ class API {
 		}
 		
 		let userRequest = FBRequest.requestForMe()
-		userRequest.startWithCompletionHandler { [unowned self] (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+		userRequest.startWithCompletionHandler { [unowned self] _, result, error in
 			if error == nil {
 				let user = [
 					"email": result["email"] as! String,
