@@ -18,6 +18,7 @@ import MediaPlayer
 enum ViewType: Int {
     case Feed
 	case History
+	case Liked
 }
 
 enum SavedSongStatus: Int {
@@ -59,6 +60,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             if let post = post {
                 switch type {
                 case .Feed:
+					avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
                     likesLabel?.text = "\(post.likes) likes"
@@ -74,14 +76,19 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					updateAddButton()
 					break
-                }
-                
+				case .Liked:
+					profileNameLabel?.text = post.song.artist
+					descriptionLabel?.text = "\(post.song.title)"
+					likesLabel?.text = "\(post.likes) likes"
+					likedButton!.hidden = true
+					updateAddButton()
+				}
                 if type == .Feed {
                     post.user.loadImage {
                         self.avatarImageView?.image = $0
                     }
                 }
-				else if type == .History {
+				else if type == .History || type == .Liked {
 					avatarImageView!.imageURL = post.song.smallArtworkURL
 				}
                 
@@ -148,7 +155,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			addGestureRecognizer(longPressGestureRecognizer!)
 		}
 		
-        avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
         avatarImageView?.clipsToBounds = true
         userInteractionEnabled = true
         avatarImageView?.userInteractionEnabled = true
