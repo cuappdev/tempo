@@ -12,7 +12,9 @@ import MediaPlayer
 class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
 	
 	var customRefresh:ADRefreshControl!
-	var plusButton: UIButton!	
+	var plusButton: UIButton!
+	var internetAlertView: UIView!
+	var reachability: Reachability!
 	
 	lazy var searchTableViewController: SearchViewController = {
 		let vc = SearchViewController(nibName: "SearchViewController", bundle: nil)
@@ -28,9 +30,33 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	// MARK: - Lifecycle Methods
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		print("ViewDidLoad")
+		do {
+			reachability = try Reachability.reachabilityForInternetConnection()
+		} catch {
+			print("Unable to create Reachability")
+		}
 		
-		notifCenterSetup()
-		commandCenterHandler()
+		reachability.whenUnreachable = { [weak self] reachability in
+			dispatch_async(dispatch_get_main_queue()) {
+				self?.internetAlertView = UINib(nibName: "Reachability", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! UIView
+				self?.internetAlertView.frame = CGRectMake(0, 0, (self?.view.frame.width)!, 50)
+				self?.internetAlertView.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, self!.internetAlertView.bounds.height/2)
+				self?.internetAlertView.backgroundColor = UIColor.iceDarkGray
+				self?.internetAlertView.alpha = 0
+				self!.view.addSubview(self!.internetAlertView)
+				UIView.animateWithDuration(1, delay: 0.4, options: .CurveEaseOut, animations: {
+					self?.internetAlertView.alpha = 1
+					}, completion: nil)
+				_ = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(4.0), target: self!, selector: "internetViewTimeExpired", userInfo: nil, repeats: false)
+			}
+		}
+
+		do {
+			try reachability.startNotifier()
+		} catch {
+			print("Unable to start notifier")
+		}
 		
 		//—————————————from MAIN VC——————————————————
 		title = "Feed"
@@ -53,11 +79,25 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		super.viewWillAppear(animated)
 		
 		rotatePlusButton(false)
+		
 	}
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-		
+    
+        if reachability.currentReachabilityStatus == Reachability.NetworkStatus.NotReachable {
+            self.internetAlertView = UINib(nibName: "Reachability", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! UIView
+            self.internetAlertView.frame = CGRectMake(0, 0, (self.view.frame.width), 50)
+            self.internetAlertView.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, self.internetAlertView.bounds.height/2)
+            self.internetAlertView.backgroundColor = UIColor.iceDarkGray
+            self.internetAlertView.alpha = 0
+            self.view.addSubview(self.internetAlertView)
+            UIView.animateWithDuration(1, delay: 0.4, options: .CurveEaseOut, animations: {
+                self.internetAlertView.alpha = 1
+                }, completion: nil)
+            _ = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(4.0), target: self, selector: "internetViewTimeExpired", userInfo: nil, repeats: false)
+        }
+        
 		topPinViewContainer.frame = CGRectMake(0, tableView.frame.minY, view.frame.width, tableView.rowHeight)
 		view.superview!.addSubview(topPinViewContainer)
 		bottomPinViewContainer.frame = CGRectMake(0, tableView.frame.maxY-tableView.rowHeight, view.frame.width, tableView.rowHeight)
@@ -72,6 +112,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		for cell in (tableView.visibleCells as? [FeedTableViewCell])! {
 			cell.postView.updateAddButton()
 		}
+		
 	}
 	
 	// MARK: - UIRefreshControl
@@ -87,6 +128,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 				self?.refreshControl?.endRefreshing()
 			}
 		}
+		
+		self.refreshControl?.endRefreshing()
 	}
 	
 	// MARK: - UITableViewDataSource
@@ -192,5 +235,13 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		profileVC.title = "Profile"
 		profileVC.user = user
 		navigationController?.pushViewController(profileVC, animated: true)
+	}
+
+	func internetViewTimeExpired() {
+		UIView.animateWithDuration(3, animations: {
+			self.internetAlertView.alpha = 0.0
+			}, completion: { _ in
+				self.internetAlertView.removeFromSuperview()
+		})
 	}
 }
