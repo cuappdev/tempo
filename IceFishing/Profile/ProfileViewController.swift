@@ -168,7 +168,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 				if newUsername.lowercaseString != oldUsername.lowercaseString {
 					API.sharedAPI.updateCurrentUser(newUsername) { success in
 						if success {
-							self.usernameLabel.text = User.currentUser.username
+							self.usernameLabel.text = "@\(User.currentUser.username)"
 						} else {
 							self.showErrorAlert("Sorry!", message: "Username is taken.", actionTitle: "Try again")
 						}
