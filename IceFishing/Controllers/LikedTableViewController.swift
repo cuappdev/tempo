@@ -8,8 +8,8 @@
 
 import UIKit
 
-class LikedTableViewController: PlayerTableViewController  {
-    let cellIdentifier = "SongSearchTableViewCell"
+class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
+    let cellIdentifier = "FeedTableViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +17,7 @@ class LikedTableViewController: PlayerTableViewController  {
 		notifCenterSetup()
 		commandCenterHandler()
 		
-        tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
+        tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: "FeedCell")
         title = "Liked"
         addHamburgerMenu()
         addRevealGesture()
@@ -39,21 +39,17 @@ class LikedTableViewController: PlayerTableViewController  {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! SongSearchTableViewCell
-        
-        var post = posts[indexPath.row]
-        if searchController.active {
-            post = filteredPosts[indexPath.row]
-        }
-        
-        cell.postView.post = post
-        cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
-        
-        return cell
+		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
+		cell.postView.type = .Liked
+		cell.postView.post = posts[indexPath.row]
+		cell.postView.delegate = self
+		cell.postView.post?.player.prepareToPlay()
+		
+		return cell
     }
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		let cell = tableView.cellForRowAtIndexPath(indexPath) as! SongSearchTableViewCell
+		let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
 		cell.postView.backgroundColor = UIColor.iceLightGray
 		currentlyPlayingIndexPath = indexPath
 	}
