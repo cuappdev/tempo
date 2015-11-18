@@ -10,10 +10,6 @@ import Foundation
 
 extension UIViewController {
 	func addHamburgerMenu() {
-		//—————————————from MAIN VC——————————————————
-		navigationItem.title = title
-		
-		// Add hamburger menu to the left side of the navbar
 		let image = UIImage(named: "Hamburger-Menu")!
 		let menuButton = UIButton(frame: CGRect(origin: CGPointZero, size: image.size))
 		menuButton.setImage(image, forState: .Normal)
@@ -24,6 +20,12 @@ extension UIViewController {
 	func addRevealGesture() {
 		if revealViewController() != nil {
 			view.addGestureRecognizer(revealViewController().panGestureRecognizer())
+		}
+	}
+	
+	func removeRevealGesture() {
+		if revealViewController() != nil {
+			view.removeGestureRecognizer(revealViewController().panGestureRecognizer())
 		}
 	}
 }

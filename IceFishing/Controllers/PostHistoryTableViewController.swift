@@ -23,8 +23,6 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
         
         navigationItem.title = "Post History"
-        
-        addRevealGesture()
 		
 		notifCenterSetup()
 		commandCenterHandler()

@@ -59,6 +59,18 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		tableView.backgroundView = UIView() // Fix color above search bar
     }
 	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		addRevealGesture()
+	}
+	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		
+		removeRevealGesture()
+	}
+	
     // MARK: - Table view data source
 	
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

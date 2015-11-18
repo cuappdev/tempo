@@ -179,5 +179,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	
 	func revealController(revealController: SWRevealViewController!, willMoveToPosition position: FrontViewPosition) {
 		UIApplication.sharedApplication().sendAction("resignFirstResponder", to: nil, from: nil, forEvent: nil)
+		if position == .Left {
+			revealController.frontViewController.view.userInteractionEnabled = true
+			revealController.frontViewController.revealViewController().tapGestureRecognizer()
+		} else {
+			revealController.frontViewController.view.userInteractionEnabled = false
+		}
 	}
 }

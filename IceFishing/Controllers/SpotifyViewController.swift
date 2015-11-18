@@ -40,6 +40,12 @@ class SpotifyViewController: UIViewController, SPTAuthViewDelegate {
 		}
 	}
 	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		
+		removeRevealGesture()
+	}
+	
 	// Can be called after successful login to Spotify SDK
 	func updateSpotifyState() {
 		// FIX: Temporary fix for user authentication

@@ -58,7 +58,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		if user == User.currentUser {
 			addHamburgerMenu()
 		}
-		addRevealGesture()
 		
         nameLabel.text = user.name
 		usernameLabel.text = "@" + user.username
@@ -105,6 +104,18 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
 		let views: [String : AnyObject] = ["pic" : profilePictureView, "topGuide": topLayoutGuide]
 		view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
+	}
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		addRevealGesture()
+	}
+	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		
+		removeRevealGesture()
 	}
 
     // Return to profile view

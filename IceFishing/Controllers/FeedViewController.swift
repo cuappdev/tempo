@@ -70,7 +70,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		pinView.backgroundColor = UIColor.iceLightGray
 		
 		addHamburgerMenu()
-		addRevealGesture()
 		
 		tableView.tableHeaderView = nil
 	}
@@ -112,7 +111,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		for cell in (tableView.visibleCells as? [FeedTableViewCell])! {
 			cell.postView.updateAddButton()
 		}
-		
 	}
 	
 	// MARK: - UIRefreshControl

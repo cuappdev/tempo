@@ -51,8 +51,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		addRevealGesture()
         
         if searchType == .Song {
             title = "Post your song of the day!"
@@ -85,6 +83,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
+		addRevealGesture()
 		view.layoutIfNeeded()
 		
 		let textFieldInsideSearchBar = searchBar.valueForKey("_searchField") as? UITextField
@@ -95,6 +94,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		}, completion:nil)
 		
 		searchBar.becomeFirstResponder()
+	}
+	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		
+		removeRevealGesture()
 	}
 	
 	override func viewDidLayoutSubviews() {

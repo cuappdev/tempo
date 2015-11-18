@@ -20,7 +20,6 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
         tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: "FeedCell")
         title = "Liked"
         addHamburgerMenu()
-        addRevealGesture()
         
         extendedLayoutIncludesOpaqueBars = true
         definesPresentationContext = true
