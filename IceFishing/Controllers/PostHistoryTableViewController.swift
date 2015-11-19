@@ -39,7 +39,9 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
+		
 		cell.postView.type = .History
+		let posts = searchController.active ? filteredPosts : self.posts
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()

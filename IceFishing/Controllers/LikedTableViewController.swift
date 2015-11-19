@@ -23,7 +23,6 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
         
         extendedLayoutIncludesOpaqueBars = true
         definesPresentationContext = true
-		
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -39,7 +38,9 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
+		
 		cell.postView.type = .Liked
+		let posts = searchController.active ? filteredPosts : self.posts
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()

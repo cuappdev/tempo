@@ -74,7 +74,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 			user = filteredUsers[indexPath.row]
 			
 		}
-		print(user.username)
+
         cell.userName.text = user.name
         cell.userHandle.text = "@\(user.username)"
         cell.numFollowLabel.text = "\(user.followersCount) followers"

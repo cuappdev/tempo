@@ -220,16 +220,17 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             let duration = NSTimeInterval(0.3)
             if post.player.isPlaying() {
                 color = UIColor.iceDarkRed
-				if let layer = avatarLayer {
-                    let animation = CABasicAnimation(keyPath: "transform.rotation")
-                    animation.fromValue = 0
-                    animation.duration = 3 * M_PI
-                    animation.toValue = 2 * M_PI
-                    animation.repeatCount = FLT_MAX
-                    layer.addAnimation(animation, forKey: "transform.rotation")
-                    
-                }
-                
+				if type == .Feed {
+					if let layer = avatarLayer {
+						let animation = CABasicAnimation(keyPath: "transform.rotation")
+						animation.fromValue = 0
+						animation.duration = 3 * M_PI
+						animation.toValue = 2 * M_PI
+						animation.repeatCount = FLT_MAX
+						layer.addAnimation(animation, forKey: "transform.rotation")
+					}
+				}
+				
                 // Will scroll labels
                 profileNameLabel?.holdScrolling = false
                 descriptionLabel?.holdScrolling = false
