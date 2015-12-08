@@ -93,7 +93,6 @@
 		FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C061AF9105E00C14463 /* ADRefreshControl.swift */; };
 		FA674C0F1AF917A200C14463 /* ViewController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C0E1AF917A200C14463 /* ViewController+Utilities.swift */; };
 		FAB564731AF6A8C9001059DF /* LikedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */; };
-		FAB564741AF6A8C9001059DF /* LikedTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB564721AF6A8C9001059DF /* LikedTableViewController.xib */; };
 		FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
@@ -308,7 +307,6 @@
 		FA674C061AF9105E00C14463 /* ADRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRefreshControl.swift; sourceTree = "<group>"; };
 		FA674C0E1AF917A200C14463 /* ViewController+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ViewController+Utilities.swift"; path = "IceFishing/Utilities/ViewController+Utilities.swift"; sourceTree = SOURCE_ROOT; };
 		FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikedTableViewController.swift; sourceTree = "<group>"; };
-		FAB564721AF6A8C9001059DF /* LikedTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LikedTableViewController.xib; sourceTree = "<group>"; };
 		FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SideBarTableViewCell.xib; path = ../Profile/SideBarTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -332,6 +330,7 @@
 		1D046D8C1AB6953600D0354B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B01FE1541C1765080077C2BF /* Spotify */,
 				6DEE0FC31AC34811005552F9 /* Profile */,
 				BA257E251ABA3FBC00D939B0 /* SWRevealViewController */,
 				1DCB96121AED5EA7007F6A4B /* APIViewController.swift */,
@@ -340,11 +339,6 @@
 				B085F3B31BE3CBB80000421E /* SearchViewController.swift */,
 				B085F3B41BE3CBB80000421E /* SearchViewController.xib */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
-				FAB564721AF6A8C9001059DF /* LikedTableViewController.xib */,
-				1D653F3D1B81451700F54455 /* SpotifyController.swift */,
-				1DE649C11B78590800DA5499 /* SpotifyViewController.swift */,
-				1DE649C21B78590800DA5499 /* SpotifyViewController.xib */,
-				D160AE011BE677D4003B0E1A /* PlaylistTableViewController.swift */,
 				FA674C0E1AF917A200C14463 /* ViewController+Utilities.swift */,
 				1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */,
 				6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */,
@@ -583,6 +577,17 @@
 			path = FBTweaks;
 			sourceTree = "<group>";
 		};
+		B01FE1541C1765080077C2BF /* Spotify */ = {
+			isa = PBXGroup;
+			children = (
+				1D653F3D1B81451700F54455 /* SpotifyController.swift */,
+				1DE649C11B78590800DA5499 /* SpotifyViewController.swift */,
+				1DE649C21B78590800DA5499 /* SpotifyViewController.xib */,
+				D160AE011BE677D4003B0E1A /* PlaylistTableViewController.swift */,
+			);
+			name = Spotify;
+			sourceTree = "<group>";
+		};
 		BA257E251ABA3FBC00D939B0 /* SWRevealViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -763,7 +768,6 @@
 			files = (
 				B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */,
 				CC70D4A51BEAD39D00241732 /* Reachability.xib in Resources */,
-				FAB564741AF6A8C9001059DF /* LikedTableViewController.xib in Resources */,
 				D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */,
 				1DB476481AEF24670066014F /* PostButton.xib in Resources */,
 				6D3FA6611AD5FD5C00B1320D /* UsernameViewController.xib in Resources */,
