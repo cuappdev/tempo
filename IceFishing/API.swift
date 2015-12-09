@@ -26,6 +26,7 @@ private enum Router: URLStringConvertible {
 	case Likes(String?)
 	case Followings
 	case Posts
+	case FollowSuggestions
 	
 	var URLString: String {
 		let path: String = {
@@ -61,6 +62,8 @@ private enum Router: URLStringConvertible {
 				return "/followings"
 			case .Posts:
 				return "/posts"
+			case .FollowSuggestions:
+				return "/users/suggestions"
 			}
 			}()
 		return Router.baseURLString + path
@@ -159,6 +162,14 @@ class API {
 		get(.Following(userID), params: ["session_code": sessionCode], map: map, completion: completion)
 	}
 	
+	func fetchFollowSuggestions(completion: [User] -> Void, length: Int, page: Int) {
+		let map: [String: AnyObject] -> [User]? = {
+			guard let users = $0["users"] as? [AnyObject] else { return [] }
+			return users.map { User(json: JSON($0)) }
+		}
+		post(.FollowSuggestions, params: ["p": page, "l": length, "session_code": sessionCode], map: map, completion: completion)
+	}
+	
 	func fetchFeed(userID: String, completion: [Post] -> Void) {
 		get(.Feed(userID), params: ["session_code": sessionCode], map: postMapping, completion: completion)
 	}
@@ -220,7 +231,6 @@ class API {
 				if let json = result.value as? O {
 					if let obj = map(json) {
 						completion?(obj)
-						print(json)
 					}
 				} else {
 					print("—————— Couldn't decompose object ——————")

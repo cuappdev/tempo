@@ -30,7 +30,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	// MARK: - Lifecycle Methods
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		print("ViewDidLoad")
 		do {
 			reachability = try Reachability.reachabilityForInternetConnection()
 		} catch {
