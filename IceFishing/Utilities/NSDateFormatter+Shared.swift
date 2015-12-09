@@ -10,30 +10,30 @@ import Foundation
 
 extension NSDateFormatter {
 	
-	static var parsingDateFormatter: NSDateFormatter {
+	@nonobjc static let parsingDateFormatter: NSDateFormatter = {
 		let formatter = NSDateFormatter()
 		formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
 		formatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
 		formatter.locale = NSLocale(localeIdentifier: "en_US")
 		return formatter
-	}
+	}()
 	
-	static var simpleDateFormatter: NSDateFormatter {
+	@nonobjc static let simpleDateFormatter: NSDateFormatter = {
 		let formatter = NSDateFormatter()
 		formatter.dateFormat = "M.dd.YY"
 		return formatter
-	}
+	}()
 	
-	static var yearMonthDayFormatter: NSDateFormatter {
+	@nonobjc static let yearMonthDayFormatter: NSDateFormatter = {
 		let formatter = NSDateFormatter()
 		formatter.dateFormat = "yyyy-MM-dd"
 		formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
 		return formatter
-	}
+	}()
 	
-	static var monthFormatter: NSDateFormatter {
+	@nonobjc static let monthFormatter: NSDateFormatter = {
 		let formatter = NSDateFormatter()
 		formatter.dateFormat = "MMM"
 		return formatter
-	}
+	}()
 }
