@@ -21,6 +21,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	private var filteredUsers: [User] = []
 	
 	private var searchController: UISearchController!
+	
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,10 +55,17 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		} else {
 			API.sharedAPI.fetchFollowing(user.id, completion: completion)
 		}
+		
+		
     }
-    
+	
+	override func viewDidAppear(animated: Bool) {
+		
+		notConnected()
+	}
+	
     // TableView Methods
-    
+	
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if searchController.active {
 			return self.filteredUsers.count
@@ -138,4 +146,5 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	override func preferredStatusBarStyle() -> UIStatusBarStyle {
 		return .LightContent
 	}
+
 }

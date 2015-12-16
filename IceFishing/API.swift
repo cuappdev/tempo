@@ -76,6 +76,10 @@ class API {
 	
 	static let sharedAPI: API = API()
 	
+	var isAPIConnected: Bool = true
+	
+	var isConnected: Bool = true
+
 	// Mappings
 	private let postMapping: [String: [AnyObject]] -> [Post]? = {
 		$0["posts"]?.map { Post(json: JSON($0)) }
@@ -230,13 +234,18 @@ class API {
 				if let json = result.value as? O {
 					if let obj = map(json) {
 						completion?(obj)
+						self.isConnected = true
+						self.isAPIConnected = true
 					}
-				} else {
-					print("—————— Couldn't decompose object ——————")
-					print("JSON: \(result.value)")
-					print("Error: \(result.error)")
-					print("Request: \(request)")
-					print("Response: \(response)")
+				} else if let error = result.error as? NSError {
+					if error.code != -1009 {
+						self.isAPIConnected = false
+						self.isConnected = true
+						
+					} else {
+						self.isConnected = false
+						self.isAPIConnected = true
+					}
 				}
 		}
 	}

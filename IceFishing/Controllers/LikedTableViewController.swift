@@ -28,10 +28,12 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         retrieveLikedSongs()
+		
+		notConnected()
     }
-    
+	
     // MARK: - Table view data source
-    
+	
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -60,4 +62,5 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
             self.tableView.reloadData()
         }
     }
+
 }

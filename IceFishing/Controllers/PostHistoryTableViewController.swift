@@ -18,14 +18,18 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
 	
+		notifCenterSetup()
+		commandCenterHandler()
+		
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.iceDarkGray
         tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
         
         navigationItem.title = "Post History"
 		
-		notifCenterSetup()
-		commandCenterHandler()
+		extendedLayoutIncludesOpaqueBars = true
+		definesPresentationContext = true
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -33,10 +37,12 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 			let selectedRow = NSIndexPath(forRow: index!, inSection: 0)
 			tableView.scrollToRowAtIndexPath(selectedRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
 		}
+		
+		notConnected()
     }
-    
+	
     // TableView Methods
-    
+	
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
 		
@@ -57,4 +63,5 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
         selectedCell.postView.backgroundColor = UIColor.iceLightGray
 		currentlyPlayingIndexPath = indexPath
     }
+
 }

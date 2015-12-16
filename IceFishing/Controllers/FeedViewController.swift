@@ -11,16 +11,14 @@ import MediaPlayer
 
 class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
 	
-	var customRefresh:ADRefreshControl!
+	var customRefresh: ADRefreshControl?
 	var plusButton: UIButton!
-	var internetAlertView: UIView!
-	var reachability: Reachability!
 	
 	lazy var searchTableViewController: SearchViewController = {
 		let vc = SearchViewController(nibName: "SearchViewController", bundle: nil)
 		vc.delegate = self
 		return vc
-		}()
+	}()
 	
 	let topPinViewContainer = UIView()
 	let bottomPinViewContainer = UIView()
@@ -30,34 +28,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	// MARK: - Lifecycle Methods
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		do {
-			reachability = try Reachability.reachabilityForInternetConnection()
-		} catch {
-			print("Unable to create Reachability")
-		}
 		
-		reachability.whenUnreachable = { [weak self] reachability in
-			dispatch_async(dispatch_get_main_queue()) {
-				self?.internetAlertView = UINib(nibName: "Reachability", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! UIView
-				self?.internetAlertView.frame = CGRectMake(0, 0, (self?.view.frame.width)!, 50)
-				self?.internetAlertView.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, self!.internetAlertView.bounds.height/2)
-				self?.internetAlertView.backgroundColor = UIColor.iceDarkGray
-				self?.internetAlertView.alpha = 0
-				self!.view.addSubview(self!.internetAlertView)
-				UIView.animateWithDuration(1, delay: 0.4, options: .CurveEaseOut, animations: {
-					self?.internetAlertView.alpha = 1
-					}, completion: nil)
-				_ = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(4.0), target: self!, selector: "internetViewTimeExpired", userInfo: nil, repeats: false)
-			}
-		}
-
-		do {
-			try reachability.startNotifier()
-		} catch {
-			print("Unable to start notifier")
-		}
-		
-		//—————————————from MAIN VC——————————————————
 		title = "Feed"
 		setupAddButton()
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
@@ -71,30 +42,20 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		addHamburgerMenu()
 		
 		tableView.tableHeaderView = nil
+		
+		refreshControl = UIRefreshControl()
+		customRefresh = ADRefreshControl(refreshControl: refreshControl!)
+		refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
 	}
 	
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		
 		rotatePlusButton(false)
-		
 	}
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-    
-        if reachability.currentReachabilityStatus == Reachability.NetworkStatus.NotReachable {
-            self.internetAlertView = UINib(nibName: "Reachability", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! UIView
-            self.internetAlertView.frame = CGRectMake(0, 0, (self.view.frame.width), 50)
-            self.internetAlertView.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, self.internetAlertView.bounds.height/2)
-            self.internetAlertView.backgroundColor = UIColor.iceDarkGray
-            self.internetAlertView.alpha = 0
-            self.view.addSubview(self.internetAlertView)
-            UIView.animateWithDuration(1, delay: 0.4, options: .CurveEaseOut, animations: {
-                self.internetAlertView.alpha = 1
-                }, completion: nil)
-            _ = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(4.0), target: self, selector: "internetViewTimeExpired", userInfo: nil, repeats: false)
-        }
         
 		topPinViewContainer.frame = CGRectMake(0, tableView.frame.minY, view.frame.width, tableView.rowHeight)
 		view.superview!.addSubview(topPinViewContainer)
@@ -110,11 +71,16 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		for cell in (tableView.visibleCells as? [FeedTableViewCell])! {
 			cell.postView.updateAddButton()
 		}
+		
+		notConnected()
 	}
 	
 	// MARK: - UIRefreshControl
 	
 	func refreshFeed() {
+		
+		notConnected()
+		
 		API.sharedAPI.fetchFeedOfEveryone { [weak self] in
 			self?.posts = $0
 			self?.tableView.reloadData()
@@ -146,16 +112,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	
 	override func scrollViewDidScroll(scrollView: UIScrollView) {
 		pinIfNeeded()
-		
-		//! This gets called before viewDidLoad, maybe this should be created in init
-		//! instead of didLoad or here.
-		if customRefresh == nil {
-			refreshControl = UIRefreshControl()
-			customRefresh = ADRefreshControl(refreshControl: refreshControl!)
-			refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
-		}
-		
-		customRefresh.scrollViewDidScroll(scrollView)
+		customRefresh?.scrollViewDidScroll(scrollView)
 	}
 	
 	func pinIfNeeded() {
@@ -234,11 +191,4 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		navigationController?.pushViewController(profileVC, animated: true)
 	}
 
-	func internetViewTimeExpired() {
-		UIView.animateWithDuration(3, animations: {
-			self.internetAlertView.alpha = 0.0
-			}, completion: { _ in
-				self.internetAlertView.removeFromSuperview()
-		})
-	}
 }

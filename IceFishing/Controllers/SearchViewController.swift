@@ -94,6 +94,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		}, completion:nil)
 		
 		searchBar.becomeFirstResponder()
+		
+		notConnected()
 	}
 	
 	override func viewDidDisappear(animated: Bool) {

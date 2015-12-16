@@ -28,4 +28,12 @@ extension UIViewController {
 			view.removeGestureRecognizer(revealViewController().panGestureRecognizer())
 		}
 	}
+	
+	func notConnected() {
+		if !API.sharedAPI.isConnected {
+			Banner.notConnected(self)
+		} else if !API.sharedAPI.isAPIConnected {
+			Banner.APINotConnected(self)
+		}
+	}
 }
