@@ -1,5 +1,5 @@
 //
-//  ColorExtension.swift
+//  UIColor+Shared.swift
 //  IceFishing
 //
 //  Created by Manuela Rios on 4/26/15.

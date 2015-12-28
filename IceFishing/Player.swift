@@ -13,17 +13,21 @@ let PlayerDidChangeStateNotification = "PlayerDidChangeState"
 let PlayerDidSeekNotification = "PlayerDidSeek"
 let PlayerDidFinishPlayingNotification = "PlayerDidFinishPlaying"
 
-class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
-    var downloadCallback: ((progress: Double) -> ())?
-    
-    private var currentConnection: NSURLConnection?
-    static private var player: Player? {
-        didSet {
-            if Player.player != oldValue {
-                oldValue?.pause(true)
-            }
-        }
-    }
+class Player: NSObject, AVAudioPlayerDelegate {
+	
+	private var currentTask: NSURLSessionDataTask?
+	private let session: NSURLSession = {
+		let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+		config.requestCachePolicy = .ReturnCacheDataElseLoad
+		return NSURLSession(configuration: config)
+	}()
+	private static var currentPlayer: Player? {
+		didSet {
+			if Player.currentPlayer != oldValue {
+				oldValue?.pause(true)
+			}
+		}
+	}
     private var player: AVAudioPlayer? {
         didSet {
             oldValue?.pause()
@@ -37,20 +41,18 @@ class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
     }
     private(set) var finishedPlaying = false
     
-    var fileURL: NSURL!
-    init(fileURL: NSURL) {
-        super.init()
-        // hack to enable did set
-        self.fileURL = fileURL
-		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
-			object: self, queue: nil) { [weak self] _ in
-				if let _ = self {
-					if self!.isPlaying() {
-						Player.player = self!
-					}
-				}
-		}
+    private let fileURL: NSURL
+	init(fileURL: NSURL) {
+		self.fileURL = fileURL
+		super.init()
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeCurrentPlayer", name: PlayerDidChangeStateNotification, object: nil)
     }
+	
+	func changeCurrentPlayer() {
+		if self.isPlaying() {
+			Player.currentPlayer = self
+		}
+	}
     
     class func keyPathsForValuesAffectingCurrentTime(key: String) -> Set<String> {
         return Set(["player.currentTime"])
@@ -63,18 +65,30 @@ class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
     func prepareToPlay() {
         if player == nil {
             if fileURL.fileURL {
-                do {
-                    player = try AVAudioPlayer(contentsOfURL: fileURL)
-                } catch _ {
-                    player = nil
-                }
+				player = try? AVAudioPlayer(contentsOfURL: fileURL)
                 player?.prepareToPlay()
-            } else if currentConnection == nil {
-                // get cached data
-                let request = NSURLRequest(URL: fileURL,
-                    cachePolicy: NSURLRequestCachePolicy.ReturnCacheDataElseLoad,
-                    timeoutInterval: 15.0)
-                currentConnection = NSURLConnection(request: request, delegate: self, startImmediately: true)
+            } else if currentTask == nil {
+                let request = NSURLRequest(URL: fileURL, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 15.0)
+				currentTask = session.dataTaskWithRequest(request) { [weak self] data, response, _ -> Void in
+					guard let s = self else { return }
+					if let data = data {
+						s.player = try? AVAudioPlayer(data: data)
+						if let response = response {
+							let cachedResponse = NSCachedURLResponse(response: response, data: data)
+							NSURLCache.sharedURLCache().storeCachedResponse(cachedResponse, forRequest: request)
+						}
+					}
+					s.player?.prepareToPlay()
+					s.currentTask = nil
+					
+					if s.shouldAutoplay {
+						s.player?.play()
+						if s.shouldNotify {
+							NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
+						}
+					}
+				}
+				currentTask!.resume()
             }
         }
     }
@@ -180,45 +194,7 @@ class Player: NSObject, AVAudioPlayerDelegate, NSURLConnectionDelegate {
         }
     }
     
-    // MARK: NSURLConnectionDelegate
-    private var expectedLength: Int64 = 0
-    private var totalData: NSMutableData?
-    func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
-        expectedLength = response.expectedContentLength
-        totalData = NSMutableData(capacity: Int(expectedLength))
-    }
-    
-    func connection(connection: NSURLConnection, didReceiveData data: NSData) {
-        totalData?.appendData(data)
-        if let totalData = totalData {
-            downloadCallback?(progress: Double(totalData.length) / Double(expectedLength))
-        }
-    }
-    
-    func connectionDidFinishLoading(connection: NSURLConnection) {
-        downloadCallback?(progress: 1.0)
-        do {
-            player = try AVAudioPlayer(data: totalData!)
-        } catch _ {
-            player = nil
-        }
-        player?.prepareToPlay()
-        totalData = nil
-        currentConnection = nil
-        
-        if shouldAutoplay {
-            player?.play()
-            if shouldNotify {
-                NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
-            }
-        }
-    }
-	
-	func connection(connection: NSURLConnection, didFailWithError error: NSError) {
-		print(__FUNCTION__ + " \(error)")
-	}
-    
-    // MARK: AVAudioPlayerDelegate
+    // MARK: - AVAudioPlayerDelegate
 	
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         pause(true)

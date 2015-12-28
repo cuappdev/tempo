@@ -1,5 +1,5 @@
 //
-//  ViewController+Bar.swift
+//  UIViewController+Utilities.swift
 //  IceFishing
 //
 //  Created by Alexander Zielenski on 5/5/15.
