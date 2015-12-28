@@ -115,7 +115,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
                     MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: artwork),
                     MPMediaItemPropertyPlaybackDuration: post.player.duration,
                     MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
-                    MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying() ? post.player.rate : 0.0,
+                    MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying ? post.player.rate : 0.0,
                     MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
                     MPNowPlayingInfoPropertyPlaybackQueueCount: count ]
             } else {

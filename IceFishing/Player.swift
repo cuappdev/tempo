@@ -16,11 +16,6 @@ let PlayerDidFinishPlayingNotification = "PlayerDidFinishPlaying"
 class Player: NSObject, AVAudioPlayerDelegate {
 	
 	private var currentTask: NSURLSessionDataTask?
-	private let session: NSURLSession = {
-		let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-		config.requestCachePolicy = .ReturnCacheDataElseLoad
-		return NSURLSession(configuration: config)
-	}()
 	private static var currentPlayer: Player? {
 		didSet {
 			if Player.currentPlayer != oldValue {
@@ -49,7 +44,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
 	
 	func changeCurrentPlayer() {
-		if self.isPlaying() {
+		if self.isPlaying {
 			Player.currentPlayer = self
 		}
 	}
@@ -69,14 +64,10 @@ class Player: NSObject, AVAudioPlayerDelegate {
                 player?.prepareToPlay()
             } else if currentTask == nil {
                 let request = NSURLRequest(URL: fileURL, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 15.0)
-				currentTask = session.dataTaskWithRequest(request) { [weak self] data, response, _ -> Void in
+				currentTask = NSURLSession.dataTaskWithCachedRequest(request) { [weak self] data, response, _ -> Void in
 					guard let s = self else { return }
 					if let data = data {
 						s.player = try? AVAudioPlayer(data: data)
-						if let response = response {
-							let cachedResponse = NSCachedURLResponse(response: response, data: data)
-							NSURLCache.sharedURLCache().storeCachedResponse(cachedResponse, forRequest: request)
-						}
 					}
 					s.player?.prepareToPlay()
 					s.currentTask = nil
@@ -109,7 +100,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
         }
     }
     
-    var rate:Float {
+    var rate: Float {
         get {
             return player?.rate ?? 0.0
         }
@@ -127,48 +118,27 @@ class Player: NSObject, AVAudioPlayerDelegate {
         }
     }
     
-    func isPlaying() -> Bool {
-        if let player = player {
-            return player.playing
-        }
-        return false
+	var isPlaying: Bool {
+		return player?.playing ?? false
     }
     
     func togglePlaying() {
-        if isPlaying() {
-            pause(true)
-        } else {
-            play(true)
-        }
+		isPlaying ? pause(true) : play(true)
     }
     
     dynamic var currentTime: NSTimeInterval {
         get {
-            if let player = player {
-                return player.currentTime
-            } else {
-                return 0.0
-            }
+			return player?.currentTime ?? 0.0
         }
-        
         set {
-            if let player = player {
-                var val = newValue
-                val = max(0, val)
-                val = min(duration, val)
-                
-                player.currentTime = val
-                NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidSeekNotification, object: self)
-            }
+			guard let player = player else { return }
+			player.currentTime = max(0, min(duration, newValue))
+			NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidSeekNotification, object: self)
         }
     }
     
     var duration: NSTimeInterval {
-        if let player = player {
-            return player.duration
-        }
-        
-        return DBL_MAX
+		return player?.duration ?? DBL_MAX
     }
     
     dynamic var progress: Double {
@@ -176,21 +146,15 @@ class Player: NSObject, AVAudioPlayerDelegate {
             if finishedPlaying {
                 return 1.0
             }
-            
-            if let _ = player {
-                return currentTime / duration
-            }
-            return 0.0
+			return player != nil ? currentTime / duration : 0.0
         }
-        
         set {
-            if let _ = player {
-                if newValue == 1.0 {
-                    finishedPlaying = true
-                }
-                
-                currentTime = newValue * duration
-            }
+			if player == nil { return }
+			if newValue == 1.0 {
+				finishedPlaying = true
+			}
+			
+			currentTime = newValue * duration
         }
     }
     
@@ -200,6 +164,5 @@ class Player: NSObject, AVAudioPlayerDelegate {
         pause(true)
         finishedPlaying = true
         NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
-        // we finished playing, destroy the object
     }
 }

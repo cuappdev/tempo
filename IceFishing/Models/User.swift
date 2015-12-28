@@ -49,18 +49,17 @@ class User: NSObject, NSCoding {
 		if let image = profileImage {
 			completion(image)
 		} else {
-			let request = NSURLRequest(URL: fbImageURL, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+			let request = NSURLRequest(URL: fbImageURL, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 10)
 			
-			NSURLSession.sharedSession().dataTaskWithRequest(request) { data, _, _ in
-				guard let unwrappedData = data else { return }
-				self.profileImage = UIImage(data: unwrappedData)
+			NSURLSession.dataTaskWithCachedRequest(request) { data, response, _ in
+				guard let data = data else { return }
+				self.profileImage = UIImage(data: data)
 				if let image = self.profileImage {
 					dispatch_async(dispatch_get_main_queue()) {
 						completion(image)
 					}
 				}
 			}.resume()
-			
 		}
 	}
 	
@@ -162,11 +161,11 @@ class CurrentSpotifyUser: NSObject, NSCoding {
         if let image = profileImage {
             completion(image)
         } else {
-            let request = NSURLRequest(URL: self.image, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+            let request = NSURLRequest(URL: self.image, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 10)
             
-            NSURLSession.sharedSession().dataTaskWithRequest(request) { data, _, _ in
-				guard let unwrappedData = data else { return }
-                self.profileImage = UIImage(data: unwrappedData)
+            NSURLSession.dataTaskWithCachedRequest(request) { data, response, _ in
+				guard let data = data else { return }
+                self.profileImage = UIImage(data: data)
                 if let image = self.profileImage {
                     dispatch_async(dispatch_get_main_queue()) {
                         completion(image)

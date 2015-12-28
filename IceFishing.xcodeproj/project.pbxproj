@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1CC60C1C31BC0D0052F66D /* NSURLSession+Shared.swift */; };
 		1D1DD7141AE492750066AB39 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1DD7121AE492750066AB39 /* Util.swift */; };
 		1D2CA85F1B720290004EAEAB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2CA85D1B720290004EAEAB /* FacebookSDK.framework */; };
 		1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */; };
@@ -201,6 +202,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D1CC60C1C31BC0D0052F66D /* NSURLSession+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Shared.swift"; sourceTree = "<group>"; };
 		1D1DD7121AE492750066AB39 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		1D2CA85C1B720290004EAEAB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = IceFishing/Vendor/FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		1D2CA85D1B720290004EAEAB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = IceFishing/Vendor/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				1DD875FB1B6E27DD0041C45B /* NSDateFormatter+Shared.swift */,
 				FA674C0E1AF917A200C14463 /* UIViewController+Utilities.swift */,
 				1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */,
+				1D1CC60C1C31BC0D0052F66D /* NSURLSession+Shared.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -854,6 +857,7 @@
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
 				952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */,
+				1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */,
 				D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */,
 				D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */,
 				1D9991751B81E2F70005A376 /* MarqueeLabel.swift in Sources */,

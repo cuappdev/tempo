@@ -117,7 +117,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	}
 	
     private func setUpTimer() {
-        if updateTimer == nil && post?.player.isPlaying() ?? false {
+        if updateTimer == nil && post?.player.isPlaying ?? false {
             // 60 fps
             updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
                 target: self, selector: Selector("timerFired:"),
@@ -125,7 +125,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 repeats: true)
 
             NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
-        } else if !(post?.player.isPlaying() ?? false) {
+        } else if !(post?.player.isPlaying ?? false) {
             updateTimer?.invalidate()
             updateTimer = nil
         }
@@ -190,7 +190,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     dynamic private func timerFired(timer: NSTimer) {
-        if post?.player.isPlaying() ?? false {
+        if post?.player.isPlaying ?? false {
             setNeedsDisplay()
         }
     }
@@ -218,7 +218,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         if let post = post {
             let color: UIColor
             let duration = NSTimeInterval(0.3)
-            if post.player.isPlaying() {
+            if post.player.isPlaying {
                 color = UIColor.iceDarkRed
 				if type == .Feed {
 					if let layer = avatarLayer {
@@ -296,7 +296,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 if let translation = translation {
                     return ((fabs(translation.x) > fabs(translation.y)) &&
                         (offsetY == 0.0 && offsetX == 0.0)) &&
-                        player.isPlaying()
+                        player.isPlaying
                 }
             }
             return false

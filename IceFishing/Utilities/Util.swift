@@ -37,9 +37,9 @@ func delay(delay: Double, closure:()->()) {
 }
 
 func loadImageAsync(url: NSURL, completion: (UIImage!, NSError!) -> ()) {
-    let requestedURL = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReturnCacheDataElseLoad, timeoutInterval: 10.0)
+    let requestedURL = NSURLRequest(URL: url, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 10.0)
 	
-	NSURLSession.sharedSession().dataTaskWithRequest(requestedURL) { data, response, error in
+	NSURLSession.dataTaskWithCachedRequest(requestedURL) { data, response, error in
 		dispatch_async(dispatch_get_main_queue()) {
 			error != nil ? completion(nil, error) : completion(UIImage(data: data!), nil)
 		}

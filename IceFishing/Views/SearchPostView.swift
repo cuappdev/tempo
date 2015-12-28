@@ -37,7 +37,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
                     queue: nil, usingBlock: { [weak self] note in
                         self?.updateProfileLabelTextColor()
                         
-                        if self?.updateTimer == nil && self?.post?.player.isPlaying() ?? false {
+                        if self?.updateTimer == nil && self?.post?.player.isPlaying ?? false {
                             // 60 fps
                             self?.updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
                                 target: self!, selector: Selector("timerFired:"),
@@ -106,7 +106,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     }
     
     dynamic private func timerFired(timer: NSTimer) {
-        if post?.player.isPlaying() ?? false {
+        if post?.player.isPlaying ?? false {
             setNeedsDisplay()
         }
     }
@@ -121,7 +121,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
             var color: UIColor!
             let duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = profileNameLabel!
-            if post.player.isPlaying() {
+            if post.player.isPlaying {
                 color = UIColor.iceDarkRed
                 // Will scroll labels
                 profileNameLabel?.holdScrolling = false
@@ -184,7 +184,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
                 if let translation = translation {
                     return ((fabs(translation.x) > fabs(translation.y)) &&
                         (offsetY == 0.0 && offsetX == 0.0)) &&
-                        player.isPlaying()
+                        player.isPlaying
                 }
             }
             return false
@@ -194,7 +194,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     
     func postViewPressed(sender: UITapGestureRecognizer) {
         if let post = post {
-            if post.player.isPlaying() {
+            if post.player.isPlaying {
                 let tapPoint = sender.locationInView(self)
                 let hitView = hitTest(tapPoint, withEvent: nil)
                 
