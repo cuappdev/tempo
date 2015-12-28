@@ -580,7 +580,7 @@ public class MarqueeLabel: UILabel {
         CATransaction.setAnimationDuration(transDuration)
         
         // Create gradient animation, if needed
-        if fadeLength != 0.0 {
+        if fadeLength != 0.0 && interval.isFinite {
             let gradientAnimation = keyFrameAnimationForGradient(fadeLength, interval: interval, delay: delay)
             self.layer.mask?.addAnimation(gradientAnimation, forKey: "gradient")
         }
@@ -799,6 +799,7 @@ public class MarqueeLabel: UILabel {
             let offsetDistance = (awayLabelFrame.origin.x - homeLabelFrame.origin.x)
             let startFadeFraction = fabs(sublabel.bounds.size.width / offsetDistance)
             // Find when the animation will hit that point
+			print("\(totalDuration) \(delay) \(interval)")
             let startFadeTimeFraction = timingFunction.durationPercentageForPositionPercentage(startFadeFraction, duration: totalDuration)
             let startFadeTime = delay + CGFloat(startFadeTimeFraction) * interval
             
@@ -1252,7 +1253,7 @@ extension CAMediaTimingFunction {
         
         let controlPoints = self.controlPoints()
         let epsilon: CGFloat = 1.0 / (100.0 * CGFloat(duration))
-        
+		
         // Find the t value that gives the position percentage we want
         let t_found = solveTforY(positionPercentage, epsilon: epsilon, controlPoints: controlPoints)
         
