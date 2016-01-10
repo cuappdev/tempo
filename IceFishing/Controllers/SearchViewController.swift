@@ -225,8 +225,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	func initiateRequest(term: String) {
 		let searchUrl = kSearchBase + term.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.alphanumericCharacterSet())!
-		lastRequest = Alamofire.request(.GET, searchUrl).responseJSON { _, _, result in
-			if let value = result.value as? Dictionary<String, AnyObject> {
+		lastRequest = Alamofire.request(.GET, searchUrl).responseJSON { response in
+			if let value = response.result.value as? Dictionary<String, AnyObject> {
 				self.receivedResponse(value)
 			}
 		}

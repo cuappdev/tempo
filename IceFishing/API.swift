@@ -230,14 +230,14 @@ class API {
 	private func makeNetworkRequest<O, T>(method: Alamofire.Method, router: Router, params: [String: AnyObject], map: O -> T?, completion: (T -> Void)?) {
 		Alamofire
 			.request(method, router, parameters: params)
-			.responseJSON { request, response, result in
-				if let json = result.value as? O {
+			.responseJSON { response in
+				if let json = response.result.value as? O {
 					if let obj = map(json) {
 						completion?(obj)
 						self.isConnected = true
 						self.isAPIConnected = true
 					}
-				} else if let error = result.error as? NSError {
+				} else if let error = response.result.error {
 					if error.code != -1009 {
 						self.isAPIConnected = false
 						self.isConnected = true
