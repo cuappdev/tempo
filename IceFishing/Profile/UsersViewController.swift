@@ -25,25 +25,29 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-        tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
+		extendedLayoutIncludesOpaqueBars = true
+		definesPresentationContext = true
+		view.backgroundColor = UIColor.iceDarkGray
+		tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
 		
+		// Set up search bar
 		searchController = UISearchController(searchResultsController: nil)
 		searchController.dimsBackgroundDuringPresentation = false
 		searchController.delegate = self
 		searchController.searchResultsUpdater = self
-		
-		// Formatting for search bar
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.delegate = self
 		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
 		textFieldInsideSearchBar!.textColor = UIColor.whiteColor()
-
-		extendedLayoutIncludesOpaqueBars = true
-		definesPresentationContext = true
 		
+		// Fix color above search bar
+		let topView = UIView(frame: view.frame)
+		topView.frame.origin.y = -view.frame.size.height
+		topView.backgroundColor = UIColor.iceDarkRed
 		tableView.tableHeaderView = searchController.searchBar
-		tableView.backgroundView = UIView() // Fix color above search bar
+		tableView.addSubview(topView)
 		
+		// Populate users
 		let completion: [User] -> Void = {
 			self.users = $0
 			self.tableView.reloadData()
