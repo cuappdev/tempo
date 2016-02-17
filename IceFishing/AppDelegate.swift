@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
 	let feedVC = FeedViewController()
     let searchVC = SearchViewController(nibName: "SearchViewController", bundle: nil)
+	let usersVC = UsersViewController()
 	let likedVC = LikedTableViewController()
 	let spotifyVC = SpotifyViewController(nibName: "SpotifyViewController", bundle: nil)
 	let suggestionsVC = FollowSuggestionTableViewController()
@@ -83,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			revealVC.setRearViewController(sidebarVC, animated: false)
 			sidebarVC.elements = [
 				SideBarElement(title: "Feed", viewController: feedVC, image: UIImage(named: "Feed")),
-				SideBarElement(title: "People", viewController: searchVC, image: UIImage(named: "People")),
+				SideBarElement(title: "People", viewController: usersVC, image: UIImage(named: "People")),
 				SideBarElement(title: "Liked", viewController: likedVC, image: UIImage(named: "Heart-Menu")),
 				SideBarElement(title: "Spotify", viewController: spotifyVC, image: UIImage(named: "Spotify")),
 				SideBarElement(title: "Suggestions", viewController: suggestionsVC, image: UIImage(named: "People")),

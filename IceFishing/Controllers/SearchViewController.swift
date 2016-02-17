@@ -9,21 +9,12 @@
 import UIKit
 import Alamofire
 
-enum SearchType {
-    case Song
-    case User
-}
-
 protocol SongSearchDelegate: class {
 	func didSelectSong(song: Song)
 }
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
-	
-	var cellIdentifier = "UserTableViewCell"
-    var searchType = SearchType.User
-    var users: [User] = []
-	
+
 	@IBOutlet weak var searchBarContainer: UIView!
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var postButtonContainer: UIView!
@@ -51,18 +42,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        
-        if searchType == .Song {
-            title = "Post your song of the day!"
-            cellIdentifier = "SongSearchTableViewCell"
-        } else {
-            title = "Search Users"
-            cellIdentifier = "FollowTableViewCell"
-			addHamburgerMenu()
-        }
 		
+		title = "Post your song of the day!"
 		view.backgroundColor = UIColor.iceLightGray
-		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
+		tableView.registerNib(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
 		
 		searchBar.delegate = self
 		
@@ -122,87 +105,49 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	// MARK: - UITableViewDataSource
 	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchType == .Song {
-            return results.count
-        } else {
-            return users.count
-        }
+        return results.count
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if searchType == .Song {
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! SongSearchTableViewCell
-            let post = results[indexPath.row]
-            cell.postView.post = post
-            cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
-            
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! FollowTableViewCell
-            let user = users[indexPath.row]
-            cell.userName.text = user.name
-			cell.userHandle.text = "@" + user.username
-            cell.numFollowLabel.text = "Followers: \(user.followersCount)"
-            user.loadImage {
-                cell.userImage.image = $0
-            }
-			
-            return cell
-        }
+		let cell = tableView.dequeueReusableCellWithIdentifier("SongSearchTableViewCell", forIndexPath: indexPath) as! SongSearchTableViewCell
+		let post = results[indexPath.row]
+		cell.postView.post = post
+		cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
+		
+		return cell
 	}
 	
 	// MARK: - UITableViewDelegate
 	
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if searchType == .Song {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as! SongSearchTableViewCell
-            let post = results[indexPath.row]
-            selectSong(post.song)
-            
-            if activePlayer != nil && activePlayer != cell.postView.post?.player {
-                activePlayer!.pause(true)
-                activePlayer = nil
-            }
-            
-            cell.postView.post?.player.togglePlaying()
-            activePlayer = cell.postView.post?.player
-        }
-        else {
-            let profileView = ProfileViewController()
-            profileView.user = users[indexPath.row]
-            navigationController?.pushViewController(profileView, animated: true)
-        }
+		tableView.deselectRowAtIndexPath(indexPath, animated: true)
+		let cell = tableView.cellForRowAtIndexPath(indexPath) as! SongSearchTableViewCell
+		let post = results[indexPath.row]
+		selectSong(post.song)
+		
+		if activePlayer != nil && activePlayer != cell.postView.post?.player {
+			activePlayer!.pause(true)
+			activePlayer = nil
+		}
+		
+		cell.postView.post?.player.togglePlaying()
+		activePlayer = cell.postView.post?.player
 	}
-    
+	
     // MARK: - General Request Methods
-    
+	
     func update(searchText: String) {
-        if searchType == .Song {
-            lastRequest?.cancel()
-            searchText.characters.count != 0 ? initiateRequest(searchText) : clearResults()
-        } else {
-            searchText.characters.count != 0 ? reloadUserData(searchText) : clearResults()
-        }
+		lastRequest?.cancel()
+		searchText.characters.count != 0 ? initiateRequest(searchText) : clearResults()
     }
-    
+	
     func clearResults() {
         results = []
-        users = []
         selectedSong = nil
         activePlayer?.pause(true)
         activePlayer = nil
         searchBar.text = nil
         tableView.reloadData()
-    }
-    
-    // MARK: - User Request Methods
-    
-    func reloadUserData(searchText: String) {
-        API.sharedAPI.searchUsers(searchText) { users in
-            self.users = users
-            self.tableView.reloadData()
-        }
     }
 	
 	// MARK: - Song Request Methods

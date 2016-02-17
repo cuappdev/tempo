@@ -11,77 +11,77 @@ import UIKit
 enum DisplayType: String {
 	case Followers = "Followers"
 	case Following = "Following"
+	case Users = "Users"
 }
 
 class UsersViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
 
 	var user: User = User.currentUser
-	var displayType: DisplayType = .Followers
+	var displayType: DisplayType = .Users
 	private var users: [User] = []
 	private var filteredUsers: [User] = []
-	
 	private var searchController: UISearchController!
-	
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-        tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
+		extendedLayoutIncludesOpaqueBars = true
+		definesPresentationContext = true
+		view.backgroundColor = UIColor.iceDarkGray
+		tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
 		
+		// Set up search bar
 		searchController = UISearchController(searchResultsController: nil)
 		searchController.dimsBackgroundDuringPresentation = false
 		searchController.delegate = self
 		searchController.searchResultsUpdater = self
-		
-		//Formating for search Bar
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.delegate = self
 		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
 		textFieldInsideSearchBar!.textColor = UIColor.whiteColor()
-
-		extendedLayoutIncludesOpaqueBars = true
-		definesPresentationContext = true
 		
+		// Fix color above search bar
+		let topView = UIView(frame: view.frame)
+		topView.frame.origin.y = -view.frame.size.height
+		topView.backgroundColor = UIColor.iceDarkRed
 		tableView.tableHeaderView = searchController.searchBar
-		tableView.backgroundView = UIView() // Fix color above search bar
+		tableView.addSubview(topView)
 		
+		// Populate users
 		let completion: [User] -> Void = {
 			self.users = $0
 			self.tableView.reloadData()
 		}
 		
-		if displayType == .Followers {
+		switch(displayType) {
+		case .Followers:
 			API.sharedAPI.fetchFollowers(user.id, completion: completion)
-		} else {
+		case .Following:
 			API.sharedAPI.fetchFollowing(user.id, completion: completion)
+		default:
+			API.sharedAPI.searchUsers("", completion: completion)
+			title = "Search Users"
+			addHamburgerMenu()
 		}
-		
-		
     }
 	
 	override func viewDidAppear(animated: Bool) {
-		
 		notConnected()
 	}
 	
-    // TableView Methods
+	override func preferredStatusBarStyle() -> UIStatusBarStyle {
+		return .LightContent
+	}
+	
+    // MARK: Table View Methods
 	
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if searchController.active {
-			return self.filteredUsers.count
-		} else {
-			return self.users.count
-		}
+		return searchController.active ? filteredUsers.count : users.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
-        
-        var user = users[indexPath.row]
-		if searchController.active {
-			user = filteredUsers[indexPath.row]
-			
-		}
+		let user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
 
         cell.userName.text = user.name
         cell.userHandle.text = "@\(user.username)"
@@ -94,29 +94,28 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80
+        return 80.0
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.iceLightGray
+		
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
-		if searchController.active {
-			profileVC.user = filteredUsers[indexPath.row]
-		} else {
-			profileVC.user = users[indexPath.row]
-		}
+		profileVC.user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
+		
+		let backButton = UIBarButtonItem()
+		backButton.title = "Search"
+		navigationItem.backBarButtonItem = backButton
         navigationController?.pushViewController(profileVC, animated: true)
     }
 	
+	// MARK: Search Methods
+	
 	private func filterContentForSearchText(searchText: String, scope: String = "All") {
-		if searchText == "" {
-			filteredUsers = users
-		} else {
-			let pred = NSPredicate(format: "name contains[cd] %@ OR username contains[cd] %@", searchText, searchText)
-			filteredUsers = (users as NSArray).filteredArrayUsingPredicate(pred) as! [User]
-		}
+		let pred = NSPredicate(format: "name contains[cd] %@ OR username contains[cd] %@", searchText, searchText)
+		filteredUsers = (searchText == "") ? users : (users as NSArray).filteredArrayUsingPredicate(pred) as! [User]
 		tableView.reloadData()
 	}
 	
@@ -141,10 +140,6 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	
 	func didDismissSearchController(searchController: UISearchController) {
 		statusBarView.removeFromSuperview()
-	}
-	
-	override func preferredStatusBarStyle() -> UIStatusBarStyle {
-		return .LightContent
 	}
 
 }

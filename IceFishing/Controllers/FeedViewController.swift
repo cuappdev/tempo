@@ -168,7 +168,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		
 		searchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
 		searchTableViewController.navigationItem.leftBarButtonItem = navigationItem.leftBarButtonItem
-		searchTableViewController.searchType = .Song
 		navigationController?.pushViewController(searchTableViewController, animated: false)
 	}
 	

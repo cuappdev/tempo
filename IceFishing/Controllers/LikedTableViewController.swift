@@ -14,15 +14,21 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		title = "Liked"
+		view.backgroundColor = UIColor.iceDarkGray
+		extendedLayoutIncludesOpaqueBars = true
+		definesPresentationContext = true
+		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: "FeedCell")
+		
 		notifCenterSetup()
 		commandCenterHandler()
-		
-        tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: "FeedCell")
-        title = "Liked"
-        addHamburgerMenu()
-        
-        extendedLayoutIncludesOpaqueBars = true
-        definesPresentationContext = true
+		addHamburgerMenu()
+
+		// Fix color above search bar
+		let topView = UIView(frame: view.frame)
+		topView.frame.origin.y = -view.frame.size.height
+		topView.backgroundColor = UIColor.iceDarkRed
+		tableView.addSubview(topView)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -32,7 +38,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		notConnected()
     }
 	
-    // MARK: - Table view data source
+    // MARK: - Table View Methods
 	
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
