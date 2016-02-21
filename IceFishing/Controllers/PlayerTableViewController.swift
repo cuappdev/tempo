@@ -84,7 +84,20 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
     // MARK: - Table view data source
 	
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+		if posts.count > 0 {
+			self.tableView.backgroundView = nil
+			return 1
+		} else {
+			let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+			label.text = "No posts in the last 24 hours...\nFollow more friends!"
+			label.textColor = UIColor.whiteColor()
+			label.textAlignment = .Center
+			label.numberOfLines = 2
+			
+			self.tableView.backgroundView = label
+		}
+		
+        return 0
     }
     
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
