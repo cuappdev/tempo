@@ -189,4 +189,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			revealController.frontViewController.view.userInteractionEnabled = false
 		}
 	}
+	
+	// MARK: - Force Touch Shortcut
+	
+	@available(iOS 9.0, *)
+	func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+		let handleShortcutItem = self.handleShortcutItem(shortcutItem)
+		completionHandler(handleShortcutItem)
+	}
+	
+	enum ShortcutIdentifier: String {
+		case Post
+		case PeopleSearch
+		case Liked
+		case Profile
+		
+		init?(fullType: String) {
+			guard let last = fullType.componentsSeparatedByString(".").last else {return nil}
+			self.init(rawValue: last)
+		}
+		
+		var type: String {
+			return NSBundle.mainBundle().bundleIdentifier! + ".\(self.rawValue)"
+		}
+	}
+	
+	@available(iOS 9.0, *)
+	func handleShortcutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+		guard ShortcutIdentifier(fullType: shortcutItem.type) != nil else { return false }
+		guard let shortcutType = shortcutItem.type as String? else { return false }
+
+		switch (shortcutType)
+		{
+			case ShortcutIdentifier.Post.type:
+				//Bring up Search for Post Song of the day
+				break
+			case ShortcutIdentifier.PeopleSearch.type:
+				//Bring up People Search Screen
+				break
+			case ShortcutIdentifier.Liked.type:
+				//Bring up Liked View
+				break
+			case ShortcutIdentifier.Profile.type:
+				//Bring up Profile Screen (of current user)
+				break
+			default:
+				return false
+		}
+		return true
+	}
 }
