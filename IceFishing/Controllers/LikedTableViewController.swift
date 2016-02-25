@@ -30,7 +30,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		topView.backgroundColor = UIColor.iceDarkRed
 		tableView.addSubview(topView)
 		
-		pinView.postView.type = .History
+		pinView.postView.type = .Liked
     }
     
     override func viewDidAppear(animated: Bool) {
