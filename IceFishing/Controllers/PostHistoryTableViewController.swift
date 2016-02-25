@@ -30,9 +30,12 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 
+		pinView.postView.type = .History
     }
     
     override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		
 		if index != nil {
 			let selectedRow = NSIndexPath(forRow: index!, inSection: 0)
 			tableView.scrollToRowAtIndexPath(selectedRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)

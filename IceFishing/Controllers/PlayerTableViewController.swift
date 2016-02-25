@@ -10,10 +10,17 @@ import UIKit
 import MediaPlayer
 
 class PlayerTableViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
+	// For pinning
+	let topPinViewContainer = UIView()
+	let bottomPinViewContainer = UIView()
+	let pinView = NSBundle.mainBundle().loadNibNamed("FeedTableViewCell", owner: nil, options: nil)[0] as! FeedTableViewCell
+	var pinViewGestureRecognizer: UITapGestureRecognizer!
+	
 	var searchController: UISearchController!
 	var posts: [Post] = []
 	var filteredPosts: [Post] = []
     var currentlyPlayingPost: Post?
+	
     var currentlyPlayingIndexPath: NSIndexPath? {
         didSet {
 			var array = posts
@@ -57,11 +64,14 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.backgroundView = UIView() // Fix color above search bar
+		
+		setupPinViews()
     }
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
+		positionPinViews()
 		addRevealGesture()
 	}
 	

@@ -20,11 +20,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		return vc
 	}()
 	
-	let topPinViewContainer = UIView()
-	let bottomPinViewContainer = UIView()
-	let pinView = NSBundle.mainBundle().loadNibNamed("FeedTableViewCell", owner: nil, options: nil)[0] as! FeedTableViewCell
-	var pinViewGestureRecognizer: UITapGestureRecognizer!
-	
 	// MARK: - Lifecycle Methods
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -34,11 +29,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
 		refreshFeed()
-		
-		pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
-		pinViewGestureRecognizer.delegate = pinView.postView
-		pinView.backgroundColor = UIColor.iceLightGray
-		
 		addHamburgerMenu()
 		
 		tableView.tableHeaderView = nil
@@ -57,16 +47,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
         
-		topPinViewContainer.frame = CGRectMake(0, tableView.frame.minY, view.frame.width, tableView.rowHeight)
-		view.superview!.addSubview(topPinViewContainer)
-		bottomPinViewContainer.frame = CGRectMake(0, tableView.frame.maxY-tableView.rowHeight, view.frame.width, tableView.rowHeight)
-		view.superview!.addSubview(bottomPinViewContainer)
-		
-		topPinViewContainer.hidden = true
-		bottomPinViewContainer.hidden = true
-		
-		pinView.frame = CGRectMake(0, 0, view.frame.width, tableView.rowHeight)
-		
+
 		// Used to update Spotify + button, not very elegant solution
 		for cell in (tableView.visibleCells as? [FeedTableViewCell])! {
 			cell.postView.updateAddButton()
@@ -111,31 +92,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	}
 	
 	override func scrollViewDidScroll(scrollView: UIScrollView) {
-		pinIfNeeded()
+		super.scrollViewDidScroll(scrollView)
 		customRefresh?.scrollViewDidScroll(scrollView)
-	}
-	
-	func pinIfNeeded() {
-		guard let selected = currentlyPlayingIndexPath else { return }
-		if pinView.postView.post != posts[selected.row] {
-			pinView.postView.post = posts[selected.row]
-		}
-		guard let selectedCell = tableView.cellForRowAtIndexPath(selected) else { return }
-		if selectedCell.frame.minY < tableView.contentOffset.y {
-			topPinViewContainer.addSubview(pinView)
-			topPinViewContainer.hidden = false
-		} else if selectedCell.frame.maxY > tableView.contentOffset.y + tableView.frame.height {
-			pinView.postView.post = posts[selected.row]
-			bottomPinViewContainer.addSubview(pinView)
-			bottomPinViewContainer.hidden = false
-		} else {
-			topPinViewContainer.hidden = true
-			bottomPinViewContainer.hidden = true
-		}
-	}
-	
-	func togglePlay() {
-		pinView.postView.post?.player.togglePlaying()
 	}
 	
 	func setupAddButton() {
