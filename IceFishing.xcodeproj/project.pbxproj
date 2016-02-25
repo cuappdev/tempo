@@ -95,6 +95,7 @@
 		FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7D1ADB0818007C823C /* PostView.swift */; };
 		FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C061AF9105E00C14463 /* ADRefreshControl.swift */; };
 		FA674C0F1AF917A200C14463 /* UIViewController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C0E1AF917A200C14463 /* UIViewController+Utilities.swift */; };
+		FAAFB7F31C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAFB7F21C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift */; };
 		FAB564731AF6A8C9001059DF /* LikedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */; };
 		FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -183,6 +184,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = F8111E3219A95C8B0040E7D1;
 			remoteInfo = "Alamofire iOS";
+		};
+		FAAFB7FA1C7E7BDC00B21BBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1DFD734C1BA0DC21008D9FD8 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CF626EF1BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS";
+		};
+		FAAFB7FC1C7E7BDC00B21BBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1DFD734C1BA0DC21008D9FD8 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CF626F81BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS Tests";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -312,6 +327,7 @@
 		FA1E1A7D1ADB0818007C823C /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		FA674C061AF9105E00C14463 /* ADRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRefreshControl.swift; sourceTree = "<group>"; };
 		FA674C0E1AF917A200C14463 /* UIViewController+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Utilities.swift"; path = "IceFishing/Utilities/UIViewController+Utilities.swift"; sourceTree = SOURCE_ROOT; };
+		FAAFB7F21C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PlayerTableViewController+Pinning.swift"; sourceTree = "<group>"; };
 		FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikedTableViewController.swift; sourceTree = "<group>"; };
 		FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SideBarTableViewCell.xib; path = ../Profile/SideBarTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -346,6 +362,7 @@
 				B085F3B41BE3CBB80000421E /* SearchViewController.xib */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
 				6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */,
+				FAAFB7F21C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift */,
 				6067F0801BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift */,
 			);
 			path = Controllers;
@@ -487,10 +504,12 @@
 			isa = PBXGroup;
 			children = (
 				1DFD73551BA0DC22008D9FD8 /* Alamofire.framework */,
-				1DFD73571BA0DC22008D9FD8 /* Alamofire.framework */,
-				1DFD73591BA0DC22008D9FD8 /* Alamofire.framework */,
 				1DFD735B1BA0DC22008D9FD8 /* Alamofire iOS Tests.xctest */,
+				1DFD73571BA0DC22008D9FD8 /* Alamofire.framework */,
 				1DFD735D1BA0DC22008D9FD8 /* Alamofire OSX Tests.xctest */,
+				FAAFB7FB1C7E7BDC00B21BBE /* Alamofire.framework */,
+				FAAFB7FD1C7E7BDC00B21BBE /* Alamofire tvOS Tests.xctest */,
+				1DFD73591BA0DC22008D9FD8 /* Alamofire.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -768,6 +787,20 @@
 			remoteRef = 1DFD73711BA0DC9F008D9FD8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		FAAFB7FB1C7E7BDC00B21BBE /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = FAAFB7FA1C7E7BDC00B21BBE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAAFB7FD1C7E7BDC00B21BBE /* Alamofire tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire tvOS Tests.xctest";
+			remoteRef = FAAFB7FC1C7E7BDC00B21BBE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -854,6 +887,7 @@
 				952F0FF51BCF20E100C53522 /* FBTweak.m in Sources */,
 				6084F6C51BE700B00048EFE3 /* PlayerTableViewController.swift in Sources */,
 				BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */,
+				FAAFB7F31C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift in Sources */,
 				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
 				952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */,
