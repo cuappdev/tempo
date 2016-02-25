@@ -42,10 +42,26 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 	
     // MARK: - Table View Methods
 	
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		if posts.count > 0 {
+			self.tableView.backgroundView = nil
+			return 1
+		} else {
+			let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+			label.text = "Like songs on your home feed\nto view them here!"
+			label.textColor = UIColor.whiteColor()
+			label.textAlignment = .Center
+			label.numberOfLines = 2
+			label.font = UIFont(name: "AvenirNext-Regular", size: 16)
+			label.sizeToFit()
+			
+			self.tableView.backgroundView = label
+		}
+		
+		return 0
+	}
+
+	
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
 		

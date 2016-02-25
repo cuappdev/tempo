@@ -75,6 +75,42 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	
     // MARK: Table View Methods
 	
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		if users.count > 0 {
+			self.tableView.backgroundView = nil
+			return 1
+		} else {
+			let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+			
+			switch displayType {
+			case .Followers:
+				if user.id == User.currentUser.id {
+					label.text = "No followers right now\nTell your friends to follow you!"
+				} else {
+					label.text = "\(user.firstName) doesn't have any followers\nFollow them!"
+				}
+			case .Following:
+				if user.id == User.currentUser.id {
+					label.text = "Follow your Facebook friends to\nview them here!"
+				} else {
+					label.text = "\(user.firstName) is not following anyone"
+				}
+			default:
+				label.text = ""
+			}
+			
+			label.textColor = UIColor.whiteColor()
+			label.textAlignment = .Center
+			label.numberOfLines = 2
+			label.font = UIFont(name: "AvenirNext-Regular", size: 16)
+			label.sizeToFit()
+			
+			self.tableView.backgroundView = label
+		}
+		
+		return 0
+	}
+	
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return searchController.active ? filteredUsers.count : users.count
     }
