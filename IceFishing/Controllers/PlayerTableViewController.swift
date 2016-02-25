@@ -89,10 +89,12 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 			return 1
 		} else {
 			let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-			label.text = "No posts in the last 24 hours...\nFollow more friends!"
+			label.text = "No posts in the last 24 hours\nFollow more friends"
 			label.textColor = UIColor.whiteColor()
 			label.textAlignment = .Center
 			label.numberOfLines = 2
+			label.font = UIFont(name: "AvenirNext-Regular", size: 16)
+			label.sizeToFit()
 			
 			self.tableView.backgroundView = label
 		}
