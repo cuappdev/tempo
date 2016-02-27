@@ -88,15 +88,28 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 			self.tableView.backgroundView = nil
 			return 1
 		} else {
+			let emptyView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+			
 			let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-			label.text = "No posts in the last 24 hours\nFollow more friends"
+			label.text = "No posts in the last 24 hours"
 			label.textColor = UIColor.whiteColor()
 			label.textAlignment = .Center
 			label.numberOfLines = 2
 			label.font = UIFont(name: "AvenirNext-Regular", size: 16)
-			label.sizeToFit()
+			emptyView.addSubview(label)
 			
-			self.tableView.backgroundView = label
+			let button = UIButton(frame: CGRect(x: 0, y: 0, width: 190, height: 35))
+			button.center = self.view.center
+			button.center.y += 35
+			button.backgroundColor = UIColor.iceDarkRed
+			button.setTitle("Follow more friends", forState: .Normal)
+			button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+			button.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
+			button.layer.cornerRadius = 5.0
+			
+			emptyView.addSubview(button)
+			
+			self.tableView.backgroundView = emptyView
 		}
 		
         return 0
