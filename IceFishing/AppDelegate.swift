@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	
 	// Saved shortcut item used as a result of an app launch, used later when app is activated.
 	var launchedShortcutItem: AnyObject?
-	
+
 	var firstViewController: UIViewController!
 	var resetFirstVC = true
 	
@@ -279,7 +279,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func handleShortcutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
 		guard ShortcutIdentifier(fullType: shortcutItem.type) != nil else { return false }
 		guard let shortcutType = shortcutItem.type as String? else { return false }
-		
+
 		func handleShortCutForMenuIndex(index: Int) {
 			var vc: UIViewController!
 			if index == -1 {
@@ -297,20 +297,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			//Bring up Search for Post Song of the day
 			handleShortCutForMenuIndex(0)
 			feedVC.pretappedPlusButton = true
-			break
 		case ShortcutIdentifier.PeopleSearch.type:
 			//Bring up People Search Screen
 			handleShortCutForMenuIndex(1)
-			break
 		case ShortcutIdentifier.Liked.type:
 			//Bring up Liked View
 			handleShortCutForMenuIndex(2)
-			break
 		case ShortcutIdentifier.Profile.type:
 			//Bring up Profile Screen (of current user)
 			profileVC.user = User.currentUser
 			handleShortCutForMenuIndex(-1)
-			break
 		default:
 			return false
 		}
