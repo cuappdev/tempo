@@ -52,7 +52,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 			imageView.frame.origin = CGPoint(x: emptyView.bounds.width/2 - imageView.bounds.width/2, y: emptyView.bounds.height/2 - imageView.bounds.height/2)
 			emptyView.addSubview(imageView)
 			
-			let label = UILabel(frame: CGRect(x: 0, y: imageView.bounds.height + 10, width: self.view.bounds.width, height: self.view.bounds.height))
+			let label = UILabel(frame: CGRect(x: 0, y: imageView.bounds.height/2 + 35, width: self.view.bounds.width, height: self.view.bounds.height))
 			label.text = "Like songs on your home feed\nto view them here!"
 			label.textColor = UIColor.whiteColor()
 			label.textAlignment = .Center

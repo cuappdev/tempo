@@ -93,7 +93,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 			
 			emptyView.addSubview(imageView)
 			
-			let label = UILabel(frame: CGRect(x: 0, y: imageView.bounds.height + 10, width: self.view.bounds.width, height: self.view.bounds.height))
+			let label = UILabel(frame: CGRect(x: 0, y: imageView.bounds.height/2 + 30, width: self.view.bounds.width, height: self.view.bounds.height))
 			label.textColor = UIColor.whiteColor()
 			label.textAlignment = .Center
 			label.numberOfLines = 2
@@ -110,6 +110,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 					label.text = "Follow your Facebook friends to\nview them here!"
 				} else {
 					label.text = "\(user.firstName) is not following anyone"
+					label.numberOfLines = 1
 				}
 			}
 			
