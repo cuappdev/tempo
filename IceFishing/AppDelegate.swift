@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let revealVC = SWRevealViewController()
 	let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
 	let feedVC = FeedViewController()
-    let searchVC = SearchViewController(nibName: "SearchViewController", bundle: nil)
+	let searchVC = SearchViewController(nibName: "SearchViewController", bundle: nil)
 	let usersVC = UsersViewController()
 	let likedVC = LikedTableViewController()
 	let spotifyVC = SpotifyViewController(nibName: "SpotifyViewController", bundle: nil)
@@ -30,6 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	
 	//tools
 	let toolsEnabled = true
+	
+	// Saved shortcut item used as a result of an app launch, used later when app is activated.
+	var launchedShortcutItem: AnyObject?
 	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// TODO: Figure out a way to get rid of this, since it's deprecated
@@ -66,12 +69,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 
 		toggleRootVC()
 		
+		// Check if it's launched from Quick Action
+		var shouldPerformAdditionalDelegateHandling = true
+		if #available(iOS 9.0, *) {
+		    if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+					launchedShortcutItem = shortcutItem
+					shouldPerformAdditionalDelegateHandling = false
+    		}
+		}
+		
 		//declaration of tools remains active in background while app runs
 		if toolsEnabled {
 			tools = Tools(rootViewController: window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
 		}
 		
-		return true
+		return shouldPerformAdditionalDelegateHandling
 	}
 	
 	func toggleRootVC() {
@@ -190,6 +202,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		}
 	}
 	
+	func applicationDidBecomeActive(application: UIApplication) {
+		if #available(iOS 9.0, *) {
+			guard let shortcut = launchedShortcutItem else { return }
+			
+			handleShortcutItem(shortcut as! UIApplicationShortcutItem)
+			
+			launchedShortcutItem = nil
+		}
+	}
+	
 	// MARK: - Force Touch Shortcut
 	
 	@available(iOS 9.0, *)
@@ -219,19 +241,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		guard ShortcutIdentifier(fullType: shortcutItem.type) != nil else { return false }
 		guard let shortcutType = shortcutItem.type as String? else { return false }
 
-		switch (shortcutType)
-		{
+		switch (shortcutType) {
 			case ShortcutIdentifier.Post.type:
 				//Bring up Search for Post Song of the day
+				sidebarVC.loadViewIfNeeded()
+				sidebarVC.selectionHandler?(feedVC)
+				feedVC.plusButtonTapped()
+				sidebarVC.categoryTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: .None)
 				break
 			case ShortcutIdentifier.PeopleSearch.type:
 				//Bring up People Search Screen
+				sidebarVC.loadViewIfNeeded()
+				sidebarVC.selectionHandler?(searchVC)
+				sidebarVC.categoryTableView.selectRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0), animated: false, scrollPosition: .None)
 				break
 			case ShortcutIdentifier.Liked.type:
 				//Bring up Liked View
+				sidebarVC.loadViewIfNeeded()
+				sidebarVC.selectionHandler?(likedVC)
+				sidebarVC.categoryTableView.selectRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0), animated: false, scrollPosition: .None)
 				break
 			case ShortcutIdentifier.Profile.type:
 				//Bring up Profile Screen (of current user)
+				sidebarVC.loadViewIfNeeded()
+				let loginVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+				loginVC.user = User.currentUser
+				sidebarVC.profileView.backgroundColor = UIColor.iceLightGray
+				sidebarVC.selectionHandler?(loginVC)
+				sidebarVC.categoryTableView.selectRowAtIndexPath(nil, animated: false, scrollPosition: .None)
 				break
 			default:
 				return false
