@@ -125,7 +125,6 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	}
 	
 	func navigateToSuggestions() {
-		print("here!!!!")
 		let suggestionsVC = (UIApplication.sharedApplication().delegate as! AppDelegate).suggestionsVC
 		navigationController?.setViewControllers([suggestionsVC], animated: false)
 	}
