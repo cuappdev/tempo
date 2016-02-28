@@ -84,7 +84,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
     // MARK: - Table view data source
 	
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		if posts.count > 0 {
+		if posts.count > 0 && !searchController.active {
 			self.tableView.backgroundView = nil
 			return 1
 		} else {
@@ -106,6 +106,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 			button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			button.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
 			button.layer.cornerRadius = 5.0
+			button.addTarget(self, action: "navigateToSuggestions", forControlEvents: .TouchUpInside)
 			
 			emptyView.addSubview(button)
 			
@@ -121,6 +122,12 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		} else {
 			return posts.count
 		}
+	}
+	
+	func navigateToSuggestions() {
+		print("here!!!!")
+		let suggestionsVC = (UIApplication.sharedApplication().delegate as! AppDelegate).suggestionsVC
+		navigationController?.setViewControllers([suggestionsVC], animated: false)
 	}
 	
     private func updateNowPlayingInfo() {
