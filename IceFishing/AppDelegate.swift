@@ -98,7 +98,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
 			window!.rootViewController = signInVC
 		} else {
-			//			if let shortcut = launchedShortcutItem as?
 			if resetFirstVC {
 				navigationController.setViewControllers([firstViewController], animated: false)
 			}
@@ -148,6 +147,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				default:
 					firstViewController = feedVC
 				}
+			} else {
+				firstViewController = feedVC
 			}
 		} else {
 			firstViewController = feedVC
@@ -178,6 +179,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 								API.sharedAPI.getCurrentUser("") { _ in
 									let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 									appDelegate.toggleRootVC()
+									if let vc = self.firstViewController as? ProfileViewController {
+										vc.user = User.currentUser
+										vc.setupUserUI()
+									}
 								}
 							}
 						}
@@ -239,9 +244,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		if #available(iOS 9.0, *) {
 			guard let shortcut = launchedShortcutItem else { return }
 			
-			handleShortcutItem(shortcut as! UIApplicationShortcutItem)
-			
-			launchedShortcutItem = nil
+			if FBSession.activeSession().isOpen {
+				handleShortcutItem(shortcut as! UIApplicationShortcutItem)
+				launchedShortcutItem = nil
+			}
 		}
 	}
 	
@@ -281,9 +287,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			} else {
 				vc = sidebarVC.elements[index].viewController
 			}
-			if vc == revealVC.frontViewController {
-				revealVC.setFrontViewPosition(.Left, animated: false)
-			}
+			revealVC.setFrontViewPosition(.Left, animated: false)
 			navigationController.setViewControllers([vc], animated: false)
 			sidebarVC.preselectedIndex = index
 		}
@@ -292,8 +296,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		case ShortcutIdentifier.Post.type:
 			//Bring up Search for Post Song of the day
 			handleShortCutForMenuIndex(0)
-			feedVC.loadViewIfNeeded()
-			feedVC.plusButtonTapped()
+			feedVC.pretappedPlusButton = true
 			break
 		case ShortcutIdentifier.PeopleSearch.type:
 			//Bring up People Search Screen
