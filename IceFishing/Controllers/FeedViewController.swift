@@ -20,6 +20,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		return vc
 	}()
 	
+	var pretappedPlusButton = false
+
 	// MARK: - Lifecycle Methods
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -41,7 +43,13 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		rotatePlusButton(false)
+		//Begin a post if coming from a quick action
+		if pretappedPlusButton {
+			plusButtonTapped()
+			pretappedPlusButton = false
+		} else {
+			rotatePlusButton(false)
+		}
 	}
 	
 	override func viewDidAppear(animated: Bool) {

@@ -16,8 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let revealVC = SWRevealViewController()
 	let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
 	let feedVC = FeedViewController()
-    let searchVC = SearchViewController(nibName: "SearchViewController", bundle: nil)
+	let searchVC = SearchViewController(nibName: "SearchViewController", bundle: nil)
 	let usersVC = UsersViewController()
+	let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 	let likedVC = LikedTableViewController()
 	let spotifyVC = SpotifyViewController(nibName: "SpotifyViewController", bundle: nil)
 	let suggestionsVC = FollowSuggestionTableViewController()
@@ -31,6 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	//tools
 	let toolsEnabled = true
 	
+	// Saved shortcut item used as a result of an app launch, used later when app is activated.
+	var launchedShortcutItem: AnyObject?
+
+	var firstViewController: UIViewController!
+	var resetFirstVC = true
+	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// TODO: Figure out a way to get rid of this, since it's deprecated
 		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
@@ -40,8 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		StyleController.applyStyles()
 		
-//		let appDomain = NSBundle.mainBundle().bundleIdentifier!;
-//		NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain);
+		//		let appDomain = NSBundle.mainBundle().bundleIdentifier!;
+		//		NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain);
 		
 		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
 		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")
@@ -63,7 +70,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				self.sessionStateChanged(session, state: state, error: error)
 			}
 		}
-
+		
+		// Check if it's launched from Quick Action
+		var shouldPerformAdditionalDelegateHandling = true
+		if #available(iOS 9.0, *) {
+			if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+				launchedShortcutItem = shortcutItem
+				shouldPerformAdditionalDelegateHandling = false
+				resetFirstVC = false
+			}
+		}
+		
+		setFirstVC()
+		
 		toggleRootVC()
 		
 		//declaration of tools remains active in background while app runs
@@ -71,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			tools = Tools(rootViewController: window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
 		}
 		
-		return true
+		return shouldPerformAdditionalDelegateHandling
 	}
 	
 	func toggleRootVC() {
@@ -79,7 +98,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
 			window!.rootViewController = signInVC
 		} else {
-			navigationController.setViewControllers([feedVC], animated: false)
+			if resetFirstVC {
+				navigationController.setViewControllers([firstViewController], animated: false)
+			}
 			revealVC.setFrontViewController(navigationController, animated: false)
 			revealVC.setRearViewController(sidebarVC, animated: false)
 			sidebarVC.elements = [
@@ -110,6 +131,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 	}
 	
+	func setFirstVC() {
+		if #available(iOS 9.0, *) {
+			if let shortcutItem = launchedShortcutItem as? UIApplicationShortcutItem {
+				guard let shortcutType = shortcutItem.type as String? else { firstViewController = feedVC }
+				switch (shortcutType) {
+				case ShortcutIdentifier.Post.type:
+					firstViewController =  feedVC
+				case ShortcutIdentifier.PeopleSearch.type:
+					firstViewController =  searchVC
+				case ShortcutIdentifier.Liked.type:
+					firstViewController = likedVC
+				case ShortcutIdentifier.Profile.type:
+					firstViewController =  profileVC
+				default:
+					firstViewController = feedVC
+				}
+			} else {
+				firstViewController = feedVC
+			}
+		} else {
+			firstViewController = feedVC
+		}
+		
+	}
+	
 	// Facebook Session
 	func sessionStateChanged(session : FBSession, state : FBSessionState, error : NSError?)
 	{
@@ -118,7 +164,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		} else {
 			if state == FBSessionState.Open {
 				let userRequest = FBRequest.requestForMe()
-
+				
 				userRequest.startWithCompletionHandler { connection, result, error in
 					if error == nil {
 						let fbid = result["id"] as! String
@@ -133,6 +179,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 								API.sharedAPI.getCurrentUser("") { _ in
 									let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 									appDelegate.toggleRootVC()
+									if let vc = self.firstViewController as? ProfileViewController {
+										vc.user = User.currentUser
+										vc.setupUserUI()
+									}
 								}
 							}
 						}
@@ -170,7 +220,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				} else {
 					self?.spotifyVC.updateSpotifyState()
 				}
-			})
+				})
 			
 			return true
 		}
@@ -188,5 +238,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		} else {
 			revealController.frontViewController.view.userInteractionEnabled = false
 		}
+	}
+	
+	func applicationDidBecomeActive(application: UIApplication) {
+		if #available(iOS 9.0, *) {
+			guard let shortcut = launchedShortcutItem else { return }
+			
+			if FBSession.activeSession().isOpen {
+				handleShortcutItem(shortcut as! UIApplicationShortcutItem)
+				launchedShortcutItem = nil
+			}
+		}
+	}
+	
+	// MARK: - Force Touch Shortcut
+	
+	@available(iOS 9.0, *)
+	func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+		let handleShortcutItem = self.handleShortcutItem(shortcutItem)
+		completionHandler(handleShortcutItem)
+	}
+	
+	enum ShortcutIdentifier: String {
+		case Post
+		case PeopleSearch
+		case Liked
+		case Profile
+		
+		init?(fullType: String) {
+			guard let last = fullType.componentsSeparatedByString(".").last else {return nil}
+			self.init(rawValue: last)
+		}
+		
+		var type: String {
+			return NSBundle.mainBundle().bundleIdentifier! + ".\(self.rawValue)"
+		}
+	}
+	
+	@available(iOS 9.0, *)
+	func handleShortcutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+		guard ShortcutIdentifier(fullType: shortcutItem.type) != nil else { return false }
+		guard let shortcutType = shortcutItem.type as String? else { return false }
+
+		func handleShortCutForMenuIndex(index: Int) {
+			var vc: UIViewController!
+			if index == -1 {
+				vc = profileVC
+			} else {
+				vc = sidebarVC.elements[index].viewController
+			}
+			revealVC.setFrontViewPosition(.Left, animated: false)
+			navigationController.setViewControllers([vc], animated: false)
+			sidebarVC.preselectedIndex = index
+		}
+		
+		switch (shortcutType) {
+		case ShortcutIdentifier.Post.type:
+			//Bring up Search for Post Song of the day
+			handleShortCutForMenuIndex(0)
+			feedVC.pretappedPlusButton = true
+		case ShortcutIdentifier.PeopleSearch.type:
+			//Bring up People Search Screen
+			handleShortCutForMenuIndex(1)
+		case ShortcutIdentifier.Liked.type:
+			//Bring up Liked View
+			handleShortCutForMenuIndex(2)
+		case ShortcutIdentifier.Profile.type:
+			//Bring up Profile Screen (of current user)
+			profileVC.user = User.currentUser
+			handleShortCutForMenuIndex(-1)
+		default:
+			return false
+		}
+		return true
 	}
 }
