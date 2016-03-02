@@ -132,8 +132,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	
 	@IBAction func followButtonPressed(sender: UIButton) {
 		user.isFollowing = !user.isFollowing
-		user.isFollowing ? User.currentUser.followingCount++ : User.currentUser.followingCount--
-		user.isFollowing ? user.followersCount++ : user.followersCount--
+		User.currentUser.followingCount += user.isFollowing ? 1 : -1
+		user.followersCount += user.isFollowing ? 1 : -1
 		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
 		updateFollowingUI()
 	}

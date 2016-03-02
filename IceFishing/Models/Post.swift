@@ -81,7 +81,7 @@ class Post: NSObject {
 	
 	func toggleLike() {
 		isLiked = !isLiked
-		isLiked ? likes++ : likes--
+		likes += isLiked ? 1 : -1
 		API.sharedAPI.updateLikes(postID, unlike: !isLiked)
 	}
 }

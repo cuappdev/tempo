@@ -49,7 +49,7 @@ extension NSDate {
     
     func lastDayOfMonth() -> NSDate {
         let components = calendarDateComponents()
-        components.month++
+        components.month += 1
         components.day = 0
         return calendarDate(components)
     }

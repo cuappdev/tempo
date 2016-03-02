@@ -87,8 +87,8 @@ class FollowSuggestionTableViewController: UITableViewController, SuggestedFollo
 		let indexPath = tableView.indexPathForCell(cell)
 		let user = users[indexPath!.row]
 		user.isFollowing = !user.isFollowing
-		user.isFollowing ? User.currentUser.followingCount++ : User.currentUser.followingCount--
-		user.isFollowing ? user.followersCount++ : user.followersCount--
+		User.currentUser.followingCount += user.isFollowing ? 1 : -1
+		user.followersCount += user.isFollowing ? 1 : -1
 		let cell = tableView.cellForRowAtIndexPath(indexPath!) as! FollowSuggestionsTableViewCell
 		cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
 		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
