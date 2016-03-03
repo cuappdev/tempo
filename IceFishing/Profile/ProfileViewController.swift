@@ -8,12 +8,12 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-	
-	var user: User = User.currentUser
-	
-	// Post History Calendar
-	var calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerTransitioningDelegate{
+    
+    var user: User = User.currentUser
+    
+    // Post History Calendar
+    var calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
 	var posts: [Post] = []
 	var postedDates: [NSDate] = []
 	var postedDays: [Int] = []
@@ -33,8 +33,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	@IBOutlet weak var separator: UIView!
 	@IBOutlet weak var collectionView: UICollectionView!
 	
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    //Animation
+    private let popTransition = PopAnimator()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
 		
 		profilePictureView.layer.borderWidth = 1.5
 		profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
@@ -107,9 +110,19 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
 		nameLabel.text = user.name
 		usernameLabel.text = "@" + user.username
-		user.loadImage {
-			self.profilePictureView.image = $0
-		}
+        user.loadImage {
+            self.profilePictureView.image = $0
+        }
+        profilePictureView.layer.borderWidth = 1.5
+        profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
+        profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
+        profilePictureView.clipsToBounds = true
+        
+        //Set tap gesture for profile picture
+        profilePictureView.userInteractionEnabled = true
+		let tapProfile = UITapGestureRecognizer()
+		profilePictureView.addGestureRecognizer(tapProfile)
+		tapProfile.addTarget(self, action: "profileTapped:")
 		
 		if User.currentUser.username == user.username {
 			followButton.setTitle("EDIT", forState: .Normal)
@@ -135,7 +148,46 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		navigationController?.popToRootViewControllerAnimated(true)
 	}
 	
-	// <------------------------FOLLOW BUTTONS------------------------>
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		
+		removeRevealGesture()
+	}
+
+    // Return to profile view
+    func popToRoot() {
+        navigationController?.popToRootViewControllerAnimated(true)
+    }
+	
+	// Show profile picture upon tap
+	@IBAction func profileTapped(sender: UITapGestureRecognizer){
+		let proPicVC = ProfilePictureViewController()
+		//set user
+		proPicVC.user = user
+		//animation
+		proPicVC.transitioningDelegate = self
+		presentViewController(proPicVC, animated: true, completion: nil)
+	}
+	
+	//Animation for Profile picture view
+	func animationControllerForPresentedController(
+		presented: UIViewController,
+		presentingController presenting: UIViewController,
+		sourceController source: UIViewController) ->
+		UIViewControllerAnimatedTransitioning? {
+				popTransition.originFrame = profilePictureView.superview!.convertRect(profilePictureView.frame, toView: nil)
+				popTransition.presenting = true
+				
+				return popTransition
+	}
+	
+	func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		popTransition.presenting = false
+		
+		return popTransition
+	}
+	
+    // <------------------------FOLLOW BUTTONS------------------------>
 	
 	@IBAction func followButtonPressed(sender: UIButton) {
 		user.isFollowing = !user.isFollowing
