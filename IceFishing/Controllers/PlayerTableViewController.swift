@@ -83,39 +83,6 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	
     // MARK: - Table view data source
 	
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		if posts.count > 0 && !searchController.active {
-			self.tableView.backgroundView = nil
-			return 1
-		} else {
-			let emptyView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-			
-			let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-			label.text = "No posts in the last 24 hours"
-			label.textColor = UIColor.whiteColor()
-			label.textAlignment = .Center
-			label.numberOfLines = 2
-			label.font = UIFont(name: "AvenirNext-Regular", size: 16)
-			emptyView.addSubview(label)
-			
-			let button = UIButton(frame: CGRect(x: 0, y: 0, width: 190, height: 35))
-			button.center = self.view.center
-			button.center.y += 35
-			button.backgroundColor = UIColor.iceDarkRed
-			button.setTitle("Follow more friends", forState: .Normal)
-			button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-			button.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
-			button.layer.cornerRadius = 5.0
-			button.addTarget(self, action: "navigateToSuggestions", forControlEvents: .TouchUpInside)
-			
-			emptyView.addSubview(button)
-			
-			self.tableView.backgroundView = emptyView
-		}
-		
-        return 0
-    }
-    
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if searchController.active {
 			return filteredPosts.count

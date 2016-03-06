@@ -76,45 +76,20 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
     // MARK: Table View Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		if users.count > 0 || displayType == .Users {
+		if users.count > 0 {
 			self.tableView.backgroundView = nil
 			return 1
 		} else {
-			let emptyView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-			var image: UIImage
-			if displayType == .Following {
-				image = UIImage(named: "headphonesPerson")!
-			} else {
-				image = UIImage(named: "greyPeople")!
+			var emptyView: UIView
+			
+			switch displayType {
+			case .Followers:
+				emptyView = UIView.viewForEmptyViewController(.Followers, boundsWidth: self.view.bounds.width, boundsHeight: self.view.bounds.height, isCurrentUser: (user.id == User.currentUser.id), userFirstName: user.firstName)
+			case .Following:
+				emptyView = UIView.viewForEmptyViewController(.Following, boundsWidth: self.view.bounds.width, boundsHeight: self.view.bounds.height, isCurrentUser: (user.id == User.currentUser.id), userFirstName: user.firstName)
+			default:
+				emptyView = UIView.viewForEmptyViewController(.Users, boundsWidth: self.view.bounds.width, boundsHeight: self.view.bounds.height, isCurrentUser: (user.id == User.currentUser.id), userFirstName: user.firstName)
 			}
-			
-			let imageView = UIImageView(image: image)
-			imageView.frame.origin = CGPoint(x: emptyView.bounds.width/2 - imageView.bounds.width/2, y: emptyView.bounds.height/2 - imageView.bounds.height/2)
-			
-			emptyView.addSubview(imageView)
-			
-			let label = UILabel(frame: CGRect(x: 0, y: imageView.bounds.height/2 + 30, width: self.view.bounds.width, height: self.view.bounds.height))
-			label.textColor = UIColor.whiteColor()
-			label.textAlignment = .Center
-			label.numberOfLines = 2
-			label.font = UIFont(name: "AvenirNext-Regular", size: 16)
-			
-			if displayType == .Followers {
-				if user.id == User.currentUser.id {
-					label.text = "No followers right now\nTell your friends to follow you!"
-				} else {
-					label.text = "\(user.firstName) doesn't have any followers\nFollow them!"
-				}
-			} else {
-				if user.id == User.currentUser.id {
-					label.text = "Follow your Facebook friends to\nview them here!"
-				} else {
-					label.text = "\(user.firstName) is not following anyone"
-					label.numberOfLines = 1
-				}
-			}
-			
-			emptyView.addSubview(label)
 			
 			self.tableView.backgroundView = emptyView
 		}
