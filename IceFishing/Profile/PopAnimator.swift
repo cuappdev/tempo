@@ -27,11 +27,13 @@ class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 		profilePicViewController.view.alpha = 0
 		
 		transitionContext.containerView()?.addSubview(profilePicViewController.view)
+		transitionContext.containerView()?.bringSubviewToFront(profilePicViewController.view)
 		
 		profilePicViewController.profilePictureView.image = profileImage
 		
-		UIView.animateWithDuration(duration) { () -> Void in
+		UIView.animateWithDuration(duration, animations: { () -> Void in
 			profilePicViewController.view.alpha = 1
+			}) {_ in transitionContext.completeTransition(true)
 		}
 	}
 }
