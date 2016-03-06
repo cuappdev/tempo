@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
+class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate, UIViewControllerPreviewingDelegate {
 	
 	var customRefresh: ADRefreshControl?
 	var plusButton: UIButton!
@@ -38,6 +38,13 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		refreshControl = UIRefreshControl()
 		customRefresh = ADRefreshControl(refreshControl: refreshControl!)
 		refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
+		
+		// Check for 3D Touch availability
+		if #available(iOS 9.0, *) {
+			if traitCollection.forceTouchCapability == .Available {
+				registerForPreviewingWithDelegate(self, sourceView: view)
+			}
+		}
 	}
 	
 	override func viewWillAppear(animated: Bool) {
@@ -168,7 +175,41 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		}
 	}
 	
-	//MARK: - Navigation
+	// MARK: - UIViewControllerPreviewingDelegate
+	
+	@available(iOS 9.0, *)
+	func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		let tableViewPoint = view.convertPoint(location, toView: tableView)
+		
+		guard let indexPath = tableView.indexPathForRowAtPoint(tableViewPoint),
+			cell = tableView.cellForRowAtIndexPath(indexPath) as? FeedTableViewCell else {
+				return nil
+		}
+		
+		let postView = cell.postView
+		guard let avatar = postView.avatarImageView else { return nil }
+		
+		let avatarFrame = postView.convertRect(avatar.frame, toView: tableView)
+		
+		if avatarFrame.contains(tableViewPoint) {
+			guard let user = postView.post?.user else { return nil }
+			let peekViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+			peekViewController.title = "Profile"
+			peekViewController.user = user
+			
+			peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+			previewingContext.sourceRect = postView.convertRect(avatar.frame, toView: tableView)
+			
+			return peekViewController
+		}
+		return nil
+	}
+	
+	func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+		showViewController(viewControllerToCommit, sender: self)
+	}
+	
+	// MARK: - Navigation
 	
 	func didTapImageForPostView(postView: PostView) {
 		guard let user = postView.post?.user else { return }
