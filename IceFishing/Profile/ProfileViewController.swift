@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerTransitioningDelegate{
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerTransitioningDelegate {
     
     var user: User = User.currentUser
     
@@ -34,8 +34,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	@IBOutlet weak var collectionView: UICollectionView!
 	
     //Animation
-    private let popTransition = PopAnimator()
-    
+//    private let popTransition = PopAnimator()
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -162,8 +162,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	// Show profile picture upon tap
 	@IBAction func profileTapped(sender: UITapGestureRecognizer){
 		let proPicVC = ProfilePictureViewController()
-		//set user
-		proPicVC.user = user
 		//animation
 		proPicVC.transitioningDelegate = self
 		presentViewController(proPicVC, animated: true, completion: nil)
@@ -175,16 +173,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		presentingController presenting: UIViewController,
 		sourceController source: UIViewController) ->
 		UIViewControllerAnimatedTransitioning? {
-				popTransition.originFrame = profilePictureView.superview!.convertRect(profilePictureView.frame, toView: nil)
-				popTransition.presenting = true
-				
-				return popTransition
-	}
-	
-	func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		popTransition.presenting = false
-		
-		return popTransition
+			let popTransition = PopAnimator()
+			popTransition.originFrame = profilePictureView.superview!.convertRect(profilePictureView.frame, toView: nil)
+			popTransition.presenting = true
+			popTransition.profileImage = profilePictureView.image!
+			
+			return popTransition
 	}
 	
     // <------------------------FOLLOW BUTTONS------------------------>
