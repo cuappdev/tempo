@@ -66,6 +66,28 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 			self?.posts = $0
 			self?.tableView.reloadData()
 			
+			if let x = self {
+				if x.posts.count == 0 {
+					let emptyView = UIView.viewForEmptyViewController(.Feed, size: x.view.bounds.size, isCurrentUser: true, userFirstName: "")
+					let button = UIButton(frame: CGRect(x: 0, y: 0, width: 190, height: 35))
+					button.center = x.view.center
+					button.center.y += 65
+					button.backgroundColor = UIColor.iceDarkRed
+					button.setTitle("Follow more friends", forState: .Normal)
+					button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+					button.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
+					button.layer.cornerRadius = 5.0
+					button.addTarget(self, action: "navigateToSuggestions", forControlEvents: .TouchUpInside)
+					
+					emptyView.addSubview(button)
+					
+					x.tableView.backgroundView = emptyView
+					
+				} else {
+					x.tableView.backgroundView = nil
+				}
+			}
+			
 			let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
 			dispatch_after(popTime, dispatch_get_main_queue()) { [weak self] in
 				// When done requesting/reloading/processing invoke endRefreshing, to close the control
@@ -90,33 +112,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		currentlyPlayingIndexPath = indexPath
 	}
-	
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		if posts.count > 0 && !searchController.active {
-			self.tableView.backgroundView = nil
-			return 1
-		} else {
-			let emptyView = UIView.viewForEmptyViewController(.Feed, boundsWidth: self.view.bounds.width, boundsHeight: self.view.bounds.height, isCurrentUser: true, userFirstName: "")
-			
-			// could be moved to UIView+Utilities, but need solution for handling adding target to control navigation
-			let button = UIButton(frame: CGRect(x: 0, y: 0, width: 190, height: 35))
-			button.center = self.view.center
-			button.center.y += 65
-			button.backgroundColor = UIColor.iceDarkRed
-			button.setTitle("Follow more friends", forState: .Normal)
-			button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-			button.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
-			button.layer.cornerRadius = 5.0
-			button.addTarget(self, action: "navigateToSuggestions", forControlEvents: .TouchUpInside)
-			
-			emptyView.addSubview(button)
-			
-			self.tableView.backgroundView = emptyView
-		}
-		
-		return 0
-	}
-
 	
 	override func scrollViewDidScroll(scrollView: UIScrollView) {
 		super.scrollViewDidScroll(scrollView)

@@ -42,20 +42,6 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 	
     // MARK: - Table View Methods
 	
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		if posts.count > 0 {
-			self.tableView.backgroundView = nil
-			return 1
-		} else {
-			let emptyView = UIView.viewForEmptyViewController(.Liked, boundsWidth: self.view.bounds.width, boundsHeight: self.view.bounds.height, isCurrentUser: true, userFirstName: "")
-			
-			self.tableView.backgroundView = emptyView
-		}
-		
-		return 0
-	}
-
-	
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
 		
@@ -78,6 +64,12 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
         API.sharedAPI.fetchLikes(User.currentUser.id) {
             self.posts = $0.map { Post(song: $0, user: User.currentUser) }
             self.tableView.reloadData()
+			
+			if self.posts.count == 0 {
+				self.tableView.backgroundView = UIView.viewForEmptyViewController(.Liked, size: self.view.bounds.size, isCurrentUser: true, userFirstName: "")
+			} else {
+				self.tableView.backgroundView = nil
+			}
         }
     }
 
