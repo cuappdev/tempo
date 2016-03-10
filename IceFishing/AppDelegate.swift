@@ -227,10 +227,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
 	}
 	
-	func applicationDidBecomeActive(application: UIApplication) {
-		FBSDKAppEvents.activateApp()
-	}
-	
 	// MARK: - SWRevealDelegate
 	
 	func revealController(revealController: SWRevealViewController!, willMoveToPosition position: FrontViewPosition) {
@@ -244,10 +240,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func applicationDidBecomeActive(application: UIApplication) {
+		FBSDKAppEvents.activateApp()
+		
 		if #available(iOS 9.0, *) {
 			guard let shortcut = launchedShortcutItem else { return }
-			
-			if FBSession.activeSession().isOpen {
+
+			if FBSDKAccessToken.currentAccessToken() != nil {
 				handleShortcutItem(shortcut as! UIApplicationShortcutItem)
 				launchedShortcutItem = nil
 			}

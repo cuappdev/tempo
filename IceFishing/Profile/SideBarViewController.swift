@@ -26,6 +26,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
     var searchNavigationController: UINavigationController!
     var elements: [SideBarElement] = []
     var button: UIButton!
+	
+	var preselectedIndex: Int? // -1 is profile
     
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
