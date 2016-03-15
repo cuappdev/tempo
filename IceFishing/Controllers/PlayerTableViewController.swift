@@ -83,16 +83,17 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	
     // MARK: - Table view data source
 	
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if searchController.active {
 			return filteredPosts.count
 		} else {
 			return posts.count
 		}
+	}
+	
+	func navigateToSuggestions() {
+		let suggestionsVC = (UIApplication.sharedApplication().delegate as! AppDelegate).suggestionsVC
+		navigationController?.setViewControllers([suggestionsVC], animated: false)
 	}
 	
     private func updateNowPlayingInfo() {

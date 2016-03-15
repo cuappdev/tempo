@@ -51,6 +51,19 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		let completion: [User] -> Void = {
 			self.users = $0
 			self.tableView.reloadData()
+			
+			if self.users.count == 0 {
+				switch self.displayType {
+				case .Followers:
+					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Followers, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
+				case .Following:
+					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Following, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
+				default:
+					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Users, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
+				}
+			} else {
+				self.tableView.backgroundView = nil
+			}
 		}
 		
 		switch(displayType) {
