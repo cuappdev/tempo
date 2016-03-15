@@ -14,7 +14,7 @@ enum DisplayType: String {
 	case Users = "Users"
 }
 
-class UsersViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate, UIViewControllerPreviewingDelegate {
+class UsersViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
 
 	var user: User = User.currentUser
 	var displayType: DisplayType = .Users
@@ -161,10 +161,11 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	func didDismissSearchController(searchController: UISearchController) {
 		statusBarView.removeFromSuperview()
 	}
-
-	// MARK: - UIViewControllerPreviewingDelegate
 	
-	@available(iOS 9.0, *)
+}
+
+@available(iOS 9.0, *)
+extension UsersViewController: UIViewControllerPreviewingDelegate {
 	func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		let tableViewPoint = view.convertPoint(location, toView: tableView)
 		
@@ -189,5 +190,4 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		navigationItem.backBarButtonItem = backButton
 		showViewController(viewControllerToCommit, sender: self)
 	}
-	
 }

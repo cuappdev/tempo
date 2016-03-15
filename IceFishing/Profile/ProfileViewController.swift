@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate {
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 	
 	var user: User = User.currentUser
 	
@@ -313,9 +313,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		return CGSize(width: dayWidth, height: dayHeight)
 	}
 	
-	// MARK: - UIViewControllerPreviewingDelegate
-	
-	@available(iOS 9.0, *)
+}
+
+@available(iOS 9.0, *)
+extension ProfileViewController: UIViewControllerPreviewingDelegate {
 	func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		
 		if followersButton.frame.contains(location) {
@@ -334,7 +335,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			followersVC.displayType = .Following
 			followersVC.user = user
 			followersVC.title = String(followersVC.displayType)
-
+			
 			previewingContext.sourceRect = followingButton.frame
 			
 			return followersVC
@@ -348,7 +349,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		}
 		
 		if let index = postedDays.indexOf(cell.date.day()) where cell.date.month() == postedDates[index].month() && cell.date.year() == postedDates[index].year() {
-		
+			
 			let date = dateForIndexPath(indexPath)
 			
 			let peekViewController = PostHistoryTableViewController()
@@ -373,4 +374,3 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		showViewController(viewControllerToCommit, sender: self)
 	}
 }
-

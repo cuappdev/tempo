@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate, UIViewControllerPreviewingDelegate {
+class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
 	
 	var customRefresh: ADRefreshControl?
 	var plusButton: UIButton!
@@ -175,9 +175,20 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		}
 	}
 	
-	// MARK: - UIViewControllerPreviewingDelegate
+	// MARK: - Navigation
 	
-	@available(iOS 9.0, *)
+	func didTapImageForPostView(postView: PostView) {
+		guard let user = postView.post?.user else { return }
+		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		profileVC.title = "Profile"
+		profileVC.user = user
+		navigationController?.pushViewController(profileVC, animated: true)
+	}
+
+}
+
+@available(iOS 9.0, *)
+extension FeedViewController: UIViewControllerPreviewingDelegate {
 	func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		let tableViewPoint = view.convertPoint(location, toView: tableView)
 		
@@ -208,15 +219,4 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
 		showViewController(viewControllerToCommit, sender: self)
 	}
-	
-	// MARK: - Navigation
-	
-	func didTapImageForPostView(postView: PostView) {
-		guard let user = postView.post?.user else { return }
-		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
-		profileVC.title = "Profile"
-		profileVC.user = user
-		navigationController?.pushViewController(profileVC, animated: true)
-	}
-
 }
