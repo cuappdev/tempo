@@ -1094,7 +1094,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/IceFishing/Vendor",
-					"$(PROJECT_DIR)/IceFishing/Vendor/FacebookSDK",
 					"$(PROJECT_DIR)/IceFishing/Vendor/ios-sdk",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
@@ -1122,7 +1121,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/IceFishing/Vendor",
-					"$(PROJECT_DIR)/IceFishing/Vendor/FacebookSDK",
 					"$(PROJECT_DIR)/IceFishing/Vendor/ios-sdk",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";

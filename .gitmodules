@@ -12,7 +12,3 @@
 	path = IceFishing/Vendor/ios-sdk
 	url = https://github.com/spotify/ios-sdk.git
 	ignore = dirty
-[submodule "IceFishing/Vendor/facebook-ios-sdk"]
-	path = IceFishing/Vendor/facebook-ios-sdk
-	url = https://github.com/facebook/facebook-ios-sdk.git
-	ignore = dirty
