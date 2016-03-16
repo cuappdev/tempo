@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import FBSDKShareKit
 
 private enum Router: URLStringConvertible {
 	static let baseURLString = "http://icefishing-web.herokuapp.com"

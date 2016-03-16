@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKShareKit
 
 class UsernameViewController: UIViewController, UINavigationControllerDelegate {
  

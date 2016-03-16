@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKShareKit
 
 struct SideBarElement {
 	var title: String
