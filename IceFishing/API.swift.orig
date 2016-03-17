@@ -9,7 +9,6 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-import FBSDKShareKit
 
 private enum Router: URLStringConvertible {
 	static let baseURLString = "http://icefishing-web.herokuapp.com"
@@ -114,10 +113,15 @@ class API {
 			}
 			return nil
 		}
-
+		
+<<<<<<< 8af5a96ebe9b657897397e983c750f529b8497c8
+		let userRequest = FBRequest.requestForMe()
+		userRequest.startWithCompletionHandler { [unowned self] _, result, error in
+=======
 		let userRequest = FBSDKGraphRequest(graphPath: "me",
 			parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
 		userRequest.startWithCompletionHandler { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+>>>>>>> Move to new Facebook API
 			if error == nil {
 				let user = [
 					"email": result["email"] as! String,

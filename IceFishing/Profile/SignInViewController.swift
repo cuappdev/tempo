@@ -19,16 +19,8 @@ class SignInViewController: UIViewController {
     }
     
     @IBAction func logIn(sender: UIButton) {
-            
-        // Open a session with the login UI
-        FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: true) {
-            session, state, error in
-            
-            // Handle session state changes
-            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.sessionStateChanged(session, state: state, error: error)
-        }
-        
+		let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		appDelegate.loginToFacebook()
     }
     
 }

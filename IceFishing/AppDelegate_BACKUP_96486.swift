@@ -67,11 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		window!.backgroundColor = UIColor.iceLightGray
 		window!.makeKeyAndVisible()
 		
-		FBSDKProfile.enableUpdatesOnAccessTokenChange(true)
-		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-		
-		if FBSDKAccessToken.currentAccessToken() != nil {
-			fbSessionStateChanged(nil)
+<<<<<<< 8af5a96ebe9b657897397e983c750f529b8497c8
+		if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded {
+			FBSession.openActiveSessionWithReadPermissions(["public_profile", "email", "user_friends"], allowLoginUI: false) { session, state, error in
+				self.sessionStateChanged(session, state: state, error: error)
+			}
 		}
 		
 		// Check if it's launched from Quick Action
@@ -85,6 +85,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		}
 		
 		setFirstVC()
+		
+=======
+		FBSDKProfile.enableUpdatesOnAccessTokenChange(true)
+		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+		
+		if FBSDKAccessToken.currentAccessToken() != nil {
+			fbSessionStateChanged(nil)
+		}
+		
+>>>>>>> Move to new Facebook API
 		toggleRootVC()
 		
 		//declaration of tools remains active in background while app runs
@@ -178,6 +188,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		if error != nil {
 			FBSDKAccessToken.setCurrentAccessToken(nil)
 		} else {
+<<<<<<< 8af5a96ebe9b657897397e983c750f529b8497c8
+			if state == FBSessionState.Open {
+				let userRequest = FBRequest.requestForMe()
+				
+				userRequest.startWithCompletionHandler { connection, result, error in
+					if error == nil {
+						let fbid = result["id"] as! String
+						API.sharedAPI.fbIdIsValid(fbid) { newUser in
+=======
 			if FBSDKAccessToken.currentAccessToken() != nil {
 				let userRequest = FBSDKGraphRequest(graphPath: "me",
 					parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
@@ -188,6 +207,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 					} else {
 						let fbid = result["id"] as! String
 						API.sharedAPI.fbIdIsValid(fbid) { (newUser) -> Void in
+>>>>>>> Move to new Facebook API
 							if newUser {
 								let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
 								usernameVC.name = result["name"] as! String
@@ -227,6 +247,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
 	}
 	
+	func applicationDidBecomeActive(application: UIApplication) {
+		FBSDKAppEvents.activateApp()
+	}
+	
 	// MARK: - SWRevealDelegate
 	
 	func revealController(revealController: SWRevealViewController!, willMoveToPosition position: FrontViewPosition) {
@@ -240,12 +264,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func applicationDidBecomeActive(application: UIApplication) {
-		FBSDKAppEvents.activateApp()
-		
 		if #available(iOS 9.0, *) {
 			guard let shortcut = launchedShortcutItem else { return }
-
-			if FBSDKAccessToken.currentAccessToken() != nil {
+			
+			if FBSession.activeSession().isOpen {
 				handleShortcutItem(shortcut as! UIApplicationShortcutItem)
 				launchedShortcutItem = nil
 			}
