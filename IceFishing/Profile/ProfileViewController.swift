@@ -60,6 +60,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
 		let views: [String : AnyObject] = ["pic" : profilePictureView, "topGuide": topLayoutGuide]
 		view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
+		
+		// Check for 3D Touch availability
+		if #available(iOS 9.0, *) {
+			if traitCollection.forceTouchCapability == .Available {
+				registerForPreviewingWithDelegate(self, sourceView: view)
+			}
+		}
 	}
 	
 	override func viewDidAppear(animated: Bool) {
@@ -308,3 +315,62 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	
 }
 
+@available(iOS 9.0, *)
+extension ProfileViewController: UIViewControllerPreviewingDelegate {
+	func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		
+		if followersButton.frame.contains(location) {
+			let followersVC = UsersViewController()
+			followersVC.displayType = .Followers
+			followersVC.user = user
+			followersVC.title = String(followersVC.displayType)
+			
+			previewingContext.sourceRect = followersButton.frame
+			
+			return followersVC
+		}
+		
+		if followingButton.frame.contains(location) {
+			let followersVC = UsersViewController()
+			followersVC.displayType = .Following
+			followersVC.user = user
+			followersVC.title = String(followersVC.displayType)
+			
+			previewingContext.sourceRect = followingButton.frame
+			
+			return followersVC
+		}
+		
+		let collectionViewPoint = view.convertPoint(location, toView: collectionView)
+		
+		guard let indexPath = collectionView.indexPathForItemAtPoint(collectionViewPoint),
+			cell = collectionView.cellForItemAtIndexPath(indexPath) as? HipCalendarDayCollectionViewCell else {
+				return nil
+		}
+		
+		if let index = postedDays.indexOf(cell.date.day()) where cell.date.month() == postedDates[index].month() && cell.date.year() == postedDates[index].year() {
+			
+			let date = dateForIndexPath(indexPath)
+			
+			let peekViewController = PostHistoryTableViewController()
+			peekViewController.posts = posts
+			peekViewController.postedDates = postedDates
+			peekViewController.songLikes = postedLikes
+			
+			if let index = postedDays.indexOf(date.day()) {
+				peekViewController.index = index
+			}
+			
+			peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+			previewingContext.sourceRect = collectionView.convertRect(cell.frame, toView: view)
+			
+			return peekViewController
+		}
+		
+		return nil
+	}
+	
+	func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+		showViewController(viewControllerToCommit, sender: self)
+	}
+}

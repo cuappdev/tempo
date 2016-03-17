@@ -76,6 +76,13 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 			title = "Search Users"
 			addHamburgerMenu()
 		}
+		
+		// Check for 3D Touch availability
+		if #available(iOS 9.0, *) {
+			if traitCollection.forceTouchCapability == .Available {
+				registerForPreviewingWithDelegate(self, sourceView: view)
+			}
+		}
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -154,5 +161,33 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	func didDismissSearchController(searchController: UISearchController) {
 		statusBarView.removeFromSuperview()
 	}
+	
+}
 
+@available(iOS 9.0, *)
+extension UsersViewController: UIViewControllerPreviewingDelegate {
+	func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		let tableViewPoint = view.convertPoint(location, toView: tableView)
+		
+		guard let indexPath = tableView.indexPathForRowAtPoint(tableViewPoint),
+			cell = tableView.cellForRowAtIndexPath(indexPath) as? FollowTableViewCell else {
+				return nil
+		}
+		
+		let peekViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		peekViewController.title = "Profile"
+		peekViewController.user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
+		
+		peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+		previewingContext.sourceRect = tableView.convertRect(cell.frame, toView: view)
+		
+		return peekViewController
+	}
+	
+	func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+		let backButton = UIBarButtonItem()
+		backButton.title = "Search"
+		navigationItem.backBarButtonItem = backButton
+		showViewController(viewControllerToCommit, sender: self)
+	}
 }
