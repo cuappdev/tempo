@@ -24,9 +24,9 @@
                         <constraint firstAttribute="width" secondItem="yGS-IU-S99" secondAttribute="height" multiplier="1:1" id="OjG-gx-oKA"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QIa-ME-BPE">
-                    <rect key="frame" x="526" y="20" width="54" height="53"/>
-                    <state key="normal" image="Saved-Cross"/>
+                <button opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QIa-ME-BPE">
+                    <rect key="frame" x="563" y="20" width="32" height="32"/>
+                    <state key="normal" image="Exit"/>
                     <connections>
                         <action selector="exitButtonPressed:" destination="-1" eventType="touchUpInside" id="Ntm-e4-Ia7"/>
                     </connections>
@@ -38,7 +38,7 @@
                 <constraint firstItem="yGS-IU-S99" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="5Gz-Wo-owf"/>
                 <constraint firstItem="QIa-ME-BPE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="Qz4-eI-Tu6"/>
                 <constraint firstAttribute="trailing" secondItem="yGS-IU-S99" secondAttribute="trailing" id="ZiV-AH-fCZ"/>
-                <constraint firstAttribute="trailing" secondItem="QIa-ME-BPE" secondAttribute="trailing" constant="20" id="c1h-au-ulG"/>
+                <constraint firstAttribute="trailing" secondItem="QIa-ME-BPE" secondAttribute="trailing" constant="5" id="c1h-au-ulG"/>
                 <constraint firstItem="yGS-IU-S99" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ktO-jr-syP"/>
             </constraints>
             <variation key="default">
@@ -50,6 +50,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Saved-Cross" width="54" height="53"/>
+        <image name="Exit" width="32" height="32"/>
     </resources>
 </document>
