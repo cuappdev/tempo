@@ -8,6 +8,7 @@
 
 import UIKit
 import MediaPlayer
+import MarqueeLabel_Swift
 
 @objc protocol PostViewDelegate {
 	optional func didTapAddButtonForPostView(postView: PostView)
@@ -120,7 +121,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         if updateTimer == nil && post?.player.isPlaying ?? false {
             // 60 fps
             updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
-                target: self, selector: Selector("timerFired:"),
+                target: self, selector: #selector(PostView.timerFired(_:)),
                 userInfo: nil,
                 repeats: true)
 
@@ -134,21 +135,21 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     override func didMoveToWindow() {
         if progressGestureRecognizer == nil {
-            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: "changeProgress:")
+            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(PostView.changeProgress(_:)))
             progressGestureRecognizer?.delegate = self
             progressGestureRecognizer?.delaysTouchesBegan = true
             addGestureRecognizer(progressGestureRecognizer!)
         }
         
         if tapGestureRecognizer == nil {
-            tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "postViewPressed:")
+            tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PostView.postViewPressed(_:)))
             tapGestureRecognizer?.delegate = self
             tapGestureRecognizer?.cancelsTouchesInView = false
             addGestureRecognizer(tapGestureRecognizer!)
         }
 		
 		if longPressGestureRecognizer == nil {
-			longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "postViewPressed:")
+			longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(PostView.postViewPressed(_:)))
 			longPressGestureRecognizer?.delegate = self
 			longPressGestureRecognizer?.minimumPressDuration = 0.5
 			longPressGestureRecognizer?.cancelsTouchesInView = false

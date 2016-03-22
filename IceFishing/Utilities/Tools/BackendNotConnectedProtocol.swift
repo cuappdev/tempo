@@ -21,7 +21,7 @@ private struct AWBannerProperties {
 
 // MARK: - Banner View -
 
-private class BannerView: UIView {
+class BannerView: UIView {
 	
 	var notificationLabel: UILabel!
 	
@@ -35,7 +35,7 @@ private class BannerView: UIView {
 		
 		self.addSubview(notificationLabel)
 		
-		let tapGesture = UITapGestureRecognizer(target: self, action: "hide")
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hide))
 		self.addGestureRecognizer(tapGesture)
 	}
 	

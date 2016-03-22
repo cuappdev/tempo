@@ -11,7 +11,7 @@ import UIKit
 extension PlayerTableViewController {
 	
 	internal func setupPinViews() {
-		pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: "togglePlay")
+		pinViewGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PlayerTableViewController.togglePlay))
 		pinViewGestureRecognizer.delegate = pinView.postView
 		pinView.backgroundColor = UIColor.iceLightGray
 	}

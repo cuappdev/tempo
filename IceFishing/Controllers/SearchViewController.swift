@@ -34,7 +34,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	var searchBar = UISearchBar()
 	lazy var postButton: PostButton = {
 		let button = PostButton.instanceFromNib()
-		button.addTarget(self, action: "submitSong", forControlEvents: .TouchUpInside)
+		button.addTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
 		return button
 	}()
 	
@@ -49,8 +49,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		searchBar.delegate = self
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
 	}
 	
 	override func viewWillAppear(animated: Bool) {

@@ -37,7 +37,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		
 		refreshControl = UIRefreshControl()
 		customRefresh = ADRefreshControl(refreshControl: refreshControl!)
-		refreshControl?.addTarget(self, action: "refreshFeed", forControlEvents: .ValueChanged)
+		refreshControl?.addTarget(self, action: #selector(FeedViewController.refreshFeed), forControlEvents: .ValueChanged)
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
@@ -92,7 +92,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 					button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 					button.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
 					button.layer.cornerRadius = 5.0
-					button.addTarget(self, action: "navigateToSuggestions", forControlEvents: .TouchUpInside)
+					button.addTarget(self, action: #selector(PlayerTableViewController.navigateToSuggestions), forControlEvents: .TouchUpInside)
 					
 					emptyView.addSubview(button)
 					
@@ -141,7 +141,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		plusButton.imageView!.contentMode = .Center
 		plusButton.imageView!.clipsToBounds = false
 		plusButton.adjustsImageWhenHighlighted = false
-		plusButton.addTarget(self, action: "plusButtonTapped", forControlEvents: .TouchUpInside)
+		plusButton.addTarget(self, action: #selector(FeedViewController.plusButtonTapped), forControlEvents: .TouchUpInside)
 		
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: plusButton)
 	}
@@ -151,7 +151,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 			plusButton.imageView?.layer.transform = currentTransform
 		}
 		plusButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
-		plusButton.addTarget(active ? searchTableViewController : self, action: active ? "dismiss" : "plusButtonTapped", forControlEvents: .TouchUpInside)
+		plusButton.addTarget(active ? searchTableViewController : self, action: active ? #selector(SearchViewController.dismiss) : #selector(plusButtonTapped), forControlEvents: .TouchUpInside)
 		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
 			let transform = active ? CGAffineTransformMakeRotation(CGFloat(M_PI_4)) : CGAffineTransformIdentity
 			self.plusButton.imageView!.transform = transform

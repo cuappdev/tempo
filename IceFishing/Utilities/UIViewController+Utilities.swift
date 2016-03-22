@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import SWRevealViewController
 
 extension UIViewController {
 	func addHamburgerMenu() {
 		let image = UIImage(named: "Hamburger-Menu")!
 		let menuButton = UIButton(frame: CGRect(origin: CGPointZero, size: image.size))
 		menuButton.setImage(image, forState: .Normal)
-		menuButton.addTarget(revealViewController(), action: "revealToggle:", forControlEvents: .TouchUpInside)
+		menuButton.addTarget(revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), forControlEvents: .TouchUpInside)
 		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
 	}
 	

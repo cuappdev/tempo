@@ -15,7 +15,6 @@
 		1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9C11AACC4C0007822B0 /* Images.xcassets */; };
 		1D802AB51B786351005A96D1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D802AB41B786350005A96D1 /* AVFoundation.framework */; };
 		1D802AB71B78635A005A96D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D802AB61B78635A005A96D1 /* SystemConfiguration.framework */; };
-		1D9991751B81E2F70005A376 /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9991741B81E2F70005A376 /* MarqueeLabel.swift */; };
 		1DA44FC61B6D84D1009EC2BD /* PostButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA44FC51B6D84D1009EC2BD /* PostButton.swift */; };
 		1DB283901B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */; };
 		1DB476481AEF24670066014F /* PostButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB476471AEF24670066014F /* PostButton.xib */; };
@@ -46,26 +45,12 @@
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
 		952F0FEE1BCF20E100C53522 /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FCC1BCF20E100C53522 /* ADScreenCapture.swift */; };
-		952F0FEF1BCF20E100C53522 /* _FBTweakArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FCF1BCF20E100C53522 /* _FBTweakArrayViewController.m */; };
-		952F0FF01BCF20E100C53522 /* _FBTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD11BCF20E100C53522 /* _FBTweakBindObserver.m */; };
-		952F0FF11BCF20E100C53522 /* _FBTweakCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD31BCF20E100C53522 /* _FBTweakCategoryViewController.m */; };
-		952F0FF21BCF20E100C53522 /* _FBTweakCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD51BCF20E100C53522 /* _FBTweakCollectionViewController.m */; };
-		952F0FF31BCF20E100C53522 /* _FBTweakDictionaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD71BCF20E100C53522 /* _FBTweakDictionaryViewController.m */; };
-		952F0FF41BCF20E100C53522 /* _FBTweakTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FD91BCF20E100C53522 /* _FBTweakTableViewCell.m */; };
-		952F0FF51BCF20E100C53522 /* FBTweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FDC1BCF20E100C53522 /* FBTweak.m */; };
-		952F0FF61BCF20E100C53522 /* FBTweakCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FDE1BCF20E100C53522 /* FBTweakCategory.m */; };
-		952F0FF71BCF20E100C53522 /* FBTweakCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE01BCF20E100C53522 /* FBTweakCollection.m */; };
-		952F0FF81BCF20E100C53522 /* FBTweakInline.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE31BCF20E100C53522 /* FBTweakInline.m */; };
-		952F0FF91BCF20E100C53522 /* FBTweakShakeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE61BCF20E100C53522 /* FBTweakShakeWindow.m */; };
-		952F0FFA1BCF20E100C53522 /* FBTweakStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FE81BCF20E100C53522 /* FBTweakStore.m */; };
-		952F0FFB1BCF20E100C53522 /* FBTweakViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEA1BCF20E100C53522 /* FBTweakViewController.m */; };
 		952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */; };
 		952F0FFD1BCF20E100C53522 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEC1BCF20E100C53522 /* Tools.swift */; };
 		952F0FFE1BCF20E100C53522 /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FED1BCF20E100C53522 /* Tweaks.swift */; };
 		96284AEB2B885E7D8E624457 /* Pods_IceFishing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3E20BD729A4279B9A4EA08 /* Pods_IceFishing.framework */; };
 		B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B085F3B41BE3CBB80000421E /* SearchViewController.xib */; };
 		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
-		BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */; };
 		CCC0F80E1C0257A2003429BF /* BackendNotConnectedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */; };
 		D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9C51AE889D600C66385 /* SideBarViewController.swift */; };
 		D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D102A9C61AE889D600C66385 /* SideBarViewController.xib */; };
@@ -124,7 +109,6 @@
 		1D72D9C41AACC4C0007822B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1D802AB41B786350005A96D1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1D802AB61B78635A005A96D1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		1D9991741B81E2F70005A376 /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
 		1DA44FC51B6D84D1009EC2BD /* PostButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostButton.swift; sourceTree = "<group>"; };
 		1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSLayoutContraint+Fill.swift"; path = "../Controllers/NSLayoutContraint+Fill.swift"; sourceTree = "<group>"; };
 		1DB476471AEF24670066014F /* PostButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostButton.xib; sourceTree = "<group>"; };
@@ -153,35 +137,6 @@
 		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; usesTabs = 1; };
 		952F0FCC1BCF20E100C53522 /* ADScreenCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADScreenCapture.swift; sourceTree = "<group>"; };
-		952F0FCE1BCF20E100C53522 /* _FBTweakArrayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakArrayViewController.h; sourceTree = "<group>"; };
-		952F0FCF1BCF20E100C53522 /* _FBTweakArrayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakArrayViewController.m; sourceTree = "<group>"; };
-		952F0FD01BCF20E100C53522 /* _FBTweakBindObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakBindObserver.h; sourceTree = "<group>"; };
-		952F0FD11BCF20E100C53522 /* _FBTweakBindObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakBindObserver.m; sourceTree = "<group>"; };
-		952F0FD21BCF20E100C53522 /* _FBTweakCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakCategoryViewController.h; sourceTree = "<group>"; };
-		952F0FD31BCF20E100C53522 /* _FBTweakCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakCategoryViewController.m; sourceTree = "<group>"; };
-		952F0FD41BCF20E100C53522 /* _FBTweakCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakCollectionViewController.h; sourceTree = "<group>"; };
-		952F0FD51BCF20E100C53522 /* _FBTweakCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakCollectionViewController.m; sourceTree = "<group>"; };
-		952F0FD61BCF20E100C53522 /* _FBTweakDictionaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakDictionaryViewController.h; sourceTree = "<group>"; };
-		952F0FD71BCF20E100C53522 /* _FBTweakDictionaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakDictionaryViewController.m; sourceTree = "<group>"; };
-		952F0FD81BCF20E100C53522 /* _FBTweakTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _FBTweakTableViewCell.h; sourceTree = "<group>"; };
-		952F0FD91BCF20E100C53522 /* _FBTweakTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _FBTweakTableViewCell.m; sourceTree = "<group>"; };
-		952F0FDA1BCF20E100C53522 /* FBTweak-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBTweak-Prefix.pch"; sourceTree = "<group>"; };
-		952F0FDB1BCF20E100C53522 /* FBTweak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweak.h; sourceTree = "<group>"; };
-		952F0FDC1BCF20E100C53522 /* FBTweak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweak.m; sourceTree = "<group>"; };
-		952F0FDD1BCF20E100C53522 /* FBTweakCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakCategory.h; sourceTree = "<group>"; };
-		952F0FDE1BCF20E100C53522 /* FBTweakCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakCategory.m; sourceTree = "<group>"; };
-		952F0FDF1BCF20E100C53522 /* FBTweakCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakCollection.h; sourceTree = "<group>"; };
-		952F0FE01BCF20E100C53522 /* FBTweakCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakCollection.m; sourceTree = "<group>"; };
-		952F0FE11BCF20E100C53522 /* FBTweakEnabled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakEnabled.h; sourceTree = "<group>"; };
-		952F0FE21BCF20E100C53522 /* FBTweakInline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakInline.h; sourceTree = "<group>"; };
-		952F0FE31BCF20E100C53522 /* FBTweakInline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakInline.m; sourceTree = "<group>"; };
-		952F0FE41BCF20E100C53522 /* FBTweakInlineInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakInlineInternal.h; sourceTree = "<group>"; };
-		952F0FE51BCF20E100C53522 /* FBTweakShakeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakShakeWindow.h; sourceTree = "<group>"; };
-		952F0FE61BCF20E100C53522 /* FBTweakShakeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakShakeWindow.m; sourceTree = "<group>"; };
-		952F0FE71BCF20E100C53522 /* FBTweakStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakStore.h; sourceTree = "<group>"; };
-		952F0FE81BCF20E100C53522 /* FBTweakStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakStore.m; sourceTree = "<group>"; };
-		952F0FE91BCF20E100C53522 /* FBTweakViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweakViewController.h; sourceTree = "<group>"; };
-		952F0FEA1BCF20E100C53522 /* FBTweakViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweakViewController.m; sourceTree = "<group>"; };
 		952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitBugViewController.swift; sourceTree = "<group>"; };
 		952F0FEC1BCF20E100C53522 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		952F0FED1BCF20E100C53522 /* Tweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweaks.swift; sourceTree = "<group>"; };
@@ -191,8 +146,6 @@
 		B085F3B41BE3CBB80000421E /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
 		BA24C57C1AF866630066C2ED /* SearchPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPostView.swift; sourceTree = "<group>"; };
 		BA257E271ABA3FE200D939B0 /* IceFishing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IceFishing-Bridging-Header.h"; sourceTree = "<group>"; };
-		BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		BF3E20BD729A4279B9A4EA08 /* Pods_IceFishing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IceFishing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0CF7B971AE425450083606C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendNotConnectedProtocol.swift; sourceTree = "<group>"; };
@@ -247,7 +200,6 @@
 			children = (
 				B01FE1541C1765080077C2BF /* Spotify */,
 				6DEE0FC31AC34811005552F9 /* Profile */,
-				BA257E251ABA3FBC00D939B0 /* SWRevealViewController */,
 				1DCB96121AED5EA7007F6A4B /* APIViewController.swift */,
 				1DCB96131AED5EA7007F6A4B /* APIViewController.xib */,
 				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
@@ -280,7 +232,6 @@
 		1D65392E1AD0E23800E82627 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1D9991741B81E2F70005A376 /* MarqueeLabel.swift */,
 				FA1E1A7D1ADB0818007C823C /* PostView.swift */,
 				BA24C57C1AF866630066C2ED /* SearchPostView.swift */,
 				FA171CBF1AF1D758007B40AF /* FeedImageView.swift */,
@@ -408,49 +359,12 @@
 			isa = PBXGroup;
 			children = (
 				952F0FCC1BCF20E100C53522 /* ADScreenCapture.swift */,
-				952F0FCD1BCF20E100C53522 /* FBTweaks */,
 				952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */,
 				952F0FEC1BCF20E100C53522 /* Tools.swift */,
 				952F0FED1BCF20E100C53522 /* Tweaks.swift */,
 				CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */,
 			);
 			path = Tools;
-			sourceTree = "<group>";
-		};
-		952F0FCD1BCF20E100C53522 /* FBTweaks */ = {
-			isa = PBXGroup;
-			children = (
-				952F0FCE1BCF20E100C53522 /* _FBTweakArrayViewController.h */,
-				952F0FCF1BCF20E100C53522 /* _FBTweakArrayViewController.m */,
-				952F0FD01BCF20E100C53522 /* _FBTweakBindObserver.h */,
-				952F0FD11BCF20E100C53522 /* _FBTweakBindObserver.m */,
-				952F0FD21BCF20E100C53522 /* _FBTweakCategoryViewController.h */,
-				952F0FD31BCF20E100C53522 /* _FBTweakCategoryViewController.m */,
-				952F0FD41BCF20E100C53522 /* _FBTweakCollectionViewController.h */,
-				952F0FD51BCF20E100C53522 /* _FBTweakCollectionViewController.m */,
-				952F0FD61BCF20E100C53522 /* _FBTweakDictionaryViewController.h */,
-				952F0FD71BCF20E100C53522 /* _FBTweakDictionaryViewController.m */,
-				952F0FD81BCF20E100C53522 /* _FBTweakTableViewCell.h */,
-				952F0FD91BCF20E100C53522 /* _FBTweakTableViewCell.m */,
-				952F0FDA1BCF20E100C53522 /* FBTweak-Prefix.pch */,
-				952F0FDB1BCF20E100C53522 /* FBTweak.h */,
-				952F0FDC1BCF20E100C53522 /* FBTweak.m */,
-				952F0FDD1BCF20E100C53522 /* FBTweakCategory.h */,
-				952F0FDE1BCF20E100C53522 /* FBTweakCategory.m */,
-				952F0FDF1BCF20E100C53522 /* FBTweakCollection.h */,
-				952F0FE01BCF20E100C53522 /* FBTweakCollection.m */,
-				952F0FE11BCF20E100C53522 /* FBTweakEnabled.h */,
-				952F0FE21BCF20E100C53522 /* FBTweakInline.h */,
-				952F0FE31BCF20E100C53522 /* FBTweakInline.m */,
-				952F0FE41BCF20E100C53522 /* FBTweakInlineInternal.h */,
-				952F0FE51BCF20E100C53522 /* FBTweakShakeWindow.h */,
-				952F0FE61BCF20E100C53522 /* FBTweakShakeWindow.m */,
-				952F0FE71BCF20E100C53522 /* FBTweakStore.h */,
-				952F0FE81BCF20E100C53522 /* FBTweakStore.m */,
-				952F0FE91BCF20E100C53522 /* FBTweakViewController.h */,
-				952F0FEA1BCF20E100C53522 /* FBTweakViewController.m */,
-			);
-			path = FBTweaks;
 			sourceTree = "<group>";
 		};
 		B01FE1541C1765080077C2BF /* Spotify */ = {
@@ -471,15 +385,6 @@
 				BF3E20BD729A4279B9A4EA08 /* Pods_IceFishing.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BA257E251ABA3FBC00D939B0 /* SWRevealViewController */ = {
-			isa = PBXGroup;
-			children = (
-				BA257E291ABA3FE200D939B0 /* SWRevealViewController.h */,
-				BA257E2A1ABA3FE200D939B0 /* SWRevealViewController.m */,
-			);
-			name = SWRevealViewController;
 			sourceTree = "<group>";
 		};
 		D148F4991AF0349A009AB073 /* Post History Calendar */ = {
@@ -654,9 +559,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
-				952F0FF01BCF20E100C53522 /* _FBTweakBindObserver.m in Sources */,
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,
-				952F0FF41BCF20E100C53522 /* _FBTweakTableViewCell.m in Sources */,
 				1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */,
 				1D653F3E1B81451700F54455 /* SpotifyController.swift in Sources */,
 				FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */,
@@ -664,13 +567,10 @@
 				D17395741ADB080900A53AEE /* UsersViewController.swift in Sources */,
 				1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */,
 				1DE649C31B78590800DA5499 /* SpotifyViewController.swift in Sources */,
-				952F0FF61BCF20E100C53522 /* FBTweakCategory.m in Sources */,
-				952F0FF81BCF20E100C53522 /* FBTweakInline.m in Sources */,
 				FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */,
 				D160ADFF1BE67406003B0E1A /* PlaylistTableViewCell.swift in Sources */,
 				6092CBD91C021C5E008836AE /* FollowSuggestionsTableViewCell.swift in Sources */,
 				1DA44FC61B6D84D1009EC2BD /* PostButton.swift in Sources */,
-				952F0FF21BCF20E100C53522 /* _FBTweakCollectionViewController.m in Sources */,
 				1D1DD7141AE492750066AB39 /* Util.swift in Sources */,
 				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
 				1DCB96141AED5EA7007F6A4B /* APIViewController.swift in Sources */,
@@ -682,12 +582,9 @@
 				1DD875FC1B6E27DD0041C45B /* NSDateFormatter+Shared.swift in Sources */,
 				D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */,
 				952F0FEE1BCF20E100C53522 /* ADScreenCapture.swift in Sources */,
-				952F0FF31BCF20E100C53522 /* _FBTweakDictionaryViewController.m in Sources */,
-				952F0FFB1BCF20E100C53522 /* FBTweakViewController.m in Sources */,
 				D14D06B21BE9535400ABA1CF /* SearchViewController.swift in Sources */,
 				7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */,
 				6067F0821BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift in Sources */,
-				952F0FFA1BCF20E100C53522 /* FBTweakStore.m in Sources */,
 				D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */,
 				CCC0F80E1C0257A2003429BF /* BackendNotConnectedProtocol.swift in Sources */,
 				FA171CC01AF1D758007B40AF /* FeedImageView.swift in Sources */,
@@ -698,27 +595,20 @@
 				D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */,
 				6DA5FE4D1AED72F800E795DD /* UIColor+Shared.swift in Sources */,
 				D148F4AE1AF03EF5009AB073 /* PostHistoryTableViewCell.swift in Sources */,
-				952F0FEF1BCF20E100C53522 /* _FBTweakArrayViewController.m in Sources */,
 				D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */,
-				952F0FF91BCF20E100C53522 /* FBTweakShakeWindow.m in Sources */,
 				FA674C0F1AF917A200C14463 /* UIViewController+Utilities.swift in Sources */,
-				952F0FF51BCF20E100C53522 /* FBTweak.m in Sources */,
 				6084F6C51BE700B00048EFE3 /* PlayerTableViewController.swift in Sources */,
 				BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */,
 				FAAFB7F31C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift in Sources */,
-				BA257E2B1ABA3FE200D939B0 /* SWRevealViewController.m in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
 				952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */,
 				426E1A4B1C87BA6400512214 /* UIView+Utilities.swift in Sources */,
 				1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */,
 				D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */,
 				D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */,
-				1D9991751B81E2F70005A376 /* MarqueeLabel.swift in Sources */,
 				952F0FFE1BCF20E100C53522 /* Tweaks.swift in Sources */,
 				D160AE021BE677D4003B0E1A /* PlaylistTableViewController.swift in Sources */,
 				D148F4AA1AF03EB4009AB073 /* PostHistoryTableViewController.swift in Sources */,
-				952F0FF11BCF20E100C53522 /* _FBTweakCategoryViewController.m in Sources */,
-				952F0FF71BCF20E100C53522 /* FBTweakCollection.m in Sources */,
 				6DEE0FDA1AC34811005552F9 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

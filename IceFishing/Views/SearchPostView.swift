@@ -8,6 +8,7 @@
 
 import UIKit
 import MediaPlayer
+import MarqueeLabel_Swift
 
 class SearchPostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
@@ -40,7 +41,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
                         if self?.updateTimer == nil && self?.post?.player.isPlaying ?? false {
                             // 60 fps
                             self?.updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
-                                target: self!, selector: Selector("timerFired:"),
+                                target: self!, selector: #selector(SearchPostView.timerFired(_:)),
                                 userInfo: nil,
                                 repeats: true)
                             NSRunLoop.currentRunLoop().addTimer(self!.updateTimer!, forMode: NSRunLoopCommonModes)
@@ -58,14 +59,14 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     
     override func didMoveToWindow() {
         if progressGestureRecognizer == nil {
-            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: "changeProgress:")
+            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(SearchPostView.changeProgress(_:)))
             progressGestureRecognizer?.delegate = self
             progressGestureRecognizer?.delaysTouchesBegan = true
             addGestureRecognizer(progressGestureRecognizer!)
         }
         
         if tapGestureRecognizer == nil {
-            tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "postViewPressed:")
+            tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SearchPostView.postViewPressed(_:)))
             tapGestureRecognizer?.delegate = self
             tapGestureRecognizer?.cancelsTouchesInView = false
             addGestureRecognizer(tapGestureRecognizer!)

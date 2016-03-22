@@ -9,6 +9,7 @@
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
+import SWRevealViewController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate {
@@ -230,7 +231,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	// MARK: - SWRevealDelegate
 	
 	func revealController(revealController: SWRevealViewController!, willMoveToPosition position: FrontViewPosition) {
-		UIApplication.sharedApplication().sendAction("resignFirstResponder", to: nil, from: nil, forEvent: nil)
+		UIApplication.sharedApplication().sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, forEvent: nil)
 		if position == .Left {
 			revealController.frontViewController.view.userInteractionEnabled = true
 			revealController.frontViewController.revealViewController().tapGestureRecognizer()

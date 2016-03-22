@@ -113,11 +113,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
 		if User.currentUser.username == user.username {
 			followButton.setTitle("EDIT", forState: .Normal)
-			followButton.addTarget(self, action: "userHandleButtonClicked:", forControlEvents: .TouchUpInside)
+			followButton.addTarget(self, action: #selector(ProfileViewController.userHandleButtonClicked(_:)), forControlEvents: .TouchUpInside)
 		} else {
 			followButton.hidden = true
 			followButton.alpha = 0
-			followButton.addTarget(self, action: "followButtonPressed:", forControlEvents: .TouchUpInside)
+			followButton.addTarget(self, action: #selector(ProfileViewController.followButtonPressed(_:)), forControlEvents: .TouchUpInside)
 			
 			API.sharedAPI.fetchUser(user.id) {
 				self.user = $0
