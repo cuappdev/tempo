@@ -1,13 +1,3 @@
-[submodule "IceFishing/Vendor/Alamofire"]
-	path = IceFishing/Vendor/Alamofire
-	url = https://github.com/Alamofire/Alamofire.git
-	branch = swift-2.0
-	ignore = dirty
-[submodule "IceFishing/Vendor/SwiftyJSON"]
-	path = IceFishing/Vendor/SwiftyJSON
-	url = https://github.com/SwiftyJSON/SwiftyJSON.git
-	branch = xcode7
-	ignore = dirty
 [submodule "IceFishing/Vendor/ios-sdk"]
 	path = IceFishing/Vendor/ios-sdk
 	url = https://github.com/spotify/ios-sdk.git

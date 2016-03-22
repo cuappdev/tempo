@@ -1,6 +1,11 @@
 use_frameworks!
 platform :ios, '8.0'
-pod 'Bolts'
-pod 'FBSDKCoreKit'
-pod 'FBSDKShareKit'
-pod 'FBSDKLoginKit'
+
+target 'IceFishing' do
+	pod 'SwiftyJSON'
+	pod 'Alamofire'
+	pod 'Bolts'
+	pod 'FBSDKCoreKit'
+	pod 'FBSDKShareKit'
+	pod 'FBSDKLoginKit'
+end
