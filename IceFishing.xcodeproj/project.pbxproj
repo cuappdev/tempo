@@ -30,7 +30,6 @@
 		1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */; };
 		1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */; };
 		426E1A4B1C87BA6400512214 /* UIView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426E1A4A1C87BA6400512214 /* UIView+Utilities.swift */; };
-		5997B3E764C1E93A79579866 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1698B38F16E152E9A84B507 /* Pods.framework */; };
 		60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60256C0F1BC1BC7900B52FDD /* SavedSongView.xib */; };
 		60256C1A1BC1BFA900B52FDD /* SavedSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60256C191BC1BFA900B52FDD /* SavedSongView.swift */; };
 		6067F0821BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6067F0801BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift */; };
@@ -187,7 +186,6 @@
 				1D802AB71B78635A005A96D1 /* SystemConfiguration.framework in Frameworks */,
 				1D802AB51B786351005A96D1 /* AVFoundation.framework in Frameworks */,
 				1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */,
-				5997B3E764C1E93A79579866 /* Pods.framework in Frameworks */,
 				96284AEB2B885E7D8E624457 /* Pods_IceFishing.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
