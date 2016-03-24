@@ -12,7 +12,7 @@ import SwiftyJSON
 import FBSDKShareKit
 
 private enum Router: URLStringConvertible {
-	static let baseURLString = "http://icefishing-web.herokuapp.com"
+	static let baseURLString = "https://icefishing-web.herokuapp.com"
 	case Root
 	case ValidUsername
 	case ValidFBID
