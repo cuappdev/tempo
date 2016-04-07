@@ -19,8 +19,12 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	var user: User = User.currentUser
 	var displayType: DisplayType = .Users
 	private var users: [User] = []
+	private var suggestedUsers: [User] = []
 	private var filteredUsers: [User] = []
 	private var searchController: UISearchController!
+	var isLoadingMoreSuggestions = false
+	let length = 8
+	var page = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,10 +53,17 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		
 		// Populate users
 		let completion: [User] -> Void = {
-			self.users = $0
+			if self.displayType == .Users {
+				self.suggestedUsers = $0
+			} else {
+				self.users = $0
+			}
 			self.tableView.reloadData()
 			
-			if self.users.count == 0 {
+			// find count of which array table view will display, if .Users then we initially display suggestedUsers
+			let itemCount = (self.displayType == .Users ? self.suggestedUsers.count : self.users.count)
+			
+			if itemCount == 0 {
 				switch self.displayType {
 				case .Followers:
 					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Followers, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
@@ -72,7 +83,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		case .Following:
 			API.sharedAPI.fetchFollowing(user.id, completion: completion)
 		default:
-			API.sharedAPI.searchUsers("", completion: completion)
+			API.sharedAPI.fetchFollowSuggestions(completion, length: length, page: page)
 			title = "Search Users"
 			addHamburgerMenu()
 		}
@@ -96,13 +107,22 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
     // MARK: Table View Methods
 	
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return searchController.active ? filteredUsers.count : users.count
+		if displayType == .Users {
+			return searchController.active ? filteredUsers.count : suggestedUsers.count
+		} else {
+			return searchController.active ? filteredUsers.count : users.count
+		}
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
-		let user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
-
+		var user: User
+		if displayType == .Users {
+			user = searchController.active ? filteredUsers[indexPath.row] : suggestedUsers[indexPath.row]
+		} else {
+			user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
+		}
+		
         cell.userName.text = user.name
         cell.userHandle.text = "@\(user.username)"
         cell.numFollowLabel.text = "\(user.followersCount) followers"
@@ -123,13 +143,39 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
-		profileVC.user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
+		if self.displayType == .Users {
+			profileVC.user = searchController.active ? filteredUsers[indexPath.row] : suggestedUsers[indexPath.row]
+		} else {
+			profileVC.user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
+		}
 		
 		let backButton = UIBarButtonItem()
 		backButton.title = "Search"
 		navigationItem.backBarButtonItem = backButton
         navigationController?.pushViewController(profileVC, animated: true)
     }
+	
+	override func scrollViewDidScroll(scrollView: UIScrollView) {
+		if !searchController.active {
+			let contentOffset = scrollView.contentOffset.y
+			let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+			if (!isLoadingMoreSuggestions && maximumOffset - contentOffset <= CGFloat(0)) {
+				let completion: [User] -> Void = {
+					for user in $0 {
+						self.suggestedUsers.append(user)
+					}
+					dispatch_async(dispatch_get_main_queue()) {
+						self.tableView.reloadData()
+					}
+					self.isLoadingMoreSuggestions = false
+				}
+				
+				page += 1
+				self.isLoadingMoreSuggestions = true
+				API.sharedAPI.fetchFollowSuggestions(completion, length: length, page: page)
+			}
+		}
+	}
 	
 	// MARK: Search Methods
 	
@@ -155,6 +201,26 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	}()
 	
 	func willPresentSearchController(searchController: UISearchController) {
+		let completion: [User] -> Void = {
+			self.users = $0
+			self.tableView.reloadData()
+			
+			if self.users.count == 0 {
+				switch self.displayType {
+				case .Followers:
+					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Followers, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
+				case .Following:
+					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Following, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
+				default:
+					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Users, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
+				}
+			} else {
+				self.tableView.backgroundView = nil
+			}
+		}
+		
+		API.sharedAPI.searchUsers("", completion: completion)
+		
 		navigationController?.view.addSubview(statusBarView)
 	}
 	
