@@ -122,7 +122,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         profilePictureView.userInteractionEnabled = true
 		let tapProfile = UITapGestureRecognizer()
 		profilePictureView.addGestureRecognizer(tapProfile)
-		tapProfile.addTarget(self, action: "profileTapped:")
+		tapProfile.addTarget(self, action: #selector(ProfileViewController.profileTapped(_:)))
 		
 		if User.currentUser.username == user.username {
 			followButton.setTitle("EDIT", forState: .Normal)
@@ -148,19 +148,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		navigationController?.popToRootViewControllerAnimated(true)
 	}
 	
-	override func viewDidDisappear(animated: Bool) {
-		super.viewDidDisappear(animated)
-		
-		removeRevealGesture()
-	}
-
-    // Return to profile view
-    func popToRoot() {
-        navigationController?.popToRootViewControllerAnimated(true)
-    }
-	
 	// Show profile picture upon tap
-	@IBAction func profileTapped(sender: UITapGestureRecognizer){
+	@IBAction func profileTapped(sender: UITapGestureRecognizer) {
 		let proPicVC = ProfilePictureViewController()
 		//animation
 		proPicVC.transitioningDelegate = self
@@ -175,7 +164,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		UIViewControllerAnimatedTransitioning? {
 			let popTransition = PopAnimator()
 			popTransition.originFrame = profilePictureView.superview!.convertRect(profilePictureView.frame, toView: nil)
-			popTransition.presenting = true
+//			popTransition.presenting = true
 			popTransition.profileImage = profilePictureView.image!
 			
 			return popTransition

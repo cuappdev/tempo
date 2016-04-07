@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D1C46F71CB6002C00D1B431 /* UIView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426E1A4A1C87BA6400512214 /* UIView+Utilities.swift */; };
 		1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1CC60C1C31BC0D0052F66D /* NSURLSession+Shared.swift */; };
 		1D1DD7141AE492750066AB39 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1DD7121AE492750066AB39 /* Util.swift */; };
 		1D6539301AD0E23800E82627 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */; };
@@ -29,7 +30,6 @@
 		1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DFBFB511B7845E7001DD6AC /* SongSearchTableViewCell.xib */; };
 		1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */; };
 		1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */; };
-		426E1A4B1C87BA6400512214 /* UIView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426E1A4A1C87BA6400512214 /* UIView+Utilities.swift */; };
 		60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60256C0F1BC1BC7900B52FDD /* SavedSongView.xib */; };
 		60256C1A1BC1BFA900B52FDD /* SavedSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60256C191BC1BFA900B52FDD /* SavedSongView.swift */; };
 		6067F0821BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6067F0801BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift */; };
@@ -566,6 +566,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D1C46F71CB6002C00D1B431 /* UIView+Utilities.swift in Sources */,
 				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,
 				1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */,
