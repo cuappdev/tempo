@@ -23,7 +23,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	private var filteredUsers: [User] = []
 	private var searchController: UISearchController!
 	var isLoadingMoreSuggestions = false
-	let length = 8
+	let length = 10
 	var page = 0
 
     override func viewDidLoad() {
@@ -201,25 +201,16 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	}()
 	
 	func willPresentSearchController(searchController: UISearchController) {
-		let completion: [User] -> Void = {
-			self.users = $0
-			self.tableView.reloadData()
-			
-			if self.users.count == 0 {
-				switch self.displayType {
-				case .Followers:
-					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Followers, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
-				case .Following:
-					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Following, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
-				default:
-					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Users, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
-				}
-			} else {
-				self.tableView.backgroundView = nil
+		// if a .Users VC, only suggestions were fetched in viewDidLoad(), need to fetch users to search
+		if displayType == .Users {
+			let completion: [User] -> Void = {
+				self.users = $0
+				self.tableView.reloadData()
+				self.filterContentForSearchText("")
 			}
+			
+			API.sharedAPI.searchUsers("", completion: completion)
 		}
-		
-		API.sharedAPI.searchUsers("", completion: completion)
 		
 		navigationController?.view.addSubview(statusBarView)
 	}
