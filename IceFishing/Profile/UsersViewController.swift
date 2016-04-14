@@ -14,7 +14,7 @@ enum DisplayType: String {
 	case Users = "Users"
 }
 
-class UsersViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
+class UsersViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate, FollowUserDelegate {
 
 	var user: User = User.currentUser
 	var displayType: DisplayType = .Users
@@ -129,6 +129,8 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
         user.loadImage {
             cell.userImage.image = $0
         }
+		cell.followButton.setTitle(self.user.isFollowing ? "Following" : "Follow", forState: .Normal)
+		cell.delegate = self
         
         return cell
     }
@@ -174,6 +176,29 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 				self.isLoadingMoreSuggestions = true
 				API.sharedAPI.fetchFollowSuggestions(completion, length: length, page: page)
 			}
+		}
+	}
+	
+	// MARK: Follow User Method
+	
+	func didTapFollowButton(cell: FollowTableViewCell) -> Void {
+		let indexPath = tableView.indexPathForCell(cell)
+		
+		var user: User
+		if displayType == .Users {
+			user = searchController.active ? filteredUsers[indexPath!.row] : suggestedUsers[indexPath!.row]
+		} else {
+			user = searchController.active ? filteredUsers[indexPath!.row] : users[indexPath!.row]
+		}
+		
+		user.isFollowing = !user.isFollowing
+		User.currentUser.followingCount += user.isFollowing ? 1 : -1
+		user.followersCount += user.isFollowing ? 1 : -1
+		let cell = tableView.cellForRowAtIndexPath(indexPath!) as! FollowTableViewCell
+		cell.followButton.setTitle(self.user.isFollowing ? "Following" : "Follow", forState: .Normal)
+		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
+		dispatch_async(dispatch_get_main_queue()) {
+			self.tableView.reloadData()
 		}
 	}
 	
