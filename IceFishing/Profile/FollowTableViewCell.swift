@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol FollowUserDelegate {
+	func didTapFollowButton(cell: FollowTableViewCell)
+}
+
 class FollowTableViewCell: UITableViewCell {
     
     @IBOutlet weak var userImage: UIImageView!
@@ -15,6 +19,9 @@ class FollowTableViewCell: UITableViewCell {
     @IBOutlet weak var userHandle: UILabel!
     @IBOutlet weak var numFollowLabel: UILabel!
     @IBOutlet weak var separator: UIView!
+	@IBOutlet weak var followButton: UIButton!
+	
+	var delegate: FollowUserDelegate?
     
     override func didMoveToSuperview() {
         selectionStyle = .None
@@ -35,5 +42,9 @@ class FollowTableViewCell: UITableViewCell {
     override func setSelected(selected: Bool, animated: Bool) {
 		contentView.backgroundColor = selected ? UIColor.iceLightGray : UIColor.clearColor()
     }
+	
+	@IBAction func didTapFollowButton(sender: AnyObject) {
+		delegate?.didTapFollowButton(self)
+	}
 }
 
