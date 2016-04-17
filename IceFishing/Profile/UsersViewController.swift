@@ -129,8 +129,13 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
         user.loadImage {
             cell.userImage.image = $0
         }
-		cell.followButton.setTitle(self.user.isFollowing ? "Following" : "Follow", forState: .Normal)
-		cell.delegate = self
+		if user.id != User.currentUser.id {
+			cell.followButton.setTitle(user.isFollowing ? "Following" : "Follow", forState: .Normal)
+			cell.delegate = self
+		} else {
+			cell.followButton.setTitle("", forState: .Normal)
+		}
+		
         
         return cell
     }
@@ -191,11 +196,15 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 			user = searchController.active ? filteredUsers[indexPath!.row] : users[indexPath!.row]
 		}
 		
+		if user.id == User.currentUser.id {
+			return
+		}
+		
 		user.isFollowing = !user.isFollowing
 		User.currentUser.followingCount += user.isFollowing ? 1 : -1
 		user.followersCount += user.isFollowing ? 1 : -1
 		let cell = tableView.cellForRowAtIndexPath(indexPath!) as! FollowTableViewCell
-		cell.followButton.setTitle(self.user.isFollowing ? "Following" : "Follow", forState: .Normal)
+		cell.followButton.setTitle(user.isFollowing ? "Following" : "Follow", forState: .Normal)
 		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
 		dispatch_async(dispatch_get_main_queue()) {
 			self.tableView.reloadData()
