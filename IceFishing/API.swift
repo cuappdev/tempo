@@ -12,10 +12,10 @@ import SwiftyJSON
 import FBSDKShareKit
 
 private enum Router: URLStringConvertible {
-	static let baseURLString = "http://10.148.4.45:3000"//"https://icefishing-web.herokuapp.com"
+	static let baseURLString = "http://10.148.7.232:3000"//"https://icefishing-web.herokuapp.com"
 	case Root
+	case ValidAuthenticate
 	case ValidUsername
-	case ValidFBID
 	case Sessions
 	case UserSearch
 	case Users(String)
@@ -35,10 +35,10 @@ private enum Router: URLStringConvertible {
 			switch self {
 			case .Root:
 				return "/"
+			case .ValidAuthenticate:
+				return "/users/authenticate"
 			case .ValidUsername:
 				return "/users/valid_username"
-			case .ValidFBID:
-				return "/users/valid_fbid"
 			case .Sessions:
 				return "/sessions"
 			case .UserSearch:
@@ -100,37 +100,50 @@ class API {
 	
 	func usernameIsValid(username: String, completion: Bool -> Void) {
 		let map: [String: Bool] -> Bool? = { $0["is_valid"] }
-		get(.ValidUsername, params: ["username": username], map: map, completion: completion)
+		post(.ValidUsername, params: ["username": username, "session_code": sessionCode], map: map, completion: completion)
 	}
 	
-	func fbIdIsValid(fbid: String, completion: Bool -> Void) {
-		let map: [String: Bool] -> Bool? = { $0["is_valid"] }
-		get(.ValidFBID, params: ["fbid": fbid], map: map, completion: completion)
-	}
-	
-	func getCurrentUser(username: String, completion: User -> Void) {
-		let map: [String: AnyObject] -> User? = {
+	func fbAuthenticate(fbid: String, userToken: String, completion: (Bool) -> Void) {
+		let map: [String: AnyObject] -> (Bool) = {
 			if let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
-				self.sessionCode = code
-				User.currentUser = User(json: JSON(user))
-				return User.currentUser
+				if let success = $0["success"] as? Bool where success == true {
+					self.sessionCode = code
+					User.currentUser = User(json: JSON(user))
+					return success
+				}
 			}
-			return nil
+			
+			return false
 		}
-
-		let userRequest = FBSDKGraphRequest(graphPath: "me",
-			parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
+		
+		let userRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
 		userRequest.startWithCompletionHandler { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
 			if error == nil {
 				let user = [
 					"email": result["email"] as? String ?? "",
 					"name": result["name"] as? String ?? "",
-					"username": username,
-					"fbid": result["id"] as? String ?? ""
+					"fbid": result["id"] as? String ?? "",
+					"usertoken": userToken
 				]
-				self.post(.Sessions, params: ["user": user], map: map, completion: completion)
+
+				self.post(.ValidAuthenticate, params: ["user": user], map: map, completion: completion)
 			}
 		}
+	}
+	
+	func setCurrentUser(fbid: String, fbAccessToken: String, completion: Bool -> Void) {
+		let user = ["fbid": fbid, "usertoken": fbAccessToken]
+		let map: [String: AnyObject] -> Bool = {
+			if let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
+				self.sessionCode = code
+				User.currentUser = User(json: JSON(user))
+				return true
+			}
+			
+			return false
+		}
+		
+		self.post(.Sessions, params: ["user": user], map: map, completion: completion)
 	}
 	
 	func updateCurrentUser(changedUsername: String, didSucceed: Bool -> Void) {

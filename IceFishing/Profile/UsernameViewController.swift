@@ -25,25 +25,24 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
 		
 		if username == "" {
 			showErrorAlert("Empty field!", message: "Username must have at least one character.", actionTitle: "Try again")
-		} else if invalidChars != nil {
-			// Username contains some invalid characters
+		} else if invalidChars != nil { // Username contains some invalid characters
 			showErrorAlert("Invalid characters!", message: "Only underscores and alphanumeric characters are allowed.", actionTitle: "Try again")
-		} else {
-			// Username contains only valid characters
+		} else { // Username contains only valid characters
 			API.sharedAPI.usernameIsValid(username) { success in
-				if success {
-					// Username available
-					API.sharedAPI.getCurrentUser(username) { _ in
-						let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-						appDelegate.toggleRootVC()
-					}
-				} else {
-					// Username already taken (prompt user with error alert in UsernameVC)
+				if success { // Username available
+					API.sharedAPI.updateCurrentUser(username, didSucceed: { (success) in
+						if success {
+							let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+							appDelegate.toggleRootVC()
+						} else {
+							self.showErrorAlert("Sorry!", message: "Username failed to update.", actionTitle: "Try again")
+						}
+					})
+				} else { // Username already taken
 					self.showErrorAlert("Sorry!", message: "Username is taken.", actionTitle: "Try again")
 				}
 			}
 		}
-	
     }
 	
     @IBAction func logOut(sender: UIButton) {
