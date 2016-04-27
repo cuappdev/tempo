@@ -11,6 +11,15 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import SWRevealViewController
 
+extension NSURL {
+	func getQueryItemValueForKey(key: String) -> AnyObject? {
+		guard let components = NSURLComponents(URL: self, resolvingAgainstBaseURL: false) else { return nil }
+		guard let queryItems = components.queryItems else { return nil }
+		
+		return queryItems.filter { $0.name == key }.first?.value
+	}
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate {
 	
@@ -188,39 +197,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 						print("Error getting Facebook user: \(error)")
 					} else {
 						let fbid = result["id"] as! String
-						API.sharedAPI.fbIdIsValid(fbid) { (newUser) -> Void in
-							if newUser {
-								let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
-								usernameVC.name = result["name"] as! String
-								usernameVC.fbID = result["id"] as! String
-								let navController = UINavigationController(rootViewController: usernameVC)
-								self.window!.rootViewController = navController
-							} else {
-								API.sharedAPI.getCurrentUser("") { _ in
-									let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-									appDelegate.toggleRootVC()
-									if let vc = self.firstViewController as? ProfileViewController {
-										vc.user = User.currentUser
-										vc.setupUserUI()
-									}
+						let fbAccessToken = FBSDKAccessToken.currentAccessToken().tokenString
+						
+						API.sharedAPI.fbAuthenticate(fbid, userToken: fbAccessToken, completion: { (success) in
+							if success {
+								if User.currentUser.username.isEmpty { // New user
+									let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
+									usernameVC.name = result["name"] as! String
+									usernameVC.fbID = result["id"] as! String
+									let navController = UINavigationController(rootViewController: usernameVC)
+									self.window!.rootViewController = navController
+								} else { // Old user
+									API.sharedAPI.setCurrentUser(fbid, fbAccessToken: fbAccessToken, completion: { (success) in
+										if success {
+											let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+											appDelegate.toggleRootVC()
+											if let vc = self.firstViewController as? ProfileViewController {
+												vc.user = User.currentUser
+												vc.setupUserUI()
+											}
+										}
+									})
 								}
 							}
-						}
+						})
 					}
 				})
 			}
 		}
 	}
 	
+	
+	
 	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-		if SPTAuth.defaultInstance().canHandleURL(url) {
+		if url.absoluteString.containsString(SPTAuth.defaultInstance().redirectURL.absoluteString) {
 			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { [weak self] error, session in
 				if error != nil {
 					print("*** Auth error: \(error)")
 				} else {
+					let accessToken = url.getQueryItemValueForKey("access_token") as? String
+					let unixExpirationDate = url.getQueryItemValueForKey("expires_at") as? String
+					let expirationDate = NSDate(timeIntervalSince1970: Double(unixExpirationDate!)!)
+					
+					SpotifyController.sharedController.setSpotifyUser(accessToken!)
+					SPTAuth.defaultInstance().session = SPTSession(userName: User.currentUser.currentSpotifyUser?.username, accessToken: accessToken, expirationDate: expirationDate)
 					self?.spotifyVC.updateSpotifyState()
 				}
-				})
+			})
 			
 			return true
 		}

@@ -14,8 +14,8 @@ import FBSDKShareKit
 private enum Router: URLStringConvertible {
 	static let baseURLString = "https://icefishing-web.herokuapp.com"
 	case Root
+	case ValidAuthenticate
 	case ValidUsername
-	case ValidFBID
 	case Sessions
 	case UserSearch
 	case Users(String)
@@ -28,16 +28,17 @@ private enum Router: URLStringConvertible {
 	case Followings
 	case Posts
 	case FollowSuggestions
+    case SpotifyAccessToken
 	
 	var URLString: String {
 		let path: String = {
 			switch self {
 			case .Root:
 				return "/"
+			case .ValidAuthenticate:
+				return "/users/authenticate"
 			case .ValidUsername:
 				return "/users/valid_username"
-			case .ValidFBID:
-				return "/users/valid_fbid"
 			case .Sessions:
 				return "/sessions"
 			case .UserSearch:
@@ -65,6 +66,8 @@ private enum Router: URLStringConvertible {
 				return "/posts"
 			case .FollowSuggestions:
 				return "/users/suggestions"
+            case .SpotifyAccessToken:
+                return "/spotify/get_access_token"
 			}
 			}()
 		return Router.baseURLString + path
@@ -97,37 +100,50 @@ class API {
 	
 	func usernameIsValid(username: String, completion: Bool -> Void) {
 		let map: [String: Bool] -> Bool? = { $0["is_valid"] }
-		get(.ValidUsername, params: ["username": username], map: map, completion: completion)
+		post(.ValidUsername, params: ["username": username, "session_code": sessionCode], map: map, completion: completion)
 	}
 	
-	func fbIdIsValid(fbid: String, completion: Bool -> Void) {
-		let map: [String: Bool] -> Bool? = { $0["is_valid"] }
-		get(.ValidFBID, params: ["fbid": fbid], map: map, completion: completion)
-	}
-	
-	func getCurrentUser(username: String, completion: User -> Void) {
-		let map: [String: AnyObject] -> User? = {
+	func fbAuthenticate(fbid: String, userToken: String, completion: (Bool) -> Void) {
+		let map: [String: AnyObject] -> (Bool) = {
 			if let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
-				self.sessionCode = code
-				User.currentUser = User(json: JSON(user))
-				return User.currentUser
+				if let success = $0["success"] as? Bool where success == true {
+					self.sessionCode = code
+					User.currentUser = User(json: JSON(user))
+					return success
+				}
 			}
-			return nil
+			
+			return false
 		}
-
-		let userRequest = FBSDKGraphRequest(graphPath: "me",
-			parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
+		
+		let userRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
 		userRequest.startWithCompletionHandler { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
 			if error == nil {
 				let user = [
-					"email": result["email"] as! String,
-					"name": result["name"] as! String,
-					"username": username,
-					"fbid": result["id"] as! String
+					"email": result["email"] as? String ?? "",
+					"name": result["name"] as? String ?? "",
+					"fbid": result["id"] as? String ?? "",
+					"usertoken": userToken
 				]
-				self.post(.Sessions, params: ["user": user], map: map, completion: completion)
+
+				self.post(.ValidAuthenticate, params: ["user": user], map: map, completion: completion)
 			}
 		}
+	}
+	
+	func setCurrentUser(fbid: String, fbAccessToken: String, completion: Bool -> Void) {
+		let user = ["fbid": fbid, "usertoken": fbAccessToken]
+		let map: [String: AnyObject] -> Bool = {
+			if let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
+				self.sessionCode = code
+				User.currentUser = User(json: JSON(user))
+				return true
+			}
+			
+			return false
+		}
+		
+		self.post(.Sessions, params: ["user": user], map: map, completion: completion)
 	}
 	
 	func updateCurrentUser(changedUsername: String, didSucceed: Bool -> Void) {
@@ -214,6 +230,21 @@ class API {
 		let map: [String: AnyObject] -> [String: AnyObject]? = { $0 }
 		post(.Posts, params: ["user_id": userID, "song": songDict, "session_code": sessionCode], map: map, completion: completion)
 	}
+    
+    func getSpotifyAccessToken(completion: (Bool, String, Double) -> Void) {
+        let map: [String: AnyObject] -> (Bool, String, Double)? = {
+            let expiresAt = $0["expires_at"] as? Double ?? 0.0
+            
+			if let success = $0["success"] as? Bool where success == true {
+                let accessToken = $0["access_token"] as? String ?? ""
+                return (success, accessToken, expiresAt)
+            } else {
+                let url = $0["url"] as? String ?? ""
+                return (false, url, expiresAt)
+            }
+        }
+        get(.SpotifyAccessToken, params: ["session_code": sessionCode], map: map, completion: completion)
+    }
 	
 	// MARK: - Private Methods
 	
@@ -238,8 +269,11 @@ class API {
 						completion?(obj)
 						self.isConnected = true
 						self.isAPIConnected = true
+					} else {
+						print(json)
 					}
 				} else if let error = response.result.error {
+					print(error)
 					if error.code != -1009 {
 						self.isAPIConnected = false
 						self.isConnected = true

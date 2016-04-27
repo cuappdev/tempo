@@ -23,8 +23,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1618111635067060</string>
-				<string>fbauth2</string>
+				<string>fb977907382286912</string>
 			</array>
 		</dict>
 		<dict>
@@ -38,12 +37,10 @@
 			</array>
 		</dict>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>1</string>
 	<key>FacebookAppID</key>
-	<string>1618111635067060</string>
+	<string>977907382286912</string>
 	<key>FacebookDisplayName</key>
-	<string>IceFishing</string>
+	<string>Icefishing</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -55,6 +52,8 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>akamaihd.net</key>

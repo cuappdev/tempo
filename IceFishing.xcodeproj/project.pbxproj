@@ -47,7 +47,6 @@
 		952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */; };
 		952F0FFD1BCF20E100C53522 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEC1BCF20E100C53522 /* Tools.swift */; };
 		952F0FFE1BCF20E100C53522 /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FED1BCF20E100C53522 /* Tweaks.swift */; };
-		96284AEB2B885E7D8E624457 /* Pods_IceFishing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3E20BD729A4279B9A4EA08 /* Pods_IceFishing.framework */; };
 		B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B085F3B41BE3CBB80000421E /* SearchViewController.xib */; };
 		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
 		CCC0F80E1C0257A2003429BF /* BackendNotConnectedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */; };
@@ -73,6 +72,7 @@
 		DDEC11471C8381EE0090102A /* ProfilePictureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDEC11461C8381EE0090102A /* ProfilePictureViewController.xib */; };
 		DDEC11531C8382BB0090102A /* ProfilePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEC11521C8382BB0090102A /* ProfilePictureViewController.swift */; };
 		DDEC11551C838F6E0090102A /* PopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEC11541C838F6E0090102A /* PopAnimator.swift */; };
+		D1D102B31CB188BA00EF8CCC /* Pods_IceFishing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D102B21CB188BA00EF8CCC /* Pods_IceFishing.framework */; };
 		FA171CC01AF1D758007B40AF /* FeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA171CBF1AF1D758007B40AF /* FeedImageView.swift */; };
 		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
 		FA1E1A781ADB06A3007C823C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A771ADB06A3007C823C /* Post.swift */; };
@@ -172,6 +172,7 @@
 		DDEC11461C8381EE0090102A /* ProfilePictureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilePictureViewController.xib; sourceTree = "<group>"; };
 		DDEC11521C8382BB0090102A /* ProfilePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePictureViewController.swift; sourceTree = "<group>"; };
 		DDEC11541C838F6E0090102A /* PopAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopAnimator.swift; sourceTree = "<group>"; };
+		D1D102B21CB188BA00EF8CCC /* Pods_IceFishing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_IceFishing.framework; path = "Pods/../build/Release-iphoneos/Pods_IceFishing.framework"; sourceTree = "<group>"; };
 		FA171CBF1AF1D758007B40AF /* FeedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedImageView.swift; sourceTree = "<group>"; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FA1E1A771ADB06A3007C823C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
@@ -189,10 +190,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1D102B31CB188BA00EF8CCC /* Pods_IceFishing.framework in Frameworks */,
 				1D802AB71B78635A005A96D1 /* SystemConfiguration.framework in Frameworks */,
 				1D802AB51B786351005A96D1 /* AVFoundation.framework in Frameworks */,
 				1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */,
-				96284AEB2B885E7D8E624457 /* Pods_IceFishing.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +389,7 @@
 		B9DF81295CC69057799B6683 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D1D102B21CB188BA00EF8CCC /* Pods_IceFishing.framework */,
 				A1698B38F16E152E9A84B507 /* Pods.framework */,
 				BF3E20BD729A4279B9A4EA08 /* Pods_IceFishing.framework */,
 			);
@@ -731,10 +733,33 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/IceFishing/Vendor",
 					"$(PROJECT_DIR)/IceFishing/Vendor/ios-sdk",
+					"$(PROJECT_DIR)/build/Release-iphoneos",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"Bolts\"",
+					"-framework",
+					"\"FBSDKCoreKit\"",
+					"-framework",
+					"\"FBSDKLoginKit\"",
+					"-framework",
+					"\"FBSDKShareKit\"",
+					"-framework",
+					"\"MarqueeLabel_Swift\"",
+					"-framework",
+					"\"SWRevealViewController\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"Tweaks\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.IceFishing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -756,10 +781,33 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/IceFishing/Vendor",
 					"$(PROJECT_DIR)/IceFishing/Vendor/ios-sdk",
+					"$(PROJECT_DIR)/build/Release-iphoneos",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"Bolts\"",
+					"-framework",
+					"\"FBSDKCoreKit\"",
+					"-framework",
+					"\"FBSDKLoginKit\"",
+					"-framework",
+					"\"FBSDKShareKit\"",
+					"-framework",
+					"\"MarqueeLabel_Swift\"",
+					"-framework",
+					"\"SWRevealViewController\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"Tweaks\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.IceFishing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
