@@ -235,9 +235,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				if error != nil {
 					print("*** Auth error: \(error)")
 				} else {
-					let accessToken = SPTAuth.defaultInstance().redirectURL.getQueryItemValueForKey("access_token") as? String
-					let unixExpirationDate = SPTAuth.defaultInstance().redirectURL.getQueryItemValueForKey("expires_at") as? Double
-					let expirationDate = NSDate(timeIntervalSince1970: unixExpirationDate!)
+					let accessToken = url.getQueryItemValueForKey("access_token") as? String
+					let unixExpirationDate = url.getQueryItemValueForKey("expires_at") as? String
+					let expirationDate = NSDate(timeIntervalSince1970: Double(unixExpirationDate!)!)
 					
 					SpotifyController.sharedController.setSpotifyUser(accessToken!)
 					SPTAuth.defaultInstance().session = SPTSession(userName: User.currentUser.currentSpotifyUser?.username, accessToken: accessToken, expirationDate: expirationDate)

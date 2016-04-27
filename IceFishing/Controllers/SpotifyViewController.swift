@@ -17,8 +17,6 @@ class SpotifyViewController: UIViewController {
     @IBOutlet weak var goToSpotifyButton: UIButton!
     @IBOutlet weak var logOutSpotifyButton: UIButton!
 	
-	var authViewController: SPTAuthViewController?
-	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
@@ -78,7 +76,7 @@ class SpotifyViewController: UIViewController {
 		SpotifyController.sharedController.loginToSpotify { (success) in
 			if success {
 				self.updateSpotifyState()
-			}
+			} 
 		}
 	}
     

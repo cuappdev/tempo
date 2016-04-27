@@ -72,6 +72,7 @@ class SpotifyController {
         
         SPTTrack.trackWithURI(spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, data in
             if error != nil {
+				print(error)
 				completionHandler(success: false)
             } else {
                 SPTYourMusic.saveTracks([data], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
@@ -147,16 +148,6 @@ class SpotifyController {
 		}
 	}
 	
-    func createSpotifyPlaylist() {
-        SPTPlaylistList.createPlaylistWithName("IceFishing", publicFlag: false, session: SPTAuth.defaultInstance().session) { error, snapshot in
-            if error != nil {
-                print(error)
-            } else {
-                
-            }
-        }
-    }
-    
     func closeCurrentSpotifySession() {
         SPTAuth.defaultInstance().session = nil
     }

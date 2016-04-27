@@ -18,59 +18,29 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	
-<!--	<key>CFBundleURLTypes</key>-->
-<!--	<array>-->
-<!--		<dict>-->
-<!--			<key>CFBundleURLSchemes</key>-->
-<!--			<array>-->
-<!--				<string>fb1618111635067060</string>-->
-<!--				<string>fbauth2</string>-->
-<!--			</array>-->
-<!--		</dict>-->
-<!--		<dict>-->
-<!--			<key>CFBundleTypeRole</key>-->
-<!--			<string>Editor</string>-->
-<!--			<key>CFBundleURLName</key>-->
-<!--			<string>com.cuappdev.IceFishing.spotify-auth</string>-->
-<!--			<key>CFBundleURLSchemes</key>-->
-<!--			<array>-->
-<!--				<string>icefishing-login</string>-->
-<!--			</array>-->
-<!--		</dict>-->
-<!--	</array>-->
-
 	<key>CFBundleURLTypes</key>
 	<array>
-	  <dict>
-		  <key>CFBundleURLSchemes</key>
-		  <array>
-			  <string>fb977907382286912</string>
-		  </array>
-	  </dict>
-	  <dict>
-		  <key>CFBundleTypeRole</key>
-		  <string>Editor</string>
-		  <key>CFBundleURLName</key>
-		  <string>com.cuappdev.IceFishing.spotify-auth</string>
-		  <key>CFBundleURLSchemes</key>
-		  <array>
-			  <string>icefishing-login</string>
-		  </array>
-	  </dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb977907382286912</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.cuappdev.IceFishing.spotify-auth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>icefishing-login</string>
+			</array>
+		</dict>
 	</array>
 	<key>FacebookAppID</key>
 	<string>977907382286912</string>
 	<key>FacebookDisplayName</key>
 	<string>Icefishing</string>
-	
-<!--	<key>CFBundleVersion</key>-->
-<!--	<string>1</string>-->
-<!--	<key>FacebookAppID</key>-->
-<!--	<string>1618111635067060</string>-->
-<!--	<key>FacebookDisplayName</key>-->
-<!--	<string>IceFishing</string>-->
-
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -82,7 +52,6 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<!--Include to allow all connections (DANGER)-->
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 		<key>NSExceptionDomains</key>
