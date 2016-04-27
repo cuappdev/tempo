@@ -69,10 +69,10 @@
 		D17395741ADB080900A53AEE /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395721ADB080900A53AEE /* UsersViewController.swift */; };
 		D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395881ADF360C00A53AEE /* SignInViewController.swift */; };
 		D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395891ADF360C00A53AEE /* SignInViewController.xib */; };
+		D1D102B31CB188BA00EF8CCC /* Pods_IceFishing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D102B21CB188BA00EF8CCC /* Pods_IceFishing.framework */; };
 		DDEC11471C8381EE0090102A /* ProfilePictureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDEC11461C8381EE0090102A /* ProfilePictureViewController.xib */; };
 		DDEC11531C8382BB0090102A /* ProfilePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEC11521C8382BB0090102A /* ProfilePictureViewController.swift */; };
 		DDEC11551C838F6E0090102A /* PopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEC11541C838F6E0090102A /* PopAnimator.swift */; };
-		D1D102B31CB188BA00EF8CCC /* Pods_IceFishing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D102B21CB188BA00EF8CCC /* Pods_IceFishing.framework */; };
 		FA171CC01AF1D758007B40AF /* FeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA171CBF1AF1D758007B40AF /* FeedImageView.swift */; };
 		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
 		FA1E1A781ADB06A3007C823C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A771ADB06A3007C823C /* Post.swift */; };
@@ -169,10 +169,10 @@
 		D17395721ADB080900A53AEE /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		D17395881ADF360C00A53AEE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		D17395891ADF360C00A53AEE /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
+		D1D102B21CB188BA00EF8CCC /* Pods_IceFishing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_IceFishing.framework; path = "Pods/../build/Release-iphoneos/Pods_IceFishing.framework"; sourceTree = "<group>"; };
 		DDEC11461C8381EE0090102A /* ProfilePictureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilePictureViewController.xib; sourceTree = "<group>"; };
 		DDEC11521C8382BB0090102A /* ProfilePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePictureViewController.swift; sourceTree = "<group>"; };
 		DDEC11541C838F6E0090102A /* PopAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopAnimator.swift; sourceTree = "<group>"; };
-		D1D102B21CB188BA00EF8CCC /* Pods_IceFishing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_IceFishing.framework; path = "Pods/../build/Release-iphoneos/Pods_IceFishing.framework"; sourceTree = "<group>"; };
 		FA171CBF1AF1D758007B40AF /* FeedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedImageView.swift; sourceTree = "<group>"; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FA1E1A771ADB06A3007C823C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
@@ -733,7 +733,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/IceFishing/Vendor",
 					"$(PROJECT_DIR)/IceFishing/Vendor/ios-sdk",
-					"$(PROJECT_DIR)/build/Release-iphoneos",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -781,7 +780,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/IceFishing/Vendor",
 					"$(PROJECT_DIR)/IceFishing/Vendor/ios-sdk",
-					"$(PROJECT_DIR)/build/Release-iphoneos",
 				);
 				INFOPLIST_FILE = "IceFishing/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
