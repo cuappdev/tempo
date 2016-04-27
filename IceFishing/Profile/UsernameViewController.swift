@@ -19,7 +19,6 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var usernameTextField: UITextField!
     
     @IBAction func createUser(sender: UIButton) {
-        
 		guard let username = usernameTextField.text else { print("No Username"); return}
 		let charSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_").invertedSet
 		let invalidChars = username.rangeOfCharacterFromSet(charSet)

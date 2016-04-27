@@ -12,7 +12,7 @@ import SwiftyJSON
 import FBSDKShareKit
 
 private enum Router: URLStringConvertible {
-	static let baseURLString = "https://icefishing-web.herokuapp.com"
+	static let baseURLString = "http://10.148.4.45:3000"//"https://icefishing-web.herokuapp.com"
 	case Root
 	case ValidUsername
 	case ValidFBID
@@ -260,6 +260,7 @@ class API {
 						print(json)
 					}
 				} else if let error = response.result.error {
+					print(error)
 					if error.code != -1009 {
 						self.isAPIConnected = false
 						self.isConnected = true
