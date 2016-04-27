@@ -11,6 +11,15 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import SWRevealViewController
 
+extension NSURL {
+	func getQueryItemValueForKey(key: String) -> AnyObject? {
+		guard let components = NSURLComponents(URL: self, resolvingAgainstBaseURL: false) else { return nil }
+		guard let queryItems = components.queryItems else { return nil }
+		
+		return queryItems.filter { $0.name == key }.first?.value
+	}
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate {
 	
@@ -212,15 +221,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		}
 	}
 	
+	
+	
 	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-		if SPTAuth.defaultInstance().canHandleURL(url) {
+		if url.absoluteString.containsString(SPTAuth.defaultInstance().redirectURL.absoluteString) {
 			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { [weak self] error, session in
 				if error != nil {
 					print("*** Auth error: \(error)")
 				} else {
+					let accessToken = SPTAuth.defaultInstance().redirectURL.getQueryItemValueForKey("access_token") as? String
+					let unixExpirationDate = SPTAuth.defaultInstance().redirectURL.getQueryItemValueForKey("expires_at") as? Double
+					let expirationDate = NSDate(timeIntervalSince1970: unixExpirationDate!)
+					
+					SpotifyController.sharedController.setSpotifyUser(accessToken!)
+					SPTAuth.defaultInstance().session = SPTSession(userName: User.currentUser.currentSpotifyUser?.username, accessToken: accessToken, expirationDate: expirationDate)
 					self?.spotifyVC.updateSpotifyState()
 				}
-				})
+			})
 			
 			return true
 		}

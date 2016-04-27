@@ -151,7 +151,7 @@ class CurrentSpotifyUser: NSObject, NSCoding {
         let images = json["images"].arrayValue
 		imageURLString = images.isEmpty ? "" : images[0]["url"].stringValue
         let externalURLs = json["external_urls"].dictionaryValue
-        spotifyUserURLString = externalURLs["spotify"]!.stringValue
+        spotifyUserURLString = externalURLs["spotify"]!.stringValue ?? ""
         loadImage {
             self.profileImage = $0
         }

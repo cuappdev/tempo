@@ -28,6 +28,7 @@ private enum Router: URLStringConvertible {
 	case Followings
 	case Posts
 	case FollowSuggestions
+    case SpotifyAccessToken
 	
 	var URLString: String {
 		let path: String = {
@@ -65,6 +66,8 @@ private enum Router: URLStringConvertible {
 				return "/posts"
 			case .FollowSuggestions:
 				return "/users/suggestions"
+            case .SpotifyAccessToken:
+                return "/spotify/get_access_token"
 			}
 			}()
 		return Router.baseURLString + path
@@ -120,10 +123,10 @@ class API {
 		userRequest.startWithCompletionHandler { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
 			if error == nil {
 				let user = [
-					"email": result["email"] as! String,
-					"name": result["name"] as! String,
+					"email": result["email"] as? String ?? "",
+					"name": result["name"] as? String ?? "",
 					"username": username,
-					"fbid": result["id"] as! String
+					"fbid": result["id"] as? String ?? ""
 				]
 				self.post(.Sessions, params: ["user": user], map: map, completion: completion)
 			}
@@ -214,6 +217,21 @@ class API {
 		let map: [String: AnyObject] -> [String: AnyObject]? = { $0 }
 		post(.Posts, params: ["user_id": userID, "song": songDict, "session_code": sessionCode], map: map, completion: completion)
 	}
+    
+    func getSpotifyAccessToken(completion: (Bool, String, Double) -> Void) {
+        let map: [String: AnyObject] -> (Bool, String, Double)? = {
+            let expiresAt = $0["expires_at"] as? Double ?? 0.0
+            
+			if let success = $0["success"] as? Bool where success == true {
+                let accessToken = $0["access_token"] as? String ?? ""
+                return (success, accessToken, expiresAt)
+            } else {
+                let url = $0["url"] as? String ?? ""
+                return (false, url, expiresAt)
+            }
+        }
+        get(.SpotifyAccessToken, params: ["session_code": sessionCode], map: map, completion: completion)
+    }
 	
 	// MARK: - Private Methods
 	
@@ -238,6 +256,8 @@ class API {
 						completion?(obj)
 						self.isConnected = true
 						self.isAPIConnected = true
+					} else {
+						print(json)
 					}
 				} else if let error = response.result.error {
 					if error.code != -1009 {

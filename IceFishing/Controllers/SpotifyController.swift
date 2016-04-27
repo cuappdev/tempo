@@ -14,20 +14,10 @@ class SpotifyController {
 	let spotifyPlaylistURIKey = "SpotifyPlaylistURIKey"
 	static let sharedController: SpotifyController = SpotifyController()
 	
-	/*
-	TODO: Handle Spotify Access Token Expiration
-	
-	Currently, the app gets access tokens that only last for one hour, and once 
-	the token expires, the app crashes upon launch. For now, users will have to login 
-	every time the access token expires. We need to find a way to refresh the tokens
-	before they expire. The Spotify iOS SDK requires developers to run their own token 
-	exchange service to get refresh/swap tokens. This requires some backend changes.
-	*/
-	
 	func spotifyIsAvailable(completion: Bool -> Void) {
 		if let session = SPTAuth.defaultInstance().session {
 			if session.isValid() {
-                getSpotifyUser(session)
+				setSpotifyUser(session.accessToken)
 				completion(true)
 			}
 		} else {
@@ -35,25 +25,43 @@ class SpotifyController {
 		}
 	}
 	
-    func getSpotifyUser(session: SPTSession) {
-        do {
-            let currentUserRequest = try SPTUser.createRequestForCurrentUserWithAccessToken(session.accessToken)
-            let data: NSData?
-            var error: NSError? = nil
-            do {
-                data = try NSURLConnection.sendSynchronousRequest(currentUserRequest, returningResponse: nil)
-            } catch let error as NSError {
-                print(error)
-                data = nil
-            }
+	func setSpotifyUser(accessToken: String) {
+		do {
+			let currentUserRequest = try SPTUser.createRequestForCurrentUserWithAccessToken(accessToken)
+			let data: NSData?
+			var error: NSError? = nil
+			do {
+				data = try NSURLConnection.sendSynchronousRequest(currentUserRequest, returningResponse: nil)
+			} catch let error as NSError {
+				print(error)
+				data = nil
+			}
 			guard let unwrappedData = data else { return }
-            let jsonDict = JSON(data: unwrappedData, options: NSJSONReadingOptions(rawValue: 0), error: &error)
-            User.currentUser.currentSpotifyUser = CurrentSpotifyUser(json: jsonDict)
-        } catch let error as NSError {
-            print(error)
-        }
-    }
-    
+			let jsonDict = JSON(data: unwrappedData, options: NSJSONReadingOptions(rawValue: 0), error: &error)
+			User.currentUser.currentSpotifyUser = CurrentSpotifyUser(json: jsonDict)
+		} catch let error as NSError {
+			print(error)
+		}
+	}
+	
+	func loginToSpotify(completionHandler: (success: Bool) -> Void) {
+		API.sharedAPI.getSpotifyAccessToken { (success, accessToken, expiresAt) -> Void in
+			if success {
+				self.setSpotifyUser(accessToken)
+				let expirationDate = NSDate(timeIntervalSince1970: expiresAt)
+				let spotifyUsername = User.currentUser.currentSpotifyUser?.username
+				SPTAuth.defaultInstance().session = SPTSession(userName: spotifyUsername, accessToken: accessToken, expirationDate: expirationDate)
+				completionHandler(success: true)
+			} else {
+				if let spotifyLoginUrl = NSURL(string: accessToken) {
+					UIApplication.sharedApplication().openURL(spotifyLoginUrl)
+				} else {
+					completionHandler(success: false)
+				}
+			}
+		}
+	}
+	
     func openSpotifyURL() {
         let spotifyUserURL = User.currentUser.currentSpotifyUser!.spotifyUserURL
         UIApplication.sharedApplication().openURL(spotifyUserURL)
