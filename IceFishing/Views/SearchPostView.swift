@@ -8,7 +8,7 @@
 
 import UIKit
 import MediaPlayer
-import MarqueeLabel_Swift
+import MarqueeLabel
 
 class SearchPostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
@@ -80,9 +80,9 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         layer.borderColor = UIColor.iceDarkGray.CGColor
         layer.borderWidth = CGFloat(0.7)
         
-        profileNameLabel?.scrollRate = 0
+        profileNameLabel?.speed = .Rate(0)
         profileNameLabel?.trailingBuffer = 8.0
-        descriptionLabel?.scrollRate = 0
+        descriptionLabel?.speed = .Rate(0)
         descriptionLabel?.trailingBuffer = 8.0
         
         profileNameLabel?.type = .Continuous

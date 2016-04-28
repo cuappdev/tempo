@@ -8,7 +8,7 @@
 
 import UIKit
 import MediaPlayer
-import MarqueeLabel_Swift
+import MarqueeLabel
 
 @objc protocol PostViewDelegate {
 	optional func didTapAddButtonForPostView(postView: PostView)
@@ -164,9 +164,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         layer.borderColor = UIColor.iceDarkGray.CGColor
         layer.borderWidth = 0.7
         
-        profileNameLabel?.scrollRate = 0
+        profileNameLabel?.speed = .Rate(0)
         profileNameLabel?.trailingBuffer = 8.0
-        descriptionLabel?.scrollRate = 0
+        descriptionLabel?.speed = .Rate(0)
         descriptionLabel?.trailingBuffer = 8.0
         
         profileNameLabel?.type = .Continuous

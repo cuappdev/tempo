@@ -8,7 +8,7 @@ target 'IceFishing' do
 	pod 'FBSDKCoreKit'
 	pod 'FBSDKShareKit'
 	pod 'FBSDKLoginKit'
-	pod 'MarqueeLabel-Swift'
+	pod 'MarqueeLabel/Swift'
 	pod 'Tweaks'
 	pod 'SWRevealViewController'
 end
