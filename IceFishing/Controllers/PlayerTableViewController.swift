@@ -92,8 +92,8 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	}
 	
 	func navigateToSuggestions() {
-		let suggestionsVC = (UIApplication.sharedApplication().delegate as! AppDelegate).suggestionsVC
-		navigationController?.setViewControllers([suggestionsVC], animated: false)
+		let usersVC = (UIApplication.sharedApplication().delegate as! AppDelegate).usersVC
+		navigationController?.setViewControllers([usersVC], animated: false)
 	}
 	
     private func updateNowPlayingInfo() {
