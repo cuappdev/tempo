@@ -7,6 +7,6 @@ The second app from [CUAppDev](http://www.cuappdev.org/home), codenamed IceFishi
 ## Installing
 The installation requires CocoaPods be installed on your machine
 ```
-git clone https://github.com/cuappdev/icefishing.git
+git clone --recursive https://github.com/cuappdev/icefishing.git
 pod install
 ```
