@@ -12,7 +12,7 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.11.0):
     - FBSDKCoreKit
-  - MarqueeLabel/Swift (2.7.1)
+  - MarqueeLabel/Swift (2.7.2)
   - SwiftyJSON (2.3.2)
   - SWRevealViewController (2.3.0)
   - Tweaks (2.0.0)
@@ -34,7 +34,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 686ac982723a14ec9ddb85e2f81235d7706c891b
   FBSDKLoginKit: bade9fc78277764149ccc5bfaadbf13c83175c6a
   FBSDKShareKit: 2d1746144cfc8a9dbbd24997c34ee0471be51b6a
-  MarqueeLabel: d5796f199ae732d8670f1a6f9af6aec0da0cceb2
+  MarqueeLabel: 26ecbdd54105dcb282cd3b56452f891d524b233b
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   Tweaks: 524fa47636cce3bf3a4d9156e980f10ae9480e81
