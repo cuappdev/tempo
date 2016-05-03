@@ -98,6 +98,11 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	
 	override func viewDidAppear(animated: Bool) {
 		notConnected()
+		addRevealGesture()
+	}
+	
+	override func viewDidDisappear(animated: Bool) {
+		removeRevealGesture()
 	}
 	
 	override func preferredStatusBarStyle() -> UIStatusBarStyle {
