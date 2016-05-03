@@ -20,8 +20,6 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		definesPresentationContext = true
 		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
-		notifCenterSetup()
-		commandCenterHandler()
 		addHamburgerMenu()
 
 		// Fix color above search bar

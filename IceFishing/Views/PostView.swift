@@ -31,7 +31,7 @@ enum SavedSongStatus: Int {
 
 class PostView: UIView, UIGestureRecognizerDelegate {
     private var progressGestureRecognizer: UIPanGestureRecognizer?
-    private var tapGestureRecognizer: UITapGestureRecognizer?
+	private var tapGestureRecognizer: UITapGestureRecognizer?
 	private var longPressGestureRecognizer: UILongPressGestureRecognizer?
     @IBOutlet var profileNameLabel: MarqueeLabel?
     @IBOutlet var avatarImageView: FeedImageView?
@@ -48,6 +48,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	var delegate: PostViewDelegate?
     private var updateTimer: NSTimer?
     private var notificationHandler: AnyObject?
+	var pinned = false
+	var playerController: PlayerTableViewController?
     
     var post: Post? {
         didSet {
@@ -145,8 +147,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PostView.postViewPressed(_:)))
             tapGestureRecognizer?.delegate = self
             tapGestureRecognizer?.cancelsTouchesInView = false
-            addGestureRecognizer(tapGestureRecognizer!)
-        }
+			addGestureRecognizer(tapGestureRecognizer!)
+		}
 		
 		if longPressGestureRecognizer == nil {
 			longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(PostView.postViewPressed(_:)))
@@ -301,7 +303,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 }
             }
             return false
-        }
+		}
         return true
     }
     
@@ -340,8 +342,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 				}
 			} else if hitView == avatarImageView {
 				delegate?.didTapImageForPostView?(self)
+			} else if pinned {
+				if let playerController = playerController {
+					playerController.togglePlay()
+				}
 			}
 		}
 	}
-
 }
