@@ -197,15 +197,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 						let fbid = result["id"] as! String
 						let fbAccessToken = FBSDKAccessToken.currentAccessToken().tokenString
 						
-						API.sharedAPI.fbAuthenticate(fbid, userToken: fbAccessToken, completion: { (success) in
+						API.sharedAPI.fbAuthenticate(fbid, userToken: fbAccessToken, completion: { (success, newUser) in
 							if success {
-								if User.currentUser.username.isEmpty { // New user
+								if newUser {
 									let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
 									usernameVC.name = result["name"] as! String
 									usernameVC.fbID = result["id"] as! String
 									let navController = UINavigationController(rootViewController: usernameVC)
 									self.window!.rootViewController = navController
-								} else { // Old user
+								} else {
 									API.sharedAPI.setCurrentUser(fbid, fbAccessToken: fbAccessToken, completion: { (success) in
 										if success {
 											let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

@@ -103,17 +103,18 @@ class API {
 		post(.ValidUsername, params: ["username": username, "session_code": sessionCode], map: map, completion: completion)
 	}
 	
-	func fbAuthenticate(fbid: String, userToken: String, completion: (Bool) -> Void) {
-		let map: [String: AnyObject] -> (Bool) = {
+	func fbAuthenticate(fbid: String, userToken: String, completion: (success: Bool, newUser: Bool) -> Void) {
+		let map: [String: AnyObject] -> (success: Bool, newUser: Bool) = {
 			if let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
 				if let success = $0["success"] as? Bool where success == true {
+					guard let newUser = $0["new_user"] as? Bool else { return (false, false) }
 					self.sessionCode = code
 					User.currentUser = User(json: JSON(user))
-					return success
+					return (success, newUser)
 				}
 			}
 			
-			return false
+			return (false, false)
 		}
 		
 		let userRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
