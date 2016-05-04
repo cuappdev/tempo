@@ -14,7 +14,6 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	let topPinViewContainer = UIView()
 	let bottomPinViewContainer = UIView()
 	let pinView = NSBundle.mainBundle().loadNibNamed("FeedTableViewCell", owner: nil, options: nil)[0] as! FeedTableViewCell
-	var pinViewGestureRecognizer: UITapGestureRecognizer!
 	
 	var searchController: UISearchController!
 	var posts: [Post] = []
@@ -23,6 +22,11 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	
     var currentlyPlayingIndexPath: NSIndexPath? {
         didSet {
+			if justOpened {
+				removeCommandCenterHandler()
+				commandCenterHandler()
+				justOpened = false
+			}
 			var array = posts
 			if searchController.active {
 				array = filteredPosts
@@ -43,8 +47,9 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
             tableView.selectRowAtIndexPath(currentlyPlayingIndexPath, animated: false, scrollPosition: .None)
         }
     }
-
+	var pinnedIndexPath: NSIndexPath?
 	var savedSongAlertView: SavedSongView!
+	var justOpened = true
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +71,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		tableView.backgroundView = UIView() // Fix color above search bar
 		
 		setupPinViews()
+		notifCenterSetup()
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -73,6 +79,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		
 		positionPinViews()
 		addRevealGesture()
+		justOpened = true
 	}
 	
 	override func viewDidDisappear(animated: Bool) {
@@ -226,6 +233,14 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
         center.seekForwardCommand.addTargetWithHandler { _ in .Success }
         center.seekBackwardCommand.addTargetWithHandler { _ in .Success }
     }
+	
+	func removeCommandCenterHandler() {
+		let center = MPRemoteCommandCenter.sharedCommandCenter()
+		center.playCommand.removeTarget(nil)
+		center.pauseCommand.removeTarget(nil)
+		center.nextTrackCommand.removeTarget(nil)
+		center.previousTrackCommand.removeTarget(nil)
+	}
 	
 	// MARK: - Search Stuff
 	
