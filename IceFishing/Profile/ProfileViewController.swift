@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	var posts: [Post] = []
 	var postedDates: [NSDate] = []
 	var postedDays: [Int] = []
+	var postedYearMonthDay: [String] = []
 	var postedLikes: [Int] = []
 	var earliestPostDate: NSDate?
 	var padding: CGFloat = 5
@@ -89,6 +90,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			self.posts = post
 			self.postedDates = post.map { $0.date! }
 			self.postedDays = self.postedDates.map { $0.day() }
+			self.postedYearMonthDay = self.postedDates.map { $0.yearMonthDay() }
+			print(self.postedYearMonthDay)
 			self.postedLikes = post.map{ $0.likes }
 			self.collectionView.reloadData()
 			for date in self.postedDates {
@@ -261,26 +264,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	
 	private func determineAlpha(likes: Int) -> CGFloat {
 		let ratio = Float(likes) / avgLikes
-		
-		if ratio <= 0.2 {
-			return 0.5
-		} else if ratio <= 0.4 {
-			return 0.60
-		} else if ratio <= 0.6 {
-			return 0.65
-		} else if ratio <= 0.8 {
-			return 0.70
-		} else if ratio <= 1.0 {
-			return 0.75
-		} else if ratio <= 1.5 {
-			return 0.80
-		} else if ratio <= 2.0 {
-			return 0.85
-		} else if ratio <= 2.5 {
-			return 0.90
-		} else if ratio <= 3.0 {
-			return 0.95
-		} else { return 1 }
+		return -0.0311 * CGFloat(pow(ratio, 2)) + 0.2461 * CGFloat(ratio) + 0.4997
 	}
 	
 	// MARK: - UICollectionViewDataSource
@@ -289,11 +273,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		let date = dateForIndexPath(indexPath)
 		let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
 		cell.date = date
-		
-		if let index = postedDays.indexOf(cell.date.day()) where cell.date.month() == postedDates[index].month() && cell.date.year() == postedDates[index].year() {
+		cell.userInteractionEnabled = true
+		if let index = postedYearMonthDay.indexOf(date.yearMonthDay()) {
 			let alpha = determineAlpha(postedLikes[index])
 			cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed.colorWithAlphaComponent(alpha)
-			cell.userInteractionEnabled = true
 		}
 		
 		return cell
@@ -329,8 +312,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		postHistoryVC.posts = posts
 		postHistoryVC.postedDates = postedDates
 		postHistoryVC.songLikes = postedLikes
-		if let index = postedDays.indexOf(date.day()) {
+		if let index = postedYearMonthDay.indexOf(date.yearMonthDay()) {
 			postHistoryVC.index = index
+			print(postHistoryVC.index)
+			
 		}
 		navigationController?.pushViewController(postHistoryVC, animated: true)
 	}
@@ -383,7 +368,7 @@ extension ProfileViewController: UIViewControllerPreviewingDelegate {
 				return nil
 		}
 		
-		if let index = postedDays.indexOf(cell.date.day()) where cell.date.month() == postedDates[index].month() && cell.date.year() == postedDates[index].year() {
+		if let _ = postedYearMonthDay.indexOf(cell.date.yearMonthDay()) {
 			
 			let date = dateForIndexPath(indexPath)
 			

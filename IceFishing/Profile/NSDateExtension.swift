@@ -40,6 +40,10 @@ extension NSDate {
     func year() -> Int {
         return calendarDateComponents().year
     }
+	
+	func yearMonthDay() -> String {
+		return "\(year())/\(month())/\(day())"
+	}
     
     func firstDayOfMonth() -> NSDate {
         let components = calendarDateComponents()
