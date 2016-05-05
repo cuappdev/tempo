@@ -171,7 +171,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	func didSelectSong(song: Song) {
 		posts.insert(Post(song: song, user: User.currentUser, date: NSDate()), atIndex: 0)
 		API.sharedAPI.updatePost(User.currentUser.id, song: song) { [weak self] _ in
-			self?.tableView.reloadData()
+			self?.refreshFeed()
 		}
 	}
 	
