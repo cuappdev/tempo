@@ -16,6 +16,7 @@ class SpotifyViewController: UIViewController {
     @IBOutlet weak var createPlaylistSwitch: UISwitch!
     @IBOutlet weak var goToSpotifyButton: UIButton!
     @IBOutlet weak var logOutSpotifyButton: UIButton!
+    @IBOutlet weak var loginText: UILabel!
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
@@ -34,7 +35,7 @@ class SpotifyViewController: UIViewController {
 		
 		for button in [loginToSpotifyButton, goToSpotifyButton, logOutSpotifyButton] {
 			button.backgroundColor = UIColor.iceDarkRed
-			button.layer.cornerRadius = 5.0
+			button.layer.cornerRadius = 1.0
 			button.layer.masksToBounds = true
 		}
 	}
@@ -53,6 +54,7 @@ class SpotifyViewController: UIViewController {
 				
 				let currentSpotifyUser = User.currentUser.currentSpotifyUser
 				self.nameLabel.text = currentSpotifyUser!.username
+				self.nameLabel.font = nameLabel.font.fontWithSize(18)
 				currentSpotifyUser!.loadImage {
 					self.profilePicture.image = $0
 				}
@@ -67,6 +69,7 @@ class SpotifyViewController: UIViewController {
     func loggedInToSpotify(loggedIn: Bool) {
         let elements = [profilePicture, nameLabel, createPlaylistSwitch, goToSpotifyButton, logOutSpotifyButton]
         loginToSpotifyButton.hidden = loggedIn
+        loginText.hidden = loggedIn
         for e in elements {
             e.hidden = !loggedIn
         }

@@ -127,7 +127,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		tapProfile.addTarget(self, action: #selector(ProfileViewController.profileTapped(_:)))
 		
 		if User.currentUser.username == user.username {
-			followButton.setTitle("EDIT", forState: .Normal)
+			followButton.setTitle("EDIT USERNAME", forState: .Normal)
 			followButton.addTarget(self, action: #selector(ProfileViewController.userHandleButtonClicked(_:)), forControlEvents: .TouchUpInside)
 		} else {
 			followButton.hidden = true
