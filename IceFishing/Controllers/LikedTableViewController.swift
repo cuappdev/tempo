@@ -25,7 +25,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		// Fix color above search bar
 		let topView = UIView(frame: view.frame)
 		topView.frame.origin.y = -view.frame.size.height
-		topView.backgroundColor = UIColor.iceDarkRed
+		topView.backgroundColor = UIColor.tempoLightRed
 		tableView.addSubview(topView)
 		
 		pinView.postView.type = .Liked

@@ -43,8 +43,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		title = "Post your song of the day!"
-		view.backgroundColor = UIColor.iceLightGray
+		title = "Post a track"
+		view.backgroundColor = UIColor.tempoDarkGray
+		tableView.rowHeight = 72
+		tableView.showsVerticalScrollIndicator = false
+		tableView.separatorColor = UIColor.separatorGray
 		tableView.registerNib(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
 		
 		searchBar.delegate = self
@@ -68,15 +71,22 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		addRevealGesture()
 		view.layoutIfNeeded()
+		tableView.tableFooterView = UIView()
 		
 		let textFieldInsideSearchBar = searchBar.valueForKey("_searchField") as? UITextField
 		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
+		textFieldInsideSearchBar?.font = UIFont(name: "Avenir-Book", size: 14)
+		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.valueForKey("placeholderLabel") as? UILabel
+		textFieldInsideSearchBarLabel?.textColor = UIColor.tempoUltraLightRed
 		
 		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
 			self.searchBar.layer.transform = CATransform3DIdentity
 		}, completion:nil)
 		
 		searchBar.becomeFirstResponder()
+		searchBar.setImage(UIImage(named: "search-icon"), forSearchBarIcon: .Search, state: .Normal)
+		searchBar.setImage(UIImage(named: "clear-search-icon"), forSearchBarIcon: .Clear, state: .Normal)
 		
 		notConnected()
 	}
@@ -115,6 +125,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
 		
 		return cell
+	}
+	
+	func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+		tableView.separatorInset = UIEdgeInsetsZero
+		tableView.layoutMargins = UIEdgeInsetsZero
+		cell.layoutMargins = UIEdgeInsetsZero
 	}
 	
 	// MARK: - UITableViewDelegate

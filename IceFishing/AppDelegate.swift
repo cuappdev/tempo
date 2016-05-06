@@ -56,7 +56,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		let URLCache = NSURLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
 		NSURLCache.setSharedURLCache(URLCache)
 		
+		// Set up navigation bar divider
+		let navigationBar = navigationController.navigationBar
+		let navigationSeparator = UIView(frame: CGRectMake(0, navigationBar.frame.size.height - 0.5, navigationBar.frame.size.width, 0.5))
+		navigationSeparator.backgroundColor = UIColor.tempoDarkRed
+		navigationSeparator.opaque = true
+		navigationController.navigationBar.addSubview(navigationSeparator)
+		
 		StyleController.applyStyles()
+		UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: false)
 		
 		//		let appDomain = NSBundle.mainBundle().bundleIdentifier!;
 		//		NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain);

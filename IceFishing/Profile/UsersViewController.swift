@@ -41,13 +41,19 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		searchController.searchResultsUpdater = self
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.delegate = self
+		searchController.searchBar.setImage(UIImage(named: "search-icon"), forSearchBarIcon: .Search, state: .Normal)
+		searchController.searchBar.setImage(UIImage(named: "clear-search-icon"), forSearchBarIcon: .Clear, state: .Normal)
 		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
 		textFieldInsideSearchBar!.textColor = UIColor.whiteColor()
+		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
+		textFieldInsideSearchBar?.font = UIFont(name: "Avenir-Book", size: 14)
+		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.valueForKey("placeholderLabel") as? UILabel
+		textFieldInsideSearchBarLabel?.textColor = UIColor.tempoUltraLightRed
 		
 		// Fix color above search bar
 		let topView = UIView(frame: view.frame)
 		topView.frame.origin.y = -view.frame.size.height
-		topView.backgroundColor = UIColor.iceDarkRed
+		topView.backgroundColor = UIColor.tempoLightRed
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
 		

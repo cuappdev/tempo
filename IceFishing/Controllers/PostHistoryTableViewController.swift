@@ -26,6 +26,12 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
+		
+		// Fix color above search bar
+		let topView = UIView(frame: view.frame)
+		topView.frame.origin.y = -view.frame.size.height
+		topView.backgroundColor = UIColor.tempoLightRed
+		tableView.addSubview(topView)
 
 		pinView.postView.type = .History
     }
