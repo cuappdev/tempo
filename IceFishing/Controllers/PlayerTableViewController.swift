@@ -120,7 +120,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
                 }
                 UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
                 
-                let artwork = post.song.fetchArtwork() ?? UIImage(named: "Sexy")!
+                let artwork = post.song.fetchArtwork() ?? UIImage(named: "temp-user")!
 				var count = posts.count
 				if searchController.active {
 					count = filteredPosts.count

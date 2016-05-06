@@ -67,7 +67,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
                     likesLabel?.text = "\(post.likes) likes"
-					let imageName = post.isLiked ? "Heart-Red" : "Heart"
+					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					dateLabel?.text = post.relativeDate()
 					updateAddButton()
@@ -76,7 +76,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					profileNameLabel?.text = post.song.artist
 					descriptionLabel?.text = "\(post.song.title)"
 					likesLabel?.text = "\(post.likes) likes"
-					let imageName = post.isLiked ? "Heart-Red" : "Heart"
+					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					dateLabel?.text = post.relativeDate()
 					updateAddButton()
@@ -327,14 +327,14 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			let hitView = hitTest(tapPoint, withEvent: nil)
 			if hitView == likedButton {
 				post.toggleLike()
-				let name = post.isLiked ? "Heart-Red" : "Heart"
+				let name = post.isLiked ? "filled-heart" : "empty-heart"
 				likesLabel?.text = "\(post.likes) likes"
 				likedButton?.setImage(UIImage(named: name), forState: .Normal)
 			} else if hitView == addButton {
 				if songStatus == .NotSaved {
 					SpotifyController.sharedController.saveSpotifyTrack(post) { success in
 						if success {
-							self.addButton?.setImage(UIImage(named: "Check"), forState: .Normal)
+							self.addButton?.setImage(UIImage(named: "check"), forState: .Normal)
 							self.delegate?.didTapAddButtonForPostView?(self)
 							self.songStatus = .Saved
 						}
@@ -342,7 +342,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 				} else if songStatus == .Saved {
 					SpotifyController.sharedController.removeSavedSpotifyTrack(post) { success in
 						if success {
-							self.addButton?.setImage(UIImage(named: "Add"), forState: .Normal)
+							self.addButton?.setImage(UIImage(named: "plus"), forState: .Normal)
 							self.delegate?.didTapAddButtonForPostView?(self)
 							self.songStatus = .NotSaved
 						}

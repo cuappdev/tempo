@@ -171,7 +171,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	}
 	
 	func setupAddButton() {
-		let image = UIImage(named: "Add")!
+		let image = UIImage(named: "add")!
 		plusButton = UIButton(type: .Custom)
 		plusButton.frame = CGRect(origin: CGPointZero, size: image.size)
 		plusButton.setImage(image, forState: .Normal)

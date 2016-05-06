@@ -57,7 +57,7 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
 		cell.playlistNumSongsLabel.text = numTracks == 1 ? "\(numTracks) Song" : "\(numTracks) Songs"
 		
 		if trackImages.count == 0 {
-			cell.playlistImage.image = UIImage(named: "Music-Icon")
+			cell.playlistImage.image = UIImage(named: "playlist")
 		} else {
 			if let url = trackImages[0].imageURL {
 				if let data = NSData(contentsOfURL: url){

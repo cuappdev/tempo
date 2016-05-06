@@ -11,7 +11,7 @@ import SWRevealViewController
 
 extension UIViewController {
 	func addHamburgerMenu() {
-		let image = UIImage(named: "Hamburger-Menu")!
+		let image = UIImage(named: "hamburger-menu")!
 		let menuButton = UIButton(frame: CGRect(origin: CGPointZero, size: image.size))
 		menuButton.setImage(image, forState: .Normal)
 		menuButton.addTarget(revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), forControlEvents: .TouchUpInside)

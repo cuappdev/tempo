@@ -23,8 +23,8 @@ class ADRefreshControl {
 		self.refreshControl = refreshControl
 		
 		// Create the graphic image views
-		vinylView = UIImageView(image: UIImage(named: "Vinyl-Red"))
-		vinylView.frame = CGRectMake(0, 0, 40, 40)
+		graphicView = UIImageView(image: UIImage(named: "vinyl-red"))
+		graphicView.frame = CGRectMake(0, 0, 45, 45)
 		
 		vinylCaseBack = UIView(frame: CGRectMake(0, 0, 50, 50))
 		vinylCaseBack.backgroundColor = UIColor(red: 181/255.0, green: 72/255.0, blue: 65/255.0, alpha: 1.0)
