@@ -85,7 +85,6 @@ class ADRefreshControl {
 	}
 	
 	func animateRefreshView() {
-		
 		// Flag that we are animating
 		isRefreshAnimating = true
 		
