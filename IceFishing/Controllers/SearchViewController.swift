@@ -47,7 +47,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		view.backgroundColor = UIColor.tempoDarkGray
 		tableView.rowHeight = 72
 		tableView.showsVerticalScrollIndicator = false
-		tableView.separatorColor = UIColor.separatorGray
 		tableView.registerNib(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
 		
 		searchBar.delegate = self
@@ -125,12 +124,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
 		
 		return cell
-	}
-	
-	func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-		tableView.separatorInset = UIEdgeInsetsZero
-		tableView.layoutMargins = UIEdgeInsetsZero
-		cell.layoutMargins = UIEdgeInsetsZero
 	}
 	
 	// MARK: - UITableViewDelegate

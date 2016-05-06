@@ -17,10 +17,6 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-        tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor.iceDarkGray
-        tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
         
         navigationItem.title = "Post History"
 		
@@ -32,6 +28,8 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		topView.frame.origin.y = -view.frame.size.height
 		topView.backgroundColor = UIColor.tempoLightRed
 		tableView.addSubview(topView)
+		
+		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 
 		pinView.postView.type = .History
     }
