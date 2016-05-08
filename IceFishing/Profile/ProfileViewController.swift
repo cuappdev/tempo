@@ -365,7 +365,7 @@ extension ProfileViewController: UIViewControllerPreviewingDelegate {
 				return nil
 		}
 		
-		if let _ = postedYearMonthDay.indexOf(cell.date.yearMonthDay()) {
+		if postedYearMonthDay.indexOf(cell.date.yearMonthDay()) != nil {
 			
 			let date = dateForIndexPath(indexPath)
 			
