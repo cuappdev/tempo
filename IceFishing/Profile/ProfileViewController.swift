@@ -91,7 +91,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			self.postedDates = post.map { $0.date! }
 			self.postedDays = self.postedDates.map { $0.day() }
 			self.postedYearMonthDay = self.postedDates.map { $0.yearMonthDay() }
-			print(self.postedYearMonthDay)
 			self.postedLikes = post.map{ $0.likes }
 			self.collectionView.reloadData()
 			for date in self.postedDates {
@@ -314,8 +313,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		postHistoryVC.songLikes = postedLikes
 		if let index = postedYearMonthDay.indexOf(date.yearMonthDay()) {
 			postHistoryVC.index = index
-			print(postHistoryVC.index)
-			
 		}
 		navigationController?.pushViewController(postHistoryVC, animated: true)
 	}
