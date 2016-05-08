@@ -165,23 +165,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         
         layer.borderColor = UIColor.iceDarkGray.CGColor
         layer.borderWidth = 0.7
-        
-        profileNameLabel?.speed = .Rate(0)
-        profileNameLabel?.trailingBuffer = 8.0
-        descriptionLabel?.speed = .Rate(0)
-        descriptionLabel?.trailingBuffer = 8.0
-        
-        profileNameLabel?.type = .Continuous
-        profileNameLabel?.fadeLength = 8
-        profileNameLabel?.tapToScroll = false
-        profileNameLabel?.holdScrolling = true
-        profileNameLabel?.animationDelay = 2.0
-        
-        descriptionLabel?.type = .Continuous
-        descriptionLabel?.fadeLength = 8
-        descriptionLabel?.tapToScroll = false
-        descriptionLabel?.holdScrolling = true
-        descriptionLabel?.animationDelay = 2.0
+		
+		self.setupMarqueeLabel(profileNameLabel!)
+		self.setupMarqueeLabel(descriptionLabel!)
     }
     
     override func didMoveToSuperview() {
@@ -204,7 +190,17 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         updateProfileLabelTextColor()
         setUpTimer()
     }
-    
+	
+	private func setupMarqueeLabel(label: MarqueeLabel) {
+		label.speed = .Duration(4.6)
+		label.trailingBuffer = 10.0
+		label.type = .Continuous
+		label.fadeLength = 8
+		label.tapToScroll = false
+		label.holdScrolling = true
+		label.animationDelay = 2.0
+	}
+	
     // Customize view to be able to re-use it for search results.
     func flagAsSearchResultPost() {
         descriptionLabel?.text = post!.song.title + " · " + post!.song.album
@@ -242,10 +238,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 // Labels won't scroll
                 profileNameLabel?.holdScrolling = true
                 descriptionLabel?.holdScrolling = true
-//                if let layer = avatarLayer {
-//                    print("\(current)")
-//                    
-//                }
 
             }
 			
