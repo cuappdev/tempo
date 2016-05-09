@@ -11,7 +11,7 @@ import MediaPlayer
 
 class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
 	
-	var customRefresh: ADRefreshControl?
+	var customRefresh: ADRefreshControl!
 	var plusButton: UIButton!
 	
 	lazy var searchTableViewController: SearchViewController = {
@@ -30,14 +30,11 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		setupAddButton()
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
+		addRefreshControl()
 		refreshFeed()
 		addHamburgerMenu()
 		
 		tableView.tableHeaderView = nil
-		
-		refreshControl = UIRefreshControl()
-		customRefresh = ADRefreshControl(refreshControl: refreshControl!)
-		refreshControl?.addTarget(self, action: #selector(FeedViewController.refreshFeed), forControlEvents: .ValueChanged)
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
@@ -73,13 +70,29 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	
 	// MARK: - UIRefreshControl
 	
+	func addRefreshControl() {
+		refreshControl = UIRefreshControl()
+		customRefresh = ADRefreshControl(refreshControl: refreshControl!)
+		refreshControl?.addTarget(self, action: #selector(FeedViewController.refreshFeed), forControlEvents: .ValueChanged)
+	}
+	
 	func refreshFeed() {
 		
-		notConnected()
+		//finished refreshing gets set to true when the api returns
+		var finishedRefreshing = false
+		//minimum time passed gets set to true when minimum delay dispatch gets called
+		var minimumTimePassed = false
+		
+		//fetch data
+		self.notConnected()
 		
 		API.sharedAPI.fetchFeedOfEveryone { [weak self] in
 			self?.posts = $0
-			self?.tableView.reloadData()
+			if minimumTimePassed {
+				self?.tableView.reloadData()
+				self?.refreshControl?.endRefreshing()
+			}
+			finishedRefreshing = true
 			
 			if let x = self {
 				if x.posts.count == 0 {
@@ -102,15 +115,22 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 					x.tableView.backgroundView = nil
 				}
 			}
-			
-			let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
-			dispatch_after(popTime, dispatch_get_main_queue()) { [weak self] in
-				// When done requesting/reloading/processing invoke endRefreshing, to close the control
-				self?.refreshControl?.endRefreshing()
-			}
 		}
 		
-		self.refreshControl?.endRefreshing()
+		//fetch for a minimum of delay seconds
+		//if after delay seconds we finished fetching, 
+		//then we reload the tableview, else we wait for the
+		//api to return to reload by setting minumum time passed
+		let delayInSeconds = 2.0;
+		let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)));
+		dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
+			if finishedRefreshing {
+				self.tableView.reloadData()
+				self.refreshControl?.endRefreshing()
+			} else {
+				minimumTimePassed = true
+			}
+		}
 	}
 	
 	// MARK: - UITableViewDataSource
