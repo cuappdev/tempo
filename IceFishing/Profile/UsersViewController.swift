@@ -158,7 +158,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
 		if self.displayType == .Users {
-			profileVC.user = searchController.active ? filteredUsers[indexPath.row] : suggestedUsers[indexPath.row]
+			profileVC.user = searchController.active ? users[indexPath.row] : suggestedUsers[indexPath.row]
 		} else {
 			profileVC.user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
 		}
@@ -198,7 +198,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		
 		var user: User
 		if displayType == .Users {
-			user = searchController.active ? filteredUsers[indexPath!.row] : suggestedUsers[indexPath!.row]
+			user = searchController.active ? users[indexPath!.row] : suggestedUsers[indexPath!.row]
 		} else {
 			user = searchController.active ? filteredUsers[indexPath!.row] : users[indexPath!.row]
 		}
