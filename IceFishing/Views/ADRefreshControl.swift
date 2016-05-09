@@ -12,33 +12,23 @@ class ADRefreshControl {
 	
 	var refreshControl: UIRefreshControl!
 	var graphicView: UIImageView!
-	var refreshColorView: UIView!
 	var isRefreshAnimating = false
 	var timesAnimationLooped = 0
 	var pullDistance: CGFloat = 0
-	var colorIndex = 0
 	
 	init(refreshControl: UIRefreshControl) {
 		
 		self.refreshControl = refreshControl
 		
-		// Setup the color view, which will display the rainbowed background
-		refreshColorView = UIView(frame: refreshControl.bounds)
-		refreshColorView.backgroundColor = UIColor.clearColor()
-		refreshColorView.alpha = 0.30
-		
 		// Create the graphic image views
 		graphicView = UIImageView(image: UIImage(named: "Vinyl-Red"))
-		graphicView.frame = CGRectMake(0, 0, 45, 45)
+		graphicView.frame = CGRectMake(0, 0, 40, 40)
 		
 		// Add the graphics to the loading view
 		refreshControl.addSubview(graphicView)
 		
 		// Hide the original spinner icon
 		refreshControl.tintColor = UIColor.clearColor()
-		
-		// Add the loading and colors views to our refresh control
-		refreshControl.addSubview(refreshColorView)
 	}
 	
 	func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -61,8 +51,6 @@ class ADRefreshControl {
 		// Set the encompassing view's frames
 		refreshBounds.size.height = pullDistance
 		
-		refreshColorView.frame = refreshBounds
-		
 		// If we're refreshing and the animation is not playing, then play the animation
 		if refreshControl!.refreshing && !isRefreshAnimating {
 			animateRefreshView()
@@ -71,10 +59,6 @@ class ADRefreshControl {
 	}
 	
 	func animateRefreshView() {
-		
-		// Background color to loop through for our color view
-		
-		var colorArray = [UIColor.redColor(), UIColor.blueColor(), UIColor.purpleColor(), UIColor.cyanColor(), UIColor.orangeColor(), UIColor.magentaColor()]
 		
 		// Flag that we are animating
 		isRefreshAnimating = true
@@ -87,9 +71,6 @@ class ADRefreshControl {
 			} else {
 				self.graphicView.transform = CGAffineTransformScale(self.graphicView.transform, 1/1.3, 1/1.3)
 			}
-			// Change the background color
-			self.refreshColorView.backgroundColor = colorArray[self.colorIndex]
-			self.colorIndex = (self.colorIndex + 1) % colorArray.count
 		}, completion: { finished in
 			// If still refreshing, keep spinning, else reset
 			if self.refreshControl.refreshing {
@@ -109,7 +90,6 @@ class ADRefreshControl {
 		}
 		timesAnimationLooped = 0
 		isRefreshAnimating = false
-		refreshColorView.backgroundColor = UIColor.clearColor()
 		
 	}
 	
