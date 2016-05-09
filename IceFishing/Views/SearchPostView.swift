@@ -59,14 +59,14 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     
     override func didMoveToWindow() {
         if progressGestureRecognizer == nil {
-            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(SearchPostView.changeProgress(_:)))
+            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(changeProgress(_:)))
             progressGestureRecognizer?.delegate = self
             progressGestureRecognizer?.delaysTouchesBegan = true
             addGestureRecognizer(progressGestureRecognizer!)
         }
         
         if tapGestureRecognizer == nil {
-            tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SearchPostView.postViewPressed(_:)))
+            tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(postViewPressed(_:)))
             tapGestureRecognizer?.delegate = self
             tapGestureRecognizer?.cancelsTouchesInView = false
             addGestureRecognizer(tapGestureRecognizer!)

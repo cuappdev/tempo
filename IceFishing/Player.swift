@@ -40,7 +40,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 	init(fileURL: NSURL) {
 		self.fileURL = fileURL
 		super.init()
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Player.changeCurrentPlayer), name: PlayerDidChangeStateNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(changeCurrentPlayer), name: PlayerDidChangeStateNotification, object: nil)
     }
 	
 	func changeCurrentPlayer() {

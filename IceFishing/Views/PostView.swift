@@ -139,7 +139,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         if updateTimer == nil && post?.player.isPlaying ?? false {
             // 60 fps
             updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
-                target: self, selector: #selector(PostView.timerFired(_:)),
+                target: self, selector: #selector(timerFired(_:)),
                 userInfo: nil,
                 repeats: true)
 
@@ -153,21 +153,21 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     override func didMoveToWindow() {
         if progressGestureRecognizer == nil {
-            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(PostView.changeProgress(_:)))
+            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(changeProgress(_:)))
             progressGestureRecognizer?.delegate = self
             progressGestureRecognizer?.delaysTouchesBegan = true
             addGestureRecognizer(progressGestureRecognizer!)
         }
         
         if tapGestureRecognizer == nil {
-            tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PostView.postViewPressed(_:)))
+            tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(postViewPressed(_:)))
             tapGestureRecognizer?.delegate = self
             tapGestureRecognizer?.cancelsTouchesInView = false
 			addGestureRecognizer(tapGestureRecognizer!)
 		}
 		
 		if longPressGestureRecognizer == nil {
-			longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(PostView.postViewPressed(_:)))
+			longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(postViewPressed(_:)))
 			longPressGestureRecognizer?.delegate = self
 			longPressGestureRecognizer?.minimumPressDuration = 0.5
 			longPressGestureRecognizer?.cancelsTouchesInView = false

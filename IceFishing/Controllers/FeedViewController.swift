@@ -52,6 +52,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 			plusButtonTapped()
 			pretappedPlusButton = false
 		} else {
+			print("false")
 			rotatePlusButton(false)
 		}
 	}
@@ -73,7 +74,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	func addRefreshControl() {
 		refreshControl = UIRefreshControl()
 		customRefresh = ADRefreshControl(refreshControl: refreshControl!)
-		refreshControl?.addTarget(self, action: #selector(FeedViewController.refreshFeed), forControlEvents: .ValueChanged)
+		refreshControl?.addTarget(self, action: #selector(refreshFeed), forControlEvents: .ValueChanged)
 	}
 	
 	func refreshFeed() {
@@ -161,7 +162,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		plusButton.imageView!.contentMode = .Center
 		plusButton.imageView!.clipsToBounds = false
 		plusButton.adjustsImageWhenHighlighted = false
-		plusButton.addTarget(self, action: #selector(FeedViewController.plusButtonTapped), forControlEvents: .TouchUpInside)
+		plusButton.addTarget(self, action: #selector(plusButtonTapped), forControlEvents: .TouchUpInside)
 		
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: plusButton)
 	}
@@ -179,6 +180,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	}
 	
 	func plusButtonTapped() {
+		print("true")
 		rotatePlusButton(true)
 		
 		searchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem

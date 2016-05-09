@@ -120,9 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				SideBarElement(title: "Liked", viewController: likedVC, image: UIImage(named: "Heart-Menu")),
 				SideBarElement(title: "Spotify", viewController: spotifyVC, image: UIImage(named: "Spotify"))
 			]
-			sidebarVC.selectionHandler = {
-				[weak self]
-				(viewController) in
+			sidebarVC.selectionHandler = { [weak self] viewController in
 				if let viewController = viewController {
 					if let front = self?.revealVC.frontViewController {
 						if viewController == front {
@@ -135,7 +133,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				}
 			}
 			revealVC.delegate = self
-			
 			window!.rootViewController = revealVC
 		}
 		
@@ -144,8 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func setFirstVC() {
 		if #available(iOS 9.0, *) {
 			if let shortcutItem = launchedShortcutItem as? UIApplicationShortcutItem {
-				guard let shortcutType = shortcutItem.type as String? else { firstViewController = feedVC }
-				switch (shortcutType) {
+				switch (shortcutItem.type) {
 				case ShortcutIdentifier.Post.type:
 					firstViewController =  feedVC
 				case ShortcutIdentifier.PeopleSearch.type:
@@ -157,19 +153,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				default:
 					firstViewController = feedVC
 				}
-			} else {
-				firstViewController = feedVC
+				return
 			}
-		} else {
-			firstViewController = feedVC
 		}
-		
+		firstViewController = feedVC
 	}
 	
 	func loginToFacebook() {
-		let fbLoginManager = FBSDKLoginManager.init()
+		let fbLoginManager = FBSDKLoginManager()
 		fbLoginManager.logOut()
-		fbLoginManager.logInWithReadPermissions(["public_profile", "email", "user_friends"], fromViewController: nil, handler: { (loginResult, error) -> Void in
+		fbLoginManager.logInWithReadPermissions(["public_profile", "email", "user_friends"], fromViewController: nil) { loginResult, error in
 			if error != nil {
 				print("Facebook login error: \(error)")
 			} else if loginResult.isCancelled {
@@ -177,59 +170,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			} else {
 				self.fbSessionStateChanged(error)
 			}
-		})
+		}
 	}
 	
 	// Facebook Session
-	func fbSessionStateChanged(error : NSError?)
-	{
-		if error != nil {
-			FBSDKAccessToken.setCurrentAccessToken(nil)
-		} else {
-			if FBSDKAccessToken.currentAccessToken() != nil {
-				let userRequest = FBSDKGraphRequest(graphPath: "me",
-					parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
-				
-				userRequest.startWithCompletionHandler({ (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-					if error != nil {
-						print("Error getting Facebook user: \(error)")
-					} else {
-						let fbid = result["id"] as! String
-						let fbAccessToken = FBSDKAccessToken.currentAccessToken().tokenString
-						
-						API.sharedAPI.fbAuthenticate(fbid, userToken: fbAccessToken, completion: { (success, newUser) in
-							if success {
-								if newUser {
-									let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
-									usernameVC.name = result["name"] as! String
-									usernameVC.fbID = result["id"] as! String
-									let navController = UINavigationController(rootViewController: usernameVC)
-									self.window!.rootViewController = navController
-								} else {
-									API.sharedAPI.setCurrentUser(fbid, fbAccessToken: fbAccessToken, completion: { (success) in
-										if success {
-											let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-											appDelegate.toggleRootVC()
-											if let vc = self.firstViewController as? ProfileViewController {
-												vc.user = User.currentUser
-												vc.setupUserUI()
-											}
-										}
-									})
-								}
-							}
-						})
+	func fbSessionStateChanged(error : NSError?) {
+		guard error == nil else { FBSDKAccessToken.setCurrentAccessToken(nil); return }
+		guard FBSDKAccessToken.currentAccessToken() != nil else { return }
+		let userRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
+		
+		userRequest.startWithCompletionHandler() { connection, result, error in
+			guard error == nil else { print("Error getting Facebook user: \(error)"); return }
+			let fbid = result["id"] as! String
+			let fbAccessToken = FBSDKAccessToken.currentAccessToken().tokenString
+			
+			API.sharedAPI.fbAuthenticate(fbid, userToken: fbAccessToken) { success, newUser in
+				guard success else { return }
+				if newUser {
+					let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
+					usernameVC.name = result["name"] as! String
+					usernameVC.fbID = result["id"] as! String
+					self.window!.rootViewController = UINavigationController(rootViewController: usernameVC)
+				} else {
+					API.sharedAPI.setCurrentUser(fbid, fbAccessToken: fbAccessToken) { success in
+						guard success else { return }
+						let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+						appDelegate.toggleRootVC()
+						guard let vc = self.firstViewController as? ProfileViewController else { return }
+						vc.user = User.currentUser
+						vc.setupUserUI()
 					}
-				})
+				}
 			}
 		}
 	}
 	
-	
-	
 	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
 		if url.absoluteString.containsString(SPTAuth.defaultInstance().redirectURL.absoluteString) {
-			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { [weak self] error, session in
+			SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url) { [weak self] error, session in
 				if error != nil {
 					print("*** Auth error: \(error)")
 				} else {
@@ -241,7 +219,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 					SPTAuth.defaultInstance().session = SPTSession(userName: User.currentUser.currentSpotifyUser?.username, accessToken: accessToken, expirationDate: expirationDate)
 					self?.spotifyVC.updateSpotifyState()
 				}
-			})
+			}
 			
 			return true
 		}

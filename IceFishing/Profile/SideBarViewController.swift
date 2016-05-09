@@ -70,7 +70,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		// Add button to profile view
 		button = UIButton(type: UIButtonType.System)
 		button.frame = profileView.bounds
-		button.addTarget(self, action: #selector(SideBarViewController.pushToProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+		button.addTarget(self, action: #selector(pushToProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 		view.addSubview(button)
 		
 		categoryTableView.reloadData()

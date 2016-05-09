@@ -101,10 +101,10 @@ class User: NSObject, NSCoding {
 		email = aDecoder.decodeObjectForKey("email") as! String
 		fbid = aDecoder.decodeObjectForKey("fbid") as! String
 		followers = aDecoder.decodeObjectForKey("followers") as! [String]
-		followersCount = aDecoder.decodeObjectForKey("followers_count") as! Int
-		hipsterScore = aDecoder.decodeObjectForKey("hipster_score") as! Int
+		followersCount = aDecoder.decodeIntegerForKey("followers_count")
+		hipsterScore = aDecoder.decodeIntegerForKey("hipster_score")
 		id = aDecoder.decodeObjectForKey("id") as! String
-		likeCount = aDecoder.decodeObjectForKey("like_count") as! Int
+		likeCount = aDecoder.decodeIntegerForKey("like_count")
 		locationID = aDecoder.decodeObjectForKey("location_id") as! String
 		name = aDecoder.decodeObjectForKey("name") as! String
 		updatedAt = aDecoder.decodeObjectForKey("updated_at") as! String
@@ -117,10 +117,10 @@ class User: NSObject, NSCoding {
 		aCoder.encodeObject(email, forKey: "email")
 		aCoder.encodeObject(fbid, forKey: "fbid")
 		aCoder.encodeObject(followers, forKey: "followers")
-		aCoder.encodeObject(followersCount, forKey: "followers_count")
-		aCoder.encodeObject(hipsterScore, forKey: "hipster_score")
+		aCoder.encodeInteger(followersCount, forKey: "followers_count")
+		aCoder.encodeInteger(hipsterScore, forKey: "hipster_score")
 		aCoder.encodeObject(id, forKey: "id")
-		aCoder.encodeObject(likeCount, forKey: "like_count")
+		aCoder.encodeInteger(likeCount, forKey: "like_count")
 		aCoder.encodeObject(locationID, forKey: "location_id")
 		aCoder.encodeObject(name, forKey: "name")
 		aCoder.encodeObject(updatedAt, forKey: "updated_at")

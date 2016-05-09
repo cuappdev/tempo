@@ -124,15 +124,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         profilePictureView.userInteractionEnabled = true
 		let tapProfile = UITapGestureRecognizer()
 		profilePictureView.addGestureRecognizer(tapProfile)
-		tapProfile.addTarget(self, action: #selector(ProfileViewController.profileTapped(_:)))
+		tapProfile.addTarget(self, action: #selector(profileTapped(_:)))
 		
 		if User.currentUser.username == user.username {
 			followButton.setTitle("EDIT USERNAME", forState: .Normal)
-			followButton.addTarget(self, action: #selector(ProfileViewController.userHandleButtonClicked(_:)), forControlEvents: .TouchUpInside)
+			followButton.addTarget(self, action: #selector(userHandleButtonClicked(_:)), forControlEvents: .TouchUpInside)
 		} else {
 			followButton.hidden = true
 			followButton.alpha = 0
-			followButton.addTarget(self, action: #selector(ProfileViewController.followButtonPressed(_:)), forControlEvents: .TouchUpInside)
+			followButton.addTarget(self, action: #selector(followButtonPressed(_:)), forControlEvents: .TouchUpInside)
 			
 			API.sharedAPI.fetchUser(user.id) {
 				self.user = $0

@@ -15,7 +15,7 @@ class ProfilePictureViewController: UIViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		pan.addTarget(self, action: #selector(ProfilePictureViewController.moveProPic(_:)))
+		pan.addTarget(self, action: #selector(moveProPic(_:)))
 		profilePictureView.addGestureRecognizer(pan)
 		profilePictureView.userInteractionEnabled = true
     }

@@ -34,7 +34,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	var searchBar = UISearchBar()
 	lazy var postButton: PostButton = {
 		let button = PostButton.instanceFromNib()
-		button.addTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
+		button.addTarget(self, action: #selector(submitSong), forControlEvents: .TouchUpInside)
 		return button
 	}()
 	
@@ -49,8 +49,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		searchBar.delegate = self
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
 	}
 	
 	override func viewWillAppear(animated: Bool) {
@@ -94,8 +94,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	// Called from bar button, not an elegant solution (should audit)
 	func dismiss() {
-		navigationController?.popViewControllerAnimated(false)
 		clearResults()
+		navigationController?.popViewControllerAnimated(false)
 	}
 	
 	deinit {
@@ -171,15 +171,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	func initiateRequest(term: String) {
 		let searchUrl = kSearchBase + term.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.alphanumericCharacterSet())!
 		lastRequest = Alamofire.request(.GET, searchUrl).responseJSON { response in
-			if let value = response.result.value as? Dictionary<String, AnyObject> {
+			if let value = response.result.value as? [String: AnyObject] {
 				self.receivedResponse(value)
 			}
 		}
 	}
 	
-	func receivedResponse(response: Dictionary<String, AnyObject>) {
-		let songs = response["tracks"] as! Dictionary<String, AnyObject>
-		let items = songs["items"] as! Array<Dictionary<String, AnyObject>>
+	func receivedResponse(response: [String: AnyObject]) {
+		let songs = response["tracks"] as! [String: AnyObject]
+		let items = songs["items"] as! [[String: AnyObject]]
 		
 		results = items.map {
 			let song = Song(responseDictionary: $0)

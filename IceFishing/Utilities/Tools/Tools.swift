@@ -63,12 +63,12 @@ class Tools: UIView, FBTweakViewControllerDelegate {
 		popup.addAction(cancelAction)
 		
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Tools.assignFirstResponder), name: "AssignToolsAsFirstResponder", object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(assignFirstResponder), name: "AssignToolsAsFirstResponder", object: nil)
 		becomeFirstResponder()
 		
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Tools.keyboardShown), name:UIKeyboardWillShowNotification , object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Tools.keyboardDismissed), name:UIKeyboardWillHideNotification , object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardShown), name:UIKeyboardWillShowNotification , object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDismissed), name:UIKeyboardWillHideNotification , object: nil)
 	}
 	
 	func keyboardShown() {

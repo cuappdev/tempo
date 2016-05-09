@@ -22,7 +22,7 @@ class Song: NSObject {
 	private var largeArtwork: UIImage?
 	func fetchArtwork() -> UIImage? {
 		if largeArtwork == nil && largeArtworkURL != nil {
-			loadImageAsync(largeArtworkURL!) { [weak self] image, error -> () in
+			loadImageAsync(largeArtworkURL!) { [weak self] image, _ in
 				self?.largeArtwork = image
 				NSNotificationCenter.defaultCenter().postNotificationName(SongDidDownloadArtworkNotification, object: self)
 			}
@@ -40,15 +40,12 @@ class Song: NSObject {
 	}
 	
 	convenience init(spotifyURI: String) {
-		let components = spotifyURI.componentsSeparatedByString(":") as [String]
-		var id = ""
-		if components.count > 0 {
-			id = components.last!
-		}
+		let components = spotifyURI.componentsSeparatedByString(":")
+		let id = components.last ?? ""
 		self.init(songID: id)
 	}
 	
-	init(responseDictionary: Dictionary<String, AnyObject>) {
+	init(responseDictionary: [String: AnyObject]) {
 		super.init()
 		initializeFromResponseDictionary(responseDictionary)
 	}
@@ -58,7 +55,7 @@ class Song: NSObject {
 		initializeFromResponse(json)
 	}
 	
-	private func initializeFromResponseDictionary(response: Dictionary<String, AnyObject>) {
+	private func initializeFromResponseDictionary(response: [String: AnyObject]) {
 		initializeFromResponse(JSON(response))
 	}
 	
@@ -70,10 +67,8 @@ class Song: NSObject {
 			let artists = json["artists"].arrayValue
 			if artists.count > 1 {
 				artist = "Various Artists"
-			} else if artists.count == 0 {
-				artist = "Unknown Artist"
 			} else {
-				artist = artists[0]["name"].string ?? "Unknown Artist"
+				artist = artists.first?["name"].string ?? "Unknown Artist"
 			}
 			
 			let albums = json["album"].dictionaryValue

@@ -18,7 +18,7 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
         super.viewDidLoad()
 		
 		title = "Add to Playlists"
-		let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(PlaylistTableViewController.dismissVC))
+		let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(dismissVC))
 		navigationItem.leftBarButtonItem = cancelButton
 		tableView.registerNib(UINib(nibName: "PlaylistTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaylistCell")
     }
