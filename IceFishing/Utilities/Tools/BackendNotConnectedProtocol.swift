@@ -12,10 +12,10 @@ import UIKit
 
 // MARK: - Banner Properties -
 
-private var originY: CGFloat = 0.0
+private var originY: CGFloat = 0
 
 private struct AWBannerProperties {
-	static let height: CGFloat    = 50.0
+	static let height: CGFloat    = 50
 	static let width: CGFloat     = UIScreen.mainScreen().bounds.width
 }
 
@@ -26,11 +26,11 @@ class BannerView: UIView {
 	var notificationLabel: UILabel!
 	
 	override init(frame: CGRect) {
-		let f = CGRect(x: 0.0, y: originY, width: AWBannerProperties.width, height: AWBannerProperties.height)
+		let f = CGRect(x: 0, y: originY, width: AWBannerProperties.width, height: AWBannerProperties.height)
 		super.init(frame: f)
 		
 		notificationLabel = UILabel(frame: CGRect(origin: CGPointZero, size: f.size))
-		notificationLabel.font = notificationLabel.font.fontWithSize(13.0)
+		notificationLabel.font = notificationLabel.font.fontWithSize(13)
 		notificationLabel.textAlignment = .Center
 		
 		self.addSubview(notificationLabel)
@@ -64,10 +64,10 @@ class Banner {
 		notificationView.backgroundColor             = backgroundColor
 		notificationView.notificationLabel.textColor = textColor
 		
-		UIView.animateWithDuration(0.5, delay: delay, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .CurveLinear, animations: {
+		UIView.animateWithDuration(0.5, delay: delay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .CurveLinear, animations: {
 			
 			topView.view.addSubview(self.notificationView)
-			self.notificationView.frame = CGRect(x: 0.0, y: originY, width: AWBannerProperties.width, height: AWBannerProperties.height) }, completion: nil)
+			self.notificationView.frame = CGRect(x: 0, y: originY, width: AWBannerProperties.width, height: AWBannerProperties.height) }, completion: nil)
 		
 		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(duration * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
 			self.hide()
@@ -75,9 +75,9 @@ class Banner {
 	}
 	
 	static func hide() {
-		UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .CurveLinear, animations: {
+		UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .CurveLinear, animations: {
 			self.notificationView.notificationLabel.text = " "
-			self.notificationView.frame = CGRect(x: 0.0, y: originY, width: AWBannerProperties.width, height: 0.0)
+			self.notificationView.frame = CGRect(x: 0, y: originY, width: AWBannerProperties.width, height: 0)
 			}, completion: { _ in
 				self.notificationView.removeFromSuperview()
 			})
@@ -87,7 +87,7 @@ class Banner {
 		Banner.showWithDuration(
 			currentVC,
 			duration: 4,
-			delay: 0.0,
+			delay: 0,
 			message: NSLocalizedString("IceFishing must be down, sorry :(", comment: "Banner title that informs the user the notification API is down"),
 			backgroundColor: UIColor.iceDarkGray,
 			textColor: UIColor.whiteColor(),
@@ -99,7 +99,7 @@ class Banner {
 		Banner.showWithDuration(
 			currentVC,
 			duration: 4,
-			delay: 0.0,
+			delay: 0,
 			message: NSLocalizedString("No internet connection", comment: "Banner title that informs the user the notification internet is down"),
 			backgroundColor: UIColor.iceDarkGray,
 			textColor: UIColor.whiteColor(),

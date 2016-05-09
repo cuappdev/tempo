@@ -35,7 +35,7 @@ class SpotifyViewController: UIViewController {
 		
 		for button in [loginToSpotifyButton, goToSpotifyButton, logOutSpotifyButton] {
 			button.backgroundColor = UIColor.iceDarkRed
-			button.layer.cornerRadius = 1.0
+			button.layer.cornerRadius = 1
 			button.layer.masksToBounds = true
 		}
 	}

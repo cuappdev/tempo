@@ -37,7 +37,7 @@ class ADRefreshControl {
 		var refreshBounds = refreshControl.bounds
 		
 		// Distance the table has been pulled >= 0
-		let newPullDistance = max(0.0, -refreshControl.frame.origin.y)
+		let newPullDistance = max(0, -refreshControl.frame.origin.y)
 		
 		if !isRefreshAnimating {
 			let direction = newPullDistance < pullDistance ? -10.0 : 10.0
@@ -63,7 +63,7 @@ class ADRefreshControl {
 		// Flag that we are animating
 		isRefreshAnimating = true
 		
-		UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveLinear, animations: {
+		UIView.animateWithDuration(0.5, delay: 0, options: .CurveLinear, animations: {
 			// Rotate the spinner by M_PI_2 = PI/2 = 90 degrees
 			self.graphicView.transform = CGAffineTransformRotate(self.graphicView.transform, CGFloat(-1 * M_PI_2))
 			if self.timesAnimationLooped % 2 == 0 {

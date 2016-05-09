@@ -20,13 +20,13 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		loginButton.layer.cornerRadius = 1.0
+		loginButton.layer.cornerRadius = 1
 		loginButton.layer.masksToBounds = true
 		animateRecord()
     }
     
     func animateRecord() {
-        UIView.animateWithDuration(3.0, delay: 0.0, options: .CurveLinear, animations: {
+        UIView.animateWithDuration(3, delay: 0, options: .CurveLinear, animations: {
             self.vinyl.transform = CGAffineTransformMakeRotation((360.0 * CGFloat(M_PI)) / 360.0)
 			
         }) { (complete: Bool) in

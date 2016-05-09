@@ -63,7 +63,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 				player = try? AVAudioPlayer(contentsOfURL: fileURL)
                 player?.prepareToPlay()
             } else if currentTask == nil {
-                let request = NSURLRequest(URL: fileURL, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 15.0)
+                let request = NSURLRequest(URL: fileURL, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 15)
 				currentTask = NSURLSession.dataTaskWithCachedRequest(request) { [weak self] data, response, _ -> Void in
 					guard let s = self else { return }
 					if let data = data {
@@ -102,7 +102,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     
     var rate: Float {
         get {
-            return player?.rate ?? 0.0
+            return player?.rate ?? 0
         }
         set {
             player?.rate = newValue
@@ -128,7 +128,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     
     dynamic var currentTime: NSTimeInterval {
         get {
-			return player?.currentTime ?? 0.0
+			return player?.currentTime ?? 0
         }
         set {
 			guard let player = player else { return }
@@ -144,9 +144,9 @@ class Player: NSObject, AVAudioPlayerDelegate {
     dynamic var progress: Double {
         get {
             if finishedPlaying {
-                return 1.0
+                return 1
             }
-			return player != nil ? currentTime / duration : 0.0
+			return player != nil ? currentTime / duration : 0
         }
         set {
 			if player == nil { return }

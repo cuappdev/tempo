@@ -81,21 +81,21 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         layer.borderWidth = CGFloat(0.7)
         
         profileNameLabel?.speed = .Rate(0)
-        profileNameLabel?.trailingBuffer = 8.0
+        profileNameLabel?.trailingBuffer = 8
         descriptionLabel?.speed = .Rate(0)
-        descriptionLabel?.trailingBuffer = 8.0
+        descriptionLabel?.trailingBuffer = 8
         
         profileNameLabel?.type = .Continuous
         profileNameLabel?.fadeLength = 8
         profileNameLabel?.tapToScroll = false
         profileNameLabel?.holdScrolling = true
-        profileNameLabel?.animationDelay = 2.0
+        profileNameLabel?.animationDelay = 2
         
         descriptionLabel?.type = .Continuous
         descriptionLabel?.fadeLength = 8
         descriptionLabel?.tapToScroll = false
         descriptionLabel?.holdScrolling = true
-        descriptionLabel?.animationDelay = 2.0
+        descriptionLabel?.animationDelay = 2
     }
     
     override func didMoveToSuperview() {
@@ -174,8 +174,8 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == progressGestureRecognizer {
             if let player = post?.player {
-                var offsetY:CGFloat = 0.0
-                var offsetX:CGFloat = 0.0
+                var offsetY: CGFloat = 0
+                var offsetX: CGFloat = 0
                 if let superview = superview?.superview?.superview as? UIScrollView {
                     offsetY = superview.contentOffset.y
                     offsetX = superview.contentOffset.x
@@ -184,7 +184,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
                 
                 if let translation = translation {
                     return ((fabs(translation.x) > fabs(translation.y)) &&
-                        (offsetY == 0.0 && offsetX == 0.0)) &&
+                        (offsetY == 0 && offsetX == 0)) &&
                         player.isPlaying
                 }
             }

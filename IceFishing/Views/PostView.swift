@@ -209,12 +209,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	
 	private func setupMarqueeLabel(label: MarqueeLabel) {
 		label.speed = .Duration(4.6)
-		label.trailingBuffer = 10.0
+		label.trailingBuffer = 10
 		label.type = .Continuous
 		label.fadeLength = 8
 		label.tapToScroll = false
 		label.holdScrolling = true
-		label.animationDelay = 2.0
+		label.animationDelay = 2
 	}
 	
     // Customize view to be able to re-use it for search results.
@@ -285,7 +285,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func drawRect(rect: CGRect) {
-        let progress = post?.player.progress ?? 0.0
+        let progress = post?.player.progress ?? 0
         
         super.drawRect(rect)
         fillColor.setFill()
@@ -296,8 +296,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == progressGestureRecognizer {
             if let player = post?.player {
-                var offsetY:CGFloat = 0.0
-                var offsetX:CGFloat = 0.0
+                var offsetY: CGFloat = 0
+                var offsetX: CGFloat = 0
                 if let superview = superview?.superview?.superview as? UIScrollView {
                     offsetY = superview.contentOffset.y
                     offsetX = superview.contentOffset.x
@@ -306,7 +306,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 
                 if let translation = translation {
                     return ((fabs(translation.x) > fabs(translation.y)) &&
-                        (offsetY == 0.0 && offsetX == 0.0)) &&
+                        (offsetY == 0 && offsetX == 0)) &&
                         player.isPlaying
                 }
             }

@@ -20,8 +20,6 @@
 		1DB283901B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */; };
 		1DB476481AEF24670066014F /* PostButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB476471AEF24670066014F /* PostButton.xib */; };
 		1DC9BBA01AE805A00033E970 /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */; };
-		1DCB96141AED5EA7007F6A4B /* APIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCB96121AED5EA7007F6A4B /* APIViewController.swift */; };
-		1DCB96151AED5EA7007F6A4B /* APIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCB96131AED5EA7007F6A4B /* APIViewController.xib */; };
 		1DCB961C1AED5F48007F6A4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CF7B971AE425450083606C /* API.swift */; };
 		1DD875FC1B6E27DD0041C45B /* NSDateFormatter+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD875FB1B6E27DD0041C45B /* NSDateFormatter+Shared.swift */; };
 		1DE649C31B78590800DA5499 /* SpotifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE649C11B78590800DA5499 /* SpotifyViewController.swift */; };
@@ -115,8 +113,6 @@
 		1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSLayoutContraint+Fill.swift"; path = "../Controllers/NSLayoutContraint+Fill.swift"; sourceTree = "<group>"; };
 		1DB476471AEF24670066014F /* PostButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostButton.xib; sourceTree = "<group>"; };
 		1DC9BB9F1AE805A00033E970 /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedTableViewCell.xib; path = IceFishing/Profile/FeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
-		1DCB96121AED5EA7007F6A4B /* APIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIViewController.swift; sourceTree = "<group>"; };
-		1DCB96131AED5EA7007F6A4B /* APIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APIViewController.xib; sourceTree = "<group>"; };
 		1DD875FB1B6E27DD0041C45B /* NSDateFormatter+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDateFormatter+Shared.swift"; sourceTree = "<group>"; };
 		1DE649C11B78590800DA5499 /* SpotifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyViewController.swift; sourceTree = "<group>"; };
 		1DE649C21B78590800DA5499 /* SpotifyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotifyViewController.xib; sourceTree = "<group>"; };
@@ -205,8 +201,6 @@
 			children = (
 				B01FE1541C1765080077C2BF /* Spotify */,
 				6DEE0FC31AC34811005552F9 /* Profile */,
-				1DCB96121AED5EA7007F6A4B /* APIViewController.swift */,
-				1DCB96131AED5EA7007F6A4B /* APIViewController.xib */,
 				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
 				B085F3B31BE3CBB80000421E /* SearchViewController.swift */,
 				B085F3B41BE3CBB80000421E /* SearchViewController.xib */,
@@ -502,7 +496,6 @@
 				D160AE001BE67406003B0E1A /* PlaylistTableViewCell.xib in Resources */,
 				1DC9BBA01AE805A00033E970 /* FeedTableViewCell.xib in Resources */,
 				1DE649C41B78590800DA5499 /* SpotifyViewController.xib in Resources */,
-				1DCB96151AED5EA7007F6A4B /* APIViewController.xib in Resources */,
 				D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */,
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
 				60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */,
@@ -584,7 +577,6 @@
 				1DA44FC61B6D84D1009EC2BD /* PostButton.swift in Sources */,
 				1D1DD7141AE492750066AB39 /* Util.swift in Sources */,
 				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
-				1DCB96141AED5EA7007F6A4B /* APIViewController.swift in Sources */,
 				1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */,
 				60256C1A1BC1BFA900B52FDD /* SavedSongView.swift in Sources */,
 				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,

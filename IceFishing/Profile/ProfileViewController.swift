@@ -378,7 +378,7 @@ extension ProfileViewController: UIViewControllerPreviewingDelegate {
 				peekViewController.index = index
 			}
 			
-			peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+			peekViewController.preferredContentSize = CGSizeZero
 			previewingContext.sourceRect = collectionView.convertRect(cell.frame, toView: view)
 			
 			return peekViewController

@@ -148,7 +148,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80.0
+        return 80
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -279,7 +279,7 @@ extension UsersViewController: UIViewControllerPreviewingDelegate {
 		peekViewController.title = "Profile"
 		peekViewController.user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
 		
-		peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+		peekViewController.preferredContentSize = CGSizeZero
 		previewingContext.sourceRect = tableView.convertRect(cell.frame, toView: view)
 		
 		return peekViewController

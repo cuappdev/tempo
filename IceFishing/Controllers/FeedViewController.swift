@@ -228,7 +228,7 @@ extension FeedViewController: UIViewControllerPreviewingDelegate {
 			peekViewController.title = "Profile"
 			peekViewController.user = user
 			
-			peekViewController.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+			peekViewController.preferredContentSize = CGSizeZero
 			previewingContext.sourceRect = postView.convertRect(avatar.frame, toView: tableView)
 			
 			return peekViewController

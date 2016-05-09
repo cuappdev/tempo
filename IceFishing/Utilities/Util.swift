@@ -9,15 +9,15 @@
 import UIKit
 
 extension UIView {
-	func fadeIn(duration: NSTimeInterval = 1.0, delay: NSTimeInterval = 0.0, completion: ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
+	func fadeIn(duration: NSTimeInterval = 1, delay: NSTimeInterval = 0, completion: ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
 		UIView.animateWithDuration(duration, delay: delay, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-			self.alpha = 1.0
+			self.alpha = 1
 			}, completion: completion)
 	}
 	
-	func fadeOut(duration: NSTimeInterval = 1.0, delay: NSTimeInterval = 0.0, completion: (Bool) -> Void = {(finished: Bool) -> Void in}) {
+	func fadeOut(duration: NSTimeInterval = 1, delay: NSTimeInterval = 0, completion: (Bool) -> Void = {(finished: Bool) -> Void in}) {
 		UIView.animateWithDuration(duration, delay: delay, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-			self.alpha = 0.0
+			self.alpha = 0
 			}, completion: completion)
 	}
 }
@@ -37,7 +37,7 @@ func delay(delay: Double, closure:()->()) {
 }
 
 func loadImageAsync(url: NSURL, completion: (UIImage!, NSError!) -> ()) {
-    let requestedURL = NSURLRequest(URL: url, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 10.0)
+    let requestedURL = NSURLRequest(URL: url, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 10)
 	
 	NSURLSession.dataTaskWithCachedRequest(requestedURL) { data, response, error in
 		dispatch_async(dispatch_get_main_queue()) {
@@ -47,7 +47,7 @@ func loadImageAsync(url: NSURL, completion: (UIImage!, NSError!) -> ()) {
 }
 
 func transparentPNG(length: CGFloat) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(length, length), false, 0.0)
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(length, length), false, 0)
     let blank = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     return blank

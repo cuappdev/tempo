@@ -35,7 +35,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
                 currentlyPlayingPost?.player.togglePlaying()
             } else {
                 currentlyPlayingPost?.player.pause(true)
-                currentlyPlayingPost?.player.progress = 1.0 // Fill cell as played
+                currentlyPlayingPost?.player.progress = 1 // Fill cell as played
                 
                 if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
                     currentlyPlayingPost = array[currentlyPlayingIndexPath.row]
@@ -133,7 +133,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
                     MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: artwork),
                     MPMediaItemPropertyPlaybackDuration: post.player.duration,
                     MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
-                    MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying ? post.player.rate : 0.0,
+                    MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying ? post.player.rate : 0,
                     MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
                     MPNowPlayingInfoPropertyPlaybackQueueCount: count ]
             } else {
