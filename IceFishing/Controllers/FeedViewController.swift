@@ -11,7 +11,13 @@ import MediaPlayer
 
 class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
 	
-	var customRefresh: ADRefreshControl?
+	lazy var customRefresh: ADRefreshControl = {
+		self.refreshControl = UIRefreshControl()
+		let customRefresh = ADRefreshControl(refreshControl: self.refreshControl!)
+		self.refreshControl?.addTarget(self, action: #selector(refreshFeed), forControlEvents: .ValueChanged)
+		return customRefresh
+	}()
+	
 	var plusButton: UIButton!
 	
 	lazy var searchTableViewController: SearchViewController = {
@@ -36,7 +42,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		view.userInteractionEnabled = false
 		
 		refreshFeed()
-		addRefreshControl()
 		addHamburgerMenu()
 		
 		tableView.tableHeaderView = nil
@@ -71,14 +76,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		}
 		
 		notConnected()
-	}
-	
-	// MARK: - UIRefreshControl
-	
-	func addRefreshControl() {
-		refreshControl = UIRefreshControl()
-		customRefresh = ADRefreshControl(refreshControl: refreshControl!)
-		refreshControl?.addTarget(self, action: #selector(FeedViewController.refreshFeed), forControlEvents: .ValueChanged)
 	}
 	
 	func refreshFeed() {
@@ -131,9 +128,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		//if after delay seconds we finished fetching, 
 		//then we reload the tableview, else we wait for the
 		//api to return to reload by setting minumum time passed
-		var delayInSeconds = 2.0;
-		var popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)));
-		dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
+		var popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+		dispatch_after(popTime, dispatch_get_main_queue()) {
 			if finishedRefreshing {
 				self.tableView.reloadData()
 				self.refreshControl?.endRefreshing()
@@ -144,9 +140,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		}
 		
 		//timeout for refresh taking too long
-		delayInSeconds = 10.0;
-		popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)));
-		dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
+		popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(10 * Double(NSEC_PER_SEC)))
+		dispatch_after(popTime, dispatch_get_main_queue()) {
 			if !finishedRefreshing {
 				self.refreshControl?.endRefreshing()
 				self.view.userInteractionEnabled = true
@@ -172,7 +167,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	
 	override func scrollViewDidScroll(scrollView: UIScrollView) {
 		super.scrollViewDidScroll(scrollView)
-		customRefresh?.scrollViewDidScroll(scrollView)
+		customRefresh.scrollViewDidScroll(scrollView)
 	}
 	
 	func setupAddButton() {
