@@ -51,41 +51,25 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
 		
-		// Populate users
-		let completion: [User] -> Void = {
-			if self.displayType == .Users {
-				self.suggestedUsers = $0
-			} else {
-				self.users = $0
-			}
-			self.tableView.reloadData()
-			
-			// find count of which array table view will display, if .Users then we initially display suggestedUsers
-			let itemCount = (self.displayType == .Users ? self.suggestedUsers.count : self.users.count)
-			
-			if itemCount == 0 {
-				switch self.displayType {
-				case .Followers:
-					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Followers, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
-				case .Following:
-					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Following, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
-				default:
-					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Users, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
-				}
-			} else {
-				self.tableView.backgroundView = nil
-			}
-		}
-		
-		switch(displayType) {
-		case .Followers:
-			API.sharedAPI.fetchFollowers(user.id, completion: completion)
-		case .Following:
-			API.sharedAPI.fetchFollowing(user.id, completion: completion)
-		default:
-			API.sharedAPI.fetchFollowSuggestions(completion, length: length, page: page)
+		if displayType == .Users {
 			title = "Search Users"
 			addHamburgerMenu()
+			populateSuggestions()
+		} else {
+			let completion: [User] -> Void = {
+				self.users = $0
+				self.tableView.reloadData()
+				if self.users.count == 0 {
+					let contentType = self.displayType == .Followers ? ContentType.Followers : ContentType.Following
+					self.tableView.backgroundView = UIView.viewForEmptyViewController(contentType, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
+				}
+			}
+			
+			if displayType == .Followers {
+				API.sharedAPI.fetchFollowers(user.id, completion: completion)
+			} else {
+				API.sharedAPI.fetchFollowing(user.id, completion: completion)
+			}
 		}
 		
 		// Check for 3D Touch availability
@@ -96,9 +80,28 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		}
     }
 	
+	func populateSuggestions() {
+		let completion: [User] -> Void = {
+			self.suggestedUsers = $0
+			self.tableView.reloadData()
+			
+			if self.suggestedUsers.count == 0 {
+				self.tableView.backgroundView = UIView.viewForEmptyViewController(.Users, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
+			} else {
+				self.tableView.backgroundView = nil
+			}
+		}
+		
+		page = 0 // reset page
+		API.sharedAPI.fetchFollowSuggestions(completion, length: length, page: page)
+	}
+	
 	override func viewDidAppear(animated: Bool) {
 		notConnected()
 		addRevealGesture()
+		if !searchController.active && displayType == .Users {
+			populateSuggestions()
+		}
 	}
 	
 	override func viewDidDisappear(animated: Bool) {
@@ -113,7 +116,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if displayType == .Users {
-			return searchController.active ? filteredUsers.count : suggestedUsers.count
+			return searchController.active ? users.count : suggestedUsers.count
 		} else {
 			return searchController.active ? filteredUsers.count : users.count
 		}
@@ -123,7 +126,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
 		var user: User
 		if displayType == .Users {
-			user = searchController.active ? filteredUsers[indexPath.row] : suggestedUsers[indexPath.row]
+			user = searchController.active ? users[indexPath.row] : suggestedUsers[indexPath.row]
 		} else {
 			user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
 		}
@@ -140,7 +143,6 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		} else {
 			cell.followButton.setTitle("", forState: .Normal)
 		}
-		
         
         return cell
     }
@@ -156,7 +158,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
 		if self.displayType == .Users {
-			profileVC.user = searchController.active ? filteredUsers[indexPath.row] : suggestedUsers[indexPath.row]
+			profileVC.user = searchController.active ? users[indexPath.row] : suggestedUsers[indexPath.row]
 		} else {
 			profileVC.user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
 		}
@@ -196,7 +198,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		
 		var user: User
 		if displayType == .Users {
-			user = searchController.active ? filteredUsers[indexPath!.row] : suggestedUsers[indexPath!.row]
+			user = searchController.active ? users[indexPath!.row] : suggestedUsers[indexPath!.row]
 		} else {
 			user = searchController.active ? filteredUsers[indexPath!.row] : users[indexPath!.row]
 		}
@@ -225,7 +227,20 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	}
 	
 	func updateSearchResultsForSearchController(searchController: UISearchController) {
-		filterContentForSearchText(searchController.searchBar.text!)
+		self.tableView.reloadData()
+		
+		if displayType == .Users {
+			let completion: [User] -> Void = {
+				self.users = $0
+				dispatch_async(dispatch_get_main_queue()) {
+					self.tableView.reloadData()
+				}
+			}
+			
+			API.sharedAPI.searchUsers(searchController.searchBar.text!, completion: completion)
+		} else {
+			filterContentForSearchText(searchController.searchBar.text!)
+		}
 	}
 	
 	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -241,16 +256,6 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	
 	func willPresentSearchController(searchController: UISearchController) {
 		// if a .Users VC, only suggestions were fetched in viewDidLoad(), need to fetch users to search
-		if displayType == .Users {
-			let completion: [User] -> Void = {
-				self.users = $0
-				self.tableView.reloadData()
-				self.filterContentForSearchText("")
-			}
-			
-			API.sharedAPI.searchUsers("", completion: completion)
-		}
-		
 		navigationController?.view.addSubview(statusBarView)
 	}
 	
