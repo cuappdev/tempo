@@ -11,7 +11,7 @@ import MediaPlayer
 
 class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
 	
-	var customRefresh: ADRefreshControl!
+	var customRefresh: ADRefreshControl?
 	var plusButton: UIButton!
 	
 	lazy var searchTableViewController: SearchViewController = {
@@ -30,8 +30,13 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		setupAddButton()
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
-		addRefreshControl()
+		//disable user interaction when first loading up feed
+		//user interaction gets enabled after refresh is done
+		//not very elegant solution, but fixes some UI issues
+		view.userInteractionEnabled = false
+		
 		refreshFeed()
+		addRefreshControl()
 		addHamburgerMenu()
 		
 		tableView.tableHeaderView = nil
@@ -88,9 +93,14 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		
 		API.sharedAPI.fetchFeedOfEveryone { [weak self] in
 			self?.posts = $0
-			if minimumTimePassed {
+			
+			//return even if we get data after a timeout
+			if finishedRefreshing {
+				return
+			} else if minimumTimePassed {
 				self?.tableView.reloadData()
 				self?.refreshControl?.endRefreshing()
+				self?.view.userInteractionEnabled = true
 			}
 			finishedRefreshing = true
 			
@@ -121,14 +131,26 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		//if after delay seconds we finished fetching, 
 		//then we reload the tableview, else we wait for the
 		//api to return to reload by setting minumum time passed
-		let delayInSeconds = 2.0;
-		let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)));
+		var delayInSeconds = 2.0;
+		var popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)));
 		dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
 			if finishedRefreshing {
 				self.tableView.reloadData()
 				self.refreshControl?.endRefreshing()
+				self.view.userInteractionEnabled = true
 			} else {
 				minimumTimePassed = true
+			}
+		}
+		
+		//timeout for refresh taking too long
+		delayInSeconds = 10.0;
+		popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)));
+		dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
+			if !finishedRefreshing {
+				self.refreshControl?.endRefreshing()
+				self.view.userInteractionEnabled = true
+				finishedRefreshing = true
 			}
 		}
 	}
