@@ -69,6 +69,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     likesLabel?.text = "\(post.likes) likes"
 					let imageName = post.isLiked ? "Heart-Red" : "Heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
+					dateLabel?.text = post.relativeDate()
 					updateAddButton()
                     break
 				case .History:
@@ -77,14 +78,19 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					likesLabel?.text = "\(post.likes) likes"
 					let imageName = post.isLiked ? "Heart-Red" : "Heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
+					dateLabel?.text = post.relativeDate()
 					updateAddButton()
 					break
 				case .Liked:
+					self.addButton!.frame.origin.x = self.likedButton!.frame.origin.x
+					self.addButton!.frame.origin.y = self.likedButton!.frame.origin.y
 					profileNameLabel?.text = post.song.artist
 					descriptionLabel?.text = "\(post.song.title)"
-					likesLabel?.text = "\(post.likes) likes"
+					likesLabel?.hidden = true
 					likedButton!.hidden = true
+					dateLabel?.text = "Add to Spotify"
 					updateAddButton()
+					updateDateLabel()
 				}
                 if type == .Feed {
                     post.user.loadImage {
@@ -97,7 +103,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
-				dateLabel?.text = post.relativeDate()
+	
+				
                 
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
                     object: post.player,
@@ -115,6 +122,15 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 		SpotifyController.sharedController.spotifyIsAvailable { success in
 			if success {
 				self.addButton!.hidden = false
+			}
+		}
+	}
+	
+	func updateDateLabel() {
+		self.dateLabel!.hidden = true
+		SpotifyController.sharedController.spotifyIsAvailable { success in
+			if success {
+				self.dateLabel!.hidden = false
 			}
 		}
 	}
