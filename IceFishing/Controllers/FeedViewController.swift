@@ -71,7 +71,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		super.viewDidAppear(animated)
 
 		// Used to update Spotify + button, not very elegant solution
-		for cell in (tableView.visibleCells as? [FeedTableViewCell])! {
+		for cell in tableView.visibleCells as! [FeedTableViewCell] {
 			cell.postView.updateAddButton()
 		}
 		
