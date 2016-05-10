@@ -35,7 +35,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
                 
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
                     object: post.player,
-                    queue: nil, usingBlock: { [weak self] note in
+                    queue: NSOperationQueue.mainQueue(), usingBlock: { [weak self] note in
                         self?.updateProfileLabel()
                         
                         if self?.updateTimer == nil && self?.post?.player.isPlaying ?? false {
