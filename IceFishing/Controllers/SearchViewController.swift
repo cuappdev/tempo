@@ -17,7 +17,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 
 	@IBOutlet weak var searchBarContainer: UIView!
 	@IBOutlet weak var tableView: UITableView!
-	@IBOutlet weak var postButtonContainer: UIView!
 	
 	weak var delegate: SongSearchDelegate?
 	
@@ -25,26 +24,19 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	let kSearchBase: String = "https://api.spotify.com/v1/search?type=track&q="
 	var activePlayer: Player?
 	var lastRequest: Request?
-	var selectedSong: Song? {
-		didSet {
-			postButtonContainer.hidden = selectedSong == nil
-		}
-	}
-	
+	var selectedSong: Song?
+	var selectedCell: SongSearchTableViewCell?
 	var searchBar = UISearchBar()
-	lazy var postButton: PostButton = {
-		let button = PostButton.instanceFromNib()
-		button.addTarget(self, action: #selector(submitSong), forControlEvents: .TouchUpInside)
-		return button
-	}()
 	
 	// MARK: - Lifecycle Methods
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		title = "Post your song of the day!"
-		view.backgroundColor = UIColor.iceLightGray
+		title = "Post a track"
+		view.backgroundColor = UIColor.tempoDarkGray
+		tableView.rowHeight = 72
+		tableView.showsVerticalScrollIndicator = false
 		tableView.registerNib(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
 		
 		searchBar.delegate = self
@@ -68,15 +60,22 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		addRevealGesture()
 		view.layoutIfNeeded()
+		tableView.tableFooterView = UIView()
 		
 		let textFieldInsideSearchBar = searchBar.valueForKey("_searchField") as? UITextField
 		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
+		textFieldInsideSearchBar?.font = UIFont(name: "Avenir-Book", size: 14)
+		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.valueForKey("placeholderLabel") as? UILabel
+		textFieldInsideSearchBarLabel?.textColor = UIColor.tempoUltraLightRed
 		
 		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
 			self.searchBar.layer.transform = CATransform3DIdentity
 		}, completion:nil)
 		
 		searchBar.becomeFirstResponder()
+		searchBar.setImage(UIImage(named: "search-icon"), forSearchBarIcon: .Search, state: .Normal)
+		searchBar.setImage(UIImage(named: "clear-search-icon"), forSearchBarIcon: .Clear, state: .Normal)
 		
 		notConnected()
 	}
@@ -113,6 +112,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		let post = results[indexPath.row]
 		cell.postView.post = post
 		cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
+		cell.shareButton.hidden = true
+		cell.shareButton.addTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
 		
 		return cell
 	}
@@ -121,7 +122,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
+		
+		if selectedCell != nil {
+			selectedCell?.shareButton.hidden = true
+		}
+		
 		let cell = tableView.cellForRowAtIndexPath(indexPath) as! SongSearchTableViewCell
+		selectedCell = cell
+		cell.shareButton.hidden = false
+		
 		let post = results[indexPath.row]
 		selectSong(post.song)
 		
@@ -153,12 +162,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	// MARK: - Song Request Methods
 	
 	func selectSong(song: Song) {
-		if postButton.superview == nil {
-			postButton.translatesAutoresizingMaskIntoConstraints = false
-			postButtonContainer.addSubview(postButton)
-			NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsToFillSuperview(postButton))
-		}
-		postButton.title = "\(song.title) - \(song.artist)"
 		selectedSong = song
 		searchBar.resignFirstResponder()
 	}

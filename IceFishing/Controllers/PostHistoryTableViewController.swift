@@ -17,15 +17,22 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-        tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor.iceDarkGray
-        tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
         
         navigationItem.title = "Post History"
 		
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
+		
+		// Fix color above search bar
+		let topView = UIView(frame: view.frame)
+		topView.frame.origin.y = -view.frame.size.height
+		topView.backgroundColor = UIColor.tempoLightRed
+		tableView.tableHeaderView = searchController.searchBar
+		tableView.addSubview(topView)
+		
+		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+		tableView.rowHeight = 80
+		tableView.showsVerticalScrollIndicator = false
 
 		pinView.postView.type = .History
     }
@@ -60,7 +67,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
-        selectedCell.postView.backgroundColor = UIColor.iceLightGray
+        selectedCell.postView.backgroundColor = UIColor.tempoLightGray
 		currentlyPlayingIndexPath = indexPath
     }
 

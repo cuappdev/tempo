@@ -13,10 +13,15 @@ class PlaylistTableViewCell: UITableViewCell {
 	@IBOutlet weak var playlistImage: UIImageView!
 	@IBOutlet weak var playlistNameLabel: UILabel!
 	@IBOutlet weak var playlistNumSongsLabel: UILabel!
+    @IBOutlet weak var separator: UIView!
+    @IBOutlet weak var separatorHeight: NSLayoutConstraint!
 	
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
+		
+		contentView.backgroundColor = UIColor.tempoLightGray
+		separator.backgroundColor = UIColor.separatorGray
+		separatorHeight.constant = 0.5
+	}
     
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -32,7 +32,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Saved-Check" translatesAutoresizingMaskIntoConstraints="NO" id="STY-Hz-79l">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="saved-check" translatesAutoresizingMaskIntoConstraints="NO" id="STY-Hz-79l">
                     <rect key="frame" x="45" y="18" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="PUJ-nf-dX8"/>
@@ -70,6 +70,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Saved-Check" width="51" height="54"/>
+        <image name="saved-check" width="51" height="54"/>
     </resources>
 </document>

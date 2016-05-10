@@ -21,7 +21,7 @@ class ProfilePictureViewController: UIViewController {
     }
 	
     @IBAction func exitButtonPressed(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+		self.dismissVCWithFadeAnimation()
     }
 	
 	func moveProPic(sender: UIPanGestureRecognizer){
@@ -39,7 +39,7 @@ class ProfilePictureViewController: UIViewController {
 				self.profilePictureView.center.y = self.view.bounds.midY
 			}
 		} else {
-			self.dismissViewControllerAnimated(true, completion: nil)
+			self.dismissVCWithFadeAnimation()
 		}
 	}
 }

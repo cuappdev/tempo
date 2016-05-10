@@ -52,17 +52,14 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Formatting
         categoryTableView.separatorStyle = .None
         categoryTableView.scrollEnabled = false
-        categoryTableView.backgroundColor = UIColor.iceDarkGray
-        profileView.backgroundColor = UIColor.iceDarkGray
-        view.backgroundColor = UIColor.iceDarkGray
-        divider.backgroundColor = UIColor.iceLightGray
+        categoryTableView.backgroundColor = UIColor.tempoDarkGray
+        profileView.backgroundColor = UIColor.tempoDarkGray
+        view.backgroundColor = UIColor.tempoDarkGray
+        divider.backgroundColor = UIColor.tempoLightGray
 
 		sideView.hidden = true
-		sideView.backgroundColor = UIColor.iceDarkRed
+		sideView.backgroundColor = UIColor.tempoLightRed
 		
-		profilePicture.layer.masksToBounds = false
-		profilePicture.layer.borderWidth = 1.5
-		profilePicture.layer.borderColor = UIColor.whiteColor().CGColor
 		profilePicture.frame = CGRectMake(0, 0, 85, 85)
 		profilePicture.layer.cornerRadius = profilePicture.frame.size.height/2
 		profilePicture.clipsToBounds = true
@@ -79,7 +76,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		if elements.count > 0 {
 			if let selectedIndex = preselectedIndex {
 				if selectedIndex == -1 {
-					profileView.backgroundColor = .iceLightGray
+					profileView.backgroundColor = .tempoLightGray
 					sideView.hidden = false
 					categoryTableView.selectRowAtIndexPath(nil, animated: false, scrollPosition: .None)
 				} else {
@@ -104,7 +101,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		// Mark first item selected unless there was a preselected item
 		if let selectedIndex = preselectedIndex {
 			if selectedIndex == -1 {
-				profileView.backgroundColor = .iceLightGray
+				profileView.backgroundColor = .tempoLightGray
 				sideView.hidden = false
 				categoryTableView.selectRowAtIndexPath(nil, animated: false, scrollPosition: .None)
 			} else {
@@ -115,7 +112,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 	}
 	
 	func pushToProfile(sender:UIButton!) {
-		profileView.backgroundColor = UIColor.iceLightGray
+		profileView.backgroundColor = UIColor.tempoLightGray
 		sideView.hidden = false
 		let loginVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 		loginVC.user = User.currentUser

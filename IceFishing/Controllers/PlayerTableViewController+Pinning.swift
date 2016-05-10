@@ -13,7 +13,7 @@ extension PlayerTableViewController {
 	internal func setupPinViews() {
 		pinView.postView.pinned = true
 		pinView.postView.playerController = self
-		pinView.backgroundColor = UIColor.iceLightGray
+		pinView.backgroundColor = UIColor.tempoLightGray
 	}
 	
 	internal func positionPinViews() {

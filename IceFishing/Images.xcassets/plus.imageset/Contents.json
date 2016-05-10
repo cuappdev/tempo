@@ -2,18 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "SPOTIFY2X.png"
+      "filename" : "plus2.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "Profile-Icon-1.png"
+      "filename" : "plus@2x.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "Profile-Icon-1-1.png"
+      "filename" : "plus@2x-1.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

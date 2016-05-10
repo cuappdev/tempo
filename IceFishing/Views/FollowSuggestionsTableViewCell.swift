@@ -21,7 +21,7 @@ class FollowSuggestionsTableViewCell: UITableViewCell {
 	
     override func awakeFromNib() {
         super.awakeFromNib()
-		contentView.backgroundColor = UIColor.iceLightGray
+		contentView.backgroundColor = UIColor.tempoLightGray
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

@@ -11,7 +11,7 @@ import SWRevealViewController
 
 extension UIViewController {
 	func addHamburgerMenu() {
-		let image = UIImage(named: "Hamburger-Menu")!
+		let image = UIImage(named: "hamburger-menu")!
 		let menuButton = UIButton(frame: CGRect(origin: CGPointZero, size: image.size))
 		menuButton.setImage(image, forState: .Normal)
 		menuButton.addTarget(revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), forControlEvents: .TouchUpInside)
@@ -36,5 +36,14 @@ extension UIViewController {
 		} else if !API.sharedAPI.isAPIConnected {
 			Banner.APINotConnected(self)
 		}
+	}
+	
+	func dismissVCWithFadeAnimation() {
+		let transition = CATransition()
+		transition.duration = 0.3
+		transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+		transition.type = kCATransitionFade
+		view.window!.layer.addAnimation(transition, forKey: nil)
+		dismissViewControllerAnimated(false, completion: nil)
 	}
 }

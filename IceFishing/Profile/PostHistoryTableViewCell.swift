@@ -19,15 +19,15 @@ class PostHistoryTableViewCell: UITableViewCell {
 	
     override func didMoveToSuperview() {
         selectionStyle = .None
-        backgroundColor = UIColor.iceDarkGray
-        separator.backgroundColor = UIColor.iceLightGray
+        backgroundColor = UIColor.tempoDarkGray
+        separator.backgroundColor = UIColor.separatorGray
 		postedSongImage.layer.cornerRadius = postedSongImage.bounds.size.width/2
         postedSongImage.clipsToBounds = true
     }
     
     // Custom selected cell view
     override func setSelected(selected: Bool, animated: Bool) {
-		contentView.backgroundColor = selected ? UIColor.iceLightGray : UIColor.clearColor()
+		contentView.backgroundColor = selected ? UIColor.tempoLightGray : UIColor.clearColor()
     }
     
 }

@@ -61,8 +61,14 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		searchController.searchResultsUpdater = self
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.delegate = self
+		searchController.searchBar.setImage(UIImage(named: "search-icon"), forSearchBarIcon: .Search, state: .Normal)
+		searchController.searchBar.setImage(UIImage(named: "clear-search-icon"), forSearchBarIcon: .Clear, state: .Normal)
 		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
 		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
+		textFieldInsideSearchBar?.font = UIFont(name: "Avenir-Book", size: 14)
+		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.valueForKey("placeholderLabel") as? UILabel
+		textFieldInsideSearchBarLabel?.textColor = UIColor.tempoUltraLightRed
 		
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
@@ -120,7 +126,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
                 }
                 UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
                 
-                let artwork = post.song.fetchArtwork() ?? UIImage(named: "Sexy")!
+                let artwork = post.song.fetchArtwork() ?? UIImage(named: "temp-user")!
 				var count = posts.count
 				if searchController.active {
 					count = filteredPosts.count
@@ -265,7 +271,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	//This allows for the text not to be viewed behind the search bar at the top of the screen
 	private let statusBarView: UIView = {
 		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
-		view.backgroundColor = UIColor.iceDarkRed
+		view.backgroundColor = UIColor.tempoLightRed
 		return view
 	}()
 	
@@ -275,10 +281,6 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	
 	func didDismissSearchController(searchController: UISearchController) {
 		statusBarView.removeFromSuperview()
-	}
-	
-	override func preferredStatusBarStyle() -> UIStatusBarStyle {
-		return .LightContent
 	}
 	
 	// MARK: - Save song button clicked

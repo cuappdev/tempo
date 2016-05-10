@@ -2,18 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "vinylRED.png"
+      "filename" : "vinyl-case3.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "vinylRED-2.png"
+      "filename" : "vinyl-case2.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "vinylRED-1.png"
+      "filename" : "vinyl-case.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

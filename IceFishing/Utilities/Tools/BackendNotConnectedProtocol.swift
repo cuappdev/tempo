@@ -89,7 +89,7 @@ class Banner {
 			duration: 4,
 			delay: 0,
 			message: NSLocalizedString("IceFishing must be down, sorry :(", comment: "Banner title that informs the user the notification API is down"),
-			backgroundColor: UIColor.iceDarkGray,
+			backgroundColor: UIColor.tempoDarkGray,
 			textColor: UIColor.whiteColor(),
 			originY: 0)
 	}
@@ -101,7 +101,7 @@ class Banner {
 			duration: 4,
 			delay: 0,
 			message: NSLocalizedString("No internet connection", comment: "Banner title that informs the user the notification internet is down"),
-			backgroundColor: UIColor.iceDarkGray,
+			backgroundColor: UIColor.tempoDarkGray,
 			textColor: UIColor.whiteColor(),
 			originY: 0)
 	}

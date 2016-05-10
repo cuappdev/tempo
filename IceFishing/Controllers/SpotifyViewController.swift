@@ -30,12 +30,12 @@ class SpotifyViewController: UIViewController {
         profilePicture.layer.masksToBounds = true
         profilePicture.layer.borderWidth = 1.5
         profilePicture.layer.borderColor = UIColor.whiteColor().CGColor
-        createPlaylistSwitch.tintColor = UIColor.iceDarkRed
-        createPlaylistSwitch.onTintColor = UIColor.iceDarkRed
+        createPlaylistSwitch.tintColor = UIColor.tempoLightRed
+        createPlaylistSwitch.onTintColor = UIColor.tempoLightRed
 		
 		for button in [loginToSpotifyButton, goToSpotifyButton, logOutSpotifyButton] {
-			button.backgroundColor = UIColor.iceDarkRed
-			button.layer.cornerRadius = 1
+			button.backgroundColor = UIColor.tempoLightRed
+			button.layer.cornerRadius = 5.0
 			button.layer.masksToBounds = true
 		}
 	}

@@ -9,5 +9,16 @@
 import UIKit
 
 class FeedTableViewCell: UITableViewCell {
+	
     @IBOutlet var postView: PostView!
+    @IBOutlet weak var separator: UIView!
+    @IBOutlet weak var separatorHeight: NSLayoutConstraint!
+	
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		
+		postView.backgroundColor = UIColor.tempoLightGray
+		separator.backgroundColor = UIColor.separatorGray
+		separatorHeight.constant = 0.5
+	}
 }

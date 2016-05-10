@@ -17,9 +17,15 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		title = "Add to Playlists"
-		let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(dismissVC))
+		title = "Add to Playlist"
+		view.backgroundColor = UIColor.tempoDarkGray
+		
+		let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(PlaylistTableViewController.dismissVC))
+		cancelButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Avenir-Book", size: 14)!], forState: .Normal)
 		navigationItem.leftBarButtonItem = cancelButton
+		
+		tableView.rowHeight = 72
+		tableView.showsVerticalScrollIndicator = false
 		tableView.registerNib(UINib(nibName: "PlaylistTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaylistCell")
     }
 	
@@ -57,7 +63,7 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
 		cell.playlistNumSongsLabel.text = numTracks == 1 ? "\(numTracks) Song" : "\(numTracks) Songs"
 		
 		if trackImages.count == 0 {
-			cell.playlistImage.image = UIImage(named: "Music-Icon")
+			cell.playlistImage.image = UIImage(named: "playlist")
 		} else {
 			if let url = trackImages[0].imageURL {
 				if let data = NSData(contentsOfURL: url){
@@ -69,8 +75,6 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
 
         return cell
     }
-	
-
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		let playlist = playlists[indexPath.row]

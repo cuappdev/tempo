@@ -50,16 +50,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	var resetFirstVC = true
 	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-		// TODO: Figure out a way to get rid of this, since it's deprecated
-		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
 		
 		let URLCache = NSURLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
 		NSURLCache.setSharedURLCache(URLCache)
 		
-		StyleController.applyStyles()
+		// Set up navigation bar divider
+		let navigationBar = navigationController.navigationBar
+		let navigationSeparator = UIView(frame: CGRectMake(0, navigationBar.frame.size.height - 0.5, navigationBar.frame.size.width, 0.5))
+		navigationSeparator.backgroundColor = UIColor.tempoDarkRed
+		navigationSeparator.opaque = true
+		navigationController.navigationBar.addSubview(navigationSeparator)
 		
-		//		let appDomain = NSBundle.mainBundle().bundleIdentifier!;
-		//		NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain);
+		StyleController.applyStyles()
+		UIApplication.sharedApplication().statusBarStyle = .LightContent
 		
 		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
 		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")
@@ -73,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		]
 		
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
-		window!.backgroundColor = UIColor.iceLightGray
+		window!.backgroundColor = UIColor.tempoLightGray
 		window!.makeKeyAndVisible()
 		
 		FBSDKProfile.enableUpdatesOnAccessTokenChange(true)
@@ -115,10 +118,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			revealVC.setFrontViewController(navigationController, animated: false)
 			revealVC.setRearViewController(sidebarVC, animated: false)
 			sidebarVC.elements = [
-				SideBarElement(title: "Feed", viewController: feedVC, image: UIImage(named: "Feed")),
-				SideBarElement(title: "People", viewController: usersVC, image: UIImage(named: "People")),
-				SideBarElement(title: "Liked", viewController: likedVC, image: UIImage(named: "Heart-Menu")),
-				SideBarElement(title: "Spotify", viewController: spotifyVC, image: UIImage(named: "Spotify"))
+				SideBarElement(title: "Feed", viewController: feedVC, image: UIImage(named: "feed-sidebar-icon")),
+				SideBarElement(title: "People", viewController: usersVC, image: UIImage(named: "people-sidebar-icon")),
+				SideBarElement(title: "Liked", viewController: likedVC, image: UIImage(named: "liked-sidebar-icon")),
+				SideBarElement(title: "Spotify", viewController: spotifyVC, image: UIImage(named: "spotify-sidebar-icon"))
 			]
 			sidebarVC.selectionHandler = { [weak self] viewController in
 				if let viewController = viewController {

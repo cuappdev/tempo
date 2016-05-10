@@ -15,9 +15,12 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
         super.viewDidLoad()
 		
 		title = "Liked"
-		view.backgroundColor = UIColor.iceDarkGray
+		view.backgroundColor = UIColor.tempoDarkGray
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
+		
+		tableView.rowHeight = 80
+		tableView.showsVerticalScrollIndicator = false
 		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
 		addHamburgerMenu()
@@ -25,7 +28,8 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		// Fix color above search bar
 		let topView = UIView(frame: view.frame)
 		topView.frame.origin.y = -view.frame.size.height
-		topView.backgroundColor = UIColor.iceDarkRed
+		topView.backgroundColor = UIColor.tempoLightRed
+		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
 		
 		pinView.postView.type = .Liked
@@ -54,7 +58,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
-		cell.postView.backgroundColor = UIColor.iceLightGray
+		cell.postView.backgroundColor = UIColor.tempoLightGray
 		currentlyPlayingIndexPath = indexPath
 	}
 	
