@@ -9,6 +9,8 @@
 import UIKit
 import SWRevealViewController
 
+let RevealControllerToggledNotificaiton = "RevealControllerToggled"
+
 class HamburgerIconView: UIButton {
     
     var topBar: UIView!
@@ -22,37 +24,26 @@ class HamburgerIconView: UIButton {
 
     init(frame: CGRect, color: UIColor, lineWidth: CGFloat, iconWidthRatio: CGFloat) {
         super.init(frame: frame)
+		
+		func applyStyle(bar: UIView, heightMultiplier: CGFloat) {
+			bar.userInteractionEnabled = false
+			bar.center = CGPointMake(bar.center.x, frame.height * heightMultiplier)
+			bar.layer.cornerRadius = lineWidth * 0.5
+			bar.backgroundColor = color
+			bar.layer.allowsEdgeAntialiasing = true
+			addSubview(bar)
+		}
 		                
         topBar = UIView(frame: CGRectMake(0, 0, frame.width * iconWidthRatio, lineWidth))
         middleBar = UIView(frame: CGRectMake(0, 0, frame.width * iconWidthRatio, lineWidth))
         bottomBar = UIView(frame: CGRectMake(0, 0, frame.width * iconWidthRatio, lineWidth))
-        
-        topBar.userInteractionEnabled = false
-        middleBar.userInteractionEnabled = false
-        bottomBar.userInteractionEnabled = false
-        
-        topBar.center = CGPointMake(topBar.center.x, frame.height * (0.5 - spacingRatio))
-        middleBar.center = CGPointMake(middleBar.center.x, frame.height * 0.5)
-        bottomBar.center = CGPointMake(bottomBar.center.x, frame.height * (0.5 + spacingRatio))
-        
-        topBar.layer.cornerRadius = lineWidth * 0.5
-        middleBar.layer.cornerRadius = lineWidth * 0.5
-        bottomBar.layer.cornerRadius = lineWidth * 0.5
-        
-        topBar.backgroundColor = color
-        middleBar.backgroundColor = color
-        bottomBar.backgroundColor = color
-
-        topBar.layer.allowsEdgeAntialiasing = true
-        middleBar.layer.allowsEdgeAntialiasing = true
-        bottomBar.layer.allowsEdgeAntialiasing = true
-
-        addSubview(topBar)
-        addSubview(middleBar)
-        addSubview(bottomBar)
+		
+		applyStyle(topBar, heightMultiplier: 0.5 - spacingRatio)
+        applyStyle(middleBar, heightMultiplier: 0.5)
+		applyStyle(bottomBar, heightMultiplier: 0.5 + spacingRatio)
 		
 		//be notified when hamburger menu opens/closes
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HamburgerIconView.hamburgerMenuToggled), name: "Reveal Controller Toggled", object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(hamburgerMenuToggled), name: RevealControllerToggledNotificaiton, object: nil)
     }
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -88,7 +79,7 @@ class HamburgerIconView: UIButton {
 		if !isHamburgerMode { return }
 		
 		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 30, options: [], animations: {
-			self.middleBar.alpha = 0.0
+			self.middleBar.alpha = 0
 			}, completion: nil)
 		
 		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
@@ -102,7 +93,7 @@ class HamburgerIconView: UIButton {
 			
 			self.bottomBar.transform = CGAffineTransformConcat(rotationCounterClockWise, moveUpToCenter)
 			
-			}, completion: { (success: Bool) in
+			}, completion: { _ in
 				self.userInteractionEnabled = true
 		})
 		isHamburgerMode = false
@@ -112,7 +103,7 @@ class HamburgerIconView: UIButton {
 		if isHamburgerMode { return }
 		
 		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 30, options: [], animations: {
-			self.middleBar.alpha = 1.0
+			self.middleBar.alpha = 1
 			}, completion: nil)
 		
 		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
@@ -123,7 +114,7 @@ class HamburgerIconView: UIButton {
 			self.bottomBar.transform = CGAffineTransformIdentity
 			self.bottomBar.center = CGPointMake(self.bottomBar.center.x, self.frame.height * (0.5 + self.spacingRatio))
 			
-			}, completion: { (success: Bool) in
+			}, completion: { _ in
 				self.userInteractionEnabled = true
 		})
 		isHamburgerMode = true
