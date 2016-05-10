@@ -240,6 +240,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		} else {
 			revealController.frontViewController.view.userInteractionEnabled = false
 		}
+		//Notify any hamburger menus that the menu is being toggled
+		NSNotificationCenter.defaultCenter().postNotificationName(RevealControllerToggledNotificaiton, object: revealController)
 	}
 	
 	func applicationDidBecomeActive(application: UIApplication) {

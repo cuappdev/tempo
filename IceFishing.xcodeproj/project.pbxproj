@@ -45,6 +45,7 @@
 		952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */; };
 		952F0FFD1BCF20E100C53522 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEC1BCF20E100C53522 /* Tools.swift */; };
 		952F0FFE1BCF20E100C53522 /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FED1BCF20E100C53522 /* Tweaks.swift */; };
+		95D1E77E1CE20BED00E1EF0F /* HamburgerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1E77D1CE20BED00E1EF0F /* HamburgerIconView.swift */; };
 		B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B085F3B41BE3CBB80000421E /* SearchViewController.xib */; };
 		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
 		CCC0F80E1C0257A2003429BF /* BackendNotConnectedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */; };
@@ -138,6 +139,7 @@
 		952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitBugViewController.swift; sourceTree = "<group>"; };
 		952F0FEC1BCF20E100C53522 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		952F0FED1BCF20E100C53522 /* Tweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweaks.swift; sourceTree = "<group>"; };
+		95D1E77D1CE20BED00E1EF0F /* HamburgerIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerIconView.swift; sourceTree = "<group>"; };
 		A1698B38F16E152E9A84B507 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A87B0C101563CFC264BBA7E6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods-IceFishing/Pods-IceFishing.debug.xcconfig"; sourceTree = "<group>"; };
 		B085F3B31BE3CBB80000421E /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 		1D65392E1AD0E23800E82627 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				95D1E77D1CE20BED00E1EF0F /* HamburgerIconView.swift */,
 				FA1E1A7D1ADB0818007C823C /* PostView.swift */,
 				BA24C57C1AF866630066C2ED /* SearchPostView.swift */,
 				FA171CBF1AF1D758007B40AF /* FeedImageView.swift */,
@@ -610,6 +613,7 @@
 				1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */,
 				D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */,
 				D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */,
+				95D1E77E1CE20BED00E1EF0F /* HamburgerIconView.swift in Sources */,
 				952F0FFE1BCF20E100C53522 /* Tweaks.swift in Sources */,
 				D160AE021BE677D4003B0E1A /* PlaylistTableViewController.swift in Sources */,
 				D148F4AA1AF03EB4009AB073 /* PostHistoryTableViewController.swift in Sources */,
