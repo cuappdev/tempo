@@ -271,7 +271,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	//This allows for the text not to be viewed behind the search bar at the top of the screen
 	private let statusBarView: UIView = {
 		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
-		view.backgroundColor = UIColor.tempoDarkRed
+		view.backgroundColor = UIColor.tempoLightRed
 		return view
 	}()
 	

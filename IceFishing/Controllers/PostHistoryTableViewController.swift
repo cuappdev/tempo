@@ -27,6 +27,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		let topView = UIView(frame: view.frame)
 		topView.frame.origin.y = -view.frame.size.height
 		topView.backgroundColor = UIColor.tempoLightRed
+		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
 		
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
