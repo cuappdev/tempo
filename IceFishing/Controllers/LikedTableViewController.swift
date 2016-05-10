@@ -15,7 +15,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
         super.viewDidLoad()
 		
 		title = "Liked"
-		view.backgroundColor = UIColor.iceDarkGray
+		view.backgroundColor = UIColor.tempoDarkGray
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
@@ -57,7 +57,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
-		cell.postView.backgroundColor = UIColor.iceLightGray
+		cell.postView.backgroundColor = UIColor.tempoLightGray
 		currentlyPlayingIndexPath = indexPath
 	}
 	

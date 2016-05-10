@@ -283,7 +283,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		cell.userInteractionEnabled = true
 		if let index = postedYearMonthDay.indexOf(date.yearMonthDay()) {
 			let alpha = determineAlpha(postedLikes[index])
-			cell.dayInnerCircleView.backgroundColor = UIColor.iceDarkRed.colorWithAlphaComponent(alpha)
+			cell.dayInnerCircleView.backgroundColor = UIColor.tempoLightRed.colorWithAlphaComponent(alpha)
+			cell.userInteractionEnabled = true
 		}
 		
 		return cell

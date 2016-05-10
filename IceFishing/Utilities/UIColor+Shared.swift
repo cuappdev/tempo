@@ -9,11 +9,6 @@
 import Foundation
 
 extension UIColor {
-	@nonobjc static let iceDarkRed = UIColor(red: 154/255.0, green: 57/255.0, blue: 54/255.0, alpha: 1.0)
-	@nonobjc static let iceDarkGreen = UIColor(red: 20/255.0, green: 61/255.0, blue: 54/255.0, alpha: 1.0)
-	@nonobjc static let iceDarkGray = UIColor(red: 35/255.0, green: 36/255.0, blue: 39/255.0, alpha: 1.0)
-	@nonobjc static let iceLightGray = UIColor(red: 44/255.0, green: 45/255.0, blue: 48/255.0, alpha: 1.0)
-	
 	@nonobjc static let tempoUltraLightRed = UIColor.colorFromCode(0xA26660)
 	@nonobjc static let tempoLightRed = UIColor.colorFromCode(0xB04B40)
 	@nonobjc static let tempoDarkRed = UIColor.colorFromCode(0x8B4038)

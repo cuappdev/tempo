@@ -66,7 +66,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
-        selectedCell.postView.backgroundColor = UIColor.iceLightGray
+        selectedCell.postView.backgroundColor = UIColor.tempoLightGray
 		currentlyPlayingIndexPath = indexPath
     }
 

@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		]
 		
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
-		window!.backgroundColor = UIColor.iceLightGray
+		window!.backgroundColor = UIColor.tempoLightGray
 		window!.makeKeyAndVisible()
 		
 		FBSDKProfile.enableUpdatesOnAccessTokenChange(true)

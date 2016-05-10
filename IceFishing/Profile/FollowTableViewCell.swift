@@ -45,7 +45,7 @@ class FollowTableViewCell: UITableViewCell {
 
     // Custom selected cell view
     override func setSelected(selected: Bool, animated: Bool) {
-		contentView.backgroundColor = selected ? UIColor.iceLightGray : UIColor.clearColor()
+		contentView.backgroundColor = selected ? UIColor.tempoLightGray : UIColor.clearColor()
     }
 	
 	@IBAction func didTapFollowButton(sender: AnyObject) {

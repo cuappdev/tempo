@@ -34,7 +34,7 @@
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Zb-1Y-QdA" userLabel="Overlay">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="240"/>
-                    <color key="backgroundColor" red="0.20392156862745098" green="0.20784313725490194" blue="0.22352941176470587" alpha="0.94999999999999996" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.20392156862745098" green="0.20784313725490194" blue="0.22352941176470587" alpha="0.95999999999999996" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="240" id="VnJ-e8-6PD"/>
                     </constraints>
