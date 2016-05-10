@@ -18,6 +18,8 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
         super.viewDidLoad()
 		
 		title = "Add to Playlist"
+		view.backgroundColor = UIColor.tempoDarkGray
+		
 		let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(PlaylistTableViewController.dismissVC))
 		cancelButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Avenir-Book", size: 14)!], forState: .Normal)
 		navigationItem.leftBarButtonItem = cancelButton

@@ -41,7 +41,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var likesLabel: UILabel?
     @IBOutlet var likedButton: UIButton?
     @IBOutlet var addButton: UIButton?
-    let fillColor = UIColor.iceDarkGray
+    let fillColor = UIColor.tempoDarkGray
  
     var type: ViewType = .Feed
 	var songStatus: SavedSongStatus = .NotSaved
@@ -66,7 +66,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
-                    likesLabel?.text = "\(post.likes) likes"
+					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					dateLabel?.text = post.relativeDate()
@@ -75,7 +75,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 				case .History:
 					profileNameLabel?.text = post.song.artist
 					descriptionLabel?.text = "\(post.song.title)"
-					likesLabel?.text = "\(post.likes) likes"
+					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					dateLabel?.text = post.relativeDate()
@@ -86,7 +86,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					self.addButton!.frame.origin.y = self.likedButton!.frame.origin.y
 					profileNameLabel?.text = post.song.artist
 					descriptionLabel?.text = "\(post.song.title)"
-					likesLabel?.hidden = true
+					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					likedButton!.hidden = true
 					dateLabel?.text = "Add to Spotify"
 					updateAddButton()
@@ -179,7 +179,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         avatarImageView?.userInteractionEnabled = true
         profileNameLabel?.userInteractionEnabled = true
         
-        layer.borderColor = UIColor.iceDarkGray.CGColor
+        layer.borderColor = UIColor.tempoDarkGray.CGColor
         layer.borderWidth = 0.7
 		
 		self.setupMarqueeLabel(profileNameLabel!)
@@ -234,7 +234,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             let color: UIColor
             let duration = NSTimeInterval(0.3)
             if post.player.isPlaying {
-                color = UIColor.iceDarkRed
+                color = UIColor.tempoLightRed
 				if type == .Feed {
 					if let layer = avatarLayer {
 						let animation = CABasicAnimation(keyPath: "transform.rotation")
@@ -328,7 +328,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			if hitView == likedButton {
 				post.toggleLike()
 				let name = post.isLiked ? "filled-heart" : "empty-heart"
-				likesLabel?.text = "\(post.likes) likes"
+				likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 				likedButton?.setImage(UIImage(named: name), forState: .Normal)
 			} else if hitView == addButton {
 				if songStatus == .NotSaved {

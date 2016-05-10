@@ -32,7 +32,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		title = "Feed"
+		title = "Friend's Tunes"
+		view.backgroundColor = UIColor.tempoDarkGray
 		setupAddButton()
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
@@ -45,6 +46,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		addHamburgerMenu()
 		
 		tableView.tableHeaderView = nil
+		tableView.rowHeight = 80
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
@@ -106,8 +108,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 					let emptyView = UIView.viewForEmptyViewController(.Feed, size: x.view.bounds.size, isCurrentUser: true, userFirstName: "")
 					let button = UIButton(frame: CGRect(x: 0, y: 0, width: 190, height: 50))
 					button.center = x.view.center
-					button.center.y += 90
-					button.backgroundColor = UIColor.iceDarkRed
+					button.center.y += 65
+					button.backgroundColor = UIColor.tempoLightRed
 					button.setTitle("Follow more friends", forState: .Normal)
 					button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 					button.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)

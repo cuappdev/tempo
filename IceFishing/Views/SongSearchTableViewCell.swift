@@ -16,6 +16,7 @@ class SongSearchTableViewCell: UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
+		contentView.backgroundColor = UIColor.tempoLightGray
 		separator.backgroundColor = UIColor.separatorGray
 		separatorHeight.constant = 0.5
 	}
