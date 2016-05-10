@@ -116,10 +116,6 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		removeRevealGesture()
 	}
 	
-	override func preferredStatusBarStyle() -> UIStatusBarStyle {
-		return .LightContent
-	}
-	
     // MARK: Table View Methods
 	
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

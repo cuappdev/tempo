@@ -50,8 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	var resetFirstVC = true
 	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-		// TODO: Figure out a way to get rid of this, since it's deprecated
-		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
 		
 		let URLCache = NSURLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
 		NSURLCache.setSharedURLCache(URLCache)
@@ -64,10 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		navigationController.navigationBar.addSubview(navigationSeparator)
 		
 		StyleController.applyStyles()
-		UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: false)
-		
-		//		let appDomain = NSBundle.mainBundle().bundleIdentifier!;
-		//		NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain);
+		UIApplication.sharedApplication().statusBarStyle = .LightContent
 		
 		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
 		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")

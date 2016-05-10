@@ -283,10 +283,6 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		statusBarView.removeFromSuperview()
 	}
 	
-	override func preferredStatusBarStyle() -> UIStatusBarStyle {
-		return .LightContent
-	}
-	
 	// MARK: - Save song button clicked
 	
 	func didTapAddButtonForPostView(postView: PostView) {
