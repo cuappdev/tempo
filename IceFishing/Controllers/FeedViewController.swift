@@ -65,7 +65,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 			plusButtonTapped()
 			pretappedPlusButton = false
 		} else {
-			print("false")
 			rotatePlusButton(false)
 		}
 	}
@@ -199,7 +198,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	}
 	
 	func plusButtonTapped() {
-		print("true")
 		rotatePlusButton(true)
 		
 		searchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
