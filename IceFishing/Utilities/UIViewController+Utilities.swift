@@ -10,12 +10,17 @@ import Foundation
 import SWRevealViewController
 
 extension UIViewController {
+	
 	func addHamburgerMenu() {
-		let image = UIImage(named: "hamburger-menu")!
-		let menuButton = UIButton(frame: CGRect(origin: CGPointZero, size: image.size))
-		menuButton.setImage(image, forState: .Normal)
-		menuButton.addTarget(revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), forControlEvents: .TouchUpInside)
-		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
+		
+		let hamburgerIconView = HamburgerIconView(frame: CGRectMake(0, 0, 30, 30), color: UIColor.whiteColor().colorWithAlphaComponent(0.85), lineWidth: 2, iconWidthRatio: 0.50)
+		hamburgerIconView.addTarget(self, action: #selector(UIViewController.toggleHamburger(_:)), forControlEvents: .TouchUpInside)
+		
+		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerIconView)
+	}
+	
+	func toggleHamburger(hamburgerIconView: HamburgerIconView) {
+		revealViewController().revealToggle(hamburgerIconView)
 	}
 	
 	func addRevealGesture() {
