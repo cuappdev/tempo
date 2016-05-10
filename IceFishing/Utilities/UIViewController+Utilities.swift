@@ -37,4 +37,13 @@ extension UIViewController {
 			Banner.APINotConnected(self)
 		}
 	}
+	
+	func dismissVCWithFadeAnimation() {
+		let transition = CATransition()
+		transition.duration = 0.3
+		transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+		transition.type = kCATransitionFade
+		view.window!.layer.addAnimation(transition, forKey: nil)
+		dismissViewControllerAnimated(false, completion: nil)
+	}
 }

@@ -60,9 +60,6 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		sideView.hidden = true
 		sideView.backgroundColor = UIColor.tempoLightRed
 		
-		profilePicture.layer.masksToBounds = false
-		profilePicture.layer.borderWidth = 1.5
-		profilePicture.layer.borderColor = UIColor.whiteColor().CGColor
 		profilePicture.frame = CGRectMake(0, 0, 85, 85)
 		profilePicture.layer.cornerRadius = profilePicture.frame.size.height/2
 		profilePicture.clipsToBounds = true

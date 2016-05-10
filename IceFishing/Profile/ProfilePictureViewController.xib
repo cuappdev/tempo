@@ -17,6 +17,17 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QIa-ME-BPE">
+                    <rect key="frame" x="565" y="25" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="2Wj-zU-AUc"/>
+                        <constraint firstAttribute="width" secondItem="QIa-ME-BPE" secondAttribute="height" multiplier="1:1" id="zBV-iE-RDf"/>
+                    </constraints>
+                    <state key="normal" image="exit"/>
+                    <connections>
+                        <action selector="exitButtonPressed:" destination="-1" eventType="touchUpInside" id="Ntm-e4-Ia7"/>
+                    </connections>
+                </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yGS-IU-S99">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="tintColor" name="controlLightHighlightColor" catalog="System" colorSpace="catalog"/>
@@ -24,21 +35,14 @@
                         <constraint firstAttribute="width" secondItem="yGS-IU-S99" secondAttribute="height" multiplier="1:1" id="OjG-gx-oKA"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QIa-ME-BPE">
-                    <rect key="frame" x="563" y="20" width="32" height="32"/>
-                    <state key="normal" image="exit"/>
-                    <connections>
-                        <action selector="exitButtonPressed:" destination="-1" eventType="touchUpInside" id="Ntm-e4-Ia7"/>
-                    </connections>
-                </button>
             </subviews>
-            <color key="backgroundColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+            <color key="backgroundColor" red="0.13725490196078433" green="0.14117647058823529" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="yGS-IU-S99" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="59y-UO-B8q"/>
                 <constraint firstItem="yGS-IU-S99" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="5Gz-Wo-owf"/>
-                <constraint firstItem="QIa-ME-BPE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="Qz4-eI-Tu6"/>
+                <constraint firstItem="QIa-ME-BPE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="Qz4-eI-Tu6"/>
                 <constraint firstAttribute="trailing" secondItem="yGS-IU-S99" secondAttribute="trailing" id="ZiV-AH-fCZ"/>
-                <constraint firstAttribute="trailing" secondItem="QIa-ME-BPE" secondAttribute="trailing" constant="5" id="c1h-au-ulG"/>
+                <constraint firstAttribute="trailing" secondItem="QIa-ME-BPE" secondAttribute="trailing" constant="15" id="c1h-au-ulG"/>
                 <constraint firstItem="yGS-IU-S99" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ktO-jr-syP"/>
             </constraints>
             <variation key="default">
