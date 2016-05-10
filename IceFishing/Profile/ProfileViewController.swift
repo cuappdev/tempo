@@ -110,6 +110,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
 		nameLabel.text = user.name
 		usernameLabel.text = "@" + user.username
+		hipsterCredLabel.text = "\(user.hipsterScore)"
         user.loadImage {
             self.profilePictureView.image = $0
 			self.backgroundImage.image = $0
