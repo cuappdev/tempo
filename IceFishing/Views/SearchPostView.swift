@@ -36,7 +36,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
                     object: post.player,
                     queue: nil, usingBlock: { [weak self] note in
-                        self?.updateProfileLabelTextColor()
+                        self?.updateProfileLabel()
                         
                         if self?.updateTimer == nil && self?.post?.player.isPlaying ?? false {
                             // 60 fps
@@ -117,18 +117,21 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         descriptionLabel?.text = post!.song.title + " · " + post!.song.album
     }
     
-    func updateProfileLabelTextColor() {
+    func updateProfileLabel() {
         if let post = post {
             var color: UIColor!
+			var font: UIFont!
             let duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = profileNameLabel!
             if post.player.isPlaying {
                 color = UIColor.tempoLightRed
+				font = UIFont(name: "Avenir-Heavy", size: 14)!
                 // Will scroll labels
                 profileNameLabel?.holdScrolling = false
                 descriptionLabel?.holdScrolling = false
             } else {
                 color = UIColor.whiteColor()
+				font = UIFont(name: "Avenir-Medium", size: 14)!
                 // Labels won't scroll
                 profileNameLabel?.holdScrolling = true
                 descriptionLabel?.holdScrolling = true
@@ -137,8 +140,10 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
             if !label.textColor.isEqual(color) {
                 UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
                     label.textColor = color
+					label.font = font
                     }, completion: { _ in
                         label.textColor = color
+						label.font = font
                 })
             }
         }

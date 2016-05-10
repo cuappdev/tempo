@@ -109,7 +109,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
                     object: post.player,
                     queue: nil, usingBlock: { [weak self] note in
-                        self?.updateProfileLabelTextColor()
+                        self?.updateProfileLabel()
                         self?.setUpTimer()
                         self?.setNeedsDisplay()
                 })
@@ -203,7 +203,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         setNeedsDisplay()
-        updateProfileLabelTextColor()
+        updateProfileLabel()
         setUpTimer()
     }
 	
@@ -222,9 +222,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         descriptionLabel?.text = post!.song.title + " · " + post!.song.album
     }
     
-    func updateProfileLabelTextColor() {
+    func updateProfileLabel() {
         let avatarLayer = avatarImageView?.layer
-//        let current: AnyObject? = layer.presentationLayer()?.valueForKeyPath("transform.rotation")
         if let layer = avatarLayer {
             layer.transform = CATransform3DIdentity
             layer.removeAnimationForKey("transform.rotation")
@@ -232,9 +231,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 
         if let post = post {
             let color: UIColor
+			let font: UIFont
             let duration = NSTimeInterval(0.3)
             if post.player.isPlaying {
                 color = UIColor.tempoLightRed
+				font = UIFont(name: "Avenir-Heavy", size: 14)!
 				if type == .Feed {
 					if let layer = avatarLayer {
 						let animation = CABasicAnimation(keyPath: "transform.rotation")
@@ -251,18 +252,20 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 descriptionLabel?.holdScrolling = false
             } else {
                 color = UIColor.whiteColor()
+				font = UIFont(name: "Avenir-Medium", size: 14)!
                 // Labels won't scroll
                 profileNameLabel?.holdScrolling = true
                 descriptionLabel?.holdScrolling = true
-
             }
 			
 			guard let label = profileNameLabel else { return }
             if !label.textColor.isEqual(color) {
                 UIView.transitionWithView(label, duration: duration, options: .TransitionCrossDissolve, animations: {
                     label.textColor = color
+					label.font = font
                     }, completion: { _ in
                         label.textColor = color
+						label.font = font
                 })
             }
         }
