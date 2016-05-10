@@ -18,6 +18,9 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		view.backgroundColor = UIColor.iceDarkGray
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
+		
+		tableView.rowHeight = 80
+		tableView.showsVerticalScrollIndicator = false
 		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
 		addHamburgerMenu()

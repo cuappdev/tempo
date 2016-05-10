@@ -30,6 +30,8 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		tableView.addSubview(topView)
 		
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+		tableView.rowHeight = 80
+		tableView.showsVerticalScrollIndicator = false
 
 		pinView.postView.type = .History
     }
