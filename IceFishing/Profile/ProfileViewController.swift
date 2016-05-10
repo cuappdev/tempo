@@ -64,9 +64,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		collectionView.backgroundColor = UIColor.clearColor()
 		collectionView.scrollsToTop = false
 		
-		let views: [String : AnyObject] = ["pic" : profilePictureView, "topGuide": topLayoutGuide]
-		view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topGuide]-[pic]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views))
-		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
 			if traitCollection.forceTouchCapability == .Available {
