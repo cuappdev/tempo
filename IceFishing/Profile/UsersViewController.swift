@@ -31,7 +31,9 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
-		view.backgroundColor = UIColor.iceDarkGray
+		view.backgroundColor = UIColor.tempoDarkGray
+		tableView.rowHeight = 80
+		tableView.showsVerticalScrollIndicator = false
 		tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
 		
 		// Set up search bar
@@ -139,12 +141,14 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		
         cell.userName.text = user.name
         cell.userHandle.text = "@\(user.username)"
-        cell.numFollowLabel.text = "\(user.followersCount) followers"
+		cell.numFollowLabel.text = (user.followersCount == 1) ? "1 follower" : "\(user.followersCount) followers"
         user.loadImage {
             cell.userImage.image = $0
         }
 		if user.id != User.currentUser.id {
-			cell.followButton.setTitle(user.isFollowing ? "Following" : "Follow", forState: .Normal)
+			cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
+			cell.followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
+			cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.whiteColor(), forState: .Normal)
 			cell.delegate = self
 		} else {
 			cell.followButton.setTitle("", forState: .Normal)
@@ -159,7 +163,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor.iceLightGray
+        selectedCell.contentView.backgroundColor = UIColor.tempoLightGray
 		
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
@@ -217,7 +221,9 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		User.currentUser.followingCount += user.isFollowing ? 1 : -1
 		user.followersCount += user.isFollowing ? 1 : -1
 		let cell = tableView.cellForRowAtIndexPath(indexPath!) as! FollowTableViewCell
-		cell.followButton.setTitle(user.isFollowing ? "Following" : "Follow", forState: .Normal)
+		cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
+		cell.followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
+		cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.whiteColor(), forState: .Normal)
 		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
 		dispatch_async(dispatch_get_main_queue()) {
 			self.tableView.reloadData()
@@ -256,7 +262,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	//This allows for the text not to be viewed behind the search bar at the top of the screen
 	private let statusBarView: UIView = {
 		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
-		view.backgroundColor = UIColor.iceDarkRed
+		view.backgroundColor = UIColor.tempoLightRed
 		return view
 	}()
 	

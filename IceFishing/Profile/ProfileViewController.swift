@@ -24,15 +24,19 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	var avgLikes: Float = 0
 	
 	// Outlets
+    @IBOutlet weak var backgroundImage: UIImageView!
 	@IBOutlet weak var profilePictureView: UIImageView!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var usernameLabel: UILabel!
 	@IBOutlet weak var followButton: UIButton!
+    @IBOutlet weak var hipsterCredButton: UIButton!
 	@IBOutlet weak var followersButton: UIButton!
 	@IBOutlet weak var followingButton: UIButton!
-	@IBOutlet weak var divider: UIView!
 	@IBOutlet weak var separator: UIView!
 	@IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var hipsterCredLabel: UILabel!
+    @IBOutlet weak var followersLabel: UILabel!
+    @IBOutlet weak var followingLabel: UILabel!
 	
     //Animation
 //    private let popTransition = PopAnimator()
@@ -40,17 +44,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		profilePictureView.layer.borderWidth = 1.5
-		profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
-		profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
-		profilePictureView.clipsToBounds = true
+		followButton.layer.borderWidth = 1.5
+		followButton.layer.borderColor = UIColor.tempoLightRed.CGColor
+		followButton.backgroundColor = UIColor.clearColor()
 		
 		setupUserUI()
-		
 		updateFollowingUI()
 		
 		// Post History Calendar
-		separator.backgroundColor = UIColor.iceDarkRed
+		separator.backgroundColor = UIColor.tempoLightRed
 		
 		let layout = collectionView.collectionViewLayout as! HipStickyHeaderFlowLayout
 		layout.sectionInset = UIEdgeInsets(top: 0, left: padding*6, bottom: padding*2, right: 0)
@@ -105,7 +107,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		}
 		
 		// Profile Info
-		title = "Profile"
 		if user == User.currentUser {
 			addHamburgerMenu()
 		}
@@ -114,9 +115,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		usernameLabel.text = "@" + user.username
         user.loadImage {
             self.profilePictureView.image = $0
+			self.backgroundImage.image = $0
         }
-        profilePictureView.layer.borderWidth = 1.5
-        profilePictureView.layer.borderColor = UIColor.whiteColor().CGColor
+
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true
         
@@ -127,9 +128,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		tapProfile.addTarget(self, action: #selector(profileTapped(_:)))
 		
 		if User.currentUser.username == user.username {
-			followButton.setTitle("EDIT USERNAME", forState: .Normal)
-			followButton.addTarget(self, action: #selector(userHandleButtonClicked(_:)), forControlEvents: .TouchUpInside)
+			title = "My Profile"
+			followButton.setTitle("EDIT", forState: .Normal)
+			followButton.addTarget(self, action: #selector(ProfileViewController.userHandleButtonClicked(_:)), forControlEvents: .TouchUpInside)
 		} else {
+			title = "Profile"
 			followButton.hidden = true
 			followButton.alpha = 0
 			followButton.addTarget(self, action: #selector(followButtonPressed(_:)), forControlEvents: .TouchUpInside)
@@ -186,9 +189,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		if User.currentUser.username != user.username {
 			followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
 		}
-		followingButton.setTitle("\(user.followingCount) Following", forState: .Normal)
-		followersButton.setTitle("\(user.followersCount) Followers", forState: .Normal)
+		
+		followingLabel.text = "\(user.followingCount)"
+		followersLabel.text = "\(user.followersCount)"
 	}
+	
+    @IBAction func hipsterCredButtonPressed(sender: UIButton) {
+		// We should display to the user how hipster score is calculated for gamification.
+    }
 	
 	@IBAction func followersButtonPressed(sender: UIButton) {
 		displayUsers(.Followers)

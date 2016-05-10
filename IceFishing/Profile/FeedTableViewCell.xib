@@ -32,13 +32,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reflections · MisterWives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOI-Pn-Mde" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                                <rect key="frame" x="76" y="28" width="156.5" height="19.5"/>
+                                <rect key="frame" x="76" y="29" width="156.5" height="19.5"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                 <color key="textColor" red="0.77254901960784317" green="0.71764705882352942" blue="0.71372549019607845" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8 likes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgO-bG-1rj">
-                                <rect key="frame" x="76" y="49.5" width="33" height="17"/>
+                                <rect key="frame" x="76" y="50.5" width="33" height="17"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="12"/>
                                 <color key="textColor" red="0.5490196078431373" green="0.50588235294117645" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -51,7 +51,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6mr-Fh-ZfQ">
-                                <rect key="frame" x="311" y="43" width="30" height="30"/>
+                                <rect key="frame" x="311" y="44" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="3F1-sB-VvE"/>
                                     <constraint firstAttribute="width" constant="30" id="LDw-C6-eoZ"/>
@@ -67,7 +67,7 @@
                                 </variation>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OvL-PV-iIp">
-                                <rect key="frame" x="281" y="43" width="30" height="30"/>
+                                <rect key="frame" x="281" y="44" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="OvL-PV-iIp" secondAttribute="height" multiplier="1:1" id="7E2-eO-zQ8"/>
                                     <constraint firstAttribute="height" constant="30" id="h3w-d9-Ddf"/>
@@ -89,7 +89,7 @@
                             <constraint firstAttribute="bottom" secondItem="6mr-Fh-ZfQ" secondAttribute="bottom" constant="15" id="Aom-ii-Yop"/>
                             <constraint firstItem="6mr-Fh-ZfQ" firstAttribute="bottom" secondItem="Nid-NE-gCm" secondAttribute="bottom" id="GzN-4s-nM5"/>
                             <constraint firstAttribute="centerY" secondItem="Nid-NE-gCm" secondAttribute="centerY" id="HKw-jz-64n"/>
-                            <constraint firstItem="uOI-Pn-Mde" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="bottom" constant="-4" id="Hqh-ji-dHw"/>
+                            <constraint firstItem="uOI-Pn-Mde" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="bottom" constant="-3" id="Hqh-ji-dHw"/>
                             <constraint firstItem="Nid-NE-gCm" firstAttribute="leading" secondItem="QJt-Cq-8SO" secondAttribute="leading" constant="14" id="KdP-ma-5Op"/>
                             <constraint firstItem="OvL-PV-iIp" firstAttribute="height" secondItem="6mr-Fh-ZfQ" secondAttribute="height" id="Mtk-pH-XFW"/>
                             <constraint firstItem="6mr-Fh-ZfQ" firstAttribute="trailing" secondItem="5c9-Vi-T55" secondAttribute="trailing" id="NBM-qT-a6T"/>
