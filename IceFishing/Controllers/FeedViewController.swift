@@ -47,6 +47,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		
 		tableView.tableHeaderView = nil
 		tableView.rowHeight = 80
+		tableView.showsVerticalScrollIndicator = false
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {

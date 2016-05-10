@@ -44,22 +44,43 @@
                                     </mask>
                                 </variation>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtY-1R-IMy">
+                                <rect key="frame" x="244" y="21" width="90" height="30"/>
+                                <color key="backgroundColor" red="0.69019607843137254" green="0.29411764705882354" blue="0.25098039215686274" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="FV6-ZE-CbN"/>
+                                    <constraint firstAttribute="height" constant="30" id="OCW-s6-dCU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="12"/>
+                                <state key="normal" title="SHARE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="4"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.17254901960784313" green="0.1764705882352941" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="gtY-1R-IMy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YKr-CE-jlM" secondAttribute="trailing" constant="8" id="5X6-3f-Std"/>
                             <constraint firstAttribute="centerY" secondItem="Nid-NE-gCm" secondAttribute="centerY" id="HKw-jz-64n"/>
+                            <constraint firstItem="gtY-1R-IMy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uOI-Pn-Mde" secondAttribute="trailing" constant="8" id="JUy-fb-his"/>
                             <constraint firstItem="Nid-NE-gCm" firstAttribute="leading" secondItem="QJt-Cq-8SO" secondAttribute="leading" constant="14" id="KdP-ma-5Op"/>
                             <constraint firstItem="uOI-Pn-Mde" firstAttribute="leading" secondItem="YKr-CE-jlM" secondAttribute="leading" id="Pbo-hS-N69"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YKr-CE-jlM" secondAttribute="trailing" constant="14" id="Qm8-3A-vx8"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uOI-Pn-Mde" secondAttribute="trailing" constant="14" id="bgX-rg-DvA"/>
                             <constraint firstItem="uOI-Pn-Mde" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="bottom" constant="-3" id="bsi-sg-UgG"/>
                             <constraint firstItem="YKr-CE-jlM" firstAttribute="leading" secondItem="Nid-NE-gCm" secondAttribute="trailing" constant="17" id="eap-fr-BWT"/>
+                            <constraint firstAttribute="trailing" secondItem="gtY-1R-IMy" secondAttribute="trailing" constant="14" id="hqA-fC-exf"/>
+                            <constraint firstItem="gtY-1R-IMy" firstAttribute="centerY" secondItem="QJt-Cq-8SO" secondAttribute="centerY" id="lSM-Eo-Ylk"/>
                             <constraint firstItem="YKr-CE-jlM" firstAttribute="top" secondItem="QJt-Cq-8SO" secondAttribute="top" constant="18" id="lZk-RB-4b0"/>
                             <constraint firstItem="Nid-NE-gCm" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="top" id="wMg-cp-mDM"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="wMg-cp-mDM"/>
+                                <exclude reference="Qm8-3A-vx8"/>
+                                <exclude reference="bgX-rg-DvA"/>
                             </mask>
                         </variation>
                         <connections>
@@ -103,6 +124,7 @@
                 <outlet property="postView" destination="QJt-Cq-8SO" id="lEX-7b-WMB"/>
                 <outlet property="separator" destination="xzZ-0z-OQb" id="SeU-gY-tWT"/>
                 <outlet property="separatorHeight" destination="3yc-Nr-cJV" id="0yM-uu-EVe"/>
+                <outlet property="shareButton" destination="gtY-1R-IMy" id="kV6-n0-Y2g"/>
             </connections>
             <point key="canvasLocation" x="381" y="245"/>
         </tableViewCell>

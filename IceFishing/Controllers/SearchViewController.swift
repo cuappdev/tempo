@@ -17,7 +17,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 
 	@IBOutlet weak var searchBarContainer: UIView!
 	@IBOutlet weak var tableView: UITableView!
-	@IBOutlet weak var postButtonContainer: UIView!
 	
 	weak var delegate: SongSearchDelegate?
 	
@@ -25,18 +24,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	let kSearchBase: String = "https://api.spotify.com/v1/search?type=track&q="
 	var activePlayer: Player?
 	var lastRequest: Request?
-	var selectedSong: Song? {
-		didSet {
-			postButtonContainer.hidden = selectedSong == nil
-		}
-	}
-	
+	var selectedSong: Song?
+	var selectedCell: SongSearchTableViewCell?
 	var searchBar = UISearchBar()
-	lazy var postButton: PostButton = {
-		let button = PostButton.instanceFromNib()
-		button.addTarget(self, action: #selector(submitSong), forControlEvents: .TouchUpInside)
-		return button
-	}()
 	
 	// MARK: - Lifecycle Methods
 	
@@ -122,6 +112,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		let post = results[indexPath.row]
 		cell.postView.post = post
 		cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
+		cell.shareButton.hidden = true
+		cell.shareButton.addTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
 		
 		return cell
 	}
@@ -130,7 +122,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
+		
+		if selectedCell != nil {
+			selectedCell?.shareButton.hidden = true
+		}
+		
 		let cell = tableView.cellForRowAtIndexPath(indexPath) as! SongSearchTableViewCell
+		selectedCell = cell
+		cell.shareButton.hidden = false
+		
 		let post = results[indexPath.row]
 		selectSong(post.song)
 		
@@ -162,12 +162,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	// MARK: - Song Request Methods
 	
 	func selectSong(song: Song) {
-		if postButton.superview == nil {
-			postButton.translatesAutoresizingMaskIntoConstraints = false
-			postButtonContainer.addSubview(postButton)
-			NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsToFillSuperview(postButton))
-		}
-		postButton.title = "\(song.title) - \(song.artist)"
 		selectedSong = song
 		searchBar.resignFirstResponder()
 	}
