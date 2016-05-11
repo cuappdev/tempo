@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -24,51 +24,30 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tempo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVp-eX-wnF">
-                    <rect key="frame" x="104" y="197" width="393" height="137"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="393" id="P15-EP-eoD"/>
-                        <constraint firstAttribute="height" constant="137" id="T8X-v3-3Tv"/>
-                        <constraint firstAttribute="width" constant="393" id="Veo-JX-qAT"/>
-                    </constraints>
+                    <rect key="frame" x="160" y="181" width="280" height="120.5"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="88"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="share your favorite songs with friends " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T8J-AL-ZeE">
-                    <rect key="frame" x="118" y="304" width="365" height="51"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="57" id="7Xh-r4-Cwm"/>
-                        <constraint firstAttribute="width" constant="332" id="hpE-Fa-BjQ"/>
-                        <constraint firstAttribute="width" constant="365" id="vg3-bO-tv1"/>
-                        <constraint firstAttribute="height" constant="51" id="ymk-dP-atl"/>
-                    </constraints>
+                    <rect key="frame" x="154" y="288" width="293" height="24"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="7Xh-r4-Cwm"/>
-                            <exclude reference="hpE-Fa-BjQ"/>
-                        </mask>
-                    </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vinyl-Red" translatesAutoresizingMaskIntoConstraints="NO" id="sgc-14-eQ1">
-                    <rect key="frame" x="250" y="349" width="100" height="100"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vinyl-red" translatesAutoresizingMaskIntoConstraints="NO" id="sgc-14-eQ1">
+                    <rect key="frame" x="250" y="316.5" width="100" height="100"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="jSd-Nq-ofe"/>
                         <constraint firstAttribute="height" constant="100" id="vZP-ZA-36R"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vrr-zH-v88">
-                    <rect key="frame" x="180" y="464" width="241" height="53"/>
+                    <rect key="frame" x="180" y="443" width="241" height="53"/>
                     <color key="backgroundColor" red="0.17647058823529413" green="0.26666666666666666" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="100" id="3Tp-bG-H2m"/>
                         <constraint firstAttribute="height" constant="53" id="9oN-Yh-rXy"/>
                         <constraint firstAttribute="width" constant="241" id="MNa-lA-5cl"/>
-                        <constraint firstAttribute="height" constant="40" id="Plc-cc-xfi"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="241" id="ROv-lT-qAJ"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="53" id="yyB-B2-XkM"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                     <color key="tintColor" red="0.1843137255" green="0.28627450980000002" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,14 +55,6 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="3Tp-bG-H2m"/>
-                            <exclude reference="Plc-cc-xfi"/>
-                            <exclude reference="ROv-lT-qAJ"/>
-                            <exclude reference="yyB-B2-XkM"/>
-                        </mask>
-                    </variation>
                     <connections>
                         <action selector="logIn:" destination="-1" eventType="touchUpInside" id="54R-7R-xOR"/>
                     </connections>
@@ -92,38 +63,23 @@
             <color key="backgroundColor" red="0.13725490196078433" green="0.14117647058823529" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="T8J-AL-ZeE" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="0.5" id="0E3-rM-iJM"/>
-                <constraint firstItem="T8J-AL-ZeE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="297" id="3DE-5Y-lZh"/>
-                <constraint firstAttribute="trailing" secondItem="sgc-14-eQ1" secondAttribute="trailing" constant="250" id="3Vu-uC-uJD"/>
                 <constraint firstItem="sgc-14-eQ1" firstAttribute="top" secondItem="SVp-eX-wnF" secondAttribute="bottom" constant="15" id="E9m-Jz-8lJ"/>
-                <constraint firstItem="T8J-AL-ZeE" firstAttribute="top" secondItem="SVp-eX-wnF" secondAttribute="bottom" constant="-27" id="GHn-Zk-b5A"/>
+                <constraint firstItem="Vrr-zH-v88" firstAttribute="top" secondItem="sgc-14-eQ1" secondAttribute="bottom" constant="26" id="HyW-lJ-NYM"/>
+                <constraint firstItem="T8J-AL-ZeE" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="IRV-62-1pZ"/>
                 <constraint firstItem="sgc-14-eQ1" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="KOu-CW-DsZ"/>
-                <constraint firstItem="sgc-14-eQ1" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="NZX-oe-cRc"/>
-                <constraint firstItem="sgc-14-eQ1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="342" id="TKA-RZ-edS"/>
                 <constraint firstItem="SVp-eX-wnF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Uo6-L3-c8e"/>
                 <constraint firstItem="SVp-eX-wnF" firstAttribute="centerX" secondItem="Vrr-zH-v88" secondAttribute="centerX" id="ZmB-KZ-7eI"/>
-                <constraint firstAttribute="centerY" secondItem="Vrr-zH-v88" secondAttribute="centerY" constant="-190.5" id="dbU-oY-KHe"/>
-                <constraint firstAttribute="centerX" secondItem="T8J-AL-ZeE" secondAttribute="centerX" constant="-297.5" id="hPv-gK-WqQ"/>
-                <constraint firstItem="T8J-AL-ZeE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="304" id="pO0-pc-KGb"/>
-                <constraint firstItem="T8J-AL-ZeE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="307" id="tSe-JC-0OC"/>
+                <constraint firstItem="T8J-AL-ZeE" firstAttribute="top" secondItem="SVp-eX-wnF" secondAttribute="bottom" constant="-13.5" id="eoo-br-roy"/>
                 <constraint firstAttribute="centerX" secondItem="Vrr-zH-v88" secondAttribute="centerX" constant="-0.5" id="uFp-qd-aDe"/>
-                <constraint firstItem="SVp-eX-wnF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="197" id="w7I-Ac-5U8"/>
-                <constraint firstItem="T8J-AL-ZeE" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="63" id="wb3-8w-vr9"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="3DE-5Y-lZh"/>
-                    <exclude reference="GHn-Zk-b5A"/>
-                    <exclude reference="hPv-gK-WqQ"/>
-                    <exclude reference="tSe-JC-0OC"/>
-                    <exclude reference="wb3-8w-vr9"/>
-                    <exclude reference="3Vu-uC-uJD"/>
-                    <exclude reference="NZX-oe-cRc"/>
-                    <exclude reference="TKA-RZ-edS"/>
+                    <exclude reference="uFp-qd-aDe"/>
                 </mask>
             </variation>
         </view>
     </objects>
     <resources>
-        <image name="Vinyl-Red" width="30" height="30"/>
+        <image name="vinyl-red" width="30" height="30"/>
     </resources>
 </document>
