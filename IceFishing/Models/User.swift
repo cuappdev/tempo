@@ -85,6 +85,7 @@ class User: NSObject, NSCoding {
 		loadImage {
 			self.profileImage = $0
 		}
+		currentSpotifyUser = User.currentUser.currentSpotifyUser
 	}
 	
 	override var description: String {
@@ -141,6 +142,7 @@ class CurrentSpotifyUser: NSObject, NSCoding {
         return NSURL(string: imageURLString)!
     }
     private var profileImage: UIImage?
+	var savedTracks = [String : AnyObject]()
     
     override init() {}
     

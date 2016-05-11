@@ -75,6 +75,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			SPTAuthUserLibraryModifyScope
 		]
 		
+		if SPTAuth.defaultInstance().session != nil && SPTAuth.defaultInstance().session.isValid() {
+			SpotifyController.sharedController.setSpotifyUser(SPTAuth.defaultInstance().session.accessToken)
+			User.currentUser.currentSpotifyUser?.savedTracks = NSUserDefaults.standardUserDefaults().dictionaryForKey("savedTracks") ?? [:]
+		}
+
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		window!.backgroundColor = UIColor.tempoLightGray
 		window!.makeKeyAndVisible()

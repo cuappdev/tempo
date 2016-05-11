@@ -113,6 +113,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                         self?.setUpTimer()
                         self?.setNeedsDisplay()
                 })
+				
+				if (User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] != nil) ?? false {
+					self.addButton?.setImage(UIImage(named: "check"), forState: .Normal)
+					songStatus = .Saved
+				}
+				
             }
         }
     }
