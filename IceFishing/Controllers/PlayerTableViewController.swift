@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haneke
 import MediaPlayer
 
 class PlayerTableViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
@@ -112,45 +113,36 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
     private func updateNowPlayingInfo() {
         let session = AVAudioSession.sharedInstance()
         
-        if let post = currentlyPlayingPost {
-            // state change, update play information
-            let center = MPNowPlayingInfoCenter.defaultCenter()
-            if post.player.progress != 1.0 {
-                do {
-                    try session.setCategory(AVAudioSessionCategoryPlayback)
-                } catch _ {
-                }
-                do {
-                    try session.setActive(true)
-                } catch _ {
-                }
-                UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
-                
-                let artwork = post.song.fetchArtwork() ?? UIImage(named: "temp-user")!
-				var count = posts.count
-				if searchController.active {
-					count = filteredPosts.count
-				}
-				
-                center.nowPlayingInfo = [
-                    MPMediaItemPropertyTitle: post.song.title,
-                    MPMediaItemPropertyArtist: post.song.artist,
-                    MPMediaItemPropertyAlbumTitle: post.song.album,
-                    MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: artwork),
-                    MPMediaItemPropertyPlaybackDuration: post.player.duration,
-                    MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
-                    MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying ? post.player.rate : 0,
-                    MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
-                    MPNowPlayingInfoPropertyPlaybackQueueCount: count ]
-            } else {
-                UIApplication.sharedApplication().endReceivingRemoteControlEvents()
-                do {
-                    try session.setActive(false)
-                } catch {
-                }
-                center.nowPlayingInfo = nil
-            }
-        }
+		guard let post = currentlyPlayingPost else { return }
+		
+		let center = MPNowPlayingInfoCenter.defaultCenter()
+		if post.player.progress != 1.0 {
+			_ = try? session.setCategory(AVAudioSessionCategoryPlayback)
+			_ = try? session.setActive(true)
+			
+			UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+			
+			let artwork = post.song.fetchArtwork() ?? UIImage(named: "temp-user")!
+			var count = posts.count
+			if searchController.active {
+				count = filteredPosts.count
+			}
+			
+			center.nowPlayingInfo = [
+				MPMediaItemPropertyTitle: post.song.title,
+				MPMediaItemPropertyArtist: post.song.artist,
+				MPMediaItemPropertyAlbumTitle: post.song.album,
+				MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: artwork),
+				MPMediaItemPropertyPlaybackDuration: post.player.duration,
+				MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
+				MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying ? post.player.rate : 0,
+				MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
+				MPNowPlayingInfoPropertyPlaybackQueueCount: count ]
+		} else {
+			UIApplication.sharedApplication().endReceivingRemoteControlEvents()
+			_ = try? session.setActive(false)
+			center.nowPlayingInfo = nil
+		}
     }
     
     func notifCenterSetup() {

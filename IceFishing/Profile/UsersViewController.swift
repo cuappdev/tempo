@@ -138,9 +138,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
         cell.userName.text = user.name
         cell.userHandle.text = "@\(user.username)"
 		cell.numFollowLabel.text = (user.followersCount == 1) ? "1 follower" : "\(user.followersCount) followers"
-        user.loadImage {
-            cell.userImage.image = $0
-        }
+		cell.userImage.hnk_setImageFromURL(user.imageURL)
 		if user.id != User.currentUser.id {
 			cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
 			cell.followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed

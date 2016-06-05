@@ -94,9 +94,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		
 		nameLabel.text = User.currentUser.name
 		usernameLabel.text = "@\(User.currentUser.username)"
-		User.currentUser.loadImage {
-			self.profilePicture.image = $0
-		}
+		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
 		
 		// Mark first item selected unless there was a preselected item
 		if let selectedIndex = preselectedIndex {

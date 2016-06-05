@@ -2,13 +2,14 @@ use_frameworks!
 platform :ios, '8.0'
 
 target 'IceFishing' do
-	pod 'SwiftyJSON'
 	pod 'Alamofire'
 	pod 'Bolts'
 	pod 'FBSDKCoreKit'
-	pod 'FBSDKShareKit'
 	pod 'FBSDKLoginKit'
+	pod 'FBSDKShareKit'
+	pod 'HanekeSwift'
 	pod 'MarqueeLabel/Swift'
-	pod 'Tweaks'
+	pod 'SwiftyJSON'
 	pod 'SWRevealViewController'
+	pod 'Tweaks'
 end

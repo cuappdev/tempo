@@ -62,15 +62,8 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
 		userProfilePicture.clipsToBounds = true
 		nameLabel.text = name
 		
-		let imageUrl = NSURL(string: "http://graph.facebook.com/\(fbID)/picture?type=large")
-		
-		loadImageAsync(imageUrl!) { (userImage, error) -> () in
-			if error != nil {
-				print("Image load error: \(error)")
-			} else {
-				self.userProfilePicture.image = userImage
-			}
-		}
+		guard let imageUrl = NSURL(string: "http://graph.facebook.com/\(fbID)/picture?type=large") else { return }
+		userProfilePicture.hnk_setImageFromURL(imageUrl)
 	}
 	
 	func showErrorAlert(title: String, message: String, actionTitle: String) {

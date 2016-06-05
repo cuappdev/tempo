@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haneke
 import SwiftyJSON
 
 let spotifyAPIBaseURL = NSURL(string: "https://api.spotify.com/v1/tracks/")
@@ -21,11 +22,12 @@ class Song: NSObject {
 	
 	private var largeArtwork: UIImage?
 	func fetchArtwork() -> UIImage? {
-		if largeArtwork == nil && largeArtworkURL != nil {
-			loadImageAsync(largeArtworkURL!) { [weak self] image, _ in
-				self?.largeArtwork = image
+		if largeArtworkURL != nil && largeArtwork == nil {
+			Shared.imageCache.fetch(URL: largeArtworkURL!).onSuccess {
+				self.largeArtwork = $0
 				NSNotificationCenter.defaultCenter().postNotificationName(SongDidDownloadArtworkNotification, object: self)
 			}
+			
 		}
 		return largeArtwork
 	}
@@ -50,7 +52,7 @@ class Song: NSObject {
 		initializeFromResponseDictionary(responseDictionary)
 	}
 	
-	init(json: JSON) {
+	init(json: SwiftyJSON.JSON) {
 		super.init()
 		initializeFromResponse(json)
 	}
@@ -59,7 +61,7 @@ class Song: NSObject {
 		initializeFromResponse(JSON(response))
 	}
 	
-	private func initializeFromResponse(json: JSON) {
+	private func initializeFromResponse(json: SwiftyJSON.JSON) {
 		if let track = json["name"].string {
 			title = track
 			let preview = json["preview_url"].stringValue

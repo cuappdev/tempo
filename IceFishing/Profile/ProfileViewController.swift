@@ -111,10 +111,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		nameLabel.text = user.name
 		usernameLabel.text = "@" + user.username
 		hipsterCredLabel.text = "\(user.hipsterScore)"
-        user.loadImage {
-            self.profilePictureView.image = $0
-			self.backgroundImage.image = $0
-        }
+		
+		profilePictureView.hnk_setImageFromURL(user.imageURL)
+		backgroundImage.hnk_setImageFromURL(user.imageURL)
 
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true

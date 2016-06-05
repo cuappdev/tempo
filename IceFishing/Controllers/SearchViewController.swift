@@ -111,7 +111,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		let cell = tableView.dequeueReusableCellWithIdentifier("SongSearchTableViewCell", forIndexPath: indexPath) as! SongSearchTableViewCell
 		let post = results[indexPath.row]
 		cell.postView.post = post
-		cell.postView.avatarImageView?.imageURL = post.song.smallArtworkURL
+		cell.postView.avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL!)
 		cell.shareButton.hidden = true
 		cell.shareButton.addTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
 		

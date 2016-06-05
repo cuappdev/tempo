@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haneke
 import MediaPlayer
 import MarqueeLabel
 
@@ -34,7 +35,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	private var tapGestureRecognizer: UITapGestureRecognizer?
 	private var longPressGestureRecognizer: UILongPressGestureRecognizer?
     @IBOutlet var profileNameLabel: MarqueeLabel?
-    @IBOutlet var avatarImageView: FeedImageView?
+    @IBOutlet var avatarImageView: UIImageView?
     @IBOutlet var descriptionLabel: MarqueeLabel?
     @IBOutlet var dateLabel: UILabel?
     @IBOutlet var spacingConstraint: NSLayoutConstraint?
@@ -70,8 +71,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					dateLabel?.text = post.relativeDate()
-					updateAddButton()
-                    break
 				case .History:
 					profileNameLabel?.text = post.song.artist
 					descriptionLabel?.text = "\(post.song.title)"
@@ -79,8 +78,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					dateLabel?.text = post.relativeDate()
-					updateAddButton()
-					break
 				case .Liked:
 					self.addButton!.frame.origin.x = self.likedButton!.frame.origin.x
 					self.addButton!.frame.origin.y = self.likedButton!.frame.origin.y
@@ -89,21 +86,19 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					likedButton!.hidden = true
 					dateLabel?.text = "Add to Spotify"
-					updateAddButton()
 					updateDateLabel()
 				}
-                if type == .Feed {
-                    post.user.loadImage {
-                        self.avatarImageView?.image = $0
-                    }
-                }
-				else if type == .History || type == .Liked {
-					avatarImageView!.imageURL = post.song.smallArtworkURL
+				updateAddButton()
+				
+				switch type {
+				case .Feed:
+					avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
+				case .History, .Liked:
+					avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL ?? NSURL())
 				}
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
-	
 				
                 
                 notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,

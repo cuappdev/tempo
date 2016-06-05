@@ -49,9 +49,7 @@ class FollowSuggestionTableViewController: UITableViewController, SuggestedFollo
 		cell.userName.text = user.name
 		cell.userHandle.text = "@\(user.username)"
 		cell.numFollowLabel.text = "\(user.followersCount) followers"
-		user.loadImage {
-			cell.userImage.image = $0
-		}
+		cell.userImage.hnk_setImageFromURL(user.imageURL)
 		cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
 		cell.delegate = self
         return cell

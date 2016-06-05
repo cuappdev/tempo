@@ -14,10 +14,10 @@ class User: NSObject, NSCoding {
 	static var currentUser: User = User()
     var currentSpotifyUser: CurrentSpotifyUser?
 	
-	var caption = ""
-	var createdAt = ""
-	var email = "temp@example.com"
-	var fbid = ""
+	private(set) var caption = ""
+	private(set) var createdAt = ""
+	private(set) var email = "temp@example.com"
+	private(set) var fbid = ""
 	var isFollowing = false
 	var followers: [String] = []
 	var followersCount = 0
@@ -41,26 +41,8 @@ class User: NSObject, NSCoding {
 	var updatedAt: String!
 	var username: String = "temp_username"
 	private var profileImage: UIImage?
-	private var fbImageURL: NSURL {
+	var imageURL: NSURL {
 		return NSURL(string: "http://graph.facebook.com/\(fbid)/picture?type=large")!
-	}
-	
-	func loadImage(completion:(UIImage -> Void)) {
-		if let image = profileImage {
-			completion(image)
-		} else {
-			let request = NSURLRequest(URL: fbImageURL, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 10)
-			
-			NSURLSession.dataTaskWithCachedRequest(request) { data, response, _ in
-				guard let data = data else { return }
-				self.profileImage = UIImage(data: data)
-				if let image = self.profileImage {
-					dispatch_async(dispatch_get_main_queue()) {
-						completion(image)
-					}
-				}
-			}.resume()
-		}
 	}
 	
 	override init() {} 
@@ -82,9 +64,6 @@ class User: NSObject, NSCoding {
 		name = json["name"].stringValue
 		updatedAt = json["updated_at"].stringValue
 		username = json["username"].stringValue
-		loadImage {
-			self.profileImage = $0
-		}
 		currentSpotifyUser = User.currentUser.currentSpotifyUser
 	}
 	
@@ -131,52 +110,28 @@ class User: NSObject, NSCoding {
 
 class CurrentSpotifyUser: NSObject, NSCoding {
 
-    var name: String = ""
-    var username: String = ""
+    let name: String
+    let username: String
     var imageURLString: String = ""
     var spotifyUserURLString: String = ""
     var spotifyUserURL: NSURL {
         return NSURL(string: spotifyUserURLString)!
     }
-    private var image: NSURL {
+	var imageURL: NSURL {
         return NSURL(string: imageURLString)!
     }
-    private var profileImage: UIImage?
 	var savedTracks = [String : AnyObject]()
     
-    override init() {}
-    
     init(json: JSON) {
-        super.init()
         name = json["display_name"].stringValue
         username = json["id"].stringValue
         let images = json["images"].arrayValue
 		imageURLString = images.isEmpty ? "" : images[0]["url"].stringValue
         let externalURLs = json["external_urls"].dictionaryValue
-        spotifyUserURLString = externalURLs["spotify"]!.stringValue ?? ""
-        loadImage {
-            self.profileImage = $0
-        }
+		spotifyUserURLString = externalURLs["spotify"]!.stringValue ?? ""
+		super.init()
     }
-    
-    func loadImage(completion:(UIImage -> Void)) {
-        if let image = profileImage {
-            completion(image)
-        } else {
-            let request = NSURLRequest(URL: self.image, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 10)
-            
-            NSURLSession.dataTaskWithCachedRequest(request) { data, response, _ in
-				guard let data = data else { return }
-                self.profileImage = UIImage(data: data)
-                if let image = self.profileImage {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        completion(image)
-                    }
-                }
-            }.resume()
-        }
-    }
-    
+	
     override var description: String {
         return "Name: \(name)| Username: \(username)"
     }
@@ -185,11 +140,11 @@ class CurrentSpotifyUser: NSObject, NSCoding {
     // MARK: - NSCoding
     
     required init?(coder aDecoder: NSCoder) {
-        super.init()
         name = aDecoder.decodeObjectForKey("name") as! String
-        username = aDecoder.decodeObjectForKey("username") as! String
+		username = aDecoder.decodeObjectForKey("username") as! String
+		super.init()
     }
-    
+	
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(name, forKey: "name")
         aCoder.encodeObject(username, forKey: "username")

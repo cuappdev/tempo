@@ -11,29 +11,25 @@ import Foundation
 extension NSDateFormatter {
 	
 	@nonobjc static let parsingDateFormatter: NSDateFormatter = {
-		let formatter = NSDateFormatter()
-		formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
-		formatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-		formatter.locale = NSLocale(localeIdentifier: "en_US")
-		return formatter
-	}()
+		$0.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
+		$0.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+		$0.locale = NSLocale(localeIdentifier: "en_US")
+		return $0
+	}(NSDateFormatter())
 	
 	@nonobjc static let simpleDateFormatter: NSDateFormatter = {
-		let formatter = NSDateFormatter()
-		formatter.dateFormat = "M.dd.YY"
-		return formatter
-	}()
+		$0.dateFormat = "M.dd.YY"
+		return $0
+	}(NSDateFormatter())
 	
 	@nonobjc static let yearMonthDayFormatter: NSDateFormatter = {
-		let formatter = NSDateFormatter()
-		formatter.dateFormat = "yyyy-MM-dd"
-		formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-		return formatter
-	}()
+		$0.dateFormat = "yyyy-MM-dd"
+		$0.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		return $0
+	}(NSDateFormatter())
 	
 	@nonobjc static let monthFormatter: NSDateFormatter = {
-		let formatter = NSDateFormatter()
-		formatter.dateFormat = "MMM"
-		return formatter
-	}()
+		$0.dateFormat = "MMM"
+		return $0
+	}(NSDateFormatter())
 }

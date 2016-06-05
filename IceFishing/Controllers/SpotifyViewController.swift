@@ -55,9 +55,6 @@ class SpotifyViewController: UIViewController {
 				let currentSpotifyUser = User.currentUser.currentSpotifyUser
 				self.nameLabel.text = currentSpotifyUser!.username
 				self.nameLabel.font = nameLabel.font.fontWithSize(18)
-				currentSpotifyUser!.loadImage {
-					self.profilePicture.image = $0
-				}
 			}
 			
 			loggedInToSpotify(session.isValid())

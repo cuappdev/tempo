@@ -14,8 +14,8 @@ extension NSLayoutConstraint {
 		view.translatesAutoresizingMaskIntoConstraints = false
 		
 		var constraints: [NSLayoutConstraint] = []
-		constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[v]|", options: .DirectionLeadingToTrailing, metrics: nil, views: ["v" : view]) 
-		constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|[v]|", options: .DirectionLeadingToTrailing, metrics: nil, views: ["v" : view]) 
+		constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[v]|", options: .DirectionLeadingToTrailing, metrics: nil, views: ["v" : view])
+		constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|[v]|", options: .DirectionLeadingToTrailing, metrics: nil, views: ["v" : view])
 		
 		return constraints
 	}

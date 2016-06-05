@@ -23,6 +23,6 @@ extension NSURLSession {
 				NSURLCache.sharedURLCache().storeCachedResponse(cachedResponse, forRequest: request)
 			}
 		}
-		return NSURLSession.sharedCachedSession.dataTaskWithRequest(request, completionHandler: completionWithCaching)
+		return sharedCachedSession.dataTaskWithRequest(request, completionHandler: completionWithCaching)
 	}
 }

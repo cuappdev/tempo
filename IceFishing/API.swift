@@ -78,11 +78,9 @@ private let sessionCodeKey = "SessionCodeKey"
 
 class API {
 	
-	static let sharedAPI: API = API()
-	
-	var isAPIConnected: Bool = true
-	
-	var isConnected: Bool = true
+	static let sharedAPI = API()
+	var isAPIConnected = true
+	var isConnected = true
 
 	// Mappings
 	private let postMapping: [String: [AnyObject]] -> [Post]? = {
@@ -118,32 +116,28 @@ class API {
 		}
 		
 		let userRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
-		userRequest.startWithCompletionHandler { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-			if error == nil {
-				let user = [
-					"email": result["email"] as? String ?? "",
-					"name": result["name"] as? String ?? "",
-					"fbid": result["id"] as? String ?? "",
-					"usertoken": userToken
-				]
+		userRequest.startWithCompletionHandler { connection, result, error in
+			if error != nil { return }
+			
+			let user = [
+				"email": result["email"] as? String ?? "",
+				"name": result["name"] as? String ?? "",
+				"fbid": result["id"] as? String ?? "",
+				"usertoken": userToken
+			]
 
-				self.post(.ValidAuthenticate, params: ["user": user], map: map, completion: completion)
-			}
+			self.post(.ValidAuthenticate, params: ["user": user], map: map, completion: completion)
 		}
 	}
 	
 	func setCurrentUser(fbid: String, fbAccessToken: String, completion: Bool -> Void) {
 		let user = ["fbid": fbid, "usertoken": fbAccessToken]
 		let map: [String: AnyObject] -> Bool = {
-			if let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String {
-				self.sessionCode = code
-				User.currentUser = User(json: JSON(user))
-				return true
-			}
-			
-			return false
+			guard let user = $0["user"] as? [String: AnyObject], code = $0["session"]?["code"] as? String else { return false }
+			self.sessionCode = code
+			User.currentUser = User(json: JSON(user))
+			return true
 		}
-		
 		self.post(.Sessions, params: ["user": user], map: map, completion: completion)
 	}
 	

@@ -14,7 +14,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
 	private var progressGestureRecognizer: UIPanGestureRecognizer?
 	var tapGestureRecognizer: UITapGestureRecognizer?
 	@IBOutlet var profileNameLabel: MarqueeLabel?
-	@IBOutlet var avatarImageView: FeedImageView?
+	@IBOutlet var avatarImageView: UIImageView?
 	@IBOutlet var descriptionLabel: MarqueeLabel?
 	@IBOutlet var dateLabel: UILabel?
 	@IBOutlet var spacingConstraint: NSLayoutConstraint?

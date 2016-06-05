@@ -36,16 +36,6 @@ func delay(delay: Double, closure:()->()) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), closure)
 }
 
-func loadImageAsync(url: NSURL, completion: (UIImage!, NSError!) -> ()) {
-    let requestedURL = NSURLRequest(URL: url, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 10)
-	
-	NSURLSession.dataTaskWithCachedRequest(requestedURL) { data, response, error in
-		dispatch_async(dispatch_get_main_queue()) {
-			error != nil ? completion(nil, error) : completion(UIImage(data: data!), nil)
-		}
-	}.resume()
-}
-
 func transparentPNG(length: CGFloat) -> UIImage {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(length, length), false, 0)
     let blank = UIGraphicsGetImageFromCurrentImageContext()
