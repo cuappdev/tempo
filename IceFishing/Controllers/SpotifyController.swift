@@ -1,6 +1,6 @@
 //
 //  SpotifyController.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Lucas Derraugh on 8/16/15.
 //  Copyright © 2015 CUAppDev. All rights reserved.

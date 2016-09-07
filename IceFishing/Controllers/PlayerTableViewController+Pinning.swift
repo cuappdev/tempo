@@ -1,6 +1,6 @@
 //
 //  PlayerTableViewController+Pinning.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Alexander Zielenski on 2/24/16.
 //  Copyright © 2016 CUAppDev. All rights reserved.

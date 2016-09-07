@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Lucas Derraugh on 3/8/15.
 //  Copyright (c) 2015 Lucas Derraugh. All rights reserved.

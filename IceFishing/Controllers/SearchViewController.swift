@@ -1,6 +1,6 @@
 //
 //  SearchViewController.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Austin Chan on 3/15/15.
 //  Copyright (c) 2015 CUAppDev. All rights reserved.

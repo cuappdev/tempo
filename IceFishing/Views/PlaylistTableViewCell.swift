@@ -1,6 +1,6 @@
 //
 //  PlaylistTableViewCell.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Annie Cheng on 11/1/15.
 //  Copyright © 2015 CUAppDev. All rights reserved.

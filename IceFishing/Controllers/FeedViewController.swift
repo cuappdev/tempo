@@ -1,6 +1,6 @@
 //
 //  FeedVC.swift
-//  IceFishingTrending
+//  Tempo
 //
 //  Created by Joseph Antonakakis on 3/15/15.
 //  Copyright (c) 2015 Joseph Antonakakis. All rights reserved.

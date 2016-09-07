@@ -1,6 +1,6 @@
 //
 //  LikedTableViewController.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Alexander Zielenski on 5/3/15.
 //  Copyright (c) 2015 Alexander Zielenski. All rights reserved.

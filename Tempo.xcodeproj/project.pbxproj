@@ -101,7 +101,7 @@
 		1D1DD7121AE492750066AB39 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		1D65392F1AD0E23800E82627 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		1D653F3D1B81451700F54455 /* SpotifyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
-		1D72D9B51AACC4C0007822B0 /* IceFishing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IceFishing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D72D9B51AACC4C0007822B0 /* Tempo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tempo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D72D9B91AACC4C0007822B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D72D9C11AACC4C0007822B0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -244,7 +244,7 @@
 		1D72D9AC1AACC4C0007822B0 = {
 			isa = PBXGroup;
 			children = (
-				1D72D9B71AACC4C0007822B0 /* IceFishing */,
+				1D72D9B71AACC4C0007822B0 /* Tempo */,
 				1D72D9B61AACC4C0007822B0 /* Products */,
 				B9DF81295CC69057799B6683 /* Frameworks */,
 				E244AA0D43192C66D8A68954 /* Pods */,
@@ -255,12 +255,12 @@
 		1D72D9B61AACC4C0007822B0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D72D9B51AACC4C0007822B0 /* IceFishing.app */,
+				1D72D9B51AACC4C0007822B0 /* Tempo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1D72D9B71AACC4C0007822B0 /* IceFishing */ = {
+		1D72D9B71AACC4C0007822B0 /* Tempo */ = {
 			isa = PBXGroup;
 			children = (
 				C0CF7B971AE425450083606C /* API.swift */,
@@ -277,6 +277,7 @@
 				1D72D9B81AACC4C0007822B0 /* Supporting Files */,
 				6D54C2A61ABF5A87007648A5 /* Frameworks */,
 			);
+			name = Tempo;
 			path = IceFishing;
 			sourceTree = "<group>";
 		};
@@ -424,9 +425,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D72D9B41AACC4C0007822B0 /* IceFishing */ = {
+		1D72D9B41AACC4C0007822B0 /* Tempo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D72D9D41AACC4C0007822B0 /* Build configuration list for PBXNativeTarget "IceFishing" */;
+			buildConfigurationList = 1D72D9D41AACC4C0007822B0 /* Build configuration list for PBXNativeTarget "Tempo" */;
 			buildPhases = (
 				ED540AF0F8E9E1ABABA07036 /* [CP] Check Pods Manifest.lock */,
 				1D72D9B11AACC4C0007822B0 /* Sources */,
@@ -435,14 +436,15 @@
 				1DFD738A1BA0EE7B008D9FD8 /* Embed Frameworks */,
 				23F0C18350569E0AD1126E0A /* [CP] Embed Pods Frameworks */,
 				AC8DDD8183B4879D60E0364E /* [CP] Copy Pods Resources */,
+				0E948D59195C9D7F76555006 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = IceFishing;
+			name = Tempo;
 			productName = IceFishing;
-			productReference = 1D72D9B51AACC4C0007822B0 /* IceFishing.app */;
+			productReference = 1D72D9B51AACC4C0007822B0 /* Tempo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -461,7 +463,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1D72D9B01AACC4C0007822B0 /* Build configuration list for PBXProject "IceFishing" */;
+			buildConfigurationList = 1D72D9B01AACC4C0007822B0 /* Build configuration list for PBXProject "Tempo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -474,7 +476,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D72D9B41AACC4C0007822B0 /* IceFishing */,
+				1D72D9B41AACC4C0007822B0 /* Tempo */,
 			);
 		};
 /* End PBXProject section */
@@ -507,6 +509,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0E948D59195C9D7F76555006 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IceFishing/Pods-IceFishing-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		23F0C18350569E0AD1126E0A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -750,7 +767,7 @@
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.IceFishing;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Tempo;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "IceFishing/IceFishing-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -797,7 +814,7 @@
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.IceFishing;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Tempo;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "IceFishing/IceFishing-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -807,7 +824,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D72D9B01AACC4C0007822B0 /* Build configuration list for PBXProject "IceFishing" */ = {
+		1D72D9B01AACC4C0007822B0 /* Build configuration list for PBXProject "Tempo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D72D9D21AACC4C0007822B0 /* Debug */,
@@ -816,7 +833,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1D72D9D41AACC4C0007822B0 /* Build configuration list for PBXNativeTarget "IceFishing" */ = {
+		1D72D9D41AACC4C0007822B0 /* Build configuration list for PBXNativeTarget "Tempo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D72D9D51AACC4C0007822B0 /* Debug */,

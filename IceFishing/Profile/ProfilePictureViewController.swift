@@ -1,6 +1,6 @@
 //
 //  ProfilePictureViewController.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Monica Ong on 2/28/16.
 //  Copyright © 2016 CUAppDev. All rights reserved.

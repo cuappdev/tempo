@@ -1,6 +1,6 @@
 //
 //  SignInViewController.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Annie Cheng on 4/15/15.
 //  Copyright (c) 2015 Lucas Derraugh. All rights reserved.

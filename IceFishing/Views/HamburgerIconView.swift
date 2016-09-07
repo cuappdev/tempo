@@ -1,6 +1,6 @@
 //
 //  HamburgerIconView.swift
-//  xButton
+//  Tempo
 //
 //  Created by Dennis Fedorko on 5/10/16.
 //  Copyright © 2016 Dennis Fedorko. All rights reserved.

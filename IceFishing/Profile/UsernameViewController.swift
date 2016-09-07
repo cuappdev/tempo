@@ -1,6 +1,6 @@
 //
 //  UsernameViewController.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Manuela Rios on 4/8/15.
 //  Copyright (c) 2015 Lucas Derraugh. All rights reserved.

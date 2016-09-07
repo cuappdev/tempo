@@ -1,6 +1,6 @@
 //
 //  UIViewController+Utilities.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Alexander Zielenski on 5/5/15.
 //  Copyright (c) 2015 Alexander Zielenski. All rights reserved.

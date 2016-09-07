@@ -1,6 +1,6 @@
 //
-//  BackendNotConnectedProtocol .swift
-//  IceFishing
+//  BackendNotConnectedProtocol.swift
+//  Tempo
 //
 //  Created by Natasha Armbrust on 11/22/15.
 //  Copyright © 2015 CUAppDev. All rights reserved.

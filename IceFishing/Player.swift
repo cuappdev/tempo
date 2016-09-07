@@ -1,6 +1,6 @@
 //
 //  Player.swift
-//  experience
+//  Tempo
 //
 //  Created by Alexander Zielenski on 3/22/15.
 //  Copyright (c) 2015 CUAppDev. All rights reserved.

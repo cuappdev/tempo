@@ -1,6 +1,6 @@
 //
 //  PostView.swift
-//  IceFishing
+//  Tempo
 //
 //  Created by Alexander Zielenski on 4/12/15.
 //  Copyright (c) 2015 Alexander Zielenski and Mark Bryan. All rights reserved.
