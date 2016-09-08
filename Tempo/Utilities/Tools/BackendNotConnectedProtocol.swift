@@ -88,7 +88,7 @@ class Banner {
 			currentVC,
 			duration: 4,
 			delay: 0,
-			message: NSLocalizedString("IceFishing must be down, sorry :(", comment: "Banner title that informs the user the notification API is down"),
+			message: NSLocalizedString("Tempo must be down, sorry :(", comment: "Banner title that informs the user the notification API is down"),
 			backgroundColor: UIColor.tempoDarkGray,
 			textColor: UIColor.whiteColor(),
 			originY: 0)
