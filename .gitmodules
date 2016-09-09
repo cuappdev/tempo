@@ -1,7 +1,4 @@
-[submodule "IceFishing/Vendor/ios-sdk"]
-	path = IceFishing/Vendor/ios-sdk
-	url = https://github.com/spotify/ios-sdk.git
-	ignore = dirty
 [submodule "Tempo/Vendor/ios-sdk"]
 	path = Tempo/Vendor/ios-sdk
 	url = https://github.com/spotify/ios-sdk.git
+	ignore = dirty

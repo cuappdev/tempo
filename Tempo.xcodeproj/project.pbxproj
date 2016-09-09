@@ -803,7 +803,7 @@
 					"\"Tweaks\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.IceFishing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.Tempo;
 				PRODUCT_NAME = Tempo;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tempo/Tempo-Bridging-Header.h";
@@ -850,7 +850,7 @@
 					"\"Tweaks\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.IceFishing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cuappdev.Tempo;
 				PRODUCT_NAME = Tempo;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tempo/Tempo-Bridging-Header.h";
