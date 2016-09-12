@@ -1,7 +1,7 @@
 use_frameworks!
 platform :ios, '8.0'
 
-target 'IceFishing' do
+target 'Tempo' do
 	pod 'Alamofire'
 	pod 'Bolts'
 	pod 'FBSDKCoreKit'
