@@ -24,6 +24,7 @@ class ADRefreshControl {
 		vinylView = UIImageView(image: UIImage(named: "vinyl-red")?.imageWithRenderingMode(.AlwaysTemplate))
 		vinylView.tintColor = UIColor.tempoLightRed
 		vinylView.frame = CGRectMake(0, 0, 45, 45)
+		vinylView.layer.opacity = 0
 		
 		// Add the graphics to the loading view
 		refreshControl.addSubview(vinylView)
@@ -47,8 +48,11 @@ class ADRefreshControl {
 		
 		pullDistance = newPullDistance
 		
+		// Animate vinyl opacity when initially appearing/fading
+		vinylView.layer.opacity = isRefreshAnimating ? 1.0 : Float(pullDistance-10.0)/45.0
+		
 		//have vinyl case follow disc up to a certain point then return
-		vinylView.center = CGPointMake(refreshBounds.size.width/2.0, pullDistance / 2.0)
+		vinylView.center = CGPointMake(refreshBounds.size.width/2.0, pullDistance/2.0)
 		
 		// Set the encompassing view's frames
 		refreshBounds.size.height = pullDistance
@@ -60,6 +64,7 @@ class ADRefreshControl {
 	}
 	
 	func animateRefreshView() {
+		
 		// Flag that we are animating
 		isRefreshAnimating = true
 		
@@ -91,8 +96,6 @@ class ADRefreshControl {
 		}
 		timesAnimationLooped = 0
 		isRefreshAnimating = false
-		
-		
 	}
 	
 }
