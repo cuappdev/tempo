@@ -12,8 +12,6 @@ class ADRefreshControl {
 	
 	var refreshControl: UIRefreshControl!
 	var vinylView: UIImageView!
-	var vinylCaseFront: UIImageView!
-	var vinylCaseBack: UIView!
 	var isRefreshAnimating = false
 	var timesAnimationLooped = 0
 	var pullDistance: CGFloat = 0
@@ -26,17 +24,10 @@ class ADRefreshControl {
 		vinylView = UIImageView(image: UIImage(named: "vinyl-red")?.imageWithRenderingMode(.AlwaysTemplate))
 		vinylView.tintColor = UIColor.tempoLightRed
 		vinylView.frame = CGRectMake(0, 0, 45, 45)
-		
-		vinylCaseBack = UIView(frame: CGRectMake(0, 0, 50, 50))
-		vinylCaseBack.backgroundColor = UIColor(red: 181/255.0, green: 72/255.0, blue: 65/255.0, alpha: 1.0)
-		
-		vinylCaseFront = UIImageView(image: UIImage(named: "vinyl-case"))
-		vinylCaseFront.frame = CGRectMake(0, 0, 50, 50)
+		vinylView.layer.opacity = 0
 		
 		// Add the graphics to the loading view
-		refreshControl.addSubview(vinylCaseBack)
 		refreshControl.addSubview(vinylView)
-		refreshControl.addSubview(vinylCaseFront)
 		
 		// Hide the original spinner icon
 		refreshControl.tintColor = UIColor.clearColor()
@@ -57,24 +48,11 @@ class ADRefreshControl {
 		
 		pullDistance = newPullDistance
 		
-		if (pullDistance == 0) {
-			vinylCaseFront.alpha = 1.0
-			vinylCaseBack.alpha = 1.0
-		} else if pullDistance > 110 {
-			vinylCaseFront.alpha = 0.0
-			vinylCaseBack.alpha = 0.0
-		}
+		// Animate vinyl opacity when initially appearing/fading
+		vinylView.layer.opacity = isRefreshAnimating ? 1.0 : Float(pullDistance-10.0)/45.0
 		
 		//have vinyl case follow disc up to a certain point then return
-		vinylView.center = CGPointMake(refreshBounds.size.width/2.0, pullDistance / 2.0)
-		let followDistance: CGFloat = 30.0
-		if pullDistance / 2.0 < followDistance {
-			vinylCaseFront.center = CGPointMake(refreshBounds.size.width / 2.0, pullDistance / 2.0)
-			vinylCaseBack.center = CGPointMake(refreshBounds.size.width / 2.0, pullDistance / 2.0)
-		} else {
-			vinylCaseFront.center = CGPointMake(refreshBounds.size.width / 2.0, followDistance - 2.0 * (pullDistance / 2.0 - followDistance))
-			vinylCaseBack.center = CGPointMake(refreshBounds.size.width / 2.0, followDistance - 2.0 * (pullDistance / 2.0 - followDistance))
-		}
+		vinylView.center = CGPointMake(refreshBounds.size.width/2.0, pullDistance/2.0)
 		
 		// Set the encompassing view's frames
 		refreshBounds.size.height = pullDistance
@@ -86,12 +64,9 @@ class ADRefreshControl {
 	}
 	
 	func animateRefreshView() {
+		
 		// Flag that we are animating
 		isRefreshAnimating = true
-		
-		//make sure vinyl case is hidden
-		vinylCaseFront.alpha = 0.0
-		vinylCaseBack.alpha = 0.0
 		
 		UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveLinear, animations: {
 
@@ -121,8 +96,6 @@ class ADRefreshControl {
 		}
 		timesAnimationLooped = 0
 		isRefreshAnimating = false
-		
-		
 	}
 	
 }

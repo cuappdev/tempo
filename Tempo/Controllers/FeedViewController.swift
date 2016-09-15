@@ -44,7 +44,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		
 		addHamburgerMenu()
 		
-		refreshFeedWithDelay(0, timeout: 10.0)
+		refreshFeedWithDelay(0, timeout: 6.0)
 		
 		tableView.tableHeaderView = nil
 		tableView.rowHeight = 80
@@ -153,7 +153,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	}
 	
 	func refreshFeed() {
-		refreshFeedWithDelay(2.0, timeout: 10.0)
+		refreshFeedWithDelay(1.0, timeout: 6.0)
 	}
 	
 	// MARK: - UITableViewDataSource
