@@ -27,6 +27,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	}()
 	
 	var pretappedPlusButton = false
+	var refreshNeeded = false //set to true on logout
 	
 	// MARK: - Lifecycle Methods
 	override func viewDidLoad() {
@@ -72,13 +73,20 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-
-        // Used to update Spotify + button, not very elegant solution
-		for cell in tableView.visibleCells as! [FeedTableViewCell] {
-			cell.postView.updateAddButton()
+		
+		if refreshNeeded { //when user re-logged in
+			refreshNeeded = false
+			refreshFeed() //also handles updateSpotifyPlusButton()
+		} else {
+			updateSpotifyPlusButton()
 		}
 		
 		notConnected()
+	}
+	
+	func updateSpotifyPlusButton() {
+		// Used to update Spotify + button, not very elegant solution
+		(tableView.visibleCells as! [FeedTableViewCell]).forEach({ cell in cell.postView.updateAddButton() })
 	}
 	
 	func refreshFeedWithDelay(delay: Double, timeout: Double) {
@@ -124,6 +132,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 					x.tableView.backgroundView = nil
 				}
 			}
+			
+			self?.updateSpotifyPlusButton()
 		}
 		
 		//fetch for a minimum of delay seconds
