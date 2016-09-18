@@ -10,6 +10,7 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 import SWRevealViewController
+import Haneke
 
 extension NSURL {
 	func getQueryItemValueForKey(key: String) -> AnyObject? {
@@ -179,6 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				self.fbSessionStateChanged(error)
 			}
 		}
+		Shared.imageCache.removeAll()
 	}
 	
 	// Facebook Session
