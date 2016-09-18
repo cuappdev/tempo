@@ -209,13 +209,13 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
 	
 	private func setupMarqueeLabel(label: MarqueeLabel) {
-		label.speed = .Duration(4.6)
+		label.speed = .Duration(8)
 		label.trailingBuffer = 10
 		label.type = .Continuous
 		label.fadeLength = 8
 		label.tapToScroll = false
 		label.holdScrolling = true
-		label.animationDelay = 2
+		label.animationDelay = 0
 	}
 	
     // Customize view to be able to re-use it for search results.

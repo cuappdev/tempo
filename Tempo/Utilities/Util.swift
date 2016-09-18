@@ -22,6 +22,12 @@ extension UIView {
 	}
 }
 
+extension String {
+	func chopPrefix(count: Int = 1) -> String {
+		return self.substringFromIndex(self.startIndex.advancedBy(count))
+	}
+}
+
 func getTopViewController() -> UIViewController {
 	var topVC = UIApplication.sharedApplication().keyWindow?.rootViewController
 	

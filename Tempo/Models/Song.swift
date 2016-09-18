@@ -68,7 +68,10 @@ class Song: NSObject {
 			previewURL = NSURL(string: preview)
 			let artists = json["artists"].arrayValue
 			if artists.count > 1 {
-				artist = "Various Artists"
+				artist = artists
+						.map({ $0["name"].string! })
+						.reduce("", combine: { $0 + ", " + $1})
+						.chopPrefix(2)
 			} else {
 				artist = artists.first?["name"].string ?? "Unknown Artist"
 			}
