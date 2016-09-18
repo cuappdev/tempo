@@ -42,6 +42,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		FBSDKAccessToken.setCurrentAccessToken(nil)
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.toggleRootVC()
+		appDelegate.feedVC.refreshNeeded = true
     }
     
     override func viewDidLoad() {
