@@ -18,7 +18,6 @@ class SongSearchTableViewCell: UITableViewCell {
 		super.awakeFromNib()
 		
 		contentView.backgroundColor = UIColor.tempoLightGray
-        shareButton.backgroundColor = UIColor.tempoLightRed
 		separator.backgroundColor = UIColor.separatorGray
 		separatorHeight.constant = 0.5
 	}

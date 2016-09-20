@@ -27,6 +27,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	var selectedSong: Song?
 	var selectedCell: SongSearchTableViewCell?
 	var searchBar = UISearchBar()
+	var selfPostIds: [String] = []
 	
 	// MARK: - Lifecycle Methods
 	
@@ -113,7 +114,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		cell.postView.post = post
 		cell.postView.avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL!)
 		cell.shareButton.hidden = true
-		cell.shareButton.addTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
+		if (selfPostIds.contains(post.song.spotifyID)) {
+			cell.shareButton.setTitle("SHARED", forState: .Normal)
+			cell.shareButton.backgroundColor = UIColor.tempoDarkGray
+			cell.shareButton.removeTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
+		} else {
+			cell.shareButton.setTitle("SHARE", forState: .Normal)
+			cell.shareButton.backgroundColor = UIColor.tempoLightRed
+			cell.shareButton.addTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
+		}
 		
 		return cell
 	}
