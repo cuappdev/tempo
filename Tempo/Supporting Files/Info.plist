@@ -30,10 +30,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.cuappdev.IceFishing.spotify-auth</string>
+			<string>com.cuappdev.Tempo.spotify-auth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>icefishing-login</string>
+				<string>tempo-login</string>
 			</array>
 		</dict>
 	</array>
@@ -42,7 +42,7 @@
 	<key>FacebookAppID</key>
 	<string>977907382286912</string>
 	<key>FacebookDisplayName</key>
-	<string>Icefishing</string>
+	<string>Tempo</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
