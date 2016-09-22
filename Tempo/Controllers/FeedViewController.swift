@@ -100,7 +100,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		
 		API.sharedAPI.fetchFeedOfEveryone { [weak self] in
 			self?.posts = $0
-			
 			//return even if we get data after a timeout
 			if finishedRefreshing {
 				return
@@ -216,6 +215,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		
 		searchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
 		searchTableViewController.navigationItem.leftBarButtonItem = navigationItem.leftBarButtonItem
+		searchTableViewController.selfPostIds = posts.filter({ $0.user.name == User.currentUser.name }).map({ $0.song.spotifyID })
 		navigationController?.pushViewController(searchTableViewController, animated: false)
 	}
 	
