@@ -278,6 +278,22 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		return -0.0311 * CGFloat(pow(ratio, 2)) + 0.2461 * CGFloat(ratio) + 0.4997
 	}
 	
+	// Filter posted dates into dictionary of key: date, value: date_count
+	private func filterPostedDates() -> (dict: [String: Int], sections: [String]) {
+		var postedDatesDict = [String: Int]()
+		var postedDatesSections = [String]()
+		for d in postedDates {
+			let date = d.yearMonthDay()
+			if let count = postedDatesDict[date] {
+				postedDatesDict[date] = count + 1
+			} else {
+				postedDatesDict[date] = 1
+				postedDatesSections.append(date)
+			}
+		}
+		return (postedDatesDict, postedDatesSections)
+	}
+	
 	// MARK: - UICollectionViewDataSource
 	
 	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -323,10 +339,20 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		let postHistoryVC = PostHistoryTableViewController()
 		postHistoryVC.posts = posts
 		postHistoryVC.postedDates = postedDates
+		print(postedDates)
+		let (d, s) = filterPostedDates()
+		print(d)
+		print(s)
+		postHistoryVC.postedDatesDict = d
+		postHistoryVC.postedDatesSections = s
 		postHistoryVC.songLikes = postedLikes
-		if let index = postedYearMonthDay.indexOf(date.yearMonthDay()) {
-			postHistoryVC.index = index
+		
+		if let sectionIndex = s.indexOf(date.yearMonthDay()) {
+			postHistoryVC.sectionIndex = sectionIndex
 		}
+//		if let index = postedYearMonthDay.indexOf(date.yearMonthDay()) {
+//			postHistoryVC.index = index
+//		}
 		navigationController?.pushViewController(postHistoryVC, animated: true)
 	}
 	
@@ -380,16 +406,23 @@ extension ProfileViewController: UIViewControllerPreviewingDelegate {
 		
 		if postedYearMonthDay.indexOf(cell.date.yearMonthDay()) != nil {
 			
+			print("Here")
 			let date = dateForIndexPath(indexPath)
 			
 			let peekViewController = PostHistoryTableViewController()
 			peekViewController.posts = posts
 			peekViewController.postedDates = postedDates
+			let (d, s) = filterPostedDates()
+			peekViewController.postedDatesDict = d
+			peekViewController.postedDatesSections = s
 			peekViewController.songLikes = postedLikes
 			
-			if let index = postedDays.indexOf(date.day()) {
-				peekViewController.index = index
+			if let sectionIndex = s.indexOf(date.yearMonthDay()) {
+				peekViewController.sectionIndex = sectionIndex
 			}
+//			if let index = postedDays.indexOf(date.day()) {
+//				peekViewController.index = index
+//			}
 			
 			peekViewController.preferredContentSize = CGSizeZero
 			previewingContext.sourceRect = collectionView.convertRect(cell.frame, toView: view)
