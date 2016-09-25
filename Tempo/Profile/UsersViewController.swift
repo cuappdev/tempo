@@ -104,8 +104,13 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		API.sharedAPI.fetchFollowSuggestions(completion, length: length, page: page)
 	}
 	
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
+	}
+	
 	override func viewDidAppear(animated: Bool) {
-		notConnected()
 		addRevealGesture()
 		if !searchController.active && displayType == .Users {
 			populateSuggestions()

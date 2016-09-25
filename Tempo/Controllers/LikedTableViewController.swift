@@ -34,12 +34,17 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		
 		pinView.postView.type = .Liked
     }
+	
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
+	}
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        retrieveLikedSongs()
 		
-		notConnected()
+        retrieveLikedSongs()
     }
 	
     // MARK: - Table View Methods

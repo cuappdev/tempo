@@ -36,6 +36,12 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 
 		pinView.postView.type = .History
     }
+	
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
+	}
     
     override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
@@ -44,8 +50,6 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 			let selectedRow = NSIndexPath(forRow: index!, inSection: 0)
 			tableView.scrollToRowAtIndexPath(selectedRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
 		}
-		
-		notConnected()
     }
 	
     // TableView Methods

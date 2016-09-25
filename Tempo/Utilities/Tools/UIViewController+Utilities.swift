@@ -35,12 +35,16 @@ extension UIViewController {
 		}
 	}
 	
-	func notConnected() {
+	// If not connected to internet return true and display banner if animated
+	func notConnected(animated: Bool) -> Bool {
 		if !API.sharedAPI.isConnected {
-			Banner.notConnected(self)
+			if animated { Banner.internetNotConnected(self) }
+			return true
 		} else if !API.sharedAPI.isAPIConnected {
-			Banner.APINotConnected(self)
+			if animated { Banner.APINotConnected(self) }
+			return true
 		}
+		return false
 	}
 	
 	func dismissVCWithFadeAnimation() {

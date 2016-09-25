@@ -52,7 +52,7 @@ class Banner {
 	
 	private static let notificationView = BannerView()
 	
-	static func showWithDuration(topView: UIViewController, duration: NSTimeInterval, delay: NSTimeInterval, message: String, backgroundColor: UIColor, textColor: UIColor, originY y: CGFloat = originY) {
+	static func showBanner(topView: UIViewController, delay: NSTimeInterval, message: String, backgroundColor: UIColor, textColor: UIColor, originY y: CGFloat = originY) {
 		
 		guard let window = UIApplication.sharedApplication().delegate?.window where window != nil else {
 			return
@@ -68,10 +68,6 @@ class Banner {
 			
 			topView.view.addSubview(self.notificationView)
 			self.notificationView.frame = CGRect(x: 0, y: originY, width: AWBannerProperties.width, height: AWBannerProperties.height) }, completion: nil)
-		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(duration * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
-			self.hide()
-		}
 	}
 	
 	static func hide() {
@@ -84,9 +80,8 @@ class Banner {
 		}
 	
 	static func APINotConnected(currentVC: UIViewController) {
-		Banner.showWithDuration(
+		Banner.showBanner(
 			currentVC,
-			duration: 4,
 			delay: 0,
 			message: NSLocalizedString("Tempo must be down, sorry :(", comment: "Banner title that informs the user the notification API is down"),
 			backgroundColor: UIColor.tempoDarkGray,
@@ -94,11 +89,10 @@ class Banner {
 			originY: 0)
 	}
 	
-	static func notConnected(currentVC: UIViewController) {
+	static func internetNotConnected(currentVC: UIViewController) {
 		print("Not connected internet")
-		Banner.showWithDuration(
+		Banner.showBanner(
 			currentVC,
-			duration: 4,
 			delay: 0,
 			message: NSLocalizedString("No internet connection", comment: "Banner title that informs the user the notification internet is down"),
 			backgroundColor: UIColor.tempoDarkGray,
