@@ -86,8 +86,8 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()
 		
-        let date = convertDate(postedDatesSections[indexPath.section])
-		cell.postView.dateLabel!.text = "\(date)"
+//        let date = convertDate(postedDatesSections[indexPath.section])
+	    cell.postView.dateLabel!.text = ""
 		
 		return cell
     }
@@ -113,7 +113,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
         selectedCell.postView.backgroundColor = UIColor.tempoLightGray
-		currentlyPlayingIndexPath = NSIndexPath(index: absoluteIndex(indexPath))
+		currentlyPlayingIndexPath = NSIndexPath(forRow: absoluteIndex(indexPath), inSection: 0)
     }
 
 }
