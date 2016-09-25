@@ -78,7 +78,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		searchBar.setImage(UIImage(named: "search-icon"), forSearchBarIcon: .Search, state: .Normal)
 		searchBar.setImage(UIImage(named: "clear-search-icon"), forSearchBarIcon: .Clear, state: .Normal)
 		
-		notConnected()
+		if notConnected(true) {
+			searchBar.hidden = true
+			searchBar.userInteractionEnabled = false
+		} else {
+			searchBar.hidden = false
+			searchBar.userInteractionEnabled = true
+			searchBar.becomeFirstResponder()
+		}
 	}
 	
 	override func viewDidDisappear(animated: Bool) {

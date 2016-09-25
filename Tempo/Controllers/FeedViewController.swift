@@ -33,7 +33,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		title = "Friend's Tunes"
+		title = "Feed"
 		view.backgroundColor = UIColor.tempoDarkGray
 		setupAddButton()
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
@@ -45,7 +45,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		
 		addHamburgerMenu()
 		
-		refreshFeedWithDelay(0, timeout: 6.0)
+		refreshFeedWithDelay(0, timeout: 5.0)
 		
 		tableView.tableHeaderView = nil
 		tableView.rowHeight = 80
@@ -69,6 +69,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		} else {
 			rotatePlusButton(false)
 		}
+		plusButton.hidden = notConnected(false)
 	}
 	
 	override func viewDidAppear(animated: Bool) {
@@ -81,7 +82,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 			updateSpotifyPlusButton()
 		}
 		
-		notConnected()
+		notConnected(true)
 	}
 	
 	func updateSpotifyPlusButton() {
@@ -94,9 +95,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		var finishedRefreshing = false
 		//minimum time passed gets set to true when minimum delay dispatch gets called
 		var minimumTimePassed = false
-		
-		//fetch data
-		self.notConnected()
 		
 		API.sharedAPI.fetchFeedOfEveryone { [weak self] in
 			self?.posts = $0
@@ -142,6 +140,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		var popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
 		dispatch_after(popTime, dispatch_get_main_queue()) {
 			if finishedRefreshing {
+				Banner.hide()
+				self.plusButton.hidden = self.notConnected(false)
 				self.tableView.reloadData()
 				self.refreshControl?.endRefreshing()
 				self.view.userInteractionEnabled = true
@@ -154,6 +154,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * Double(NSEC_PER_SEC)))
 		dispatch_after(popTime, dispatch_get_main_queue()) {
 			if !finishedRefreshing {
+				self.plusButton.hidden = self.notConnected(true)
 				self.refreshControl?.endRefreshing()
 				self.view.userInteractionEnabled = true
 				finishedRefreshing = true
@@ -162,7 +163,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	}
 	
 	func refreshFeed() {
-		refreshFeedWithDelay(1.0, timeout: 6.0)
+		refreshFeedWithDelay(1.0, timeout: 5.0)
 	}
 	
 	// MARK: - UITableViewDataSource
