@@ -10,6 +10,12 @@ import UIKit
 import Haneke
 import MediaPlayer
 
+enum CurrentPlayerVC {
+	case Feed
+	case PostHistory
+	case Liked
+}
+
 class PlayerTableViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
 	// For pinning
 	let topPinViewContainer = UIView()
@@ -19,7 +25,11 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	var searchController: UISearchController!
 	var posts: [Post] = []
 	var filteredPosts: [Post] = []
+	var postedDatesDict: [String: Int]?
+	var postedDatesSections: [String]?
     var currentlyPlayingPost: Post?
+	
+	var currentPlayerVC: CurrentPlayerVC?
 	
     var currentlyPlayingIndexPath: NSIndexPath? {
         didSet {
@@ -93,6 +103,21 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		super.viewDidDisappear(animated)
 		
 		removeRevealGesture()
+	}
+	
+	// Filter posted dates into dictionary of key: date, value: date_count
+	func filterPostedDatesToSections(postedDates: [NSDate]) {
+		postedDatesDict = [String: Int]()
+		postedDatesSections = []
+		for d in postedDates {
+			let date = d.yearMonthDay()
+			if let count = postedDatesDict![date] {
+				postedDatesDict![date] = count + 1
+			} else {
+				postedDatesDict![date] = 1
+				postedDatesSections!.append(date)
+			}
+		}
 	}
 	
     // MARK: - Table view data source
@@ -248,6 +273,12 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		} else {
 			let pred = NSPredicate(format: "song.title contains[cd] %@ OR song.artist contains[cd] %@", searchText, searchText)
 			filteredPosts = (posts as NSArray).filteredArrayUsingPredicate(pred) as! [Post]
+			if let curVC = currentPlayerVC {
+				if curVC == .PostHistory {
+					let filteredDates = filteredPosts.map { $0.date! }
+					filterPostedDatesToSections(filteredDates)
+				}
+			}
 		}
 		tableView.reloadData()
 	}

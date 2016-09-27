@@ -278,22 +278,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		return -0.0311 * CGFloat(pow(ratio, 2)) + 0.2461 * CGFloat(ratio) + 0.4997
 	}
 	
-	// Filter posted dates into dictionary of key: date, value: date_count
-	private func filterPostedDates() -> (dict: [String: Int], sections: [String]) {
-		var postedDatesDict = [String: Int]()
-		var postedDatesSections = [String]()
-		for d in postedDates {
-			let date = d.yearMonthDay()
-			if let count = postedDatesDict[date] {
-				postedDatesDict[date] = count + 1
-			} else {
-				postedDatesDict[date] = 1
-				postedDatesSections.append(date)
-			}
-		}
-		return (postedDatesDict, postedDatesSections)
-	}
-	
 	// MARK: - UICollectionViewDataSource
 	
 	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -339,13 +323,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		let postHistoryVC = PostHistoryTableViewController()
 		postHistoryVC.posts = posts
 		postHistoryVC.postedDates = postedDates
-		print(postedDates)
-		let (d, s) = filterPostedDates()
-		postHistoryVC.postedDatesDict = d
-		postHistoryVC.postedDatesSections = s
+		postHistoryVC.filterPostedDatesToSections(postedDates)
 		postHistoryVC.songLikes = postedLikes
 		
-		if let sectionIndex = s.indexOf(date.yearMonthDay()) {
+		if let sectionIndex = postHistoryVC.postedDatesSections!.indexOf(date.yearMonthDay()) {
 			postHistoryVC.sectionIndex = sectionIndex
 		}
 		
@@ -407,12 +388,10 @@ extension ProfileViewController: UIViewControllerPreviewingDelegate {
 			let peekViewController = PostHistoryTableViewController()
 			peekViewController.posts = posts
 			peekViewController.postedDates = postedDates
-			let (d, s) = filterPostedDates()
-			peekViewController.postedDatesDict = d
-			peekViewController.postedDatesSections = s
+			peekViewController.filterPostedDatesToSections(postedDates)
 			peekViewController.songLikes = postedLikes
 			
-			if let sectionIndex = s.indexOf(date.yearMonthDay()) {
+			if let sectionIndex = peekViewController.postedDatesSections!.indexOf(date.yearMonthDay()) {
 				peekViewController.sectionIndex = sectionIndex
 			}
 			

@@ -34,6 +34,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		super.viewDidLoad()
 		
 		title = "Feed"
+		currentPlayerVC = .Feed
 		view.backgroundColor = UIColor.tempoDarkGray
 		setupAddButton()
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")

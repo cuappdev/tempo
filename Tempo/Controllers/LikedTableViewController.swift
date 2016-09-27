@@ -15,6 +15,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
         super.viewDidLoad()
 		
 		title = "Liked"
+		currentPlayerVC = .Liked
 		view.backgroundColor = UIColor.tempoDarkGray
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true

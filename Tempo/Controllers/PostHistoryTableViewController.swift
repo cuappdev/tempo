@@ -13,15 +13,13 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 	
 	var songLikes: [Int] = []
     var postedDates: [NSDate] = []
-	var postedDatesDict: [String: Int] = [String: Int]()
-	var postedDatesSections: [String] = []
     var sectionIndex: Int?
 	
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "Post History"
-		
+		currentPlayerVC = .PostHistory
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
@@ -69,7 +67,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		var absoluteIndex = indexPath.row
 		if indexPath.section > 0 {
 			for s in 0...indexPath.section-1 {
-				absoluteIndex = absoluteIndex + postedDatesDict[postedDatesSections[s]]!
+				absoluteIndex = absoluteIndex + postedDatesDict![postedDatesSections![s]]!
 			}
 		}
 		return absoluteIndex
@@ -93,21 +91,21 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     }
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return postedDatesSections.count
+		return postedDatesSections!.count
 	}
 	
 	override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! PostHistoryHeaderSectionCell
-		headerCell.postDate?.text = convertDate(postedDatesSections[section])
+		headerCell.postDate?.text = convertDate(postedDatesSections![section])
 		return headerCell
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return postedDatesDict[postedDatesSections[section]]!
+		return postedDatesDict![postedDatesSections![section]]!
 	}
 	
 	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return convertDate(postedDatesSections[section])
+		return convertDate(postedDatesSections![section])
 	}
 	
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
