@@ -37,6 +37,7 @@
 		6084F6C51BE700B00048EFE3 /* PlayerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */; };
 		6092CBD91C021C5E008836AE /* FollowSuggestionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6092CBD71C021C5E008836AE /* FollowSuggestionsTableViewCell.swift */; };
 		6092CBDA1C021C5E008836AE /* FollowSuggestionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6092CBD81C021C5E008836AE /* FollowSuggestionsTableViewCell.xib */; };
+		60C5A3CD1D9A1FB1004BDD58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60C5A3CC1D9A1FB1004BDD58 /* LaunchScreen.storyboard */; };
 		6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */; };
 		6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */; };
 		6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */; };
@@ -108,7 +109,6 @@
 		1D72D9B91AACC4C0007822B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D72D9C11AACC4C0007822B0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		1D72D9C41AACC4C0007822B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1D802AB41B786350005A96D1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1D802AB61B78635A005A96D1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1DA44FC51B6D84D1009EC2BD /* PostButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostButton.swift; sourceTree = "<group>"; };
@@ -133,6 +133,7 @@
 		6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewController.swift; sourceTree = "<group>"; };
 		6092CBD71C021C5E008836AE /* FollowSuggestionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowSuggestionsTableViewCell.swift; sourceTree = "<group>"; };
 		6092CBD81C021C5E008836AE /* FollowSuggestionsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowSuggestionsTableViewCell.xib; sourceTree = "<group>"; };
+		60C5A3CC1D9A1FB1004BDD58 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowTableViewCell.swift; path = ../Profile/FollowTableViewCell.swift; sourceTree = "<group>"; };
 		6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowTableViewCell.xib; path = ../Profile/FollowTableViewCell.xib; sourceTree = "<group>"; };
 		6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
@@ -279,10 +280,10 @@
 				1D1DD7101AE492750066AB39 /* Utilities */,
 				1DE932921AAD12A700AD3BF0 /* Vendor */,
 				1D72D9C11AACC4C0007822B0 /* Images.xcassets */,
-				1D72D9C31AACC4C0007822B0 /* LaunchScreen.xib */,
 				BA257E271ABA3FE200D939B0 /* Tempo-Bridging-Header.h */,
 				1D72D9B81AACC4C0007822B0 /* Supporting Files */,
 				6D54C2A61ABF5A87007648A5 /* Frameworks */,
+				60C5A3CC1D9A1FB1004BDD58 /* LaunchScreen.storyboard */,
 			);
 			path = Tempo;
 			sourceTree = "<group>";
@@ -508,6 +509,7 @@
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
 				D160AE001BE67406003B0E1A /* PlaylistTableViewCell.xib in Resources */,
 				1DE649C41B78590800DA5499 /* SpotifyViewController.xib in Resources */,
+				60C5A3CD1D9A1FB1004BDD58 /* LaunchScreen.storyboard in Resources */,
 				D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */,
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
 				60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */,
@@ -678,18 +680,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		1D72D9C31AACC4C0007822B0 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1D72D9C41AACC4C0007822B0 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			path = .;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1D72D9D21AACC4C0007822B0 /* Debug */ = {
