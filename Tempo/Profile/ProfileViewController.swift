@@ -326,7 +326,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		postHistoryVC.filterPostedDatesToSections(postedDates)
 		postHistoryVC.songLikes = postedLikes
 		
-		if let sectionIndex = postHistoryVC.postedDatesSections!.indexOf(date.yearMonthDay()) {
+		if let sectionIndex = postHistoryVC.postedDatesSections.indexOf(date.yearMonthDay()) {
 			postHistoryVC.sectionIndex = sectionIndex
 		}
 		
@@ -391,7 +391,7 @@ extension ProfileViewController: UIViewControllerPreviewingDelegate {
 			peekViewController.filterPostedDatesToSections(postedDates)
 			peekViewController.songLikes = postedLikes
 			
-			if let sectionIndex = peekViewController.postedDatesSections!.indexOf(date.yearMonthDay()) {
+			if let sectionIndex = peekViewController.postedDatesSections.indexOf(date.yearMonthDay()) {
 				peekViewController.sectionIndex = sectionIndex
 			}
 			

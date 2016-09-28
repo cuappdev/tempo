@@ -12,14 +12,15 @@ import MediaPlayer
 class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegate {
 	
 	var songLikes: [Int] = []
-    var postedDates: [NSDate] = []
+	var postedDates: [NSDate] = []
+	var postedDatesDict: [String: Int] = [String: Int]()
+	var postedDatesSections: [String] = []
     var sectionIndex: Int?
 	
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "Post History"
-		currentPlayerVC = .PostHistory
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
@@ -67,10 +68,27 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		var absoluteIndex = indexPath.row
 		if indexPath.section > 0 {
 			for s in 0...indexPath.section-1 {
-				absoluteIndex = absoluteIndex + postedDatesDict![postedDatesSections![s]]!
+				absoluteIndex = absoluteIndex + postedDatesDict[postedDatesSections[s]]!
 			}
 		}
 		return absoluteIndex
+	}
+	
+	// Filter posted dates into dictionary of key: date, value: date_count
+	func filterPostedDatesToSections(dates: [NSDate]) {
+		// Clear section dictionary
+		postedDatesDict = [String: Int]()
+		postedDatesSections = []
+		// Create new dictionary
+		for d in dates {
+			let date = d.yearMonthDay()
+			if let count = postedDatesDict[date] {
+				postedDatesDict[date] = count + 1
+			} else {
+				postedDatesDict[date] = 1
+				postedDatesSections.append(date)
+			}
+		}
 	}
 	
     // TableView Methods
@@ -91,21 +109,21 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     }
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return postedDatesSections!.count
+		return postedDatesSections.count
 	}
 	
 	override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! PostHistoryHeaderSectionCell
-		headerCell.postDate?.text = convertDate(postedDatesSections![section])
+		headerCell.postDate?.text = convertDate(postedDatesSections[section])
 		return headerCell
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return postedDatesDict![postedDatesSections![section]]!
+		return postedDatesDict[postedDatesSections[section]]!
 	}
 	
 	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return convertDate(postedDatesSections![section])
+		return convertDate(postedDatesSections[section])
 	}
 	
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -113,5 +131,19 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
         selectedCell.postView.backgroundColor = UIColor.tempoLightGray
 		currentlyPlayingIndexPath = NSIndexPath(forRow: absoluteIndex(indexPath), inSection: 0)
     }
+	
+	// MARK: - Search Override
+	
+	override func filterContentForSearchText(searchText: String, scope: String = "All") {
+		if searchText == "" {
+			filteredPosts = posts
+		} else {
+			let pred = NSPredicate(format: "song.title contains[cd] %@ OR song.artist contains[cd] %@", searchText, searchText)
+			filteredPosts = (posts as NSArray).filteredArrayUsingPredicate(pred) as! [Post]
+		}
+		let filteredDates = filteredPosts.map { $0.date! }
+		filterPostedDatesToSections(filteredDates)
+		tableView.reloadData()
+	}
 
 }
