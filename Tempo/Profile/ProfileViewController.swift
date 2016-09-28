@@ -323,10 +323,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		let postHistoryVC = PostHistoryTableViewController()
 		postHistoryVC.posts = posts
 		postHistoryVC.postedDates = postedDates
+		postHistoryVC.filterPostedDatesToSections(postedDates)
 		postHistoryVC.songLikes = postedLikes
-		if let index = postedYearMonthDay.indexOf(date.yearMonthDay()) {
-			postHistoryVC.index = index
+		
+		if let sectionIndex = postHistoryVC.postedDatesSections.indexOf(date.yearMonthDay()) {
+			postHistoryVC.sectionIndex = sectionIndex
 		}
+		
 		navigationController?.pushViewController(postHistoryVC, animated: true)
 	}
 	
@@ -385,10 +388,11 @@ extension ProfileViewController: UIViewControllerPreviewingDelegate {
 			let peekViewController = PostHistoryTableViewController()
 			peekViewController.posts = posts
 			peekViewController.postedDates = postedDates
+			peekViewController.filterPostedDatesToSections(postedDates)
 			peekViewController.songLikes = postedLikes
 			
-			if let index = postedDays.indexOf(date.day()) {
-				peekViewController.index = index
+			if let sectionIndex = peekViewController.postedDatesSections.indexOf(date.yearMonthDay()) {
+				peekViewController.sectionIndex = sectionIndex
 			}
 			
 			peekViewController.preferredContentSize = CGSizeZero

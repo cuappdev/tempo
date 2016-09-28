@@ -12,14 +12,15 @@ import MediaPlayer
 class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegate {
 	
 	var songLikes: [Int] = []
-    var postedDates: [NSDate] = []
-    var index: Int?
+	var postedDates: [NSDate] = []
+	var postedDatesDict: [String: Int] = [String: Int]()
+	var postedDatesSections: [String] = []
+    var sectionIndex: Int?
 	
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "Post History"
-		
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
@@ -31,7 +32,9 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		tableView.addSubview(topView)
 		
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+		tableView.registerNib(UINib(nibName: "PostHistoryHeaderSectionCell", bundle: nil), forCellReuseIdentifier: "HeaderCell")
 		tableView.rowHeight = 80
+		tableView.sectionHeaderHeight = 30
 		tableView.showsVerticalScrollIndicator = false
 
 		pinView.postView.type = .History
@@ -46,33 +49,101 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		if index != nil {
-			let selectedRow = NSIndexPath(forRow: index!, inSection: 0)
+		if sectionIndex != nil {
+			let selectedRow = NSIndexPath(forRow: 0, inSection: sectionIndex!)
 			tableView.scrollToRowAtIndexPath(selectedRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
 		}
     }
 	
-    // TableView Methods
+	private func convertDate(date: String) -> String {
+		let year = date.substringToIndex(date.startIndex.advancedBy(4))
+		let monthDay = date.substringFromIndex(date.startIndex.advancedBy(5))
+		let editedDate = monthDay + "/" + year.substringFromIndex(year.startIndex.advancedBy(2))
+		let d = editedDate.stringByReplacingOccurrencesOfString("/", withString: ".")
+		return d
+	}
 	
+	// Get the absolute index path of cell
+	private func absoluteIndex(indexPath: NSIndexPath) -> Int {
+		var absoluteIndex = indexPath.row
+		if indexPath.section > 0 {
+			for s in 0...indexPath.section-1 {
+				absoluteIndex = absoluteIndex + postedDatesDict[postedDatesSections[s]]!
+			}
+		}
+		return absoluteIndex
+	}
+	
+	// Filter posted dates into dictionary of key: date, value: date_count
+	func filterPostedDatesToSections(dates: [NSDate]) {
+		// Clear section dictionary
+		postedDatesDict = [String: Int]()
+		postedDatesSections = []
+		// Create new dictionary
+		for d in dates {
+			let date = d.yearMonthDay()
+			if let count = postedDatesDict[date] {
+				postedDatesDict[date] = count + 1
+			} else {
+				postedDatesDict[date] = 1
+				postedDatesSections.append(date)
+			}
+		}
+	}
+	
+    // TableView Methods
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
 		
 		cell.postView.type = .History
 		let posts = searchController.active ? filteredPosts : self.posts
-		cell.postView.post = posts[indexPath.row]
+		cell.postView.post = posts[absoluteIndex(indexPath)]
 		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()
 		
-        let date = NSDateFormatter.simpleDateFormatter.stringFromDate(postedDates[indexPath.row])
-		cell.postView.dateLabel!.text = "\(date)"
+//        let date = convertDate(postedDatesSections[indexPath.section])
+	    cell.postView.dateLabel!.text = ""
 		
 		return cell
     }
-    
+	
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		return postedDatesSections.count
+	}
+	
+	override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! PostHistoryHeaderSectionCell
+		headerCell.postDate?.text = convertDate(postedDatesSections[section])
+		return headerCell
+	}
+	
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return postedDatesDict[postedDatesSections[section]]!
+	}
+	
+	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return convertDate(postedDatesSections[section])
+	}
+	
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
         selectedCell.postView.backgroundColor = UIColor.tempoLightGray
-		currentlyPlayingIndexPath = indexPath
+		currentlyPlayingIndexPath = NSIndexPath(forRow: absoluteIndex(indexPath), inSection: 0)
     }
+	
+	// MARK: - Search Override
+	
+	override func filterContentForSearchText(searchText: String, scope: String = "All") {
+		if searchText == "" {
+			filteredPosts = posts
+		} else {
+			let pred = NSPredicate(format: "song.title contains[cd] %@ OR song.artist contains[cd] %@", searchText, searchText)
+			filteredPosts = (posts as NSArray).filteredArrayUsingPredicate(pred) as! [Post]
+		}
+		let filteredDates = filteredPosts.map { $0.date! }
+		filterPostedDatesToSections(filteredDates)
+		tableView.reloadData()
+	}
 
 }

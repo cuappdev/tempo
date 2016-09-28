@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0271C9471D9582410037F6AD /* PostHistoryHeaderSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271C9451D9582410037F6AD /* PostHistoryHeaderSectionCell.swift */; };
+		0271C9481D9582410037F6AD /* PostHistoryHeaderSectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0271C9461D9582410037F6AD /* PostHistoryHeaderSectionCell.xib */; };
 		1D1C46F71CB6002C00D1B431 /* UIView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426E1A4A1C87BA6400512214 /* UIView+Utilities.swift */; };
 		1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1CC60C1C31BC0D0052F66D /* NSURLSession+Shared.swift */; };
 		1D1DD7141AE492750066AB39 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1DD7121AE492750066AB39 /* Util.swift */; };
@@ -97,6 +99,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0271C9451D9582410037F6AD /* PostHistoryHeaderSectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHistoryHeaderSectionCell.swift; sourceTree = "<group>"; };
+		0271C9461D9582410037F6AD /* PostHistoryHeaderSectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHistoryHeaderSectionCell.xib; sourceTree = "<group>"; };
 		1D1CC60C1C31BC0D0052F66D /* NSURLSession+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Shared.swift"; sourceTree = "<group>"; };
 		1D1DD7121AE492750066AB39 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		1D653F3D1B81451700F54455 /* SpotifyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
@@ -297,14 +301,16 @@
 				6038B17D1D80ED250083940D /* FeedTableViewCell.swift */,
 				6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */,
 				6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */,
-				6092CBD71C021C5E008836AE /* FollowSuggestionsTableViewCell.swift */,
 				6092CBD81C021C5E008836AE /* FollowSuggestionsTableViewCell.xib */,
+				6092CBD71C021C5E008836AE /* FollowSuggestionsTableViewCell.swift */,
 				D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */,
 				FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */,
 				1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */,
 				1DFBFB511B7845E7001DD6AC /* SongSearchTableViewCell.xib */,
 				D160ADFD1BE67406003B0E1A /* PlaylistTableViewCell.swift */,
 				D160ADFE1BE67406003B0E1A /* PlaylistTableViewCell.xib */,
+				0271C9451D9582410037F6AD /* PostHistoryHeaderSectionCell.swift */,
+				0271C9461D9582410037F6AD /* PostHistoryHeaderSectionCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -505,6 +511,7 @@
 				D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */,
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
 				60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */,
+				0271C9481D9582410037F6AD /* PostHistoryHeaderSectionCell.xib in Resources */,
 				D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */,
 				FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */,
 				6038B1801D80EDAF0083940D /* FeedTableViewCell.xib in Resources */,
@@ -654,6 +661,7 @@
 				6038B17E1D80ED250083940D /* FeedTableViewCell.swift in Sources */,
 				6084F6C51BE700B00048EFE3 /* PlayerTableViewController.swift in Sources */,
 				BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */,
+				0271C9471D9582410037F6AD /* PostHistoryHeaderSectionCell.swift in Sources */,
 				FAAFB7F31C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
 				952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */,

@@ -36,7 +36,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
                 currentlyPlayingPost?.player.togglePlaying()
             } else {
                 currentlyPlayingPost?.player.pause(true)
-                currentlyPlayingPost?.player.progress = 1 // Fill cell as played
+                currentlyPlayingPost?.player.progress = 0 // Fill cell light gray after deselected
                 
                 if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
                     currentlyPlayingPost = array[currentlyPlayingIndexPath.row]
@@ -242,7 +242,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	
 	// MARK: - Search Stuff
 	
-	private func filterContentForSearchText(searchText: String, scope: String = "All") {
+	func filterContentForSearchText(searchText: String, scope: String = "All") {
 		if searchText == "" {
 			filteredPosts = posts
 		} else {
