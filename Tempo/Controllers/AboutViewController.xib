@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AboutViewController" customModule="Tempo" customModuleProvider="target">
+            <connections>
+                <outlet property="aboutLabel" destination="t5p-hu-qvY" id="fGc-8z-b13"/>
+                <outlet property="linksLabel" destination="Jou-oI-h4d" id="yOy-ZR-72v"/>
+                <outlet property="teamLabel" destination="xZx-k4-fLw" id="omA-7w-3hI"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="460" height="750"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ez7-gX-8JC">
+                    <rect key="frame" x="0.0" y="0.0" width="460" height="750"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vinyl-red" translatesAutoresizingMaskIntoConstraints="NO" id="AkN-Xn-APH">
+                            <rect key="frame" x="256" y="32" width="44" height="41"/>
+                            <color key="tintColor" red="0.61363636359999996" green="0.19489535650000001" blue="0.17212780450000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="44" id="0iC-Tl-Von"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tempo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdo-KS-Ocb">
+                            <rect key="frame" x="156" y="23" width="149" height="54"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="149" id="vHH-6x-FpY"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="39"/>
+                            <color key="textColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Music Sharing Made Simple" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ju2-NA-2e6">
+                            <rect key="frame" x="124" y="73" width="212" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAW-Ms-nXs">
+                            <rect key="frame" x="25" y="119" width="47" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5p-hu-qvY">
+                            <rect key="frame" x="25" y="148" width="411" height="167"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="167" id="nKJ-nZ-4Zh"/>
+                            </constraints>
+                            <string key="text">"Cornell App Development is a project team at Cornell University dedicated to mobile app development. Every year, we take an app from idea to product, culminating with a release on the App Store. We give students the opportunity to work in a startup environment and gain practical experience in software development, design, and product management. Our team is made up of talented designers, developers, and visionaries who collaborate to bring projects to life."</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xZx-k4-fLw">
+                            <rect key="frame" x="25" y="360" width="411" height="244"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="244" id="PYO-rl-wbc"/>
+                            </constraints>
+                            <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Team" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXE-CG-2Pe">
+                            <rect key="frame" x="25" y="331" width="76" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vn4-cg-UEj">
+                            <rect key="frame" x="228" y="40" width="5" height="25"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="5" id="VIL-0n-MmE"/>
+                                <constraint firstAttribute="height" constant="25" id="daA-VD-5mT"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Links" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jPX-PW-LNs">
+                            <rect key="frame" x="25" y="617" width="40" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jou-oI-h4d">
+                            <rect key="frame" x="20" y="646" width="421" height="74"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="74" id="Zhj-RS-ry4"/>
+                            </constraints>
+                            <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                            <color key="textColor" red="0.61363636359999996" green="0.19489535650000001" blue="0.17212780450000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                        </textView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Jou-oI-h4d" secondAttribute="bottom" constant="30" id="0Cd-v1-1zW"/>
+                        <constraint firstItem="xZx-k4-fLw" firstAttribute="leading" secondItem="jPX-PW-LNs" secondAttribute="leading" id="1EI-z5-IiO"/>
+                        <constraint firstItem="t5p-hu-qvY" firstAttribute="top" secondItem="LAW-Ms-nXs" secondAttribute="bottom" constant="8" symbolic="YES" id="5gk-rD-0vT"/>
+                        <constraint firstItem="AkN-Xn-APH" firstAttribute="top" secondItem="Ez7-gX-8JC" secondAttribute="top" constant="32" id="8L3-YX-K21"/>
+                        <constraint firstItem="vn4-cg-UEj" firstAttribute="centerY" secondItem="AkN-Xn-APH" secondAttribute="centerY" id="9H3-RM-qoJ"/>
+                        <constraint firstItem="t5p-hu-qvY" firstAttribute="top" secondItem="ju2-NA-2e6" secondAttribute="bottom" constant="54" id="BIa-co-Pbf"/>
+                        <constraint firstItem="AkN-Xn-APH" firstAttribute="leading" secondItem="vn4-cg-UEj" secondAttribute="trailing" constant="23" id="D4c-of-LoW"/>
+                        <constraint firstItem="dXE-CG-2Pe" firstAttribute="top" secondItem="t5p-hu-qvY" secondAttribute="bottom" constant="16" id="Glg-xL-N9t"/>
+                        <constraint firstItem="xZx-k4-fLw" firstAttribute="top" secondItem="dXE-CG-2Pe" secondAttribute="bottom" constant="8" symbolic="YES" id="JxD-TN-rFn"/>
+                        <constraint firstAttribute="trailing" secondItem="t5p-hu-qvY" secondAttribute="trailing" constant="24" id="KDZ-XF-egc"/>
+                        <constraint firstItem="t5p-hu-qvY" firstAttribute="leading" secondItem="Ez7-gX-8JC" secondAttribute="leading" constant="25" id="Nda-87-V2U"/>
+                        <constraint firstAttribute="trailing" secondItem="xZx-k4-fLw" secondAttribute="trailing" constant="24" id="RY4-bQ-80I"/>
+                        <constraint firstItem="ju2-NA-2e6" firstAttribute="top" secondItem="vn4-cg-UEj" secondAttribute="bottom" constant="8" symbolic="YES" id="TlS-s1-rUU"/>
+                        <constraint firstItem="vn4-cg-UEj" firstAttribute="centerX" secondItem="ju2-NA-2e6" secondAttribute="centerX" id="TnN-KE-y5b"/>
+                        <constraint firstItem="ju2-NA-2e6" firstAttribute="top" secondItem="AkN-Xn-APH" secondAttribute="bottom" id="YA8-qf-Mme"/>
+                        <constraint firstItem="Jou-oI-h4d" firstAttribute="leading" secondItem="Ez7-gX-8JC" secondAttribute="leading" constant="20" id="a6W-lm-WIh"/>
+                        <constraint firstItem="LAW-Ms-nXs" firstAttribute="leading" secondItem="t5p-hu-qvY" secondAttribute="leading" id="dmS-qZ-Oyj"/>
+                        <constraint firstItem="cdo-KS-Ocb" firstAttribute="centerX" secondItem="vn4-cg-UEj" secondAttribute="centerX" id="ds4-Og-FFR"/>
+                        <constraint firstItem="ju2-NA-2e6" firstAttribute="centerX" secondItem="t5p-hu-qvY" secondAttribute="centerX" id="e1K-Du-WW5"/>
+                        <constraint firstItem="cdo-KS-Ocb" firstAttribute="centerX" secondItem="Ez7-gX-8JC" secondAttribute="centerX" id="enE-s4-o6z"/>
+                        <constraint firstItem="xZx-k4-fLw" firstAttribute="centerX" secondItem="Jou-oI-h4d" secondAttribute="centerX" id="fdh-eq-MSv"/>
+                        <constraint firstItem="Jou-oI-h4d" firstAttribute="leading" secondItem="Ez7-gX-8JC" secondAttribute="leading" constant="20" id="fpD-qB-83j"/>
+                        <constraint firstItem="t5p-hu-qvY" firstAttribute="top" secondItem="cdo-KS-Ocb" secondAttribute="bottom" constant="71" id="hfP-oT-uEw"/>
+                        <constraint firstItem="t5p-hu-qvY" firstAttribute="leading" secondItem="dXE-CG-2Pe" secondAttribute="leading" id="ke8-CI-ria"/>
+                        <constraint firstItem="Jou-oI-h4d" firstAttribute="top" secondItem="jPX-PW-LNs" secondAttribute="bottom" constant="8" symbolic="YES" id="l8g-6x-hfM"/>
+                        <constraint firstItem="jPX-PW-LNs" firstAttribute="top" secondItem="xZx-k4-fLw" secondAttribute="bottom" constant="13" id="lCB-Vz-TUk"/>
+                        <constraint firstItem="cdo-KS-Ocb" firstAttribute="top" secondItem="Ez7-gX-8JC" secondAttribute="top" constant="23" id="mcy-JP-cxQ"/>
+                        <constraint firstItem="dXE-CG-2Pe" firstAttribute="leading" secondItem="xZx-k4-fLw" secondAttribute="leading" id="odN-OU-Oro"/>
+                        <constraint firstItem="xZx-k4-fLw" firstAttribute="leading" secondItem="Ez7-gX-8JC" secondAttribute="leading" constant="25" id="xI3-Kv-Nyj"/>
+                        <constraint firstAttribute="trailing" secondItem="Jou-oI-h4d" secondAttribute="trailing" constant="19" id="xTh-Bi-3jb"/>
+                        <constraint firstAttribute="trailing" secondItem="Jou-oI-h4d" secondAttribute="trailing" constant="19" id="xzf-Dz-XhC"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Ez7-gX-8JC" secondAttribute="bottom" id="1cj-rV-b7D"/>
+                <constraint firstAttribute="trailing" secondItem="Ez7-gX-8JC" secondAttribute="trailing" id="8eF-Ko-U2n"/>
+                <constraint firstItem="Ez7-gX-8JC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dke-ej-BFG"/>
+                <constraint firstItem="Ez7-gX-8JC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gXX-0g-sWN"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="337" y="383"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="vinyl-red" width="30" height="30"/>
+    </resources>
+</document>
