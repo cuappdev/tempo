@@ -36,7 +36,6 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
                 currentlyPlayingPost?.player.togglePlaying()
             } else {
                 currentlyPlayingPost?.player.pause(true)
-                currentlyPlayingPost?.player.progress = 0 // Fill cell light gray after deselected
                 
                 if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
                     currentlyPlayingPost = array[currentlyPlayingIndexPath.row]
@@ -116,7 +115,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		guard let post = currentlyPlayingPost else { return }
 		
 		let center = MPNowPlayingInfoCenter.defaultCenter()
-		if post.player.progress != 1.0 {
+		if post.player.wasPlayed {
 			_ = try? session.setCategory(AVAudioSessionCategoryPlayback)
 			_ = try? session.setActive(true)
 			

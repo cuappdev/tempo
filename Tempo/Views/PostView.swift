@@ -31,7 +31,6 @@ enum SavedSongStatus: Int {
 }
 
 class PostView: UIView, UIGestureRecognizerDelegate {
-    private var progressGestureRecognizer: UIPanGestureRecognizer?
 	private var tapGestureRecognizer: UITapGestureRecognizer?
 	private var longPressGestureRecognizer: UILongPressGestureRecognizer?
     @IBOutlet var profileNameLabel: MarqueeLabel?
@@ -153,12 +152,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func didMoveToWindow() {
-        if progressGestureRecognizer == nil {
-            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(changeProgress(_:)))
-            progressGestureRecognizer?.delegate = self
-            progressGestureRecognizer?.delaysTouchesBegan = true
-            addGestureRecognizer(progressGestureRecognizer!)
-        }
         
         if tapGestureRecognizer == nil {
             tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(postViewPressed(_:)))
@@ -272,51 +265,20 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    dynamic func changeProgress(gesture: UIPanGestureRecognizer) {
-        if gesture.state != .Ended {
-            post?.player.pause(false)
-        } else {
-            post?.player.play(false)
-        }
-        
-        let xTranslation = gesture.locationInView(self).x
-        let cellWidth = bounds.width
-        
-        let progress = Double(xTranslation/cellWidth)
-        post?.player.progress = progress
-        
-        setNeedsDisplay()
-    }
-    
     override func drawRect(rect: CGRect) {
-        let progress = post?.player.progress ?? 0
+		var fill = 0
+		if let post = post {
+			if type == .Feed {
+				fill = post.player.wasPlayed ? 1 : 0
+			} else {
+				fill = post.player.isPlaying ? 1 : 0
+			 }
+		}
         
         super.drawRect(rect)
         fillColor.setFill()
         CGContextFillRect(UIGraphicsGetCurrentContext(),
-            CGRect(x: 0, y: 0, width: bounds.width * CGFloat(progress), height: bounds.height))
-    }
-    
-    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer == progressGestureRecognizer {
-            if let player = post?.player {
-                var offsetY: CGFloat = 0
-                var offsetX: CGFloat = 0
-                if let superview = superview?.superview?.superview as? UIScrollView {
-                    offsetY = superview.contentOffset.y
-                    offsetX = superview.contentOffset.x
-                }
-                let translation = progressGestureRecognizer?.translationInView(self)
-                
-                if let translation = translation {
-                    return ((fabs(translation.x) > fabs(translation.y)) &&
-                        (offsetY == 0 && offsetX == 0)) &&
-                        player.isPlaying
-                }
-            }
-            return false
-		}
-        return true
+            CGRect(x: 0, y: 0, width: bounds.width * CGFloat(fill), height: bounds.height))
     }
     
 	func postViewPressed(sender: UIGestureRecognizer) {

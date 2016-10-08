@@ -34,7 +34,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
             player?.delegate = self
         }
     }
-    private(set) var finishedPlaying = false
+    private(set) var wasPlayed = false
     
     private let fileURL: NSURL
 	init(fileURL: NSURL) {
@@ -88,7 +88,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     private var shouldNotify = false
     func play(notify: Bool) {
         prepareToPlay()
-        finishedPlaying = false
+        wasPlayed = true
         if player == nil {
             shouldAutoplay = true
             shouldNotify = notify
@@ -141,28 +141,10 @@ class Player: NSObject, AVAudioPlayerDelegate {
 		return player?.duration ?? DBL_MAX
     }
     
-    dynamic var progress: Double {
-        get {
-            if finishedPlaying {
-                return 1
-            }
-			return player != nil ? currentTime / duration : 0
-        }
-        set {
-			if player == nil { return }
-			if newValue == 1.0 {
-				finishedPlaying = true
-			}
-			
-			currentTime = newValue * duration
-        }
-    }
-    
     // MARK: - AVAudioPlayerDelegate
 	
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         pause(true)
-        finishedPlaying = true
         NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
     }
 }
