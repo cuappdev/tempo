@@ -48,7 +48,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	var delegate: PostViewDelegate?
     private var updateTimer: NSTimer?
     private var notificationHandler: AnyObject?
-	var pinned = false
 	var playerController: PlayerTableViewController?
     
     var post: Post? {
@@ -316,10 +315,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 				}
 			} else if hitView == avatarImageView {
 				delegate?.didTapImageForPostView?(self)
-			} else if pinned {
-				if let playerController = playerController {
-					playerController.togglePlay()
-				}
 			}
 		}
 	}

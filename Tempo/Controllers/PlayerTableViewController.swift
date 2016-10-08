@@ -11,10 +11,6 @@ import Haneke
 import MediaPlayer
 
 class PlayerTableViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
-	// For pinning
-	let topPinViewContainer = UIView()
-	let bottomPinViewContainer = UIView()
-	let pinView = NSBundle.mainBundle().loadNibNamed("FeedTableViewCell", owner: nil, options: nil)[0] as! FeedTableViewCell
 	
 	var searchController: UISearchController!
 	var posts: [Post] = []
@@ -47,7 +43,6 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
             tableView.selectRowAtIndexPath(currentlyPlayingIndexPath, animated: false, scrollPosition: .None)
         }
     }
-	var pinnedIndexPath: NSIndexPath?
 	var savedSongAlertView: SavedSongView!
 	var justOpened = true
 	
@@ -76,14 +71,12 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.backgroundView = UIView() // Fix color above search bar
 		
-		setupPinViews()
 		notifCenterSetup()
     }
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		positionPinViews()
 		addRevealGesture()
 		justOpened = true
 	}
@@ -115,7 +108,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		guard let post = currentlyPlayingPost else { return }
 		
 		let center = MPNowPlayingInfoCenter.defaultCenter()
-		if post.player.wasPlayed {
+		if !post.player.finishedPlaying {
 			_ = try? session.setCategory(AVAudioSessionCategoryPlayback)
 			_ = try? session.setActive(true)
 			

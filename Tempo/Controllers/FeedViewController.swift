@@ -182,7 +182,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	}
 	
 	override func scrollViewDidScroll(scrollView: UIScrollView) {
-		super.scrollViewDidScroll(scrollView)
 		customRefresh.scrollViewDidScroll(scrollView)
 	}
 	

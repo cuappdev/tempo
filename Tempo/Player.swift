@@ -34,8 +34,9 @@ class Player: NSObject, AVAudioPlayerDelegate {
             player?.delegate = self
         }
     }
-    private(set) var wasPlayed = false
-    
+	private(set) var wasPlayed = false
+	private(set) var finishedPlaying = false
+	
     private let fileURL: NSURL
 	init(fileURL: NSURL) {
 		self.fileURL = fileURL
@@ -89,6 +90,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     func play(notify: Bool) {
         prepareToPlay()
         wasPlayed = true
+		finishedPlaying = false
         if player == nil {
             shouldAutoplay = true
             shouldNotify = notify
@@ -145,6 +147,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 	
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         pause(true)
+		finishedPlaying = true
         NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
     }
 }
