@@ -38,9 +38,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var followersLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
 	
-    //Animation
-//    private let popTransition = PopAnimator()
-	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -125,12 +122,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true
-        
-        //Set tap gesture for profile picture
-        profilePictureView.userInteractionEnabled = !notConnected(false)
-		let tapProfile = UITapGestureRecognizer()
-		profilePictureView.addGestureRecognizer(tapProfile)
-		tapProfile.addTarget(self, action: #selector(profileTapped(_:)))
 		
 		if User.currentUser.username == user.username {
 			title = "My Profile"
@@ -150,33 +141,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 				}
 			}
 		}
-	}
-	
-	// Return to profile view
-	func popToRoot() {
-		navigationController?.popToRootViewControllerAnimated(true)
-	}
-	
-	// Show profile picture upon tap
-	@IBAction func profileTapped(sender: UITapGestureRecognizer) {
-		let proPicVC = ProfilePictureViewController()
-		//animation
-		proPicVC.transitioningDelegate = self
-		presentViewController(proPicVC, animated: true, completion: nil)
-	}
-	
-	//Animation for Profile picture view
-	func animationControllerForPresentedController(
-		presented: UIViewController,
-		presentingController presenting: UIViewController,
-		sourceController source: UIViewController) ->
-		UIViewControllerAnimatedTransitioning? {
-			let popTransition = PopAnimator()
-			popTransition.originFrame = profilePictureView.superview!.convertRect(profilePictureView.frame, toView: nil)
-//			popTransition.presenting = true
-			popTransition.profileImage = profilePictureView.image!
-			
-			return popTransition
 	}
 	
     // <------------------------FOLLOW BUTTONS------------------------>

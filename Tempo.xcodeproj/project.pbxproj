@@ -74,9 +74,6 @@
 		D17395741ADB080900A53AEE /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395721ADB080900A53AEE /* UsersViewController.swift */; };
 		D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395881ADF360C00A53AEE /* SignInViewController.swift */; };
 		D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395891ADF360C00A53AEE /* SignInViewController.xib */; };
-		DDEC11471C8381EE0090102A /* ProfilePictureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDEC11461C8381EE0090102A /* ProfilePictureViewController.xib */; };
-		DDEC11531C8382BB0090102A /* ProfilePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEC11521C8382BB0090102A /* ProfilePictureViewController.swift */; };
-		DDEC11551C838F6E0090102A /* PopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEC11541C838F6E0090102A /* PopAnimator.swift */; };
 		F068384F39E18ADAF6E154A6 /* Pods_Tempo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3842C2DC885AA9126502E3B9 /* Pods_Tempo.framework */; };
 		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
 		FA1E1A781ADB06A3007C823C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A771ADB06A3007C823C /* Post.swift */; };
@@ -178,9 +175,6 @@
 		D17395891ADF360C00A53AEE /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		D78D075B8DE7CC1E55A4700F /* Pods-Tempo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tempo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tempo/Pods-Tempo.debug.xcconfig"; sourceTree = "<group>"; };
 		DBBDF6788B90A85996D296E1 /* Pods-IceFishing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IceFishing.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IceFishing/Pods-IceFishing.debug.xcconfig"; sourceTree = "<group>"; };
-		DDEC11461C8381EE0090102A /* ProfilePictureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilePictureViewController.xib; sourceTree = "<group>"; };
-		DDEC11521C8382BB0090102A /* ProfilePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePictureViewController.swift; sourceTree = "<group>"; };
-		DDEC11541C838F6E0090102A /* PopAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopAnimator.swift; sourceTree = "<group>"; };
 		FA10FE2AF6390B262E6B5B4A /* Pods-Tempo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tempo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tempo/Pods-Tempo.release.xcconfig"; sourceTree = "<group>"; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FA1E1A771ADB06A3007C823C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
@@ -357,10 +351,7 @@
 				D17395891ADF360C00A53AEE /* SignInViewController.xib */,
 				D1173FFF1AF8574400302FFD /* ProfileViewController.swift */,
 				D11740071AF8574900302FFD /* ProfileViewController.xib */,
-				DDEC11541C838F6E0090102A /* PopAnimator.swift */,
 				6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */,
-				DDEC11521C8382BB0090102A /* ProfilePictureViewController.swift */,
-				DDEC11461C8381EE0090102A /* ProfilePictureViewController.xib */,
 				D17395721ADB080900A53AEE /* UsersViewController.swift */,
 				D102A9C51AE889D600C66385 /* SideBarViewController.swift */,
 				D102A9C61AE889D600C66385 /* SideBarViewController.xib */,
@@ -510,7 +501,6 @@
 				B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */,
 				D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */,
 				1DB476481AEF24670066014F /* PostButton.xib in Resources */,
-				DDEC11471C8381EE0090102A /* ProfilePictureViewController.xib in Resources */,
 				6D3FA6611AD5FD5C00B1320D /* UsernameViewController.xib in Resources */,
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
 				D160AE001BE67406003B0E1A /* PlaylistTableViewCell.xib in Resources */,
@@ -666,7 +656,6 @@
 				D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */,
 				6DA5FE4D1AED72F800E795DD /* UIColor+Shared.swift in Sources */,
 				D148F4AE1AF03EF5009AB073 /* PostHistoryTableViewCell.swift in Sources */,
-				DDEC11551C838F6E0090102A /* PopAnimator.swift in Sources */,
 				D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */,
 				6038B17E1D80ED250083940D /* FeedTableViewCell.swift in Sources */,
 				6084F6C51BE700B00048EFE3 /* PlayerTableViewController.swift in Sources */,
@@ -675,7 +664,6 @@
 				FAAFB7F31C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
 				952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */,
-				DDEC11531C8382BB0090102A /* ProfilePictureViewController.swift in Sources */,
 				1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */,
 				D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */,
 				D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */,
