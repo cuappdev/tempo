@@ -20,6 +20,10 @@ class SongSearchTableViewCell: UITableViewCell {
 		contentView.backgroundColor = UIColor.tempoLightGray
 		separator.backgroundColor = UIColor.separatorGray
 		separatorHeight.constant = 0.5
+		
+		shareButton.layer.borderWidth = 1.5
+		shareButton.layer.borderColor = UIColor.tempoLightRed.CGColor
+		shareButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 12)!
 	}
 	
 	override func prepareForReuse() {

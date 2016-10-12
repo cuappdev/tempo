@@ -123,7 +123,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		cell.shareButton.hidden = true
 		if (selfPostIds.contains(post.song.spotifyID)) {
 			cell.shareButton.setTitle("SHARED", forState: .Normal)
-			cell.shareButton.backgroundColor = UIColor.tempoDarkGray
+			cell.shareButton.backgroundColor = UIColor.clearColor()
 			cell.shareButton.removeTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
 		} else {
 			cell.shareButton.setTitle("SHARE", forState: .Normal)
