@@ -80,7 +80,6 @@
 		FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7B1ADB072A007C823C /* Song.swift */; };
 		FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7D1ADB0818007C823C /* PostView.swift */; };
 		FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA674C061AF9105E00C14463 /* ADRefreshControl.swift */; };
-		FAAFB7F31C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAFB7F21C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift */; };
 		FAB564731AF6A8C9001059DF /* LikedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */; };
 		FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -181,7 +180,6 @@
 		FA1E1A7B1ADB072A007C823C /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Models/Song.swift; sourceTree = "<group>"; };
 		FA1E1A7D1ADB0818007C823C /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		FA674C061AF9105E00C14463 /* ADRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRefreshControl.swift; sourceTree = "<group>"; };
-		FAAFB7F21C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PlayerTableViewController+Pinning.swift"; sourceTree = "<group>"; };
 		FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikedTableViewController.swift; sourceTree = "<group>"; };
 		FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SideBarTableViewCell.xib; path = ../Profile/SideBarTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -211,7 +209,6 @@
 				B085F3B41BE3CBB80000421E /* SearchViewController.xib */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
 				6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */,
-				FAAFB7F21C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift */,
 				6067F0801BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift */,
 				60C018041D9C7A2E00FE5166 /* AboutViewController.swift */,
 				60C018051D9C7A2E00FE5166 /* AboutViewController.xib */,
@@ -661,7 +658,6 @@
 				6084F6C51BE700B00048EFE3 /* PlayerTableViewController.swift in Sources */,
 				BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */,
 				0271C9471D9582410037F6AD /* PostHistoryHeaderSectionCell.swift in Sources */,
-				FAAFB7F31C7E7BDB00B21BBE /* PlayerTableViewController+Pinning.swift in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
 				952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */,
 				1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */,

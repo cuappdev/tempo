@@ -36,8 +36,6 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		tableView.rowHeight = 80
 		tableView.sectionHeaderHeight = 30
 		tableView.showsVerticalScrollIndicator = false
-
-		pinView.postView.type = .History
     }
 	
 	override func viewWillAppear(animated: Bool) {

@@ -31,8 +31,6 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		topView.backgroundColor = UIColor.tempoLightRed
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
-		
-		pinView.postView.type = .Liked
     }
 	
 	override func viewWillAppear(animated: Bool) {

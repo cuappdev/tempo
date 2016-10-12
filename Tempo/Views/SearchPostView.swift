@@ -11,7 +11,6 @@ import MediaPlayer
 import MarqueeLabel
 
 class SearchPostView: UIView, UIGestureRecognizerDelegate {
-	private var progressGestureRecognizer: UIPanGestureRecognizer?
 	var tapGestureRecognizer: UITapGestureRecognizer?
 	@IBOutlet var profileNameLabel: MarqueeLabel?
 	@IBOutlet var avatarImageView: UIImageView?
@@ -58,12 +57,6 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func didMoveToWindow() {
-        if progressGestureRecognizer == nil {
-            progressGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(SearchPostView.changeProgress(_:)))
-            progressGestureRecognizer?.delegate = self
-            progressGestureRecognizer?.delaysTouchesBegan = true
-            addGestureRecognizer(progressGestureRecognizer!)
-        }
         
         if tapGestureRecognizer == nil {
             tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SearchPostView.postViewPressed(_:)))
@@ -149,53 +142,15 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    dynamic func changeProgress(gesture: UIPanGestureRecognizer) {
-        if gesture.state != .Ended {
-            post?.player.pause(false)
-        } else {
-            post?.player.play(false)
-        }
-        
-        let xTranslation = gesture.locationInView(self).x
-        let cellWidth = bounds.width
-        
-        let progress = Double(xTranslation/cellWidth)
-        post?.player.progress = progress
-        
-        setNeedsDisplay()
-    }
-    
     override func drawRect(rect: CGRect) {
-        var progress = 0.0
+        var fill = 0
         if let post = post {
-            progress = post.player.progress
+			fill = post.player.isPlaying ? 1 : 0
         }
         super.drawRect(rect)
         UIColor.tempoDarkGray.setFill()
         CGContextFillRect(UIGraphicsGetCurrentContext(),
-            CGRect(x: 0, y: 0, width: bounds.width * CGFloat(progress), height: bounds.height))
-    }
-    
-    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer == progressGestureRecognizer {
-            if let player = post?.player {
-                var offsetY:CGFloat = 0.0
-                var offsetX:CGFloat = 0.0
-                if let superview = superview?.superview?.superview as? UIScrollView {
-                    offsetY = superview.contentOffset.y
-                    offsetX = superview.contentOffset.x
-                }
-                let translation = self.progressGestureRecognizer?.translationInView(self)
-                
-                if let translation = translation {
-                    return ((fabs(translation.x) > fabs(translation.y)) &&
-                        (offsetY == 0.0 && offsetX == 0.0)) &&
-                        player.isPlaying
-                }
-            }
-            return false
-        }
-        return true
+            CGRect(x: 0, y: 0, width: bounds.width * CGFloat(fill), height: bounds.height))
     }
     
     func postViewPressed(sender: UITapGestureRecognizer) {
