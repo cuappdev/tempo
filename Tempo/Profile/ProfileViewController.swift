@@ -122,7 +122,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true
-		
+
 		if User.currentUser.username == user.username {
 			title = "My Profile"
 			followButton.setTitle("EDIT", forState: .Normal)
@@ -131,14 +131,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			title = "Profile"
 			followButton.hidden = true
 			followButton.addTarget(self, action: #selector(followButtonPressed(_:)), forControlEvents: .TouchUpInside)
-			
-			API.sharedAPI.fetchUser(user.id) {
-				self.user = $0
-				self.updateFollowingUI()
-				self.followButton.hidden = false
-				UIView.animateWithDuration(0.25) {
-					self.followButton.alpha = 1
-				}
+			}
+		
+		API.sharedAPI.fetchUser(user.id) {
+			self.user = $0
+			self.updateFollowingUI()
+			self.followButton.hidden = false
+			UIView.animateWithDuration(0.25) {
+				self.followButton.alpha = 1
 			}
 		}
 	}
@@ -157,7 +157,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		if User.currentUser.username != user.username {
 			followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
 		}
-		
+
 		followingLabel.text = "\(user.followingCount)"
 		followersLabel.text = "\(user.followersCount)"
 	}
