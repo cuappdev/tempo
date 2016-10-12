@@ -59,7 +59,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		return cell
     }
 	
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
 		cell.postView.backgroundColor = UIColor.tempoLightGray
 		currentlyPlayingIndexPath = indexPath

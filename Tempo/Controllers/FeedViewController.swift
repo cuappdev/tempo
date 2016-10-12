@@ -50,6 +50,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		tableView.tableHeaderView = nil
 		tableView.rowHeight = 80
 		tableView.showsVerticalScrollIndicator = false
+		refreshControl = customRefresh.refreshControl
+		tableView.addSubview(self.refreshControl)
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
@@ -177,11 +179,11 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	}
 	
 	// MARK: - UITableViewDelegate
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		currentlyPlayingIndexPath = indexPath
 	}
 	
-	override func scrollViewDidScroll(scrollView: UIScrollView) {
+	func scrollViewDidScroll(scrollView: UIScrollView) {
 		customRefresh.scrollViewDidScroll(scrollView)
 	}
 	
