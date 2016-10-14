@@ -10,8 +10,10 @@ import UIKit
 import Haneke
 import MediaPlayer
 
-class PlayerTableViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
+class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
 	
+	var tableView: UITableView!
+	var refreshControl: UIRefreshControl!
 	var searchController: UISearchController!
 	var posts: [Post] = []
 	var filteredPosts: [Post] = []
@@ -49,6 +51,12 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		//TableView
+		let playerCellHeight = CGFloat(72)
+		tableView = UITableView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height - playerCellHeight), style: .Plain)
+		tableView.delegate = self
+		tableView.dataSource = self
+		
 		//Search Bar
 		searchController = UISearchController(searchResultsController: nil)
 		searchController.dimsBackgroundDuringPresentation = false
@@ -70,6 +78,7 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 		
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.backgroundView = UIView() // Fix color above search bar
+		self.view.addSubview(tableView)
 		
 		notifCenterSetup()
     }
@@ -89,12 +98,16 @@ class PlayerTableViewController: UITableViewController, UISearchResultsUpdating,
 	
     // MARK: - Table view data source
 	
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if searchController.active {
 			return filteredPosts.count
 		} else {
 			return posts.count
 		}
+	}
+	
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		preconditionFailure("This method must be overridden")
 	}
 	
 	func navigateToSuggestions() {

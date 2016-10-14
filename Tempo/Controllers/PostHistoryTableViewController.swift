@@ -106,11 +106,11 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		return cell
     }
 	
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return postedDatesSections.count
 	}
 	
-	override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+	func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! PostHistoryHeaderSectionCell
 		headerCell.postDate?.text = convertDate(postedDatesSections[section])
 		return headerCell
@@ -120,11 +120,11 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		return postedDatesDict[postedDatesSections[section]]!
 	}
 	
-	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		return convertDate(postedDatesSections[section])
 	}
 	
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
         selectedCell.postView.backgroundColor = UIColor.tempoLightGray
 		currentlyPlayingIndexPath = NSIndexPath(forRow: absoluteIndex(indexPath), inSection: 0)
