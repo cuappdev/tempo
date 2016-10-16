@@ -9,6 +9,7 @@ target 'Tempo' do
 	pod 'FBSDKShareKit'
 	pod 'HanekeSwift'
 	pod 'MarqueeLabel/Swift'
+	pod 'Onboard'
 	pod 'SwiftyJSON'
 	pod 'SWRevealViewController'
 	pod 'Tweaks'

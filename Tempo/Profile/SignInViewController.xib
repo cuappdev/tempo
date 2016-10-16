@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -11,7 +11,7 @@
         </mutableArray>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignInViewController" customModule="IceFishing" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignInViewController" customModule="Tempo" customModuleProvider="target">
             <connections>
                 <outlet property="loginButton" destination="Vrr-zH-v88" id="wkf-FY-ti1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -24,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tempo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVp-eX-wnF">
-                    <rect key="frame" x="160" y="181" width="280" height="120.5"/>
+                    <rect key="frame" x="160" y="181" width="280" height="121"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="88"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -36,25 +36,33 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vinyl-red" translatesAutoresizingMaskIntoConstraints="NO" id="sgc-14-eQ1">
-                    <rect key="frame" x="250" y="316.5" width="100" height="100"/>
+                    <rect key="frame" x="250" y="317" width="100" height="100"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="jSd-Nq-ofe"/>
                         <constraint firstAttribute="height" constant="100" id="vZP-ZA-36R"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vrr-zH-v88">
-                    <rect key="frame" x="180" y="443" width="241" height="53"/>
+                    <rect key="frame" x="162" y="505" width="276" height="60"/>
                     <color key="backgroundColor" red="0.17647058823529413" green="0.26666666666666666" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="53" id="9oN-Yh-rXy"/>
-                        <constraint firstAttribute="width" constant="241" id="MNa-lA-5cl"/>
+                        <constraint firstAttribute="height" constant="60" id="9oN-Yh-rXy"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="G9k-Nz-qho"/>
+                        <constraint firstAttribute="width" constant="276" id="MNa-lA-5cl"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="276" id="n2M-sX-D1E"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                     <color key="tintColor" red="0.1843137255" green="0.28627450980000002" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="Continue with Facebook">
+                    <state key="normal" title="Connect with Facebook">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="9oN-Yh-rXy"/>
+                            <exclude reference="MNa-lA-5cl"/>
+                        </mask>
+                    </variation>
                     <connections>
                         <action selector="logIn:" destination="-1" eventType="touchUpInside" id="54R-7R-xOR"/>
                     </connections>
@@ -63,6 +71,7 @@
             <color key="backgroundColor" red="0.13725490196078433" green="0.14117647058823529" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="T8J-AL-ZeE" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="0.5" id="0E3-rM-iJM"/>
+                <constraint firstAttribute="bottom" secondItem="Vrr-zH-v88" secondAttribute="bottom" constant="35" id="2R0-S4-Ml0"/>
                 <constraint firstItem="sgc-14-eQ1" firstAttribute="top" secondItem="SVp-eX-wnF" secondAttribute="bottom" constant="15" id="E9m-Jz-8lJ"/>
                 <constraint firstItem="Vrr-zH-v88" firstAttribute="top" secondItem="sgc-14-eQ1" secondAttribute="bottom" constant="26" id="HyW-lJ-NYM"/>
                 <constraint firstItem="T8J-AL-ZeE" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="IRV-62-1pZ"/>
@@ -74,6 +83,7 @@
             </constraints>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="HyW-lJ-NYM"/>
                     <exclude reference="uFp-qd-aDe"/>
                 </mask>
             </variation>

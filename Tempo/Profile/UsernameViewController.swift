@@ -17,44 +17,53 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var userProfilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameTextField: UITextField!
-    
+    @IBOutlet weak var continueBtn: UIButton!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var alertLabel: UILabel!
+	
     @IBAction func createUser(sender: UIButton) {
 		guard let username = usernameTextField.text else { print("No Username"); return}
 		let charSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_").invertedSet
 		let invalidChars = username.rangeOfCharacterFromSet(charSet)
 		
 		if username == "" {
-			showErrorAlert("Empty field!", message: "Username must have at least one character.", actionTitle: "Try again")
+			alertLabel.text = "Username must have at least one character."
+			alertLabel.textColor = UIColor.redColor()
 		} else if invalidChars != nil { // Username contains some invalid characters
-			showErrorAlert("Invalid characters!", message: "Only underscores and alphanumeric characters are allowed.", actionTitle: "Try again")
+			alertLabel.text = "Only underscores and alphanumeric characters allowed."
+			alertLabel.textColor = UIColor.redColor()
 		} else { // Username contains only valid characters
 			API.sharedAPI.usernameIsValid(username) { success in
 				if success { // Username available
 					API.sharedAPI.updateCurrentUser(username, didSucceed: { (success) in
 						if success {
 							let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-							appDelegate.toggleRootVC()
+							appDelegate.launchOnboarding(true)
 						} else {
-							self.showErrorAlert("Sorry!", message: "Username failed to update.", actionTitle: "Try again")
+							self.alertLabel.text = "Username failed to update. Try again."
+							self.alertLabel.textColor = UIColor.redColor()
 						}
 					})
 				} else { // Username already taken
-					self.showErrorAlert("Sorry!", message: "Username is taken.", actionTitle: "Try again")
+					self.alertLabel.text = "Username unavailable."
+					self.alertLabel.textColor = UIColor.redColor()
 				}
 			}
 		}
     }
-	
-    @IBAction func logOut(sender: UIButton) {
-		FBSDKAccessToken.setCurrentAccessToken(nil)
-		let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-		appDelegate.toggleRootVC()
-    }
 
+	override func viewWillAppear(animated: Bool) {
+		self.navigationController?.setNavigationBarHidden(true, animated: true)
+	}
+	
+	override func viewWillDisappear(animated: Bool) {
+		self.navigationController?.setNavigationBarHidden(false, animated: true)
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		title = "Enter Your Username"
+        continueBtn.layer.cornerRadius = 5
+		usernameTextField.addTarget(self, action: #selector(UsernameViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
 		
 		userProfilePicture.layer.borderWidth = 1.5
 		userProfilePicture.layer.borderColor = UIColor.whiteColor().CGColor
@@ -66,11 +75,10 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
 		userProfilePicture.hnk_setImageFromURL(imageUrl)
 	}
 	
-	func showErrorAlert(title: String, message: String, actionTitle: String) {
-		let errorAlert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-		errorAlert.addAction(UIAlertAction(title: actionTitle, style: .Default, handler: nil))
-		presentViewController(errorAlert, animated: true, completion: nil)
-		usernameTextField.text = ""
+	func textFieldDidChange(textField: UITextField) {
+		if let usernameValue = usernameTextField.text {
+			usernameLabel.text = "@\(usernameValue)"
+		}
 	}
 	
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -80,5 +88,4 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
