@@ -36,7 +36,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		title = "Post a track"
 		view.backgroundColor = UIColor.tempoDarkGray
-		tableView.rowHeight = 72
+		tableView.rowHeight = 84
 		tableView.showsVerticalScrollIndicator = false
 		tableView.registerNib(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
 		
@@ -119,6 +119,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		let cell = tableView.dequeueReusableCellWithIdentifier("SongSearchTableViewCell", forIndexPath: indexPath) as! SongSearchTableViewCell
 		let post = results[indexPath.row]
 		cell.postView.post = post
+		cell.postView.post?.player.prepareToPlay()
 		cell.postView.avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL!)
 		cell.shareButton.hidden = true
 		if (selfPostIds.contains(post.song.spotifyID)) {
