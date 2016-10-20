@@ -33,7 +33,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		tableView.registerNib(UINib(nibName: "PostHistoryHeaderSectionCell", bundle: nil), forCellReuseIdentifier: "HeaderCell")
-		tableView.rowHeight = 80
+		tableView.rowHeight = 100
 		tableView.sectionHeaderHeight = 30
 		tableView.showsVerticalScrollIndicator = false
     }

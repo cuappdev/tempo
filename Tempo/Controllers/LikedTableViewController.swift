@@ -19,7 +19,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
-		tableView.rowHeight = 80
+		tableView.rowHeight = 100
 		tableView.showsVerticalScrollIndicator = false
 		tableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
