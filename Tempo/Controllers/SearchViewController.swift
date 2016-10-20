@@ -122,6 +122,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		cell.postView.post?.player.prepareToPlay()
 		cell.postView.avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL!)
 		cell.shareButton.hidden = true
+		cell.postView.profileNameLabel?.holdScrolling = true
+		cell.postView.descriptionLabel?.holdScrolling = true
 		if (selfPostIds.contains(post.song.spotifyID)) {
 			cell.shareButton.setTitle("SHARED", forState: .Normal)
 			cell.shareButton.backgroundColor = UIColor.clearColor()
@@ -130,6 +132,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			cell.shareButton.setTitle("SHARE", forState: .Normal)
 			cell.shareButton.backgroundColor = UIColor.tempoLightRed
 			cell.shareButton.addTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
+		}
+		if activePlayer != nil {
+			cell.postView.profileNameLabel?.textColor = (activePlayer == post.player) ? UIColor.tempoLightRed : UIColor.whiteColor()
 		}
 		
 		return cell

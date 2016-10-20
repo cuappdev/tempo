@@ -105,18 +105,16 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     func updateProfileLabel() {
         if let post = post {
             var color: UIColor!
-			var font: UIFont!
+			let font = UIFont(name: "Avenir-Medium", size: 14)
             let duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = profileNameLabel!
             if post.player.isPlaying {
                 color = UIColor.tempoLightRed
-				font = UIFont(name: "Avenir-Medium", size: 14)!
                 // Will scroll labels
                 profileNameLabel?.holdScrolling = false
                 descriptionLabel?.holdScrolling = false
             } else {
                 color = UIColor.whiteColor()
-				font = UIFont(name: "Avenir-Medium", size: 14)!
                 // Labels won't scroll
                 profileNameLabel?.holdScrolling = true
                 descriptionLabel?.holdScrolling = true

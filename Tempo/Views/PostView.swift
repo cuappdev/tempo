@@ -104,7 +104,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 })
 				
 				if (User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] != nil) ?? false {
-					print("Here")
 					songStatus = .Saved
 				}
 				
@@ -211,11 +210,10 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 
         if let post = post {
             let color: UIColor
-			let font: UIFont
+			let font = UIFont(name: "Avenir-Medium", size: 16)!
             let duration = NSTimeInterval(0.3)
             if post.player.isPlaying {
                 color = UIColor.tempoLightRed
-				font = UIFont(name: "Avenir-Medium", size: 16)!
 				if type == .Feed {
 					if let layer = avatarLayer {
 						let animation = CABasicAnimation(keyPath: "transform.rotation")
@@ -232,7 +230,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 descriptionLabel?.holdScrolling = false
             } else {
                 color = UIColor.whiteColor()
-				font = UIFont(name: "Avenir-Medium", size: 16)!
                 // Labels won't scroll
                 profileNameLabel?.holdScrolling = true
                 descriptionLabel?.holdScrolling = true
