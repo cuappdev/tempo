@@ -99,8 +99,6 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		cell.postView.post = posts[absoluteIndex(indexPath)]
 		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()
-		
-//        let date = convertDate(postedDatesSections[indexPath.section])
 	    cell.postView.dateLabel!.text = ""
 		
 		return cell
