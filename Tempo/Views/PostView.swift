@@ -46,14 +46,19 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	var songStatus: SavedSongStatus = .NotSaved
 	var delegate: PostViewDelegate?
     private var updateTimer: NSTimer?
-    private var notificationHandler: AnyObject?
+	private var playNotificationHandler: AnyObject?
+	private var likedNotificationHandler: AnyObject?
 	var playerController: PlayerTableViewController?
+	var playerCellRef: PlayerCellView?
     
     var post: Post? {
         didSet {
-            if let handler: AnyObject = notificationHandler {
-                NSNotificationCenter.defaultCenter().removeObserver(handler)
+            if let playHandler: AnyObject = playNotificationHandler {
+                NSNotificationCenter.defaultCenter().removeObserver(playHandler)
             }
+			if let likedHandler: AnyObject = likedNotificationHandler {
+				NSNotificationCenter.defaultCenter().removeObserver(likedHandler)
+			}
 
             setUpTimer()
             
@@ -95,13 +100,22 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 //! that updates every minute
 				
                 
-                notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
-                    object: post.player,
-                    queue: NSOperationQueue.mainQueue(), usingBlock: { [weak self] note in
-                        self?.updateProfileLabel()
-                        self?.setUpTimer()
-                        self?.setNeedsDisplay()
-                })
+				playNotificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
+					object: post.player,
+					queue: NSOperationQueue.mainQueue(), usingBlock: { [weak self] note in
+					self?.updateProfileLabel()
+					self?.playerCellRef!.updatePlayingStatus()
+					self?.setUpTimer()
+					self?.setNeedsDisplay()
+					})
+ 				
+				if let playerCellRef = playerCellRef {
+					likedNotificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PostLikedStatusChangeNotification,
+						object: playerCellRef,
+						queue: NSOperationQueue.mainQueue(), usingBlock: { [weak self] note in
+							self?.updateLikedStatus()
+						})
+				}
 				
 				if (User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] != nil) ?? false {
 					songStatus = .Saved
@@ -276,12 +290,18 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			let hitView = hitTest(tapPoint, withEvent: nil)
 			if hitView == likedButton {
 				post.toggleLike()
-				let name = post.isLiked ? "filled-heart" : "empty-heart"
-				likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
-				likedButton?.setImage(UIImage(named: name), forState: .Normal)
+				updateLikedStatus()
 			} else if hitView == avatarImageView {
 				delegate?.didTapImageForPostView?(self)
 			}
+		}
+	}
+	
+	func updateLikedStatus() {
+		if let post = post {
+			let name = post.isLiked ? "filled-heart" : "empty-heart"
+			likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
+			likedButton?.setImage(UIImage(named: name), forState: .Normal)
 		}
 	}
 }

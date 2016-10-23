@@ -142,7 +142,23 @@ class Player: NSObject, AVAudioPlayerDelegate {
     var duration: NSTimeInterval {
 		return player?.duration ?? DBL_MAX
     }
-    
+	
+	dynamic var progress: Double {
+		get {
+			if finishedPlaying {
+				return 1
+			}
+			return player != nil ? currentTime / duration : 0
+		}
+		set {
+			if player == nil { return }
+			if newValue == 1.0 {
+				finishedPlaying = true
+			}
+			currentTime = newValue * duration
+		}
+	}
+	
     // MARK: - AVAudioPlayerDelegate
 	
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {

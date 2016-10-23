@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let likedVC = LikedTableViewController()
 	let spotifyVC = SpotifyViewController(nibName: "SpotifyViewController", bundle: nil)
 	let aboutVC = AboutViewController(nibName: "AboutViewController", bundle: nil)
-	let navigationController = UINavigationController()
+	let navigationController = PlayerNavigationController()
 	
 	//slack info
 	let slackChannel = "C04C10672"

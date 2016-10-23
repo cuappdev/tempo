@@ -52,6 +52,7 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		
 		cell.postView.type = .Liked
 		let posts = searchController.active ? filteredPosts : self.posts
+		cell.postView.playerCellRef = (navigationController as! PlayerNavigationController).playerCell
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()

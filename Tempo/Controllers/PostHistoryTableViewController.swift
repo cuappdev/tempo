@@ -96,6 +96,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		
 		cell.postView.type = .History
 		let posts = searchController.active ? filteredPosts : self.posts
+		cell.postView.playerCellRef = (navigationController as! PlayerNavigationController).playerCell
 		cell.postView.post = posts[absoluteIndex(indexPath)]
 		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()

@@ -34,10 +34,15 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
                 currentlyPlayingPost?.player.togglePlaying()
             } else {
                 currentlyPlayingPost?.player.pause(true)
-                
+				
+				currentlyPlayingPost?.player.progress = 0
                 if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
                     currentlyPlayingPost = array[currentlyPlayingIndexPath.row]
                     currentlyPlayingPost!.player.play(true)
+					let playerNav = navigationController as! PlayerNavigationController
+					playerNav.playerCell.post = currentlyPlayingPost
+					playerNav.playerCell.postsRef = posts
+					playerNav.playerCell.postRefIndex = currentlyPlayingIndexPath.row
                 } else {
                     currentlyPlayingPost = nil
                 }
@@ -166,26 +171,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
         NSNotificationCenter.defaultCenter().addObserverForName(SongDidDownloadArtworkNotification, object: nil, queue: nil) { [weak self] note in
             if note.object as? Song == self?.currentlyPlayingPost?.song {
                 self?.updateNowPlayingInfo()
-            }
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidFinishPlayingNotification, object: nil, queue: nil) { [weak self] note in
-            if let current = self?.currentlyPlayingPost {
-                if current.player == note.object as? Player {
-                    let path = self!.currentlyPlayingIndexPath
-                    if let path = path {
-                        var row = path.row + 1
-						var count = self!.posts.count
-						if self!.searchController.active {
-							count = self!.filteredPosts.count
-						}
-                        if row >= count {
-                            row = 0
-                        }
-                        
-                        self?.currentlyPlayingIndexPath = NSIndexPath(forRow: row, inSection: path.section)
-                    }
-                }
             }
         }
     }
