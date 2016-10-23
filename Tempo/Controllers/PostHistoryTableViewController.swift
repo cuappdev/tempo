@@ -33,7 +33,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		
 		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		tableView.registerNib(UINib(nibName: "PostHistoryHeaderSectionCell", bundle: nil), forCellReuseIdentifier: "HeaderCell")
-		tableView.rowHeight = 80
+		tableView.rowHeight = 100
 		tableView.sectionHeaderHeight = 30
 		tableView.showsVerticalScrollIndicator = false
     }
@@ -99,8 +99,6 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		cell.postView.post = posts[absoluteIndex(indexPath)]
 		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()
-		
-//        let date = convertDate(postedDatesSections[indexPath.section])
 	    cell.postView.dateLabel!.text = ""
 		
 		return cell

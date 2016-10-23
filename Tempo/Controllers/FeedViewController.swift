@@ -48,7 +48,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		refreshFeedWithDelay(0, timeout: 5.0)
 		
 		tableView.tableHeaderView = nil
-		tableView.rowHeight = 80
+		tableView.rowHeight = 100
 		tableView.showsVerticalScrollIndicator = false
 		refreshControl = customRefresh.refreshControl
 		tableView.addSubview(self.refreshControl)
@@ -79,17 +79,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		
 		if refreshNeeded { //when user re-logged in
 			refreshNeeded = false
-			refreshFeed() //also handles updateSpotifyPlusButton()
-		} else {
-			updateSpotifyPlusButton()
+			refreshFeed()
 		}
 		
 		notConnected(true)
-	}
-	
-	func updateSpotifyPlusButton() {
-		// Used to update Spotify + button, not very elegant solution
-		(tableView.visibleCells as! [FeedTableViewCell]).forEach({ cell in cell.postView.updateAddButton() })
 	}
 	
 	func refreshFeedWithDelay(delay: Double, timeout: Double) {
@@ -131,8 +124,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 					x.tableView.backgroundView = nil
 				}
 			}
-			
-			self?.updateSpotifyPlusButton()
 		}
 		
 		//fetch for a minimum of delay seconds

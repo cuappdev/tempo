@@ -15,7 +15,6 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
 	@IBOutlet var profileNameLabel: MarqueeLabel?
 	@IBOutlet var avatarImageView: UIImageView?
 	@IBOutlet var descriptionLabel: MarqueeLabel?
-	@IBOutlet var dateLabel: UILabel?
 	@IBOutlet var spacingConstraint: NSLayoutConstraint?
  
     private var updateTimer: NSTimer?
@@ -28,7 +27,8 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
             }
 
             // update stuff
-            if let post = post {
+			if let post = post {
+				avatarImageView?.layer.cornerRadius = 7
                 profileNameLabel?.text = post.song.title
                 descriptionLabel?.text = post.song.artist
                 
@@ -73,38 +73,30 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         layer.borderColor = UIColor.tempoDarkGray.CGColor
         layer.borderWidth = CGFloat(0.7)
         
-        profileNameLabel?.speed = .Rate(0)
-        profileNameLabel?.trailingBuffer = 8.0
-        descriptionLabel?.speed = .Rate(0)
-        descriptionLabel?.trailingBuffer = 8.0
-        
-        profileNameLabel?.type = .Continuous
-        profileNameLabel?.fadeLength = 8
-        profileNameLabel?.tapToScroll = false
-        profileNameLabel?.holdScrolling = true
-        profileNameLabel?.animationDelay = 2.0
-        
-        descriptionLabel?.type = .Continuous
-        descriptionLabel?.fadeLength = 8
-        descriptionLabel?.tapToScroll = false
-        descriptionLabel?.holdScrolling = true
-        descriptionLabel?.animationDelay = 2.0
+        setupMarqueeLabel(profileNameLabel!)
+		setupMarqueeLabel(descriptionLabel!)
     }
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
-
-        if superview != nil && dateLabel != nil {
-            spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
-        }
     }
     
     dynamic private func timerFired(timer: NSTimer) {
         if post?.player.isPlaying ?? false {
             setNeedsDisplay()
         }
-    }
-    
+	}
+	
+	private func setupMarqueeLabel(label: MarqueeLabel) {
+		label.speed = .Duration(8)
+		label.trailingBuffer = 10
+		label.type = .Continuous
+		label.fadeLength = 8
+		label.tapToScroll = false
+		label.holdScrolling = true
+		label.animationDelay = 0
+	}
+	
     // Customize view to be able to re-use it for search results.
     func flagAsSearchResultPost() {
         descriptionLabel?.text = post!.song.title + " · " + post!.song.album
@@ -113,18 +105,16 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     func updateProfileLabel() {
         if let post = post {
             var color: UIColor!
-			var font: UIFont!
+			let font = UIFont(name: "Avenir-Medium", size: 14)
             let duration = NSTimeInterval(0.3) as NSTimeInterval
             let label = profileNameLabel!
             if post.player.isPlaying {
                 color = UIColor.tempoLightRed
-				font = UIFont(name: "Avenir-Heavy", size: 14)!
                 // Will scroll labels
                 profileNameLabel?.holdScrolling = false
                 descriptionLabel?.holdScrolling = false
             } else {
                 color = UIColor.whiteColor()
-				font = UIFont(name: "Avenir-Medium", size: 14)!
                 // Labels won't scroll
                 profileNameLabel?.holdScrolling = true
                 descriptionLabel?.holdScrolling = true

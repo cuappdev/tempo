@@ -52,27 +52,27 @@ class Post: NSObject {
         let now = NSDate()
         let seconds = Int(now.timeIntervalSinceDate(date))
         if seconds < 60 {
-            return "just now"
+            return "\(seconds)s"
         }
         let minutes = seconds / 60
         if minutes == 1 {
-            return "\(minutes) min"
+            return "\(minutes)m"
         }
         if minutes < 60 {
-            return "\(minutes) mins"
+            return "\(minutes)m"
         }
         let hours: Int = minutes / 60
         if hours == 1 {
-            return "\(hours) hr"
+            return "\(hours)h"
         }
         if hours < 24 {
-            return "\(hours) hrs"
+            return "\(hours)h"
         }
         let days: Int = hours / 24
         if days == 1 {
-            return "\(days) day"
+            return "\(days)d"
         }
-        return "\(days) days"
+        return "\(days)d"
     }
     
     override var description: String {

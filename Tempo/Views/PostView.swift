@@ -40,7 +40,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var spacingConstraint: NSLayoutConstraint?
     @IBOutlet var likesLabel: UILabel?
     @IBOutlet var likedButton: UIButton?
-    @IBOutlet var addButton: UIButton?
     let fillColor = UIColor.tempoDarkGray
  
     var type: ViewType = .Feed
@@ -70,23 +69,20 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
 					dateLabel?.text = post.relativeDate()
 				case .History:
-					profileNameLabel?.text = post.song.artist
-					descriptionLabel?.text = "\(post.song.title)"
+					avatarImageView?.layer.cornerRadius = 7
+					profileNameLabel?.text = post.song.title
+					descriptionLabel?.text = post.song.artist
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
 					likedButton?.setImage(UIImage(named: imageName), forState: .Normal)
-					dateLabel?.text = post.relativeDate()
 				case .Liked:
-					self.addButton!.frame.origin.x = self.likedButton!.frame.origin.x
-					self.addButton!.frame.origin.y = self.likedButton!.frame.origin.y
-					profileNameLabel?.text = post.song.artist
-					descriptionLabel?.text = "\(post.song.title)"
+					avatarImageView?.layer.cornerRadius = 7
+					profileNameLabel?.text = post.song.title
+					descriptionLabel?.text = post.song.artist
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					likedButton!.hidden = true
-					dateLabel?.text = "Add to Spotify"
-					updateDateLabel()
+					dateLabel?.hidden = true
 				}
-				updateAddButton()
 				
 				switch type {
 				case .Feed:
@@ -108,22 +104,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 })
 				
 				if (User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] != nil) ?? false {
-					self.addButton?.setImage(UIImage(named: "check"), forState: .Normal)
 					songStatus = .Saved
 				}
 				
             }
         }
     }
-	
-	func updateAddButton() {
-		addButton!.hidden = true
-		SpotifyController.sharedController.spotifyIsAvailable { success in
-			if success {
-				self.addButton!.hidden = false
-			}
-		}
-	}
 	
 	func updateDateLabel() {
 		self.dateLabel!.hidden = true
@@ -224,11 +210,10 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 
         if let post = post {
             let color: UIColor
-			let font: UIFont
+			let font = UIFont(name: "Avenir-Medium", size: 16)!
             let duration = NSTimeInterval(0.3)
             if post.player.isPlaying {
                 color = UIColor.tempoLightRed
-				font = UIFont(name: "Avenir-Heavy", size: 14)!
 				if type == .Feed {
 					if let layer = avatarLayer {
 						let animation = CABasicAnimation(keyPath: "transform.rotation")
@@ -245,7 +230,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 descriptionLabel?.holdScrolling = false
             } else {
                 color = UIColor.whiteColor()
-				font = UIFont(name: "Avenir-Medium", size: 14)!
                 // Labels won't scroll
                 profileNameLabel?.holdScrolling = true
                 descriptionLabel?.holdScrolling = true
@@ -295,24 +279,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 				let name = post.isLiked ? "filled-heart" : "empty-heart"
 				likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 				likedButton?.setImage(UIImage(named: name), forState: .Normal)
-			} else if hitView == addButton {
-				if songStatus == .NotSaved {
-					SpotifyController.sharedController.saveSpotifyTrack(post) { success in
-						if success {
-							self.addButton?.setImage(UIImage(named: "check"), forState: .Normal)
-							self.delegate?.didTapAddButtonForPostView?(self)
-							self.songStatus = .Saved
-						}
-					}
-				} else if songStatus == .Saved {
-					SpotifyController.sharedController.removeSavedSpotifyTrack(post) { success in
-						if success {
-							self.addButton?.setImage(UIImage(named: "plus"), forState: .Normal)
-							self.delegate?.didTapAddButtonForPostView?(self)
-							self.songStatus = .NotSaved
-						}
-					}
-				}
 			} else if hitView == avatarImageView {
 				delegate?.didTapImageForPostView?(self)
 			}

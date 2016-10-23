@@ -126,7 +126,7 @@
 		60256C191BC1BFA900B52FDD /* SavedSongView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedSongView.swift; sourceTree = "<group>"; };
 		6038B1791D80EBEA0083940D /* UIViewController+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Utilities.swift"; path = "Tools/UIViewController+Utilities.swift"; sourceTree = "<group>"; };
 		6038B17D1D80ED250083940D /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
-		6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedTableViewCell.xib; sourceTree = "<group>"; };
+		6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedTableViewCell.xib; path = ../Profile/FeedTableViewCell.xib; sourceTree = "<group>"; };
 		6067F0801BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowSuggestionTableViewController.swift; sourceTree = "<group>"; };
 		6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewController.swift; sourceTree = "<group>"; };
 		6092CBD71C021C5E008836AE /* FollowSuggestionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowSuggestionsTableViewCell.swift; sourceTree = "<group>"; };
@@ -297,10 +297,11 @@
 			isa = PBXGroup;
 			children = (
 				6038B17D1D80ED250083940D /* FeedTableViewCell.swift */,
+				6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */,
 				6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */,
 				6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */,
-				6092CBD81C021C5E008836AE /* FollowSuggestionsTableViewCell.xib */,
 				6092CBD71C021C5E008836AE /* FollowSuggestionsTableViewCell.swift */,
+				6092CBD81C021C5E008836AE /* FollowSuggestionsTableViewCell.xib */,
 				D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */,
 				FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */,
 				1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */,
@@ -348,7 +349,6 @@
 				D17395891ADF360C00A53AEE /* SignInViewController.xib */,
 				D1173FFF1AF8574400302FFD /* ProfileViewController.swift */,
 				D11740071AF8574900302FFD /* ProfileViewController.xib */,
-				6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */,
 				D17395721ADB080900A53AEE /* UsersViewController.swift */,
 				D102A9C51AE889D600C66385 /* SideBarViewController.swift */,
 				D102A9C61AE889D600C66385 /* SideBarViewController.xib */,

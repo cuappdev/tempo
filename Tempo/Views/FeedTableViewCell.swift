@@ -19,6 +19,6 @@ class FeedTableViewCell: UITableViewCell {
 		
 		postView.backgroundColor = UIColor.tempoLightGray
 		separator.backgroundColor = UIColor.separatorGray
-		separatorHeight.constant = 0.5
+		separatorHeight.constant = 1.0
 	}
 }
