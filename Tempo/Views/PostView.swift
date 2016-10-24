@@ -9,7 +9,6 @@
 import UIKit
 import Haneke
 import MediaPlayer
-import MarqueeLabel
 
 @objc protocol PostViewDelegate {
 	optional func didTapAddButtonForPostView(postView: PostView)
@@ -33,9 +32,9 @@ enum SavedSongStatus: Int {
 class PostView: UIView, UIGestureRecognizerDelegate {
 	private var tapGestureRecognizer: UITapGestureRecognizer?
 	private var longPressGestureRecognizer: UILongPressGestureRecognizer?
-    @IBOutlet var profileNameLabel: MarqueeLabel?
+    @IBOutlet var profileNameLabel: UILabel?
     @IBOutlet var avatarImageView: UIImageView?
-    @IBOutlet var descriptionLabel: MarqueeLabel?
+    @IBOutlet var descriptionLabel: UILabel?
     @IBOutlet var dateLabel: UILabel?
     @IBOutlet var spacingConstraint: NSLayoutConstraint?
     @IBOutlet var likesLabel: UILabel?
@@ -174,9 +173,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         
         layer.borderColor = UIColor.tempoDarkGray.CGColor
         layer.borderWidth = 0.7
-		
-		self.setupMarqueeLabel(profileNameLabel!)
-		self.setupMarqueeLabel(descriptionLabel!)
     }
     
     override func didMoveToSuperview() {
@@ -199,16 +195,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         updateProfileLabel()
         setUpTimer()
     }
-	
-	private func setupMarqueeLabel(label: MarqueeLabel) {
-		label.speed = .Duration(8)
-		label.trailingBuffer = 10
-		label.type = .Continuous
-		label.fadeLength = 8
-		label.tapToScroll = false
-		label.holdScrolling = true
-		label.animationDelay = 0
-	}
 	
     // Customize view to be able to re-use it for search results.
     func flagAsSearchResultPost() {
@@ -238,15 +224,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 						layer.addAnimation(animation, forKey: "transform.rotation")
 					}
 				}
-				
-                // Will scroll labels
-                profileNameLabel?.holdScrolling = false
-                descriptionLabel?.holdScrolling = false
             } else {
                 color = UIColor.whiteColor()
-                // Labels won't scroll
-                profileNameLabel?.holdScrolling = true
-                descriptionLabel?.holdScrolling = true
             }
 			
 			guard let label = profileNameLabel else { return }
