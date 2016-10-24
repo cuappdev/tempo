@@ -172,6 +172,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	
 	// MARK: - UITableViewDelegate
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		(navigationController as! PlayerNavigationController).playerCell.postsLikable = true
 		currentlyPlayingIndexPath = indexPath
 	}
 	

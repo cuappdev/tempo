@@ -32,6 +32,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			}
             if let row = currentlyPlayingIndexPath?.row where currentlyPlayingPost?.isEqual(array[row]) ?? false {
                 currentlyPlayingPost?.player.togglePlaying()
+				updatePlayerCell(row)
             } else {
                 currentlyPlayingPost?.player.pause(true)
 				
@@ -39,10 +40,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
                 if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
                     currentlyPlayingPost = array[currentlyPlayingIndexPath.row]
                     currentlyPlayingPost!.player.play(true)
-					let playerNav = navigationController as! PlayerNavigationController
-					playerNav.playerCell.post = currentlyPlayingPost
-					playerNav.playerCell.postsRef = posts
-					playerNav.playerCell.postRefIndex = currentlyPlayingIndexPath.row
+					updatePlayerCell(currentlyPlayingIndexPath.row)
                 } else {
                     currentlyPlayingPost = nil
                 }
@@ -283,5 +281,12 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
 			}
 		}
+	}
+	
+	func updatePlayerCell(row: Int) {
+		let playerNav = navigationController as! PlayerNavigationController
+		playerNav.playerCell.post = currentlyPlayingPost
+		playerNav.playerCell.postsRef = posts
+		playerNav.playerCell.postRefIndex = row
 	}
 }

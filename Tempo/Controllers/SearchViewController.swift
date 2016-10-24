@@ -170,6 +170,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		cell.postView.post?.player.togglePlaying()
 		activePlayer = cell.postView.post?.player
+		let playerCell = (navigationController as! PlayerNavigationController).playerCell
+		playerCell.postsLikable = false
+		playerCell.post = cell.postView.post
+		playerCell.postsRef = nil //do not want to autoplay next song
 	}
 	
     // MARK: - General Request Methods
@@ -182,8 +186,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     func clearResults() {
         results = []
         selectedSong = nil
-        activePlayer?.pause(true)
-        activePlayer = nil
         searchBar.text = nil
         tableView.reloadData()
     }

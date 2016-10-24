@@ -302,6 +302,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			let name = post.isLiked ? "filled-heart" : "empty-heart"
 			likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 			likedButton?.setImage(UIImage(named: name), forState: .Normal)
+			
+			playerCellRef?.updateLikeButton()
 		}
 	}
 }

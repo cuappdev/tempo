@@ -26,6 +26,7 @@ class PlayerCellView: UIView, PostDelegate {
 	
 	var postsRef: [Post]?
 	var postRefIndex: Int?
+	var postsLikable = false
 	
 	var post: Post? {
 		didSet {
@@ -38,7 +39,6 @@ class PlayerCellView: UIView, PostDelegate {
 				updateSongStatus()
 				updatePlayingStatus()
 				
-				progressView.setUpTimer()
 				songLabel.holdScrolling = false
 				artistLabel.holdScrolling = false
 			}
@@ -69,7 +69,8 @@ class PlayerCellView: UIView, PostDelegate {
 							self?.post = postsRef[index]
 							self?.postRefIndex = index
 							self?.playToggleButtonClicked((self?.playToggleButton)!)
-							self?.progressView.setUpTimer() //manually reset timer
+						} else {
+							self?.updatePlayingStatus()
 						}
 					}
 				}
@@ -81,6 +82,8 @@ class PlayerCellView: UIView, PostDelegate {
 		if let selectedPost = post {
 			if (User.currentUser.currentSpotifyUser?.savedTracks[selectedPost.song.spotifyID] != nil) ?? false {
 				songStatus = .Saved
+			} else {
+				songStatus = .NotSaved
 			}
 		}
 	}
@@ -109,6 +112,7 @@ class PlayerCellView: UIView, PostDelegate {
 	private func updatePlayToggleButton() {
 		if let selectedPost = post {
 			let name = selectedPost.player.isPlaying ? "pause" : "play"
+			progressView.setUpTimer()
 			playToggleButton.setBackgroundImage(UIImage(named: name), forState: .Normal)
 		}
 	}
@@ -132,11 +136,11 @@ class PlayerCellView: UIView, PostDelegate {
 	}
 	
 	private func updateAddButton() {
-		addButton!.hidden = true
+		addButton!.userInteractionEnabled = false
 		if let _ = post {
 			SpotifyController.sharedController.spotifyIsAvailable { success in
 				if success {
-					self.addButton!.userInteractionEnabled = false
+					self.addButton!.userInteractionEnabled = true
 				}
 			}
 		}
@@ -150,11 +154,16 @@ class PlayerCellView: UIView, PostDelegate {
 		}
 	}
 	
-	private func updateLikeButton() {
+	func updateLikeButton() {
 		if let selectedPost = post {
-			likeButton.userInteractionEnabled = true
-			let name = selectedPost.isLiked ? "filled-heart" : "empty-heart"
-			likeButton?.setBackgroundImage(UIImage(named: name), forState: .Normal)
+			if postsLikable {
+				likeButton.userInteractionEnabled = true
+				let name = selectedPost.isLiked ? "filled-heart" : "empty-heart"
+				likeButton?.setBackgroundImage(UIImage(named: name), forState: .Normal)
+			} else {
+				likeButton.userInteractionEnabled = false
+				likeButton?.setBackgroundImage(UIImage(named: "empty-heart"), forState: .Normal)
+			}
 		}
 	}
 	
