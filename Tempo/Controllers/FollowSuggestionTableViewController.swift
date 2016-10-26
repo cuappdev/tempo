@@ -12,18 +12,23 @@ protocol SuggestedFollowersDelegate {
 	func didTapFollowButton(cell: FollowSuggestionsTableViewCell)
 }
 
-class FollowSuggestionTableViewController: UITableViewController, SuggestedFollowersDelegate {
+class FollowSuggestionTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SuggestedFollowersDelegate {
 	
 	private var users: [User] = []
 	let threshold = 0 // threshold from bottom of tableView
 	var isLoadingMore = false // flag
 	let length = 10
 	var page = 0
+	var tableView: UITableView!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 		title = "Suggestions"
 		addHamburgerMenu()
+		tableView = UITableView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height - playerCellHeight), style: .Plain)
+		tableView.delegate = self
+		tableView.dataSource = self
+		
 		tableView.registerNib(UINib(nibName: "FollowSuggestionsTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowSuggestionsCell")
 		let completion: [User] -> Void = {
 			self.users = $0
@@ -34,15 +39,15 @@ class FollowSuggestionTableViewController: UITableViewController, SuggestedFollo
 
     // MARK: - UITableViewDataSource
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
 	
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FollowSuggestionsCell", forIndexPath: indexPath) as! FollowSuggestionsTableViewCell
 		
 		let user = users[indexPath.row]
@@ -55,14 +60,14 @@ class FollowSuggestionTableViewController: UITableViewController, SuggestedFollo
         return cell
     }
 	
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 		profileVC.title = "Profile"
 		profileVC.user = users[indexPath.row]
 		navigationController?.pushViewController(profileVC, animated: true)
 	}
  
-	override func scrollViewDidScroll(scrollView: UIScrollView) {
+	func scrollViewDidScroll(scrollView: UIScrollView) {
 		let contentOffset = scrollView.contentOffset.y
 		let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
 		if !isLoadingMore && (maximumOffset - contentOffset <= CGFloat(threshold)) {

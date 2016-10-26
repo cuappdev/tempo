@@ -8,6 +8,8 @@
 
 import Foundation
 
+let playerCellHeight = CGFloat(72)
+
 enum ContentType: String {
 	case Following = "Following"
 	case Followers = "Followers"
