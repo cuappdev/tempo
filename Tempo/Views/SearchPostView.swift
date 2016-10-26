@@ -8,13 +8,12 @@
 
 import UIKit
 import MediaPlayer
-import MarqueeLabel
 
 class SearchPostView: UIView, UIGestureRecognizerDelegate {
 	var tapGestureRecognizer: UITapGestureRecognizer?
-	@IBOutlet var profileNameLabel: MarqueeLabel?
+	@IBOutlet var profileNameLabel: UILabel?
 	@IBOutlet var avatarImageView: UIImageView?
-	@IBOutlet var descriptionLabel: MarqueeLabel?
+	@IBOutlet var descriptionLabel: UILabel?
 	@IBOutlet var spacingConstraint: NSLayoutConstraint?
  
     private var updateTimer: NSTimer?
@@ -72,9 +71,6 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         
         layer.borderColor = UIColor.tempoDarkGray.CGColor
         layer.borderWidth = CGFloat(0.7)
-        
-        setupMarqueeLabel(profileNameLabel!)
-		setupMarqueeLabel(descriptionLabel!)
     }
     
     override func didMoveToSuperview() {
@@ -85,16 +81,6 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         if post?.player.isPlaying ?? false {
             setNeedsDisplay()
         }
-	}
-	
-	private func setupMarqueeLabel(label: MarqueeLabel) {
-		label.speed = .Duration(8)
-		label.trailingBuffer = 10
-		label.type = .Continuous
-		label.fadeLength = 8
-		label.tapToScroll = false
-		label.holdScrolling = true
-		label.animationDelay = 0
 	}
 	
     // Customize view to be able to re-use it for search results.
@@ -111,13 +97,8 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
             if post.player.isPlaying {
                 color = UIColor.tempoLightRed
                 // Will scroll labels
-                profileNameLabel?.holdScrolling = false
-                descriptionLabel?.holdScrolling = false
             } else {
                 color = UIColor.whiteColor()
-                // Labels won't scroll
-                profileNameLabel?.holdScrolling = true
-                descriptionLabel?.holdScrolling = true
             }
             
             if !label.textColor.isEqual(color) {

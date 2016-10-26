@@ -135,12 +135,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			if activePlayer == post.player {
 				cell.postView.profileNameLabel?.textColor = UIColor.tempoLightRed
 				cell.shareButton.hidden = false
-				cell.postView.profileNameLabel?.holdScrolling = false
-				cell.postView.descriptionLabel?.holdScrolling = false
 			} else {
 				cell.postView.profileNameLabel?.textColor = UIColor.whiteColor()
-				cell.postView.profileNameLabel?.holdScrolling = true
-				cell.postView.descriptionLabel?.holdScrolling = true
 			}
 		}
 		
