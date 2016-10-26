@@ -163,6 +163,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
+		cell.postView.playerCellRef = (navigationController as! PlayerNavigationController).playerCell
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.post?.player.prepareToPlay()
 		cell.postView.delegate = self
@@ -171,6 +172,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	
 	// MARK: - UITableViewDelegate
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		(navigationController as! PlayerNavigationController).playerCell.postsLikable = true
 		currentlyPlayingIndexPath = indexPath
 	}
 	

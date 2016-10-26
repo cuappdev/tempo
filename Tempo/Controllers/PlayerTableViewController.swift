@@ -32,12 +32,15 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			}
             if let row = currentlyPlayingIndexPath?.row where currentlyPlayingPost?.isEqual(array[row]) ?? false {
                 currentlyPlayingPost?.player.togglePlaying()
+				updatePlayerCell(row)
             } else {
                 currentlyPlayingPost?.player.pause(true)
-                
+				
+				currentlyPlayingPost?.player.progress = 0
                 if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
                     currentlyPlayingPost = array[currentlyPlayingIndexPath.row]
                     currentlyPlayingPost!.player.play(true)
+					updatePlayerCell(currentlyPlayingIndexPath.row)
                 } else {
                     currentlyPlayingPost = nil
                 }
@@ -168,26 +171,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
                 self?.updateNowPlayingInfo()
             }
         }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidFinishPlayingNotification, object: nil, queue: nil) { [weak self] note in
-            if let current = self?.currentlyPlayingPost {
-                if current.player == note.object as? Player {
-                    let path = self!.currentlyPlayingIndexPath
-                    if let path = path {
-                        var row = path.row + 1
-						var count = self!.posts.count
-						if self!.searchController.active {
-							count = self!.filteredPosts.count
-						}
-                        if row >= count {
-                            row = 0
-                        }
-                        
-                        self?.currentlyPlayingIndexPath = NSIndexPath(forRow: row, inSection: path.section)
-                    }
-                }
-            }
-        }
     }
     
     func commandCenterHandler() {
@@ -298,5 +281,12 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
 			}
 		}
+	}
+	
+	func updatePlayerCell(row: Int) {
+		let playerNav = navigationController as! PlayerNavigationController
+		playerNav.playerCell.post = currentlyPlayingPost
+		playerNav.playerCell.postsRef = posts
+		playerNav.playerCell.postRefIndex = row
 	}
 }

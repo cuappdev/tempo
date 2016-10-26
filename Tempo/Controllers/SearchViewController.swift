@@ -135,12 +135,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			if activePlayer == post.player {
 				cell.postView.profileNameLabel?.textColor = UIColor.tempoLightRed
 				cell.shareButton.hidden = false
-				cell.postView.profileNameLabel?.holdScrolling = false
-				cell.postView.descriptionLabel?.holdScrolling = false
 			} else {
 				cell.postView.profileNameLabel?.textColor = UIColor.whiteColor()
-				cell.postView.profileNameLabel?.holdScrolling = true
-				cell.postView.descriptionLabel?.holdScrolling = true
 			}
 		}
 		
@@ -170,6 +166,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		cell.postView.post?.player.togglePlaying()
 		activePlayer = cell.postView.post?.player
+		let playerCell = (navigationController as! PlayerNavigationController).playerCell
+		playerCell.postsLikable = false
+		playerCell.post = cell.postView.post
+		playerCell.postsRef = nil //do not want to autoplay next song
 	}
 	
     // MARK: - General Request Methods
@@ -182,8 +182,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     func clearResults() {
         results = []
         selectedSong = nil
-        activePlayer?.pause(true)
-        activePlayer = nil
         searchBar.text = nil
         tableView.reloadData()
     }

@@ -96,6 +96,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		
 		cell.postView.type = .History
 		let posts = searchController.active ? filteredPosts : self.posts
+		cell.postView.playerCellRef = (navigationController as! PlayerNavigationController).playerCell
 		cell.postView.post = posts[absoluteIndex(indexPath)]
 		cell.postView.delegate = self
 		cell.postView.post?.player.prepareToPlay()
@@ -125,6 +126,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
         selectedCell.postView.backgroundColor = UIColor.tempoLightGray
+		(navigationController as! PlayerNavigationController).playerCell.postsLikable = true
 		currentlyPlayingIndexPath = NSIndexPath(forRow: absoluteIndex(indexPath), inSection: 0)
     }
 	
