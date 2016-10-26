@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -197,14 +197,14 @@
                     </connections>
                 </button>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="dLY-tp-6O0">
-                    <rect key="frame" x="0.0" y="334" width="600" height="266"/>
+                    <rect key="frame" x="0.0" y="334" width="600" height="194"/>
                     <collectionViewLayout key="collectionViewLayout" id="sBQ-9j-yh8" customClass="HipStickyHeaderFlowLayout" customModule="Tempo" customModuleProvider="target"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="xlG-5V-ER6"/>
                         <outlet property="delegate" destination="-1" id="dzb-uE-pzc"/>
                     </connections>
                 </collectionView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTq-gI-bEe">
+                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dTq-gI-bEe">
                     <rect key="frame" x="25" y="334" width="1" height="266"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -215,22 +215,20 @@
             <color key="backgroundColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="EEM-5M-4gf" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="4yp-6X-yg1"/>
-                <constraint firstItem="dLY-tp-6O0" firstAttribute="bottom" secondItem="dTq-gI-bEe" secondAttribute="bottom" id="8ZC-OE-Izg"/>
+                <constraint firstItem="dLY-tp-6O0" firstAttribute="top" secondItem="dTq-gI-bEe" secondAttribute="top" id="C4w-Te-fkU"/>
                 <constraint firstAttribute="trailing" secondItem="6Zb-1Y-QdA" secondAttribute="trailing" id="E0q-uy-QBp"/>
-                <constraint firstAttribute="bottom" secondItem="dLY-tp-6O0" secondAttribute="bottom" id="FUs-li-Mvg"/>
+                <constraint firstItem="dLY-tp-6O0" firstAttribute="top" secondItem="FCU-TD-VAX" secondAttribute="bottom" constant="8" symbolic="YES" id="HiV-QC-bjy"/>
                 <constraint firstItem="Yqk-RI-wbs" firstAttribute="top" secondItem="ZCl-Em-Qfi" secondAttribute="bottom" constant="14" id="J0P-Zz-0ms"/>
-                <constraint firstItem="dLY-tp-6O0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JAK-az-b1m"/>
                 <constraint firstItem="4qp-8z-VHa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="23" id="KLC-zf-uc9"/>
-                <constraint firstItem="dLY-tp-6O0" firstAttribute="top" secondItem="FCU-TD-VAX" secondAttribute="bottom" constant="8" id="Kce-gP-n0B"/>
                 <constraint firstItem="dTq-gI-bEe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="KrG-oa-Ztw"/>
                 <constraint firstItem="EEM-5M-4gf" firstAttribute="top" secondItem="UCx-Gl-jLS" secondAttribute="bottom" id="PL9-CM-IbU"/>
                 <constraint firstItem="Hwz-te-xVi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QPs-qL-Yys"/>
                 <constraint firstItem="6Zb-1Y-QdA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="S3V-af-x8h"/>
                 <constraint firstItem="Yqk-RI-wbs" firstAttribute="top" secondItem="Hwz-te-xVi" secondAttribute="bottom" id="Zcx-i7-Y4O"/>
+                <constraint firstItem="dLY-tp-6O0" firstAttribute="trailing" secondItem="Yqk-RI-wbs" secondAttribute="trailing" id="akf-7M-q0w"/>
                 <constraint firstAttribute="centerX" secondItem="4qp-8z-VHa" secondAttribute="centerX" id="b0t-Ue-VWM"/>
                 <constraint firstItem="UCx-Gl-jLS" firstAttribute="top" secondItem="4qp-8z-VHa" secondAttribute="bottom" constant="13" id="cBr-5n-evE"/>
                 <constraint firstItem="UCx-Gl-jLS" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="exN-Me-Ht8"/>
-                <constraint firstAttribute="trailing" secondItem="dLY-tp-6O0" secondAttribute="trailing" id="fjO-mh-jRC"/>
                 <constraint firstAttribute="trailing" secondItem="Hwz-te-xVi" secondAttribute="trailing" id="gSQ-a4-8tw"/>
                 <constraint firstItem="Yqk-RI-wbs" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hn7-HA-gWk"/>
                 <constraint firstAttribute="centerX" secondItem="ZCl-Em-Qfi" secondAttribute="centerX" id="jiB-op-bBz"/>
@@ -238,10 +236,11 @@
                 <constraint firstItem="6Zb-1Y-QdA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lJ4-oV-Dgk"/>
                 <constraint firstAttribute="trailing" secondItem="Yqk-RI-wbs" secondAttribute="trailing" id="mOL-cl-NXS"/>
                 <constraint firstItem="Yqk-RI-wbs" firstAttribute="top" secondItem="6Zb-1Y-QdA" secondAttribute="bottom" id="mjz-R4-8Zu"/>
+                <constraint firstAttribute="bottom" secondItem="dLY-tp-6O0" secondAttribute="bottom" constant="72" id="mkS-LS-BQi"/>
                 <constraint firstAttribute="centerX" secondItem="FCU-TD-VAX" secondAttribute="centerX" id="nJP-o3-aot"/>
                 <constraint firstItem="ZCl-Em-Qfi" firstAttribute="top" secondItem="EEM-5M-4gf" secondAttribute="bottom" constant="14" id="r0M-ok-sIg"/>
                 <constraint firstItem="Hwz-te-xVi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="rEn-r1-qNY"/>
-                <constraint firstItem="dLY-tp-6O0" firstAttribute="top" secondItem="dTq-gI-bEe" secondAttribute="top" id="x2I-68-6Ze"/>
+                <constraint firstItem="dLY-tp-6O0" firstAttribute="leading" secondItem="Yqk-RI-wbs" secondAttribute="leading" id="tQ0-sq-xih"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <point key="canvasLocation" x="303" y="95"/>

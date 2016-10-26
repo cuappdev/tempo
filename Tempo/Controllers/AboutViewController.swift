@@ -25,6 +25,8 @@ class AboutViewController: UIViewController {
 		title = "About"
 		
 		addHamburgerMenu()
+		addRevealGesture()
+		
 		aboutLabel.numberOfLines = 0;
 		teamLabel.numberOfLines = 0;
 		

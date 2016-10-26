@@ -55,7 +55,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
 		
 		//TableView
-		let playerCellHeight = CGFloat(72)
 		tableView = UITableView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height - playerCellHeight), style: .Plain)
 		tableView.delegate = self
 		tableView.dataSource = self
