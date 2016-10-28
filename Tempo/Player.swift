@@ -19,7 +19,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 	private static var currentPlayer: Player? {
 		didSet {
 			if Player.currentPlayer != oldValue {
-				oldValue?.pause(true)
+				oldValue?.pause(false)
 			}
 		}
 	}
@@ -87,7 +87,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 
     private var shouldAutoplay = false
     private var shouldNotify = false
-    func play(notify: Bool) {
+	func play(notify: Bool) {
         prepareToPlay()
         wasPlayed = true
 		finishedPlaying = false

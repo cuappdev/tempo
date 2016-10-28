@@ -12,6 +12,7 @@ extension UIColor {
 	@nonobjc static let tempoUltraLightRed = UIColor.colorFromCode(0xA26660)
 	@nonobjc static let tempoLightRed = UIColor.colorFromCode(0xB04B40)
 	@nonobjc static let tempoDarkRed = UIColor.colorFromCode(0x8B4038)
+	@nonobjc static let tempoSuperDarkRed = UIColor.colorFromCode(0x36211F)
 	@nonobjc static let tempoLightGray = UIColor.colorFromCode(0x2C2D30)
 	@nonobjc static let tempoDarkGray = UIColor.colorFromCode(0x232427)
 	@nonobjc static let separatorGray = UIColor.colorFromCode(0x28282B)
@@ -19,6 +20,7 @@ extension UIColor {
 	@nonobjc static let offWhite = UIColor.colorFromCode(0xC0C0C1)
 	@nonobjc static let tempoBlue = UIColor.colorFromCode(0x02467E)
 	@nonobjc static let spotifyGreen = UIColor.colorFromCode(0x059952)
+	
 	
 	public static func colorFromCode(code: Int) -> UIColor {
 		let red = CGFloat(((code & 0xFF0000) >> 16)) / 255

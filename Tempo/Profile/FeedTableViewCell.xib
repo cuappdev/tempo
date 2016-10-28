@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -62,14 +62,14 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6mr-Fh-ZfQ">
-                                <rect key="frame" x="297" y="51" width="32" height="32"/>
+                                <rect key="frame" x="302" y="54" width="22" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="9hG-vk-Btv"/>
+                                    <constraint firstAttribute="height" constant="22" id="9hG-vk-Btv"/>
                                     <constraint firstAttribute="width" constant="30" id="LDw-C6-eoZ"/>
-                                    <constraint firstAttribute="width" constant="32" id="gm2-OX-82i"/>
+                                    <constraint firstAttribute="width" constant="22" id="gm2-OX-82i"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" image="empty-heart">
+                                <state key="normal" backgroundImage="empty-heart">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -87,7 +87,7 @@
                             <constraint firstItem="Nid-NE-gCm" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="top" constant="3" id="79W-Kx-Dih"/>
                             <constraint firstItem="5c9-Vi-T55" firstAttribute="top" secondItem="QJt-Cq-8SO" secondAttribute="top" constant="14" id="7C3-75-21p"/>
                             <constraint firstItem="5c9-Vi-T55" firstAttribute="centerY" secondItem="YKr-CE-jlM" secondAttribute="centerY" id="8RL-a6-Rty"/>
-                            <constraint firstItem="6mr-Fh-ZfQ" firstAttribute="trailing" secondItem="5c9-Vi-T55" secondAttribute="trailing" id="Aip-hp-W9k"/>
+                            <constraint firstItem="6mr-Fh-ZfQ" firstAttribute="trailing" secondItem="5c9-Vi-T55" secondAttribute="trailing" constant="-5" id="Aip-hp-W9k"/>
                             <constraint firstAttribute="bottom" secondItem="6mr-Fh-ZfQ" secondAttribute="bottom" constant="15" id="Aom-ii-Yop"/>
                             <constraint firstItem="6mr-Fh-ZfQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uOI-Pn-Mde" secondAttribute="trailing" constant="14" id="BzF-f7-NLW"/>
                             <constraint firstItem="6mr-Fh-ZfQ" firstAttribute="bottom" secondItem="Nid-NE-gCm" secondAttribute="bottom" id="GzN-4s-nM5"/>
@@ -104,7 +104,7 @@
                             <constraint firstItem="YKr-CE-jlM" firstAttribute="top" secondItem="QJt-Cq-8SO" secondAttribute="top" constant="18" id="UbQ-fg-m3B"/>
                             <constraint firstItem="5c9-Vi-T55" firstAttribute="top" secondItem="QJt-Cq-8SO" secondAttribute="top" constant="20" symbolic="YES" id="Xox-pL-MqX"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uOI-Pn-Mde" secondAttribute="trailing" constant="14" id="bgX-rg-DvA"/>
-                            <constraint firstAttribute="bottom" secondItem="6mr-Fh-ZfQ" secondAttribute="bottom" constant="16" id="cp3-qB-PmE"/>
+                            <constraint firstAttribute="bottom" secondItem="6mr-Fh-ZfQ" secondAttribute="bottom" constant="23" id="cp3-qB-PmE"/>
                             <constraint firstItem="5c9-Vi-T55" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YKr-CE-jlM" secondAttribute="trailing" constant="14" id="dZq-Se-4Vs"/>
                             <constraint firstItem="YKr-CE-jlM" firstAttribute="leading" secondItem="Nid-NE-gCm" secondAttribute="trailing" constant="21" id="eap-fr-BWT"/>
                             <constraint firstItem="bgO-bG-1rj" firstAttribute="top" secondItem="uOI-Pn-Mde" secondAttribute="bottom" constant="3" id="oFZ-TU-faA"/>
