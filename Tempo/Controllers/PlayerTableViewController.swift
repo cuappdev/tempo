@@ -88,14 +88,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		addRevealGesture()
 		justOpened = true
-	}
-	
-	override func viewDidDisappear(animated: Bool) {
-		super.viewDidDisappear(animated)
-		
-		removeRevealGesture()
 	}
 	
     // MARK: - Table view data source

@@ -59,7 +59,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		addRevealGesture()
 		view.layoutIfNeeded()
 		tableView.tableFooterView = UIView()
 		
@@ -86,12 +85,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			searchBar.userInteractionEnabled = true
 			searchBar.becomeFirstResponder()
 		}
-	}
-	
-	override func viewDidDisappear(animated: Bool) {
-		super.viewDidDisappear(animated)
-		
-		removeRevealGesture()
 	}
 	
 	override func viewDidLayoutSubviews() {
