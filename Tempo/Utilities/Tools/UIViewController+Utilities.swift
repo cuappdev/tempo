@@ -23,18 +23,6 @@ extension UIViewController {
 		revealViewController().revealToggle(hamburgerIconView)
 	}
 	
-	func addRevealGesture() {
-		if revealViewController() != nil {
-			view.addGestureRecognizer(revealViewController().panGestureRecognizer())
-		}
-	}
-	
-	func removeRevealGesture() {
-		if revealViewController() != nil {
-			view.removeGestureRecognizer(revealViewController().panGestureRecognizer())
-		}
-	}
-	
 	// If not connected to internet return true and display banner if animated
 	func notConnected(animated: Bool) -> Bool {
 		if !API.sharedAPI.isConnected {

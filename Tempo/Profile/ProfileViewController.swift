@@ -76,19 +76,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		usernameLabel.hidden = notConnected(false)
 		followButton.hidden = notConnected(false)
 	}
-	
-	override func viewDidAppear(animated: Bool) {
-		super.viewDidAppear(animated)
-		
-		addRevealGesture()
-	}
-	
-	override func viewDidDisappear(animated: Bool) {
-		super.viewDidDisappear(animated)
-		
-		removeRevealGesture()
-	}
-	
+
 	func setupUserUI() {
 		API.sharedAPI.fetchPosts(user.id) { post in
 			self.posts = post

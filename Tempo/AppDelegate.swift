@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let likedVC = LikedTableViewController()
 	let spotifyVC = SpotifyViewController(nibName: "SpotifyViewController", bundle: nil)
 	let aboutVC = AboutViewController(nibName: "AboutViewController", bundle: nil)
+	let transparentView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
 	let navigationController = PlayerNavigationController()
 	
 	//slack info
@@ -244,10 +245,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func revealController(revealController: SWRevealViewController!, willMoveToPosition position: FrontViewPosition) {
 		UIApplication.sharedApplication().sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, forEvent: nil)
 		if position == .Left {
-			revealController.frontViewController.view.userInteractionEnabled = true
+			if let _ = transparentView.superview {
+				transparentView.removeGestureRecognizer(revealVC.panGestureRecognizer())
+				transparentView.removeFromSuperview()
+			}
+			revealController.frontViewController.view.addGestureRecognizer(revealVC.panGestureRecognizer())
 			revealController.frontViewController.revealViewController().tapGestureRecognizer()
 		} else {
-			revealController.frontViewController.view.userInteractionEnabled = false
+			revealController.frontViewController.view.removeGestureRecognizer(revealVC.panGestureRecognizer())
+			transparentView.addGestureRecognizer(revealVC.panGestureRecognizer())
+			navigationController.view.addSubview(transparentView)
 		}
 		//Notify any hamburger menus that the menu is being toggled
 		NSNotificationCenter.defaultCenter().postNotificationName(RevealControllerToggledNotificaiton, object: revealController)

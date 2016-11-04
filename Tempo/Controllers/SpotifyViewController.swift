@@ -23,7 +23,6 @@ class SpotifyViewController: UIViewController {
 		
 		title = "Spotify"
 		addHamburgerMenu()
-		addRevealGesture()
 		updateSpotifyState()
 		
         profilePicture.layer.cornerRadius = profilePicture.frame.size.width/2
@@ -38,12 +37,6 @@ class SpotifyViewController: UIViewController {
 			button.layer.cornerRadius = 5.0
 			button.layer.masksToBounds = true
 		}
-	}
-	
-	override func viewDidDisappear(animated: Bool) {
-		super.viewDidDisappear(animated)
-		
-		removeRevealGesture()
 	}
 	
 	// Can be called after successful login to Spotify SDK

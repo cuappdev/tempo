@@ -14,8 +14,9 @@ enum DisplayType: String {
 	case Users = "Users"
 }
 
-class UsersViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate, FollowUserDelegate {
+class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate, FollowUserDelegate {
 
+	var tableView: UITableView!
 	var user: User = User.currentUser
 	var displayType: DisplayType = .Users
 	private var users: [User] = []
@@ -29,12 +30,17 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		tableView = UITableView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height - playerCellHeight), style: .Plain)
+		tableView.delegate = self
+		tableView.dataSource = self
+		
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		view.backgroundColor = UIColor.tempoDarkGray
 		tableView.rowHeight = 80
 		tableView.showsVerticalScrollIndicator = false
 		tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
+		self.view.addSubview(tableView)
 		
 		// Set up search bar
 		searchController = UISearchController(searchResultsController: nil)
@@ -111,19 +117,14 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 	}
 	
 	override func viewDidAppear(animated: Bool) {
-		addRevealGesture()
 		if !searchController.active && displayType == .Users {
 			populateSuggestions()
 		}
 	}
 	
-	override func viewDidDisappear(animated: Bool) {
-		removeRevealGesture()
-	}
-	
     // MARK: Table View Methods
 	
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if displayType == .Users {
 			return searchController.active ? users.count : suggestedUsers.count
 		} else {
@@ -131,7 +132,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
 		}
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
 		var user: User
 		if displayType == .Users {
@@ -156,11 +157,11 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
         return cell
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 80
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.tempoLightGray
 		
@@ -178,7 +179,7 @@ class UsersViewController: UITableViewController, UISearchResultsUpdating, UISea
         navigationController?.pushViewController(profileVC, animated: true)
     }
 	
-	override func scrollViewDidScroll(scrollView: UIScrollView) {
+	func scrollViewDidScroll(scrollView: UIScrollView) {
 		if !searchController.active {
 			let contentOffset = scrollView.contentOffset.y
 			let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
