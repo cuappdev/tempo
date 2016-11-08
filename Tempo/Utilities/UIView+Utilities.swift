@@ -20,7 +20,7 @@ enum ContentType: String {
 
 extension UIView {
 	
-	class func viewForEmptyViewController(type: ContentType, size: CGSize, isCurrentUser: Bool, userFirstName: String) -> UIView {
+	class func viewForEmptyViewController(_ type: ContentType, size: CGSize, isCurrentUser: Bool, userFirstName: String) -> UIView {
 		let emptyView = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
 		
 		var image: UIImage?
@@ -48,10 +48,10 @@ extension UIView {
 		
 		let label = UILabel(frame: CGRect(x: 0, y: imageView.bounds.height/2 + 30, width: size.width, height: size.height))
 		label.text = labelText
-		label.textColor = UIColor.whiteColor()
+		label.textColor = UIColor.white
 		label.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		label.numberOfLines = 2
-		label.textAlignment = .Center
+		label.textAlignment = .center
 		
 		emptyView.addSubview(imageView)
 		emptyView.addSubview(label)

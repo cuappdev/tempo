@@ -12,7 +12,7 @@ import MediaPlayer
 class PostHistoryTableViewController: PlayerTableViewController {
 	
 	var songLikes: [Int] = []
-	var postedDates: [NSDate] = []
+	var postedDates: [Date] = []
 	var postedDatesDict: [String: Int] = [String: Int]()
 	var postedDatesSections: [String] = []
     var sectionIndex: Int?
@@ -31,38 +31,38 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
 		
-		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
-		tableView.registerNib(UINib(nibName: "PostHistoryHeaderSectionCell", bundle: nil), forCellReuseIdentifier: "HeaderCell")
+		tableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+		tableView.register(UINib(nibName: "PostHistoryHeaderSectionCell", bundle: nil), forCellReuseIdentifier: "HeaderCell")
 		tableView.rowHeight = 100
 		tableView.sectionHeaderHeight = 30
 		tableView.showsVerticalScrollIndicator = false
     }
 	
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
 		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
 	}
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		if sectionIndex != nil {
-			let selectedRow = NSIndexPath(forRow: 0, inSection: sectionIndex!)
-			tableView.scrollToRowAtIndexPath(selectedRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+			let selectedRow = IndexPath(row: 0, section: sectionIndex!)
+			tableView.scrollToRow(at: selectedRow, at: UITableViewScrollPosition.top, animated: true)
 		}
     }
 	
-	private func convertDate(date: String) -> String {
-		let year = date.substringToIndex(date.startIndex.advancedBy(4))
-		let monthDay = date.substringFromIndex(date.startIndex.advancedBy(5))
-		let editedDate = monthDay + "/" + year.substringFromIndex(year.startIndex.advancedBy(2))
-		let d = editedDate.stringByReplacingOccurrencesOfString("/", withString: ".")
+	fileprivate func convertDate(_ date: String) -> String {
+		let year = date.substring(to: date.characters.index(date.startIndex, offsetBy: 4))
+		let monthDay = date.substring(from: date.characters.index(date.startIndex, offsetBy: 5))
+		let editedDate = monthDay + "/" + year.substring(from: year.characters.index(year.startIndex, offsetBy: 2))
+		let d = editedDate.replacingOccurrences(of: "/", with: ".")
 		return d
 	}
 	
 	// Get the absolute index path of cell
-	private func absoluteIndex(indexPath: NSIndexPath) -> Int {
+	fileprivate func absoluteIndex(_ indexPath: IndexPath) -> Int {
 		var absoluteIndex = indexPath.row
 		if indexPath.section > 0 {
 			for s in 0...indexPath.section-1 {
@@ -77,17 +77,17 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		var newRow = row
 		var section = 0
 		var s = 0
-		while (newRow >= postedDatesDict[postedDatesSections[s]]) {
+		while (newRow >= postedDatesDict[postedDatesSections[s]]!) {
 			newRow -= postedDatesDict[postedDatesSections[s]]!
 			section += 1
 			s += 1
 		}
 		
-		return NSIndexPath(forRow: newRow, inSection: section)
+		return IndexPath(row: newRow, section: section) as NSIndexPath
 	}
 	
 	// Filter posted dates into dictionary of key: date, value: date_count
-	func filterPostedDatesToSections(dates: [NSDate]) {
+	func filterPostedDatesToSections(_ dates: [Date]) {
 		// Clear section dictionary
 		postedDatesDict = [String: Int]()
 		postedDatesSections = []
@@ -105,11 +105,11 @@ class PostHistoryTableViewController: PlayerTableViewController {
 	
     // TableView Methods
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedTableViewCell
 		
-		cell.postView.type = .History
-		let posts = searchController.active ? filteredPosts : self.posts
+		cell.postView.type = .history
+		let posts = searchController.isActive ? filteredPosts : self.posts
 		cell.postView.playerCellRef = playerNav.playerCell
 		cell.postView.expandedPlayerRef = playerNav.expandedCell
 		cell.postView.post = posts[absoluteIndex(indexPath)]
@@ -122,37 +122,37 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		return cell
     }
 	
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
 		return postedDatesSections.count
 	}
 	
-	func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! PostHistoryHeaderSectionCell
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as! PostHistoryHeaderSectionCell
 		headerCell.postDate?.text = convertDate(postedDatesSections[section])
 		return headerCell
 	}
 	
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return postedDatesDict[postedDatesSections[section]]!
 	}
 	
-	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		return convertDate(postedDatesSections[section])
 	}
 	
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
+        let selectedCell = tableView.cellForRow(at: indexPath as IndexPath) as! FeedTableViewCell
 		selectedCell.postView.backgroundColor = UIColor.tempoLightGray
 		playerNav.playerCell.postsLikable = true
 		playerNav.expandedCell.postsLikable = true
 		playerNav.expandedCell.postHasInfo = false
-		currentlyPlayingIndexPath = NSIndexPath(forRow: absoluteIndex(indexPath), inSection: 0)
+		currentlyPlayingIndexPath = IndexPath(row: absoluteIndex(indexPath as IndexPath), section: 0)
     } 
 	
 	// Updates all views related to some player
 	override func updatePlayingCells() {
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-			if let cell = tableView.cellForRowAtIndexPath(relativeIndexPath(currentlyPlayingIndexPath.row)) as? FeedTableViewCell {
+			if let cell = tableView.cellForRow(at: relativeIndexPath(row: currentlyPlayingIndexPath.row) as IndexPath) as? FeedTableViewCell {
 				cell.postView.updatePlayingStatus()
 			}
 			
@@ -163,7 +163,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 	
 	func didToggleLike() {
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-			if let cell = tableView.cellForRowAtIndexPath(relativeIndexPath(currentlyPlayingIndexPath.row)) as? FeedTableViewCell {
+			if let cell = tableView.cellForRow(at: relativeIndexPath(row: currentlyPlayingIndexPath.row) as IndexPath) as? FeedTableViewCell {
 				cell.postView.updateLikedStatus()
 			}
 			playerNav.playerCell.updateLikeButton()
@@ -173,15 +173,15 @@ class PostHistoryTableViewController: PlayerTableViewController {
 	
 	// MARK: - Search Override
 	
-	override func filterContentForSearchText(searchText: String, scope: String = "All") {
+	override func filterContentForSearchText(_ searchText: String, scope: String = "All") {
 		if searchText == "" {
 			filteredPosts = posts
 		} else {
 			let pred = NSPredicate(format: "song.title contains[cd] %@ OR song.artist contains[cd] %@", searchText, searchText)
-			filteredPosts = (posts as NSArray).filteredArrayUsingPredicate(pred) as! [Post]
+			filteredPosts = (posts as NSArray).filtered(using: pred) as! [Post]
 		}
 		let filteredDates = filteredPosts.map { $0.date! }
-		filterPostedDatesToSections(filteredDates)
+		filterPostedDatesToSections(filteredDates as [Date])
 		tableView.reloadData()
 	}
 

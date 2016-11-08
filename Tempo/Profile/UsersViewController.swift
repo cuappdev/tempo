@@ -19,10 +19,10 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 	var tableView: UITableView!
 	var user: User = User.currentUser
 	var displayType: DisplayType = .Users
-	private var users: [User] = []
-	private var suggestedUsers: [User] = []
-	private var filteredUsers: [User] = []
-	private var searchController: UISearchController!
+	fileprivate var users: [User] = []
+	fileprivate var suggestedUsers: [User] = []
+	fileprivate var filteredUsers: [User] = []
+	fileprivate var searchController: UISearchController!
 	var isLoadingMoreSuggestions = false
 	let length = 10
 	var page = 0
@@ -30,7 +30,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		tableView = UITableView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height - playerCellHeight), style: .Plain)
+		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
 		
@@ -39,7 +39,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		view.backgroundColor = UIColor.tempoDarkGray
 		tableView.rowHeight = 80
 		tableView.showsVerticalScrollIndicator = false
-		tableView.registerNib(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
+		tableView.register(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
 		self.view.addSubview(tableView)
 		
 		// Set up search bar
@@ -49,13 +49,13 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		searchController.searchResultsUpdater = self
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.delegate = self
-		searchController.searchBar.setImage(UIImage(named: "search-icon"), forSearchBarIcon: .Search, state: .Normal)
-		searchController.searchBar.setImage(UIImage(named: "clear-search-icon"), forSearchBarIcon: .Clear, state: .Normal)
-		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
-		textFieldInsideSearchBar!.textColor = UIColor.whiteColor()
+		searchController.searchBar.setImage(UIImage(named: "search-icon"), for: .search, state: UIControlState())
+		searchController.searchBar.setImage(UIImage(named: "clear-search-icon"), for: .clear, state: UIControlState())
+		let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
+		textFieldInsideSearchBar!.textColor = UIColor.white
 		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
 		textFieldInsideSearchBar?.font = UIFont(name: "Avenir-Book", size: 14)
-		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.valueForKey("placeholderLabel") as? UILabel
+		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.value(forKey: "placeholderLabel") as? UILabel
 		textFieldInsideSearchBarLabel?.textColor = UIColor.tempoUltraLightRed
 		
 		// Fix color above search bar
@@ -70,7 +70,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 			addHamburgerMenu()
 			populateSuggestions()
 		} else {
-			let completion: [User] -> Void = {
+			let completion: ([User]) -> Void = {
 				self.users = $0
 				self.tableView.reloadData()
 				if self.users.count == 0 {
@@ -88,14 +88,14 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
-			if traitCollection.forceTouchCapability == .Available {
-				registerForPreviewingWithDelegate(self, sourceView: view)
+			if traitCollection.forceTouchCapability == .available {
+				registerForPreviewing(with: self, sourceView: view)
 			}
 		}
     }
 	
 	func populateSuggestions() {
-		let completion: [User] -> Void = {
+		let completion: ([User]) -> Void = {
 			self.suggestedUsers = $0
 			self.tableView.reloadData()
 			
@@ -110,35 +110,35 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		API.sharedAPI.fetchFollowSuggestions(completion, length: length, page: page)
 	}
 	
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
 		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
 	}
 	
-	override func viewDidAppear(animated: Bool) {
-		if !searchController.active && displayType == .Users {
+	override func viewDidAppear(_ animated: Bool) {
+		if !searchController.isActive && displayType == .Users {
 			populateSuggestions()
 		}
 	}
 	
     // MARK: Table View Methods
 	
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if displayType == .Users {
-			return searchController.active ? users.count : suggestedUsers.count
+			return searchController.isActive ? users.count : suggestedUsers.count
 		} else {
-			return searchController.active ? filteredUsers.count : users.count
+			return searchController.isActive ? filteredUsers.count : users.count
 		}
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("FollowCell", forIndexPath: indexPath) as! FollowTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FollowCell", for: indexPath) as! FollowTableViewCell
 		var user: User
 		if displayType == .Users {
-			user = searchController.active ? users[indexPath.row] : suggestedUsers[indexPath.row]
+			user = searchController.isActive ? users[indexPath.row] : suggestedUsers[indexPath.row]
 		} else {
-			user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
+			user = searchController.isActive ? filteredUsers[indexPath.row] : users[indexPath.row]
 		}
 		
         cell.userName.text = user.name
@@ -146,31 +146,31 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		cell.numFollowLabel.text = (user.followersCount == 1) ? "1 follower" : "\(user.followersCount) followers"
 		cell.userImage.hnk_setImageFromURL(user.imageURL)
 		if user.id != User.currentUser.id {
-			cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
+			cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
 			cell.followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
-			cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.whiteColor(), forState: .Normal)
+			cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.white, for: UIControlState())
 			cell.delegate = self
 		} else {
-			cell.followButton.setTitle("", forState: .Normal)
+			cell.followButton.setTitle("", for: UIControlState())
 		}
         
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath)!
         selectedCell.contentView.backgroundColor = UIColor.tempoLightGray
 		
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
 		if self.displayType == .Users {
-			profileVC.user = searchController.active ? users[indexPath.row] : suggestedUsers[indexPath.row]
+			profileVC.user = searchController.isActive ? users[indexPath.row] : suggestedUsers[indexPath.row]
 		} else {
-			profileVC.user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
+			profileVC.user = searchController.isActive ? filteredUsers[indexPath.row] : users[indexPath.row]
 		}
 		
 		let backButton = UIBarButtonItem()
@@ -179,16 +179,16 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         navigationController?.pushViewController(profileVC, animated: true)
     }
 	
-	func scrollViewDidScroll(scrollView: UIScrollView) {
-		if !searchController.active {
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if !searchController.isActive {
 			let contentOffset = scrollView.contentOffset.y
 			let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
 			if (!isLoadingMoreSuggestions && maximumOffset - contentOffset <= CGFloat(0)) {
-				let completion: [User] -> Void = {
+				let completion: ([User]) -> Void = {
 					for user in $0 {
 						self.suggestedUsers.append(user)
 					}
-					dispatch_async(dispatch_get_main_queue()) {
+					DispatchQueue.main.async {
 						self.tableView.reloadData()
 					}
 					self.isLoadingMoreSuggestions = false
@@ -203,14 +203,14 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 	
 	// MARK: Follow User Method
 	
-	func didTapFollowButton(cell: FollowTableViewCell) -> Void {
-		let indexPath = tableView.indexPathForCell(cell)
+	func didTapFollowButton(_ cell: FollowTableViewCell) -> Void {
+		let indexPath = tableView.indexPath(for: cell)
 		
 		var user: User
 		if displayType == .Users {
-			user = searchController.active ? users[indexPath!.row] : suggestedUsers[indexPath!.row]
+			user = searchController.isActive ? users[indexPath!.row] : suggestedUsers[indexPath!.row]
 		} else {
-			user = searchController.active ? filteredUsers[indexPath!.row] : users[indexPath!.row]
+			user = searchController.isActive ? filteredUsers[indexPath!.row] : users[indexPath!.row]
 		}
 		
 		if user.id == User.currentUser.id {
@@ -220,31 +220,31 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		user.isFollowing = !user.isFollowing
 		User.currentUser.followingCount += user.isFollowing ? 1 : -1
 		user.followersCount += user.isFollowing ? 1 : -1
-		let cell = tableView.cellForRowAtIndexPath(indexPath!) as! FollowTableViewCell
-		cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
+		let cell = tableView.cellForRow(at: indexPath!) as! FollowTableViewCell
+		cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
 		cell.followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
-		cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.whiteColor(), forState: .Normal)
+		cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.white, for: UIControlState())
 		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
-		dispatch_async(dispatch_get_main_queue()) {
+		DispatchQueue.main.async {
 			self.tableView.reloadData()
 		}
 	}
 	
 	// MARK: Search Methods
 	
-	private func filterContentForSearchText(searchText: String, scope: String = "All") {
+	fileprivate func filterContentForSearchText(_ searchText: String, scope: String = "All") {
 		let pred = NSPredicate(format: "name contains[cd] %@ OR username contains[cd] %@", searchText, searchText)
-		filteredUsers = (searchText == "") ? users : (users as NSArray).filteredArrayUsingPredicate(pred) as! [User]
+		filteredUsers = (searchText == "") ? users : (users as NSArray).filtered(using: pred) as! [User]
 		tableView.reloadData()
 	}
 	
-	func updateSearchResultsForSearchController(searchController: UISearchController) {
+	func updateSearchResults(for searchController: UISearchController) {
 		self.tableView.reloadData()
 		
 		if displayType == .Users {
-			let completion: [User] -> Void = {
+			let completion: ([User]) -> Void = {
 				self.users = $0
-				dispatch_async(dispatch_get_main_queue()) {
+				DispatchQueue.main.async {
 					self.tableView.reloadData()
 				}
 			}
@@ -255,23 +255,23 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		}
 	}
 	
-	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		searchController.searchBar.endEditing(true)
 	}
 	
 	//This allows for the text not to be viewed behind the search bar at the top of the screen
-	private let statusBarView: UIView = {
-		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
+	fileprivate let statusBarView: UIView = {
+		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
 		view.backgroundColor = UIColor.tempoLightRed
 		return view
 	}()
 	
-	func willPresentSearchController(searchController: UISearchController) {
+	func willPresentSearchController(_ searchController: UISearchController) {
 		// if a .Users VC, only suggestions were fetched in viewDidLoad(), need to fetch users to search
 		navigationController?.view.addSubview(statusBarView)
 	}
 	
-	func didDismissSearchController(searchController: UISearchController) {
+	func didDismissSearchController(_ searchController: UISearchController) {
 		statusBarView.removeFromSuperview()
 	}
 	
@@ -279,28 +279,28 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
 @available(iOS 9.0, *)
 extension UsersViewController: UIViewControllerPreviewingDelegate {
-	func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		let tableViewPoint = view.convertPoint(location, toView: tableView)
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		let tableViewPoint = view.convert(location, to: tableView)
 		
-		guard let indexPath = tableView.indexPathForRowAtPoint(tableViewPoint),
-			cell = tableView.cellForRowAtIndexPath(indexPath) as? FollowTableViewCell else {
+		guard let indexPath = tableView.indexPathForRow(at: tableViewPoint),
+			let cell = tableView.cellForRow(at: indexPath) as? FollowTableViewCell else {
 				return nil
 		}
 		
 		let peekViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 		peekViewController.title = "Profile"
-		peekViewController.user = searchController.active ? filteredUsers[indexPath.row] : users[indexPath.row]
+		peekViewController.user = searchController.isActive ? filteredUsers[indexPath.row] : users[indexPath.row]
 		
-		peekViewController.preferredContentSize = CGSizeZero
-		previewingContext.sourceRect = tableView.convertRect(cell.frame, toView: view)
+		peekViewController.preferredContentSize = CGSize.zero
+		previewingContext.sourceRect = tableView.convert(cell.frame, to: view)
 		
 		return peekViewController
 	}
 	
-	func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
 		let backButton = UIBarButtonItem()
 		backButton.title = "Search"
 		navigationItem.backBarButtonItem = backButton
-		showViewController(viewControllerToCommit, sender: self)
+		show(viewControllerToCommit, sender: self)
 	}
 }

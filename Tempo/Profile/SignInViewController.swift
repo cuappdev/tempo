@@ -24,8 +24,8 @@ class SignInViewController: UIViewController {
     }
     
     func animateRecord() {
-        UIView.animateWithDuration(3, delay: 0, options: .CurveLinear, animations: {
-            self.vinyl.transform = CGAffineTransformMakeRotation((360.0 * CGFloat(M_PI)) / 360.0)
+        UIView.animate(withDuration: 3, delay: 0, options: .curveLinear, animations: {
+            self.vinyl.transform = CGAffineTransform(rotationAngle: (360.0 * CGFloat(M_PI)) / 360.0)
 			
         }) { (complete: Bool) in
             if self.shouldAnimate {
@@ -34,9 +34,9 @@ class SignInViewController: UIViewController {
         }
     }
     
-    @IBAction func logIn(sender: UIButton) {
+    @IBAction func logIn(_ sender: UIButton) {
         self.shouldAnimate = false
-		let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		appDelegate.loginToFacebook()
     }
 }

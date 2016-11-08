@@ -14,10 +14,10 @@ class User: NSObject, NSCoding {
 	static var currentUser: User = User()
     var currentSpotifyUser: CurrentSpotifyUser?
 	
-	private(set) var caption = ""
-	private(set) var createdAt = ""
-	private(set) var email = "temp@example.com"
-	private(set) var fbid = ""
+	fileprivate(set) var caption = ""
+	fileprivate(set) var createdAt = ""
+	fileprivate(set) var email = "temp@example.com"
+	fileprivate(set) var fbid = ""
 	var isFollowing = false
 	var followers: [String] = []
 	var followersCount = 0
@@ -40,9 +40,9 @@ class User: NSObject, NSCoding {
 	}
 	var updatedAt: String!
 	var username: String = "temp_username"
-	private var profileImage: UIImage?
-	var imageURL: NSURL {
-		return NSURL(string: "http://graph.facebook.com/\(fbid)/picture?type=large")!
+	fileprivate var profileImage: UIImage?
+	var imageURL: URL {
+		return URL(string: "http://graph.facebook.com/\(fbid)/picture?type=large")!
 	}
 	
 	override init() {} 
@@ -76,35 +76,35 @@ class User: NSObject, NSCoding {
 	
 	required init?(coder aDecoder: NSCoder) {
 		super.init()
-		caption = aDecoder.decodeObjectForKey("caption") as! String
-		createdAt = aDecoder.decodeObjectForKey("created_at") as! String
-		email = aDecoder.decodeObjectForKey("email") as! String
-		fbid = aDecoder.decodeObjectForKey("fbid") as! String
-		followers = aDecoder.decodeObjectForKey("followers") as! [String]
-		followersCount = aDecoder.decodeIntegerForKey("followers_count")
-		hipsterScore = aDecoder.decodeIntegerForKey("hipster_score")
-		id = aDecoder.decodeObjectForKey("id") as! String
-		likeCount = aDecoder.decodeIntegerForKey("like_count")
-		locationID = aDecoder.decodeObjectForKey("location_id") as! String
-		name = aDecoder.decodeObjectForKey("name") as! String
-		updatedAt = aDecoder.decodeObjectForKey("updated_at") as! String
-		username = aDecoder.decodeObjectForKey("username") as! String
+		caption = aDecoder.decodeObject(forKey: "caption") as! String
+		createdAt = aDecoder.decodeObject(forKey: "created_at") as! String
+		email = aDecoder.decodeObject(forKey: "email") as! String
+		fbid = aDecoder.decodeObject(forKey: "fbid") as! String
+		followers = aDecoder.decodeObject(forKey: "followers") as! [String]
+		followersCount = aDecoder.decodeInteger(forKey: "followers_count")
+		hipsterScore = aDecoder.decodeInteger(forKey: "hipster_score")
+		id = aDecoder.decodeObject(forKey: "id") as! String
+		likeCount = aDecoder.decodeInteger(forKey: "like_count")
+		locationID = aDecoder.decodeObject(forKey: "location_id") as! String
+		name = aDecoder.decodeObject(forKey: "name") as! String
+		updatedAt = aDecoder.decodeObject(forKey: "updated_at") as! String
+		username = aDecoder.decodeObject(forKey: "username") as! String
 	}
 	
-	func encodeWithCoder(aCoder: NSCoder) {
-		aCoder.encodeObject(caption, forKey: "caption")
-		aCoder.encodeObject(createdAt, forKey: "created_at")
-		aCoder.encodeObject(email, forKey: "email")
-		aCoder.encodeObject(fbid, forKey: "fbid")
-		aCoder.encodeObject(followers, forKey: "followers")
-		aCoder.encodeInteger(followersCount, forKey: "followers_count")
-		aCoder.encodeInteger(hipsterScore, forKey: "hipster_score")
-		aCoder.encodeObject(id, forKey: "id")
-		aCoder.encodeInteger(likeCount, forKey: "like_count")
-		aCoder.encodeObject(locationID, forKey: "location_id")
-		aCoder.encodeObject(name, forKey: "name")
-		aCoder.encodeObject(updatedAt, forKey: "updated_at")
-		aCoder.encodeObject(username, forKey: "username")
+	func encode(with aCoder: NSCoder) {
+		aCoder.encode(caption, forKey: "caption")
+		aCoder.encode(createdAt, forKey: "created_at")
+		aCoder.encode(email, forKey: "email")
+		aCoder.encode(fbid, forKey: "fbid")
+		aCoder.encode(followers, forKey: "followers")
+		aCoder.encode(followersCount, forKey: "followers_count")
+		aCoder.encode(hipsterScore, forKey: "hipster_score")
+		aCoder.encode(id, forKey: "id")
+		aCoder.encode(likeCount, forKey: "like_count")
+		aCoder.encode(locationID, forKey: "location_id")
+		aCoder.encode(name, forKey: "name")
+		aCoder.encode(updatedAt, forKey: "updated_at")
+		aCoder.encode(username, forKey: "username")
 	}
 }
 
@@ -114,11 +114,11 @@ class CurrentSpotifyUser: NSObject, NSCoding {
     let username: String
     var imageURLString: String = ""
     var spotifyUserURLString: String = ""
-    var spotifyUserURL: NSURL {
-        return NSURL(string: spotifyUserURLString)!
+    var spotifyUserURL: URL {
+        return URL(string: spotifyUserURLString)!
     }
-	var imageURL: NSURL {
-        return NSURL(string: imageURLString)!
+	var imageURL: URL {
+        return URL(string: imageURLString)!
     }
 	var savedTracks = [String : AnyObject]()
     
@@ -128,7 +128,7 @@ class CurrentSpotifyUser: NSObject, NSCoding {
         let images = json["images"].arrayValue
 		imageURLString = images.isEmpty ? "" : images[0]["url"].stringValue
         let externalURLs = json["external_urls"].dictionaryValue
-		spotifyUserURLString = externalURLs["spotify"]!.stringValue ?? ""
+		spotifyUserURLString = externalURLs["spotify"]!.stringValue 
 		super.init()
     }
 	
@@ -140,14 +140,14 @@ class CurrentSpotifyUser: NSObject, NSCoding {
     // MARK: - NSCoding
     
     required init?(coder aDecoder: NSCoder) {
-        name = aDecoder.decodeObjectForKey("name") as! String
-		username = aDecoder.decodeObjectForKey("username") as! String
+        name = aDecoder.decodeObject(forKey: "name") as! String
+		username = aDecoder.decodeObject(forKey: "username") as! String
 		super.init()
     }
 	
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(name, forKey: "name")
-        aCoder.encodeObject(username, forKey: "username")
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(username, forKey: "username")
     }
 }
 

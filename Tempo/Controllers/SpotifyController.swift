@@ -14,7 +14,7 @@ class SpotifyController {
 	let spotifyPlaylistURIKey = "SpotifyPlaylistURIKey"
 	static let sharedController: SpotifyController = SpotifyController()
 	
-	func spotifyIsAvailable(completion: Bool -> Void) {
+	func spotifyIsAvailable(_ completion: (Bool) -> Void) {
 		if let session = SPTAuth.defaultInstance().session {
 			if session.isValid() {
 				completion(true)
@@ -24,38 +24,38 @@ class SpotifyController {
 		}
 	}
 	
-	func setSpotifyUser(accessToken: String) {
+	func setSpotifyUser(_ accessToken: String) {
 		do {
-			let currentUserRequest = try SPTUser.createRequestForCurrentUserWithAccessToken(accessToken)
-			let data: NSData?
+			let currentUserRequest = try SPTUser.createRequestForCurrentUser(withAccessToken: accessToken)
+			let data: Data?
 			var error: NSError? = nil
 			do {
-				data = try NSURLConnection.sendSynchronousRequest(currentUserRequest, returningResponse: nil)
+				data = try NSURLConnection.sendSynchronousRequest(currentUserRequest, returning: nil)
 			} catch let error as NSError {
 				print(error)
 				data = nil
 			}
 			guard let unwrappedData = data else { return }
-			let jsonDict = JSON(data: unwrappedData, options: NSJSONReadingOptions(rawValue: 0), error: &error)
+			let jsonDict = JSON(data: unwrappedData, options: JSONSerialization.ReadingOptions(rawValue: 0), error: &error)
 			User.currentUser.currentSpotifyUser = CurrentSpotifyUser(json: jsonDict)
 		} catch let error as NSError {
 			print(error)
 		}
 	}
 	
-	func loginToSpotify(completionHandler: (success: Bool) -> Void) {
+	func loginToSpotify(_ completionHandler: @escaping (_ success: Bool) -> Void) {
 		API.sharedAPI.getSpotifyAccessToken { (success, accessToken, expiresAt) -> Void in
 			if success {
-				let expirationDate = NSDate(timeIntervalSince1970: expiresAt)
+				let expirationDate = Date(timeIntervalSince1970: expiresAt)
 				let spotifyUsername = User.currentUser.currentSpotifyUser?.username
 				SPTAuth.defaultInstance().session = SPTSession(userName: spotifyUsername, accessToken: accessToken, expirationDate: expirationDate)
 				self.setSpotifyUser(accessToken)
-				completionHandler(success: true)
+				completionHandler(true)
 			} else {
-				if let spotifyLoginUrl = NSURL(string: accessToken) {
-					UIApplication.sharedApplication().openURL(spotifyLoginUrl)
+				if let spotifyLoginUrl = URL(string: accessToken) {
+					UIApplication.shared.openURL(spotifyLoginUrl)
 				} else {
-					completionHandler(success: false)
+					completionHandler(false)
 				}
 			}
 		}
@@ -63,24 +63,24 @@ class SpotifyController {
 	
 	func openSpotifyURL() {
 		let spotifyUserURL = User.currentUser.currentSpotifyUser!.spotifyUserURL
-		UIApplication.sharedApplication().openURL(spotifyUserURL)
+		UIApplication.shared.openURL(spotifyUserURL as URL)
 	}
 	
-	func saveSpotifyTrack(track: Post, completionHandler: (success: Bool) -> Void) {
-		let spotifyTrackURI = NSURL(string: "spotify:track:" + track.song.spotifyID)!
+	func saveSpotifyTrack(_ track: Post, completionHandler: @escaping (_ success: Bool) -> Void) {
+		let spotifyTrackURI = URL(string: "spotify:track:" + track.song.spotifyID)!
 		
-		SPTTrack.trackWithURI(spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, data in
+		SPTTrack.track(withURI: spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, data in
 			if error != nil {
-				print(error)
-				completionHandler(success: false)
+				print(error as Any)
+				completionHandler(false)
 			} else {
 				SPTYourMusic.saveTracks([data], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
 					if error != nil {
-						completionHandler(success: false)
+						completionHandler(false)
 					} else {
-						User.currentUser.currentSpotifyUser?.savedTracks[track.song.spotifyID] = true
-						NSUserDefaults.standardUserDefaults().setValue(User.currentUser.currentSpotifyUser?.savedTracks, forKey: "savedTracks")
-						completionHandler(success: true)
+						User.currentUser.currentSpotifyUser?.savedTracks[track.song.spotifyID] = true as AnyObject?
+						UserDefaults.standard.setValue(User.currentUser.currentSpotifyUser?.savedTracks, forKey: "savedTracks")
+						completionHandler(true)
 					}
 				}
 			}
@@ -88,20 +88,20 @@ class SpotifyController {
 		}
 	}
 	
-	func removeSavedSpotifyTrack(track: Post, completionHandler: (success: Bool) -> Void) {
-		let spotifyTrackURI = NSURL(string: "spotify:track:" + track.song.spotifyID)!
+	func removeSavedSpotifyTrack(_ track: Post, completionHandler: @escaping (_ success: Bool) -> Void) {
+		let spotifyTrackURI = URL(string: "spotify:track:" + track.song.spotifyID)!
 		
-		SPTTrack.trackWithURI(spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, data in
+		SPTTrack.track(withURI: spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, data in
 			if error != nil {
-				completionHandler(success: false)
+				completionHandler(false)
 			} else {
-				SPTYourMusic.removeTracksFromSaved([data], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
+				SPTYourMusic.removeTracks(fromSaved: [data], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
 					if error != nil {
-						completionHandler(success: false)
+						completionHandler(false)
 					} else {
 						User.currentUser.currentSpotifyUser?.savedTracks[track.song.spotifyID] = nil
-						NSUserDefaults.standardUserDefaults().setValue(User.currentUser.currentSpotifyUser?.savedTracks, forKey: "savedTracks")
-						completionHandler(success: true)
+						UserDefaults.standard.setValue(User.currentUser.currentSpotifyUser?.savedTracks, forKey: "savedTracks")
+						completionHandler(true)
 					}
 				}
 			}
@@ -109,40 +109,40 @@ class SpotifyController {
 		}
 	}
 	
-	func getPlaylists(completion:(playlists: [SPTPartialPlaylist]?, error: NSError?) -> Void) {
-		SPTPlaylistList.playlistsForUserWithSession(SPTAuth.defaultInstance().session) { error, data in
+	func getPlaylists(_ completion:@escaping (_ playlists: [SPTPartialPlaylist]?, _ error: NSError?) -> Void) {
+		SPTPlaylistList.playlistsForUser(with: SPTAuth.defaultInstance().session) { error, data in
 			if error != nil {
-				completion(playlists: nil, error: error)
+				completion(nil, error as NSError?)
 			} else {
 				if let playlistData = data {
 					let playlistList = playlistData as? SPTPlaylistList
 					let playlists = (playlistList?.items as? [SPTPartialPlaylist])!
-					completion(playlists: playlists, error: nil)
+					completion(playlists, nil)
 				} else {
-					completion(playlists: nil, error: NSError(domain: "Parsing error", code: 404, userInfo: nil))
+					completion(nil, NSError(domain: "Parsing error", code: 404, userInfo: nil))
 				}
 			}
 		}
 	}
 	
-	func addTrackToPlaylist(playlist: SPTPartialPlaylist, track: Post, completionHandler: (success: Bool) -> Void) {
-		let spotifyTrackURI = NSURL(string: "spotify:track:" + track.song.spotifyID)!
+	func addTrackToPlaylist(_ playlist: SPTPartialPlaylist, track: Post, completionHandler: @escaping (_ success: Bool) -> Void) {
+		let spotifyTrackURI = URL(string: "spotify:track:" + track.song.spotifyID)!
 		
-		SPTTrack.trackWithURI(spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, trackData in
+		SPTTrack.track(withURI: spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, trackData in
 			if error != nil {
-				completionHandler(success: false)
+				completionHandler(false)
 			} else {
-				SPTPlaylistSnapshot.playlistWithURI(playlist.uri, session: SPTAuth.defaultInstance().session) { error, playlistData in
+				SPTPlaylistSnapshot.playlist(withURI: playlist.uri, session: SPTAuth.defaultInstance().session) { error, playlistData in
 					if error != nil {
-						completionHandler(success: false)
+						completionHandler(false)
 					} else {
 						let selectedPlaylist = playlistData as! SPTPlaylistSnapshot
 						
-						selectedPlaylist.addTracksToPlaylist([trackData], withSession: SPTAuth.defaultInstance().session) { error in
+						selectedPlaylist.addTracks(toPlaylist: [trackData], with: SPTAuth.defaultInstance().session) { error in
 							if error != nil {
-								completionHandler(success: false)
+								completionHandler(false)
 							} else {
-								completionHandler(success: true)
+								completionHandler(true)
 							}
 						}
 					}

@@ -14,7 +14,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	lazy var customRefresh: ADRefreshControl = {
 		self.refreshControl = UIRefreshControl()
 		let customRefresh = ADRefreshControl(refreshControl: self.refreshControl!)
-		self.refreshControl?.addTarget(self, action: #selector(refreshFeed), forControlEvents: .ValueChanged)
+		self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
 		return customRefresh
 	}()
 	
@@ -36,12 +36,12 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 		title = "Feed"
 		view.backgroundColor = UIColor.tempoDarkGray
 		setupAddButton()
-		tableView.registerNib(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+		tableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
 		//disable user interaction when first loading up feed
 		//user interaction gets enabled after refresh is done
 		//not very elegant solution, but fixes some UI issues
-		view.userInteractionEnabled = false
+		view.isUserInteractionEnabled = false
 		
 		addHamburgerMenu()
 		
@@ -55,13 +55,13 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
-			if traitCollection.forceTouchCapability == .Available {
-				registerForPreviewingWithDelegate(self, sourceView: view)
+			if traitCollection.forceTouchCapability == .available {
+				registerForPreviewing(with: self, sourceView: view)
 			}
 		}
 	}
 	
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
 		//Begin a post if coming from a quick action
@@ -71,10 +71,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 		} else {
 			rotatePlusButton(false)
 		}
-		plusButton.hidden = notConnected(false)
+		plusButton.isHidden = notConnected(false)
 	}
 	
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		if refreshNeeded { //when user re-logged in
@@ -82,10 +82,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 			refreshFeed()
 		}
 		
-		notConnected(true)
+		let _ = notConnected(true)
 	}
 	
-	func refreshFeedWithDelay(delay: Double, timeout: Double) {
+	func refreshFeedWithDelay(_ delay: Double, timeout: Double) {
 		//finished refreshing gets set to true when the api returns
 		var finishedRefreshing = false
 		//minimum time passed gets set to true when minimum delay dispatch gets called
@@ -99,7 +99,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 			} else if minimumTimePassed {
 				self?.tableView.reloadData()
 				self?.refreshControl?.endRefreshing()
-				self?.view.userInteractionEnabled = true
+				self?.view.isUserInteractionEnabled = true
 			}
 			finishedRefreshing = true
 			
@@ -110,11 +110,11 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 					button.center = x.view.center
 					button.center.y += 85
 					button.backgroundColor = UIColor.tempoLightRed
-					button.setTitle("Follow more friends", forState: .Normal)
-					button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+					button.setTitle("Follow more friends", for: UIControlState())
+					button.setTitleColor(UIColor.white, for: UIControlState())
 					button.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
 					button.layer.cornerRadius = 5.0
-					button.addTarget(self, action: #selector(PlayerTableViewController.navigateToSuggestions), forControlEvents: .TouchUpInside)
+					button.addTarget(self, action: #selector(PlayerTableViewController.navigateToSuggestions), for: .touchUpInside)
 					
 					emptyView.addSubview(button)
 					
@@ -130,27 +130,27 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 		//if after delay seconds we finished fetching,
 		//then we reload the tableview, else we wait for the
 		//api to return to reload by setting minumum time passed
-		var popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
-		dispatch_after(popTime, dispatch_get_main_queue()) {
+		var popTime = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+		DispatchQueue.main.asyncAfter(deadline: popTime) {
 			if finishedRefreshing {
 				Banner.hide()
-				self.plusButton.hidden = self.notConnected(false)
+				self.plusButton.isHidden = self.notConnected(false)
 				self.tableView.reloadData()
 				self.continueAnimatingAfterRefresh()
 				self.refreshControl?.endRefreshing()
-				self.view.userInteractionEnabled = true
+				self.view.isUserInteractionEnabled = true
 			} else {
 				minimumTimePassed = true
 			}
 		}
 		
 		//timeout for refresh taking too long
-		popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * Double(NSEC_PER_SEC)))
-		dispatch_after(popTime, dispatch_get_main_queue()) {
+		popTime = DispatchTime.now() + Double(Int64(timeout * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+		DispatchQueue.main.asyncAfter(deadline: popTime) {
 			if !finishedRefreshing {
-				self.plusButton.hidden = self.notConnected(true)
+				self.plusButton.isHidden = self.notConnected(true)
 				self.refreshControl?.endRefreshing()
-				self.view.userInteractionEnabled = true
+				self.view.isUserInteractionEnabled = true
 				finishedRefreshing = true
 			}
 		}
@@ -162,8 +162,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 			for row in 0 ..< posts.count {
 				if posts[row].song.spotifyID == playerCellPost.song.spotifyID {
 					posts[row] = playerCellPost
-					let indexPath = NSIndexPath(forRow: row, inSection: 0)
-					if let cell = tableView.cellForRowAtIndexPath(indexPath) as? FeedTableViewCell {
+					let indexPath = IndexPath(row: row, section: 0)
+					if let cell = tableView.cellForRow(at: indexPath) as? FeedTableViewCell {
 						cell.postView.post = playerCellPost
 						cell.postView.layoutSubviews()
 					}
@@ -178,9 +178,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	}
 	
 	// MARK: - UITableViewDataSource
-	
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedTableViewCell
 		cell.postView.playerCellRef = playerNav.playerCell
 		cell.postView.expandedPlayerRef = playerNav.expandedCell
 		cell.postView.post = posts[indexPath.row]
@@ -192,43 +191,49 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	}
 	
 	// MARK: - UITableViewDelegate
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		playerNav.playerCell.postsLikable = true
 		playerNav.expandedCell.postsLikable = true
 		playerNav.expandedCell.postHasInfo = true
 		currentlyPlayingIndexPath = indexPath
 	}
 	
-	func scrollViewDidScroll(scrollView: UIScrollView) {
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		customRefresh.scrollViewDidScroll(scrollView)
 	}
 	
 	func setupAddButton() {
 		let image = UIImage(named: "add")!
-		plusButton = UIButton(type: .Custom)
-		plusButton.frame = CGRect(origin: CGPointZero, size: image.size)
-		plusButton.setImage(image, forState: .Normal)
-		plusButton.imageView!.contentMode = .Center
+		plusButton = UIButton(type: .custom)
+		plusButton.frame = CGRect(origin: CGPoint.zero, size: image.size)
+		plusButton.setImage(image, for: UIControlState())
+		plusButton.imageView!.contentMode = .center
 		plusButton.imageView!.clipsToBounds = false
 		plusButton.adjustsImageWhenHighlighted = false
-		plusButton.addTarget(self, action: #selector(plusButtonTapped), forControlEvents: .TouchUpInside)
+		plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
 		
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: plusButton)
 	}
 	
-	func rotatePlusButton(active: Bool) {
-		if let currentTransform = (plusButton.imageView!.layer.presentationLayer() as? CALayer)?.transform {
+	func rotatePlusButton(_ active: Bool) {
+		
+		if let currentTransform = plusButton.imageView!.layer.presentation()?.transform {
 			plusButton.imageView?.layer.transform = currentTransform
 		}
-		plusButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
-		plusButton.addTarget(active ? searchTableViewController : self, action: active ? #selector(SearchViewController.dismiss) : #selector(plusButtonTapped), forControlEvents: .TouchUpInside)
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
-			let transform = active ? CGAffineTransformMakeRotation(CGFloat(M_PI_4)) : CGAffineTransformIdentity
+		plusButton.removeTarget(nil, action: nil, for: .allEvents)
+		plusButton.addTarget(self, action: active ? #selector(dismissButtonTapped) : #selector(plusButtonTapped), for: .touchUpInside)
+		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
+			let transform = active ? CGAffineTransform(rotationAngle: CGFloat(M_PI_4)) : CGAffineTransform.identity
 			self.plusButton.imageView!.transform = transform
 			}, completion: nil)
 	}
 	
+	func dismissButtonTapped() {
+		searchTableViewController.dismiss()
+	}
+	
 	func plusButtonTapped() {
+		
 		rotatePlusButton(true)
 		
 		searchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
@@ -239,8 +244,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	
 	// MARK: - SongSearchDelegate
 	
-	func didSelectSong(song: Song) {
-		posts.insert(Post(song: song, user: User.currentUser, date: NSDate()), atIndex: 0)
+	func didSelectSong(_ song: Song) {
+		posts.insert(Post(song: song, user: User.currentUser, date: Date()), at: 0)
 		API.sharedAPI.updatePost(User.currentUser.id, song: song) { [weak self] _ in
 			self?.refreshFeed()
 		}
@@ -248,7 +253,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	
 	// MARK: - Navigation
 	
-	func didTapImageForPostView(postView: PostView) {
+	func didTapImageForPostView(_ postView: PostView) {
 		guard let user = postView.post?.user else { return }
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 		profileVC.title = "Profile"
@@ -257,7 +262,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	}
 	
 	func didToggleLike() {
-		if let cell = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath!) as? FeedTableViewCell {
+		if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath!) as? FeedTableViewCell {
 			cell.postView.updateLikedStatus()
 			playerNav.playerCell.updateLikeButton()
 			playerNav.expandedCell.updateLikeButton()
@@ -268,34 +273,34 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 
 @available(iOS 9.0, *)
 extension FeedViewController: UIViewControllerPreviewingDelegate {
-	func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		let tableViewPoint = view.convertPoint(location, toView: tableView)
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		let tableViewPoint = view.convert(location, to: tableView)
 		
-		guard let indexPath = tableView.indexPathForRowAtPoint(tableViewPoint),
-			cell = tableView.cellForRowAtIndexPath(indexPath) as? FeedTableViewCell else {
+		guard let indexPath = tableView.indexPathForRow(at: tableViewPoint),
+			let cell = tableView.cellForRow(at: indexPath) as? FeedTableViewCell else {
 				return nil
 		}
 		
 		let postView = cell.postView
-		guard let avatar = postView.avatarImageView else { return nil }
+		guard let avatar = postView?.avatarImageView else { return nil }
 		
-		let avatarFrame = postView.convertRect(avatar.frame, toView: tableView)
+		let avatarFrame = postView?.convert(avatar.frame, to: tableView)
 		
-		if avatarFrame.contains(tableViewPoint) {
-			guard let user = postView.post?.user else { return nil }
+		if (avatarFrame?.contains(tableViewPoint))! {
+			guard let user = postView?.post?.user else { return nil }
 			let peekViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 			peekViewController.title = "Profile"
 			peekViewController.user = user
 			
-			peekViewController.preferredContentSize = CGSizeZero
-			previewingContext.sourceRect = postView.convertRect(avatar.frame, toView: tableView)
+			peekViewController.preferredContentSize = CGSize.zero
+			previewingContext.sourceRect = (postView?.convert(avatar.frame, to: tableView))!
 			
 			return peekViewController
 		}
 		return nil
 	}
 	
-	func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
-		showViewController(viewControllerToCommit, sender: self)
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+		show(viewControllerToCommit, sender: self)
 	}
 }

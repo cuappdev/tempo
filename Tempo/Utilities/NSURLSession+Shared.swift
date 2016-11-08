@@ -8,21 +8,22 @@
 
 import Foundation
 
-extension NSURLSession {
-	@nonobjc private static let sharedCachedSession: NSURLSession = {
-		let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-		config.requestCachePolicy = .ReturnCacheDataElseLoad
-		return NSURLSession(configuration: config)
+extension URLSession {
+	@nonobjc fileprivate static let sharedCachedSession: URLSession = {
+		let config = URLSessionConfiguration.default
+		config.requestCachePolicy = .returnCacheDataElseLoad
+		return URLSession(configuration: config)
 	}()
 	
-	class func dataTaskWithCachedRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-		let completionWithCaching: (NSData?, NSURLResponse?, NSError?) -> Void = { data, response, error in
+	class func dataTaskWithCachedRequest(_ request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> ()) -> URLSessionDataTask {
+		let completionWithCaching = { (data: Data?, response: URLResponse?, error: Error?) in
 			completionHandler(data, response, error)
-			if let data = data, response = response {
-				let cachedResponse = NSCachedURLResponse(response: response, data: data)
-				NSURLCache.sharedURLCache().storeCachedResponse(cachedResponse, forRequest: request)
+			if let data = data, let response = response {
+				let cachedResponse = CachedURLResponse(response: response, data: data)
+				URLCache.shared.storeCachedResponse(cachedResponse, for: request)
 			}
 		}
-		return sharedCachedSession.dataTaskWithRequest(request, completionHandler: completionWithCaching)
+		
+		return sharedCachedSession.dataTask(with: request, completionHandler: completionWithCaching)
 	}
 }

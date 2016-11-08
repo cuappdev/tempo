@@ -24,18 +24,18 @@ class FollowSuggestionsTableViewCell: UITableViewCell {
 		contentView.backgroundColor = UIColor.tempoLightGray
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-		self.selectionStyle = UITableViewCellSelectionStyle.None
+		self.selectionStyle = UITableViewCellSelectionStyle.none
     }
 	
 	override func prepareForReuse() {
 		userImage.image = nil
 	}
     
-    @IBAction func didTapFollowButton(sender: UIButton) {
+    @IBAction func didTapFollowButton(_ sender: UIButton) {
         delegate?.didTapFollowButton(self)
     }
 }

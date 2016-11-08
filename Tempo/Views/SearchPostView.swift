@@ -16,13 +16,13 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
 	@IBOutlet var descriptionLabel: UILabel?
 	@IBOutlet var spacingConstraint: NSLayoutConstraint?
  
-    private var updateTimer: NSTimer?
-    private var notificationHandler: AnyObject?
+    fileprivate var updateTimer: Timer?
+    fileprivate var notificationHandler: AnyObject?
     
     var post: Post? {
         didSet {
             if let handler: AnyObject = notificationHandler {
-                NSNotificationCenter.defaultCenter().removeObserver(handler)
+                NotificationCenter.default.removeObserver(handler)
             }
 
             // update stuff
@@ -47,11 +47,11 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         }
         
         avatarImageView?.clipsToBounds = true
-        userInteractionEnabled = true
-        avatarImageView?.userInteractionEnabled = true
-        profileNameLabel?.userInteractionEnabled = true
+        isUserInteractionEnabled = true
+        avatarImageView?.isUserInteractionEnabled = true
+        profileNameLabel?.isUserInteractionEnabled = true
         
-        layer.borderColor = UIColor.tempoDarkGray.CGColor
+        layer.borderColor = UIColor.tempoDarkGray.cgColor
         layer.borderWidth = CGFloat(0.7)
     }
     
@@ -64,18 +64,18 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
 		
 		if updateTimer == nil && post?.player.isPlaying ?? false {
 			// 60 fps
-			updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
-			                            target: self, selector: #selector(SearchPostView.timerFired(_:)),
+			updateTimer = Timer(timeInterval: 1.0 / 60.0,
+			                            target: self, selector: #selector(timerFired(timer:)),
 			                            userInfo: nil,
 			                            repeats: true)
-			NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
+			RunLoop.current.add(updateTimer!, forMode: RunLoopMode.commonModes)
 		} else {
 			updateTimer?.invalidate()
 			updateTimer = nil
 		}
 	}
 	
-    dynamic private func timerFired(timer: NSTimer) {
+    dynamic private func timerFired(timer: Timer) {
         if post?.player.isPlaying ?? false {
             setNeedsDisplay()
         }
@@ -90,17 +90,17 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         if let post = post {
             var color: UIColor!
 			let font = UIFont(name: "Avenir-Medium", size: 14)
-            let duration = NSTimeInterval(0.3) as NSTimeInterval
+            let duration = TimeInterval(0.3) as TimeInterval
             let label = profileNameLabel!
             if post.player.isPlaying {
                 color = UIColor.tempoLightRed
                 // Will scroll labels
             } else {
-                color = UIColor.whiteColor()
+                color = UIColor.white
             }
             
             if !label.textColor.isEqual(color) {
-                UIView.transitionWithView(label, duration: duration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+                UIView.transition(with: label, duration: duration, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
                     label.textColor = color
 					label.font = font
                     }, completion: { _ in
@@ -110,23 +110,22 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
             }
         }
     }
-    
-    override func drawRect(rect: CGRect) {
+	
+	override func draw(_ rect: CGRect) {
         var fill = 0
         if let post = post {
 			fill = post.player.isPlaying ? 1 : 0
         }
-        super.drawRect(rect)
+        super.draw(rect)
         UIColor.tempoDarkGray.setFill()
-        CGContextFillRect(UIGraphicsGetCurrentContext(),
-            CGRect(x: 0, y: 0, width: bounds.width * CGFloat(fill), height: bounds.height))
+        UIGraphicsGetCurrentContext()?.fill(CGRect(x: 0, y: 0, width: bounds.width * CGFloat(fill), height: bounds.height))
     }
     
-    func postViewPressed(sender: UITapGestureRecognizer) {
+    func postViewPressed(_ sender: UITapGestureRecognizer) {
         if let post = post {
             if post.player.isPlaying {
-                let tapPoint = sender.locationInView(self)
-                let hitView = hitTest(tapPoint, withEvent: nil)
+                let tapPoint = sender.location(in: self)
+                let hitView = hitTest(tapPoint, with: nil)
                 
                 if hitView == avatarImageView || hitView == profileNameLabel {
                     // GO TO PROFILE VIEW CONTROLLER=

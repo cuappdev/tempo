@@ -21,19 +21,19 @@ class ADRefreshControl {
 		self.refreshControl = refreshControl
 		
 		// Create the graphic image views
-		vinylView = UIImageView(image: UIImage(named: "vinyl-red")?.imageWithRenderingMode(.AlwaysTemplate))
+		vinylView = UIImageView(image: UIImage(named: "vinyl-red")?.withRenderingMode(.alwaysTemplate))
 		vinylView.tintColor = UIColor.tempoLightRed
-		vinylView.frame = CGRectMake(0, 0, 45, 45)
+		vinylView.frame = CGRect(x: 0, y: 0, width: 45, height: 45)
 		vinylView.layer.opacity = 0
 		
 		// Add the graphics to the loading view
 		refreshControl.addSubview(vinylView)
 		
 		// Hide the original spinner icon
-		refreshControl.tintColor = UIColor.clearColor()
+		refreshControl.tintColor = UIColor.clear
 	}
 	
-	func scrollViewDidScroll(scrollView: UIScrollView) {
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		
 		// Get the current size of the refresh controller
 		var refreshBounds = refreshControl.bounds
@@ -43,7 +43,7 @@ class ADRefreshControl {
 		
 		if !isRefreshAnimating {
 			let direction = newPullDistance < pullDistance ? -10.0 : 10.0
-			vinylView.transform = CGAffineTransformRotate(vinylView.transform, CGFloat(direction * M_PI/180))
+			vinylView.transform = vinylView.transform.rotated(by: CGFloat(direction * M_PI/180))
 		}
 		
 		pullDistance = newPullDistance
@@ -52,13 +52,13 @@ class ADRefreshControl {
 		vinylView.layer.opacity = isRefreshAnimating ? 1.0 : Float(pullDistance-10.0)/45.0
 		
 		//have vinyl case follow disc up to a certain point then return
-		vinylView.center = CGPointMake(refreshBounds.size.width/2.0, pullDistance/2.0)
+		vinylView.center = CGPoint(x: refreshBounds.size.width/2.0, y: pullDistance/2.0)
 		
 		// Set the encompassing view's frames
 		refreshBounds.size.height = pullDistance
 		
 		// If we're refreshing and the animation is not playing, then play the animation
-		if refreshControl!.refreshing && !isRefreshAnimating {
+		if refreshControl!.isRefreshing && !isRefreshAnimating {
 			animateRefreshView()
 		}
 	}
@@ -68,18 +68,18 @@ class ADRefreshControl {
 		// Flag that we are animating
 		isRefreshAnimating = true
 		
-		UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveLinear, animations: {
+		UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveLinear, animations: {
 
 			// Rotate the spinner by M_PI_2 = PI/2 = 90 degrees
-			self.vinylView.transform = CGAffineTransformRotate(self.vinylView.transform, CGFloat(-1 * M_PI_2))
+			self.vinylView.transform = self.vinylView.transform.rotated(by: CGFloat(-1 * M_PI_2))
 			if self.timesAnimationLooped % 2 == 0 {
-				self.vinylView.transform = CGAffineTransformScale(self.vinylView.transform, 1.30, 1.30)
+				self.vinylView.transform = self.vinylView.transform.scaledBy(x: 1.30, y: 1.30)
 			} else {
-				self.vinylView.transform = CGAffineTransformScale(self.vinylView.transform, 1/1.3, 1/1.3)
+				self.vinylView.transform = self.vinylView.transform.scaledBy(x: 1/1.3, y: 1/1.3)
 			}
 		}, completion: { finished in
 			// If still refreshing, keep spinning, else reset
-			if self.refreshControl.refreshing {
+			if self.refreshControl.isRefreshing {
 				self.animateRefreshView()
 			} else {
 				self.resetAnimation()
@@ -92,7 +92,7 @@ class ADRefreshControl {
 		
 		// Reset our flags and background color
 		if timesAnimationLooped % 2 != 0 {
-			vinylView.transform = CGAffineTransformScale(vinylView.transform, 1/1.3, 1/1.3)
+			vinylView.transform = vinylView.transform.scaledBy(x: 1/1.3, y: 1/1.3)
 		}
 		timesAnimationLooped = 0
 		isRefreshAnimating = false

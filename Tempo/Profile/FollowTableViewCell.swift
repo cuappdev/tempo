@@ -9,7 +9,7 @@
 import UIKit
 
 protocol FollowUserDelegate {
-	func didTapFollowButton(cell: FollowTableViewCell)
+	func didTapFollowButton(_ cell: FollowTableViewCell)
 }
 
 class FollowTableViewCell: UITableViewCell {
@@ -27,28 +27,28 @@ class FollowTableViewCell: UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		selectionStyle = .None
+		selectionStyle = .none
 		backgroundColor = UIColor.tempoLightGray
 		separator.backgroundColor = UIColor.separatorGray
 		separatorHeight.constant = 1
 		followButton.backgroundColor = UIColor.tempoLightRed
-		followButton.layer.borderColor = UIColor.tempoLightRed.CGColor
+		followButton.layer.borderColor = UIColor.tempoLightRed.cgColor
 		userImage.layer.cornerRadius = userImage.bounds.size.width/2
 		userImage.clipsToBounds = true
 	}
 	
-    @IBAction func userImageClicked(sender: UIButton) {
+    @IBAction func userImageClicked(_ sender: UIButton) {
         
         
         
     }
 
     // Custom selected cell view
-    override func setSelected(selected: Bool, animated: Bool) {
-		contentView.backgroundColor = selected ? UIColor.tempoLightGray : UIColor.clearColor()
+    override func setSelected(_ selected: Bool, animated: Bool) {
+		contentView.backgroundColor = selected ? UIColor.tempoLightGray : UIColor.clear
     }
 	
-	@IBAction func didTapFollowButton(sender: AnyObject) {
+	@IBAction func didTapFollowButton(_ sender: AnyObject) {
 		delegate?.didTapFollowButton(self)
 	}
 }

@@ -18,7 +18,7 @@ class PostHistoryHeaderSectionCell: UITableViewCell {
 		
 		contentView.backgroundColor = UIColor.tempoDarkGray
 		customSeparator?.backgroundColor = UIColor.tempoDarkGray
-		postDate?.textColor = UIColor.whiteColor()
+		postDate?.textColor = UIColor.white
 		postDate?.layer.opacity = 0.7
     }
 	

@@ -8,106 +8,107 @@
 
 import Foundation
 
-private func calendarDate(components: NSDateComponents) -> NSDate {
-	let calendar : NSCalendar = NSCalendar.currentCalendar()
-	return calendar.dateFromComponents(components)!
+private func calendarDate(_ components: DateComponents) -> Date {
+	let calendar : Calendar = Calendar.current
+	return calendar.date(from: components)!
 }
 
-extension NSDate {
+extension Date {
     
-    convenience init(dateString: String) {
-        let date = NSDateFormatter.yearMonthDayFormatter.dateFromString(dateString)
-        self.init(timeInterval: 0, sinceDate: date!)
+	init(dateString: String) {
+        let date = DateFormatter.yearMonthDayFormatter.date(from: dateString)
+		self.init(timeInterval: 0, since: date!)
     }
 	
-    private func calendarDateComponents() -> NSDateComponents {
-        let calendar = NSCalendar.currentCalendar()
-        return calendar.components([.Year, .Month, .WeekOfYear, .Day], fromDate: self)
+    fileprivate func calendarDateComponents() -> DateComponents {
+        let calendar = Calendar.current
+        return (calendar as NSCalendar).components([.year, .month, .weekOfYear, .day], from: self)
     }
     
-    func components() -> NSDateComponents {
+    func components() -> DateComponents {
         return calendarDateComponents()
     }
     
     func month() -> Int {
-        return calendarDateComponents().month
+        return calendarDateComponents().month!
     }
     
     func day() -> Int {
-        return calendarDateComponents().day
+        return calendarDateComponents().day!
     }
     
     func year() -> Int {
-        return calendarDateComponents().year
+        return calendarDateComponents().year!
     }
 	
 	func yearMonthDay() -> String {
 		return "\(year())/\(month())/\(day())"
 	}
     
-    func firstDayOfMonth() -> NSDate {
-        let components = calendarDateComponents()
+    func firstDayOfMonth() -> Date {
+        var components = calendarDateComponents()
         components.day = 1
         return calendarDate(components)
     }
     
-    func lastDayOfMonth() -> NSDate {
-        let components = calendarDateComponents()
-        components.month += 1
-        components.day = 0
+    func lastDayOfMonth() -> Date {
+        var components = calendarDateComponents()
+		if let month = components.month {
+			components.month = month + 1
+		}
+		components.day = 0
         return calendarDate(components)
     }
     
     func numDaysInMonth() -> Int {
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = Calendar.current
         let firstDay = firstDayOfMonth()
         let lastDay = lastDayOfMonth()
         
-        let components = calendar.components(.Day, fromDate: firstDay, toDate: lastDay, options: NSCalendarOptions(rawValue: 0))
+        var components = (calendar as NSCalendar).components(.day, from: firstDay, to: lastDay, options: NSCalendar.Options(rawValue: 0))
         
         if isCurrentMonth(firstDay) {
-            components.day = NSDate().day()
-            return components.day
+            components.day = Date().day()
+            return components.day!
         }
         
-        return components.day + 1
+        return components.day! + 1
     }
     
-    func numberOfMonths(endDate: NSDate) -> Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(.Month, fromDate: self, toDate: endDate, options: NSCalendarOptions(rawValue: 0))
-        return components.month + 1
+    func numberOfMonths(_ endDate: Date) -> Int {
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components(.month, from: self, to: endDate, options: NSCalendar.Options(rawValue: 0))
+        return components.month! + 1
     }
     
-    func dateByAddingMonths(months: Int) -> NSDate {
-        let calendar = NSCalendar.currentCalendar()
-        let components = NSDateComponents()
+    func dateByAddingMonths(_ months: Int) -> Date {
+        let calendar = Calendar.current
+        var components = DateComponents()
         components.month = months
-        return calendar.dateByAddingComponents(components, toDate: self, options: NSCalendarOptions(rawValue: 0))!
+        return (calendar as NSCalendar).date(byAdding: components, to: self, options: NSCalendar.Options(rawValue: 0))!
     }
     
-    func numDaysUntilEndDate(endDate: NSDate) -> Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(.Day, fromDate: self, toDate: endDate, options: NSCalendarOptions(rawValue: 0))
-        return components.day + 1
+    func numDaysUntilEndDate(_ endDate: Date) -> Int {
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components(.day, from: self, to: endDate, options: NSCalendar.Options(rawValue: 0))
+        return components.day! + 1
     }
     
-    func isCurrentMonth(date: NSDate) -> Bool {
-        return (date.month() == NSDate().month() && date.year() == NSDate().year())
+    func isCurrentMonth(_ date: Date) -> Bool {
+        return (date.month() == Date().month() && date.year() == Date().year())
     }
     
-    class func dateFromComponents(components: NSDateComponents) -> NSDate {
+    static func dateFromComponents(_ components: DateComponents) -> Date {
         return calendarDate(components)
     }
     
 }
 
-public func ==(lhs: NSDate, rhs: NSDate) -> Bool {
-	return lhs === rhs || lhs.compare(rhs) == .OrderedSame
+public func ==(lhs: Date, rhs: Date) -> Bool {
+	return lhs as AnyObject === rhs as AnyObject || lhs.compare(rhs) == .orderedSame
 }
 
-public func <(lhs: NSDate, rhs: NSDate) -> Bool {
-	return lhs.compare(rhs) == .OrderedAscending
+public func <(lhs: Date, rhs: Date) -> Bool {
+	return lhs.compare(rhs) == .orderedAscending
 }
 
-extension NSDate: Comparable { }

@@ -13,12 +13,12 @@ class Post: NSObject {
     let user: User
     var player: Player!
 	let song: Song
-    let date: NSDate?
-    private(set) var likes: Int
-	private(set) var isLiked: Bool = false
-	private(set) var postID: String = ""
+    let date: Date?
+    fileprivate(set) var likes: Int
+	fileprivate(set) var isLiked: Bool = false
+	fileprivate(set) var postID: String = ""
 	
-	init(song: Song, user: User, date: NSDate? = nil, likes: Int = 0, isLiked: Bool = false) {
+	init(song: Song, user: User, date: Date? = nil, likes: Int = 0, isLiked: Bool = false) {
         self.song = song
         self.user = user
         self.date = date
@@ -28,7 +28,7 @@ class Post: NSObject {
         if let previewURL = song.previewURL {
             player = Player(fileURL: previewURL)
         } else {
-            player = Player(fileURL: NSURL(string: "https://p.scdn.co/mp3-preview/004eaa8d0769f3d464992704d9b5c152b862aa65")!)
+            player = Player(fileURL: URL(string: "https://p.scdn.co/mp3-preview/004eaa8d0769f3d464992704d9b5c152b862aa65")!)
         }
         
         super.init()
@@ -40,7 +40,7 @@ class Post: NSObject {
         let dateString = json["created_at"].stringValue
         let likes = json["like_count"].intValue
 		let isLiked = json["post"]["is_liked"].boolValue
-        let date = NSDateFormatter.parsingDateFormatter.dateFromString(dateString)
+        let date = DateFormatter.parsingDateFormatter.date(from: dateString)
                 
 		self.init(song: Song(spotifyURI: songID), user: user, date: date, likes: likes, isLiked: isLiked)
 		
@@ -49,8 +49,8 @@ class Post: NSObject {
     
     func relativeDate() -> String {
 		guard let date = date else { return "" }
-        let now = NSDate()
-        let seconds = Int(now.timeIntervalSinceDate(date))
+        let now = Date()
+        let seconds = Int(now.timeIntervalSince(date))
         if seconds < 60 {
             return "\(seconds)s"
         }

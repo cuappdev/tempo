@@ -18,7 +18,7 @@ class SpotifyViewController: UIViewController {
     @IBOutlet weak var logOutSpotifyButton: UIButton!
     @IBOutlet weak var loginText: UILabel!
 	
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		title = "Spotify"
@@ -28,14 +28,14 @@ class SpotifyViewController: UIViewController {
         profilePicture.layer.cornerRadius = profilePicture.frame.size.width/2
         profilePicture.layer.masksToBounds = true
         profilePicture.layer.borderWidth = 1.5
-        profilePicture.layer.borderColor = UIColor.whiteColor().CGColor
+        profilePicture.layer.borderColor = UIColor.white.cgColor
         createPlaylistSwitch.tintColor = UIColor.tempoLightRed
         createPlaylistSwitch.onTintColor = UIColor.tempoLightRed
 		
 		for button in [loginToSpotifyButton, goToSpotifyButton, logOutSpotifyButton] {
-			button.backgroundColor = UIColor.tempoLightRed
-			button.layer.cornerRadius = 5.0
-			button.layer.masksToBounds = true
+			button?.backgroundColor = UIColor.tempoLightRed
+			button?.layer.cornerRadius = 5.0
+			button?.layer.masksToBounds = true
 		}
 	}
 	
@@ -47,7 +47,7 @@ class SpotifyViewController: UIViewController {
 				
 				let currentSpotifyUser = User.currentUser.currentSpotifyUser
 				self.nameLabel.text = currentSpotifyUser!.username
-				self.nameLabel.font = nameLabel.font.fontWithSize(18)
+				self.nameLabel.font = nameLabel.font.withSize(18)
 			}
 			
 			loggedInToSpotify(session.isValid())
@@ -56,12 +56,12 @@ class SpotifyViewController: UIViewController {
 		}
 	}
     
-    func loggedInToSpotify(loggedIn: Bool) {
+    func loggedInToSpotify(_ loggedIn: Bool) {
         let elements = [profilePicture, nameLabel, createPlaylistSwitch, goToSpotifyButton, logOutSpotifyButton]
-        loginToSpotifyButton.hidden = loggedIn
-        loginText.hidden = loggedIn
+        loginToSpotifyButton.isHidden = loggedIn
+        loginText.isHidden = loggedIn
         for e in elements {
-            e.hidden = !loggedIn
+            e?.isHidden = !loggedIn
         }
     }
     
@@ -73,19 +73,19 @@ class SpotifyViewController: UIViewController {
 		}
 	}
     
-    @IBAction func toggleCreatePlaylistSwitch(sender: UISwitch) {
-        if sender.on {
+    @IBAction func toggleCreatePlaylistSwitch(_ sender: UISwitch) {
+        if sender.isOn {
             
         } else {
             
         }
     }
     
-    @IBAction func goToSpotify(sender: UIButton) {
+    @IBAction func goToSpotify(_ sender: UIButton) {
         SpotifyController.sharedController.openSpotifyURL()
     }
     
-    @IBAction func logOutSpotify(sender: UIButton) {
+    @IBAction func logOutSpotify(_ sender: UIButton) {
         SpotifyController.sharedController.closeCurrentSpotifySession()
 		
         updateSpotifyState()

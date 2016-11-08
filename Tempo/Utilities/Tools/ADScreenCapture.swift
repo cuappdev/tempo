@@ -10,21 +10,21 @@ import UIKit
 class ADScreenCapture: UIView {
     
     func getScreenshot() -> UIImage {
-        let layer = UIApplication.sharedApplication().keyWindow?.layer as CALayer!
-        let scale = UIScreen.mainScreen().scale
-        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale)
+        let layer = UIApplication.shared.keyWindow?.layer as CALayer!
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions((layer?.frame.size)!, false, scale)
         
 		guard let context = UIGraphicsGetCurrentContext() else { print("Can't create context: " + #function); return UIImage() }
         
-        layer.renderInContext(context)
+        layer?.render(in: context)
         let screenshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return screenshot
+        return screenshot!
     }
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		userInteractionEnabled = false
+		isUserInteractionEnabled = false
 	}
 
 	required init?(coder aDecoder: NSCoder) {

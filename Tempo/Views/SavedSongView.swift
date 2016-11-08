@@ -14,10 +14,10 @@ class SavedSongView: UIView {
     @IBOutlet weak var statusLabel: UILabel!
     
 	class func instanceFromNib() -> SavedSongView {
-		return UINib(nibName: "SavedSongView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! SavedSongView
+		return UINib(nibName: "SavedSongView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! SavedSongView
 	}
 	
-	func addSongtoPlaylist(playlist: String) {
+	func addSongtoPlaylist(_ playlist: String) {
 		statusImage.image = UIImage(named: "saved-check")
 		statusLabel.text = "Added to \(playlist)"
 	}
@@ -32,28 +32,28 @@ class SavedSongView: UIView {
 		statusLabel.text = "Removed from Your Music"
 	}
 	
-	func showSongStatusPopup(status: SavedSongStatus, playlist: String) {
-		let currentWindow = UIApplication.sharedApplication().keyWindow
+	func showSongStatusPopup(_ status: SavedSongStatus, playlist: String) {
+		let currentWindow = UIApplication.shared.keyWindow
 		let screenWidth = currentWindow!.frame.size.width
 		let screenHeight = currentWindow!.frame.size.height
-		let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
+		let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
 
-		center = CGPointMake(screenWidth / 2, screenHeight / 2)
+		center = CGPoint(x: screenWidth / 2, y: screenHeight / 2)
 		layer.cornerRadius = 10
 		alpha = 0
 		
-		if status == .NotSaved {
+		if status == .notSaved {
 			saveSongToYourMusic()
-		} else if status == .Saved {
+		} else if status == .saved {
 			removeSongfromSaved()
-		} else if status == .NotSavedToPlaylist {
+		} else if status == .notSavedToPlaylist {
 			addSongtoPlaylist(playlist)
 		}
 		
 		currentWindow?.addSubview(self)
 		
 		fadeIn(0.5, delay: 0) { _ in
-			dispatch_after(delayTime, dispatch_get_main_queue()) {
+			DispatchQueue.main.asyncAfter(deadline: delayTime) {
 				self.fadeOut(0.5, delay: 0) { _ in
 					self.removeFromSuperview()
 				}

@@ -11,15 +11,15 @@ import AVFoundation
 
 class Player: NSObject, AVAudioPlayerDelegate {
 	
-	private var currentTask: NSURLSessionDataTask?
-	private static var currentPlayer: Player? {
+	fileprivate var currentTask: URLSessionDataTask?
+	fileprivate static var currentPlayer: Player? {
 		didSet {
 			if Player.currentPlayer != oldValue {
 				oldValue?.pause()
 			}
 		}
 	}
-    private var player: AVAudioPlayer? {
+    fileprivate var player: AVAudioPlayer? {
         didSet {
             oldValue?.pause()
             if let oldDelegate = oldValue?.delegate as? Player {
@@ -34,8 +34,8 @@ class Player: NSObject, AVAudioPlayerDelegate {
 	private(set) var finishedPlaying = false
 	var delegate: PlayerDelegate!
 	
-    private let fileURL: NSURL
-	init(fileURL: NSURL) {
+    fileprivate let fileURL: URL
+	init(fileURL: URL) {
 		self.fileURL = fileURL
 		super.init()
     }
@@ -50,12 +50,12 @@ class Player: NSObject, AVAudioPlayerDelegate {
     
     func prepareToPlay() {
         if player == nil {
-            if fileURL.fileURL {
-				player = try? AVAudioPlayer(contentsOfURL: fileURL)
+            if fileURL.isFileURL {
+				player = try? AVAudioPlayer(contentsOf: fileURL)
                 player?.prepareToPlay()
             } else if currentTask == nil {
-                let request = NSURLRequest(URL: fileURL, cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: 15)
-				currentTask = NSURLSession.dataTaskWithCachedRequest(request) { [weak self] data, response, _ -> Void in
+                let request = URLRequest(url: fileURL, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 15)
+				currentTask = URLSession.dataTaskWithCachedRequest(request) { [weak self] data, response, _ -> Void in
 					guard let s = self else { return }
 					if let data = data {
 						s.player = try? AVAudioPlayer(data: data)
@@ -65,7 +65,6 @@ class Player: NSObject, AVAudioPlayerDelegate {
 					
 					if s.shouldAutoplay {
 						s.player?.play()
-						// ??? PlayerDidChangeState post
 					}
 				}
 				currentTask!.resume()
@@ -82,7 +81,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
             shouldAutoplay = true
         } else {
             player?.play()
-        }
+		}
     }
     
     var rate: Float {
@@ -100,7 +99,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
     
 	var isPlaying: Bool {
-		return player?.playing ?? false
+		return player?.isPlaying ?? false
     }
     
     func togglePlaying() {
@@ -110,7 +109,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 		}
     }
     
-    dynamic var currentTime: NSTimeInterval {
+    dynamic var currentTime: TimeInterval {
         get {
 			return player?.currentTime ?? 0
         }
@@ -120,7 +119,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
         }
     }
     
-    var duration: NSTimeInterval {
+    var duration: TimeInterval {
 		return player?.duration ?? DBL_MAX
     }
 	

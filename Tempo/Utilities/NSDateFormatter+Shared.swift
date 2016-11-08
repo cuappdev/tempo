@@ -8,28 +8,28 @@
 
 import Foundation
 
-extension NSDateFormatter {
+extension DateFormatter {
 	
-	@nonobjc static let parsingDateFormatter: NSDateFormatter = {
+	@nonobjc static let parsingDateFormatter: DateFormatter = {
 		$0.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"
-		$0.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-		$0.locale = NSLocale(localeIdentifier: "en_US")
+		$0.timeZone = TimeZone(secondsFromGMT: 0)
+		$0.locale = Locale(identifier: "en_US")
 		return $0
-	}(NSDateFormatter())
+	}(DateFormatter())
 	
-	@nonobjc static let simpleDateFormatter: NSDateFormatter = {
+	@nonobjc static let simpleDateFormatter: DateFormatter = {
 		$0.dateFormat = "M.dd.YY"
 		return $0
-	}(NSDateFormatter())
+	}(DateFormatter())
 	
-	@nonobjc static let yearMonthDayFormatter: NSDateFormatter = {
+	@nonobjc static let yearMonthDayFormatter: DateFormatter = {
 		$0.dateFormat = "yyyy-MM-dd"
-		$0.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		$0.locale = Locale(identifier: "en_US_POSIX")
 		return $0
-	}(NSDateFormatter())
+	}(DateFormatter())
 	
-	@nonobjc static let monthFormatter: NSDateFormatter = {
+	@nonobjc static let monthFormatter: DateFormatter = {
 		$0.dateFormat = "MMM"
 		return $0
-	}(NSDateFormatter())
+	}(DateFormatter())
 }

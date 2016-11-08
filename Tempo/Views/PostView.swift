@@ -7,31 +7,30 @@
 //
 
 import UIKit
-import Haneke
 import MediaPlayer
+import Haneke
 
 @objc protocol PostViewDelegate {
-	optional func didTapAddButtonForPostView(postView: PostView)
-	optional func didTapImageForPostView(postView: PostView)
+	@objc optional func didTapAddButtonForPostView(postView: PostView)
+	@objc optional func didTapImageForPostView(postView: PostView)
 }
 
 enum ViewType: Int {
-    case Feed
-	case History
-	case Liked
+    case feed
+	case history
+	case liked
 }
 
 enum SavedSongStatus: Int {
-	
-	case NotSaved
-	case Saved
-	case NotSavedToPlaylist
-	case SavedToPlaylist
+	case notSaved
+	case saved
+	case notSavedToPlaylist
+	case savedToPlaylist
 }
 
 class PostView: UIView, UIGestureRecognizerDelegate {
-	private var tapGestureRecognizer: UITapGestureRecognizer?
-	private var longPressGestureRecognizer: UILongPressGestureRecognizer?
+	fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
+	fileprivate var longPressGestureRecognizer: UILongPressGestureRecognizer?
     @IBOutlet var profileNameLabel: UILabel?
     @IBOutlet var avatarImageView: UIImageView?
     @IBOutlet var descriptionLabel: UILabel?
@@ -41,14 +40,15 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var likedButton: UIButton?
     let fillColor = UIColor.tempoDarkGray
  
-    var type: ViewType = .Feed
-	var songStatus: SavedSongStatus = .NotSaved
+    var type: ViewType = .feed
+	var songStatus: SavedSongStatus = .notSaved
 	var postViewDelegate: PostViewDelegate!
 	var playerDelegate: PlayerDelegate!
-    private var updateTimer: NSTimer?
+    private var updateTimer: Timer?
 	private var playNotificationHandler: NSObjectProtocol?
 	private var likedNotificationHandler: NSObjectProtocol?
 	private var didFinishPlayingNotificationHandler: NSObjectProtocol?
+
 	var playerController: PlayerTableViewController?
 	var playerCellRef: PlayerCellView?
 	var expandedPlayerRef: ExpandedPlayerView?
@@ -56,10 +56,10 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     var post: Post? {
         didSet {
             if let playHandler = playNotificationHandler {
-                NSNotificationCenter.defaultCenter().removeObserver(playHandler)
+                NotificationCenter.default.removeObserver(playHandler)
             }
 			if let likedHandler = likedNotificationHandler {
-				NSNotificationCenter.defaultCenter().removeObserver(likedHandler)
+				NotificationCenter.default.removeObserver(likedHandler)
 			}
 
             setUpTimer()
@@ -67,42 +67,42 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             // update stuff
             if let post = post {
                 switch type {
-                case .Feed:
+                case .feed:
 					avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
                     profileNameLabel?.text = post.user.name
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
-					likedButton?.setBackgroundImage(UIImage(named: imageName), forState: .Normal)
+					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
 					dateLabel?.text = post.relativeDate()
-				case .History:
+				case .history:
 					avatarImageView?.layer.cornerRadius = 7
 					profileNameLabel?.text = post.song.title
 					descriptionLabel?.text = post.song.artist
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
-					likedButton?.setBackgroundImage(UIImage(named: imageName), forState: .Normal)
-				case .Liked:
+					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
+				case .liked:
 					avatarImageView?.layer.cornerRadius = 7
 					profileNameLabel?.text = post.song.title
 					descriptionLabel?.text = post.song.artist
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
-					likedButton!.hidden = true
-					dateLabel?.hidden = true
+					likedButton!.isHidden = true
+					dateLabel?.isHidden = true
 				}
 				
 				switch type {
-				case .Feed:
+				case .feed:
 					avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
-				case .History, .Liked:
-					avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL ?? NSURL())
+				case .history, .liked:
+					avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL ?? URL(fileURLWithPath: ""))
 				}
                 
                 //! TODO: Write something that makes this nice and relative
                 //! that updates every minute
 				
-				if (User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] != nil) ?? false {
-					songStatus = .Saved
+				if User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] != nil {
+					songStatus = .saved
 				}
 				
             }
@@ -117,23 +117,23 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	}
 	
 	func updateDateLabel() {
-		self.dateLabel!.hidden = true
+		self.dateLabel!.isHidden = true
 		SpotifyController.sharedController.spotifyIsAvailable { success in
 			if success {
-				self.dateLabel!.hidden = false
+				self.dateLabel!.isHidden = false
 			}
 		}
 	}
 	
-    private func setUpTimer() {
+    fileprivate func setUpTimer() {
         if updateTimer == nil && post?.player.isPlaying ?? false {
             // 60 fps
-            updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
+            updateTimer = Timer(timeInterval: 1.0 / 60.0,
                 target: self, selector: #selector(timerFired(_:)),
                 userInfo: nil,
                 repeats: true)
 
-            NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
+            RunLoop.current.add(updateTimer!, forMode: RunLoopMode.commonModes)
         } else if !(post?.player.isPlaying ?? false) {
             updateTimer?.invalidate()
             updateTimer = nil
@@ -159,11 +159,11 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 		}
 		
         avatarImageView?.clipsToBounds = true
-        userInteractionEnabled = true
-        avatarImageView?.userInteractionEnabled = true
-        profileNameLabel?.userInteractionEnabled = true
+        isUserInteractionEnabled = true
+        avatarImageView?.isUserInteractionEnabled = true
+        profileNameLabel?.isUserInteractionEnabled = true
         
-        layer.borderColor = UIColor.tempoDarkGray.CGColor
+        layer.borderColor = UIColor.tempoDarkGray.cgColor
         layer.borderWidth = 0.7
     }
     
@@ -175,7 +175,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    dynamic private func timerFired(timer: NSTimer) {
+    dynamic fileprivate func timerFired(_ timer: Timer) {
         if post?.player.isPlaying ?? false {
             setNeedsDisplay()
         }
@@ -197,32 +197,32 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         let avatarLayer = avatarImageView?.layer
         if let layer = avatarLayer {
             layer.transform = CATransform3DIdentity
-            layer.removeAnimationForKey("transform.rotation")
+            layer.removeAnimation(forKey: "transform.rotation")
         }
 
         if let post = post {
             let color: UIColor
 			let font = UIFont(name: "Avenir-Medium", size: 16)!
-            let duration = NSTimeInterval(0.3)
+            let duration = TimeInterval(0.3)
             if post.player.isPlaying {
                 color = UIColor.tempoLightRed
-				if type == .Feed {
+				if type == .feed {
 					if let layer = avatarLayer {
 						let animation = CABasicAnimation(keyPath: "transform.rotation")
 						animation.fromValue = 0
 						animation.duration = 3 * M_PI
 						animation.toValue = 2 * M_PI
 						animation.repeatCount = FLT_MAX
-						layer.addAnimation(animation, forKey: "transform.rotation")
+						layer.add(animation, forKey: "transform.rotation")
 					}
 				}
             } else {
-                color = UIColor.whiteColor()
+                color = UIColor.white
             }
 			
 			guard let label = profileNameLabel else { return }
             if !label.textColor.isEqual(color) {
-                UIView.transitionWithView(label, duration: duration, options: .TransitionCrossDissolve, animations: {
+                UIView.transition(with: label, duration: duration, options: .transitionCrossDissolve, animations: {
                     label.textColor = color
 					label.font = font
                     }, completion: { _ in
@@ -233,33 +233,33 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
 		var fill = 0
 		if let post = post {
-			if type == .Feed {
+			if type == .feed {
 				fill = post.player.wasPlayed ? 1 : 0
 			} else {
 				fill = post.player.isPlaying ? 1 : 0
 			 }
 		}
-        super.drawRect(rect)
+        super.draw(rect)
+
         fillColor.setFill()
-        CGContextFillRect(UIGraphicsGetCurrentContext(),
-            CGRect(x: 0, y: 0, width: bounds.width * CGFloat(fill), height: bounds.height))
+        UIGraphicsGetCurrentContext()?.fill(CGRect(x: 0, y: 0, width: bounds.width * CGFloat(fill), height: bounds.height))
     }
     
-	func postViewPressed(sender: UIGestureRecognizer) {
+	func postViewPressed(_ sender: UIGestureRecognizer) {
 		guard let post = post else { return }
 		
-		if sender.isKindOfClass(UITapGestureRecognizer) {
-			let tapPoint = sender.locationInView(self)
-			let hitView = hitTest(tapPoint, withEvent: nil)
+		if sender is UITapGestureRecognizer {
+			let tapPoint = sender.location(in: self)
+			let hitView = hitTest(tapPoint, with: nil)
 			if hitView == likedButton {
 				post.toggleLike()
 				updateLikedStatus()
 				playerDelegate.didToggleLike!()
 			} else if hitView == avatarImageView {
-				postViewDelegate?.didTapImageForPostView?(self)
+				postViewDelegate?.didTapImageForPostView?(postView: self)
 			}
 		}
 	}
@@ -268,7 +268,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 		if let post = post {
 			let name = post.isLiked ? "filled-heart" : "empty-heart"
 			likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
-			likedButton?.setBackgroundImage(UIImage(named: name), forState: .Normal)
+			likedButton?.setBackgroundImage(UIImage(named: name), for: .normal)
 		}
 	}
 }

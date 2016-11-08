@@ -10,57 +10,57 @@ import UIKit
 
 class HipStickyHeaderFlowLayout: UICollectionViewFlowLayout {
 	
-	override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+	override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
 		
-		var layoutAttributes = super.layoutAttributesForElementsInRect(rect)!
+		var layoutAttributes = super.layoutAttributesForElements(in: rect)!
 		let contentOffset = collectionView!.contentOffset
 		
 		let missingSections = NSMutableIndexSet()
 		
 		for attribute in layoutAttributes {
-			if attribute.representedElementCategory == .Cell {
-				missingSections.addIndex(attribute.indexPath.section)
+			if attribute.representedElementCategory == .cell {
+				missingSections.add(attribute.indexPath.section)
 			}
 		}
 		
 		for attribute in layoutAttributes {
 			if let kind = attribute.representedElementKind {
 				if kind == UICollectionElementKindSectionHeader {
-					missingSections.removeIndex(attribute.indexPath.section)
+					missingSections.remove(attribute.indexPath.section)
 				}
 			}
 		}
 		
-		missingSections.enumerateIndexesUsingBlock { idx, stop in
-			let indexPath = NSIndexPath(forItem: 0, inSection: idx)
-			if let attribute = self.layoutAttributesForSupplementaryViewOfKind(UICollectionElementKindSectionHeader, atIndexPath: indexPath) {
+		missingSections.enumerate({ idx, stop in
+			let indexPath = IndexPath(item: 0, section: idx)
+			if let attribute = self.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: indexPath) {
 				layoutAttributes.append(attribute)
 			}
-		}
+		})
 		
 		for attribute in layoutAttributes {
 			if let kind = attribute.representedElementKind {
 				if kind == UICollectionElementKindSectionHeader {
 					let section = attribute.indexPath.section
-					let numberOfItemsInSection = collectionView!.numberOfItemsInSection(section)
+					let numberOfItemsInSection = collectionView!.numberOfItems(inSection: section)
 					
-					let firstCellIndexPath = NSIndexPath(forItem: 0, inSection: section)
-					let lastCellIndexPath = NSIndexPath(forItem: max(0, (numberOfItemsInSection - 1)), inSection: section)
+					let firstCellIndexPath = IndexPath(item: 0, section: section)
+					let lastCellIndexPath = IndexPath(item: max(0, (numberOfItemsInSection - 1)), section: section)
 					
-					let (firstCellAttributes, lastCellAttributes): (UICollectionViewLayoutAttributes!, UICollectionViewLayoutAttributes!) = {
-						if self.collectionView!.numberOfItemsInSection(section) > 0 {
+					let (firstCellAttributes, lastCellAttributes): (UICollectionViewLayoutAttributes?, UICollectionViewLayoutAttributes?) = {
+						if self.collectionView!.numberOfItems(inSection: section) > 0 {
 							return (
-								layoutAttributesForItemAtIndexPath(firstCellIndexPath),
-								layoutAttributesForItemAtIndexPath(lastCellIndexPath))
+								layoutAttributesForItem(at: firstCellIndexPath),
+								layoutAttributesForItem(at: lastCellIndexPath))
 						} else {
 							return (
-								layoutAttributesForSupplementaryViewOfKind(UICollectionElementKindSectionHeader, atIndexPath: firstCellIndexPath),
-								layoutAttributesForSupplementaryViewOfKind(UICollectionElementKindSectionFooter, atIndexPath: lastCellIndexPath))
+								layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: firstCellIndexPath),
+								layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionFooter, at: lastCellIndexPath))
 						}
 					}()
 					var origin = attribute.frame.origin
 					
-					origin.y = min(max(contentOffset.y, CGRectGetMinY(firstCellAttributes.frame)), CGRectGetMaxY(lastCellAttributes.frame))
+					origin.y = min(max(contentOffset.y, (firstCellAttributes?.frame.minY)!), (lastCellAttributes?.frame.maxY)!)
 					
 					attribute.zIndex = 1024
 					attribute.frame = CGRect(origin: origin, size: attribute.frame.size)
@@ -71,7 +71,7 @@ class HipStickyHeaderFlowLayout: UICollectionViewFlowLayout {
 		return layoutAttributes
 	}
 	
-	override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+	override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
 		return true
 	}
 	

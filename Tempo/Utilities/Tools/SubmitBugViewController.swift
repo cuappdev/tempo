@@ -39,26 +39,26 @@ class SubmitBugViewController: UIViewController {
 		super.viewDidLoad()
 		
 		//set background color for view
-		view.backgroundColor = UIColor.whiteColor()
+		view.backgroundColor = UIColor.white
 		
 		//create title label in top center of view controller
-		let titleLabel = UILabel(frame: CGRectMake(0, 20, view.frame.width, 30))
+		let titleLabel = UILabel(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 30))
 		titleLabel.text = "Submit Bug Report"
-		titleLabel.textAlignment = .Center
+		titleLabel.textAlignment = .center
 		view.addSubview(titleLabel)
 		
 		//create cancel button to dismiss but submittion form
-		let cancelButton = UIButton(frame: CGRectMake(0, 20, 80, 30))
-		cancelButton.setTitle("Cancel", forState: .Normal)
-		cancelButton.setTitleColor(UIColor(red: 0, green:122.0/255.0, blue: 1, alpha: 1), forState: .Normal)
-		cancelButton.addTarget(self, action: #selector(cancel), forControlEvents: .TouchDown)
+		let cancelButton = UIButton(frame: CGRect(x: 0, y: 20, width: 80, height: 30))
+		cancelButton.setTitle("Cancel", for: UIControlState())
+		cancelButton.setTitleColor(UIColor(red: 0, green:122.0/255.0, blue: 1, alpha: 1), for: UIControlState())
+		cancelButton.addTarget(self, action: #selector(cancel), for: .touchDown)
 		view.addSubview(cancelButton)
 		
 		//create submit button to send bug report to slack
-		let submitButton = UIButton(frame: CGRectMake(view.frame.width - 80 , 20, 80, 30))
-		submitButton.setTitle("Submit", forState: .Normal)
-		submitButton.setTitleColor(UIColor(red: 0, green: 122.0/255.0, blue: 1, alpha: 1), forState: .Normal)
-		submitButton.addTarget(self, action: #selector(submitBug), forControlEvents: .TouchDown)
+		let submitButton = UIButton(frame: CGRect(x: view.frame.width - 80 , y: 20, width: 80, height: 30))
+		submitButton.setTitle("Submit", for: UIControlState())
+		submitButton.setTitleColor(UIColor(red: 0, green: 122.0/255.0, blue: 1, alpha: 1), for: UIControlState())
+		submitButton.addTarget(self, action: #selector(submitBug), for: .touchDown)
 		view.addSubview(submitButton)
 	}
 
@@ -66,10 +66,10 @@ class SubmitBugViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 	
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         //create text view for entering message
-        textView = UITextView(frame: CGRectMake(0, 50, view.frame.width, 250))
-        textView.font = UIFont.systemFontOfSize(16)
+        textView = UITextView(frame: CGRect(x: 0, y: 50, width: view.frame.width, height: 250))
+        textView.font = UIFont.systemFont(ofSize: 16)
         view.addSubview(textView)
         
         //display keyboard as soon as view appears
@@ -91,28 +91,28 @@ class SubmitBugViewController: UIViewController {
         print("++++++++Submitting Text Message To Slack+++++++++++++")
         
         //create parameters for url request
-        let requestURL = NSURL(string: "https://slack.com/api/chat.postMessage?")
+        let requestURL = URL(string: "https://slack.com/api/chat.postMessage?")
         
         //create post request
-        let request = NSMutableURLRequest(URL: requestURL!)
-        request.HTTPMethod = "POST"
+        var request = URLRequest(url: requestURL!)
+        request.httpMethod = "POST"
         
         //sign parameters for url request based on slack api
         let parameters = "token=\(token)&channel=\(channel)&text=\(textView.text!)&username=\(username)&pretty=1"
-        request.HTTPBody = parameters.dataUsingEncoding(NSUTF8StringEncoding)
+        request.httpBody = parameters.data(using: String.Encoding.utf8)
         
         //asynchronously send url request through NSURLSession
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
             if error == nil {
                 print("ERROR \(error)")
             } else {
-                print("RESPONSE \(String(data: data!, encoding: NSUTF8StringEncoding))")
+                print("RESPONSE \(String(data: data!, encoding: String.Encoding.utf8))")
             }
-        }
+        }) 
         task.resume()
         
         //after request is sent we can dismiss view controller
-        dismissViewControllerAnimated(true) {
+        dismiss(animated: true) {
             self.toolsController.assignFirstResponder()
         }
     }
@@ -128,21 +128,21 @@ class SubmitBugViewController: UIViewController {
         ]
         
         //represent screenshot as jpeg image data
-        let imageData =  UIImageJPEGRepresentation(screenshot!, 0.7) as NSData!
+        let imageData =  UIImageJPEGRepresentation(screenshot!, 0.7) as Data!
     
         //create multipart/form-data request with slack api url, parameters, and the image data to be uploaded
-        makeMultipartFormDataRequest(NSURL(string: "https://slack.com/api/files.upload?")!, parameters: parameters, data: imageData)
+        makeMultipartFormDataRequest(URL(string: "https://slack.com/api/files.upload?")!, parameters: parameters, data: imageData!)
         
         //after request is sent we can dismiss view controller
-        dismissViewControllerAnimated(true) {
+        dismiss(animated: true) {
             self.toolsController.assignFirstResponder()
         }
     }
     
-    func makeMultipartFormDataRequest (baseURL: NSURL, parameters: [String:String], data: NSData) {
+    func makeMultipartFormDataRequest (_ baseURL: URL, parameters: [String:String], data: Data) {
         // create url request to send
-        let mutableURLRequest = NSMutableURLRequest(URL: baseURL)
-        mutableURLRequest.HTTPMethod = "POST"
+        var mutableURLRequest = URLRequest(url: baseURL)
+        mutableURLRequest.httpMethod = "POST"
         let boundaryConstant = "myRandomBoundary123"
         let contentType = "multipart/form-data;boundary="+boundaryConstant
         mutableURLRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
@@ -151,36 +151,36 @@ class SubmitBugViewController: UIViewController {
         let uploadData = NSMutableData()
     
         // add image
-        uploadData.appendData("\r\n--\(boundaryConstant)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        uploadData.appendData("Content-Disposition: form-data; name=\"file\"; filename=\"app_screenshot.jpg\"\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        uploadData.appendData("Content-Type: image/jpeg\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        uploadData.appendData(data)
+        uploadData.append("\r\n--\(boundaryConstant)\r\n".data(using: String.Encoding.utf8)!)
+        uploadData.append("Content-Disposition: form-data; name=\"file\"; filename=\"app_screenshot.jpg\"\r\n".data(using: String.Encoding.utf8)!)
+        uploadData.append("Content-Type: image/jpeg\r\n\r\n".data(using: String.Encoding.utf8)!)
+        uploadData.append(data)
     
         // add parameters
         for (key, value) in parameters {
-        uploadData.appendData("\r\n--\(boundaryConstant)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        uploadData.appendData("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n\(value)".dataUsingEncoding(NSUTF8StringEncoding)!)
+        uploadData.append("\r\n--\(boundaryConstant)\r\n".data(using: String.Encoding.utf8)!)
+        uploadData.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n\(value)".data(using: String.Encoding.utf8)!)
         }
-        uploadData.appendData("\r\n--\(boundaryConstant)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        uploadData.append("\r\n--\(boundaryConstant)--\r\n".data(using: String.Encoding.utf8)!)
         
         //set http body for request
-        mutableURLRequest.HTTPBody = uploadData
+        mutableURLRequest.httpBody = uploadData as Data
         
         //asynchronously send url request through NSURLSession
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(mutableURLRequest) { data, _, error in
+        let task = URLSession.shared.dataTask(with: mutableURLRequest, completionHandler: { data, _, error in
             if error == nil {
                 print("ERROR \(error)")
             } else {
-                print("RESPONSE \(String(data: data!, encoding: NSUTF8StringEncoding))")
+                print("RESPONSE \(String(data: data!, encoding: String.Encoding.utf8))")
             }
-        }
+        }) 
         task.resume()
     }
 
     func cancel() {
         //cancel button was pressed, remove screenshot submission form from view hierarchy
         textView.endEditing(true)
-        dismissViewControllerAnimated(true) {
+        dismiss(animated: true) {
             self.toolsController.assignFirstResponder()
         }
     }

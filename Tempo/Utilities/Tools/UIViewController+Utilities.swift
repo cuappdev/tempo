@@ -13,18 +13,18 @@ extension UIViewController {
 	
 	func addHamburgerMenu() {
 		
-		let hamburgerIconView = HamburgerIconView(frame: CGRectMake(0, 0, 30, 30), color: UIColor.whiteColor().colorWithAlphaComponent(0.85), lineWidth: 2, iconWidthRatio: 0.50)
-		hamburgerIconView.addTarget(self, action: #selector(UIViewController.toggleHamburger(_:)), forControlEvents: .TouchUpInside)
+		let hamburgerIconView = HamburgerIconView(frame: CGRect(x: 0, y: 0, width: 30, height: 30), color: UIColor.white.withAlphaComponent(0.85), lineWidth: 2, iconWidthRatio: 0.50)
+		hamburgerIconView.addTarget(self, action: #selector(UIViewController.toggleHamburger(_:)), for: .touchUpInside)
 		
 		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerIconView)
 	}
 	
-	func toggleHamburger(hamburgerIconView: HamburgerIconView) {
+	func toggleHamburger(_ hamburgerIconView: HamburgerIconView) {
 		revealViewController().revealToggle(hamburgerIconView)
 	}
 	
 	// If not connected to internet return true and display banner if animated
-	func notConnected(animated: Bool) -> Bool {
+	func notConnected(_ animated: Bool) -> Bool {
 		if !API.sharedAPI.isConnected {
 			if animated { Banner.internetNotConnected(self) }
 			return true
@@ -40,7 +40,7 @@ extension UIViewController {
 		transition.duration = 0.3
 		transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
 		transition.type = kCATransitionFade
-		view.window!.layer.addAnimation(transition, forKey: nil)
-		dismissViewControllerAnimated(false, completion: nil)
+		view.window!.layer.add(transition, forKey: nil)
+		dismiss(animated: false, completion: nil)
 	}
 }

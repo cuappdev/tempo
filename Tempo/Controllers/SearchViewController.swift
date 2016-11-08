@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 protocol SongSearchDelegate: class {
-	func didSelectSong(song: Song)
+	func didSelectSong(_ song: Song)
 }
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, PlayerDelegate {
@@ -43,16 +43,16 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		view.backgroundColor = UIColor.tempoDarkGray
 		tableView.rowHeight = 84
 		tableView.showsVerticalScrollIndicator = false
-		tableView.registerNib(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
+		tableView.register(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
 		
 		searchBar.delegate = self
 		playerNav = navigationController as! PlayerNavigationController
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 	}
 	
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
 		searchBarContainer.addSubview(searchBar)
@@ -62,33 +62,33 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		searchBar.layer.anchorPoint = CGPoint(x: 0.5, y: 0)
 	}
 	
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		view.layoutIfNeeded()
 		tableView.tableFooterView = UIView()
 		
-		let textFieldInsideSearchBar = searchBar.valueForKey("_searchField") as? UITextField
-		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+		let textFieldInsideSearchBar = searchBar.value(forKey: "_searchField") as? UITextField
+		textFieldInsideSearchBar?.textColor = UIColor.white
 		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
 		textFieldInsideSearchBar?.font = UIFont(name: "Avenir-Book", size: 14)
-		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.valueForKey("placeholderLabel") as? UILabel
+		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.value(forKey: "placeholderLabel") as? UILabel
 		textFieldInsideSearchBarLabel?.textColor = UIColor.tempoUltraLightRed
 		
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
+		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
 			self.searchBar.layer.transform = CATransform3DIdentity
 		}, completion:nil)
 		
 		searchBar.becomeFirstResponder()
-		searchBar.setImage(UIImage(named: "search-icon"), forSearchBarIcon: .Search, state: .Normal)
-		searchBar.setImage(UIImage(named: "clear-search-icon"), forSearchBarIcon: .Clear, state: .Normal)
+		searchBar.setImage(UIImage(named: "search-icon"), for: .search, state: UIControlState())
+		searchBar.setImage(UIImage(named: "clear-search-icon"), for: .clear, state: UIControlState())
 		
 		if notConnected(true) {
-			searchBar.hidden = true
-			searchBar.userInteractionEnabled = false
+			searchBar.isHidden = true
+			searchBar.isUserInteractionEnabled = false
 		} else {
-			searchBar.hidden = false
-			searchBar.userInteractionEnabled = true
+			searchBar.isHidden = false
+			searchBar.isUserInteractionEnabled = true
 			searchBar.becomeFirstResponder()
 		}
 	}
@@ -104,41 +104,41 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			playerNav.resetPlayerCells()
 		}
 		clearResults()
-		navigationController?.popViewControllerAnimated(false)
+		let _ = navigationController?.popViewController(animated: false)
 	}
 	
 	deinit {
-		NSNotificationCenter.defaultCenter().removeObserver(self)
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	// MARK: - UITableViewDataSource
 	
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results.count
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("SongSearchTableViewCell", forIndexPath: indexPath) as! SongSearchTableViewCell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "SongSearchTableViewCell", for: indexPath) as! SongSearchTableViewCell
 		let post = results[indexPath.row]
 		cell.postView.post = post
 		cell.postView.post?.player.prepareToPlay()
 		cell.postView.avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL!)
-		cell.shareButton.hidden = true
+		cell.shareButton.isHidden = true
 		if (selfPostIds.contains(post.song.spotifyID)) {
-			cell.shareButton.setTitle("SHARED", forState: .Normal)
-			cell.shareButton.backgroundColor = UIColor.clearColor()
-			cell.shareButton.removeTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
+			cell.shareButton.setTitle("SHARED", for: UIControlState())
+			cell.shareButton.backgroundColor = UIColor.clear
+			cell.shareButton.removeTarget(self, action: #selector(SearchViewController.submitSong), for: .touchUpInside)
 		} else {
-			cell.shareButton.setTitle("SHARE", forState: .Normal)
+			cell.shareButton.setTitle("SHARE", for: UIControlState())
 			cell.shareButton.backgroundColor = UIColor.tempoLightRed
-			cell.shareButton.addTarget(self, action: #selector(SearchViewController.submitSong), forControlEvents: .TouchUpInside)
+			cell.shareButton.addTarget(self, action: #selector(SearchViewController.submitSong), for: .touchUpInside)
 		}
 		if activePlayer != nil {
 			if activePlayer == post.player {
 				cell.postView.profileNameLabel?.textColor = UIColor.tempoLightRed
-				cell.shareButton.hidden = false
+				cell.shareButton.isHidden = false
 			} else {
-				cell.postView.profileNameLabel?.textColor = UIColor.whiteColor()
+				cell.postView.profileNameLabel?.textColor = UIColor.white
 			}
 		}
 		
@@ -147,16 +147,16 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	// MARK: - UITableViewDelegate
 	
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		tableView.deselectRowAtIndexPath(indexPath, animated: true)
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
 		
 		if selectedCell != nil {
-			selectedCell?.shareButton.hidden = true
+			selectedCell?.shareButton.isHidden = true
 		}
 		
-		let cell = tableView.cellForRowAtIndexPath(indexPath) as! SongSearchTableViewCell
+		let cell = tableView.cellForRow(at: indexPath) as! SongSearchTableViewCell
 		selectedCell = cell
-		cell.shareButton.hidden = false
+		cell.shareButton.isHidden = false
 		
 		let post = results[indexPath.row]
 		selectSong(post.song)
@@ -168,7 +168,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		activePlayer = cell.postView.post?.player
 		activePlayer?.delegate = self
-		didTogglePlaying(true)
+		didTogglePlaying(animate: true)
 		playerNav.playerCell.delegate = self
 		playerNav.playerCell.postsLikable = false
 		playerNav.expandedCell.postsLikable = false
@@ -179,7 +179,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
     // MARK: - General Request Methods
 	
-    func update(searchText: String) {
+    func update(_ searchText: String) {
 		lastRequest?.cancel()
 		searchText.characters.count != 0 ? initiateRequest(searchText) : clearResults()
     }
@@ -193,7 +193,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	// MARK: - Song Request Methods
 	
-	func selectSong(song: Song) {
+	func selectSong(_ song: Song) {
 		selectedSong = song
 		searchBar.resignFirstResponder()
 	}
@@ -203,16 +203,16 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		dismiss()
 	}
 	
-	func initiateRequest(term: String) {
-		let searchUrl = kSearchBase + term.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.alphanumericCharacterSet())!
-		lastRequest = Alamofire.request(.GET, searchUrl).responseJSON { response in
+	func initiateRequest(_ term: String) {
+		let searchUrl = kSearchBase + term.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics)!
+		lastRequest = Alamofire.request(searchUrl).responseJSON { response in
 			if let value = response.result.value as? [String: AnyObject] {
 				self.receivedResponse(value)
 			}
 		}
 	}
 	
-	func receivedResponse(response: [String: AnyObject]) {
+	func receivedResponse(_ response: [String: AnyObject]) {
 		let songs = response["tracks"] as! [String: AnyObject]
 		let items = songs["items"] as! [[String: AnyObject]]
 		
@@ -226,11 +226,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	// MARK: - UISearchBarDelegete
 	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		update(searchText)
 	}
 	
-	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
 	}
 	
@@ -247,23 +247,23 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	// MARK: - Notifications
 	
-	func keyboardWillShow(notification: NSNotification) {
-		let rect = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+	func keyboardWillShow(_ notification: Notification) {
+		let rect = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
 		let duration = (notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
 		
-		UIView.animateWithDuration(duration) {
+		UIView.animate(withDuration: duration, animations: {
 			self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: rect.height, right: 0)
 			self.view.layoutIfNeeded()
-		}
+		}) 
 	}
 	
-	func keyboardWillHide(notification: NSNotification) {
+	func keyboardWillHide(_ notification: Notification) {
 		let duration = (notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
 		
-		UIView.animateWithDuration(duration) {
+		UIView.animate(withDuration: duration, animations: {
 			self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.searchBar.frame.height, right: 0)
 			self.view.layoutIfNeeded()
-		}
+		}) 
 	}
 	
 }

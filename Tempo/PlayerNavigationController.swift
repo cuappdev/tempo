@@ -27,27 +27,27 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	var currentPost: Post? {
 		didSet {
 			if let newPost = currentPost {
-				updatePlayerCells(newPost)
+				updatePlayerCells(newPost: newPost)
 			}
 		}
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		let playerFrame = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height - frameHeight, UIScreen.mainScreen().bounds.width, frameHeight))
-		playerFrame.backgroundColor = UIColor.redColor()
+		let playerFrame = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - frameHeight, width: UIScreen.main.bounds.width, height: frameHeight))
+		playerFrame.backgroundColor = .red
 		view.addSubview(playerFrame)
-		playerCell = NSBundle.mainBundle().loadNibNamed("PlayerCellView", owner: self, options: nil).first as? PlayerCellView
-		playerCell?.setup(self)
-		playerCell?.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, frameHeight)
-		playerCell?.userInteractionEnabled = false
+		playerCell = Bundle.main.loadNibNamed("PlayerCellView", owner: self, options: nil)?.first as? PlayerCellView
+		playerCell?.setup(parent: self)
+		playerCell?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: frameHeight)
+		playerCell?.isUserInteractionEnabled = false
 		playerFrame.addSubview(playerCell!)
 		// Do any additional setup after loading the view.
 		
 		// Setup expandedCell
-		expandedCell = NSBundle.mainBundle().loadNibNamed("ExpandedPlayerView", owner: self, options: nil).first as? ExpandedPlayerView
-		expandedCell?.setup(self)
-		expandedCell?.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height, UIScreen.mainScreen().bounds.width, expandedHeight)
+		expandedCell = Bundle.main.loadNibNamed("ExpandedPlayerView", owner: self, options: nil)?.first as? ExpandedPlayerView
+		expandedCell?.setup(parent: self)
+		expandedCell?.frame = CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: expandedHeight)
 		view.addSubview(expandedCell!)
 	}
 	
@@ -57,15 +57,15 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	}
 	
 	func updatePlayerCells(newPost: Post) {
-		playerCell.updateCellInfo(newPost)
-		expandedCell.updateCellInfo(newPost)
+		playerCell.updateCellInfo(newPost: newPost)
+		expandedCell.updateCellInfo(newPost: newPost)
 	}
 	
 	func animateExpandedCell(isExpanding: Bool) {
-		UIView.animateWithDuration(0.2) {
+		UIView.animate(withDuration: 0.2) {
 			let loc = isExpanding ? self.expandedHeight : CGFloat(0)
-			UIView.animateWithDuration(0.2, animations: {
-				self.expandedCell.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - loc, UIScreen.mainScreen().bounds.width, self.expandedHeight)
+			UIView.animate(withDuration: 0.2, animations: {
+				self.expandedCell.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - loc, width: UIScreen.main.bounds.width, height: self.expandedHeight)
 				self.expandedCell.layer.opacity = isExpanding ? 1 : 0
 			})
 		}

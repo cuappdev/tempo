@@ -7,19 +7,32 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerTransitioningDelegate {
     
     var user: User = User.currentUser
     
     // Post History Calendar
-    var calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+    var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
 	var posts: [Post] = []
-	var postedDates: [NSDate] = []
+	var postedDates: [Date] = []
 	var postedDays: [Int] = []
 	var postedYearMonthDay: [String] = []
 	var postedLikes: [Int] = []
-	var earliestPostDate: NSDate?
+	var earliestPostDate: Date?
 	var padding: CGFloat = 5
 	var avgLikes: Float = 0
 	
@@ -42,8 +55,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
 		
 		followButton.layer.borderWidth = 1.5
-		followButton.layer.borderColor = UIColor.tempoLightRed.CGColor
-		followButton.backgroundColor = UIColor.clearColor()
+		followButton.layer.borderColor = UIColor.tempoLightRed.cgColor
+		followButton.backgroundColor = UIColor.clear
 		
 		setupUserUI()
 		updateFollowingUI()
@@ -56,25 +69,25 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		layout.minimumInteritemSpacing = 0
 		layout.minimumLineSpacing = 0
 		
-		collectionView.registerClass(HipCalendarCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
-		collectionView.registerClass(HipCalendarDayCollectionViewCell.self, forCellWithReuseIdentifier: "DayCell")
-		collectionView.backgroundColor = UIColor.clearColor()
+		collectionView.register(HipCalendarCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
+		collectionView.register(HipCalendarDayCollectionViewCell.self, forCellWithReuseIdentifier: "DayCell")
+		collectionView.backgroundColor = UIColor.clear
 		collectionView.scrollsToTop = false
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
-			if traitCollection.forceTouchCapability == .Available {
-				registerForPreviewingWithDelegate(self, sourceView: view)
+			if traitCollection.forceTouchCapability == .available {
+				registerForPreviewing(with: self, sourceView: view)
 			}
 		}
 	}
 	
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		nameLabel.hidden = notConnected(true)
-		usernameLabel.hidden = notConnected(false)
-		followButton.hidden = notConnected(false)
+		nameLabel.isHidden = notConnected(true)
+		usernameLabel.isHidden = notConnected(false)
+		followButton.isHidden = notConnected(false)
 	}
 
 	func setupUserUI() {
@@ -113,27 +126,27 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
 		if User.currentUser.username == user.username {
 			title = "My Profile"
-			followButton.setTitle("EDIT", forState: .Normal)
-			followButton.addTarget(self, action: #selector(ProfileViewController.userHandleButtonClicked(_:)), forControlEvents: .TouchUpInside)
+			followButton.setTitle("EDIT", for: UIControlState())
+			followButton.addTarget(self, action: #selector(ProfileViewController.userHandleButtonClicked(_:)), for: .touchUpInside)
 		} else {
 			title = "Profile"
-			followButton.hidden = true
-			followButton.addTarget(self, action: #selector(followButtonPressed(_:)), forControlEvents: .TouchUpInside)
+			followButton.isHidden = true
+			followButton.addTarget(self, action: #selector(followButtonPressed(_:)), for: .touchUpInside)
 			}
 		
 		API.sharedAPI.fetchUser(user.id) {
 			self.user = $0
 			self.updateFollowingUI()
-			self.followButton.hidden = false
-			UIView.animateWithDuration(0.25) {
+			self.followButton.isHidden = false
+			UIView.animate(withDuration: 0.25, animations: {
 				self.followButton.alpha = 1
-			}
+			}) 
 		}
 	}
 	
     // <------------------------FOLLOW BUTTONS------------------------>
 	
-	@IBAction func followButtonPressed(sender: UIButton) {
+	@IBAction func followButtonPressed(_ sender: UIButton) {
 		user.isFollowing = !user.isFollowing
 		User.currentUser.followingCount += user.isFollowing ? 1 : -1
 		user.followersCount += user.isFollowing ? 1 : -1
@@ -143,44 +156,44 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	
 	func updateFollowingUI() {
 		if User.currentUser.username != user.username {
-			followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", forState: .Normal)
+			followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
 		}
 
 		followingLabel.text = "\(user.followingCount)"
 		followersLabel.text = "\(user.followersCount)"
 	}
 	
-    @IBAction func hipsterCredButtonPressed(sender: UIButton) {
+    @IBAction func hipsterCredButtonPressed(_ sender: UIButton) {
 		// We should display to the user how hipster score is calculated for gamification.
     }
 	
-	@IBAction func followersButtonPressed(sender: UIButton) {
+	@IBAction func followersButtonPressed(_ sender: UIButton) {
 		displayUsers(.Followers)
 	}
 	
-	@IBAction func followingButtonPressed(sender: UIButton) {
+	@IBAction func followingButtonPressed(_ sender: UIButton) {
 		displayUsers(.Following)
 	}
 	
-	private func displayUsers(displayType: DisplayType) {
+	fileprivate func displayUsers(_ displayType: DisplayType) {
 		let followersVC = UsersViewController()
 		followersVC.displayType = displayType
 		followersVC.user = user
-		followersVC.title = String(displayType)
+		followersVC.title = String(describing: displayType)
 		navigationController?.pushViewController(followersVC, animated: true)
 	}
 	
-	@IBAction func userHandleButtonClicked(sender: UIButton) {
-		let editAlert = UIAlertController(title: "Edit Username", message: "This is how you appear to other users.", preferredStyle: .Alert)
-		editAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-		editAlert.addTextFieldWithConfigurationHandler { textField in
+	@IBAction func userHandleButtonClicked(_ sender: UIButton) {
+		let editAlert = UIAlertController(title: "Edit Username", message: "This is how you appear to other users.", preferredStyle: .alert)
+		editAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		editAlert.addTextField { textField in
 			textField.placeholder = "New username"
-			textField.textAlignment = .Center
+			textField.textAlignment = .center
 		}
-		editAlert.addAction(UIAlertAction(title: "Save", style: .Default) { _ in
+		editAlert.addAction(UIAlertAction(title: "Save", style: .default) { _ in
 			let newUsername = editAlert.textFields!.first!.text!
-			let charSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_").invertedSet
-			let invalidChars = newUsername.rangeOfCharacterFromSet(charSet)
+			let charSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_").inverted
+			let invalidChars = newUsername.rangeOfCharacter(from: charSet)
 			
 			if newUsername == "" {
 				self.showErrorAlert("Oh no!", message: "Username must have at least one character.", actionTitle: "Try again")
@@ -189,7 +202,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			} else {
 				let oldUsername = User.currentUser.username
 				
-				if newUsername.lowercaseString != oldUsername.lowercaseString {
+				if newUsername.lowercased() != oldUsername.lowercased() {
 					API.sharedAPI.updateCurrentUser(newUsername) { success in
 						if success {
 							self.usernameLabel.text = "@\(User.currentUser.username)"
@@ -201,55 +214,55 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 				}
 			}
 			})
-		presentViewController(editAlert, animated: true, completion: nil)
+		present(editAlert, animated: true, completion: nil)
 	}
 	
-	func showErrorAlert(title: String, message: String, actionTitle: String) {
-		let errorAlert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-		errorAlert.addAction(UIAlertAction(title: actionTitle, style: .Default, handler: nil))
-		presentViewController(errorAlert, animated: true, completion: nil)
+	func showErrorAlert(_ title: String, message: String, actionTitle: String) {
+		let errorAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+		errorAlert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
+		present(errorAlert, animated: true, completion: nil)
 	}
 	
 	// <------------------------POST HISTORY------------------------>
 	
 	// When post history label clicked
-	@IBAction func scrollToTop(sender: UIButton) {
-		collectionView.setContentOffset(CGPointZero, animated: true)
+	@IBAction func scrollToTop(_ sender: UIButton) {
+		collectionView.setContentOffset(CGPoint.zero, animated: true)
 	}
 	
 	// Helper Methods
-	private func dateForIndexPath(indexPath: NSIndexPath) -> NSDate {
-		let date = NSDate().dateByAddingMonths(-indexPath.section).lastDayOfMonth()
-		let components: NSDateComponents = date.components()
+	fileprivate func dateForIndexPath(_ indexPath: IndexPath) -> Date {
+		let date = Date().dateByAddingMonths(-indexPath.section).lastDayOfMonth()
+		var components: DateComponents = date.components()
 		components.day = date.numDaysInMonth() - indexPath.item
-		return NSDate.dateFromComponents(components)
+		return Date.dateFromComponents(components)
 	}
 	
-	private func determineAlpha(likes: Int) -> CGFloat {
+	fileprivate func determineAlpha(_ likes: Int) -> CGFloat {
 		let ratio = Float(likes) / avgLikes
 		return -0.0311 * CGFloat(pow(ratio, 2)) + 0.2461 * CGFloat(ratio) + 0.4997
 	}
 	
 	// MARK: - UICollectionViewDataSource
 	
-	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let date = dateForIndexPath(indexPath)
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DayCell", forIndexPath: indexPath) as! HipCalendarDayCollectionViewCell
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as! HipCalendarDayCollectionViewCell
 		cell.date = date
-		cell.userInteractionEnabled = true
-		if let index = postedYearMonthDay.indexOf(date.yearMonthDay()) {
+		cell.isUserInteractionEnabled = true
+		if let index = postedYearMonthDay.index(of: date.yearMonthDay()) {
 			let alpha = determineAlpha(postedLikes[index])
-			cell.dayInnerCircleView.backgroundColor = UIColor.tempoLightRed.colorWithAlphaComponent(alpha)
-			cell.userInteractionEnabled = true
+			cell.dayInnerCircleView.backgroundColor = UIColor.tempoLightRed.withAlphaComponent(alpha)
+			cell.isUserInteractionEnabled = true
 		}
 		
 		return cell
 	}
 	
-	func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		if kind == UICollectionElementKindSectionHeader {
 			let firstDayOfMonth = dateForIndexPath(indexPath).firstDayOfMonth()
-			let header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! HipCalendarCollectionReusableView
+			let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as! HipCalendarCollectionReusableView
 			header.firstDayOfMonth = firstDayOfMonth
 			
 			return header
@@ -258,17 +271,17 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		return UICollectionReusableView()
 	}
 	
-	func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-		return earliestPostDate?.firstDayOfMonth().numberOfMonths(NSDate()) ?? 1
+	func numberOfSections(in collectionView: UICollectionView) -> Int {
+		return earliestPostDate?.firstDayOfMonth().numberOfMonths(Date()) ?? 1
 	}
 	
-	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return NSDate().firstDayOfMonth().dateByAddingMonths(-section).numDaysInMonth()
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return Date().firstDayOfMonth().dateByAddingMonths(-section).numDaysInMonth()
 	}
 	
 	// MARK: - UICollectionViewDelegate
 	
-	func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let date = dateForIndexPath(indexPath)
 		
 		// Push to TableView with posted songs and dates
@@ -278,7 +291,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		postHistoryVC.filterPostedDatesToSections(postedDates)
 		postHistoryVC.songLikes = postedLikes
 		
-		if let sectionIndex = postHistoryVC.postedDatesSections.indexOf(date.yearMonthDay()) {
+		if let sectionIndex = postHistoryVC.postedDatesSections.index(of: date.yearMonthDay()) {
 			postHistoryVC.sectionIndex = sectionIndex
 		}
 		
@@ -287,11 +300,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	
 	// MARK: - UICollectionViewDelegateFlowLayout
 	
-	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-		return CGSizeMake(collectionView.frame.width - padding * 2, 30)
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+		return CGSize(width: collectionView.frame.width - padding * 2, height: 30)
 	}
 	
-	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		let cols: CGFloat = 6
 		let dayWidth = collectionView.frame.width / cols
 		let dayHeight = dayWidth
@@ -302,13 +315,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
 @available(iOS 9.0, *)
 extension ProfileViewController: UIViewControllerPreviewingDelegate {
-	func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		
 		if followersButton.frame.contains(location) {
 			let followersVC = UsersViewController()
 			followersVC.displayType = .Followers
 			followersVC.user = user
-			followersVC.title = String(followersVC.displayType)
+			followersVC.title = String(describing: followersVC.displayType)
 			
 			previewingContext.sourceRect = followersButton.frame
 			
@@ -319,21 +332,21 @@ extension ProfileViewController: UIViewControllerPreviewingDelegate {
 			let followersVC = UsersViewController()
 			followersVC.displayType = .Following
 			followersVC.user = user
-			followersVC.title = String(followersVC.displayType)
+			followersVC.title = String(describing: followersVC.displayType)
 			
 			previewingContext.sourceRect = followingButton.frame
 			
 			return followersVC
 		}
 		
-		let collectionViewPoint = view.convertPoint(location, toView: collectionView)
+		let collectionViewPoint = view.convert(location, to: collectionView)
 		
-		guard let indexPath = collectionView.indexPathForItemAtPoint(collectionViewPoint),
-			cell = collectionView.cellForItemAtIndexPath(indexPath) as? HipCalendarDayCollectionViewCell else {
+		guard let indexPath = collectionView.indexPathForItem(at: collectionViewPoint),
+			let cell = collectionView.cellForItem(at: indexPath) as? HipCalendarDayCollectionViewCell else {
 				return nil
 		}
 		
-		if postedYearMonthDay.indexOf(cell.date.yearMonthDay()) != nil {
+		if postedYearMonthDay.index(of: cell.date.yearMonthDay()) != nil {
 			
 			let date = dateForIndexPath(indexPath)
 			
@@ -343,12 +356,12 @@ extension ProfileViewController: UIViewControllerPreviewingDelegate {
 			peekViewController.filterPostedDatesToSections(postedDates)
 			peekViewController.songLikes = postedLikes
 			
-			if let sectionIndex = peekViewController.postedDatesSections.indexOf(date.yearMonthDay()) {
+			if let sectionIndex = peekViewController.postedDatesSections.index(of: date.yearMonthDay()) {
 				peekViewController.sectionIndex = sectionIndex
 			}
 			
-			peekViewController.preferredContentSize = CGSizeZero
-			previewingContext.sourceRect = collectionView.convertRect(cell.frame, toView: view)
+			peekViewController.preferredContentSize = CGSize.zero
+			previewingContext.sourceRect = collectionView.convert(cell.frame, to: view)
 			
 			return peekViewController
 		}
@@ -356,7 +369,7 @@ extension ProfileViewController: UIViewControllerPreviewingDelegate {
 		return nil
 	}
 	
-	func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
-		showViewController(viewControllerToCommit, sender: self)
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+		show(viewControllerToCommit, sender: self)
 	}
 }

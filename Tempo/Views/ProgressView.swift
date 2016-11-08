@@ -17,23 +17,22 @@ class ProgressView: UIView {
 	
 	var playerDelegate: PostDelegate!
 	let fillColor = UIColor.tempoLightRed
-	private var updateTimer: NSTimer?
+	private var updateTimer: Timer?
 	var indicator: UIView?
 	
-	override func drawRect(rect: CGRect) {
+	override func draw(_ rect: CGRect) {
 		let progress = playerDelegate.currentPost?.player.progress ?? 0.0
 		let fill = bounds.width * CGFloat(progress)
-		
-		super.drawRect(rect)
+		super.draw(rect)
 		fillColor.setFill()
-		CGContextFillRect(UIGraphicsGetCurrentContext(),
-			CGRect(x: 0, y: 0, width: fill, height: bounds.height))
+
+		UIGraphicsGetCurrentContext()!.fill(CGRect(x: 0, y: 0, width: fill, height: bounds.height))
 		if let indicator = indicator {
 			indicator.center.x = frame.origin.x + fill
 		}
 	}
 	
-	dynamic private func timerFired(timer: NSTimer) {
+	dynamic private func timerFired(timer: Timer) {
 		if playerDelegate.currentPost?.player.isPlaying ?? false {
 			setNeedsDisplay()
 		}
@@ -42,12 +41,12 @@ class ProgressView: UIView {
 	func setUpTimer() {
 		if updateTimer == nil && playerDelegate.currentPost?.player.isPlaying ?? false {
 			// 60 fps
-			updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
-								  target: self, selector: #selector(timerFired(_:)),
+			updateTimer = Timer(timeInterval: 1.0 / 60.0,
+								  target: self, selector: #selector(timerFired(timer:)),
 								  userInfo: nil,
 								  repeats: true)
 			
-			NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
+			RunLoop.current.add(updateTimer!, forMode: RunLoopMode.commonModes)
 		} else if !(playerDelegate.currentPost?.player.isPlaying ?? false) {
 			updateTimer?.invalidate()
 			updateTimer = nil

@@ -25,25 +25,25 @@ class HamburgerIconView: UIButton {
     init(frame: CGRect, color: UIColor, lineWidth: CGFloat, iconWidthRatio: CGFloat) {
         super.init(frame: frame)
 		
-		func applyStyle(bar: UIView, heightMultiplier: CGFloat) {
-			bar.userInteractionEnabled = false
-			bar.center = CGPointMake(bar.center.x, frame.height * heightMultiplier)
+		func applyStyle(_ bar: UIView, heightMultiplier: CGFloat) {
+			bar.isUserInteractionEnabled = false
+			bar.center = CGPoint(x: bar.center.x, y: frame.height * heightMultiplier)
 			bar.layer.cornerRadius = lineWidth * 0.5
 			bar.backgroundColor = color
 			bar.layer.allowsEdgeAntialiasing = true
 			addSubview(bar)
 		}
 		                
-        topBar = UIView(frame: CGRectMake(0, 0, frame.width * iconWidthRatio, lineWidth))
-        middleBar = UIView(frame: CGRectMake(0, 0, frame.width * iconWidthRatio, lineWidth))
-        bottomBar = UIView(frame: CGRectMake(0, 0, frame.width * iconWidthRatio, lineWidth))
+        topBar = UIView(frame: CGRect(x: 0, y: 0, width: frame.width * iconWidthRatio, height: lineWidth))
+        middleBar = UIView(frame: CGRect(x: 0, y: 0, width: frame.width * iconWidthRatio, height: lineWidth))
+        bottomBar = UIView(frame: CGRect(x: 0, y: 0, width: frame.width * iconWidthRatio, height: lineWidth))
 		
 		applyStyle(topBar, heightMultiplier: 0.5 - spacingRatio)
         applyStyle(middleBar, heightMultiplier: 0.5)
 		applyStyle(bottomBar, heightMultiplier: 0.5 + spacingRatio)
 		
 		//be notified when hamburger menu opens/closes
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(hamburgerMenuToggled), name: RevealControllerToggledNotificaiton, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(hamburgerMenuToggled), name: NSNotification.Name(rawValue: RevealControllerToggledNotificaiton), object: nil)
     }
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -53,9 +53,9 @@ class HamburgerIconView: UIButton {
 	//MARK: -
 	//MARK: User Interaction
 	
-	func hamburgerMenuToggled(notification: NSNotification) {
+	func hamburgerMenuToggled(_ notification: Notification) {
 		if let revealVC = notification.object as? SWRevealViewController {
-			if revealVC.frontViewController.view.userInteractionEnabled {
+			if revealVC.frontViewController.view.isUserInteractionEnabled {
 				//turn on hamburger menu
 				animateToHamburger()
 			} else {
@@ -65,7 +65,7 @@ class HamburgerIconView: UIButton {
 	}
     
     func animateIcon() {
-        userInteractionEnabled = true
+        isUserInteractionEnabled = true
         if isHamburgerMode {
             animateToClose()
 			isHamburgerMode = false
@@ -78,23 +78,23 @@ class HamburgerIconView: UIButton {
 	func animateToClose() {
 		if !isHamburgerMode { return }
 		
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 30, options: [], animations: {
+		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 30, options: [], animations: {
 			self.middleBar.alpha = 0
 			}, completion: nil)
 		
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
+		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
 			
-			let rotationClockWise = CGAffineTransformMakeRotation(CGFloat(M_PI_4))
-			let rotationCounterClockWise = CGAffineTransformMakeRotation(CGFloat(-M_PI_4))
-			let moveDownToCenter = CGAffineTransformMakeTranslation(0, self.frame.height * self.spacingRatio)
-			let moveUpToCenter = CGAffineTransformMakeTranslation(0, -self.frame.height * self.spacingRatio)
+			let rotationClockWise = CGAffineTransform(rotationAngle: CGFloat(M_PI_4))
+			let rotationCounterClockWise = CGAffineTransform(rotationAngle: CGFloat(-M_PI_4))
+			let moveDownToCenter = CGAffineTransform(translationX: 0, y: self.frame.height * self.spacingRatio)
+			let moveUpToCenter = CGAffineTransform(translationX: 0, y: -self.frame.height * self.spacingRatio)
 			
-			self.topBar.transform = CGAffineTransformConcat(rotationClockWise, moveDownToCenter)
+			self.topBar.transform = rotationClockWise.concatenating(moveDownToCenter)
 			
-			self.bottomBar.transform = CGAffineTransformConcat(rotationCounterClockWise, moveUpToCenter)
+			self.bottomBar.transform = rotationCounterClockWise.concatenating(moveUpToCenter)
 			
 			}, completion: { _ in
-				self.userInteractionEnabled = true
+				self.isUserInteractionEnabled = true
 		})
 		isHamburgerMode = false
 	}
@@ -102,20 +102,20 @@ class HamburgerIconView: UIButton {
 	func animateToHamburger() {
 		if isHamburgerMode { return }
 		
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 30, options: [], animations: {
+		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 30, options: [], animations: {
 			self.middleBar.alpha = 1
 			}, completion: nil)
 		
-		UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
+		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
 			
-			self.topBar.transform = CGAffineTransformIdentity
-			self.topBar.center = CGPointMake(self.topBar.center.x, self.frame.height * (0.5 - self.spacingRatio))
+			self.topBar.transform = CGAffineTransform.identity
+			self.topBar.center = CGPoint(x: self.topBar.center.x, y: self.frame.height * (0.5 - self.spacingRatio))
 			
-			self.bottomBar.transform = CGAffineTransformIdentity
-			self.bottomBar.center = CGPointMake(self.bottomBar.center.x, self.frame.height * (0.5 + self.spacingRatio))
+			self.bottomBar.transform = CGAffineTransform.identity
+			self.bottomBar.center = CGPoint(x: self.bottomBar.center.x, y: self.frame.height * (0.5 + self.spacingRatio))
 			
 			}, completion: { _ in
-				self.userInteractionEnabled = true
+				self.isUserInteractionEnabled = true
 		})
 		isHamburgerMode = true
 	}

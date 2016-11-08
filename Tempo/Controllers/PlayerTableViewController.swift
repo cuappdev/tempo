@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import Haneke
 import MediaPlayer
 
 @objc protocol PlayerDelegate {
 	func didTogglePlaying(animate: Bool)
-	optional func didFinishPlaying()
-	optional func didChangeProgress()
-	optional func didToggleLike()
+	@objc optional func didFinishPlaying()
+	@objc optional func didChangeProgress()
+	@objc optional func didToggleLike()
 }
 
 class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate, PostViewDelegate, PlayerDelegate {
@@ -27,7 +26,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
     var currentlyPlayingPost: Post?
 	var playerNav: PlayerNavigationController!
 	
-    var currentlyPlayingIndexPath: NSIndexPath? {
+    var currentlyPlayingIndexPath: IndexPath? {
         didSet {
 			if justOpened {
 				removeCommandCenterHandler()
@@ -35,12 +34,11 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				justOpened = false
 			}
 			var array = posts
-			if searchController.active {
+			if searchController.isActive {
 				array = filteredPosts
 			}
-            if let row = currentlyPlayingIndexPath?.row
-				where (array[row].song.spotifyID == playerNav.playerCell.post?.song.spotifyID) ?? false {
-                didTogglePlaying(true)
+            if let row = currentlyPlayingIndexPath?.row, (array[row].song.spotifyID == playerNav.playerCell.post?.song.spotifyID) {
+                let _ = didTogglePlaying(animate: true)
             } else {
 				//Deal with past post that's being played
                 currentlyPlayingPost?.player.pause()
@@ -48,11 +46,11 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				if let oldValue = oldValue {
 					if self is PostHistoryTableViewController {
 						let neoSelf = self as! PostHistoryTableViewController
-						if let cell = tableView.cellForRowAtIndexPath(neoSelf.relativeIndexPath(oldValue.row)) as? FeedTableViewCell {
+						if let cell = tableView.cellForRow(at: neoSelf.relativeIndexPath(row: oldValue.row) as IndexPath) as? FeedTableViewCell {
 							cell.postView.updatePlayingStatus()
 						}
 					} else {
-						if let cell = tableView.cellForRowAtIndexPath(oldValue) as? FeedTableViewCell {
+						if let cell = tableView.cellForRow(at: oldValue) as? FeedTableViewCell {
 							cell.postView.updatePlayingStatus()
 						}
 					}
@@ -60,10 +58,10 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				
 				//update post to new song
                 currentlyPlayingPost = array[currentlyPlayingIndexPath!.row]
-				updatePlayerNavRefs(currentlyPlayingIndexPath!.row)
-				didTogglePlaying(true)
+				updatePlayerNavRefs(row: currentlyPlayingIndexPath!.row)
+				didTogglePlaying(animate: true)
             }
-            tableView.selectRowAtIndexPath(currentlyPlayingIndexPath, animated: false, scrollPosition: .None)
+            tableView.selectRow(at: currentlyPlayingIndexPath, animated: false, scrollPosition: .none)
         }
     }
 	var savedSongAlertView: SavedSongView!
@@ -75,7 +73,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
 		
 		//TableView
-		tableView = UITableView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height - playerCellHeight), style: .Plain)
+		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
 		
@@ -88,13 +86,13 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		searchController.searchResultsUpdater = self
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.delegate = self
-		searchController.searchBar.setImage(UIImage(named: "search-icon"), forSearchBarIcon: .Search, state: .Normal)
-		searchController.searchBar.setImage(UIImage(named: "clear-search-icon"), forSearchBarIcon: .Clear, state: .Normal)
-		let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
-		textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+		searchController.searchBar.setImage(UIImage(named: "search-icon"), for: .search, state: UIControlState())
+		searchController.searchBar.setImage(UIImage(named: "clear-search-icon"), for: .clear, state: UIControlState())
+		let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
+		textFieldInsideSearchBar?.textColor = UIColor.white
 		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
 		textFieldInsideSearchBar?.font = UIFont(name: "Avenir-Book", size: 14)
-		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.valueForKey("placeholderLabel") as? UILabel
+		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.value(forKey: "placeholderLabel") as? UILabel
 		textFieldInsideSearchBarLabel?.textColor = UIColor.tempoUltraLightRed
 		
 		extendedLayoutIncludesOpaqueBars = true
@@ -107,7 +105,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		notifCenterSetup()
     }
 	
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		justOpened = true
@@ -115,38 +113,38 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	
     // MARK: - Table view data source
 	
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if searchController.active {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if searchController.isActive {
 			return filteredPosts.count
 		} else {
 			return posts.count
 		}
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		preconditionFailure("This method must be overridden")
 	}
 	
 	func navigateToSuggestions() {
-		let usersVC = (UIApplication.sharedApplication().delegate as! AppDelegate).usersVC
+		let usersVC = (UIApplication.shared.delegate as! AppDelegate).usersVC
 		navigationController?.setViewControllers([usersVC], animated: false)
 	}
 	
-    private func updateNowPlayingInfo() {
+    fileprivate func updateNowPlayingInfo() {
         let session = AVAudioSession.sharedInstance()
         
 		guard let post = currentlyPlayingPost else { return }
 		
-		let center = MPNowPlayingInfoCenter.defaultCenter()
+		let center = MPNowPlayingInfoCenter.default()
 		if !post.player.finishedPlaying {
 			_ = try? session.setCategory(AVAudioSessionCategoryPlayback)
 			_ = try? session.setActive(true)
 			
-			UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+			UIApplication.shared.beginReceivingRemoteControlEvents()
 			
 			let artwork = post.song.fetchArtwork() ?? UIImage(named: "temp-user")!
 			var count = posts.count
-			if searchController.active {
+			if searchController.isActive {
 				count = filteredPosts.count
 			}
 			
@@ -161,7 +159,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
 				MPNowPlayingInfoPropertyPlaybackQueueCount: count ]
 		} else {
-			UIApplication.sharedApplication().endReceivingRemoteControlEvents()
+			UIApplication.shared.endReceivingRemoteControlEvents()
 			_ = try? session.setActive(false)
 			center.nowPlayingInfo = nil
 			
@@ -169,7 +167,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func notifCenterSetup() {
-        downloadArtworkNotificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(SongDidDownloadArtworkNotification, object: nil, queue: nil) { [weak self] note in
+        downloadArtworkNotificationHandler = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: SongDidDownloadArtworkNotification), object: nil, queue: nil) { [weak self] note in
             if note.object as? Song == self?.currentlyPlayingPost?.song {
                 self?.updateNowPlayingInfo()
             }
@@ -178,59 +176,59 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	
 	deinit {
 		if let downloadArtworkNotificationHandler = downloadArtworkNotificationHandler {
-			NSNotificationCenter.defaultCenter().removeObserver(downloadArtworkNotificationHandler)
+			NotificationCenter.default.removeObserver(downloadArtworkNotificationHandler)
 		}
 	}
 	
     func commandCenterHandler() {
         // TODO: fetch the largest artwork image for lockscreen in Post
-        let center = MPRemoteCommandCenter.sharedCommandCenter()
-        center.playCommand.addTargetWithHandler { [weak self] _ in
+        let center = MPRemoteCommandCenter.shared()
+        center.playCommand.addTarget { [weak self] _ in
             if let _ = self?.currentlyPlayingPost?.player {
-                self?.didTogglePlaying(true)
-                return .Success
+                self?.didTogglePlaying(animate: true)
+                return .success
             }
-            return .NoSuchContent
+            return .noSuchContent
+        }
+
+        center.pauseCommand.addTarget { [weak self] _ in
+            if let _ = self?.currentlyPlayingPost?.player {
+                self?.didTogglePlaying(animate: true)
+                return .success
+            }
+            return .noSuchContent
         }
         
-        center.pauseCommand.addTargetWithHandler { [weak self] _ in
-            if let _ = self?.currentlyPlayingPost?.player {
-                self?.didTogglePlaying(true)
-                return .Success
-            }
-            return .NoSuchContent
-        }
-        
-        center.nextTrackCommand.addTargetWithHandler { [weak self] _ in
+        center.nextTrackCommand.addTarget (handler: { [weak self] _ in
 			var count = self!.posts.count
-			if self!.searchController.active {
+			if self!.searchController.isActive {
 				count = self!.filteredPosts.count
 			}
             if let path = self?.currentlyPlayingIndexPath {
                 if path.row < count - 1 {
-                    self?.currentlyPlayingIndexPath = NSIndexPath(forRow: path.row + 1, inSection: path.section)
-                    return .Success
+                    self?.currentlyPlayingIndexPath = IndexPath(row: path.row + 1, section: path.section)
+                    return .success
                 }
             }
-            return .NoSuchContent
-        }
+            return .noSuchContent
+        })
         
-        center.previousTrackCommand.addTargetWithHandler { [weak self] _ in
+        center.previousTrackCommand.addTarget (handler: { [weak self] _ in
             if let path = self?.currentlyPlayingIndexPath {
                 if path.row > 0 {
-                    self?.currentlyPlayingIndexPath = NSIndexPath(forRow: path.row - 1, inSection: path.section)
+                    self?.currentlyPlayingIndexPath = IndexPath(row: path.row - 1, section: path.section)
                 }
-                return .Success
+                return .success
             }
-            return .NoSuchContent
-        }
+            return .noSuchContent
+        })
         
-        center.seekForwardCommand.addTargetWithHandler { _ in .Success }
-        center.seekBackwardCommand.addTargetWithHandler { _ in .Success }
+        center.seekForwardCommand.addTarget (handler: { _ in .success })
+        center.seekBackwardCommand.addTarget (handler: { _ in .success })
     }
 	
 	func removeCommandCenterHandler() {
-		let center = MPRemoteCommandCenter.sharedCommandCenter()
+		let center = MPRemoteCommandCenter.shared()
 		center.playCommand.removeTarget(nil)
 		center.pauseCommand.removeTarget(nil)
 		center.nextTrackCommand.removeTarget(nil)
@@ -239,47 +237,47 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	
 	// MARK: - Search Stuff
 	
-	func filterContentForSearchText(searchText: String, scope: String = "All") {
+	func filterContentForSearchText(_ searchText: String, scope: String = "All") {
 		if searchText == "" {
 			filteredPosts = posts
 		} else {
 			let pred = NSPredicate(format: "song.title contains[cd] %@ OR song.artist contains[cd] %@", searchText, searchText)
-			filteredPosts = (posts as NSArray).filteredArrayUsingPredicate(pred) as! [Post]
+			filteredPosts = (posts as NSArray).filtered(using: pred) as! [Post]
 		}
 		tableView.reloadData()
 	}
 	
-	func updateSearchResultsForSearchController(searchController: UISearchController) {
+	func updateSearchResults(for searchController: UISearchController) {
 		filterContentForSearchText(searchController.searchBar.text!)
 	}
 	
-	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		searchController.searchBar.endEditing(true)
 	}
 	
 	//This allows for the text not to be viewed behind the search bar at the top of the screen
-	private let statusBarView: UIView = {
-		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
+	fileprivate let statusBarView: UIView = {
+		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
 		view.backgroundColor = UIColor.tempoLightRed
 		return view
 	}()
 	
-	func willPresentSearchController(searchController: UISearchController) {
+	func willPresentSearchController(_ searchController: UISearchController) {
 		navigationController?.view.addSubview(statusBarView)
 	}
 	
-	func didDismissSearchController(searchController: UISearchController) {
+	func didDismissSearchController(_ searchController: UISearchController) {
 		statusBarView.removeFromSuperview()
 	}
 	
 	// MARK: - Save song button clicked
 	
-	func didTapAddButtonForPostView(postView: PostView) {
+	func didTapAddButtonForPostView(_ postView: PostView) {
 		savedSongAlertView = SavedSongView.instanceFromNib()
 		savedSongAlertView.showSongStatusPopup(postView.songStatus, playlist: "")
 	}
 	
-	func didLongPressOnCell(postView: PostView) {
+	func didLongPressOnCell(_ postView: PostView) {
 		SpotifyController.sharedController.spotifyIsAvailable { success in
 			if success {
 				let topVC = getTopViewController()
@@ -287,7 +285,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				let tableViewNavigationController = UINavigationController(rootViewController: playlistVC)
 				
 				playlistVC.song = postView.post
-				topVC.presentViewController(tableViewNavigationController, animated: true, completion: nil)
+				topVC.present(tableViewNavigationController, animated: true, completion: nil)
 			}
 		}
 	}
@@ -307,7 +305,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	func didFinishPlaying() {
 		var index = currentlyPlayingIndexPath!.row + 1
 		index = (index >= posts.count) ? 0 : index
-		currentlyPlayingIndexPath = NSIndexPath(forRow: index, inSection: 0)
+		currentlyPlayingIndexPath = IndexPath(row: index, section: 0)
 	}
 	
 	func didChangeProgress() {
@@ -317,7 +315,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	// Updates all views related to some player
 	func updatePlayingCells() {
 		if let path = currentlyPlayingIndexPath {
-			if let cell = tableView.cellForRowAtIndexPath(path) as? FeedTableViewCell {
+			if let cell = tableView.cellForRow(at: path) as? FeedTableViewCell {
 				cell.postView.updatePlayingStatus()
 			}
 			
@@ -330,6 +328,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		playerNav.currentPost = currentlyPlayingPost
 		playerNav.postsRef = posts
 		playerNav.postRefIndex = row
-		playerNav.updateCellDelegates(self)
+		playerNav.updateCellDelegates(delegate: self)
 	}
 }

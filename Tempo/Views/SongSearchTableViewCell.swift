@@ -22,7 +22,7 @@ class SongSearchTableViewCell: UITableViewCell {
 		separatorHeight.constant = 0.5
 		
 		shareButton.layer.borderWidth = 1.5
-		shareButton.layer.borderColor = UIColor.tempoLightRed.CGColor
+		shareButton.layer.borderColor = UIColor.tempoLightRed.cgColor
 		shareButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 12)!
 	}
 	

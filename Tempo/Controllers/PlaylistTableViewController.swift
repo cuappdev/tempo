@@ -20,16 +20,16 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
 		title = "Add to Playlist"
 		view.backgroundColor = UIColor.tempoDarkGray
 		
-		let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(PlaylistTableViewController.dismissVC))
-		cancelButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Avenir-Book", size: 14)!], forState: .Normal)
+		let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(PlaylistTableViewController.dismissVC))
+		cancelButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Avenir-Book", size: 14)!], for: UIControlState())
 		navigationItem.leftBarButtonItem = cancelButton
 		
 		tableView.rowHeight = 72
 		tableView.showsVerticalScrollIndicator = false
-		tableView.registerNib(UINib(nibName: "PlaylistTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaylistCell")
+		tableView.register(UINib(nibName: "PlaylistTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaylistCell")
     }
 	
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		SpotifyController.sharedController.getPlaylists { playlists, error in
 			guard error == nil else {
 				return
@@ -41,33 +41,33 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
 	}
 	
 	func dismissVC() {
-		dismissViewControllerAnimated(true, completion: nil)
+		dismiss(animated: true, completion: nil)
 	}
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return playlists.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PlaylistCell", forIndexPath: indexPath) as! PlaylistTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath) as! PlaylistTableViewCell
 		let numTracks = playlists[indexPath.row].trackCount
 		let trackImages = playlists[indexPath.row].images
 		
 		cell.playlistNameLabel.text = playlists[indexPath.row].name
 		cell.playlistNumSongsLabel.text = numTracks == 1 ? "\(numTracks) Song" : "\(numTracks) Songs"
 		
-		if trackImages.count == 0 {
+		if trackImages?.count == 0 {
 			cell.playlistImage.image = UIImage(named: "playlist")
 		} else {
-			if let url = trackImages[0].imageURL {
-				if let data = NSData(contentsOfURL: url){
-					cell.playlistImage.contentMode = .ScaleAspectFit
+			if let url = (trackImages?[0] as AnyObject).imageURL {
+				if let data = try? Data(contentsOf: url){
+					cell.playlistImage.contentMode = .scaleAspectFit
 					cell.playlistImage.image = UIImage(data: data)
 				}
 			}
@@ -76,16 +76,16 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
         return cell
     }
 	
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let playlist = playlists[indexPath.row]
 		
 		SpotifyController.sharedController.addTrackToPlaylist(playlist, track: song!) { success in
 			if success {
 				self.savedSongAlertView = SavedSongView.instanceFromNib()
-				self.savedSongAlertView.showSongStatusPopup(.NotSavedToPlaylist, playlist: playlist.name)
+				self.savedSongAlertView.showSongStatusPopup(.notSavedToPlaylist, playlist: playlist.name)
 			}
 		}
-		dismissViewControllerAnimated(true, completion: nil)
+		dismiss(animated: true, completion: nil)
 	}
 
 }

@@ -9,27 +9,27 @@
 import UIKit
 
 extension UIView {
-	func fadeIn(duration: NSTimeInterval = 1, delay: NSTimeInterval = 0, completion: ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
-		UIView.animateWithDuration(duration, delay: delay, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+	func fadeIn(_ duration: TimeInterval = 1, delay: TimeInterval = 0, completion: @escaping ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
+		UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
 			self.alpha = 1
 			}, completion: completion)
 	}
 	
-	func fadeOut(duration: NSTimeInterval = 1, delay: NSTimeInterval = 0, completion: (Bool) -> Void = {(finished: Bool) -> Void in}) {
-		UIView.animateWithDuration(duration, delay: delay, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+	func fadeOut(_ duration: TimeInterval = 1, delay: TimeInterval = 0, completion: @escaping (Bool) -> Void = {(finished: Bool) -> Void in}) {
+		UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
 			self.alpha = 0
 			}, completion: completion)
 	}
 }
 
 extension String {
-	func chopPrefix(count: Int = 1) -> String {
-		return self.substringFromIndex(self.startIndex.advancedBy(count))
+	func chopPrefix(_ count: Int = 1) -> String {
+		return self.substring(from: self.characters.index(self.startIndex, offsetBy: count))
 	}
 }
 
 func getTopViewController() -> UIViewController {
-	var topVC = UIApplication.sharedApplication().keyWindow?.rootViewController
+	var topVC = UIApplication.shared.keyWindow?.rootViewController
 	
 	while topVC?.presentedViewController != nil {
 		topVC = topVC?.presentedViewController
@@ -38,13 +38,13 @@ func getTopViewController() -> UIViewController {
 	return topVC!
 }
 
-func delay(delay: Double, closure:()->()) {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), closure)
+func delay(_ delay: Double, closure:@escaping ()->()) {
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
 }
 
-func transparentPNG(length: CGFloat) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(length, length), false, 0)
+func transparentPNG(_ length: CGFloat) -> UIImage {
+    UIGraphicsBeginImageContextWithOptions(CGSize(width: length, height: length), false, 0)
     let blank = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
-    return blank
+    return blank!
 }

@@ -21,7 +21,7 @@ class PostButton: UIControl {
 	}
 	
 	class func instanceFromNib() -> PostButton {
-		return UINib(nibName: "PostButton", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! PostButton
+		return UINib(nibName: "PostButton", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! PostButton
 	}
 	
 	var title: String {
