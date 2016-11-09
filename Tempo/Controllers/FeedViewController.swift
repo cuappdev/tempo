@@ -108,12 +108,12 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 					let emptyView = UIView.viewForEmptyViewController(.Feed, size: x.view.bounds.size, isCurrentUser: true, userFirstName: "")
 					let button = UIButton(frame: CGRect(x: 0, y: 0, width: 190, height: 50))
 					button.center = x.view.center
-					button.center.y += 65
+					button.center.y += 85
 					button.backgroundColor = UIColor.tempoLightRed
 					button.setTitle("Follow more friends", forState: .Normal)
 					button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 					button.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
-					button.layer.cornerRadius = 1.0
+					button.layer.cornerRadius = 5.0
 					button.addTarget(self, action: #selector(PlayerTableViewController.navigateToSuggestions), forControlEvents: .TouchUpInside)
 					
 					emptyView.addSubview(button)

@@ -11,12 +11,12 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import SWRevealViewController
 import Haneke
+import Onboard
 
 extension NSURL {
 	func getQueryItemValueForKey(key: String) -> AnyObject? {
 		guard let components = NSURLComponents(URL: self, resolvingAgainstBaseURL: false) else { return nil }
 		guard let queryItems = components.queryItems else { return nil }
-		
 		return queryItems.filter { $0.name == key }.first?.value
 	}
 }
@@ -52,6 +52,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	var firstViewController: UIViewController!
 	var resetFirstVC = true
 	
+	//Onboarding
+	var launchedBefore = NSUserDefaults.standardUserDefaults().boolForKey("launchedBefore")
+	var onboardingVC = OnboardingViewController(backgroundImage: nil, contents: nil)
+
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		
 		let URLCache = NSURLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
@@ -68,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		UIApplication.sharedApplication().statusBarStyle = .LightContent
 		
 		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
-		SPTAuth.defaultInstance().redirectURL = NSURL(string: "icefishing-login://callback")
+		SPTAuth.defaultInstance().redirectURL = NSURL(string: "tempo-login://callback") 
 		SPTAuth.defaultInstance().sessionUserDefaultsKey = "SpotifyUserDefaultsKey"
 		SPTAuth.defaultInstance().requestedScopes = [
 			SPTAuthPlaylistReadPrivateScope,
@@ -111,14 +115,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		if toolsEnabled {
 			tools = Tools(rootViewController: window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
 		}
-		
 		return shouldPerformAdditionalDelegateHandling
 	}
 	
 	func toggleRootVC() {
+		launchedBefore = NSUserDefaults.standardUserDefaults().boolForKey("launchedBefore")
 		if FBSDKAccessToken.currentAccessToken() == nil {
-			let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
-			window!.rootViewController = signInVC
+			if launchedBefore  {
+				let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
+				window!.rootViewController = signInVC
+			} else {
+				launchOnboarding(false)
+			}
 		} else {
 			if resetFirstVC {
 				navigationController.setViewControllers([firstViewController], animated: false)
@@ -147,7 +155,101 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			revealVC.delegate = self
 			window!.rootViewController = revealVC
 		}
+	}
+	
+	func launchOnboarding(loggedInFB: Bool){
+		let contentVCs = generateContentVCs(loggedInFB)
+		onboardingVC = OnboardingViewController(backgroundImage: UIImage(named: "background"), contents: contentVCs)
+		onboardingVC.swipingEnabled = false
+		onboardingVC.pageControl.hidden = true
+		window!.rootViewController = onboardingVC
+	}
+	
+	func generateContentVCs(loggedInFB: Bool) -> Array<OnboardingContentViewController>{
+		let fbOnboard = generateFacebookOnboardVC()
+		let spotifyOnboard = generateSpotifyOnboardVC()
 		
+		if loggedInFB {
+		return [spotifyOnboard]
+		} else{
+			return [fbOnboard, spotifyOnboard]
+		}
+	}
+	
+	func generateFacebookOnboardVC() -> OnboardingContentViewController {
+		let fbBodyString = "Tempo is a music sharing application that allows you to share 30 second clips with your friends."
+		let paragraphStyle = NSMutableParagraphStyle()
+		let attrString = NSMutableAttributedString(string: fbBodyString)
+		paragraphStyle.lineSpacing = 12
+		attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+		
+		let fbOnboard = OnboardingContentViewController(title: "", body: fbBodyString, image: UIImage(named: "logo"), buttonText: "Connect with Facebook") {
+			self.loginToFacebook()
+		}
+		
+		fbOnboard.topPadding = 160
+		fbOnboard.underIconPadding = 40;
+		
+		fbOnboard.bodyLabel.attributedText = attrString
+		fbOnboard.bodyLabel.textAlignment = NSTextAlignment.Center
+		fbOnboard.bodyLabel.textColor = UIColor.offWhite
+		fbOnboard.bodyLabel.font = UIFont(name: "Avenir Next Regular", size: 17)
+		fbOnboard.bodyLabel.font = fbOnboard.bodyLabel.font.fontWithSize(17)
+		
+		fbOnboard.actionButton.layer.cornerRadius = 5
+		fbOnboard.actionButton.backgroundColor = UIColor.tempoBlue
+		fbOnboard.actionButton.titleLabel?.font =  UIFont(name: "Avenir Next Regular", size: 17)
+		fbOnboard.actionButton.titleLabel?.font = fbOnboard.actionButton.titleLabel?.font.fontWithSize(17)
+		
+		return fbOnboard
+	}
+	
+	func generateSpotifyOnboardVC() -> OnboardingContentViewController {		
+		let spotifyOnboard = OnboardingContentViewController(title: "", body: "Add the songs you like to your Spotify library.", image: UIImage(named: "spotify-connect"), buttonText: "Connect to Spotify ") {
+			SpotifyController.sharedController.loginToSpotify { (success) in
+				if success { if let session = SPTAuth.defaultInstance().session { if session.isValid() {
+							SpotifyController.sharedController.setSpotifyUser(session.accessToken)
+							self.toggleRootVC()
+						}
+					}
+				}
+			}
+		}
+		
+		spotifyOnboard.topPadding = 200
+		spotifyOnboard.bottomPadding = 60
+		
+		let title = UILabel(frame: CGRectMake(37, 102, 316, 28))
+		title.textAlignment = NSTextAlignment.Center
+		title.text = "Connect to Spotify"
+		title.textColor = UIColor.tempoLightGray
+		title.font = UIFont(name: "Avenir Next Regular", size: 29)
+		title.font = title.font.fontWithSize(29)
+		spotifyOnboard.view.addSubview(title)
+		
+		spotifyOnboard.bodyLabel.textColor = UIColor.offWhite
+		spotifyOnboard.bodyLabel.font = UIFont(name: "Avenir Next Regular", size: 20)
+		spotifyOnboard.bodyLabel.font = spotifyOnboard.bodyLabel.font.fontWithSize(20)
+		
+		spotifyOnboard.actionButton.layer.cornerRadius = 5
+		spotifyOnboard.actionButton.backgroundColor = UIColor.spotifyGreen
+		spotifyOnboard.actionButton.titleLabel?.font =  UIFont(name: "Avenir Next Regular", size: 17)
+		spotifyOnboard.actionButton.titleLabel?.font = spotifyOnboard.actionButton.titleLabel?.font.fontWithSize(17)
+		
+		let btn: UIButton = UIButton(frame: CGRectMake(130, 604, 115, 23))
+		btn.center.x = spotifyOnboard.view.center.x
+		btn.setTitle("Skip this step", forState: UIControlState.Normal)
+		btn.titleLabel?.font =  UIFont(name: "Avenir Next Regular", size: 17)
+		btn.titleLabel?.font = btn.titleLabel?.font.fontWithSize(17)
+		btn.titleLabel?.textColor = UIColor.tempoDarkGray
+		btn.addTarget(self, action: #selector(AppDelegate.endOnboard(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+		spotifyOnboard.view.addSubview(btn)
+		
+		return spotifyOnboard
+	}
+	
+	func endOnboard(sender: UIButton!) {
+		self.toggleRootVC()
 	}
 	
 	func setFirstVC() {
@@ -207,13 +309,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				} else {
 					API.sharedAPI.setCurrentUser(fbid, fbAccessToken: fbAccessToken) { success in
 						guard success else { return }
-						let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-						appDelegate.toggleRootVC()
-						guard let vc = self.firstViewController as? ProfileViewController else { return }
-						vc.user = User.currentUser
-						vc.setupUserUI()
+						if self.launchedBefore {
+							let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+							appDelegate.toggleRootVC()
+							guard let vc = self.firstViewController as? ProfileViewController else { return }
+							vc.user = User.currentUser
+							vc.setupUserUI()
+						} else {
+							self.launchOnboarding(true)
+						}
 					}
 				}
+				NSUserDefaults.standardUserDefaults().setBool(true, forKey: "launchedBefore")
 			}
 		}
 	}
@@ -233,7 +340,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 					self?.spotifyVC.updateSpotifyState()
 				}
 			}
-			
 			return true
 		}
 		

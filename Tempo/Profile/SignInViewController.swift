@@ -11,16 +11,14 @@ import UIKit
 class SignInViewController: UIViewController {
     
     var searchNavigationController: UINavigationController!
-    
+	var shouldAnimate = true
+
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var vinyl: UIImageView!
-    
-    var shouldAnimate = true
-
-    
+	
     override func viewDidLoad() {
         super.viewDidLoad()
-		loginButton.layer.cornerRadius = 1
+		loginButton.layer.cornerRadius = 5
 		loginButton.layer.masksToBounds = true
 		animateRecord()
     }
@@ -41,5 +39,4 @@ class SignInViewController: UIViewController {
 		let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 		appDelegate.loginToFacebook()
     }
-    
 }
