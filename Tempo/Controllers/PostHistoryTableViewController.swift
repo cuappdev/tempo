@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegate {
+class PostHistoryTableViewController: PlayerTableViewController {
 	
 	var songLikes: [Int] = []
 	var postedDates: [NSDate] = []
@@ -99,7 +99,9 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		cell.postView.playerCellRef = (navigationController as! PlayerNavigationController).playerCell
 		cell.postView.expandedPlayerRef = (navigationController as! PlayerNavigationController).expandedCell
 		cell.postView.post = posts[absoluteIndex(indexPath)]
-		cell.postView.delegate = self
+		cell.postView.postViewDelegate = self
+		cell.postView.pausePlayDelegate = self
+		cell.postView.post?.player.delegate = self
 		cell.postView.post?.player.prepareToPlay()
 	    cell.postView.dateLabel!.text = ""
 		

@@ -13,7 +13,7 @@ protocol SongSearchDelegate: class {
 	func didSelectSong(song: Song)
 }
 
-class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, PlayerDelegate {
 
 	@IBOutlet weak var searchBarContainer: UIView!
 	@IBOutlet weak var tableView: UITableView!
@@ -28,6 +28,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	var selectedCell: SongSearchTableViewCell?
 	var searchBar = UISearchBar()
 	var selfPostIds: [String] = []
+	
+	private var keyboardShowNotificationHandler: AnyObject?
+	private var keyboardHideNotificationHandler: AnyObject?
+	
 	
 	// MARK: - Lifecycle Methods
 	
@@ -153,18 +157,17 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		selectSong(post.song)
 		
 		if activePlayer != nil && activePlayer != cell.postView.post?.player {
-			activePlayer!.pause(true)
+			activePlayer!.pause()
 			activePlayer = nil
 		}
 		
-		cell.postView.post?.player.togglePlaying()
 		activePlayer = cell.postView.post?.player
+		activePlayer?.delegate = self
+		didTogglePlaying(true)
 		let playerNav = navigationController as! PlayerNavigationController
-		let playerCell = playerNav.playerCell
-		playerCell.postsLikable = false
-		let expandedCell = playerNav.expandedCell
-		expandedCell.postsLikable = false
-		expandedCell.postHasInfo = false
+		playerNav.playerCell.postsLikable = false
+		playerNav.expandedCell.postsLikable = false
+		playerNav.expandedCell.postHasInfo = false
 		playerNav.currentPost = cell.postView.post
 		playerNav.postsRef = nil //do not want to autoplay next song
 	}
@@ -224,6 +227,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
+	}
+	
+	// MARK: - PausePlayDelegate
+	
+	func didTogglePlaying(animate: Bool) {
+		if let activePlayer = activePlayer {
+			activePlayer.togglePlaying()
+			selectedCell?.postView.updatePlayingStatus()
+		}
 	}
 	
 	// MARK: - Notifications

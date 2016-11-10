@@ -27,17 +27,18 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	var currentPost: Post? {
 		didSet {
 			if let newPost = currentPost {
-				playerCell.updateCellInfo(newPost)
-				expandedCell.updateCellInfo(newPost)
+				updatePlayerCells(newPost)
 			}
 		}
 	}
+	
+	private var notificationHandler: NSObjectProtocol?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		let playerFrame = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height - frameHeight, UIScreen.mainScreen().bounds.width, frameHeight))
 		playerFrame.backgroundColor = UIColor.redColor()
-		self.view.addSubview(playerFrame)
+		view.addSubview(playerFrame)
 		playerCell = NSBundle.mainBundle().loadNibNamed("PlayerCellView", owner: self, options: nil).first as? PlayerCellView
 		playerCell?.setup(self)
 		playerCell?.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, frameHeight)
@@ -49,29 +50,23 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		expandedCell = NSBundle.mainBundle().loadNibNamed("ExpandedPlayerView", owner: self, options: nil).first as? ExpandedPlayerView
 		expandedCell?.setup(self)
 		expandedCell?.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height, UIScreen.mainScreen().bounds.width, expandedHeight)
-		self.view.addSubview(expandedCell!)
-		
-		
-		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidFinishPlayingNotification, object: nil, queue: nil) { [weak self] note in
-			if let current = self?.currentPost {
-				if current.player == note.object as? Player {
-					if let path = self?.postRefIndex {
-						var index = path + 1
-						if let postsRef = self?.postsRef {
-							let count = postsRef.count
-							index = (index >= count) ? 0 : index
-							self?.postRefIndex = index
-							self?.currentPost = postsRef[index]
-							self?.currentPost?.player.togglePlaying()
-						} else {
-							self?.playerCell.updatePlayingStatus()
-							self?.expandedCell.updatePlayingStatus()
-						}
-					}
-				}
-			}
+		view.addSubview(expandedCell!)
+	}
+	
+	deinit {
+		if let notificationHandler = notificationHandler {
+			NSNotificationCenter.defaultCenter().removeObserver(notificationHandler)
 		}
-		
+	}
+	
+	func updateCellDelegates(delegate: PlayerDelegate) {
+		playerCell.delegate = delegate
+		expandedCell.delegate = delegate
+	}
+	
+	func updatePlayerCells(newPost: Post) {
+		playerCell.updateCellInfo(newPost)
+		expandedCell.updateCellInfo(newPost)
 	}
 	
 	func animateExpandedCell(isExpanding: Bool) {

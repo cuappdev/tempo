@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
+class LikedTableViewController: PlayerTableViewController {
     let cellIdentifier = "FeedTableViewCell"
     
     override func viewDidLoad() {
@@ -55,7 +55,9 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		cell.postView.playerCellRef = (navigationController as! PlayerNavigationController).playerCell
 		cell.postView.expandedPlayerRef = (navigationController as! PlayerNavigationController).expandedCell
 		cell.postView.post = posts[indexPath.row]
-		cell.postView.delegate = self
+		cell.postView.postViewDelegate = self
+		cell.postView.pausePlayDelegate = self
+		cell.postView.post?.player.delegate = self
 		cell.postView.post?.player.prepareToPlay()
 		
 		return cell

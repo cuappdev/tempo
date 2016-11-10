@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
+class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	
 	lazy var customRefresh: ADRefreshControl = {
 		self.refreshControl = UIRefreshControl()
@@ -167,7 +167,9 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		cell.postView.expandedPlayerRef = (navigationController as! PlayerNavigationController).expandedCell
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.post?.player.prepareToPlay()
-		cell.postView.delegate = self
+		cell.postView.postViewDelegate = self
+		cell.postView.pausePlayDelegate = self
+		cell.postView.post?.player.delegate = self
 		return cell
 	}
 	
@@ -235,6 +237,13 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		profileVC.title = "Profile"
 		profileVC.user = user
 		navigationController?.pushViewController(profileVC, animated: true)
+	}
+	
+	func didToggleLike() {
+		let cell = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath!) as! FeedTableViewCell
+		cell.postView.updateLikedStatus()
+		playerNav.playerCell.updateLikeButton()
+		playerNav.expandedCell.updateLikeButton()
 	}
 
 }

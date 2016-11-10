@@ -23,11 +23,13 @@ class PlayerCellView: UIView {
 	
 	var songStatus: SavedSongStatus = .NotSaved
 	var post: Post?
+	var delegate: PlayerDelegate!
 	
 	func setup(parent: PlayerNavigationController) {
 		parentNav = parent
+		backgroundColor = UIColor.tempoSuperDarkGray
 		let tap = UITapGestureRecognizer(target: self, action: #selector(PlayerCellView.expandTap(_:)))
-		self.addGestureRecognizer(tap)
+		addGestureRecognizer(tap)
 		progressView.playerDelegate = parentNav
 		progressView.backgroundColor = UIColor.tempoSuperDarkRed
 		
@@ -46,7 +48,7 @@ class PlayerCellView: UIView {
 		artistLabel.text = newPost.song.artist
 		songLabel.holdScrolling = false
 		artistLabel.holdScrolling = false
-		self.userInteractionEnabled = true
+		userInteractionEnabled = true
 		
 		updateAddButton()
 		updateLikeButton()
@@ -79,9 +81,8 @@ class PlayerCellView: UIView {
 	}
 	
     @IBAction func playToggleButtonClicked(sender: UIButton) {
-        if let selectedPost = post {
-            selectedPost.player.togglePlaying()
-			updatePlayToggleButton()
+        if let _ = post {
+            delegate.didTogglePlaying!(true)
         }
     }
 	
@@ -97,14 +98,14 @@ class PlayerCellView: UIView {
 		if songStatus == .NotSaved {
 			SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
 				if success {
-					self.addButton?.setImage(UIImage(named: "check"), forState: .Normal)
+					self.addButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
 					self.songStatus = .Saved
 				}
 			}
 		} else if songStatus == .Saved {
 			SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
 				if success {
-					self.addButton?.setImage(UIImage(named: "plus"), forState: .Normal)
+					self.addButton.setBackgroundImage(UIImage(named: "plus"), forState: .Normal)
 					self.songStatus = .NotSaved
 				}
 			}
@@ -125,8 +126,7 @@ class PlayerCellView: UIView {
 	@IBAction func likeButtonClicked(sender: UIButton) {
 		if let selectedPost = post {
 			selectedPost.toggleLike()
-			updateLikeButton()
-			NSNotificationCenter.defaultCenter().postNotificationName(PostLikedStatusChangeNotification, object: self)
+			delegate.didToggleLike!()
 		}
 	}
 	

@@ -15,6 +15,7 @@ extension UIColor {
 	@nonobjc static let tempoSuperDarkRed = UIColor.colorFromCode(0x36211F)
 	@nonobjc static let tempoLightGray = UIColor.colorFromCode(0x2C2D30)
 	@nonobjc static let tempoDarkGray = UIColor.colorFromCode(0x232427)
+	@nonobjc static let tempoSuperDarkGray = UIColor.colorFromCode(0x191A1D)
 	@nonobjc static let separatorGray = UIColor.colorFromCode(0x28282B)
 	@nonobjc static let descriptionLightGray = UIColor.colorFromCode(0xC5B7B6)
 	@nonobjc static let offWhite = UIColor.colorFromCode(0xC0C0C1)
