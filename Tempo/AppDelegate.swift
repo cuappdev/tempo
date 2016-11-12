@@ -11,7 +11,6 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import SWRevealViewController
 import Haneke
-import Onboard
 
 extension URL {
 	func getQueryItemValueForKey(_ key: String) -> AnyObject? {
@@ -43,9 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	var firstViewController: UIViewController!
 	var resetFirstVC = true
 	
-	//Onboarding
 	var launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-	var onboardingVC = OnboardingViewController(backgroundImage: nil, contents: nil)
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
 		
@@ -111,12 +108,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func toggleRootVC() {
 		launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
 		if FBSDKAccessToken.current() == nil {
-			if launchedBefore  {
 				let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
 				window!.rootViewController = signInVC
-			} else {
-				launchOnboarding(loggedInFB: false)
-			}
 		} else {
 			if resetFirstVC {
 				navigationController.setViewControllers([firstViewController], animated: false)
@@ -145,101 +138,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			revealVC.delegate = self
 			window!.rootViewController = revealVC
 		}
-	}
-	
-	func launchOnboarding(loggedInFB: Bool){
-		let contentVCs = generateContentVCs(loggedInFB: loggedInFB)
-		onboardingVC = OnboardingViewController(backgroundImage: UIImage(named: "background"), contents: contentVCs)
-		onboardingVC?.swipingEnabled = false
-		onboardingVC?.pageControl.isHidden = true
-		window!.rootViewController = onboardingVC
-	}
-	
-	func generateContentVCs(loggedInFB: Bool) -> Array<OnboardingContentViewController>{
-		let fbOnboard = generateFacebookOnboardVC()
-		let spotifyOnboard = generateSpotifyOnboardVC()
-		
-		if loggedInFB {
-		return [spotifyOnboard]
-		} else{
-			return [fbOnboard, spotifyOnboard]
-		}
-	}
-	
-	func generateFacebookOnboardVC() -> OnboardingContentViewController {
-		let fbBodyString = "Tempo is a music sharing application that allows you to share 30 second clips with your friends."
-		let paragraphStyle = NSMutableParagraphStyle()
-		let attrString = NSMutableAttributedString(string: fbBodyString)
-		paragraphStyle.lineSpacing = 12
-		attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
-		
-		let fbOnboard = OnboardingContentViewController(title: "", body: fbBodyString, image: UIImage(named: "logo"), buttonText: "Connect with Facebook") {
-			self.loginToFacebook()
-		}
-		
-		fbOnboard.topPadding = 160
-		fbOnboard.underIconPadding = 40;
-		
-		fbOnboard.bodyLabel.attributedText = attrString
-		fbOnboard.bodyLabel.textAlignment = NSTextAlignment.center
-		fbOnboard.bodyLabel.textColor = UIColor.offWhite
-		fbOnboard.bodyLabel.font = UIFont(name: "Avenir Next Regular", size: 17)
-		fbOnboard.bodyLabel.font = fbOnboard.bodyLabel.font.withSize(17)
-		
-		fbOnboard.actionButton.layer.cornerRadius = 5
-		fbOnboard.actionButton.backgroundColor = UIColor.tempoBlue
-		fbOnboard.actionButton.titleLabel?.font =  UIFont(name: "Avenir Next Regular", size: 17)
-		fbOnboard.actionButton.titleLabel?.font = fbOnboard.actionButton.titleLabel?.font.withSize(17)
-		
-		return fbOnboard
-	}
-	
-	func generateSpotifyOnboardVC() -> OnboardingContentViewController {		
-		let spotifyOnboard = OnboardingContentViewController(title: "", body: "Add the songs you like to your Spotify library.", image: UIImage(named: "spotify-connect"), buttonText: "Connect to Spotify ") {
-			SpotifyController.sharedController.loginToSpotify { (success) in
-				if success { if let session = SPTAuth.defaultInstance().session { if session.isValid() {
-							SpotifyController.sharedController.setSpotifyUser(session.accessToken)
-							self.toggleRootVC()
-						}
-					}
-				}
-			}
-		}
-		
-		spotifyOnboard.topPadding = 200
-		spotifyOnboard.bottomPadding = 60
-		
-		let title = UILabel(frame: CGRect(x: 37, y: 102, width: 316, height: 28))
-		title.textAlignment = NSTextAlignment.center
-		title.text = "Connect to Spotify"
-		title.textColor = UIColor.tempoLightGray
-		title.font = UIFont(name: "Avenir Next Regular", size: 29)
-		title.font = title.font.withSize(29)
-		spotifyOnboard.view.addSubview(title)
-		
-		spotifyOnboard.bodyLabel.textColor = UIColor.offWhite
-		spotifyOnboard.bodyLabel.font = UIFont(name: "Avenir Next Regular", size: 20)
-		spotifyOnboard.bodyLabel.font = spotifyOnboard.bodyLabel.font.withSize(20)
-		
-		spotifyOnboard.actionButton.layer.cornerRadius = 5
-		spotifyOnboard.actionButton.backgroundColor = UIColor.spotifyGreen
-		spotifyOnboard.actionButton.titleLabel?.font =  UIFont(name: "Avenir Next Regular", size: 17)
-		spotifyOnboard.actionButton.titleLabel?.font = spotifyOnboard.actionButton.titleLabel?.font.withSize(17)
-		
-		let btn: UIButton = UIButton(frame: CGRect(x: 130, y: 604, width: 115, height: 23))
-		btn.center.x = spotifyOnboard.view.center.x
-		btn.setTitle("Skip this step", for: UIControlState.normal)
-		btn.titleLabel?.font =  UIFont(name: "Avenir Next Regular", size: 17)
-		btn.titleLabel?.font = btn.titleLabel?.font.withSize(17)
-		btn.titleLabel?.textColor = UIColor.tempoDarkGray
-		btn.addTarget(self, action: #selector(endOnboard(sender:)), for: .touchUpInside)
-		spotifyOnboard.view.addSubview(btn)
-		
-		return spotifyOnboard
-	}
-	
-	func endOnboard(sender: UIButton!) {
-		self.toggleRootVC()
 	}
 	
 	func setFirstVC() {
@@ -307,7 +205,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 							vc.user = User.currentUser
 							vc.setupUserUI()
 						} else {
-							self.launchOnboarding(loggedInFB: true)
+							let spotifyLoginVC = SpotifyLoginViewController(nibName: "SpotifyLoginViewController", bundle: nil)
+							self.window!.rootViewController = spotifyLoginVC
 						}
 					}
 				}

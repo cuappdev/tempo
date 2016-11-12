@@ -37,8 +37,11 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
 				if success { // Username available
 					API.sharedAPI.updateCurrentUser(username, didSucceed: { (success) in
 						if success {
+
 							let appDelegate = UIApplication.shared.delegate as! AppDelegate
-							appDelegate.launchOnboarding(loggedInFB: true)
+							let spotifyLoginVC = SpotifyLoginViewController(nibName: "SpotifyLoginViewController", bundle: nil)
+							appDelegate.window!.rootViewController = spotifyLoginVC
+							
 						} else {
 							self.alertLabel.text = "Username failed to update. Try again."
 							self.alertLabel.textColor = .red

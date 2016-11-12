@@ -11,7 +11,6 @@ target 'Tempo' do
 	pod 'FBSDKLoginKit'
 	pod 'FBSDKShareKit'
 	pod 'MarqueeLabel/Swift'
-	pod 'Onboard'
 	pod 'SwiftyJSON'
 	pod 'SWRevealViewController'
 	pod 'Tweaks'
