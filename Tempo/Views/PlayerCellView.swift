@@ -18,7 +18,11 @@ class PlayerCellView: UIView {
 	@IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var progressView: ProgressView!
 	
-	var postsLikable = false
+	var postsLikable: Bool? {
+		didSet {
+			likeButton.hidden = !(postsLikable!)
+		}
+	}
 	var parentNav: PlayerNavigationController?
 	
 	var songStatus: SavedSongStatus = .NotSaved
@@ -113,32 +117,29 @@ class PlayerCellView: UIView {
 	}
 	
 	private func updateAddButton() {
-		addButton!.userInteractionEnabled = false
+		addButton!.hidden = true
 		if let _ = post {
 			SpotifyController.sharedController.spotifyIsAvailable { success in
 				if success {
-					self.addButton!.userInteractionEnabled = true
+					self.addButton!.hidden = false
 				}
 			}
 		}
 	}
 	
 	@IBAction func likeButtonClicked(sender: UIButton) {
-		if let selectedPost = post {
+		if let selectedPost = post where (postsLikable! ?? false) {
 			selectedPost.toggleLike()
+			updateLikeButton()
 			delegate.didToggleLike!()
 		}
 	}
 	
 	func updateLikeButton() {
 		if let selectedPost = post {
-			if postsLikable {
-				likeButton.userInteractionEnabled = true
+			if postsLikable! ?? false {
 				let name = selectedPost.isLiked ? "filled-heart" : "empty-heart"
 				likeButton?.setBackgroundImage(UIImage(named: name), forState: .Normal)
-			} else {
-				likeButton.userInteractionEnabled = false
-				likeButton?.setBackgroundImage(UIImage(named: "empty-heart"), forState: .Normal)
 			}
 		}
 	}

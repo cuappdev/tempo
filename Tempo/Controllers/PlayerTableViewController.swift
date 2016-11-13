@@ -41,8 +41,23 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
             if let row = currentlyPlayingIndexPath?.row where currentlyPlayingPost?.isEqual(array[row]) ?? false {
                 didTogglePlaying(true)
             } else {
-                didTogglePlaying(true)
+				//Deal with past post that's being played
+                currentlyPlayingPost?.player.pause()
 				currentlyPlayingPost?.player.progress = 0
+				if let oldValue = oldValue {
+					if self is PostHistoryTableViewController {
+						let neoSelf = self as! PostHistoryTableViewController
+						if let cell = tableView.cellForRowAtIndexPath(neoSelf.relativeIndexPath(oldValue.row)) as? FeedTableViewCell {
+							cell.postView.updatePlayingStatus()
+						}
+					} else {
+						if let cell = tableView.cellForRowAtIndexPath(oldValue) as? FeedTableViewCell {
+							cell.postView.updatePlayingStatus()
+						}
+					}
+				}
+				
+				//update post to new song
                 currentlyPlayingPost = array[currentlyPlayingIndexPath!.row]
 				updatePlayerNavRefs(currentlyPlayingIndexPath!.row)
 				didTogglePlaying(true)
@@ -53,8 +68,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	var savedSongAlertView: SavedSongView!
 	var justOpened = true
 	
-	private var changeStateNotificationHandler: NSObjectProtocol?
-	private var seekNotificationHandler: NSObjectProtocol?
 	private var downloadArtworkNotificationHandler: NSObjectProtocol?
 	
     override func viewDidLoad() {
@@ -97,19 +110,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		super.viewDidAppear(animated)
 		
 		justOpened = true
-	}
-	
-	deinit {
-		let center = NSNotificationCenter.defaultCenter()
-		if let changeStateNotificationHandler = changeStateNotificationHandler {
-			center.removeObserver(changeStateNotificationHandler)
-		}
-		if let seekNotificationHandler = seekNotificationHandler {
-			center.removeObserver(seekNotificationHandler)
-		}
-		if let downloadArtworkNotificationHandler = downloadArtworkNotificationHandler {
-			center.removeObserver(downloadArtworkNotificationHandler)
-		}
 	}
 	
     // MARK: - Table view data source
@@ -175,20 +175,26 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
 	
+	deinit {
+		if let downloadArtworkNotificationHandler = downloadArtworkNotificationHandler {
+			NSNotificationCenter.defaultCenter().removeObserver(downloadArtworkNotificationHandler)
+		}
+	}
+	
     func commandCenterHandler() {
         // TODO: fetch the largest artwork image for lockscreen in Post
         let center = MPRemoteCommandCenter.sharedCommandCenter()
         center.playCommand.addTargetWithHandler { [weak self] _ in
-            if let player = self?.currentlyPlayingPost?.player {
-                player.play()
+            if let _ = self?.currentlyPlayingPost?.player {
+                self?.didTogglePlaying(true)
                 return .Success
             }
             return .NoSuchContent
         }
         
         center.pauseCommand.addTargetWithHandler { [weak self] _ in
-            if let player = self?.currentlyPlayingPost?.player {
-                player.pause()
+            if let _ = self?.currentlyPlayingPost?.player {
+                self?.didTogglePlaying(true)
                 return .Success
             }
             return .NoSuchContent
@@ -290,7 +296,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	func didTogglePlaying(animate: Bool) {
 		if let post = currentlyPlayingPost {
 			post.player.togglePlaying()
-			if (animate) {
+			if animate {
 				updatePlayingCells()
 				updateNowPlayingInfo()
 			}

@@ -32,8 +32,6 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		}
 	}
 	
-	private var notificationHandler: NSObjectProtocol?
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		let playerFrame = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height - frameHeight, UIScreen.mainScreen().bounds.width, frameHeight))
@@ -51,12 +49,6 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		expandedCell?.setup(self)
 		expandedCell?.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height, UIScreen.mainScreen().bounds.width, expandedHeight)
 		view.addSubview(expandedCell!)
-	}
-	
-	deinit {
-		if let notificationHandler = notificationHandler {
-			NSNotificationCenter.defaultCenter().removeObserver(notificationHandler)
-		}
 	}
 	
 	func updateCellDelegates(delegate: PlayerDelegate) {

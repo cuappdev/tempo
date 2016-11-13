@@ -28,6 +28,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	var selectedCell: SongSearchTableViewCell?
 	var searchBar = UISearchBar()
 	var selfPostIds: [String] = []
+	var playerNav: PlayerNavigationController!
 	
 	private var keyboardShowNotificationHandler: AnyObject?
 	private var keyboardHideNotificationHandler: AnyObject?
@@ -45,6 +46,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		tableView.registerNib(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
 		
 		searchBar.delegate = self
+		playerNav = navigationController as! PlayerNavigationController
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
@@ -164,7 +166,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		activePlayer = cell.postView.post?.player
 		activePlayer?.delegate = self
 		didTogglePlaying(true)
-		let playerNav = navigationController as! PlayerNavigationController
 		playerNav.playerCell.postsLikable = false
 		playerNav.expandedCell.postsLikable = false
 		playerNav.expandedCell.postHasInfo = false

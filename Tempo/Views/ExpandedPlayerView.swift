@@ -19,7 +19,6 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	@IBOutlet weak var albumImage: UIImageView!
 	@IBOutlet weak var topViewContainer: UIView!
 	
-	
 	@IBOutlet weak var playToggleButton: UIButton!
 	@IBOutlet weak var progressView: ProgressView!
 	@IBOutlet weak var likeButton: UIButton!
@@ -30,7 +29,11 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	
 	var progressIndicator: UIView!
 	
-	var postsLikable = false
+	var postsLikable: Bool? {
+		didSet {
+			likeButton.hidden = !(postsLikable!)
+		}
+	}
 	var postHasInfo = false
 	var parentNav: PlayerNavigationController?
 	
@@ -44,7 +47,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	var initialPanView: UIView?
 	
 	func setup(parent: PlayerNavigationController) {
-		backgroundColor = UIColor.tempoSuperDarkGray
+		backgroundColor = .tempoSuperDarkGray
 		// Setup gesture recognizers
 		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ExpandedPlayerView.expandedCellTapped(_:)))
 		tapGestureRecognizer?.delegate = self
@@ -64,11 +67,11 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		
 		parentNav = parent
 		progressView.playerDelegate = parentNav
-		progressView.backgroundColor = UIColor.tempoSuperDarkRed
+		progressView.backgroundColor = .tempoSuperDarkRed
 		
 		progressIndicator = UIView(frame: CGRectMake(progressView.frame.origin.x - 6, progressView.frame.origin.y - 6, 12, 12))
 		progressIndicator.layer.cornerRadius = 6
-		progressIndicator.backgroundColor = UIColor.tempoLightRed
+		progressIndicator.backgroundColor = .tempoLightRed
 		progressIndicator.userInteractionEnabled = true
 		addSubview(progressIndicator)
 		bringSubviewToFront(playToggleButton)
@@ -170,9 +173,9 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 				}
 			}
 		} else if hitView == likeButton {
-			if let _ = post {
-				selectedPost.toggleLike()
-				delegate.didToggleLike()
+			if let post = post where postsLikable! ?? false {
+				post.toggleLike()
+				delegate.didToggleLike!()
 			}
 		}
 	}
@@ -208,13 +211,9 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 			let maxCenter = UIScreen.mainScreen().bounds.height - height/2.0
 			
 			if translation.y > 0 || center.y > maxCenter {
-				if center.y + translation.y < maxCenter {
-					center.y = maxCenter
-				} else {
-					center.y = center.y + translation.y
-				}
+				center.y = center.y + translation.y < maxCenter ? maxCenter : center.y + translation.y
 			}
-			gesture.setTranslation(CGPointMake(0,0), inView: self)
+			gesture.setTranslation(CGPointZero, inView: self)
 		}
 		
 		if gesture.state == .Ended {
@@ -245,18 +244,13 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 				}
 			}
 		}
-		
 	}
 	
 	func updateLikeButton() {
 		if let selectedPost = post {
-			if postsLikable {
-				likeButton.userInteractionEnabled = true
+			if postsLikable! ?? false {
 				let name = selectedPost.isLiked ? "filled-heart" : "empty-heart"
 				likeButtonImage.image = UIImage(named: name)
-			} else {
-				likeButton.userInteractionEnabled = false
-				likeButtonImage.image = UIImage(named: "empty-heart")
 			}
 		}
 	}
