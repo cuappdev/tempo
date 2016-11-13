@@ -70,4 +70,9 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 			})
 		}
 	}
+	
+	func resetPlayerCells() {
+		playerCell.resetPlayerCell()
+		expandedCell.resetPlayerCell()
+	}
 }

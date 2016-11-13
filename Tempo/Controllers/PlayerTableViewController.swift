@@ -11,7 +11,7 @@ import Haneke
 import MediaPlayer
 
 @objc protocol PlayerDelegate {
-	optional func didTogglePlaying(animate: Bool)
+	func didTogglePlaying(animate: Bool)
 	optional func didFinishPlaying()
 	optional func didChangeProgress()
 	optional func didToggleLike()
@@ -38,7 +38,8 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			if searchController.active {
 				array = filteredPosts
 			}
-            if let row = currentlyPlayingIndexPath?.row where currentlyPlayingPost?.isEqual(array[row]) ?? false {
+            if let row = currentlyPlayingIndexPath?.row
+				where (array[row].song.spotifyID == playerNav.playerCell.post?.song.spotifyID) ?? false {
                 didTogglePlaying(true)
             } else {
 				//Deal with past post that's being played
@@ -316,8 +317,9 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	// Updates all views related to some player
 	func updatePlayingCells() {
 		if let path = currentlyPlayingIndexPath {
-			let cell = tableView.cellForRowAtIndexPath(path) as! FeedTableViewCell
-			cell.postView.updatePlayingStatus()
+			if let cell = tableView.cellForRowAtIndexPath(path) as? FeedTableViewCell {
+				cell.postView.updatePlayingStatus()
+			}
 			
 			playerNav.playerCell.updatePlayingStatus()
 			playerNav.expandedCell.updatePlayingStatus()

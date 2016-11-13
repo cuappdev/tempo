@@ -152,8 +152,9 @@ class PostHistoryTableViewController: PlayerTableViewController {
 	// Updates all views related to some player
 	override func updatePlayingCells() {
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-			let cell = tableView.cellForRowAtIndexPath(relativeIndexPath(currentlyPlayingIndexPath.row)) as! FeedTableViewCell
-			cell.postView.updatePlayingStatus()
+			if let cell = tableView.cellForRowAtIndexPath(relativeIndexPath(currentlyPlayingIndexPath.row)) as? FeedTableViewCell {
+				cell.postView.updatePlayingStatus()
+			}
 			
 			playerNav.playerCell.updatePlayingStatus()
 			playerNav.expandedCell.updatePlayingStatus()
@@ -162,8 +163,9 @@ class PostHistoryTableViewController: PlayerTableViewController {
 	
 	func didToggleLike() {
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-			let cell = tableView.cellForRowAtIndexPath(relativeIndexPath(currentlyPlayingIndexPath.row)) as! FeedTableViewCell
-			cell.postView.updateLikedStatus()
+			if let cell = tableView.cellForRowAtIndexPath(relativeIndexPath(currentlyPlayingIndexPath.row)) as? FeedTableViewCell {
+				cell.postView.updateLikedStatus()
+			}
 			playerNav.playerCell.updateLikeButton()
 			playerNav.expandedCell.updateLikeButton()
 		}
