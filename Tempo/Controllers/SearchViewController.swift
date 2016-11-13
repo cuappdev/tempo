@@ -100,6 +100,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	// Called from bar button, not an elegant solution (should audit)
 	func dismiss() {
+		if let _ = selectedSong {
+			playerNav.resetPlayerCells()
+		}
 		clearResults()
 		navigationController?.popViewControllerAnimated(false)
 	}
@@ -166,6 +169,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		activePlayer = cell.postView.post?.player
 		activePlayer?.delegate = self
 		didTogglePlaying(true)
+		playerNav.playerCell.delegate = self
 		playerNav.playerCell.postsLikable = false
 		playerNav.expandedCell.postsLikable = false
 		playerNav.expandedCell.postHasInfo = false
@@ -236,6 +240,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		if let activePlayer = activePlayer {
 			activePlayer.togglePlaying()
 			selectedCell?.postView.updatePlayingStatus()
+			playerNav.playerCell.updatePlayingStatus()
+			playerNav.expandedCell.updatePlayingStatus()
 		}
 	}
 	

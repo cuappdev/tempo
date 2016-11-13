@@ -38,7 +38,6 @@ class PlayerCellView: UIView {
 		progressView.backgroundColor = UIColor.tempoSuperDarkRed
 		
 		updateAddButton()
-		likeButton.userInteractionEnabled = false
 		playToggleButton.layer.cornerRadius = 5
 		playToggleButton.clipsToBounds = true
 		
@@ -86,7 +85,7 @@ class PlayerCellView: UIView {
 	
     @IBAction func playToggleButtonClicked(sender: UIButton) {
         if let _ = post {
-            delegate.didTogglePlaying!(true)
+            delegate.didTogglePlaying(true)
         }
     }
 	
@@ -128,7 +127,7 @@ class PlayerCellView: UIView {
 	}
 	
 	@IBAction func likeButtonClicked(sender: UIButton) {
-		if let selectedPost = post where (postsLikable! ?? false) {
+		if let selectedPost = post where (postsLikable ?? false) {
 			selectedPost.toggleLike()
 			updateLikeButton()
 			delegate.didToggleLike!()
@@ -152,5 +151,16 @@ class PlayerCellView: UIView {
 		label.tapToScroll = false
 		label.holdScrolling = true
 		label.animationDelay = 0
+	}
+	
+	func resetPlayerCell() {
+		if let delegate = delegate where post != nil {
+			if post!.player.isPlaying {
+				delegate.didTogglePlaying(false)
+			}
+		}
+		post = nil
+		songLabel.text = ""
+		artistLabel.text = ""
 	}
 }

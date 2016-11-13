@@ -82,7 +82,6 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		playToggleButton.clipsToBounds = true
 		
 		updateAddButton()
-		likeButton.userInteractionEnabled = false
 		
 		setupMarqueeLabel(songLabel)
 		setupMarqueeLabel(artistLabel)
@@ -154,7 +153,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		
 		if hitView == playToggleButton {
 			if let _ = post {
-				delegate.didTogglePlaying!(true)
+				delegate.didTogglePlaying(true)
 			}
 		} else if hitView == addButton {
 			if songStatus == .NotSaved {
@@ -183,12 +182,12 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	dynamic func progressPanned(gesture: UIPanGestureRecognizer) {
 		if gesture.state != .Ended {
 			if post?.player.isPlaying ?? false {
-				delegate.didTogglePlaying!(false)
+				delegate.didTogglePlaying(false)
 				wasPlaying = true
 			}
 		} else {
 			if wasPlaying {
-				delegate.didTogglePlaying!(false)
+				delegate.didTogglePlaying(false)
 			}
 			wasPlaying = false
 			initialPanView = nil
@@ -265,4 +264,11 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		label.animationDelay = 0
 	}
 	
+	func resetPlayerCell() {
+		post = nil
+		songLabel.text = ""
+		artistLabel.text = ""
+		albumImage.hnk_setImageFromURL(NSURL())
+		postDetailLabel.text = ""
+	}
 }

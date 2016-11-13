@@ -136,6 +136,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 				Banner.hide()
 				self.plusButton.hidden = self.notConnected(false)
 				self.tableView.reloadData()
+				self.continueAnimatingAfterRefresh()
 				self.refreshControl?.endRefreshing()
 				self.view.userInteractionEnabled = true
 			} else {
@@ -151,6 +152,23 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 				self.refreshControl?.endRefreshing()
 				self.view.userInteractionEnabled = true
 				finishedRefreshing = true
+			}
+		}
+	}
+	
+	func continueAnimatingAfterRefresh() {
+		//animate currently playing song
+		if let playerCellPost = self.playerNav.playerCell.post {
+			for row in 0 ..< posts.count {
+				if posts[row].song.spotifyID == playerCellPost.song.spotifyID {
+					posts[row] = playerCellPost
+					let indexPath = NSIndexPath(forRow: row, inSection: 0)
+					if let cell = tableView.cellForRowAtIndexPath(indexPath) as? FeedTableViewCell {
+						cell.postView.post = playerCellPost
+						cell.postView.layoutSubviews()
+					}
+					break
+				}
 			}
 		}
 	}
@@ -239,10 +257,11 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	}
 	
 	func didToggleLike() {
-		let cell = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath!) as! FeedTableViewCell
-		cell.postView.updateLikedStatus()
-		playerNav.playerCell.updateLikeButton()
-		playerNav.expandedCell.updateLikeButton()
+		if let cell = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath!) as? FeedTableViewCell {
+			cell.postView.updateLikedStatus()
+			playerNav.playerCell.updateLikeButton()
+			playerNav.expandedCell.updateLikeButton()
+		}
 	}
 
 }
