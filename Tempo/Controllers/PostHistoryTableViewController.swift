@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegate {
+class PostHistoryTableViewController: PlayerTableViewController {
 	
 	var songLikes: [Int] = []
 	var postedDates: [NSDate] = []
@@ -19,7 +19,7 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+		
         navigationItem.title = "Post History"
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
@@ -69,7 +69,21 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 				absoluteIndex = absoluteIndex + postedDatesDict[postedDatesSections[s]]!
 			}
 		}
+
 		return absoluteIndex
+	}
+	
+	func relativeIndexPath(row: Int) -> NSIndexPath {
+		var newRow = row
+		var section = 0
+		var s = 0
+		while (newRow >= postedDatesDict[postedDatesSections[s]]) {
+			newRow -= postedDatesDict[postedDatesSections[s]]!
+			section += 1
+			s += 1
+		}
+		
+		return NSIndexPath(forRow: newRow, inSection: section)
 	}
 	
 	// Filter posted dates into dictionary of key: date, value: date_count
@@ -96,9 +110,12 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 		
 		cell.postView.type = .History
 		let posts = searchController.active ? filteredPosts : self.posts
-		cell.postView.playerCellRef = (navigationController as! PlayerNavigationController).playerCell
+		cell.postView.playerCellRef = playerNav.playerCell
+		cell.postView.expandedPlayerRef = playerNav.expandedCell
 		cell.postView.post = posts[absoluteIndex(indexPath)]
-		cell.postView.delegate = self
+		cell.postView.postViewDelegate = self
+		cell.postView.playerDelegate = self
+		cell.postView.post?.player.delegate = self
 		cell.postView.post?.player.prepareToPlay()
 	    cell.postView.dateLabel!.text = ""
 		
@@ -125,10 +142,32 @@ class PostHistoryTableViewController: PlayerTableViewController, PostViewDelegat
 	
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
-        selectedCell.postView.backgroundColor = UIColor.tempoLightGray
-		(navigationController as! PlayerNavigationController).playerCell.postsLikable = true
+		selectedCell.postView.backgroundColor = UIColor.tempoLightGray
+		playerNav.playerCell.postsLikable = true
+		playerNav.expandedCell.postsLikable = true
+		playerNav.expandedCell.postHasInfo = false
 		currentlyPlayingIndexPath = NSIndexPath(forRow: absoluteIndex(indexPath), inSection: 0)
-    }
+    } 
+	
+	// Updates all views related to some player
+	override func updatePlayingCells() {
+		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+			let cell = tableView.cellForRowAtIndexPath(relativeIndexPath(currentlyPlayingIndexPath.row)) as! FeedTableViewCell
+			cell.postView.updatePlayingStatus()
+			
+			playerNav.playerCell.updatePlayingStatus()
+			playerNav.expandedCell.updatePlayingStatus()
+		}
+	}
+	
+	func didToggleLike() {
+		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+			let cell = tableView.cellForRowAtIndexPath(relativeIndexPath(currentlyPlayingIndexPath.row)) as! FeedTableViewCell
+			cell.postView.updateLikedStatus()
+			playerNav.playerCell.updateLikeButton()
+			playerNav.expandedCell.updateLikeButton()
+		}
+	}
 	
 	// MARK: - Search Override
 	

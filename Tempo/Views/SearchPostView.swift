@@ -30,24 +30,6 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
 				avatarImageView?.layer.cornerRadius = 7
                 profileNameLabel?.text = post.song.title
                 descriptionLabel?.text = post.song.artist
-                
-                notificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification,
-                    object: post.player,
-                    queue: NSOperationQueue.mainQueue(), usingBlock: { [weak self] note in
-                        self?.updateProfileLabel()
-                        
-                        if self?.updateTimer == nil && self?.post?.player.isPlaying ?? false {
-                            // 60 fps
-                            self?.updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
-                                target: self!, selector: #selector(SearchPostView.timerFired(_:)),
-                                userInfo: nil,
-                                repeats: true)
-                            NSRunLoop.currentRunLoop().addTimer(self!.updateTimer!, forMode: NSRunLoopCommonModes)
-                        } else {
-                            self?.updateTimer?.invalidate()
-                            self?.updateTimer = nil
-                        }
-                })
             } else {
                 updateTimer?.invalidate()
                 updateTimer = nil
@@ -76,7 +58,23 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
     }
-    
+	
+	func updatePlayingStatus() {
+		updateProfileLabel()
+		
+		if updateTimer == nil && post?.player.isPlaying ?? false {
+			// 60 fps
+			updateTimer = NSTimer(timeInterval: 1.0 / 60.0,
+			                            target: self, selector: #selector(SearchPostView.timerFired(_:)),
+			                            userInfo: nil,
+			                            repeats: true)
+			NSRunLoop.currentRunLoop().addTimer(updateTimer!, forMode: NSRunLoopCommonModes)
+		} else {
+			updateTimer?.invalidate()
+			updateTimer = nil
+		}
+	}
+	
     dynamic private func timerFired(timer: NSTimer) {
         if post?.player.isPlaying ?? false {
             setNeedsDisplay()

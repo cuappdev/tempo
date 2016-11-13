@@ -9,13 +9,7 @@
 import UIKit
 import MarqueeLabel
 
-let PostLikedStatusChangeNotification = "PostLikedStatusChange"
-
-protocol PostDelegate {
-	var post: Post? { get }
-}
-
-class PlayerCellView: UIView, PostDelegate {
+class PlayerCellView: UIView {
 	
 	@IBOutlet weak var songLabel: MarqueeLabel!
 	@IBOutlet weak var artistLabel: MarqueeLabel!
@@ -24,58 +18,46 @@ class PlayerCellView: UIView, PostDelegate {
 	@IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var progressView: ProgressView!
 	
-	var postsRef: [Post]?
-	var postRefIndex: Int?
-	var postsLikable = false
-	
-	var post: Post? {
+	var postsLikable: Bool? {
 		didSet {
-			if let newPost = post {
-				artistLabel.text = newPost.song.artist
-				songLabel.text = newPost.song.title
-				
-				updateAddButton()
-				updateLikeButton()
-				updateSongStatus()
-				updatePlayingStatus()
-				
-				songLabel.holdScrolling = false
-				artistLabel.holdScrolling = false
-			}
+			likeButton.hidden = !(postsLikable!)
 		}
 	}
+	var parentNav: PlayerNavigationController?
 	
 	var songStatus: SavedSongStatus = .NotSaved
+	var post: Post?
+	var delegate: PlayerDelegate!
 	
-	func setup() {
+	func setup(parent: PlayerNavigationController) {
+		parentNav = parent
+		backgroundColor = UIColor.tempoSuperDarkGray
 		let tap = UITapGestureRecognizer(target: self, action: #selector(PlayerCellView.expandTap(_:)))
-		self.addGestureRecognizer(tap)
-		progressView.delegate = self
+		addGestureRecognizer(tap)
+		progressView.playerDelegate = parentNav
+		progressView.backgroundColor = UIColor.tempoSuperDarkRed
 		
 		updateAddButton()
 		likeButton.userInteractionEnabled = false
+		playToggleButton.layer.cornerRadius = 5
+		playToggleButton.clipsToBounds = true
 		
 		setupMarqueeLabel(songLabel)
 		setupMarqueeLabel(artistLabel)
+	}
+	
+	func updateCellInfo(newPost: Post) {
+		post = newPost
+		songLabel.text = newPost.song.title
+		artistLabel.text = newPost.song.artist
+		songLabel.holdScrolling = false
+		artistLabel.holdScrolling = false
+		userInteractionEnabled = true
 		
-		NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidFinishPlayingNotification, object: nil, queue: nil) { [weak self] note in
-			if let current = self?.post {
-				if current.player == note.object as? Player {
-					if let path = self?.postRefIndex {
-						var index = path + 1
-						if let postsRef = self?.postsRef {
-							let count = postsRef.count
-							index = index >= count ? 0 : index
-							self?.post = postsRef[index]
-							self?.postRefIndex = index
-							self?.playToggleButtonClicked((self?.playToggleButton)!)
-						} else {
-							self?.updatePlayingStatus()
-						}
-					}
-				}
-			}
-		}
+		updateAddButton()
+		updateLikeButton()
+		updateSongStatus()
+		updatePlayingStatus()
 	}
 	
 	private func updateSongStatus() {
@@ -89,7 +71,7 @@ class PlayerCellView: UIView, PostDelegate {
 	}
 	
 	func expandTap(sender: UITapGestureRecognizer) {
-        print("EXPANDING")
+		parentNav?.animateExpandedCell(true)
 	}
 	
 	func updatePlayingStatus() {
@@ -103,15 +85,14 @@ class PlayerCellView: UIView, PostDelegate {
 	}
 	
     @IBAction func playToggleButtonClicked(sender: UIButton) {
-        if let selectedPost = post {
-            selectedPost.player.togglePlaying()
-			updatePlayToggleButton()
+        if let _ = post {
+            delegate.didTogglePlaying!(true)
         }
     }
 	
-	private func updatePlayToggleButton() {
+	func updatePlayToggleButton() {
 		if let selectedPost = post {
-			let name = selectedPost.player.isPlaying ? "pause" : "play"
+			let name = selectedPost.player.isPlaying ? "pause-red" : "play-red"
 			progressView.setUpTimer()
 			playToggleButton.setBackgroundImage(UIImage(named: name), forState: .Normal)
 		}
@@ -121,14 +102,14 @@ class PlayerCellView: UIView, PostDelegate {
 		if songStatus == .NotSaved {
 			SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
 				if success {
-					self.addButton?.setImage(UIImage(named: "check"), forState: .Normal)
+					self.addButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
 					self.songStatus = .Saved
 				}
 			}
 		} else if songStatus == .Saved {
 			SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
 				if success {
-					self.addButton?.setImage(UIImage(named: "plus"), forState: .Normal)
+					self.addButton.setBackgroundImage(UIImage(named: "plus"), forState: .Normal)
 					self.songStatus = .NotSaved
 				}
 			}
@@ -136,33 +117,29 @@ class PlayerCellView: UIView, PostDelegate {
 	}
 	
 	private func updateAddButton() {
-		addButton!.userInteractionEnabled = false
+		addButton!.hidden = true
 		if let _ = post {
 			SpotifyController.sharedController.spotifyIsAvailable { success in
 				if success {
-					self.addButton!.userInteractionEnabled = true
+					self.addButton!.hidden = false
 				}
 			}
 		}
 	}
 	
 	@IBAction func likeButtonClicked(sender: UIButton) {
-		if let selectedPost = post {
+		if let selectedPost = post where (postsLikable! ?? false) {
 			selectedPost.toggleLike()
 			updateLikeButton()
-			NSNotificationCenter.defaultCenter().postNotificationName(PostLikedStatusChangeNotification, object: self)
+			delegate.didToggleLike!()
 		}
 	}
 	
 	func updateLikeButton() {
 		if let selectedPost = post {
-			if postsLikable {
-				likeButton.userInteractionEnabled = true
+			if postsLikable! ?? false {
 				let name = selectedPost.isLiked ? "filled-heart" : "empty-heart"
 				likeButton?.setBackgroundImage(UIImage(named: name), forState: .Normal)
-			} else {
-				likeButton.userInteractionEnabled = false
-				likeButton?.setBackgroundImage(UIImage(named: "empty-heart"), forState: .Normal)
 			}
 		}
 	}

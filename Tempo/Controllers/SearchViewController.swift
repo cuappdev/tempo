@@ -13,7 +13,7 @@ protocol SongSearchDelegate: class {
 	func didSelectSong(song: Song)
 }
 
-class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, PlayerDelegate {
 
 	@IBOutlet weak var searchBarContainer: UIView!
 	@IBOutlet weak var tableView: UITableView!
@@ -28,6 +28,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	var selectedCell: SongSearchTableViewCell?
 	var searchBar = UISearchBar()
 	var selfPostIds: [String] = []
+	var playerNav: PlayerNavigationController!
+	
+	private var keyboardShowNotificationHandler: AnyObject?
+	private var keyboardHideNotificationHandler: AnyObject?
+	
 	
 	// MARK: - Lifecycle Methods
 	
@@ -41,6 +46,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		tableView.registerNib(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
 		
 		searchBar.delegate = self
+		playerNav = navigationController as! PlayerNavigationController
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
@@ -153,16 +159,18 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		selectSong(post.song)
 		
 		if activePlayer != nil && activePlayer != cell.postView.post?.player {
-			activePlayer!.pause(true)
+			activePlayer!.pause()
 			activePlayer = nil
 		}
 		
-		cell.postView.post?.player.togglePlaying()
 		activePlayer = cell.postView.post?.player
-		let playerCell = (navigationController as! PlayerNavigationController).playerCell
-		playerCell.postsLikable = false
-		playerCell.post = cell.postView.post
-		playerCell.postsRef = nil //do not want to autoplay next song
+		activePlayer?.delegate = self
+		didTogglePlaying(true)
+		playerNav.playerCell.postsLikable = false
+		playerNav.expandedCell.postsLikable = false
+		playerNav.expandedCell.postHasInfo = false
+		playerNav.currentPost = cell.postView.post
+		playerNav.postsRef = nil //do not want to autoplay next song
 	}
 	
     // MARK: - General Request Methods
@@ -220,6 +228,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
+	}
+	
+	// MARK: - PausePlayDelegate
+	
+	func didTogglePlaying(animate: Bool) {
+		if let activePlayer = activePlayer {
+			activePlayer.togglePlaying()
+			selectedCell?.postView.updatePlayingStatus()
+		}
 	}
 	
 	// MARK: - Notifications

@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostViewDelegate {
+class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	
 	lazy var customRefresh: ADRefreshControl = {
 		self.refreshControl = UIRefreshControl()
@@ -163,16 +163,21 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedTableViewCell
-		cell.postView.playerCellRef = (navigationController as! PlayerNavigationController).playerCell
+		cell.postView.playerCellRef = playerNav.playerCell
+		cell.postView.expandedPlayerRef = playerNav.expandedCell
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.post?.player.prepareToPlay()
-		cell.postView.delegate = self
+		cell.postView.postViewDelegate = self
+		cell.postView.playerDelegate = self
+		cell.postView.post?.player.delegate = self
 		return cell
 	}
 	
 	// MARK: - UITableViewDelegate
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		(navigationController as! PlayerNavigationController).playerCell.postsLikable = true
+		playerNav.playerCell.postsLikable = true
+		playerNav.expandedCell.postsLikable = true
+		playerNav.expandedCell.postHasInfo = true
 		currentlyPlayingIndexPath = indexPath
 	}
 	
@@ -231,6 +236,13 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, PostVie
 		profileVC.title = "Profile"
 		profileVC.user = user
 		navigationController?.pushViewController(profileVC, animated: true)
+	}
+	
+	func didToggleLike() {
+		let cell = tableView.cellForRowAtIndexPath(currentlyPlayingIndexPath!) as! FeedTableViewCell
+		cell.postView.updateLikedStatus()
+		playerNav.playerCell.updateLikeButton()
+		playerNav.expandedCell.updateLikeButton()
 	}
 
 }

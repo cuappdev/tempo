@@ -9,17 +9,13 @@
 import UIKit
 import AVFoundation
 
-let PlayerDidChangeStateNotification = "PlayerDidChangeState"
-let PlayerDidSeekNotification = "PlayerDidSeek"
-let PlayerDidFinishPlayingNotification = "PlayerDidFinishPlaying"
-
 class Player: NSObject, AVAudioPlayerDelegate {
 	
 	private var currentTask: NSURLSessionDataTask?
 	private static var currentPlayer: Player? {
 		didSet {
 			if Player.currentPlayer != oldValue {
-				oldValue?.pause(true)
+				oldValue?.pause()
 			}
 		}
 	}
@@ -36,20 +32,14 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
 	private(set) var wasPlayed = false
 	private(set) var finishedPlaying = false
+	var delegate: PlayerDelegate!
 	
     private let fileURL: NSURL
 	init(fileURL: NSURL) {
 		self.fileURL = fileURL
 		super.init()
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(changeCurrentPlayer), name: PlayerDidChangeStateNotification, object: nil)
     }
 	
-	func changeCurrentPlayer() {
-		if self.isPlaying {
-			Player.currentPlayer = self
-		}
-	}
-    
     class func keyPathsForValuesAffectingCurrentTime(key: String) -> Set<String> {
         return Set(["player.currentTime"])
     }
@@ -75,9 +65,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 					
 					if s.shouldAutoplay {
 						s.player?.play()
-						if s.shouldNotify {
-							NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
-						}
+						// ??? PlayerDidChangeState post
 					}
 				}
 				currentTask!.resume()
@@ -86,19 +74,14 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
 
     private var shouldAutoplay = false
-    private var shouldNotify = false
-    func play(notify: Bool) {
+	func play() {
         prepareToPlay()
         wasPlayed = true
 		finishedPlaying = false
         if player == nil {
             shouldAutoplay = true
-            shouldNotify = notify
         } else {
             player?.play()
-            if notify {
-                NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
-            }
         }
     }
     
@@ -111,13 +94,9 @@ class Player: NSObject, AVAudioPlayerDelegate {
         }
     }
     
-    func pause(notify: Bool) {
+    func pause() {
         player?.pause()
         shouldAutoplay = false
-
-        if notify {
-            NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidChangeStateNotification, object: self)
-        }
     }
     
 	var isPlaying: Bool {
@@ -125,7 +104,10 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
     
     func togglePlaying() {
-		isPlaying ? pause(true) : play(true)
+		isPlaying ? pause() : play()
+		if (isPlaying) {
+			Player.currentPlayer = self
+		}
     }
     
     dynamic var currentTime: NSTimeInterval {
@@ -135,7 +117,6 @@ class Player: NSObject, AVAudioPlayerDelegate {
         set {
 			guard let player = player else { return }
 			player.currentTime = max(0, min(duration, newValue))
-			NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidSeekNotification, object: self)
         }
     }
     
@@ -162,8 +143,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     // MARK: - AVAudioPlayerDelegate
 	
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
-        pause(true)
 		finishedPlaying = true
-        NSNotificationCenter.defaultCenter().postNotificationName(PlayerDidFinishPlayingNotification, object: self)
+		delegate.didFinishPlaying!()
     }
 }

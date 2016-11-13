@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
+class LikedTableViewController: PlayerTableViewController {
     let cellIdentifier = "FeedTableViewCell"
     
     override func viewDidLoad() {
@@ -52,9 +52,12 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 		
 		cell.postView.type = .Liked
 		let posts = searchController.active ? filteredPosts : self.posts
-		cell.postView.playerCellRef = (navigationController as! PlayerNavigationController).playerCell
+		cell.postView.playerCellRef = playerNav.playerCell
+		cell.postView.expandedPlayerRef = playerNav.expandedCell
 		cell.postView.post = posts[indexPath.row]
-		cell.postView.delegate = self
+		cell.postView.postViewDelegate = self
+		cell.postView.playerDelegate = self
+		cell.postView.post?.player.delegate = self
 		cell.postView.post?.player.prepareToPlay()
 		
 		return cell
@@ -63,7 +66,9 @@ class LikedTableViewController: PlayerTableViewController, PostViewDelegate {
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		let cell = tableView.cellForRowAtIndexPath(indexPath) as! FeedTableViewCell
 		cell.postView.backgroundColor = UIColor.tempoLightGray
-		(navigationController as! PlayerNavigationController).playerCell.postsLikable = false
+		playerNav.playerCell.postsLikable = false
+		playerNav.expandedCell.postsLikable = false
+		playerNav.expandedCell.postHasInfo = false
 		currentlyPlayingIndexPath = indexPath
 	}
 	

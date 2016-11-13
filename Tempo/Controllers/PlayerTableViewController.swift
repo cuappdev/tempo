@@ -10,7 +10,14 @@ import UIKit
 import Haneke
 import MediaPlayer
 
-class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
+@objc protocol PlayerDelegate {
+	optional func didTogglePlaying(animate: Bool)
+	optional func didFinishPlaying()
+	optional func didChangeProgress()
+	optional func didToggleLike()
+}
+
+class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate, PostViewDelegate, PlayerDelegate {
 	
 	var tableView: UITableView!
 	var refreshControl: UIRefreshControl!
@@ -18,6 +25,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	var posts: [Post] = []
 	var filteredPosts: [Post] = []
     var currentlyPlayingPost: Post?
+	var playerNav: PlayerNavigationController!
 	
     var currentlyPlayingIndexPath: NSIndexPath? {
         didSet {
@@ -31,25 +39,36 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				array = filteredPosts
 			}
             if let row = currentlyPlayingIndexPath?.row where currentlyPlayingPost?.isEqual(array[row]) ?? false {
-                currentlyPlayingPost?.player.togglePlaying()
-				updatePlayerCell(row)
+                didTogglePlaying(true)
             } else {
-                currentlyPlayingPost?.player.pause(true)
-				
+				//Deal with past post that's being played
+                currentlyPlayingPost?.player.pause()
 				currentlyPlayingPost?.player.progress = 0
-                if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-                    currentlyPlayingPost = array[currentlyPlayingIndexPath.row]
-                    currentlyPlayingPost!.player.play(true)
-					updatePlayerCell(currentlyPlayingIndexPath.row)
-                } else {
-                    currentlyPlayingPost = nil
-                }
+				if let oldValue = oldValue {
+					if self is PostHistoryTableViewController {
+						let neoSelf = self as! PostHistoryTableViewController
+						if let cell = tableView.cellForRowAtIndexPath(neoSelf.relativeIndexPath(oldValue.row)) as? FeedTableViewCell {
+							cell.postView.updatePlayingStatus()
+						}
+					} else {
+						if let cell = tableView.cellForRowAtIndexPath(oldValue) as? FeedTableViewCell {
+							cell.postView.updatePlayingStatus()
+						}
+					}
+				}
+				
+				//update post to new song
+                currentlyPlayingPost = array[currentlyPlayingIndexPath!.row]
+				updatePlayerNavRefs(currentlyPlayingIndexPath!.row)
+				didTogglePlaying(true)
             }
             tableView.selectRowAtIndexPath(currentlyPlayingIndexPath, animated: false, scrollPosition: .None)
         }
     }
 	var savedSongAlertView: SavedSongView!
 	var justOpened = true
+	
+	private var downloadArtworkNotificationHandler: NSObjectProtocol?
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +77,8 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		tableView = UITableView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height - playerCellHeight), style: .Plain)
 		tableView.delegate = self
 		tableView.dataSource = self
+		
+		playerNav = navigationController as! PlayerNavigationController
 		
 		//Search Bar
 		searchController = UISearchController(searchResultsController: nil)
@@ -142,43 +163,38 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			UIApplication.sharedApplication().endReceivingRemoteControlEvents()
 			_ = try? session.setActive(false)
 			center.nowPlayingInfo = nil
+			
 		}
     }
     
     func notifCenterSetup() {
-        NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidChangeStateNotification, object: nil, queue: nil) { [weak self] note in
-            if note.object as? Player == self?.currentlyPlayingPost?.player {
-                self?.updateNowPlayingInfo()
-            }
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(PlayerDidSeekNotification, object: nil, queue: nil) { [weak self] note in
-            if note.object as? Player == self?.currentlyPlayingPost?.player {
-                self?.updateNowPlayingInfo()
-            }
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(SongDidDownloadArtworkNotification, object: nil, queue: nil) { [weak self] note in
+        downloadArtworkNotificationHandler = NSNotificationCenter.defaultCenter().addObserverForName(SongDidDownloadArtworkNotification, object: nil, queue: nil) { [weak self] note in
             if note.object as? Song == self?.currentlyPlayingPost?.song {
                 self?.updateNowPlayingInfo()
             }
         }
     }
-    
+	
+	deinit {
+		if let downloadArtworkNotificationHandler = downloadArtworkNotificationHandler {
+			NSNotificationCenter.defaultCenter().removeObserver(downloadArtworkNotificationHandler)
+		}
+	}
+	
     func commandCenterHandler() {
         // TODO: fetch the largest artwork image for lockscreen in Post
         let center = MPRemoteCommandCenter.sharedCommandCenter()
         center.playCommand.addTargetWithHandler { [weak self] _ in
-            if let player = self?.currentlyPlayingPost?.player {
-                player.play(true)
+            if let _ = self?.currentlyPlayingPost?.player {
+                self?.didTogglePlaying(true)
                 return .Success
             }
             return .NoSuchContent
         }
         
         center.pauseCommand.addTargetWithHandler { [weak self] _ in
-            if let player = self?.currentlyPlayingPost?.player {
-                player.pause(true)
+            if let _ = self?.currentlyPlayingPost?.player {
+                self?.didTogglePlaying(true)
                 return .Success
             }
             return .NoSuchContent
@@ -275,10 +291,43 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		}
 	}
 	
-	func updatePlayerCell(row: Int) {
-		let playerNav = navigationController as! PlayerNavigationController
-		playerNav.playerCell.post = currentlyPlayingPost
-		playerNav.playerCell.postsRef = posts
-		playerNav.playerCell.postRefIndex = row
+	// MARK: - PostViewDelegate
+	
+	func didTogglePlaying(animate: Bool) {
+		if let post = currentlyPlayingPost {
+			post.player.togglePlaying()
+			if animate {
+				updatePlayingCells()
+				updateNowPlayingInfo()
+			}
+		}
+	}
+	
+	func didFinishPlaying() {
+		var index = currentlyPlayingIndexPath!.row + 1
+		index = (index >= posts.count) ? 0 : index
+		currentlyPlayingIndexPath = NSIndexPath(forRow: index, inSection: 0)
+	}
+	
+	func didChangeProgress() {
+		updateNowPlayingInfo()
+	}
+	
+	// Updates all views related to some player
+	func updatePlayingCells() {
+		if let path = currentlyPlayingIndexPath {
+			let cell = tableView.cellForRowAtIndexPath(path) as! FeedTableViewCell
+			cell.postView.updatePlayingStatus()
+			
+			playerNav.playerCell.updatePlayingStatus()
+			playerNav.expandedCell.updatePlayingStatus()
+		}
+	}
+	
+	func updatePlayerNavRefs(row: Int) {
+		playerNav.currentPost = currentlyPlayingPost
+		playerNav.postsRef = posts
+		playerNav.postRefIndex = row
+		playerNav.updateCellDelegates(self)
 	}
 }
