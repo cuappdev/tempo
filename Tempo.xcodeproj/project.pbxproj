@@ -54,10 +54,6 @@
 		6DA5FE4D1AED72F800E795DD /* UIColor+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA5FE4C1AED72F800E795DD /* UIColor+Shared.swift */; };
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
-		952F0FEE1BCF20E100C53522 /* ADScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FCC1BCF20E100C53522 /* ADScreenCapture.swift */; };
-		952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */; };
-		952F0FFD1BCF20E100C53522 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FEC1BCF20E100C53522 /* Tools.swift */; };
-		952F0FFE1BCF20E100C53522 /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F0FED1BCF20E100C53522 /* Tweaks.swift */; };
 		95D1E77E1CE20BED00E1EF0F /* HamburgerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1E77D1CE20BED00E1EF0F /* HamburgerIconView.swift */; };
 		B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B085F3B41BE3CBB80000421E /* SearchViewController.xib */; };
 		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
@@ -165,7 +161,7 @@
 		BA24C57C1AF866630066C2ED /* SearchPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPostView.swift; sourceTree = "<group>"; };
 		BA257E271ABA3FE200D939B0 /* Tempo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tempo-Bridging-Header.h"; sourceTree = "<group>"; };
 		C0CF7B971AE425450083606C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendNotConnectedProtocol.swift; sourceTree = "<group>"; };
+		CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackendNotConnectedProtocol.swift; path = Tools/BackendNotConnectedProtocol.swift; sourceTree = "<group>"; };
 		D102A9C51AE889D600C66385 /* SideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
 		D102A9C61AE889D600C66385 /* SideBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarViewController.xib; sourceTree = "<group>"; };
 		D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideBarTableViewCell.swift; path = ../Profile/SideBarTableViewCell.swift; sourceTree = "<group>"; };
@@ -231,6 +227,7 @@
 			children = (
 				952F0FCB1BCF20E100C53522 /* Tools */,
 				1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */,
+				CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */,
 				6038B1791D80EBEA0083940D /* UIViewController+Utilities.swift */,
 				1D1DD7121AE492750066AB39 /* Util.swift */,
 				6DA5FE4C1AED72F800E795DD /* UIColor+Shared.swift */,
@@ -393,7 +390,6 @@
 				952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */,
 				952F0FEC1BCF20E100C53522 /* Tools.swift */,
 				952F0FED1BCF20E100C53522 /* Tweaks.swift */,
-				CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -483,6 +479,9 @@
 						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -616,13 +615,11 @@
 				6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */,
 				1DD875FC1B6E27DD0041C45B /* NSDateFormatter+Shared.swift in Sources */,
 				D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */,
-				952F0FEE1BCF20E100C53522 /* ADScreenCapture.swift in Sources */,
 				D14D06B21BE9535400ABA1CF /* SearchViewController.swift in Sources */,
 				7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */,
 				6067F0821BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift in Sources */,
 				D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */,
 				CCC0F80E1C0257A2003429BF /* BackendNotConnectedProtocol.swift in Sources */,
-				952F0FFD1BCF20E100C53522 /* Tools.swift in Sources */,
 				60AEF76C1DBD38AD00C68AAF /* ProgressView.swift in Sources */,
 				60AEF7661DBD374200C68AAF /* PlayerNavigationController.swift in Sources */,
 				D11740001AF8574400302FFD /* ProfileViewController.swift in Sources */,
@@ -638,12 +635,10 @@
 				BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */,
 				0271C9471D9582410037F6AD /* PostHistoryHeaderSectionCell.swift in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
-				952F0FFC1BCF20E100C53522 /* SubmitBugViewController.swift in Sources */,
 				1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */,
 				D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */,
 				D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */,
 				95D1E77E1CE20BED00E1EF0F /* HamburgerIconView.swift in Sources */,
-				952F0FFE1BCF20E100C53522 /* Tweaks.swift in Sources */,
 				D160AE021BE677D4003B0E1A /* PlaylistTableViewController.swift in Sources */,
 				D148F4AA1AF03EB4009AB073 /* PostHistoryTableViewController.swift in Sources */,
 				6DEE0FDA1AC34811005552F9 /* User.swift in Sources */,

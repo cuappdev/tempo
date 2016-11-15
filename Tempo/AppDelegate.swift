@@ -25,7 +25,6 @@ extension URL {
 class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate {
 	
 	var window: UIWindow?
-	var tools: Tools!
 	let revealVC = SWRevealViewController()
 	let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
 	let feedVC = FeedViewController()
@@ -37,14 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let aboutVC = AboutViewController(nibName: "AboutViewController", bundle: nil)
 	let transparentView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
 	let navigationController = PlayerNavigationController()
-	
-	//slack info
-	let slackChannel = "C04C10672"
-	let slackToken = "xoxp-2342414247-2693337898-4405497914-7cb1a7"
-	let slackUsername = "Bug Report Bot"
-	
-	//tools
-	let toolsEnabled = true
 	
 	// Saved shortcut item used as a result of an app launch, used later when app is activated.
 	var launchedShortcutItem: AnyObject?
@@ -111,10 +102,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		setFirstVC()
 		toggleRootVC()
 		
-		//declaration of tools remains active in background while app runs
-		if toolsEnabled {
-			tools = Tools(rootViewController: window!.rootViewController!, slackChannel: slackChannel, slackToken: slackToken, slackUsername: slackUsername)
-		}
+		//should be used after user is created
+		registerForRemotePushNotifications()
+		
 		return shouldPerformAdditionalDelegateHandling
 	}
 	
@@ -441,4 +431,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		}
 		return true
 	}
+	
+	//MARK: - Remote Push Notifications
+	
+	func registerForRemotePushNotifications() {
+		DispatchQueue.main.async {
+			let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+			UIApplication.shared.registerUserNotificationSettings(settings)
+		}
+	}
+	
+	func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+		API.sharedAPI.registerForRemotePushNotificationsWithDeviceToken(deviceToken)
+	}
+	
+	func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+		application.registerForRemoteNotifications()
+	}
+
 }

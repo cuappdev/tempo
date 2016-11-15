@@ -147,6 +147,25 @@ class API {
 		}
 	}
 	
+	func registerForRemotePushNotificationsWithDeviceToken(_ deviceToken: Data) {
+		var token = NSString(format: "%@", deviceToken as NSData)
+		token = token.replacingOccurrences(of: "<", with: "") as NSString
+		token = token.replacingOccurrences(of: ">", with: "") as NSString
+		token = token.replacingOccurrences(of: " ", with: "") as NSString
+		
+		let baseURL = "ec2-35-162-151-106.us-west-2.compute.amazonaws.com/register_user"
+		
+		/// Test user_id for now, should be actual user id
+		/// This api call should only be made in settings and after login flow
+		/// so the user id will be set
+		let params = ["app": "TEMPO", "push_id":"\(token)", "user_id": "3"]
+		let headers = ["Content-Type" : "application/json"]
+		
+		Alamofire.request(baseURL, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+			debugPrint(response)
+		}
+	}
+	
 	func setCurrentUser(_ fbid: String, fbAccessToken: String, completion: @escaping (Bool) -> Void) {
 		let user = ["fbid": fbid, "usertoken": fbAccessToken]
 		let map: ([String: AnyObject]) -> Bool = {
