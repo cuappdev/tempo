@@ -271,7 +271,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	}
 	
 	// MARK: - Save song button clicked
-	
 	func didTapAddButtonForPostView(_ postView: PostView) {
 		savedSongAlertView = SavedSongView.instanceFromNib()
 		savedSongAlertView.showSongStatusPopup(postView.songStatus, playlist: "")

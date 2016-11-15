@@ -74,7 +74,7 @@ class SpotifyController {
 				print(error as Any)
 				completionHandler(false)
 			} else {
-				SPTYourMusic.saveTracks([data], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
+				SPTYourMusic.saveTracks([data!], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
 					if error != nil {
 						completionHandler(false)
 					} else {
@@ -95,7 +95,7 @@ class SpotifyController {
 			if error != nil {
 				completionHandler(false)
 			} else {
-				SPTYourMusic.removeTracks(fromSaved: [data], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
+				SPTYourMusic.removeTracks(fromSaved: [data!], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
 					if error != nil {
 						completionHandler(false)
 					} else {
@@ -138,7 +138,7 @@ class SpotifyController {
 					} else {
 						let selectedPlaylist = playlistData as! SPTPlaylistSnapshot
 						
-						selectedPlaylist.addTracks(toPlaylist: [trackData], with: SPTAuth.defaultInstance().session) { error in
+						selectedPlaylist.addTracks(toPlaylist: [trackData!], with: SPTAuth.defaultInstance().session) { error in
 							if error != nil {
 								completionHandler(false)
 							} else {

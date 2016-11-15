@@ -274,8 +274,10 @@ class API {
 	
 	fileprivate func makeNetworkRequest<O, T>(_ method: Alamofire.HTTPMethod, router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
 		
-		Alamofire.request(router, method: method, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
-				if let json = response.result.value as? O {
+		
+		Alamofire.request(router, method: method, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { response in
+
+			if let json = response.result.value as? O {
 					if let obj = map(json) {
 						completion?(obj)
 						self.isConnected = true
@@ -285,7 +287,7 @@ class API {
 					}
 				} else if let error = response.result.error {
 					print(error)
-					//TODO
+//					TODO
 //					if error.code != -1009 {
 //						self.isAPIConnected = false
 //						self.isConnected = true
@@ -295,6 +297,6 @@ class API {
 //						self.isConnected = false
 //					}
 				}
-		}
+		})
 	}
 }

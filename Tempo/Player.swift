@@ -141,7 +141,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 	
     // MARK: - AVAudioPlayerDelegate
 	
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
 		finishedPlaying = true
 		delegate.didFinishPlaying!()
     }
