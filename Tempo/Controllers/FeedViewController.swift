@@ -130,6 +130,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 					x.tableView.backgroundView = emptyView
 					
 				} else {
+					x.preparePosts()
 					x.tableView.backgroundView = nil
 				}
 			}
@@ -199,7 +200,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 		cell.postView.post?.player.prepareToPlay()
 		cell.postView.postViewDelegate = self
 		cell.postView.playerDelegate = self
-		cell.postView.post?.player.delegate = self
 		return cell
 	}
 	

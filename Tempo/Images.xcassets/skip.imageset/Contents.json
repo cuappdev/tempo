@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Play Button (1).png",
+      "filename" : "Skip Forward Button.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Play Button (1)-1.png",
+      "filename" : "Skip Forward Button-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Play Button (1)-2.png",
+      "filename" : "Skip Forward Button-2.png",
       "scale" : "3x"
     }
   ],

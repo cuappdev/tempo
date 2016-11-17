@@ -14,6 +14,8 @@ import MediaPlayer
 	@objc optional func didFinishPlaying()
 	@objc optional func didChangeProgress()
 	@objc optional func didToggleLike()
+	@objc optional func playNextSong()
+	@objc optional func playPrevSong()
 }
 
 class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate, PostViewDelegate, PlayerDelegate {
@@ -123,6 +125,13 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		preconditionFailure("This method must be overridden")
+	}
+	
+	func preparePosts() {
+		posts.forEach({ (post) in
+			post.player.delegate = self
+			post.player.prepareToPlay()
+		})
 	}
 	
 	func navigateToSuggestions() {
@@ -302,8 +311,18 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	}
 	
 	func didFinishPlaying() {
+		playNextSong()
+	}
+	
+	func playNextSong() {
 		var index = currentlyPlayingIndexPath!.row + 1
 		index = (index >= posts.count) ? 0 : index
+		currentlyPlayingIndexPath = IndexPath(row: index, section: 0)
+	}
+	
+	func playPrevSong() {
+		var index = currentlyPlayingIndexPath!.row - 1
+		index = (index < 0) ? 0 : index
 		currentlyPlayingIndexPath = IndexPath(row: index, section: 0)
 	}
 	
