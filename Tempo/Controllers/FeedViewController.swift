@@ -253,11 +253,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	
 	// MARK: - Navigation
 	
-	func didTapImageForPostView(_ postView: PostView) {
-		guard let user = postView.post?.user else { return }
+	func didTapImageForPostView(_ post: Post) {
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 		profileVC.title = "Profile"
-		profileVC.user = user
+		profileVC.user = post.user
 		navigationController?.pushViewController(profileVC, animated: true)
 	}
 	

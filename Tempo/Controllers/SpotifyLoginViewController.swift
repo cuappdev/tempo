@@ -18,7 +18,7 @@ class SpotifyLoginViewController: UIViewController {
 		connectButton.layer.cornerRadius = 5
 	}
 		
-    @IBAction func connectToSpotify(sender: UIButton) {
+    @IBAction func connectToSpotify(_ sender: UIButton) {
 		SpotifyController.sharedController.loginToSpotify { (success) in
 			if success { if let session = SPTAuth.defaultInstance().session { if session.isValid() {
 				SpotifyController.sharedController.setSpotifyUser(session.accessToken)
@@ -31,7 +31,7 @@ class SpotifyLoginViewController: UIViewController {
 		}
     }
 
-    @IBAction func skipSpotify(sender: UIButton) {
+    @IBAction func skipSpotify(_ sender: UIButton) {
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		appDelegate.toggleRootVC()
     }

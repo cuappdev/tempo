@@ -204,7 +204,6 @@
 				1D802AB51B786351005A96D1 /* AVFoundation.framework in Frameworks */,
 				1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */,
 				49941B33D42E6D1D9CAC5031 /* Pods_Tempo.framework in Frameworks */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,7 +270,6 @@
 				1D72D9B61AACC4C0007822B0 /* Products */,
 				B9DF81295CC69057799B6683 /* Frameworks */,
 				65D917AAEF2BE5A6E1AA154D /* Pods */,
-
 			);
 			sourceTree = "<group>";
 			usesTabs = 1;
@@ -485,7 +483,7 @@
 				TargetAttributes = {
 					1D72D9B41AACC4C0007822B0 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = ZGMCXU7X3U;
+						DevelopmentTeam = 9VSJZHVUGP;
 						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -749,7 +747,6 @@
 		1D72D9D51AACC4C0007822B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D5244650DDB6EA6E3FDF1FA /* Pods-Tempo.debug.xcconfig */;
-
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -757,7 +754,7 @@
 				CODE_SIGN_ENTITLEMENTS = Tempo/Tempo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				DEVELOPMENT_TEAM = 9VSJZHVUGP;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -808,7 +805,7 @@
 				CODE_SIGN_ENTITLEMENTS = Tempo/Tempo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				DEVELOPMENT_TEAM = 9VSJZHVUGP;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

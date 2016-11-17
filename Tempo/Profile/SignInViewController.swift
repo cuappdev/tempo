@@ -22,8 +22,8 @@ class SignInViewController: UIViewController {
 
     }
 	
-    @IBAction func logIn(sender: UIButton) {
-		let appDelegate = UIApplication.shared.delegate as! AppDelegate
-		appDelegate.loginToFacebook()
+    @IBAction func logIn(_ sender: UIButton) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.loginToFacebook()
     }
 }

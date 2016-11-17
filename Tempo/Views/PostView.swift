@@ -12,7 +12,7 @@ import Haneke
 
 @objc protocol PostViewDelegate {
 	@objc optional func didTapAddButtonForPostView(postView: PostView)
-	@objc optional func didTapImageForPostView(postView: PostView)
+	@objc optional func didTapImageForPostView(_ post: Post)
 }
 
 enum ViewType: Int {
@@ -259,7 +259,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 				updateLikedStatus()
 				playerDelegate.didToggleLike!()
 			} else if hitView == avatarImageView {
-				postViewDelegate?.didTapImageForPostView?(postView: self)
+				postViewDelegate?.didTapImageForPostView?(post)
 			}
 		}
 	}
