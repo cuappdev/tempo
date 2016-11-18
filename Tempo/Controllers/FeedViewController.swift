@@ -29,6 +29,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	var pretappedPlusButton = false
 	var refreshNeeded = false //set to true on logout
 	
+	var activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+	
 	// MARK: - Lifecycle Methods
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -45,13 +47,12 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 		
 		addHamburgerMenu()
 		
-		refreshFeedWithDelay(0, timeout: 5.0)
-		
 		tableView.tableHeaderView = nil
 		tableView.rowHeight = 100
 		tableView.showsVerticalScrollIndicator = false
 		refreshControl = customRefresh.refreshControl
 		tableView.addSubview(self.refreshControl)
+		tableView.alpha = 0.0
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
@@ -59,6 +60,9 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 				registerForPreviewing(with: self, sourceView: view)
 			}
 		}
+		
+		refreshFeedWithDelay(0, timeout: 5.0)
+		activityIndicatorView.center = view.center
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -90,6 +94,11 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 		var finishedRefreshing = false
 		//minimum time passed gets set to true when minimum delay dispatch gets called
 		var minimumTimePassed = false
+		
+		if tableView.alpha == 0.0 {
+			activityIndicatorView.startAnimating()
+			view.addSubview(activityIndicatorView)
+		}
 		
 		API.sharedAPI.fetchFeedOfEveryone { [weak self] in
 			self?.posts = $0
@@ -124,6 +133,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 					x.tableView.backgroundView = nil
 				}
 			}
+			
+			self?.tableView.alpha = 1.0
+			self?.activityIndicatorView.stopAnimating()
+			self?.activityIndicatorView.removeFromSuperview()
 		}
 		
 		//fetch for a minimum of delay seconds

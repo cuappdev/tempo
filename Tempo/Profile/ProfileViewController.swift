@@ -37,7 +37,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	var avgLikes: Float = 0
 	
 	// Outlets
-    @IBOutlet weak var backgroundImage: UIImageView!
 	@IBOutlet weak var profilePictureView: UIImageView!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var usernameLabel: UILabel!
@@ -140,7 +139,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		hipsterCredLabel.text = "\(user.hipsterScore)"
 		
 		profilePictureView.hnk_setImageFromURL(user.imageURL)
-		backgroundImage.hnk_setImageFromURL(user.imageURL)
 
         profilePictureView.layer.cornerRadius = profilePictureView.frame.size.height/2
         profilePictureView.clipsToBounds = true
