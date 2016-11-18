@@ -274,13 +274,15 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	}
 	
 	func didToggleLike() {
-		if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath!) as? FeedTableViewCell {
-			cell.postView.updateLikedStatus()
-			playerNav.playerCell.updateLikeButton()
-			playerNav.expandedCell.updateLikeButton()
+		//if there is a currentlyPlayingIndexPath, need to sync liked status of playerCells and post
+		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? FeedTableViewCell {
+				cell.postView.updateLikedStatus()
+				playerNav.playerCell.updateLikeButton()
+				playerNav.expandedCell.updateLikeButton()
+			}
 		}
 	}
-
 }
 
 @available(iOS 9.0, *)
