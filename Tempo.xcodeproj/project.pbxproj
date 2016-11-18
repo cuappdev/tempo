@@ -483,7 +483,7 @@
 				TargetAttributes = {
 					1D72D9B41AACC4C0007822B0 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 9VSJZHVUGP;
+						DevelopmentTeam = ZGMCXU7X3U;
 						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -754,7 +754,7 @@
 				CODE_SIGN_ENTITLEMENTS = Tempo/Tempo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9VSJZHVUGP;
+				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -805,7 +805,7 @@
 				CODE_SIGN_ENTITLEMENTS = Tempo/Tempo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9VSJZHVUGP;
+				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

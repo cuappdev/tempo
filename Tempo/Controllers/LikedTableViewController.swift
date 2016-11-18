@@ -73,6 +73,15 @@ class LikedTableViewController: PlayerTableViewController {
 	}
 	
     func retrieveLikedSongs() {
+		
+		let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+		activityIndicatorView.center = view.center
+		activityIndicatorView.startAnimating()
+		
+		if tableView.numberOfRows(inSection: 0) == 0 {
+			view.addSubview(activityIndicatorView)
+		}
+		
         API.sharedAPI.fetchLikes(User.currentUser.id) {
             self.posts = $0.map { Post(song: $0, user: User.currentUser) }
             self.tableView.reloadData()
@@ -82,6 +91,9 @@ class LikedTableViewController: PlayerTableViewController {
 			} else {
 				self.tableView.backgroundView = nil
 			}
+			
+			activityIndicatorView.stopAnimating()
+			activityIndicatorView.removeFromSuperview()
         }
     }
 

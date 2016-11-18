@@ -51,6 +51,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var followersLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
 	
+	var activityIndicatorView: UIActivityIndicatorView!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -58,8 +60,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		followButton.layer.borderColor = UIColor.tempoLightRed.cgColor
 		followButton.backgroundColor = UIColor.clear
 		
-		setupUserUI()
-		updateFollowingUI()
+		activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
 		
 		// Post History Calendar
 		separator.backgroundColor = UIColor.tempoLightRed
@@ -73,6 +74,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		collectionView.register(HipCalendarDayCollectionViewCell.self, forCellWithReuseIdentifier: "DayCell")
 		collectionView.backgroundColor = UIColor.clear
 		collectionView.scrollsToTop = false
+		collectionView.alpha = 0.0
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
@@ -80,6 +82,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 				registerForPreviewing(with: self, sourceView: view)
 			}
 		}
+		
+		setupUserUI()
+		updateFollowingUI()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -88,15 +93,28 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		nameLabel.isHidden = notConnected(true)
 		usernameLabel.isHidden = notConnected(false)
 		followButton.isHidden = notConnected(false)
+
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		if collectionView.alpha == 0.0 {
+			activityIndicatorView.center = CGPoint(x: view.frame.width / 2.0, y: collectionView.center.y)
+			activityIndicatorView.startAnimating()
+			view.addSubview(activityIndicatorView)
+		}
 	}
 
 	func setupUserUI() {
+		
 		API.sharedAPI.fetchPosts(user.id) { post in
 			self.posts = post
 			self.postedDates = post.map { $0.date! }
 			self.postedDays = self.postedDates.map { $0.day() }
 			self.postedYearMonthDay = self.postedDates.map { $0.yearMonthDay() }
 			self.postedLikes = post.map{ $0.likes }
+			self.collectionView.alpha = 1.0
 			self.collectionView.reloadData()
 			for date in self.postedDates {
 				if self.earliestPostDate == nil || date < self.earliestPostDate {
@@ -107,6 +125,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 				self.avgLikes += Float(likes)
 			}
 			self.avgLikes /= Float(self.postedLikes.count)
+			
+			self.activityIndicatorView.stopAnimating()
+			self.activityIndicatorView.removeFromSuperview()
 		}
 		
 		// Profile Info

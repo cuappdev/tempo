@@ -26,6 +26,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 	var isLoadingMoreSuggestions = false
 	let length = 10
 	var page = 0
+	
+	var activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,11 +67,16 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
 		
+		activityIndicatorView.center = view.center
+		
 		if displayType == .Users {
 			title = "Search Users"
 			addHamburgerMenu()
 			populateSuggestions()
 		} else {
+			
+			showActivityIndicator()
+			
 			let completion: ([User]) -> Void = {
 				self.users = $0
 				self.tableView.reloadData()
@@ -77,6 +84,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 					let contentType = self.displayType == .Followers ? ContentType.Followers : ContentType.Following
 					self.tableView.backgroundView = UIView.viewForEmptyViewController(contentType, size: self.view.bounds.size, isCurrentUser: (self.user.id == User.currentUser.id), userFirstName: self.user.firstName)
 				}
+				
+				self.hideActivityIndicator()
 			}
 			
 			if displayType == .Followers {
@@ -94,7 +103,22 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		}
     }
 	
+	func showActivityIndicator() {
+		if tableView.numberOfRows(inSection: 0) == 0 {
+			activityIndicatorView.startAnimating()
+			view.addSubview(activityIndicatorView)
+		}
+	}
+	
+	func hideActivityIndicator() {
+		self.activityIndicatorView.stopAnimating()
+		self.activityIndicatorView.removeFromSuperview()
+	}
+	
 	func populateSuggestions() {
+		
+		showActivityIndicator()
+		
 		let completion: ([User]) -> Void = {
 			self.suggestedUsers = $0
 			self.tableView.reloadData()
@@ -104,6 +128,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 			} else {
 				self.tableView.backgroundView = nil
 			}
+			
+			self.hideActivityIndicator()
 		}
 		
 		page = 0 // reset page
