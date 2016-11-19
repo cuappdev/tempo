@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class FeedViewController: PlayerTableViewController, SongSearchDelegate {
+class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFollowSuggestionsControllerDelegate {
 	
 	lazy var customRefresh: ADRefreshControl = {
 		self.refreshControl = UIRefreshControl()
@@ -30,6 +30,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 	var refreshNeeded = false //set to true on logout
 	
 	var activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+	
+	var feedFollowSuggestionsController: FeedFollowSuggestionsController?
 	
 	// MARK: - Lifecycle Methods
 	override func viewDidLoad() {
@@ -54,6 +56,11 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 		tableView.addSubview(self.refreshControl)
 		tableView.alpha = 0.0
 		
+		// Add follow suggestions controller to tableView
+		// Only shows if no posts in past 24 hours
+		feedFollowSuggestionsController = FeedFollowSuggestionsController(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - navigationController!.navigationBar.frame.height - playerNav.playerCell.frame.height - UIApplication.shared.statusBarFrame.height))
+		feedFollowSuggestionsController?.delegate = self
+		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
 			if traitCollection.forceTouchCapability == .available {
@@ -76,6 +83,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 			rotatePlusButton(false)
 		}
 		plusButton.isHidden = notConnected(false)
+		feedFollowSuggestionsController?.reload()
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -100,6 +108,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 			view.addSubview(activityIndicatorView)
 		}
 		
+		feedFollowSuggestionsController?.reload()
+		
 		API.sharedAPI.fetchFeedOfEveryone { [weak self] in
 			self?.posts = $0
 			//return even if we get data after a timeout
@@ -114,23 +124,14 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 			
 			if let x = self {
 				if x.posts.count == 0 {
-					let emptyView = UIView.viewForEmptyViewController(.Feed, size: x.view.bounds.size, isCurrentUser: true, userFirstName: "")
-					let button = UIButton(frame: CGRect(x: 0, y: 0, width: 190, height: 50))
-					button.center = x.view.center
-					button.center.y += 85
-					button.backgroundColor = UIColor.tempoLightRed
-					button.setTitle("Follow more friends", for: UIControlState())
-					button.setTitleColor(UIColor.white, for: UIControlState())
-					button.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
-					button.layer.cornerRadius = 5.0
-					button.addTarget(self, action: #selector(PlayerTableViewController.navigateToSuggestions), for: .touchUpInside)
-					
-					emptyView.addSubview(button)
-					
-					x.tableView.backgroundView = emptyView
-					
+					x.feedFollowSuggestionsController?.showNoMorePostsLabel()
+					x.tableView.tableFooterView = x.feedFollowSuggestionsController?.view
+				} else if x.posts.count < 3 {
+					x.feedFollowSuggestionsController?.hideNoMorePostsLabel()
+					x.tableView.tableFooterView = x.feedFollowSuggestionsController?.view
 				} else {
 					x.tableView.backgroundView = nil
+					x.tableView.tableFooterView = nil
 				}
 			}
 			
@@ -282,6 +283,17 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate {
 				playerNav.expandedCell.updateLikeButton()
 			}
 		}
+	}
+	
+	func feedFollowSuggestionsController(controller: FeedFollowSuggestionsController, wantsToShowProfileForUser user: User) {
+		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		profileVC.title = "Profile"
+		profileVC.user = user
+		navigationController?.pushViewController(profileVC, animated: true)
+	}
+	
+	func feedFollowSuggestionsControllerWantsToShowMoreSuggestions() {
+		navigateToSuggestions()
 	}
 }
 

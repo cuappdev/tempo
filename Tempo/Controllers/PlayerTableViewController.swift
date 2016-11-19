@@ -126,8 +126,13 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	}
 	
 	func navigateToSuggestions() {
-		let usersVC = (UIApplication.shared.delegate as! AppDelegate).usersVC
-		navigationController?.setViewControllers([usersVC], animated: false)
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+			return
+		}
+		
+		let sidebarVC = appDelegate.sidebarVC
+		sidebarVC.preselectedIndex = 1
+		sidebarVC.selectionHandler?(appDelegate.usersVC)
 	}
 	
     fileprivate func updateNowPlayingInfo() {

@@ -54,6 +54,8 @@
 		6DA5FE4D1AED72F800E795DD /* UIColor+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA5FE4C1AED72F800E795DD /* UIColor+Shared.swift */; };
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
+		9563B5541DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9563B5531DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift */; };
+		9563B5561DE0E8C700E80EAF /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9563B5551DE0E8C700E80EAF /* CGRect+Extensions.swift */; };
 		957E28461DDD1ED2009601CB /* BackendNotConnectedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957E28451DDD1ED2009601CB /* BackendNotConnectedProtocol.swift */; };
 		95D1E77E1CE20BED00E1EF0F /* HamburgerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1E77D1CE20BED00E1EF0F /* HamburgerIconView.swift */; };
 		B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B085F3B41BE3CBB80000421E /* SearchViewController.xib */; };
@@ -154,6 +156,8 @@
 		952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitBugViewController.swift; sourceTree = "<group>"; };
 		952F0FEC1BCF20E100C53522 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		952F0FED1BCF20E100C53522 /* Tweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweaks.swift; sourceTree = "<group>"; };
+		9563B5531DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedFollowSuggestionsController.swift; sourceTree = "<group>"; };
+		9563B5551DE0E8C700E80EAF /* CGRect+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
 		957319321DD1AF1000B5E3C4 /* Tempo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tempo.entitlements; sourceTree = "<group>"; };
 		957E28451DDD1ED2009601CB /* BackendNotConnectedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackendNotConnectedProtocol.swift; path = Utilities/Tools/BackendNotConnectedProtocol.swift; sourceTree = "<group>"; };
 		95D1E77D1CE20BED00E1EF0F /* HamburgerIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerIconView.swift; sourceTree = "<group>"; };
@@ -166,7 +170,6 @@
 		C0CF7B971AE425450083606C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		C7B1984D1DD67D6800EAB8EA /* SpotifyLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewController.swift; sourceTree = "<group>"; };
 		C7B1984F1DD67DCA00EAB8EA /* SpotifyLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SpotifyLoginViewController.xib; path = ../Profile/SpotifyLoginViewController.xib; sourceTree = "<group>"; };
-		CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendNotConnectedProtocol.swift; sourceTree = "<group>"; };
 		D102A9C51AE889D600C66385 /* SideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
 		D102A9C61AE889D600C66385 /* SideBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarViewController.xib; sourceTree = "<group>"; };
 		D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideBarTableViewCell.swift; path = ../Profile/SideBarTableViewCell.swift; sourceTree = "<group>"; };
@@ -216,6 +219,7 @@
 				B01FE1541C1765080077C2BF /* Spotify */,
 				6DEE0FC31AC34811005552F9 /* Profile */,
 				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
+				9563B5531DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift */,
 				B085F3B31BE3CBB80000421E /* SearchViewController.swift */,
 				B085F3B41BE3CBB80000421E /* SearchViewController.xib */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
@@ -232,9 +236,9 @@
 			children = (
 				952F0FCB1BCF20E100C53522 /* Tools */,
 				1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */,
-				CCC0F80D1C0257A2003429BF /* BackendNotConnectedProtocol.swift */,
 				6038B1791D80EBEA0083940D /* UIViewController+Utilities.swift */,
 				1D1DD7121AE492750066AB39 /* Util.swift */,
+				9563B5551DE0E8C700E80EAF /* CGRect+Extensions.swift */,
 				6DA5FE4C1AED72F800E795DD /* UIColor+Shared.swift */,
 				1DD875FB1B6E27DD0041C45B /* NSDateFormatter+Shared.swift */,
 				426E1A4A1C87BA6400512214 /* UIView+Utilities.swift */,
@@ -615,6 +619,7 @@
 				1DA44FC61B6D84D1009EC2BD /* PostButton.swift in Sources */,
 				60C018061D9C7A2E00FE5166 /* AboutViewController.swift in Sources */,
 				1D1DD7141AE492750066AB39 /* Util.swift in Sources */,
+				9563B5541DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift in Sources */,
 				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
 				1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */,
 				60256C1A1BC1BFA900B52FDD /* SavedSongView.swift in Sources */,
@@ -647,6 +652,7 @@
 				1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */,
 				D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */,
 				D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */,
+				9563B5561DE0E8C700E80EAF /* CGRect+Extensions.swift in Sources */,
 				957E28461DDD1ED2009601CB /* BackendNotConnectedProtocol.swift in Sources */,
 				95D1E77E1CE20BED00E1EF0F /* HamburgerIconView.swift in Sources */,
 				D160AE021BE677D4003B0E1A /* PlaylistTableViewController.swift in Sources */,
