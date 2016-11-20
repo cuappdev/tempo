@@ -49,7 +49,6 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
-		
 		backgroundColor = UIColor.tempoLightGray
 		
 		albumArtworkImageView = UIImageView(frame: CGRect(x: 20, y: 24, width: 52, height: 52))
@@ -86,8 +85,6 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 		let artistRightConstraint = NSLayoutConstraint(item: songArtistLabel!, attribute: .right, relatedBy: .equal, toItem: songNameLabel, attribute: .right, multiplier: 1, constant: 0)
 		
 		addConstraints([songTopConstraint, songWidthConstraint, songLeftConstraint, songRightConstraint, artistTopConstraint, artistLeftConstraint, artistWidthConstraint, artistRightConstraint])
-		
-	
 	}
 	
 	func updatePlayingStatus() {
