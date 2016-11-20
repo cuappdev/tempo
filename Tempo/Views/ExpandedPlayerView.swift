@@ -176,8 +176,8 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 						let appDelegate = UIApplication.shared.delegate as! AppDelegate
 						let playerNav = appDelegate.navigationController
 						let revealVC = appDelegate.revealVC
-						let spotifyVC = appDelegate.spotifyVC
-						playerNav.setViewControllers([spotifyVC], animated: true)
+						let settingsVC = appDelegate.settingsVC
+						playerNav.setViewControllers([settingsVC], animated: true)
 						revealVC.setFrontViewPosition(.left, animated: true)
 					}
 				}
