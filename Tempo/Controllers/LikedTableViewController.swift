@@ -9,7 +9,6 @@
 import UIKit
 
 class LikedTableViewController: PlayerTableViewController {
-    let cellIdentifier = "FeedTableViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +20,7 @@ class LikedTableViewController: PlayerTableViewController {
 		
 		tableView.rowHeight = 100
 		tableView.showsVerticalScrollIndicator = false
-		tableView.register(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: "FeedCell")
+		tableView.register(LikedTableViewCell.self, forCellReuseIdentifier: "LikedCell")
 		
 		addHamburgerMenu()
 
@@ -38,32 +37,29 @@ class LikedTableViewController: PlayerTableViewController {
 		
 		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
 	}
-    
+	
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-		
-        retrieveLikedSongs()
+		super.viewDidAppear(animated)
+		retrieveLikedSongs()
     }
 	
     // MARK: - Table View Methods
 	
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedTableViewCell
-		
-		cell.postView.type = .liked
+		let cell = tableView.dequeueReusableCell(withIdentifier: "LikedCell", for: indexPath) as! LikedTableViewCell
 		let posts = searchController.isActive ? filteredPosts : self.posts
-		cell.postView.playerCellRef = playerNav.playerCell
-		cell.postView.expandedPlayerRef = playerNav.expandedCell
-		cell.postView.post = posts[indexPath.row]
-		cell.postView.postViewDelegate = self
-		cell.postView.playerDelegate = self
+		cell.setupCell()
+		cell.postView?.playerCellRef = playerNav.playerCell
+		cell.postView?.expandedPlayerRef = playerNav.expandedCell
+		cell.postView?.post = posts[indexPath.row]
+		cell.postView?.postViewDelegate = self
+		cell.postView?.playerDelegate = self
+		cell.postView?.updatePlayingStatus()
 		
 		return cell
     }
 	
 	func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
-		let cell = tableView.cellForRow(at: indexPath) as! FeedTableViewCell
-		cell.postView.backgroundColor = UIColor.tempoLightGray
 		playerNav.playerCell.postsLikable = false
 		playerNav.expandedCell.postsLikable = false
 		playerNav.expandedCell.postHasInfo = false
@@ -82,7 +78,9 @@ class LikedTableViewController: PlayerTableViewController {
 		
         API.sharedAPI.fetchLikes(User.currentUser.id) {
             self.posts = $0.map { Post(song: $0, user: User.currentUser) }
+			self.posts.sort { $0.song.description < $1.song.description }
 			self.preparePosts()
+			
             self.tableView.reloadData()
 			
 			if self.posts.count == 0 {

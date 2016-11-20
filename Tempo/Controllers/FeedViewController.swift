@@ -195,10 +195,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	// MARK: - UITableViewDataSource
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedTableViewCell
+		cell.postView.type = .feed
 		cell.postView.playerCellRef = playerNav.playerCell
 		cell.postView.expandedPlayerRef = playerNav.expandedCell
 		cell.postView.post = posts[indexPath.row]
-		cell.postView.post?.player.prepareToPlay()
 		cell.postView.postViewDelegate = self
 		cell.postView.playerDelegate = self
 		return cell
