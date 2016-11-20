@@ -57,8 +57,6 @@ class LikedTableViewController: PlayerTableViewController {
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.postViewDelegate = self
 		cell.postView.playerDelegate = self
-		cell.postView.post?.player.delegate = self
-		cell.postView.post?.player.prepareToPlay()
 		
 		return cell
     }
@@ -84,6 +82,7 @@ class LikedTableViewController: PlayerTableViewController {
 		
         API.sharedAPI.fetchLikes(User.currentUser.id) {
             self.posts = $0.map { Post(song: $0, user: User.currentUser) }
+			self.preparePosts()
             self.tableView.reloadData()
 			
 			if self.posts.count == 0 {

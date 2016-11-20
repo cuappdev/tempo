@@ -11,8 +11,6 @@ import MarqueeLabel
 
 class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	
-	private let height = CGFloat(198)
-	
 	@IBOutlet weak var postDetailLabel: UILabel!
 	@IBOutlet weak var songLabel: MarqueeLabel!
 	@IBOutlet weak var artistLabel: MarqueeLabel!
@@ -26,6 +24,8 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	@IBOutlet weak var addButton: UIButton!
 	@IBOutlet weak var collapseButton: UIButton!
 	@IBOutlet weak var addButtonImage: UIImageView!
+	@IBOutlet weak var nextButton: UIButton!
+	@IBOutlet weak var prevButton: UIButton!
 	
 	var progressIndicator: UIView!
 	
@@ -35,7 +35,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		}
 	}
 	var postHasInfo = false
-	var parentNav: PlayerNavigationController?
+	var playerNav: PlayerNavigationController!
 	
 	var songStatus: SavedSongStatus = .notSaved
 	var post: Post?
@@ -58,15 +58,12 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		panGestureRecognizer?.delaysTouchesBegan = false
 		addGestureRecognizer(panGestureRecognizer!)
 		
-		let closeTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(collapseTap(sender:)))
-		closeTapGestureRecognizer.cancelsTouchesInView = false
-		topViewContainer.addGestureRecognizer(closeTapGestureRecognizer)
 		let cellPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(collapsePan(gesture:)))
 		cellPanGestureRecognizer.delaysTouchesBegan = false
 		topViewContainer.addGestureRecognizer(cellPanGestureRecognizer)
 		
-		parentNav = parent
-		progressView.playerDelegate = parentNav
+		playerNav = parent
+		progressView.playerDelegate = playerNav
 		progressView.backgroundColor = .tempoSuperDarkRed
 		
 		progressIndicator = UIView(frame: CGRect(x: progressView.frame.origin.x - 6, y: progressView.frame.origin.y - 6, width: 12, height: 12))
@@ -80,6 +77,12 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		
 		playToggleButton.layer.cornerRadius = 5
 		playToggleButton.clipsToBounds = true
+		prevButton.contentVerticalAlignment = .fill
+		prevButton.contentHorizontalAlignment = .fill
+		prevButton.imageView?.image = UIImage(named: "back")
+		nextButton.contentVerticalAlignment = .fill
+		nextButton.contentHorizontalAlignment = .fill
+		nextButton.imageView?.image = UIImage(named: "back")
 		
 		updateAddButton()
 		
@@ -91,7 +94,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		post = newPost
 		songLabel.text = newPost.song.title
 		artistLabel.text = newPost.song.artist
-		albumImage.hnk_setImageFromURL(newPost.song.smallArtworkURL ?? NSURL() as URL)
+		albumImage.hnk_setImageFromURL(newPost.song.largeArtworkURL ?? NSURL() as URL)
 		postDetailLabel.text = postHasInfo ? "\(newPost.user.name) posted \(getPostTime(time: newPost.relativeDate())) ago" : ""
 		songLabel.holdScrolling = false
 		artistLabel.holdScrolling = false
@@ -142,11 +145,6 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		updatePlayToggleButton()
 	}
 	
-	func collapseTap(sender: UITapGestureRecognizer) {
-		// Collapse expanded cell
-		parentNav?.animateExpandedCell(isExpanding: false)
-	}
-	
 	func expandedCellTapped(sender: UITapGestureRecognizer) {
 		let tapPoint = sender.location(in: self)
 		let hitView = hitTest(tapPoint, with: nil)
@@ -176,6 +174,12 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 				post.toggleLike()
 				delegate.didToggleLike!()
 			}
+		} else if hitView == nextButton {
+			delegate?.playNextSong?()
+		} else if hitView == prevButton {
+			delegate?.playPrevSong?()
+		} else {
+			playerNav.animateExpandedCell(isExpanding: false)
 		}
 	}
 	
@@ -207,7 +211,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	func collapsePan(gesture: UIPanGestureRecognizer) {
 		let translation = gesture.translation(in: self)
 		if gesture.state == .began || gesture.state == .changed {
-			let maxCenter = UIScreen.main.bounds.height - height/2.0
+			let maxCenter = UIScreen.main.bounds.height - playerNav.expandedHeight/2.0
 			
 			if translation.y > 0 || center.y > maxCenter {
 				center.y = center.y + translation.y < maxCenter ? maxCenter : center.y + translation.y
@@ -217,7 +221,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		
 		if gesture.state == .ended {
 			let velocity = gesture.velocity(in: self)
-			parentNav?.animateExpandedCell(isExpanding: velocity.y < 0)
+			playerNav.animateExpandedCell(isExpanding: velocity.y < 0)
 			initialPanView = nil
 		}
 		setNeedsDisplay()
@@ -225,7 +229,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	
 	func updatePlayToggleButton() {
 		if let selectedPost = post {
-			let name = selectedPost.player.isPlaying ? "pause-red" : "play-red"
+			let name = selectedPost.player.isPlaying ? "pause" : "play"
 			progressView.setUpTimer()
 			playToggleButton.setBackgroundImage(UIImage(named: name), for: .normal)
 		}

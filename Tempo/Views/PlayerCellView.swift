@@ -93,7 +93,7 @@ class PlayerCellView: UIView {
 	
 	func updatePlayToggleButton() {
 		if let selectedPost = post {
-			let name = selectedPost.player.isPlaying ? "pause-red" : "play-red"
+			let name = selectedPost.player.isPlaying ? "pause" : "play"
 			progressView.setUpTimer()
 			playToggleButton.setBackgroundImage(UIImage(named: name), for: UIControlState())
 		}

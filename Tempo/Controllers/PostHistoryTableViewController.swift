@@ -40,7 +40,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		
+		preparePosts()
 		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
 	}
     
@@ -115,7 +115,6 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		cell.postView.post = posts[absoluteIndex(indexPath)]
 		cell.postView.postViewDelegate = self
 		cell.postView.playerDelegate = self
-		cell.postView.post?.player.delegate = self
 		cell.postView.post?.player.prepareToPlay()
 	    cell.postView.dateLabel!.text = ""
 		
