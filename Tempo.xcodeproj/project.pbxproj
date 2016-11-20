@@ -73,8 +73,6 @@
 		D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */; };
 		D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4971AF031DB009AB073 /* NSDateExtension.swift */; };
 		D148F4AA1AF03EB4009AB073 /* PostHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */; };
-		D148F4AE1AF03EF5009AB073 /* PostHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */; };
-		D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */; };
 		D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14A31581AF53218005153E6 /* HipStickyHeaderFlowLayout.swift */; };
 		D14D06B21BE9535400ABA1CF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B085F3B31BE3CBB80000421E /* SearchViewController.swift */; };
 		D160ADFF1BE67406003B0E1A /* PlaylistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D160ADFD1BE67406003B0E1A /* PlaylistTableViewCell.swift */; };
@@ -183,8 +181,6 @@
 		D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarDayCollectionViewCell.swift; sourceTree = "<group>"; };
 		D148F4971AF031DB009AB073 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostHistoryTableViewController.swift; path = ../Controllers/PostHistoryTableViewController.swift; sourceTree = "<group>"; };
-		D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHistoryTableViewCell.swift; sourceTree = "<group>"; };
-		D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHistoryTableViewCell.xib; sourceTree = "<group>"; };
 		D14A31581AF53218005153E6 /* HipStickyHeaderFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipStickyHeaderFlowLayout.swift; sourceTree = "<group>"; };
 		D160ADFD1BE67406003B0E1A /* PlaylistTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewCell.swift; sourceTree = "<group>"; };
 		D160ADFE1BE67406003B0E1A /* PlaylistTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistTableViewCell.xib; sourceTree = "<group>"; };
@@ -436,8 +432,6 @@
 			isa = PBXGroup;
 			children = (
 				D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */,
-				D148F4AC1AF03EF5009AB073 /* PostHistoryTableViewCell.swift */,
-				D148F4AD1AF03EF5009AB073 /* PostHistoryTableViewCell.xib */,
 				D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */,
 				D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */,
 				D148F4971AF031DB009AB073 /* NSDateExtension.swift */,
@@ -541,7 +535,6 @@
 				D160AE001BE67406003B0E1A /* PlaylistTableViewCell.xib in Resources */,
 				1DE649C41B78590800DA5499 /* SpotifyViewController.xib in Resources */,
 				60C5A3CD1D9A1FB1004BDD58 /* LaunchScreen.storyboard in Resources */,
-				D148F4AF1AF03EF5009AB073 /* PostHistoryTableViewCell.xib in Resources */,
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
 				60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */,
 				0271C9481D9582410037F6AD /* PostHistoryHeaderSectionCell.xib in Resources */,
@@ -651,7 +644,6 @@
 				FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */,
 				D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */,
 				6DA5FE4D1AED72F800E795DD /* UIColor+Shared.swift in Sources */,
-				D148F4AE1AF03EF5009AB073 /* PostHistoryTableViewCell.swift in Sources */,
 				D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */,
 				6038B17E1D80ED250083940D /* FeedTableViewCell.swift in Sources */,
 				6084F6C51BE700B00048EFE3 /* PlayerTableViewController.swift in Sources */,
