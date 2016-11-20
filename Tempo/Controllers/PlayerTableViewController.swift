@@ -39,7 +39,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			if searchController.isActive {
 				array = filteredPosts
 			}
-            if let row = currentlyPlayingIndexPath?.row, (array[row].song.spotifyID == playerNav.playerCell.post?.song.spotifyID) {
+            if let row = currentlyPlayingIndexPath?.row, (array[row].song.spotifyID == playerNav.currentPost?.song.spotifyID) {
                 didTogglePlaying(animate: true)
             } else {
 				//Deal with past post that's being played
@@ -358,8 +358,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				}
 			}
 			
-			playerNav.playerCell.updatePlayingStatus()
-			playerNav.expandedCell.updatePlayingStatus()
+			playerNav.updatePlayingStatus()
 		}
 	}
 	
@@ -367,7 +366,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		playerNav.currentPost = currentlyPlayingPost
 		playerNav.postsRef = posts
 		playerNav.postRefIndex = row
-		playerNav.playerCell.delegate = self
-		playerNav.expandedCell.delegate = self
+		playerNav.updateDelegates(delegate: self)
 	}
 }

@@ -22,6 +22,8 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	@IBOutlet weak var likeButton: UIButton!
 	@IBOutlet weak var likeButtonImage: UIImageView!
 	@IBOutlet weak var addButton: UIButton!
+	@IBOutlet weak var openButton: UIButton!
+	@IBOutlet weak var bottomButtonsView: UIView!
 	@IBOutlet weak var collapseButton: UIButton!
 	@IBOutlet weak var addButtonImage: UIImageView!
 	@IBOutlet weak var nextButton: UIButton!
@@ -31,7 +33,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	
 	var postsLikable: Bool? {
 		didSet {
-			likeButton.isHidden = !(postsLikable!)
+			likeButton.isUserInteractionEnabled = postsLikable!
 		}
 	}
 	var postHasInfo = false
@@ -48,6 +50,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	
 	func setup(parent: PlayerNavigationController) {
 		backgroundColor = .tempoSuperDarkGray
+		bottomButtonsView.backgroundColor = .tempoSuperDarkGray
 		// Setup gesture recognizers
 		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(expandedCellTapped(sender:)))
 		tapGestureRecognizer?.delegate = self
@@ -84,8 +87,6 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		nextButton.contentHorizontalAlignment = .fill
 		nextButton.imageView?.image = UIImage(named: "back")
 		
-		updateAddButton()
-		
 		setupMarqueeLabel(label: songLabel)
 		setupMarqueeLabel(label: artistLabel)
 	}
@@ -99,10 +100,10 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		songLabel.holdScrolling = false
 		artistLabel.holdScrolling = false
 		
-		updateAddButton()
 		updateLikeButton()
 		updateSongStatus()
 		updatePlayingStatus()
+		updateAddButton()
 	}
 	
 	private func getPostTime(time: String) -> String {
@@ -154,18 +155,30 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 				delegate.didTogglePlaying(animate: true)
 			}
 		} else if hitView == addButton {
-			if songStatus == .notSaved {
-				SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
-					if success {
-						self.addButtonImage.image = UIImage(named: "check")
-						self.songStatus = .saved
-					}
-				}
-			} else if songStatus == .saved {
-				SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
-					if success {
-						self.addButtonImage.image = UIImage(named: "plus")
-						self.songStatus = .notSaved
+			if let _ = post {
+				SpotifyController.sharedController.spotifyIsAvailable { success in
+					if success && songStatus == .notSaved {
+						SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
+							if success {
+								self.toggleAddButton()
+								self.playerNav.playerCell.toggleAddButton()
+							}
+						}
+					} else if success && songStatus == .saved {
+						SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
+							if success {
+								self.toggleAddButton()
+								self.playerNav.playerCell.toggleAddButton()
+							}
+						}
+					} else {
+						//bring them to settingsVC
+						let appDelegate = UIApplication.shared.delegate as! AppDelegate
+						let playerNav = appDelegate.navigationController
+						let revealVC = appDelegate.revealVC
+						let spotifyVC = appDelegate.spotifyVC
+						playerNav.setViewControllers([spotifyVC], animated: true)
+						revealVC.setFrontViewPosition(.left, animated: true)
 					}
 				}
 			}
@@ -174,6 +187,9 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 				post.toggleLike()
 				delegate.didToggleLike!()
 			}
+		} else if let post = post, hitView == openButton {
+			let songURL = URL(string: "https://open.spotify.com/track/\(post.song.spotifyID)")
+			UIApplication.shared.openURL(songURL!)
 		} else if hitView == nextButton {
 			delegate?.playNextSong?()
 		} else if hitView == prevButton {
@@ -235,20 +251,6 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		}
 	}
 	
-	private func updateAddButton() {
-		addButton.isUserInteractionEnabled = false
-		addButton.isHidden = true
-		if let _ = post {
-			SpotifyController.sharedController.spotifyIsAvailable { success in
-				if success {
-					self.addButton.isHidden = false
-					self.addButton.isUserInteractionEnabled = true
-					self.addButtonImage.image = (self.songStatus == .saved) ? UIImage(named: "check") : UIImage(named: "plus")
-				}
-			}
-		}
-	}
-	
 	func updateLikeButton() {
 		if let selectedPost = post {
 			if postsLikable! {
@@ -256,6 +258,15 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 				likeButtonImage.image = UIImage(named: name)
 			}
 		}
+	}
+	
+	func updateAddButton() {
+		self.addButtonImage.image = songStatus == .saved ? UIImage(named: "check") : UIImage(named: "plus")
+	}
+	
+	func toggleAddButton() {
+		songStatus = songStatus == .saved ? .notSaved : .saved
+		updateAddButton()
 	}
 	
 	private func setupMarqueeLabel(label: MarqueeLabel) {

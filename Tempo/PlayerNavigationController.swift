@@ -66,8 +66,23 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		}
 	}
 	
+	func updateDelegates(delegate: PlayerDelegate) {
+		playerCell.delegate = delegate
+		expandedCell.delegate = delegate
+	}
+	
 	func resetPlayerCells() {
 		playerCell.resetPlayerCell()
 		expandedCell.resetPlayerCell()
+	}
+	
+	func updatePlayingStatus() {
+		playerCell.updatePlayingStatus()
+		expandedCell.updatePlayingStatus()
+	}
+	
+	func updateLikeButton() {
+		playerCell.updateLikeButton()
+		expandedCell.updateLikeButton()
 	}
 }
