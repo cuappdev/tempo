@@ -40,7 +40,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				array = filteredPosts
 			}
             if let row = currentlyPlayingIndexPath?.row, (array[row].song.spotifyID == playerNav.playerCell.post?.song.spotifyID) {
-                let _ = didTogglePlaying(animate: true)
+                didTogglePlaying(animate: true)
             } else {
 				//Deal with past post that's being played
                 currentlyPlayingPost?.player.pause()
@@ -50,6 +50,10 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 						let neoSelf = self as! PostHistoryTableViewController
 						if let cell = tableView.cellForRow(at: neoSelf.relativeIndexPath(row: oldValue.row) as IndexPath) as? FeedTableViewCell {
 							cell.postView.updatePlayingStatus()
+						}
+					} else if self is LikedTableViewController {
+						if let cell = tableView.cellForRow(at: oldValue) as? LikedTableViewCell {
+							cell.postView?.updatePlayingStatus()
 						}
 					} else {
 						if let cell = tableView.cellForRow(at: oldValue) as? FeedTableViewCell {
@@ -285,9 +289,10 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	}
 	
 	// MARK: - Save song button clicked
-	func didTapAddButtonForPostView(_ postView: PostView) {
+	func didTapAddButtonForPostView(_ saved: Bool) {
 		savedSongAlertView = SavedSongView.instanceFromNib()
-		savedSongAlertView.showSongStatusPopup(postView.songStatus, playlist: "")
+		let songStatus: SavedSongStatus = saved ? .notSaved : .saved
+		savedSongAlertView.showSongStatusPopup(songStatus, playlist: "")
 	}
 	
 	func didLongPressOnCell(_ postView: PostView) {
@@ -338,8 +343,19 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	// Updates all views related to some player
 	func updatePlayingCells() {
 		if let path = currentlyPlayingIndexPath {
-			if let cell = tableView.cellForRow(at: path) as? FeedTableViewCell {
-				cell.postView.updatePlayingStatus()
+			if self is PostHistoryTableViewController {
+				let neoSelf = self as! PostHistoryTableViewController
+				if let cell = tableView.cellForRow(at: neoSelf.relativeIndexPath(row: path.row) as IndexPath) as? FeedTableViewCell {
+					cell.postView.updatePlayingStatus()
+				}
+			} else if self is LikedTableViewController {
+				if let cell = tableView.cellForRow(at: path) as? LikedTableViewCell {
+					cell.postView?.updatePlayingStatus()
+				}
+			} else {
+				if let cell = tableView.cellForRow(at: path) as? FeedTableViewCell {
+					cell.postView.updatePlayingStatus()
+				}
 			}
 			
 			playerNav.playerCell.updatePlayingStatus()
@@ -351,6 +367,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		playerNav.currentPost = currentlyPlayingPost
 		playerNav.postsRef = posts
 		playerNav.postRefIndex = row
-		playerNav.updateCellDelegates(delegate: self)
+		playerNav.playerCell.delegate = self
+		playerNav.expandedCell.delegate = self
 	}
 }

@@ -15,24 +15,14 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
 	@IBOutlet var avatarImageView: UIImageView?
 	@IBOutlet var descriptionLabel: UILabel?
 	@IBOutlet var spacingConstraint: NSLayoutConstraint?
- 
-    fileprivate var updateTimer: Timer?
-    fileprivate var notificationHandler: AnyObject?
     
     var post: Post? {
         didSet {
-            if let handler: AnyObject = notificationHandler {
-                NotificationCenter.default.removeObserver(handler)
-            }
-
             // update stuff
 			if let post = post {
 				avatarImageView?.layer.cornerRadius = 7
                 profileNameLabel?.text = post.song.title
                 descriptionLabel?.text = post.song.artist
-            } else {
-                updateTimer?.invalidate()
-                updateTimer = nil
             }
         }
     }
@@ -53,6 +43,8 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         
         layer.borderColor = UIColor.tempoDarkGray.cgColor
         layer.borderWidth = CGFloat(0.7)
+		
+		descriptionLabel?.textColor = UIColor.descriptionLightGray
     }
     
     override func didMoveToSuperview() {
@@ -61,24 +53,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
 	
 	func updatePlayingStatus() {
 		updateProfileLabel()
-		
-		if updateTimer == nil && post?.player.isPlaying ?? false {
-			// 60 fps
-			updateTimer = Timer(timeInterval: 1.0 / 60.0,
-			                            target: self, selector: #selector(timerFired(timer:)),
-			                            userInfo: nil,
-			                            repeats: true)
-			RunLoop.current.add(updateTimer!, forMode: RunLoopMode.commonModes)
-		} else {
-			updateTimer?.invalidate()
-			updateTimer = nil
-		}
-	}
-	
-    dynamic private func timerFired(timer: Timer) {
-        if post?.player.isPlaying ?? false {
-            setNeedsDisplay()
-        }
+		updateBackground()
 	}
 	
     // Customize view to be able to re-use it for search results.
@@ -109,17 +84,13 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
                 })
             }
         }
-    }
+	}
 	
-	override func draw(_ rect: CGRect) {
-        var fill = 0
-        if let post = post {
-			fill = post.player.isPlaying ? 1 : 0
-        }
-        super.draw(rect)
-        UIColor.tempoDarkGray.setFill()
-        UIGraphicsGetCurrentContext()?.fill(CGRect(x: 0, y: 0, width: bounds.width * CGFloat(fill), height: bounds.height))
-    }
+	func updateBackground() {
+		if let post = post {
+			backgroundColor = post.player.isPlaying ? UIColor.tempoDarkGray : UIColor.tempoLightGray
+		}
+	}
     
     func postViewPressed(_ sender: UITapGestureRecognizer) {
         if let post = post {

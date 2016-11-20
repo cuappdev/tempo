@@ -123,7 +123,6 @@ class PlayerCellView: UIView {
 			SpotifyController.sharedController.spotifyIsAvailable { success in
 				if success {
 					self.addButton!.isHidden = false
-
 				}
 			}
 		}
