@@ -51,11 +51,6 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		view.addSubview(expandedCell!)
 	}
 	
-	func updateCellDelegates(delegate: PlayerDelegate) {
-		playerCell.delegate = delegate
-		expandedCell.delegate = delegate
-	}
-	
 	func updatePlayerCells(newPost: Post) {
 		playerCell.updateCellInfo(newPost: newPost)
 		expandedCell.updateCellInfo(newPost: newPost)

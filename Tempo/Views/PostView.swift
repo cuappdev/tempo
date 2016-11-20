@@ -11,14 +11,13 @@ import MediaPlayer
 import Haneke
 
 @objc protocol PostViewDelegate {
-	@objc optional func didTapAddButtonForPostView(postView: PostView)
+	@objc optional func didTapAddButtonForPostView(_ saved: Bool)
 	@objc optional func didTapImageForPostView(_ post: Post)
 }
 
 enum ViewType: Int {
     case feed
 	case history
-	case liked
 }
 
 enum SavedSongStatus: Int {
@@ -44,10 +43,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	var songStatus: SavedSongStatus = .notSaved
 	var postViewDelegate: PostViewDelegate!
 	var playerDelegate: PlayerDelegate!
-    private var updateTimer: Timer?
-	private var playNotificationHandler: NSObjectProtocol?
-	private var likedNotificationHandler: NSObjectProtocol?
-	private var didFinishPlayingNotificationHandler: NSObjectProtocol?
 
 	var playerController: PlayerTableViewController?
 	var playerCellRef: PlayerCellView?
@@ -55,15 +50,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     var post: Post? {
         didSet {
-            if let playHandler = playNotificationHandler {
-                NotificationCenter.default.removeObserver(playHandler)
-            }
-			if let likedHandler = likedNotificationHandler {
-				NotificationCenter.default.removeObserver(likedHandler)
-			}
-
-            setUpTimer()
-            
             // update stuff
             if let post = post {
                 switch type {
@@ -82,19 +68,12 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
 					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
-				case .liked:
-					avatarImageView?.layer.cornerRadius = 7
-					profileNameLabel?.text = post.song.title
-					descriptionLabel?.text = post.song.artist
-					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
-					likedButton!.isHidden = true
-					dateLabel?.isHidden = true
 				}
 				
 				switch type {
 				case .feed:
 					avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
-				case .history, .liked:
+				case .history:
 					avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL ?? URL(fileURLWithPath: ""))
 				}
                 
@@ -112,8 +91,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	// Called from delegate whenever player it toggled
 	func updatePlayingStatus() {
 		updateProfileLabel()
-		setUpTimer()
-		setNeedsDisplay()
+		updateBackground()
 	}
 	
 	func updateDateLabel() {
@@ -124,22 +102,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			}
 		}
 	}
-	
-    fileprivate func setUpTimer() {
-        if updateTimer == nil && post?.player.isPlaying ?? false {
-            // 60 fps
-            updateTimer = Timer(timeInterval: 1.0 / 60.0,
-                target: self, selector: #selector(timerFired(_:)),
-                userInfo: nil,
-                repeats: true)
-
-            RunLoop.current.add(updateTimer!, forMode: RunLoopMode.commonModes)
-        } else if !(post?.player.isPlaying ?? false) {
-            updateTimer?.invalidate()
-            updateTimer = nil
-        }
-        
-    }
     
     override func didMoveToWindow() {
         
@@ -175,17 +137,10 @@ class PostView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    dynamic fileprivate func timerFired(_ timer: Timer) {
-        if post?.player.isPlaying ?? false {
-            setNeedsDisplay()
-        }
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
-        setNeedsDisplay()
         updateProfileLabel()
-        setUpTimer()
+		updateBackground()
     }
 	
     // Customize view to be able to re-use it for search results.
@@ -232,21 +187,16 @@ class PostView: UIView, UIGestureRecognizerDelegate {
             }
         }
     }
-    
-    override func draw(_ rect: CGRect) {
-		var fill = 0
+	
+	func updateBackground() {
 		if let post = post {
 			if type == .feed {
-				fill = post.player.wasPlayed ? 1 : 0
+				backgroundColor = post.player.wasPlayed ? UIColor.tempoDarkGray : UIColor.tempoLightGray
 			} else {
-				fill = post.player.isPlaying ? 1 : 0
-			 }
+				backgroundColor = post.player.isPlaying ? UIColor.tempoDarkGray : UIColor.tempoLightGray
+			}
 		}
-        super.draw(rect)
-
-        fillColor.setFill()
-        UIGraphicsGetCurrentContext()?.fill(CGRect(x: 0, y: 0, width: bounds.width * CGFloat(fill), height: bounds.height))
-    }
+	}
     
 	func postViewPressed(_ sender: UIGestureRecognizer) {
 		guard let post = post else { return }
