@@ -49,8 +49,6 @@ class LikedTableViewController: PlayerTableViewController {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "LikedCell", for: indexPath) as! LikedTableViewCell
 		let posts = searchController.isActive ? filteredPosts : self.posts
 		cell.setupCell()
-		cell.postView?.playerCellRef = playerNav.playerCell
-		cell.postView?.expandedPlayerRef = playerNav.expandedCell
 		cell.postView?.post = posts[indexPath.row]
 		cell.postView?.postViewDelegate = self
 		cell.postView?.playerDelegate = self

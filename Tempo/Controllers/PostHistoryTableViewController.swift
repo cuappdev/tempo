@@ -108,8 +108,6 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		
 		cell.postView.type = .history
 		let posts = searchController.isActive ? filteredPosts : self.posts
-		cell.postView.playerCellRef = playerNav.playerCell
-		cell.postView.expandedPlayerRef = playerNav.expandedCell
 		cell.postView.post = posts[absoluteIndex(indexPath)]
 		cell.postView.postViewDelegate = self
 		cell.postView.playerDelegate = self
@@ -152,8 +150,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 				cell.postView.updatePlayingStatus()
 			}
 			
-			playerNav.playerCell.updatePlayingStatus()
-			playerNav.expandedCell.updatePlayingStatus()
+			playerNav.updatePlayingStatus()
 		}
 	}
 	

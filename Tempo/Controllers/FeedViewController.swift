@@ -196,8 +196,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedTableViewCell
 		cell.postView.type = .feed
-		cell.postView.playerCellRef = playerNav.playerCell
-		cell.postView.expandedPlayerRef = playerNav.expandedCell
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.postViewDelegate = self
 		cell.postView.playerDelegate = self
@@ -279,8 +277,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
 			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? FeedTableViewCell {
 				cell.postView.updateLikedStatus()
-				playerNav.playerCell.updateLikeButton()
-				playerNav.expandedCell.updateLikeButton()
+				playerNav.updateLikeButton()
 			}
 		}
 	}

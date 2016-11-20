@@ -45,8 +45,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	var playerDelegate: PlayerDelegate!
 
 	var playerController: PlayerTableViewController?
-	var playerCellRef: PlayerCellView?
-	var expandedPlayerRef: ExpandedPlayerView?
     
     var post: Post? {
         didSet {

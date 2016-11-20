@@ -169,7 +169,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		activePlayer = cell.postView.post?.player
 		activePlayer?.delegate = self
 		didTogglePlaying(animate: true)
-		playerNav.playerCell.delegate = self
+		playerNav.updateDelegates(delegate: self)
 		playerNav.playerCell.postsLikable = false
 		playerNav.expandedCell.postsLikable = false
 		playerNav.expandedCell.postHasInfo = false
@@ -240,8 +240,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		if let activePlayer = activePlayer {
 			activePlayer.togglePlaying()
 			selectedCell?.postView.updatePlayingStatus()
-			playerNav.playerCell.updatePlayingStatus()
-			playerNav.expandedCell.updatePlayingStatus()
+			playerNav.updatePlayingStatus()
 		}
 	}
 	

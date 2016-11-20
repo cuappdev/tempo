@@ -20,24 +20,22 @@ class PlayerCellView: UIView {
 	
 	var postsLikable: Bool? {
 		didSet {
-			likeButton.isHidden = !(postsLikable!)
+			likeButton.isUserInteractionEnabled = postsLikable!
 		}
 	}
-	var parentNav: PlayerNavigationController?
+	var playerNav: PlayerNavigationController?
 	
 	var songStatus: SavedSongStatus = .notSaved
 	var post: Post?
 	var delegate: PlayerDelegate!
 	
 	func setup(parent: PlayerNavigationController) {
-		parentNav = parent
+		playerNav = parent
 		backgroundColor = UIColor.tempoSuperDarkGray
 		let tap = UITapGestureRecognizer(target: self, action: #selector(expandTap(sender:)))
 		addGestureRecognizer(tap)
-		progressView.playerDelegate = parentNav
+		progressView.playerDelegate = playerNav
 		progressView.backgroundColor = UIColor.tempoSuperDarkRed
-		
-		updateAddButton()
 
 		playToggleButton.layer.cornerRadius = 5
 		playToggleButton.clipsToBounds = true
@@ -54,10 +52,10 @@ class PlayerCellView: UIView {
 		artistLabel.holdScrolling = false
 		isUserInteractionEnabled = true
 		
-		updateAddButton()
 		updateLikeButton()
 		updateSongStatus()
 		updatePlayingStatus()
+		updateAddButton()
 	}
 	
 	fileprivate func updateSongStatus() {
@@ -71,8 +69,7 @@ class PlayerCellView: UIView {
 	}
 	
 	func expandTap(sender: UITapGestureRecognizer) {
-		parentNav?.animateExpandedCell(isExpanding: true)
-
+		playerNav?.animateExpandedCell(isExpanding: true)
 	}
 	
 	func updatePlayingStatus() {
@@ -100,29 +97,31 @@ class PlayerCellView: UIView {
 	}
     
 	@IBAction func addButtonClicked(_ sender: UIButton) {
-		if songStatus == .notSaved {
-			SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
-				if success {
-					self.addButton.setBackgroundImage(UIImage(named: "check"), for: .normal)
-					self.songStatus = .saved
-				}
-			}
-		} else if songStatus == .saved {
-			SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
-				if success {
-					self.addButton.setBackgroundImage(UIImage(named: "plus"), for: .normal)
-					self.songStatus = .notSaved
-				}
-			}
-		}
-	}
-	
-	private func updateAddButton() {
-		addButton!.isHidden = true
 		if let _ = post {
 			SpotifyController.sharedController.spotifyIsAvailable { success in
-				if success {
-					self.addButton!.isHidden = false
+				if success && songStatus == .notSaved {
+					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
+						if success {
+							print("should be saving")
+							self.toggleAddButton()
+							self.playerNav?.expandedCell.toggleAddButton()
+						}
+					}
+				} else if success && songStatus == .saved {
+					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
+						if success {
+							self.toggleAddButton()
+							self.playerNav?.expandedCell.toggleAddButton()
+						}
+					}
+				} else {
+					//bring them to settingsVC
+					let appDelegate = UIApplication.shared.delegate as! AppDelegate
+					let playerNav = appDelegate.navigationController
+					let revealVC = appDelegate.revealVC
+					let spotifyVC = appDelegate.spotifyVC
+					playerNav.setViewControllers([spotifyVC], animated: true)
+					revealVC.setFrontViewPosition(.left, animated: true)
 				}
 			}
 		}
@@ -143,6 +142,16 @@ class PlayerCellView: UIView {
 				likeButton?.setBackgroundImage(UIImage(named: name), for: .normal)
 			}
 		}
+	}
+	
+	func updateAddButton() {
+		let image = songStatus == .saved ? UIImage(named: "check") : UIImage(named: "plus")
+		self.addButton.setBackgroundImage(image, for: .normal)
+	}
+	
+	func toggleAddButton() {
+		songStatus = songStatus == .saved ? .notSaved : .saved
+		updateAddButton()
 	}
 	
 	fileprivate func setupMarqueeLabel(_ label: MarqueeLabel) {
