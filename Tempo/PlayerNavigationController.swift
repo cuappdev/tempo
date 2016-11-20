@@ -20,7 +20,7 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	let frameHeight = CGFloat(72)
 	
 	var expandedCell: ExpandedPlayerView!
-	let expandedHeight = CGFloat(198)
+	let expandedHeight = CGFloat(347)
 	
 	var postsRef: [Post]?
 	var postRefIndex: Int?
