@@ -176,6 +176,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	func updateFollowingUI() {
 		if User.currentUser.username != user.username {
 			followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
+			followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
 		}
 
 		followingLabel.text = "\(user.followingCount)"

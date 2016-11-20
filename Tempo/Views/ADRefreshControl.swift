@@ -23,7 +23,7 @@ class ADRefreshControl {
 		// Create the graphic image views
 		vinylView = UIImageView(image: UIImage(named: "vinyl-red")?.withRenderingMode(.alwaysTemplate))
 		vinylView.tintColor = UIColor.tempoLightRed
-		vinylView.frame = CGRect(x: 0, y: 0, width: 45, height: 45)
+		vinylView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
 		vinylView.layer.opacity = 0
 		
 		// Add the graphics to the loading view
@@ -73,7 +73,7 @@ class ADRefreshControl {
 			// Rotate the spinner by M_PI_2 = PI/2 = 90 degrees
 			self.vinylView.transform = self.vinylView.transform.rotated(by: CGFloat(-1 * M_PI_2))
 			if self.timesAnimationLooped % 2 == 0 {
-				self.vinylView.transform = self.vinylView.transform.scaledBy(x: 1.30, y: 1.30)
+				self.vinylView.transform = self.vinylView.transform.scaledBy(x: 1.3, y: 1.3)
 			} else {
 				self.vinylView.transform = self.vinylView.transform.scaledBy(x: 1/1.3, y: 1/1.3)
 			}
