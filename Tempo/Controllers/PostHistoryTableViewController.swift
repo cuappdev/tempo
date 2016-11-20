@@ -69,11 +69,10 @@ class PostHistoryTableViewController: PlayerTableViewController {
 				absoluteIndex = absoluteIndex + postedDatesDict[postedDatesSections[s]]!
 			}
 		}
-
 		return absoluteIndex
 	}
 	
-	func relativeIndexPath(row: Int) -> NSIndexPath {
+	func relativeIndexPath(row: Int) -> IndexPath {
 		var newRow = row
 		var section = 0
 		var s = 0
@@ -82,8 +81,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 			section += 1
 			s += 1
 		}
-		
-		return IndexPath(row: newRow, section: section) as NSIndexPath
+		return IndexPath(row: newRow, section: section)
 	}
 	
 	// Filter posted dates into dictionary of key: date, value: date_count
@@ -115,8 +113,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		cell.postView.post = posts[absoluteIndex(indexPath)]
 		cell.postView.postViewDelegate = self
 		cell.postView.playerDelegate = self
-		cell.postView.post?.player.prepareToPlay()
-	    cell.postView.dateLabel!.text = ""
+	    cell.postView.dateLabel!.isHidden = true
 		
 		return cell
     }
@@ -139,13 +136,13 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		return convertDate(postedDatesSections[section])
 	}
 	
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedCell = tableView.cellForRow(at: indexPath as IndexPath) as! FeedTableViewCell
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath) as! FeedTableViewCell
 		selectedCell.postView.backgroundColor = UIColor.tempoLightGray
 		playerNav.playerCell.postsLikable = true
 		playerNav.expandedCell.postsLikable = true
 		playerNav.expandedCell.postHasInfo = false
-		currentlyPlayingIndexPath = IndexPath(row: absoluteIndex(indexPath as IndexPath), section: 0)
+		currentlyPlayingIndexPath = IndexPath(row: absoluteIndex(indexPath), section: 0)
     } 
 	
 	// Updates all views related to some player
