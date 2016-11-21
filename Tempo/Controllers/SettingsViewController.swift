@@ -19,8 +19,13 @@ class SettingsViewController: UIViewController {
 	@IBOutlet weak var toggleNotifications: UISwitch!
 	@IBOutlet weak var useLabel: UILabel!
 	
+	let remotePushNotificationsEnabledKey = "SettingsViewController.RemotePushNotificationsEnabled"
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		toggleNotifications.onTintColor = UIColor.tempoLightRed
+		profilePicture.layer.cornerRadius = profilePicture.frame.width / 2.0
 		
 		updateSpotifyState()
 		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
@@ -67,9 +72,17 @@ class SettingsViewController: UIViewController {
 		}
 	}
 	
-	@IBAction func toggledNotifications(_ sender: AnyObject) {
-		//turn on or off notifications
+	@IBAction func toggledNotifications(_ sender: UISwitch) {
+
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		
+		UserDefaults.standard.set(sender.isOn, forKey: remotePushNotificationsEnabledKey)
+		
+		if sender.isOn {
+			appDelegate.registerForRemotePushNotifications()
+		} else {
+			API.sharedAPI.disableRemotePushNotifications()
+		}
 	}
 	
 	@IBAction func goToSpotify(_ sender: UIButton) {

@@ -166,6 +166,10 @@ class API {
 		}
 	}
 	
+	func disableRemotePushNotifications() {
+		//TODO
+	}
+	
 	func setCurrentUser(_ fbid: String, fbAccessToken: String, completion: @escaping (Bool) -> Void) {
 		let user = ["fbid": fbid, "usertoken": fbAccessToken]
 		let map: ([String: AnyObject]) -> Bool = {

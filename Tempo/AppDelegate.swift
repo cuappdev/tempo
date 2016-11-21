@@ -99,9 +99,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		setFirstVC()
 		toggleRootVC()
 		
-		//should be used after user is created
-		registerForRemotePushNotifications()
-		
 		return shouldPerformAdditionalDelegateHandling
 	}
 	
