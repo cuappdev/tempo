@@ -17,7 +17,11 @@ class SpotifyLoginViewController: UIViewController {
 		super.viewDidLoad()
 		connectButton.layer.cornerRadius = 5
 	}
-		
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+	}
+	
     @IBAction func connectToSpotify(_ sender: UIButton) {
 		SpotifyController.sharedController.loginToSpotify { (success) in
 			if success { if let session = SPTAuth.defaultInstance().session { if session.isValid() {
