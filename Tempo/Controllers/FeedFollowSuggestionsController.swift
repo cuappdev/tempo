@@ -83,8 +83,9 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 				self.tableView.reloadData()
 				
 				if self.suggestedPeopleToFollow.count == 0 {
-					self.tableView.backgroundView = UIView.viewForEmptyViewController(.Users, size: self.view.bounds.size, isCurrentUser: true, userFirstName: User.currentUser.firstName)
+					self.view.alpha = 0.0
 				} else {
+					self.view.alpha = 1.0
 					self.tableView.backgroundView = nil
 				}
 			}
