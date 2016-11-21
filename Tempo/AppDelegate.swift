@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let usersVC = UsersViewController()
 	let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 	let likedVC = LikedTableViewController()
-	let spotifyVC = SpotifyViewController(nibName: "SpotifyViewController", bundle: nil)
+	let settingsVC = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
 	let aboutVC = AboutViewController(nibName: "AboutViewController", bundle: nil)
 	let transparentView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
 	let navigationController = PlayerNavigationController()
@@ -120,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				SideBarElement(title: "Feed", viewController: feedVC, image: UIImage(named: "feed-sidebar-icon")),
 				SideBarElement(title: "People", viewController: usersVC, image: UIImage(named: "people-sidebar-icon")),
 				SideBarElement(title: "Liked", viewController: likedVC, image: UIImage(named: "liked-sidebar-icon")),
-				SideBarElement(title: "Spotify", viewController: spotifyVC, image: UIImage(named: "spotify-sidebar-icon")),
+				SideBarElement(title: "Settings", viewController: settingsVC, image: UIImage(named: "spotify-sidebar-icon")),
 				SideBarElement(title: "About", viewController: aboutVC, image: UIImage(named: "about-sidebar-icon"))
 			]
 			sidebarVC.selectionHandler = { [weak self] viewController in
@@ -227,7 +227,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 					
 					SpotifyController.sharedController.setSpotifyUser(accessToken!)
 					SPTAuth.defaultInstance().session = SPTSession(userName: User.currentUser.currentSpotifyUser?.username, accessToken: accessToken, expirationDate: expirationDate)
-					self?.spotifyVC.updateSpotifyState()
+					self?.settingsVC.updateSpotifyState()
 				}
 			}
 			return true
