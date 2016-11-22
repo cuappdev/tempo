@@ -12,7 +12,7 @@ import SwiftyJSON
 import FBSDKShareKit
 
 private enum Router: URLConvertible {
-	static let baseURLString = "https://fast-fortress-75502.herokuapp.com"
+	static let baseURLString = "http://35.162.35.23"
 	case root
 	case validAuthenticate
 	case validUsername
