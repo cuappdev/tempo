@@ -12,7 +12,7 @@ import SwiftyJSON
 import FBSDKShareKit
 
 private enum Router: URLConvertible {
-	static let baseURLString = "https://icefishing-web.herokuapp.com"
+	static let baseURLString = "http://a5512b2c.ngrok.io"
 	case root
 	case validAuthenticate
 	case validUsername
@@ -60,7 +60,7 @@ private enum Router: URLConvertible {
 			case .feed(let userID):
 				return "/\(userID)/feed"
 			case .feedEveryone:
-				return "/feed.json"
+				return "/feed"
 			case .history(let userID):
 				return "/users/\(userID)/posts"
 			case .likes(let userID):
@@ -188,7 +188,7 @@ class API {
 			return true
 		}
 		let changes = ["username": changedUsername]
-		patch(.users(User.currentUser.id), params: ["user": changes as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: didSucceed)
+		put(.users(User.currentUser.id), params: ["user": changes as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: didSucceed)
 	}
 	
 	func searchUsers(_ username: String, completion: @escaping ([User]) -> Void) {
@@ -241,7 +241,11 @@ class API {
 	}
 	
 	func updateLikes(_ postID: String, unlike: Bool, completion: (([String: Bool]) -> Void)? = nil) {
-		post(.likes(nil), params: ["post_id": postID as AnyObject, "unlike": unlike as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 }, completion: completion)
+		if unlike {
+			delete(.likes(nil), params: ["post_id": postID as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 }, completion: completion)
+		} else {
+			post(.likes(nil), params: ["post_id": postID as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 }, completion: completion)
+		}
 	}
 	
 	func fetchLikes(_ userID: String, completion: @escaping ([Song]) -> Void) {
@@ -253,7 +257,11 @@ class API {
 	}
 	
 	func updateFollowings(_ userID: String, unfollow: Bool, completion: (([String: Bool]) -> Void)? = nil) {
-		post(.followings, params: ["followed_id": userID as AnyObject, "unfollow": unfollow as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 as [String: Bool] }, completion: completion)
+		if unfollow {
+			delete(.followings, params: ["followed_id": userID as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 as [String: Bool] }, completion: completion)
+		} else {
+			post(.followings, params: ["followed_id": userID as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 as [String: Bool] }, completion: completion)
+		}
 	}
 	
 	func updatePost(_ userID: String, song: Song, completion: @escaping ([String: AnyObject]) -> Void) {
@@ -291,14 +299,18 @@ class API {
 		makeNetworkRequest(.get, router: router, params: params, map: map, completion: completion)
 	}
 	
-	fileprivate func patch<O, T>(_ router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
-		makeNetworkRequest(.patch, router: router, params: params, map: map, completion: completion)
+	fileprivate func delete<O, T>(_ router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
+		makeNetworkRequest(.delete, router: router, params: params, map: map, completion: completion)
+	}
+	
+	fileprivate func put<O, T>(_ router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
+		makeNetworkRequest(.put, router: router, params: params, map: map, completion: completion)
 	}
 	
 	fileprivate func makeNetworkRequest<O, T>(_ method: Alamofire.HTTPMethod, router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
 		
-		
-		Alamofire.request(router, method: method, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { response in
+		let encoding: ParameterEncoding = method == .get || method == .delete ? URLEncoding.default : JSONEncoding.default
+		Alamofire.request(router, method: method, parameters: params, encoding: encoding, headers: nil).responseJSON(completionHandler: { response in
 
 			if let json = response.result.value as? O {
 					if let obj = map(json) {
