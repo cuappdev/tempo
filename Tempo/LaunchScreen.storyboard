@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,11 +24,15 @@
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ffv-cz-L26">
                                 <rect key="frame" x="16" y="469" width="343" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="e3C-sv-Qqh"/>
-                                </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="Made by AppDev  ">
+                                    <fragment content="Made by AppDev ">
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="20" name="Avenir-Medium"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" ">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <font key="NSFont" size="22" name="Avenir-Medium"/>
@@ -44,7 +49,7 @@
                                     <fragment content="Cornell's App Development Project Team">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <font key="NSFont" size="16" name="Avenir-Medium"/>
+                                            <font key="NSFont" size="14" name="Avenir-Medium"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -53,17 +58,21 @@
                             </textView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenLogo" translatesAutoresizingMaskIntoConstraints="NO" id="YES-UD-DPS">
                                 <rect key="frame" x="59" y="116" width="257" height="257"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="257" id="Twf-2U-ydL"/>
+                                    <constraint firstAttribute="width" secondItem="YES-UD-DPS" secondAttribute="height" multiplier="1:1" id="lBh-CS-L01"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.16078431372549018" green="0.14117647058823529" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ffv-cz-L26" firstAttribute="centerX" secondItem="YES-UD-DPS" secondAttribute="centerX" id="0fi-TZ-Tqf"/>
-                            <constraint firstItem="YES-UD-DPS" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="43" id="6lp-Pq-D5F"/>
-                            <constraint firstItem="ffv-cz-L26" firstAttribute="top" secondItem="YES-UD-DPS" secondAttribute="bottom" constant="96" id="9mw-W8-5Gd"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="ffv-cz-L26" secondAttribute="bottom" constant="70" id="E2a-Do-Oqx"/>
-                            <constraint firstItem="YES-UD-DPS" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="96" id="fM9-j9-9ar"/>
-                            <constraint firstItem="ffv-cz-L26" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="kN6-OD-I5d"/>
-                            <constraint firstItem="ffv-cz-L26" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="rlQ-gM-vOe"/>
+                            <constraint firstItem="ffv-cz-L26" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="9rN-Yk-Ofd"/>
+                            <constraint firstItem="ffv-cz-L26" firstAttribute="centerX" secondItem="YES-UD-DPS" secondAttribute="centerX" id="JDy-U4-Xg1"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="ffv-cz-L26" secondAttribute="bottom" constant="70" id="SqR-gw-QMq"/>
+                            <constraint firstItem="ffv-cz-L26" firstAttribute="top" secondItem="YES-UD-DPS" secondAttribute="bottom" constant="96" id="csb-WM-po0"/>
+                            <constraint firstItem="YES-UD-DPS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="hVa-tN-7k3"/>
+                            <constraint firstItem="YES-UD-DPS" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="43" id="np4-Mj-s2V"/>
+                            <constraint firstItem="YES-UD-DPS" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="96" id="sQb-JN-1B2"/>
                         </constraints>
                     </view>
                 </viewController>

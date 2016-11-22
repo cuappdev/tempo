@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		UIApplication.shared.statusBarStyle = .lightContent
 		
 		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
-		SPTAuth.defaultInstance().redirectURL = NSURL(string: "tempo_login://callback") as URL!
+		SPTAuth.defaultInstance().redirectURL = NSURL(string: "tempoLogin://callback") as URL!
 
 		SPTAuth.defaultInstance().sessionUserDefaultsKey = "SpotifyUserDefaultsKey"
 		SPTAuth.defaultInstance().requestedScopes = [
