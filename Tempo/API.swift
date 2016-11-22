@@ -29,6 +29,7 @@ private enum Router: URLConvertible {
 	case posts
 	case followSuggestions
     case spotifyAccessToken
+	case notifications(String)
 	
 	func asURL() throws -> URL {
 		if let url = URL(string: URLString) {
@@ -76,6 +77,8 @@ private enum Router: URLConvertible {
 				return "/users/suggestions"
             case .spotifyAccessToken:
                 return "/spotify/get_access_token"
+			case .notifications(let userID):
+				return "/users/\(userID)/toggle_push"
 			}
 			}()
 		return Router.baseURLString + path
@@ -166,8 +169,14 @@ class API {
 		}
 	}
 	
-	func disableRemotePushNotifications() {
-		//TODO
+	func toggleRemotePushNotifications(userID: String, enabled: Bool, completion: @escaping (Bool) -> Void) {
+		let map: ([String: Bool]) -> Bool? = {
+			guard let success = $0["success"], success != false else { return false }
+			User.currentUser.remotePushNotificationsEnabled = enabled
+			return true
+		}
+		
+		put(.notifications(userID), params: ["enabled" : enabled as AnyObject], map: map, completion: completion)
 	}
 	
 	func setCurrentUser(_ fbid: String, fbAccessToken: String, completion: @escaping (Bool) -> Void) {

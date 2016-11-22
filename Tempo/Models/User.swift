@@ -18,6 +18,7 @@ class User: NSObject, NSCoding {
 	fileprivate(set) var createdAt = ""
 	fileprivate(set) var email = "temp@example.com"
 	fileprivate(set) var fbid = ""
+	var remotePushNotificationsEnabled = false
 	var isFollowing = false
 	var followers: [String] = []
 	var followersCount = 0
@@ -64,6 +65,7 @@ class User: NSObject, NSCoding {
 		name = json["name"].stringValue
 		updatedAt = json["updated_at"].stringValue
 		username = json["username"].stringValue
+		remotePushNotificationsEnabled = json["remote_push_notifications_enabled"].boolValue
 		currentSpotifyUser = User.currentUser.currentSpotifyUser
 	}
 	

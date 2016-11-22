@@ -19,7 +19,7 @@ class SettingsViewController: UIViewController {
 	@IBOutlet weak var toggleNotifications: UISwitch!
 	@IBOutlet weak var useLabel: UILabel!
 	
-	let remotePushNotificationsEnabledKey = "SettingsViewController.RemotePushNotificationsEnabled"
+	let registeredDeviceTokenForRemotePushNotificationsKey = "SettingsViewController.registeredDeviceTokenForRemotePushNotificationsKey"
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -76,13 +76,19 @@ class SettingsViewController: UIViewController {
 
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		
-		UserDefaults.standard.set(sender.isOn, forKey: remotePushNotificationsEnabledKey)
-		
 		if sender.isOn {
-			appDelegate.registerForRemotePushNotifications()
-		} else {
-			API.sharedAPI.disableRemotePushNotifications()
+//			appDelegate.registerForRemotePushNotifications()
+			
+			
 		}
+		
+		API.sharedAPI.toggleRemotePushNotifications(userID: User.currentUser.id, enabled: sender.isOn, completion: { (success: Bool) in
+			
+			print(success)
+			print(User.currentUser.remotePushNotificationsEnabled)
+			print(UIApplication.shared.currentUserNotificationSettings)
+			
+		})
 	}
 	
 	@IBAction func goToSpotify(_ sender: UIButton) {
