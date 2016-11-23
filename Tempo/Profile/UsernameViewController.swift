@@ -9,11 +9,11 @@
 import UIKit
 import FBSDKShareKit
 
-class UsernameViewController: UIViewController, UINavigationControllerDelegate {
+class UsernameViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
  
 	var fbID: String = ""
 	var name: String = ""
-    
+	
     @IBOutlet weak var userProfilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameTextField: UITextField!
@@ -54,20 +54,11 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
 			}
 		}
     }
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		self.navigationController?.setNavigationBarHidden(true, animated: true)
-	}
-	
-	override func viewWillDisappear(_ animated: Bool) {
-		self.navigationController?.setNavigationBarHidden(false, animated: true)
-	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        continueBtn.layer.cornerRadius = 5
-		usernameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+		initializeTextField()
+		continueBtn.layer.cornerRadius = 5
 		
 		userProfilePicture.layer.borderWidth = 1.5
 		userProfilePicture.layer.borderColor = UIColor.white.cgColor
@@ -78,6 +69,19 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
 		guard let imageUrl = URL(string: "http://graph.facebook.com/\(fbID)/picture?type=large") else { return }
 		userProfilePicture.hnk_setImageFromURL(imageUrl)
 	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.navigationController?.setNavigationBarHidden(true, animated: true)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		self.navigationController?.setNavigationBarHidden(false, animated: true)
+		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+	}
 	
 	func textFieldDidChange(textField: UITextField) {
 		if let usernameValue = usernameTextField.text {
@@ -85,6 +89,32 @@ class UsernameViewController: UIViewController, UINavigationControllerDelegate {
 		}
 	}
 	
+	func keyboardWillShow(sender: NSNotification) {
+		if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+			let keyboardHeight = keyboardSize.height
+			self.view.frame.origin.y = -keyboardHeight
+		}
+	}
+	
+	func keyboardWillHide(sender: NSNotification) {
+		self.view.frame.origin.y = 0
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return true
+	}
+	
+	func initializeTextField(){
+		usernameTextField.delegate = self
+		usernameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+	}
+	
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		view.endEditing(true)
+		super.touchesBegan(touches, with: event)
+	}
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
