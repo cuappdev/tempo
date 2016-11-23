@@ -72,6 +72,7 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	}
 	
 	func resetPlayerCells() {
+		currentPost = nil
 		playerCell.resetPlayerCell()
 		expandedCell.resetPlayerCell()
 	}
