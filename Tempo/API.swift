@@ -12,7 +12,9 @@ import SwiftyJSON
 import FBSDKShareKit
 
 private enum Router: URLConvertible {
-	static let baseURLString = "http://35.162.35.23"
+	static let tempoBaseURLString = "https://fast-fortress-75502.herokuapp.com/"
+	static let notificationsBaseURLString = "http://9144f8af.ngrok.io"
+	
 	case root
 	case validAuthenticate
 	case validUsername
@@ -30,6 +32,7 @@ private enum Router: URLConvertible {
 	case followSuggestions
     case spotifyAccessToken
 	case notifications(String)
+	case registerNotifications
 	
 	func asURL() throws -> URL {
 		if let url = URL(string: URLString) {
@@ -79,9 +82,17 @@ private enum Router: URLConvertible {
                 return "/spotify/get_access_token"
 			case .notifications(let userID):
 				return "/users/\(userID)/toggle_push"
+			case .registerNotifications:
+				return "/register_user"
 			}
 			}()
-		return Router.baseURLString + path
+		
+		switch self {
+		case .registerNotifications:
+			return Router.notificationsBaseURLString + path
+		default:
+			return Router.tempoBaseURLString + path
+		}
 	}
 }
 
@@ -150,23 +161,25 @@ class API {
 		}
 	}
 	
-	func registerForRemotePushNotificationsWithDeviceToken(_ deviceToken: Data) {
+	func registerForRemotePushNotificationsWithDeviceToken(_ deviceToken: Data, completion: @escaping (Bool) -> Void) {
+		
+		if User.currentUser.id == "" { return }
+		
 		var token = NSString(format: "%@", deviceToken as NSData)
 		token = token.replacingOccurrences(of: "<", with: "") as NSString
 		token = token.replacingOccurrences(of: ">", with: "") as NSString
 		token = token.replacingOccurrences(of: " ", with: "") as NSString
 		
-		let baseURL = "ec2-35-162-151-106.us-west-2.compute.amazonaws.com/register_user"
+		let params = ["app": "TEMPO", "push_id":"\(token)", "user_id": User.currentUser.id]
 		
-		/// Test user_id for now, should be actual user id
-		/// This api call should only be made in settings and after login flow
-		/// so the user id will be set
-		let params = ["app": "TEMPO", "push_id":"\(token)", "user_id": "3"]
-		let headers = ["Content-Type" : "application/json"]
-		
-		Alamofire.request(baseURL, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
-			debugPrint(response)
+		let map: ([String: AnyObject]) -> Bool? = {
+			guard let success = $0["success"] as? String, success == "User successfully registered." else { return false }
+			User.currentUser.remotePushNotificationsEnabled = true
+			UserDefaults.standard.set(true, forKey: SettingsViewController.registeredForRemotePushNotificationsKey)
+			return true
 		}
+		
+		post(.registerNotifications, params: params as [String : AnyObject], map: map, completion: completion)
 	}
 	
 	func toggleRemotePushNotifications(userID: String, enabled: Bool, completion: @escaping (Bool) -> Void) {

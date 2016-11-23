@@ -19,7 +19,7 @@ class SettingsViewController: UIViewController {
 	@IBOutlet weak var toggleNotifications: UISwitch!
 	@IBOutlet weak var useLabel: UILabel!
 	
-	let registeredDeviceTokenForRemotePushNotificationsKey = "SettingsViewController.registeredDeviceTokenForRemotePushNotificationsKey"
+	static let registeredForRemotePushNotificationsKey = "SettingsViewController.registeredForRemotePushNotificationsKey"
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -29,6 +29,8 @@ class SettingsViewController: UIViewController {
 		
 		updateSpotifyState()
 		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
+		
+		toggleNotifications.isOn = User.currentUser.remotePushNotificationsEnabled
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -72,21 +74,37 @@ class SettingsViewController: UIViewController {
 		}
 	}
 	
-	@IBAction func toggledNotifications(_ sender: UISwitch) {
-
-		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+	func showPromptIfPushNotificationsDisabled() {
 		
-		if sender.isOn {
-//			appDelegate.registerForRemotePushNotifications()
-			
-			
+	}
+	
+	@IBAction func toggledNotifications(_ sender: UISwitch) {
+		
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		let didRegisterForPushNotifications = UserDefaults.standard.bool(forKey: SettingsViewController.registeredForRemotePushNotificationsKey)
+
+		if didRegisterForPushNotifications && !UIApplication.shared.isRegisteredForRemoteNotifications {
+			showPromptIfPushNotificationsDisabled()
+			return
 		}
 		
-		API.sharedAPI.toggleRemotePushNotifications(userID: User.currentUser.id, enabled: sender.isOn, completion: { (success: Bool) in
+		if sender.isOn && UserDefaults.standard.data(forKey: AppDelegate.remotePushNotificationsDeviceTokenKey) == nil {
+			appDelegate.registerForRemotePushNotifications()
+			return
+		}
+		
+		if let deviceToken = UserDefaults.standard.data(forKey: AppDelegate.remotePushNotificationsDeviceTokenKey), !didRegisterForPushNotifications {
+			API.sharedAPI.registerForRemotePushNotificationsWithDeviceToken(deviceToken, completion: { _ in })
+			return
+		}
+		
+		let enabled = sender.isOn
+		
+		API.sharedAPI.toggleRemotePushNotifications(userID: User.currentUser.id, enabled: enabled, completion: { (success: Bool) in
 			
-			print(success)
-			print(User.currentUser.remotePushNotificationsEnabled)
-			print(UIApplication.shared.currentUserNotificationSettings)
+			if !success {
+				sender.setOn(!enabled, animated: true)
+			}
 			
 		})
 	}
