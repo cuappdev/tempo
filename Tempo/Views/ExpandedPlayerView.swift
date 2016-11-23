@@ -188,8 +188,16 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 				delegate.didToggleLike!()
 			}
 		} else if let post = post, hitView == openButton {
-			let songURL = URL(string: "https://open.spotify.com/track/\(post.song.spotifyID)")
-			UIApplication.shared.openURL(songURL!)
+			
+			guard let appURL = URL(string: "spotify://track/\(post.song.spotifyID)"),
+			let webURL = URL(string: "https://open.spotify.com/track/\(post.song.spotifyID)") else { return }
+			
+			if UIApplication.shared.canOpenURL(appURL) {
+				UIApplication.shared.openURL(appURL)
+			} else {
+				UIApplication.shared.openURL(webURL)
+			}
+			
 		} else if hitView == nextButton {
 			delegate?.playNextSong?()
 		} else if hitView == prevButton {
