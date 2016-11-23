@@ -136,8 +136,8 @@ class API {
 			}
 			
 			let email = userJSON["email"] as? String ?? ""
-			let name = userJSON["email"] as? String ?? ""
-			let fbid = userJSON["email"] as? String ?? ""
+			let name = userJSON["name"] as? String ?? ""
+			let fbid = userJSON["fbid"] as? String ?? ""
 			
 			let user: [String:AnyObject] = [
 				"email": email as AnyObject,
