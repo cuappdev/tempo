@@ -30,8 +30,10 @@ class Player: NSObject, AVAudioPlayerDelegate {
             player?.delegate = self
         }
     }
-	private(set) var wasPlayed = false
-	private(set) var finishedPlaying = false
+	
+	var wasPlayed = false
+	var finishedPlaying = false
+	
 	var delegate: PlayerDelegate!
 	
     fileprivate let fileURL: URL

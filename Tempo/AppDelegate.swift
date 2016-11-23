@@ -330,6 +330,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	
 	//MARK: - Remote Push Notifications
 	
+	static let remotePushNotificationsDeviceTokenKey = "AppDelegate.remotePushNotificationsDeviceTokenKey"
+	
 	func registerForRemotePushNotifications() {
 		DispatchQueue.main.async {
 			let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
@@ -338,11 +340,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-		API.sharedAPI.registerForRemotePushNotificationsWithDeviceToken(deviceToken)
+		UserDefaults.standard.set(deviceToken, forKey: AppDelegate.remotePushNotificationsDeviceTokenKey)
+		API.sharedAPI.registerForRemotePushNotificationsWithDeviceToken(deviceToken, completion: { _ in } )
 	}
 	
 	func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
 		application.registerForRemoteNotifications()
+	}
+	
+	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+		print("RECIEVED PUSH NOTIFICATION")
+		print(userInfo)
 	}
 
 }

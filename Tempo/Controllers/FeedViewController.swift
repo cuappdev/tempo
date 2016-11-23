@@ -11,6 +11,8 @@ import MediaPlayer
 
 class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFollowSuggestionsControllerDelegate {
 	
+	static let readPostsKey = "FeedViewController.readPostsKey"
+	
 	lazy var customRefresh: ADRefreshControl = {
 		self.refreshControl = UIRefreshControl()
 		let customRefresh = ADRefreshControl(refreshControl: self.refreshControl!)
@@ -195,15 +197,41 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	// MARK: - UITableViewDataSource
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedTableViewCell
+		
+		let post = posts[indexPath.row]
+		
 		cell.postView.type = .feed
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.postViewDelegate = self
 		cell.postView.playerDelegate = self
+		
+		if let listenedToPosts = UserDefaults.standard.dictionary(forKey: FeedViewController.readPostsKey) as? [String:Double],
+		let dateListened = listenedToPosts[post.postID] {
+			cell.postView.post?.player.wasPlayed = true
+		}
+		
 		return cell
 	}
 	
 	// MARK: - UITableViewDelegate
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		
+		let post = posts[indexPath.row]
+		if var listenedToPosts = UserDefaults.standard.dictionary(forKey: FeedViewController.readPostsKey) as? [String:Double] {
+				
+			// clear posts older than 24 hrs
+			for postID in listenedToPosts.keys {
+				if let timestamp = listenedToPosts[postID], Date().timeIntervalSince1970 - timestamp > 86400000 {
+					listenedToPosts[postID] = nil
+				}
+			}
+				
+			listenedToPosts[post.postID] = Date().timeIntervalSince1970
+			UserDefaults.standard.set(listenedToPosts, forKey: FeedViewController.readPostsKey)
+		} else {
+			UserDefaults.standard.set([post.postID: Date().timeIntervalSince1970], forKey: FeedViewController.readPostsKey)
+		}
+		
 		playerNav.playerCell.postsLikable = true
 		playerNav.expandedCell.postsLikable = true
 		playerNav.expandedCell.postHasInfo = true
