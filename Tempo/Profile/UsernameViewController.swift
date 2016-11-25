@@ -17,7 +17,7 @@ class UsernameViewController: UIViewController, UITextFieldDelegate, UINavigatio
     @IBOutlet weak var userProfilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var continueBtn: UIButton!
+    @IBOutlet weak var continueButton: UIButton!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var alertLabel: UILabel!
 	
@@ -58,7 +58,7 @@ class UsernameViewController: UIViewController, UITextFieldDelegate, UINavigatio
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		initializeTextField()
-		continueBtn.layer.cornerRadius = 5
+		continueButton.layer.cornerRadius = 5
 		
 		userProfilePicture.layer.borderWidth = 1.5
 		userProfilePicture.layer.borderColor = UIColor.white.cgColor
@@ -72,13 +72,13 @@ class UsernameViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.navigationController?.setNavigationBarHidden(true, animated: true)
+		navigationController?.setNavigationBarHidden(true, animated: true)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
-		self.navigationController?.setNavigationBarHidden(false, animated: true)
+		navigationController?.setNavigationBarHidden(false, animated: true)
 		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
 	}
@@ -92,12 +92,12 @@ class UsernameViewController: UIViewController, UITextFieldDelegate, UINavigatio
 	func keyboardWillShow(sender: NSNotification) {
 		if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
 			let keyboardHeight = keyboardSize.height
-			self.view.frame.origin.y = -keyboardHeight
+			view.frame.origin.y = -keyboardHeight
 		}
 	}
 	
 	func keyboardWillHide(sender: NSNotification) {
-		self.view.frame.origin.y = 0
+		view.frame.origin.y = 0
 	}
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -111,8 +111,8 @@ class UsernameViewController: UIViewController, UITextFieldDelegate, UINavigatio
 	}
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
 		view.endEditing(true)
-		super.touchesBegan(touches, with: event)
 	}
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
