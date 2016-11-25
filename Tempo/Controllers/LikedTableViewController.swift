@@ -58,9 +58,6 @@ class LikedTableViewController: PlayerTableViewController {
     }
 	
 	func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
-		playerNav.playerCell.postsLikable = false
-		playerNav.expandedCell.postsLikable = false
-		playerNav.expandedCell.postHasInfo = false
 		currentlyPlayingIndexPath = indexPath
 	}
 	

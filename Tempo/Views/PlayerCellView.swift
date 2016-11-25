@@ -18,7 +18,7 @@ class PlayerCellView: UIView {
 	@IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var progressView: ProgressView!
 	
-	var postsLikable: Bool? {
+	private var postsLikable: Bool? {
 		didSet {
 			likeButton.isUserInteractionEnabled = postsLikable!
 		}
@@ -27,7 +27,11 @@ class PlayerCellView: UIView {
 	
 	var songStatus: SavedSongStatus = .notSaved
 	var post: Post?
-	var delegate: PlayerDelegate!
+	var delegate: PlayerDelegate! {
+		didSet {
+			postsLikable = delegate is FeedViewController
+		}
+	}
 	
 	func setup(parent: PlayerNavigationController) {
 		playerNav = parent

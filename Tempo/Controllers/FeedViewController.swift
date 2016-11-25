@@ -230,10 +230,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		} else {
 			UserDefaults.standard.set([post.postID: Date().timeIntervalSince1970], forKey: FeedViewController.readPostsKey)
 		}
-		
-		playerNav.playerCell.postsLikable = true
-		playerNav.expandedCell.postsLikable = true
-		playerNav.expandedCell.postHasInfo = true
+
 		currentlyPlayingIndexPath = indexPath
 	}
 	

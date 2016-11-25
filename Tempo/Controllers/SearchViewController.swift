@@ -170,9 +170,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		activePlayer?.delegate = self
 		didTogglePlaying(animate: true)
 		playerNav.updateDelegates(delegate: self)
-		playerNav.playerCell.postsLikable = false
-		playerNav.expandedCell.postsLikable = false
-		playerNav.expandedCell.postHasInfo = false
 		playerNav.currentPost = cell.postView.post
 		playerNav.postsRef = nil //do not want to autoplay next song
 	}

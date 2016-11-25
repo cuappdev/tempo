@@ -137,9 +137,6 @@ class PostHistoryTableViewController: PlayerTableViewController {
     func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath) as! FeedTableViewCell
 		selectedCell.postView.backgroundColor = UIColor.tempoLightGray
-		playerNav.playerCell.postsLikable = true
-		playerNav.expandedCell.postsLikable = true
-		playerNav.expandedCell.postHasInfo = false
 		currentlyPlayingIndexPath = IndexPath(row: absoluteIndex(indexPath), section: 0)
     } 
 	

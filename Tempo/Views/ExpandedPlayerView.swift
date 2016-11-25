@@ -31,17 +31,20 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	
 	var progressIndicator: UIView!
 	
-	var postsLikable: Bool? {
+	private var postsLikable: Bool? {
 		didSet {
 			likeButton.isUserInteractionEnabled = postsLikable!
 		}
 	}
-	var postHasInfo = false
 	var playerNav: PlayerNavigationController!
 	
 	var songStatus: SavedSongStatus = .notSaved
 	var post: Post?
-	var delegate: PlayerDelegate!
+	var delegate: PlayerDelegate! {
+		didSet {
+			postsLikable = delegate is FeedViewController
+		}
+	}
 	private var wasPlaying = false
 	
 	var tapGestureRecognizer: UITapGestureRecognizer?
@@ -96,7 +99,13 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		songLabel.text = newPost.song.title
 		artistLabel.text = newPost.song.artist
 		albumImage.hnk_setImageFromURL(newPost.song.largeArtworkURL ?? NSURL() as URL)
-		postDetailLabel.text = postHasInfo ? "\(newPost.user.name) posted \(getPostTime(time: newPost.relativeDate())) ago" : ""
+		if delegate is FeedViewController {
+			postDetailLabel.text = "\(newPost.user.name) posted \(getPostTime(time: newPost.relativeDate())) ago"
+		} else if delegate is LikedTableViewController {
+			postDetailLabel.text = "Playing from your Liked Songs"
+		} else if delegate is PostHistoryTableViewController {
+			postDetailLabel.text = ""
+		}
 		songLabel.holdScrolling = false
 		artistLabel.holdScrolling = false
 		
