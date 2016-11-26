@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		UIApplication.shared.statusBarStyle = .lightContent
 		
 		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
-		SPTAuth.defaultInstance().redirectURL = NSURL(string: "tempoLogin://callback") as URL!
+		SPTAuth.defaultInstance().redirectURL = NSURL(string: "tempologin://callback") as URL!
 
 		SPTAuth.defaultInstance().sessionUserDefaultsKey = "SpotifyUserDefaultsKey"
 		SPTAuth.defaultInstance().requestedScopes = [
@@ -202,8 +202,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 							vc.user = User.currentUser
 							vc.setupUserUI()
 						} else {
-							let spotifyLoginVC = SpotifyLoginViewController(nibName: "SpotifyLoginViewController", bundle: nil)
-							self.window!.rootViewController = spotifyLoginVC
+							let spotifyLoginViewController = SpotifyLoginViewController(nibName: "SpotifyLoginViewController", bundle: nil)
+							self.window!.rootViewController = spotifyLoginViewController
 						}
 					}
 				}
@@ -225,6 +225,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 					SpotifyController.sharedController.setSpotifyUser(accessToken!)
 					SPTAuth.defaultInstance().session = SPTSession(userName: User.currentUser.currentSpotifyUser?.username, accessToken: accessToken, expirationDate: expirationDate)
 					self?.settingsVC.updateSpotifyState()
+					if let currentVC = self?.window?.rootViewController as? SpotifyLoginViewController {
+						currentVC.setSpotifyUserAndContinue()
+					}
 				}
 			}
 			return true

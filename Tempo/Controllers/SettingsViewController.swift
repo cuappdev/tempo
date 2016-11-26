@@ -46,8 +46,8 @@ class SettingsViewController: UIViewController {
 			if session.isValid() {
 				SpotifyController.sharedController.setSpotifyUser(session.accessToken)
 				let currentSpotifyUser = User.currentUser.currentSpotifyUser
-				self.nameLabel.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
-				self.usernameLabel.text = "@\(currentSpotifyUser!.username)"
+				nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
+				usernameLabel?.text = "@\(currentSpotifyUser!.username)"
 			}
 			loggedInToSpotify(session.isValid())
 		} else {
@@ -56,14 +56,14 @@ class SettingsViewController: UIViewController {
 	}
 	
 	func loggedInToSpotify(_ loggedIn: Bool) {
-		loginToSpotifyButton.isHidden = loggedIn
-		useLabel.isHidden = loggedIn
+		loginToSpotifyButton?.isHidden = loggedIn
+		useLabel?.isHidden = loggedIn
 		
-		profilePicture.isHidden = !loggedIn
-		nameLabel.isHidden = !loggedIn
-		usernameLabel.isHidden = !loggedIn
-		goToSpotifyButton.isHidden = !loggedIn
-		logOutSpotifyButton.isHidden = !loggedIn
+		profilePicture?.isHidden = !loggedIn
+		nameLabel?.isHidden = !loggedIn
+		usernameLabel?.isHidden = !loggedIn
+		goToSpotifyButton?.isHidden = !loggedIn
+		logOutSpotifyButton?.isHidden = !loggedIn
 	}
 	
 	@IBAction func loginToSpotify() {

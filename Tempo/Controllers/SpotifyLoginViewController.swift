@@ -23,14 +23,9 @@ class SpotifyLoginViewController: UIViewController {
 	}
 	
     @IBAction func connectToSpotify(_ sender: UIButton) {
-		SpotifyController.sharedController.loginToSpotify { (success) in
-			if success { if let session = SPTAuth.defaultInstance().session { if session.isValid() {
-				SpotifyController.sharedController.setSpotifyUser(session.accessToken)
-						//change view
-						let appDelegate = UIApplication.shared.delegate as! AppDelegate
-						appDelegate.toggleRootVC()
-					}
-				}
+		SpotifyController.sharedController.loginToSpotify { (success: Bool) in
+			if success {
+				self.setSpotifyUserAndContinue()
 			}
 		}
     }
@@ -39,4 +34,15 @@ class SpotifyLoginViewController: UIViewController {
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		appDelegate.toggleRootVC()
     }
+	
+	func setSpotifyUserAndContinue() {
+		if let session = SPTAuth.defaultInstance().session, session.isValid() {
+			SpotifyController.sharedController.setSpotifyUser(session.accessToken)
+
+			let appDelegate = UIApplication.shared.delegate as! AppDelegate
+			appDelegate.toggleRootVC()
+		}
+	}
+	
+	
 }
