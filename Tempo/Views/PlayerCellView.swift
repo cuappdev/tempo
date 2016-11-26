@@ -9,7 +9,7 @@
 import UIKit
 import MarqueeLabel
 
-class PlayerCellView: UIView {
+class PlayerCellView: ParentPlayerCellView {
 	
 	@IBOutlet weak var songLabel: MarqueeLabel!
 	@IBOutlet weak var artistLabel: MarqueeLabel!
@@ -18,18 +18,9 @@ class PlayerCellView: UIView {
 	@IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var progressView: ProgressView!
 	
-	private var postsLikable: Bool? {
+	override var postsLikable: Bool? {
 		didSet {
 			likeButton.isUserInteractionEnabled = postsLikable!
-		}
-	}
-	var playerNav: PlayerNavigationController?
-	
-	var songStatus: SavedSongStatus = .notSaved
-	var post: Post?
-	var delegate: PlayerDelegate! {
-		didSet {
-			postsLikable = delegate is FeedViewController
 		}
 	}
 	
@@ -48,7 +39,7 @@ class PlayerCellView: UIView {
 		setupMarqueeLabel(artistLabel)
 	}
 	
-	func updateCellInfo(newPost: Post) {
+	override func updateCellInfo(newPost: Post) {
 		post = newPost
 		songLabel.text = newPost.song.title
 		artistLabel.text = newPost.song.artist
@@ -62,7 +53,7 @@ class PlayerCellView: UIView {
 		updateAddButton()
 	}
 	
-	fileprivate func updateSongStatus() {
+	override internal func updateSongStatus() {
 		if let selectedPost = post {
 			if (User.currentUser.currentSpotifyUser?.savedTracks[selectedPost.song.spotifyID] != nil) {
 				songStatus = .saved
@@ -76,7 +67,7 @@ class PlayerCellView: UIView {
 		playerNav?.animateExpandedCell(isExpanding: true)
 	}
 	
-	func updatePlayingStatus() {
+	override func updatePlayingStatus() {
 		if let selectedPost = post {
 			let isPlaying = selectedPost.player.isPlaying
 			songLabel.holdScrolling = !isPlaying
@@ -88,11 +79,11 @@ class PlayerCellView: UIView {
 	
     @IBAction func playToggleButtonClicked(sender: UIButton) {
         if let _ = post {
-            delegate.didTogglePlaying(animate: true)
+            delegate?.didTogglePlaying(animate: true)
         }
     }
 	
-	func updatePlayToggleButton() {
+	override func updatePlayToggleButton() {
 		if let selectedPost = post {
 			let name = selectedPost.player.isPlaying ? "pause" : "play"
 			progressView.setUpTimer()
@@ -106,7 +97,6 @@ class PlayerCellView: UIView {
 				if success && songStatus == .notSaved {
 					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
 						if success {
-							print("should be saving")
 							self.toggleAddButton()
 							self.playerNav?.expandedCell.toggleAddButton()
 						}
@@ -135,7 +125,7 @@ class PlayerCellView: UIView {
 		if let selectedPost = post, (postsLikable ?? false) {
 			selectedPost.toggleLike()
 			updateLikeButton()
-			delegate.didToggleLike!()
+			delegate?.didToggleLike?()
 		}
 	}
 	
@@ -148,12 +138,12 @@ class PlayerCellView: UIView {
 		}
 	}
 	
-	func updateAddButton() {
+	override func updateAddButton() {
 		let image = songStatus == .saved ? UIImage(named: "check") : UIImage(named: "plus")
-		self.addButton.setBackgroundImage(image, for: .normal)
+		addButton.setBackgroundImage(image, for: .normal)
 	}
 	
-	func toggleAddButton() {
+	override func toggleAddButton() {
 		songStatus = songStatus == .saved ? .notSaved : .saved
 		updateAddButton()
 	}
@@ -168,7 +158,7 @@ class PlayerCellView: UIView {
 		label.animationDelay = 0
 	}
 	
-	func resetPlayerCell() {
+	override func resetPlayerCell() {
 		if let delegate = delegate, post != nil {
 			if post!.player.isPlaying {
 				delegate.didTogglePlaying(animate: false)
