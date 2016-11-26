@@ -12,7 +12,7 @@ import SwiftyJSON
 import FBSDKShareKit
 
 private enum Router: URLConvertible {
-	static let tempoBaseURLString = "https://fast-fortress-75502.herokuapp.com/"
+	static let tempoBaseURLString = "http://35.162.35.23"
 	static let notificationsBaseURLString = "http://9144f8af.ngrok.io"
 	
 	case root
@@ -342,7 +342,10 @@ class API {
 					} else {
 						print(json)
 					}
-				} else if let error = response.result.error {
+				} else if let error = response.result.error, let request = response.request {
+				
+					print("Failed request: \(request)")
+					print(params)
 					print(error)
 //					TODO
 //					if error.code != -1009 {
