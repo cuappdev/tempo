@@ -36,6 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let transparentView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
 	let navigationController = PlayerNavigationController()
 	
+	var loginFlowViewController: LoginFlowViewController?
+	
 	// Saved shortcut item used as a result of an app launch, used later when app is activated.
 	var launchedShortcutItem: AnyObject?
 
@@ -82,10 +84,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		FBSDKProfile.enableUpdates(onAccessTokenChange: true)
 		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 		
-		if FBSDKAccessToken.current() != nil {
-			fbSessionStateChanged(nil)
-		}
-		
 		// Check if it's launched from Quick Action
 		var shouldPerformAdditionalDelegateHandling = true
 		if #available(iOS 9.0, *) {
@@ -105,8 +103,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func toggleRootVC() {
 		launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
 		if FBSDKAccessToken.current() == nil {
-				let signInVC = SignInViewController(nibName: "SignInViewController", bundle: nil)
-				window!.rootViewController = signInVC
+				loginFlowViewController = LoginFlowViewController()
+				window?.rootViewController = loginFlowViewController
 		} else {
 			if resetFirstVC {
 				navigationController.setViewControllers([firstViewController], animated: false)
@@ -157,61 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		}
 		firstViewController = feedVC
 	}
-	
-	func loginToFacebook() {
-		let fbLoginManager = FBSDKLoginManager()
-		fbLoginManager.logOut()
-		fbLoginManager.logIn(withReadPermissions: ["public_profile", "email", "user_friends"], from: nil) { loginResult, error in
-			if error != nil {
-				print("Facebook login error: \(error)")
-			} else if (loginResult?.isCancelled)! {
-				print("FB Login Cancelled")
-			} else {
-				self.fbSessionStateChanged(error as NSError?)
-			}
-		}
-		Shared.imageCache.removeAll()
-	}
-	
-	// Facebook Session
-	func fbSessionStateChanged(_ error : NSError?) {
-		guard error == nil else { FBSDKAccessToken.setCurrent(nil); return }
-		guard FBSDKAccessToken.current() != nil else { return }
-		let userRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
 		
-		let _ = userRequest?.start(completionHandler: { (connection: FBSDKGraphRequestConnection?, result: Any?, error: Error?) in
-			
-			guard let responseJSON = result as? [String:Any], error == nil else { print("Error getting Facebook user: \(error)"); return }
-			let fbid = responseJSON["id"] as! String
-			let fbAccessToken = FBSDKAccessToken.current().tokenString
-			
-			API.sharedAPI.fbAuthenticate(fbid, userToken: fbAccessToken!) { success, newUser in
-				guard success else { return }
-				if newUser {
-					let usernameVC = UsernameViewController(nibName: "UsernameViewController", bundle: nil)
-					usernameVC.name = responseJSON["name"] as! String
-					usernameVC.fbID = responseJSON["id"] as! String
-					self.window!.rootViewController = UINavigationController(rootViewController: usernameVC)
-				} else {
-					API.sharedAPI.setCurrentUser(fbid, fbAccessToken: fbAccessToken!) { success in
-						guard success else { return }
-						if self.launchedBefore {
-							let appDelegate = UIApplication.shared.delegate as! AppDelegate
-							appDelegate.toggleRootVC()
-							guard let vc = self.firstViewController as? ProfileViewController else { return }
-							vc.user = User.currentUser
-							vc.setupUserUI()
-						} else {
-							let spotifyLoginViewController = SpotifyLoginViewController(nibName: "SpotifyLoginViewController", bundle: nil)
-							self.window!.rootViewController = spotifyLoginViewController
-						}
-					}
-				}
-				UserDefaults.standard.set(true, forKey: "launchedBefore")
-			}
-		})
-	}
-	
 	func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
 		if url.absoluteString.contains(SPTAuth.defaultInstance().redirectURL.absoluteString) {
 			SPTAuth.defaultInstance().handleAuthCallback(withTriggeredAuthURL: url) { [weak self] error, session in

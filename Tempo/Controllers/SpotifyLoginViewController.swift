@@ -1,17 +1,17 @@
-//
-//  SpotifyLoginViewController.swift
-//  Tempo
-//
-//  Created by Keivan Shahida on 11/11/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
 
-import Foundation
 import UIKit
+
+protocol SpotifyLoginViewControllerDelegate: class {
+	
+	func spotifyLoginViewController(spotifyLoginViewController: SpotifyLoginViewController, didFinishLoggingInWithAccessToken token: String)
+	
+}
 
 class SpotifyLoginViewController: UIViewController {
 
     @IBOutlet weak var connectButton: UIButton!
+	
+	weak var delegate: SpotifyLoginViewControllerDelegate?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -39,8 +39,7 @@ class SpotifyLoginViewController: UIViewController {
 		if let session = SPTAuth.defaultInstance().session, session.isValid() {
 			SpotifyController.sharedController.setSpotifyUser(session.accessToken)
 
-			let appDelegate = UIApplication.shared.delegate as! AppDelegate
-			appDelegate.toggleRootVC()
+			delegate?.spotifyLoginViewController(spotifyLoginViewController: self, didFinishLoggingInWithAccessToken: session.accessToken)
 		}
 	}
 	
