@@ -1,10 +1,3 @@
-//
-//  CGRect+Extensions.swift
-//  Tempo
-//
-//  Created by Dennis Fedorko on 11/19/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
 
 import UIKit
 

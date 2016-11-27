@@ -16,6 +16,8 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 	var pages = [UIViewController]()
 	
 	weak var delegate: LoginFlowViewControllerDelegate?
+	
+	var currentlyDisplayingPageIndex = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +32,7 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 		createUsernameViewController = CreateUsernameViewController()
 		createUsernameViewController.delegate = self
 		
-		spotifyLoginViewController = SpotifyLoginViewController(nibName: "SpotifyLoginViewController", bundle: nil)
+		spotifyLoginViewController = SpotifyLoginViewController()
 		spotifyLoginViewController.delegate = self
 		
 		pages = [facebookLoginViewController, createUsernameViewController, spotifyLoginViewController]
@@ -61,7 +63,7 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 	}
 	
 	func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-		return 0
+		return currentlyDisplayingPageIndex
 	}
 }
 
@@ -71,6 +73,7 @@ extension LoginFlowViewController: FacebookLoginViewControllerDelegate {
 		
 		createUsernameViewController.name = name
 		createUsernameViewController.fbid = fbid
+		currentlyDisplayingPageIndex += 1
 		pageViewController.setViewControllers([createUsernameViewController], direction: .forward, animated: true, completion: nil)
 		
 	}
@@ -83,6 +86,7 @@ extension LoginFlowViewController: FacebookLoginViewControllerDelegate {
 extension LoginFlowViewController: CreateUsernameViewControllerDelegate {
 	
 	func createUsernameViewController(createUsernameViewController: CreateUsernameViewController, didFinishCreatingUsername username: String) {
+		currentlyDisplayingPageIndex += 1
 		pageViewController.setViewControllers([spotifyLoginViewController], direction: .forward, animated: true, completion: nil)
 	}
 	
@@ -90,7 +94,7 @@ extension LoginFlowViewController: CreateUsernameViewControllerDelegate {
 
 extension LoginFlowViewController: SpotifyLoginViewControllerDelegate {
 	
-	func spotifyLoginViewController(spotifyLoginViewController: SpotifyLoginViewController, didFinishLoggingInWithAccessToken token: String) {
+	func spotifyLoginViewController(spotifyLoginViewController: SpotifyLoginViewController, didFinishLoggingInWithAccessToken token: String?) {
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
 		appDelegate.toggleRootVC()
 	}
