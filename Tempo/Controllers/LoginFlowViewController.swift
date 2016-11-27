@@ -56,6 +56,13 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 		return nil
 	}
 
+	func presentationCount(for pageViewController: UIPageViewController) -> Int {
+		return pages.count
+	}
+	
+	func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+		return 0
+	}
 }
 
 extension LoginFlowViewController: FacebookLoginViewControllerDelegate {
