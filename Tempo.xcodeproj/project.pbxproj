@@ -51,11 +51,12 @@
 		60C5A3CD1D9A1FB1004BDD58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60C5A3CC1D9A1FB1004BDD58 /* LaunchScreen.storyboard */; };
 		6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */; };
 		6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */; };
-		6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */; };
-		6D3FA6611AD5FD5C00B1320D /* UsernameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3FA6601AD5FD5C00B1320D /* UsernameViewController.xib */; };
 		6DA5FE4D1AED72F800E795DD /* UIColor+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA5FE4C1AED72F800E795DD /* UIColor+Shared.swift */; };
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
+		952E7EE01DEA89ED006C6131 /* LoginFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952E7EDF1DEA89ED006C6131 /* LoginFlowViewController.swift */; };
+		952E7EE21DEA8E6E006C6131 /* FacebookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952E7EE11DEA8E6E006C6131 /* FacebookLoginViewController.swift */; };
+		952E7EE41DEAAA46006C6131 /* CreateUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952E7EE31DEAAA46006C6131 /* CreateUsernameViewController.swift */; };
 		9563B5541DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9563B5531DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift */; };
 		9563B5561DE0E8C700E80EAF /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9563B5551DE0E8C700E80EAF /* CGRect+Extensions.swift */; };
 		957E28461DDD1ED2009601CB /* BackendNotConnectedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957E28451DDD1ED2009601CB /* BackendNotConnectedProtocol.swift */; };
@@ -63,7 +64,6 @@
 		B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B085F3B41BE3CBB80000421E /* SearchViewController.xib */; };
 		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
 		C7B1984E1DD67D6800EAB8EA /* SpotifyLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B1984D1DD67D6800EAB8EA /* SpotifyLoginViewController.swift */; };
-		C7B198501DD67DCA00EAB8EA /* SpotifyLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7B1984F1DD67DCA00EAB8EA /* SpotifyLoginViewController.xib */; };
 		D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9C51AE889D600C66385 /* SideBarViewController.swift */; };
 		D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D102A9C61AE889D600C66385 /* SideBarViewController.xib */; };
 		D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */; };
@@ -79,8 +79,6 @@
 		D160AE001BE67406003B0E1A /* PlaylistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D160ADFE1BE67406003B0E1A /* PlaylistTableViewCell.xib */; };
 		D160AE021BE677D4003B0E1A /* PlaylistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D160AE011BE677D4003B0E1A /* PlaylistTableViewController.swift */; };
 		D17395741ADB080900A53AEE /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395721ADB080900A53AEE /* UsersViewController.swift */; };
-		D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395881ADF360C00A53AEE /* SignInViewController.swift */; };
-		D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17395891ADF360C00A53AEE /* SignInViewController.xib */; };
 		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
 		FA1E1A781ADB06A3007C823C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A771ADB06A3007C823C /* Post.swift */; };
 		FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7B1ADB072A007C823C /* Song.swift */; };
@@ -149,11 +147,12 @@
 		60C5A3CC1D9A1FB1004BDD58 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowTableViewCell.swift; path = ../Profile/FollowTableViewCell.swift; sourceTree = "<group>"; };
 		6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowTableViewCell.xib; path = ../Profile/FollowTableViewCell.xib; sourceTree = "<group>"; };
-		6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
-		6D3FA6601AD5FD5C00B1320D /* UsernameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsernameViewController.xib; sourceTree = "<group>"; };
 		6DA5FE4C1AED72F800E795DD /* UIColor+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Shared.swift"; sourceTree = "<group>"; };
 		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; usesTabs = 1; };
+		952E7EDF1DEA89ED006C6131 /* LoginFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginFlowViewController.swift; sourceTree = "<group>"; };
+		952E7EE11DEA8E6E006C6131 /* FacebookLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookLoginViewController.swift; sourceTree = "<group>"; };
+		952E7EE31DEAAA46006C6131 /* CreateUsernameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUsernameViewController.swift; sourceTree = "<group>"; };
 		952F0FCC1BCF20E100C53522 /* ADScreenCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADScreenCapture.swift; sourceTree = "<group>"; };
 		952F0FEB1BCF20E100C53522 /* SubmitBugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitBugViewController.swift; sourceTree = "<group>"; };
 		952F0FEC1BCF20E100C53522 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
@@ -171,12 +170,11 @@
 		BA257E271ABA3FE200D939B0 /* Tempo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tempo-Bridging-Header.h"; sourceTree = "<group>"; };
 		C0CF7B971AE425450083606C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		C7B1984D1DD67D6800EAB8EA /* SpotifyLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewController.swift; sourceTree = "<group>"; };
-		C7B1984F1DD67DCA00EAB8EA /* SpotifyLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SpotifyLoginViewController.xib; path = ../Profile/SpotifyLoginViewController.xib; sourceTree = "<group>"; };
 		D102A9C51AE889D600C66385 /* SideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
-		D102A9C61AE889D600C66385 /* SideBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarViewController.xib; sourceTree = "<group>"; };
+		D102A9C61AE889D600C66385 /* SideBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SideBarViewController.xib; path = ../Profile/SideBarViewController.xib; sourceTree = "<group>"; };
 		D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideBarTableViewCell.swift; path = ../Profile/SideBarTableViewCell.swift; sourceTree = "<group>"; };
 		D1173FFF1AF8574400302FFD /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		D11740071AF8574900302FFD /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		D11740071AF8574900302FFD /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileViewController.xib; path = ../Profile/ProfileViewController.xib; sourceTree = "<group>"; };
 		D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarCollectionReusableView.swift; sourceTree = "<group>"; };
 		D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarDayCollectionViewCell.swift; sourceTree = "<group>"; };
 		D148F4971AF031DB009AB073 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
@@ -186,8 +184,6 @@
 		D160ADFE1BE67406003B0E1A /* PlaylistTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistTableViewCell.xib; sourceTree = "<group>"; };
 		D160AE011BE677D4003B0E1A /* PlaylistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewController.swift; sourceTree = "<group>"; };
 		D17395721ADB080900A53AEE /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
-		D17395881ADF360C00A53AEE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
-		D17395891ADF360C00A53AEE /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		DA8EF99B96F4D25422DF410E /* Pods_Tempo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tempo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FA1E1A771ADB06A3007C823C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
@@ -216,17 +212,18 @@
 		1D046D8C1AB6953600D0354B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				952E7EDD1DEA890E006C6131 /* Login */,
 				B01FE1541C1765080077C2BF /* Spotify */,
 				6DEE0FC31AC34811005552F9 /* Profile */,
+				D148F4991AF0349A009AB073 /* Post History Calendar */,
 				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
 				9563B5531DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift */,
 				B085F3B31BE3CBB80000421E /* SearchViewController.swift */,
-				B085F3B41BE3CBB80000421E /* SearchViewController.xib */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
 				6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */,
 				6067F0801BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift */,
 				60C018041D9C7A2E00FE5166 /* AboutViewController.swift */,
-				60C018051D9C7A2E00FE5166 /* AboutViewController.xib */,
+				952E7EDE1DEA8957006C6131 /* XIBS */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -380,19 +377,35 @@
 		6DEE0FC31AC34811005552F9 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				D17395881ADF360C00A53AEE /* SignInViewController.swift */,
-				D17395891ADF360C00A53AEE /* SignInViewController.xib */,
 				D1173FFF1AF8574400302FFD /* ProfileViewController.swift */,
-				D11740071AF8574900302FFD /* ProfileViewController.xib */,
 				D17395721ADB080900A53AEE /* UsersViewController.swift */,
 				D102A9C51AE889D600C66385 /* SideBarViewController.swift */,
-				D102A9C61AE889D600C66385 /* SideBarViewController.xib */,
-				6D3FA65B1AD5FACB00B1320D /* UsernameViewController.swift */,
-				6D3FA6601AD5FD5C00B1320D /* UsernameViewController.xib */,
-				D148F4991AF0349A009AB073 /* Post History Calendar */,
 			);
 			name = Profile;
 			path = ../Profile;
+			sourceTree = "<group>";
+		};
+		952E7EDD1DEA890E006C6131 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				952E7EE11DEA8E6E006C6131 /* FacebookLoginViewController.swift */,
+				C7B1984D1DD67D6800EAB8EA /* SpotifyLoginViewController.swift */,
+				952E7EE31DEAAA46006C6131 /* CreateUsernameViewController.swift */,
+				952E7EDF1DEA89ED006C6131 /* LoginFlowViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		952E7EDE1DEA8957006C6131 /* XIBS */ = {
+			isa = PBXGroup;
+			children = (
+				60C018051D9C7A2E00FE5166 /* AboutViewController.xib */,
+				D11740071AF8574900302FFD /* ProfileViewController.xib */,
+				B085F3B41BE3CBB80000421E /* SearchViewController.xib */,
+				60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */,
+				D102A9C61AE889D600C66385 /* SideBarViewController.xib */,
+			);
+			name = XIBS;
 			sourceTree = "<group>";
 		};
 		952F0FCB1BCF20E100C53522 /* Tools */ = {
@@ -409,11 +422,8 @@
 		B01FE1541C1765080077C2BF /* Spotify */ = {
 			isa = PBXGroup;
 			children = (
-				C7B1984D1DD67D6800EAB8EA /* SpotifyLoginViewController.swift */,
-				C7B1984F1DD67DCA00EAB8EA /* SpotifyLoginViewController.xib */,
 				1D653F3D1B81451700F54455 /* SpotifyController.swift */,
 				1DE649C11B78590800DA5499 /* SettingsViewController.swift */,
-				60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */,
 				D160AE011BE677D4003B0E1A /* PlaylistTableViewController.swift */,
 			);
 			name = Spotify;
@@ -438,6 +448,7 @@
 				D14A31581AF53218005153E6 /* HipStickyHeaderFlowLayout.swift */,
 			);
 			name = "Post History Calendar";
+			path = ../Profile;
 			sourceTree = "<group>";
 		};
 		FA1E1A7A1ADB06A8007C823C /* Models */ = {
@@ -526,18 +537,15 @@
 			files = (
 				6092CBDA1C021C5E008836AE /* FollowSuggestionsTableViewCell.xib in Resources */,
 				B085F3B61BE3CBB80000421E /* SearchViewController.xib in Resources */,
-				D173958B1ADF360C00A53AEE /* SignInViewController.xib in Resources */,
 				60AEF76B1DBD38AD00C68AAF /* PlayerCellView.xib in Resources */,
 				02803D511DC1855C001D8F01 /* ExpandedPlayerView.xib in Resources */,
 				1DB476481AEF24670066014F /* PostButton.xib in Resources */,
-				6D3FA6611AD5FD5C00B1320D /* UsernameViewController.xib in Resources */,
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
 				D160AE001BE67406003B0E1A /* PlaylistTableViewCell.xib in Resources */,
 				60C5A3CD1D9A1FB1004BDD58 /* LaunchScreen.storyboard in Resources */,
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
 				60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */,
 				0271C9481D9582410037F6AD /* PostHistoryHeaderSectionCell.xib in Resources */,
-				C7B198501DD67DCA00EAB8EA /* SpotifyLoginViewController.xib in Resources */,
 				60C018071D9C7A2E00FE5166 /* AboutViewController.xib in Resources */,
 				D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */,
 				FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */,
@@ -605,6 +613,7 @@
 			files = (
 				1D1C46F71CB6002C00D1B431 /* UIView+Utilities.swift in Sources */,
 				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
+				952E7EE01DEA89ED006C6131 /* LoginFlowViewController.swift in Sources */,
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,
 				1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */,
 				1D653F3E1B81451700F54455 /* SpotifyController.swift in Sources */,
@@ -628,18 +637,18 @@
 				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,
 				6038B17A1D80EBEA0083940D /* UIViewController+Utilities.swift in Sources */,
 				FAB564731AF6A8C9001059DF /* LikedTableViewController.swift in Sources */,
-				6D3FA65C1AD5FACB00B1320D /* UsernameViewController.swift in Sources */,
 				1DD875FC1B6E27DD0041C45B /* NSDateFormatter+Shared.swift in Sources */,
+				952E7EE41DEAAA46006C6131 /* CreateUsernameViewController.swift in Sources */,
 				D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */,
 				C7B1984E1DD67D6800EAB8EA /* SpotifyLoginViewController.swift in Sources */,
 				D14D06B21BE9535400ABA1CF /* SearchViewController.swift in Sources */,
 				7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */,
 				6067F0821BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift in Sources */,
-				D173958A1ADF360C00A53AEE /* SignInViewController.swift in Sources */,
 				60AEF76C1DBD38AD00C68AAF /* ProgressView.swift in Sources */,
 				60AEF7661DBD374200C68AAF /* PlayerNavigationController.swift in Sources */,
 				D11740001AF8574400302FFD /* ProfileViewController.swift in Sources */,
 				6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */,
+				952E7EE21DEA8E6E006C6131 /* FacebookLoginViewController.swift in Sources */,
 				02803D4F1DC18524001D8F01 /* ExpandedPlayerView.swift in Sources */,
 				FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */,
 				D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */,

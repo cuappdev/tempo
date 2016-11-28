@@ -96,21 +96,11 @@ class Song: NSObject {
 	}
 	
 	fileprivate func setSongID(_ id: String) {
-		//TODO: This section needs a major rewrite, unfortunately the player won't work if this call is converted to be asynchronous
-		let request = URLRequest(url: URL(string: spotifyID, relativeTo: spotifyAPIBaseURL)!)
-		var error:NSError? = nil
-		let data: Data?
-		do {
-			data = try NSURLConnection.sendSynchronousRequest(request, returning: nil)
-		} catch let error1 as NSError {
-			error = error1
-			data = nil
-		}
-		if let data = data {
-			let json = JSON(data: data, options: JSONSerialization.ReadingOptions(rawValue: 0), error: &error)
+
+		if let url = URL(string: spotifyID, relativeTo: spotifyAPIBaseURL),
+		let data = try? Data(contentsOf: url) {
+			let json = JSON(data: data)
 			initializeFromResponse(json)
-		} else {
-			print("got error: %@", (error!).description)
 		}
 	}
 	

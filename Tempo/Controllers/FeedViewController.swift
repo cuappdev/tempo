@@ -205,8 +205,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		cell.postView.postViewDelegate = self
 		cell.postView.playerDelegate = self
 		
-		if let listenedToPosts = UserDefaults.standard.dictionary(forKey: FeedViewController.readPostsKey) as? [String:Double],
-		let dateListened = listenedToPosts[post.postID] {
+		if let listenedToPosts = UserDefaults.standard.dictionary(forKey: FeedViewController.readPostsKey) as? [String:Double], listenedToPosts[post.postID] != nil {
 			cell.postView.post?.player.wasPlayed = true
 		}
 		
