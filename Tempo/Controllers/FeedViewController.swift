@@ -132,10 +132,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 					x.feedFollowSuggestionsController?.hideNoMorePostsLabel()
 					x.tableView.tableFooterView = x.feedFollowSuggestionsController?.view
 				} else {
-					x.preparePosts()
 					x.tableView.backgroundView = nil
 					x.tableView.tableFooterView = nil
 				}
+				x.preparePosts()
 			}
 			
 			self?.tableView.alpha = 1.0

@@ -363,9 +363,9 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	}
 	
 	func updatePlayerNavRefs(row: Int) {
+		playerNav.updateDelegates(delegate: self)
 		playerNav.currentPost = currentlyPlayingPost
 		playerNav.postsRef = posts
 		playerNav.postRefIndex = row
-		playerNav.updateDelegates(delegate: self)
 	}
 }
