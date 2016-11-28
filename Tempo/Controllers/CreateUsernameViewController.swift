@@ -116,8 +116,7 @@ class CreateUsernameViewController: UIViewController {
 	}
 	
 	func continueButtonPressed() {
-		guard let usernameText = newUsernameTextField.text else { print("No Username"); return}
-		
+		guard let usernameText = newUsernameTextField.text?.lowercased() else { print("No Username"); return}
 		let username = usernameText.substring(from: usernameText.startIndex)
 		
 		let charSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_").inverted
@@ -128,6 +127,9 @@ class CreateUsernameViewController: UIViewController {
 			alertLabel.textColor = UIColor.red
 		} else if invalidChars != nil { // Username contains some invalid characters
 			alertLabel.text = "Only underscores and alphanumeric characters allowed."
+			alertLabel.textColor = UIColor.red
+		} else if username.characters.count > 18 {
+			alertLabel.text = "Username is too long."
 			alertLabel.textColor = UIColor.red
 		} else { // Username contains only valid characters
 			API.sharedAPI.usernameIsValid(username) { success in

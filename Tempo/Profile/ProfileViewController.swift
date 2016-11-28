@@ -211,7 +211,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			textField.textAlignment = .center
 		}
 		editAlert.addAction(UIAlertAction(title: "Save", style: .default) { _ in
-			let newUsername = editAlert.textFields!.first!.text!
+			let newUsername = editAlert.textFields!.first!.text!.lowercased()
 			let charSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_").inverted
 			let invalidChars = newUsername.rangeOfCharacter(from: charSet)
 			
@@ -219,6 +219,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 				self.showErrorAlert("Oh no!", message: "Username must have at least one character.", actionTitle: "Try again")
 			} else if invalidChars != nil {
 				self.showErrorAlert("Invalid characters", message: "Only underscores and alphanumeric characters are allowed.", actionTitle: "Try again")
+			} else if newUsername.characters.count > 18{
+				self.showErrorAlert("Invalid length", message: "Username is too long.", actionTitle: "Try again")
 			} else {
 				let oldUsername = User.currentUser.username
 				
