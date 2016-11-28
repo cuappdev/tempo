@@ -26,18 +26,15 @@ class SpotifyController {
 	
 	func setSpotifyUser(_ accessToken: String) {
 		do {
-			let currentUserRequest = try SPTUser.createRequestForCurrentUser(withAccessToken: accessToken)
-			let data: Data?
-			var error: NSError? = nil
-			do {
-				data = try NSURLConnection.sendSynchronousRequest(currentUserRequest, returning: nil)
-			} catch let error as NSError {
-				print(error)
-				data = nil
-			}
-			guard let unwrappedData = data else { return }
-			let jsonDict = JSON(data: unwrappedData, options: JSONSerialization.ReadingOptions(rawValue: 0), error: &error)
-			User.currentUser.currentSpotifyUser = CurrentSpotifyUser(json: jsonDict)
+			let currentUserRequest = try SPTUser.createRequestForCurrentUser(withAccessToken: accessToken)			
+			let task = URLSession.shared.dataTask(with: currentUserRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
+				guard let unwrappedData = data, error == nil else { return }
+				let jsonDict = JSON(data: unwrappedData)
+				User.currentUser.currentSpotifyUser = CurrentSpotifyUser(json: jsonDict)
+			})
+			
+			task.resume()
+			
 		} catch let error as NSError {
 			print(error)
 		}

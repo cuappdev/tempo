@@ -19,7 +19,7 @@ class CreateUsernameViewController: UIViewController {
 	var alertLabel: UILabel!
 	
 	var fbid: String = ""
-	var name: String = ""
+	var name: String = "Dennis Fedorko"
 	
 	weak var delegate: CreateUsernameViewControllerDelegate?
 	
@@ -45,7 +45,7 @@ class CreateUsernameViewController: UIViewController {
 		profileNameLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
 		profileNameLabel.textAlignment = .center
 		
-		profileImageView = UIImageView(frame: CGRect(x: 0, y: profileNameLabel.frame.bottom.y + 15, width: view.frame.width * 0.5, height: view.frame.width * 0.5))
+		profileImageView = UIImageView(frame: CGRect(x: 0, y: profileNameLabel.frame.bottom.y + 15, width: view.frame.height * 0.2, height: view.frame.height * 0.2))
 		profileImageView.center = CGPoint(x: view.center.x, y: profileImageView.center.y)
 		profileImageView.layer.cornerRadius = profileImageView.frame.width / 2.0
 		profileImageView.clipsToBounds = true

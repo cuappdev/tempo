@@ -25,21 +25,21 @@ class SpotifyLoginViewController: UIViewController {
 	
 	func layoutSubviews() {
 		
-		connectToSpotifyLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.2, width: view.frame.width * 0.9, height: 29))
+		connectToSpotifyLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.125, width: view.frame.width * 0.9, height: 25))
 		connectToSpotifyLabel.center = CGPoint(x: view.center.x, y: connectToSpotifyLabel.center.y)
 		connectToSpotifyLabel.text = "Connect to Spotify"
 		connectToSpotifyLabel.textColor = .white
-		connectToSpotifyLabel.font = UIFont(name: "AvenirNext-Regular", size: 29)
+		connectToSpotifyLabel.font = UIFont(name: "AvenirNext-Regular", size: 25)
 		connectToSpotifyLabel.textAlignment = .center
 		
-		connectToSpotifyImageView = UIImageView(frame: CGRect(x: 0, y: connectToSpotifyLabel.frame.bottom.y + 50, width: view.frame.width * 0.5, height: view.frame.width * 0.5))
+		connectToSpotifyImageView = UIImageView(frame: CGRect(x: 0, y: connectToSpotifyLabel.frame.bottom.y + 40, width: view.frame.width * 0.5, height: view.frame.width * 0.5))
 		connectToSpotifyImageView.center = CGPoint(x: view.center.x, y: connectToSpotifyImageView.center.y)
 		connectToSpotifyImageView.clipsToBounds = true
 		connectToSpotifyImageView.contentMode = .scaleAspectFit
 		connectToSpotifyImageView.image = UIImage(named: "spotify-connect")
 		
 		connectToSpotifyButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.7, height: 60))
-		connectToSpotifyButton.frame.bottom = CGPoint(x: view.center.x, y: view.frame.height - view.frame.width * 0.2)
+		connectToSpotifyButton.frame.bottom = CGPoint(x: view.center.x, y: view.frame.height - view.frame.width * 0.25)
 		connectToSpotifyButton.backgroundColor = UIColor.spotifyGreen
 		connectToSpotifyButton.setTitle("Connect to Spotify", for: .normal)
 		connectToSpotifyButton.setTitleColor(.white, for: .normal)
@@ -52,6 +52,7 @@ class SpotifyLoginViewController: UIViewController {
 		descriptionLabel.textAlignment = .center
 		descriptionLabel.textColor = .white
 		descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
+		descriptionLabel.baselineAdjustment = .alignCenters
 
 		skipThisStepButton = UIButton(frame: CGRect(x: 0, y: connectToSpotifyButton.frame.bottom.y + 20, width: view.frame.width * 0.7, height: 17))
 		skipThisStepButton.center = CGPoint(x: view.center.x, y: skipThisStepButton.center.y)
