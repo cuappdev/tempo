@@ -21,7 +21,7 @@ extension URL {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate, LoginFlowViewControllerDelegate {
 	
 	var window: UIWindow?
 	let revealVC = SWRevealViewController()
@@ -100,10 +100,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		return shouldPerformAdditionalDelegateHandling
 	}
 	
+	func didFinishLoggingIn() {
+		toggleRootVC()
+		loginFlowViewController = nil
+	}
+	
 	func toggleRootVC() {
 		launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
 		if FBSDKAccessToken.current() == nil {
 				loginFlowViewController = LoginFlowViewController()
+				loginFlowViewController?.delegate = self
 				window?.rootViewController = loginFlowViewController
 		} else {
 			if resetFirstVC {

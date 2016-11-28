@@ -3,7 +3,7 @@ import UIKit
 
 protocol SpotifyLoginViewControllerDelegate: class {
 	
-	func spotifyLoginViewController(spotifyLoginViewController: SpotifyLoginViewController, didFinishLoggingInWithAccessToken token: String?)
+	func spotifyLoginViewController(spotifyLoginViewController: SpotifyLoginViewController, didFinishLoggingIntoSpotifyWithAccessToken token: String?)
 	
 }
 
@@ -77,15 +77,14 @@ class SpotifyLoginViewController: UIViewController {
 	}
 	
 	func skipThisStepButtonPressed() {
-		let appDelegate = UIApplication.shared.delegate as! AppDelegate
-		appDelegate.toggleRootVC()
+		delegate?.spotifyLoginViewController(spotifyLoginViewController: self, didFinishLoggingIntoSpotifyWithAccessToken: nil)
 	}
 
 	func setSpotifyUserAndContinue() {
 		if let session = SPTAuth.defaultInstance().session, session.isValid() {
 			SpotifyController.sharedController.setSpotifyUser(session.accessToken)
 
-			delegate?.spotifyLoginViewController(spotifyLoginViewController: self, didFinishLoggingInWithAccessToken: session.accessToken)
+			delegate?.spotifyLoginViewController(spotifyLoginViewController: self, didFinishLoggingIntoSpotifyWithAccessToken: session.accessToken)
 		}
 	}
 	

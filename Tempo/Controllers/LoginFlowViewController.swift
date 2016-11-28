@@ -94,9 +94,8 @@ extension LoginFlowViewController: CreateUsernameViewControllerDelegate {
 
 extension LoginFlowViewController: SpotifyLoginViewControllerDelegate {
 	
-	func spotifyLoginViewController(spotifyLoginViewController: SpotifyLoginViewController, didFinishLoggingInWithAccessToken token: String?) {
-		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-		appDelegate.toggleRootVC()
+	func spotifyLoginViewController(spotifyLoginViewController: SpotifyLoginViewController, didFinishLoggingIntoSpotifyWithAccessToken token: String?) {
+		delegate?.didFinishLoggingIn()
 	}
 	
 }
