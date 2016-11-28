@@ -159,12 +159,16 @@ extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControl
 	func keyboardWillShow(sender: NSNotification) {
 		if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
 			let keyboardHeight = keyboardSize.height
-			view.frame.origin.y = -keyboardHeight
+			UIView.animate(withDuration: 0.2, animations: { 
+				self.view.frame.origin.y = -keyboardHeight
+			})
 		}
 	}
 	
 	func keyboardWillHide(sender: NSNotification) {
-		view.frame.origin.y = 0
+		UIView.animate(withDuration: 0.2, animations: {
+			self.view.frame.origin.y = 0
+		})
 	}
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {

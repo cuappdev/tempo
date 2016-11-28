@@ -38,6 +38,8 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 		pages = [facebookLoginViewController, createUsernameViewController, spotifyLoginViewController]
 		
 		pageViewController.setViewControllers([facebookLoginViewController], direction: .forward, animated: false, completion: nil)
+		
+		/// Disable for easy debug of login flow screens
 		pageViewController.disablePageViewControllerSwipeGesture()
 		
 		addChildViewController(pageViewController)
