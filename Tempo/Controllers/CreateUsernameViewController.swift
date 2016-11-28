@@ -59,14 +59,14 @@ class CreateUsernameViewController: UIViewController {
 		profileUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		profileUsernameLabel.textAlignment = .center
 		
-		newUsernameLabel = UILabel(frame: CGRect(x: 0, y: profileUsernameLabel.frame.bottom.y + 40, width: view.frame.width * 0.7, height: 16))
+		newUsernameLabel = UILabel(frame: CGRect(x: 0, y: profileUsernameLabel.frame.bottom.y + view.frame.height * 0.05, width: view.frame.width * 0.7, height: 16))
 		newUsernameLabel.center = CGPoint(x: view.center.x, y: newUsernameLabel.center.y)
 		newUsernameLabel.text = "New Username"
 		newUsernameLabel.textColor = .white
 		newUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		newUsernameLabel.textAlignment = .left
 		
-		newUsernameTextField = UITextField(frame: CGRect(x: 0, y: newUsernameLabel.frame.bottom.y + 10, width: view.frame.width * 0.7, height: 50))
+		newUsernameTextField = UITextField(frame: CGRect(x: 0, y: newUsernameLabel.frame.bottom.y + 10, width: view.frame.width * 0.7, height: view.frame.height * 0.07))
 		newUsernameTextField.autocorrectionType = .no
 		newUsernameTextField.autocapitalizationType = .none
 		newUsernameTextField.keyboardType = .alphabet
