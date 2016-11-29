@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			}
 		}
 		
-		if let facebookLoginToken = FBSDKAccessToken.current().tokenString {
+		if let facebookLoginToken = FBSDKAccessToken.current()?.tokenString {
 			FacebookLoginViewController.retrieveCurrentFacebookUserWithAccessToken(token: facebookLoginToken, completion: nil)
 		}
 		
