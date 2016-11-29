@@ -50,7 +50,8 @@ class Post: NSObject {
     func relativeDate() -> String {
 		guard let date = date else { return "" }
         let now = Date()
-        let seconds = Int(now.timeIntervalSince(date))
+        let seconds = max(0, Int(now.timeIntervalSince(date)))
+		
         if seconds < 60 {
             return "\(seconds)s"
         }
