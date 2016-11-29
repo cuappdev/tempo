@@ -94,6 +94,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			}
 		}
 		
+		if let facebookLoginToken = FBSDKAccessToken.current().tokenString {
+			FacebookLoginViewController.retrieveCurrentFacebookUserWithAccessToken(token: facebookLoginToken, completion: nil)
+		}
+		
 		setFirstVC()
 		toggleRootVC()
 		
@@ -136,6 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 					self?.revealVC.setFrontViewPosition(.left, animated: true)
 				}
 			}
+			
 			revealVC.delegate = self
 			window!.rootViewController = revealVC
 		}

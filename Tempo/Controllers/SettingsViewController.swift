@@ -45,9 +45,10 @@ class SettingsViewController: UIViewController {
 		if let session = SPTAuth.defaultInstance().session {
 			if session.isValid() {
 				SpotifyController.sharedController.setSpotifyUser(session.accessToken)
-				let currentSpotifyUser = User.currentUser.currentSpotifyUser
-				nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
-				usernameLabel?.text = "@\(currentSpotifyUser!.username)"
+				if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
+					nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
+					usernameLabel?.text = "@\(currentSpotifyUser.username)"
+				}
 			}
 			loggedInToSpotify(session.isValid())
 		} else {

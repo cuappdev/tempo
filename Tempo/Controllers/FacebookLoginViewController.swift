@@ -107,4 +107,28 @@ class FacebookLoginViewController: UIViewController {
 			}
 		})
 	}
+	
+	static func retrieveCurrentFacebookUserWithAccessToken(token: String, completion: ((Bool) -> ())?) {
+
+		let userRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
+				
+		let _ = userRequest?.start(completionHandler: { (connection: FBSDKGraphRequestConnection?, result: Any?, error: Error?) in
+					
+			guard let responseJSON = result as? [String:Any],
+			let fbid = responseJSON["id"] as? String,
+			error == nil else {
+				print("Error getting Facebook user: \(error)")
+				completion?(false)
+				return
+			}
+					
+			API.sharedAPI.fbAuthenticate(fbid, userToken: token) { success, newUser in
+				guard success else { completion?(false); return }
+				completion?(true)
+			}
+		})
+		
+		Shared.imageCache.removeAll()
+	}
+	
 }
