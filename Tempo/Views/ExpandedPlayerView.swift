@@ -236,7 +236,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		
 		let progress = Double((xTranslation - progressView.frame.origin.x)/progressWidth)
 		post?.player.progress = progress
-		delegate.didChangeProgress!()
+		delegate.didChangeProgress?()
 		
 		progressView.setNeedsDisplay()
 	}

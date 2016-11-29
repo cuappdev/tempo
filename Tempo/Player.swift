@@ -34,7 +34,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 	var wasPlayed = false
 	var finishedPlaying = false
 	
-	var delegate: PlayerDelegate!
+	weak var delegate: PlayerDelegate?
 	
     fileprivate let fileURL: URL
 	init(fileURL: URL) {
@@ -145,6 +145,6 @@ class Player: NSObject, AVAudioPlayerDelegate {
 	
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
 		finishedPlaying = true
-		delegate.didFinishPlaying!()
+		delegate?.didFinishPlaying?()
     }
 }

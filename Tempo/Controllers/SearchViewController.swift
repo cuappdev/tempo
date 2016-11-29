@@ -150,12 +150,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 		
-		if selectedCell != nil {
-			selectedCell?.shareButton.isHidden = true
-		}
-		
 		let cell = tableView.cellForRow(at: indexPath) as! SongSearchTableViewCell
-		selectedCell = cell
 		cell.shareButton.isHidden = false
 		
 		let post = results[indexPath.row]
@@ -166,6 +161,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			activePlayer = nil
 		}
 		
+		//deselect previous cell
+		selectedCell?.postView.updatePlayingStatus()
+		selectedCell?.shareButton.isHidden = true
+		
+		selectedCell = cell
 		activePlayer = cell.postView.post?.player
 		activePlayer?.delegate = self
 		didTogglePlaying(animate: true)
@@ -239,6 +239,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			selectedCell?.postView.updatePlayingStatus()
 			playerNav.updatePlayingStatus()
 		}
+	}
+	
+	func didFinishPlaying() {
+		selectedCell?.postView.updatePlayingStatus()
 	}
 	
 	// MARK: - Notifications
