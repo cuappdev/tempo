@@ -122,7 +122,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		let post = results[indexPath.row]
 		cell.postView.post = post
 		cell.postView.post?.player.prepareToPlay()
-		cell.postView.avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL!)
+		if let smallArtworkURL = post.song.smallArtworkURL {
+			cell.postView.avatarImageView?.hnk_setImageFromURL(smallArtworkURL)
+		}
 		cell.shareButton.isHidden = true
 		if (selfPostIds.contains(post.song.spotifyID)) {
 			cell.shareButton.setTitle("SHARED", for: UIControlState())
