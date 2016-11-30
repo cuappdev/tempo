@@ -26,8 +26,6 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	var playerDelegate: PlayerDelegate!
 	
 	var playerController: PlayerTableViewController?
-	var playerCellRef: PlayerCellView?
-	var expandedPlayerRef: ExpandedPlayerView?
 	
 	var post: Post? {
 		didSet {
@@ -176,6 +174,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 						if success {
 							self.songStatus = .saved
 							self.updateAddButton()
+							self.playerDelegate.didToggleAdd?()
 							self.postViewDelegate?.didTapAddButtonForPostView?(true)
 						}
 					}
@@ -184,11 +183,30 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 						if success {
 							self.songStatus = .notSaved
 							self.updateAddButton()
+							self.playerDelegate.didToggleAdd?()
 							self.postViewDelegate?.didTapAddButtonForPostView?(false)
 						}
 					}
 				}
 			}
+		}
+	}
+	
+	func updateSavedStatus() {
+		if let selectedPost = post {
+			if (User.currentUser.currentSpotifyUser?.savedTracks[selectedPost.song.spotifyID] != nil) {
+				songStatus = .saved
+			} else {
+				songStatus = .notSaved
+			}
+		}
+	}
+	
+	func updateAddStatus() {
+		if let _ = post {
+			updateSavedStatus()
+			let image = songStatus == .saved ? UIImage(named: "check") : UIImage(named: "plus")
+			addButton?.setBackgroundImage(image, for: .normal)
 		}
 	}
 }

@@ -14,6 +14,7 @@ import MediaPlayer
 	@objc optional func didFinishPlaying()
 	@objc optional func didChangeProgress()
 	@objc optional func didToggleLike()
+	@objc optional func didToggleAdd()
 	@objc optional func playNextSong()
 	@objc optional func playPrevSong()
 }

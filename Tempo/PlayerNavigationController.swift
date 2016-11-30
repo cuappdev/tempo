@@ -86,4 +86,9 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		playerCell.updateLikeButton()
 		expandedCell.updateLikeButton()
 	}
+	
+	func updateAddButton() {
+		playerCell.updateAddButton()
+		expandedCell.updateAddButton()
+	}
 }
