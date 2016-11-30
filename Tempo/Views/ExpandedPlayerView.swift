@@ -102,7 +102,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		artistLabel.holdScrolling = false
 		
 		updateLikeButton()
-		updateSongStatus()
+		updateSavedStatus()
 		updatePlayingStatus()
 		updateAddButton()
 	}
@@ -127,7 +127,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		return "\(num) \(convertedUnit)"
 	}
 	
-	override internal func updateSongStatus() {
+	override internal func updateSavedStatus() {
 		if let selectedPost = post {
 			if User.currentUser.currentSpotifyUser?.savedTracks[selectedPost.song.spotifyID] != nil {
 				songStatus = .saved
@@ -157,31 +157,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 			}
 		} else if hitView == addButton {
 			if let _ = post {
-				SpotifyController.sharedController.spotifyIsAvailable { success in
-					if success && songStatus == .notSaved {
-						SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
-							if success {
-								self.toggleAddButton()
-								self.playerNav.playerCell.toggleAddButton()
-							}
-						}
-					} else if success && songStatus == .saved {
-						SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
-							if success {
-								self.toggleAddButton()
-								self.playerNav.playerCell.toggleAddButton()
-							}
-						}
-					} else {
-						//bring them to settingsVC
-						let appDelegate = UIApplication.shared.delegate as! AppDelegate
-						let playerNav = appDelegate.navigationController
-						let revealVC = appDelegate.revealVC
-						let settingsVC = appDelegate.settingsVC
-						playerNav.setViewControllers([settingsVC], animated: true)
-						revealVC.setFrontViewPosition(.left, animated: true)
-					}
-				}
+				toggleAddButton()
 			}
 		} else if hitView == likeButton {
 			if let post = post, postsLikable! {
@@ -270,12 +246,8 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	}
 	
 	override func updateAddButton() {
+		updateSavedStatus()
 		addButtonImage.image = songStatus == .saved ? UIImage(named: "check") : UIImage(named: "plus")
-	}
-	
-	override func toggleAddButton() {
-		songStatus = songStatus == .saved ? .notSaved : .saved
-		updateAddButton()
 	}
 	
 	private func setupMarqueeLabel(label: MarqueeLabel) {

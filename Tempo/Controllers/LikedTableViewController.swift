@@ -88,5 +88,15 @@ class LikedTableViewController: PlayerTableViewController {
 			activityIndicatorView.removeFromSuperview()
         }
     }
+	
+	func didToggleAdd() {
+		//if there is a currentlyPlayingIndexPath, need to sync add status of playerCells and post
+		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? LikedTableViewCell {
+				cell.postView?.updateAddStatus()
+				playerNav.updateAddButton()
+			}
+		}
+	}
 
 }

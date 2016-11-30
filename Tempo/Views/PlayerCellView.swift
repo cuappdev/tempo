@@ -48,12 +48,12 @@ class PlayerCellView: ParentPlayerCellView {
 		isUserInteractionEnabled = true
 		
 		updateLikeButton()
-		updateSongStatus()
+		updateSavedStatus()
 		updatePlayingStatus()
 		updateAddButton()
 	}
 	
-	override internal func updateSongStatus() {
+	override internal func updateSavedStatus() {
 		if let selectedPost = post {
 			if (User.currentUser.currentSpotifyUser?.savedTracks[selectedPost.song.spotifyID] != nil) {
 				songStatus = .saved
@@ -93,31 +93,7 @@ class PlayerCellView: ParentPlayerCellView {
     
 	@IBAction func addButtonClicked(_ sender: UIButton) {
 		if let _ = post {
-			SpotifyController.sharedController.spotifyIsAvailable { success in
-				if success && songStatus == .notSaved {
-					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
-						if success {
-							self.toggleAddButton()
-							self.playerNav?.expandedCell.toggleAddButton()
-						}
-					}
-				} else if success && songStatus == .saved {
-					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
-						if success {
-							self.toggleAddButton()
-							self.playerNav?.expandedCell.toggleAddButton()
-						}
-					}
-				} else {
-					//bring them to settingsVC
-					let appDelegate = UIApplication.shared.delegate as! AppDelegate
-					let playerNav = appDelegate.navigationController
-					let revealVC = appDelegate.revealVC
-					let settingsVC = appDelegate.settingsVC
-					playerNav.setViewControllers([settingsVC], animated: true)
-					revealVC.setFrontViewPosition(.left, animated: true)
-				}
-			}
+			toggleAddButton()
 		}
 	}
 	
@@ -139,13 +115,9 @@ class PlayerCellView: ParentPlayerCellView {
 	}
 	
 	override func updateAddButton() {
+		updateSavedStatus()
 		let image = songStatus == .saved ? UIImage(named: "check") : UIImage(named: "plus")
 		addButton.setBackgroundImage(image, for: .normal)
-	}
-	
-	override func toggleAddButton() {
-		songStatus = songStatus == .saved ? .notSaved : .saved
-		updateAddButton()
 	}
 	
 	fileprivate func setupMarqueeLabel(_ label: MarqueeLabel) {

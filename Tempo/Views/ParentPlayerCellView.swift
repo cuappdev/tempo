@@ -32,8 +32,8 @@ class ParentPlayerCellView: UIView {
 		preconditionFailure("This method must be overridden")
 	}
 	
-	//Responsible for updating song status (saved vs. notSaved)
-	func updateSongStatus() {
+	//Responsible for updating saved status (saved vs. notSaved)
+	func updateSavedStatus() {
 		preconditionFailure("This method must be overridden")
 	}
 	
@@ -49,7 +49,33 @@ class ParentPlayerCellView: UIView {
 	
 	//Switches saved to notSaved, or notSaved to saved, and calls updateAddButton()
 	func toggleAddButton() {
-		preconditionFailure("This method must be overridden")
+		SpotifyController.sharedController.spotifyIsAvailable { success in
+			if success && songStatus == .notSaved {
+				SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
+					if success {
+						self.playerNav?.playerCell.updateAddButton()
+						self.playerNav?.expandedCell.updateAddButton()
+						self.delegate?.didToggleAdd?()
+					}
+				}
+			} else if success && songStatus == .saved {
+				SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
+					if success {
+						self.playerNav?.playerCell.updateAddButton()
+						self.playerNav?.expandedCell.updateAddButton()
+						self.delegate?.didToggleAdd?()
+					}
+				}
+			} else {
+				//bring them to settingsVC
+				let appDelegate = UIApplication.shared.delegate as! AppDelegate
+				let playerNav = appDelegate.navigationController
+				let revealVC = appDelegate.revealVC
+				let settingsVC = appDelegate.settingsVC
+				playerNav.setViewControllers([settingsVC], animated: true)
+				revealVC.setFrontViewPosition(.left, animated: true)
+			}
+		}
 	}
 	
 	//Visual update for add button, based on whether the song is saved or notSaved
