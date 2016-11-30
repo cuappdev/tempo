@@ -1,10 +1,31 @@
-# Tempo
+[//]: # (https://github.com/cuappdev/assets/tree/master/tempo)
+# Tempo <img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/logo.png width=35 />  
 
-Tempo, the second app from [CUAppDev](http://www.cuappdev.org/home), allows users to post their song of the day, and discover what others are listening to.
 
-## Installing
-The installation requires CocoaPods be installed on your machine
-```
+Tempo is the second app from [CUAppDev](http://cuappdev.org), a project team at Cornell University. Tempo allows users to post their song of the day, and discover what others are listening to. You can view our [release notes](RELEASENOTES.md) to learn more about the progress of the Tempo.
+[//]: # (Download the current release on the [Apple App Store](https://itunes.apple.com/us/app/XXXX).)
+
+## Tempo Screenshots <img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/logo.png width=35 />
+
+<div style="text-align:center">
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/launch-screen.png  width=200 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/feed.png width=200 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/sidebar.png  width=200 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/feed-expanded-player.png  width=200 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/profile.png  width=200 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/about.png  width=200 />
+</div>
+
+## Development
+
+### Installation
+We use [CocoaPods](http://cocoapods.org) for our dependency manager. This should be installed before continuing.
+
+After cloning the project, run the following:
+
+```bash
 git clone --recursive https://github.com/cuappdev/tempo.git
 pod install
 ```
+
+Open the Xcode workspace and enjoy Tempo!
