@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 	let likedVC = LikedTableViewController()
 	let settingsVC = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
-	let aboutVC = AboutViewController(nibName: "AboutViewController", bundle: nil)
+	let aboutVC = AboutViewController()
 	let transparentView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
 	let navigationController = PlayerNavigationController()
 	

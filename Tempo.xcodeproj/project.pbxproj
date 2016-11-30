@@ -48,7 +48,6 @@
 		60AEF76B1DBD38AD00C68AAF /* PlayerCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60AEF7681DBD38AD00C68AAF /* PlayerCellView.xib */; };
 		60AEF76C1DBD38AD00C68AAF /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEF7691DBD38AD00C68AAF /* ProgressView.swift */; };
 		60C018061D9C7A2E00FE5166 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C018041D9C7A2E00FE5166 /* AboutViewController.swift */; };
-		60C018071D9C7A2E00FE5166 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60C018051D9C7A2E00FE5166 /* AboutViewController.xib */; };
 		60C5A3CD1D9A1FB1004BDD58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60C5A3CC1D9A1FB1004BDD58 /* LaunchScreen.storyboard */; };
 		6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */; };
 		6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */; };
@@ -145,7 +144,6 @@
 		60AEF7681DBD38AD00C68AAF /* PlayerCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerCellView.xib; sourceTree = "<group>"; };
 		60AEF7691DBD38AD00C68AAF /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		60C018041D9C7A2E00FE5166 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		60C018051D9C7A2E00FE5166 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		60C5A3CC1D9A1FB1004BDD58 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowTableViewCell.swift; path = ../Profile/FollowTableViewCell.swift; sourceTree = "<group>"; };
 		6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowTableViewCell.xib; path = ../Profile/FollowTableViewCell.xib; sourceTree = "<group>"; };
@@ -402,7 +400,6 @@
 		952E7EDE1DEA8957006C6131 /* XIBS */ = {
 			isa = PBXGroup;
 			children = (
-				60C018051D9C7A2E00FE5166 /* AboutViewController.xib */,
 				D11740071AF8574900302FFD /* ProfileViewController.xib */,
 				B085F3B41BE3CBB80000421E /* SearchViewController.xib */,
 				60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */,
@@ -549,7 +546,6 @@
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
 				60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */,
 				0271C9481D9582410037F6AD /* PostHistoryHeaderSectionCell.xib in Resources */,
-				60C018071D9C7A2E00FE5166 /* AboutViewController.xib in Resources */,
 				D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */,
 				FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */,
 				6038B1801D80EDAF0083940D /* FeedTableViewCell.xib in Resources */,
