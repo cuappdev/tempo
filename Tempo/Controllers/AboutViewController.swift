@@ -18,7 +18,7 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 	var teamLabel:  UILabel!
 	
 	var aboutInfo:  UILabel!
-	var linksInfo:  UILabel!
+	var linksInfo:  UITextView!
 	var teamInfo:   UILabel!
 	
 	let aboutText = "Cornell App Development is a project team at Cornell University dedicated to mobile app development. Every year, we take an app from idea to product, culminating with a release on the App Store. We give students the opportunity to work in a startup environment and gain practical experience in software development, design, and product management. Our team is made up of talented designers, developers, and visionaries who collaborate to bring projects to life."
@@ -90,10 +90,13 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 		linksLabel.text = "Links"
 		view.addSubview(linksLabel)
 		
-		linksInfo = UILabel(frame: CGRect(x: 32, y: linksLabel.frame.bottom.y + 10, width: screenWidth - 64, height: 0))
+		linksInfo = UITextView(frame: CGRect(x: 32, y: linksLabel.frame.bottom.y + 10, width: screenWidth - 64, height: 0))
 		linksInfo.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+		linksInfo.backgroundColor = UIColor.clear
 		linksInfo.textColor = UIColor.tempoLightRed
-		linksInfo.numberOfLines = 3
+		linksInfo.tintColor = UIColor.tempoLightRed
+		linksInfo.isEditable = false
+		linksInfo.dataDetectorTypes = .link
 		linksInfo.text = linksText
 		linksInfo.sizeToFit()
 		view.addSubview(linksInfo)
