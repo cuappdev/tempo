@@ -8,12 +8,11 @@ Tempo is the second app from [CUAppDev](http://cuappdev.org), a project team at 
 ## Tempo Screenshots <img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/logo.png width=35 />
 
 <div style="text-align:center">
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/launch-screen.png  width=200 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/feed.png width=200 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/sidebar.png  width=200 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/feed-expanded-player.png  width=200 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/profile.png  width=200 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/about.png  width=200 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/launch-screen.png  width=175 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/feed.png width=175 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/sidebar.png  width=175 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/feed-expanded-player.png  width=175 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/profile.png  width=175 />
 </div>
 
 ## Development
