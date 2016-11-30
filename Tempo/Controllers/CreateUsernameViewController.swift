@@ -92,6 +92,8 @@ class CreateUsernameViewController: UIViewController {
 		continueButton.setTitleColor(.white, for: .normal)
 		continueButton.layer.cornerRadius = 5
 		continueButton.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
+		continueButton.addTarget(self, action: #selector(pressButton), for: .touchDown)
+		continueButton.addTarget(self, action: #selector(releaseButton), for: .touchDragExit)
 		
 		view.addSubview(createUsernameLabel)
 		view.addSubview(profileNameLabel)
@@ -104,6 +106,14 @@ class CreateUsernameViewController: UIViewController {
 		
 	}
 	
+	func pressButton(){
+		continueButton.alpha = 0.8
+	}
+	
+	func releaseButton(){
+		continueButton.alpha = 1.0
+	}
+
 	func setProfileImage() {
 		guard let imageUrl = URL(string: "http://graph.facebook.com/\(fbid)/picture?type=large") else { return }
 		profileImageView.hnk_setImageFromURL(imageUrl)
@@ -116,6 +126,7 @@ class CreateUsernameViewController: UIViewController {
 	}
 	
 	func continueButtonPressed() {
+		continueButton.alpha = 1.0
 		guard let usernameText = newUsernameTextField.text?.lowercased() else { print("No Username"); return}
 		let username = usernameText.substring(from: usernameText.startIndex)
 		

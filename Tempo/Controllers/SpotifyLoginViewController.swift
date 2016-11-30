@@ -45,7 +45,9 @@ class SpotifyLoginViewController: UIViewController {
 		connectToSpotifyButton.setTitleColor(.white, for: .normal)
 		connectToSpotifyButton.layer.cornerRadius = 5
 		connectToSpotifyButton.addTarget(self, action: #selector(connectToSpotifyButtonPressed), for: .touchUpInside)
-		
+		connectToSpotifyButton.addTarget(self, action: #selector(pressButton), for: .touchDown)
+		connectToSpotifyButton.addTarget(self, action: #selector(releaseButton), for: .touchDragExit)
+
 		descriptionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.8, height: 20))
 		descriptionLabel.center = CGPoint(x: view.center.x, y: connectToSpotifyImageView.frame.bottom.y + (connectToSpotifyButton.frame.top.y - connectToSpotifyImageView.frame.bottom.y) / 2)
 		descriptionLabel.text = "Add songs to your Spotify library"
@@ -68,7 +70,16 @@ class SpotifyLoginViewController: UIViewController {
 
 	}
 	
+	func pressButton(){
+		connectToSpotifyButton.alpha = 0.8
+	}
+	
+	func releaseButton(){
+		connectToSpotifyButton.alpha = 1.0
+	}
+	
 	func connectToSpotifyButtonPressed() {
+		connectToSpotifyButton.alpha = 1.0
 		SpotifyController.sharedController.loginToSpotify { (success: Bool) in
 			if success {
 				self.setSpotifyUserAndContinue()

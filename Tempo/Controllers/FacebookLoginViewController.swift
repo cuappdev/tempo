@@ -50,6 +50,7 @@ class FacebookLoginViewController: UIViewController {
 		tempoLabel.textAlignment = .center
 		tempoLabel.textColor = .white
 		tempoLabel.font = UIFont(name: "HelveticaNeue-Bold", size: view.frame.height / 10)
+		tempoLabel.isUserInteractionEnabled = false
 		
 		loginButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.7, height: 60))
 		loginButton.frame.bottom = CGPoint(x: view.center.x, y: view.frame.height - view.frame.width * 0.15)
@@ -58,6 +59,8 @@ class FacebookLoginViewController: UIViewController {
 		loginButton.setTitleColor(.white, for: .normal)
 		loginButton.layer.cornerRadius = 5
 		loginButton.addTarget(self, action: #selector(loginToFacebook), for: .touchUpInside)
+		loginButton.addTarget(self, action: #selector(pressButton), for: .touchDown)
+		loginButton.addTarget(self, action: #selector(releaseButton), for: .touchDragExit)
 		
 		descriptionTextView = UITextView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.8, height: 80))
 		descriptionTextView.center = CGPoint(x: view.center.x, y: tempoLabel.frame.bottom.y + (loginButton.frame.top.y - tempoLabel.frame.bottom.y) / 2)
@@ -92,8 +95,17 @@ class FacebookLoginViewController: UIViewController {
 		activityIndicatorView.removeFromSuperview()
 	}
 	
+	func pressButton(){
+		loginButton.alpha = 0.8
+	}
+	
+	func releaseButton(){
+		loginButton.alpha = 1.0
+	}
+	
 	func loginToFacebook() {
 		showActivityIndicator()
+		loginButton.alpha = 1.0
 		let fbLoginManager = FBSDKLoginManager()
 		fbLoginManager.logOut()
 		fbLoginManager.logIn(withReadPermissions: ["public_profile", "email", "user_friends"], from: nil) { loginResult, error in
