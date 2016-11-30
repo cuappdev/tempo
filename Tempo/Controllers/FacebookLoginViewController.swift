@@ -98,16 +98,15 @@ class FacebookLoginViewController: UIViewController {
 	func pressButton(){
 		loginButton.alpha = 0.8
 		loginButton.isUserInteractionEnabled = false
+
 	}
 	
 	func releaseButton(){
 		loginButton.alpha = 1.0
-		loginButton.isUserInteractionEnabled = true
 	}
 	
 	func loginToFacebook() {
 		showActivityIndicator()
-		loginButton.isUserInteractionEnabled = false
 		loginButton.alpha = 1.0
 		let fbLoginManager = FBSDKLoginManager()
 		fbLoginManager.logOut()
