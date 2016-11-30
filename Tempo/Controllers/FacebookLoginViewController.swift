@@ -56,6 +56,7 @@ class FacebookLoginViewController: UIViewController {
 		descriptionTextView.textAlignment = .center
 		descriptionTextView.textColor = .white
 		descriptionTextView.font = UIFont(name: "AvenirNext-Regular", size: 16)
+		descriptionTextView.isScrollEnabled = false
 		
 		view.addSubview(logoImageView)
 		view.addSubview(tempoLabel)
