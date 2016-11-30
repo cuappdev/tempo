@@ -97,8 +97,6 @@ class FacebookLoginViewController: UIViewController {
 	
 	func pressButton(){
 		loginButton.alpha = 0.8
-		loginButton.isUserInteractionEnabled = false
-
 	}
 	
 	func releaseButton(){
