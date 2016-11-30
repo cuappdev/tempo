@@ -9,7 +9,7 @@
 import UIKit
 import MarqueeLabel
 
-class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
+class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	@IBOutlet weak var postDetailLabel: UILabel!
 	@IBOutlet weak var songLabel: MarqueeLabel!
@@ -31,20 +31,12 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	
 	var progressIndicator: UIView!
 	
-	private var postsLikable: Bool? {
+	override var postsLikable: Bool? {
 		didSet {
 			likeButton.isUserInteractionEnabled = postsLikable!
 		}
 	}
-	var playerNav: PlayerNavigationController!
-	
-	var songStatus: SavedSongStatus = .notSaved
-	var post: Post?
-	var delegate: PlayerDelegate! {
-		didSet {
-			postsLikable = delegate is FeedViewController
-		}
-	}
+
 	private var wasPlaying = false
 	
 	var tapGestureRecognizer: UITapGestureRecognizer?
@@ -94,7 +86,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		setupMarqueeLabel(label: artistLabel)
 	}
 	
-	func updateCellInfo(newPost: Post) {
+	override func updateCellInfo(newPost: Post) {
 		post = newPost
 		songLabel.text = newPost.song.title
 		artistLabel.text = newPost.song.artist
@@ -135,7 +127,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		return "\(num) \(convertedUnit)"
 	}
 	
-	private func updateSongStatus() {
+	override internal func updateSongStatus() {
 		if let selectedPost = post {
 			if User.currentUser.currentSpotifyUser?.savedTracks[selectedPost.song.spotifyID] != nil {
 				songStatus = .saved
@@ -145,7 +137,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		}
 	}
 	
-	func updatePlayingStatus() {
+	override func updatePlayingStatus() {
 		if let selectedPost = post {
 			let isPlaying = selectedPost.player.isPlaying
 			songLabel.holdScrolling = !isPlaying
@@ -161,7 +153,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		
 		if hitView == playToggleButton {
 			if let _ = post {
-				delegate.didTogglePlaying(animate: true)
+				delegate?.didTogglePlaying(animate: true)
 			}
 		} else if hitView == addButton {
 			if let _ = post {
@@ -194,7 +186,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		} else if hitView == likeButton {
 			if let post = post, postsLikable! {
 				post.toggleLike()
-				delegate.didToggleLike!()
+				delegate?.didToggleLike!()
 			}
 		} else if let post = post, hitView == openButton {
 			
@@ -219,12 +211,12 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 	dynamic func progressPanned(gesture: UIPanGestureRecognizer) {
 		if gesture.state != .ended {
 			if post?.player.isPlaying ?? false {
-				delegate.didTogglePlaying(animate: false)
+				delegate?.didTogglePlaying(animate: false)
 				wasPlaying = true
 			}
 		} else {
 			if wasPlaying {
-				delegate.didTogglePlaying(animate: false)
+				delegate?.didTogglePlaying(animate: false)
 			}
 			wasPlaying = false
 			initialPanView = nil
@@ -236,7 +228,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		
 		let progress = Double((xTranslation - progressView.frame.origin.x)/progressWidth)
 		post?.player.progress = progress
-		delegate.didChangeProgress?()
+		delegate?.didChangeProgress?()
 		
 		progressView.setNeedsDisplay()
 	}
@@ -260,7 +252,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		setNeedsDisplay()
 	}
 	
-	func updatePlayToggleButton() {
+	override func updatePlayToggleButton() {
 		if let selectedPost = post {
 			let name = selectedPost.player.isPlaying ? "pause" : "play"
 			progressView.setUpTimer()
@@ -277,11 +269,11 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		}
 	}
 	
-	func updateAddButton() {
-		self.addButtonImage.image = songStatus == .saved ? UIImage(named: "check") : UIImage(named: "plus")
+	override func updateAddButton() {
+		addButtonImage.image = songStatus == .saved ? UIImage(named: "check") : UIImage(named: "plus")
 	}
 	
-	func toggleAddButton() {
+	override func toggleAddButton() {
 		songStatus = songStatus == .saved ? .notSaved : .saved
 		updateAddButton()
 	}
@@ -296,7 +288,7 @@ class ExpandedPlayerView: UIView, UIGestureRecognizerDelegate {
 		label.animationDelay = 0
 	}
 	
-	func resetPlayerCell() {
+	override func resetPlayerCell() {
 		post = nil
 		songLabel.text = ""
 		artistLabel.text = ""
