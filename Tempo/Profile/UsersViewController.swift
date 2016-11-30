@@ -172,12 +172,13 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		cell.numFollowLabel.text = (user.followersCount == 1) ? "1 follower" : "\(user.followersCount) followers"
 		cell.userImage.hnk_setImageFromURL(user.imageURL)
 		if user.id != User.currentUser.id {
+			cell.followButton.alpha = 1.0
 			cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
 			cell.followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
 			cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.white, for: UIControlState())
 			cell.delegate = self
 		} else {
-			cell.followButton.setTitle("", for: UIControlState())
+			cell.followButton.alpha = 0.0
 		}
         
         return cell
