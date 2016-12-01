@@ -32,6 +32,7 @@
 		1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */; };
 		1DFD73601BA0DC68008D9FD8 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */; };
 		49941B33D42E6D1D9CAC5031 /* Pods_Tempo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8EF99B96F4D25422DF410E /* Pods_Tempo.framework */; };
+		508440E51DF0B97D00463D94 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508440E41DF0B97D00463D94 /* UIButton+Extensions.swift */; };
 		60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60256C0F1BC1BC7900B52FDD /* SavedSongView.xib */; };
 		60256C1A1BC1BFA900B52FDD /* SavedSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60256C191BC1BFA900B52FDD /* SavedSongView.swift */; };
 		6035E7881DE8017300221870 /* ParentPlayerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6035E7871DE8017300221870 /* ParentPlayerCellView.swift */; };
@@ -128,6 +129,7 @@
 		1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spotify.framework; path = "ios-sdk/Spotify.framework"; sourceTree = "<group>"; };
 		3BA54522F860F4A0B44FAE09 /* Pods-Tempo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tempo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tempo/Pods-Tempo.release.xcconfig"; sourceTree = "<group>"; };
 		426E1A4A1C87BA6400512214 /* UIView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Utilities.swift"; sourceTree = "<group>"; };
+		508440E41DF0B97D00463D94 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		60256C0F1BC1BC7900B52FDD /* SavedSongView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SavedSongView.xib; sourceTree = "<group>"; };
 		60256C191BC1BFA900B52FDD /* SavedSongView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedSongView.swift; sourceTree = "<group>"; };
 		6035E7871DE8017300221870 /* ParentPlayerCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentPlayerCellView.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				426E1A4A1C87BA6400512214 /* UIView+Utilities.swift */,
 				1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */,
 				1D1CC60C1C31BC0D0052F66D /* NSURLSession+Shared.swift */,
+				508440E41DF0B97D00463D94 /* UIButton+Extensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -652,6 +655,7 @@
 				D160AE021BE677D4003B0E1A /* PlaylistTableViewController.swift in Sources */,
 				D148F4AA1AF03EB4009AB073 /* PostHistoryTableViewController.swift in Sources */,
 				6DEE0FDA1AC34811005552F9 /* User.swift in Sources */,
+				508440E51DF0B97D00463D94 /* UIButton+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
