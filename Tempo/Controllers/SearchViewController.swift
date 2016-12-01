@@ -15,8 +15,8 @@ protocol SongSearchDelegate: class {
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, PlayerDelegate {
 
-	@IBOutlet weak var searchBarContainer: UIView!
-	@IBOutlet weak var tableView: UITableView!
+	var tableView: UITableView!
+	var searchBarContainer: UIView!
 	
 	weak var delegate: SongSearchDelegate?
 	
@@ -41,15 +41,24 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		title = "Post a track"
 		view.backgroundColor = UIColor.tempoDarkGray
+		let searchBarHeight = CGFloat(44)
+		tableView = UITableView(frame: CGRect(x: 0, y: searchBarHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight - searchBarHeight - 20), style: .plain)
+		tableView.delegate = self
+		tableView.dataSource = self
+		
 		tableView.rowHeight = 84
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
+		
+		searchBarContainer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: searchBarHeight))
 		
 		searchBar.delegate = self
 		playerNav = navigationController as! PlayerNavigationController
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+		view.addSubview(searchBarContainer)
+		view.addSubview(tableView)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
