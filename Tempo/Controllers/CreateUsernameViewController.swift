@@ -54,7 +54,7 @@ class CreateUsernameViewController: UIViewController {
 		
 		profileUsernameLabel = UILabel(frame: CGRect(x: 0, y: profileImageView.frame.bottom.y + 15, width: view.frame.width * 0.8, height: 16))
 		profileUsernameLabel.center = CGPoint(x: view.center.x, y: profileUsernameLabel.center.y)
-		profileUsernameLabel.text = "@"
+		profileUsernameLabel.text = ""
 		profileUsernameLabel.textColor = .white
 		profileUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		profileUsernameLabel.textAlignment = .center
@@ -121,7 +121,12 @@ class CreateUsernameViewController: UIViewController {
 	
 	func textFieldDidChange(textField: UITextField) {
 		if let username = textField.text {
-			profileUsernameLabel.text = "@\(username)"
+			if username == ""{
+				profileUsernameLabel.text = ""
+			}
+			else{
+				profileUsernameLabel.text = "@\(username)"
+			}
 		}
 	}
 	
@@ -147,9 +152,7 @@ class CreateUsernameViewController: UIViewController {
 				if success { // Username available
 					API.sharedAPI.updateCurrentUser(username, didSucceed: { (success) in
 						if success {
-							
 							self.delegate?.createUsernameViewController(createUsernameViewController: self, didFinishCreatingUsername: username)
-							
 						} else {
 							self.alertLabel.text = "Username failed to update. Try again."
 							self.alertLabel.textColor = .red
@@ -162,7 +165,6 @@ class CreateUsernameViewController: UIViewController {
 			}
 		}
 	}
-
 }
 
 extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControllerDelegate {
