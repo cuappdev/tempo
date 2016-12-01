@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -41,9 +41,6 @@
                             <exclude reference="0RO-NQ-Nlv"/>
                         </mask>
                     </variation>
-                    <connections>
-                        <action selector="addButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="Adk-3r-NRX"/>
-                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zUX-yd-f29" customClass="ProgressView" customModule="Tempo" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="380" height="2"/>
@@ -64,9 +61,6 @@
                             <exclude reference="bvA-Yk-cgQ"/>
                         </mask>
                     </variation>
-                    <connections>
-                        <action selector="playToggleButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="KQm-kc-SBe"/>
-                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjX-LE-GtK">
                     <rect key="frame" x="341" y="24" width="22" height="22"/>
@@ -83,9 +77,6 @@
                             <exclude reference="sd1-Mj-Ucb"/>
                         </mask>
                     </variation>
-                    <connections>
-                        <action selector="likeButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="bOn-B8-M54"/>
-                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

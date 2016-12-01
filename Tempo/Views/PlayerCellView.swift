@@ -18,22 +18,21 @@ class PlayerCellView: ParentPlayerCellView {
 	@IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var progressView: ProgressView!
 	
-	override var postsLikable: Bool? {
-		didSet {
-			likeButton.isUserInteractionEnabled = postsLikable!
-		}
-	}
-	
 	func setup(parent: PlayerNavigationController) {
 		playerNav = parent
 		backgroundColor = UIColor.tempoSuperDarkGray
-		let tap = UITapGestureRecognizer(target: self, action: #selector(expandTap(sender:)))
+		let tap = UILongPressGestureRecognizer(target: self, action: #selector(playerCellTapped(sender:)))
+		tap.minimumPressDuration = 0
 		addGestureRecognizer(tap)
 		progressView.playerDelegate = playerNav
 		progressView.backgroundColor = UIColor.tempoSuperDarkRed
 
 		playToggleButton.layer.cornerRadius = 5
 		playToggleButton.clipsToBounds = true
+		
+		playToggleButton.isUserInteractionEnabled = false
+		addButton.isUserInteractionEnabled = false
+		likeButton.isUserInteractionEnabled = false
 		
 		setupMarqueeLabel(songLabel)
 		setupMarqueeLabel(artistLabel)
@@ -63,8 +62,29 @@ class PlayerCellView: ParentPlayerCellView {
 		}
 	}
 	
-	func expandTap(sender: UITapGestureRecognizer) {
-		playerNav?.animateExpandedCell(isExpanding: true)
+	func playerCellTapped(sender: UILongPressGestureRecognizer) {
+		let tapPoint = sender.location(in: self)
+		
+		let separatorPoint = (addButton.frame.right.x + likeButton.frame.left.x)/2
+		
+		if sender.state == .began {
+			if (tapPoint.x > playToggleButton.frame.right.x + 12 && tapPoint.x < addButton.frame.left.x - 12) {
+				// expand cell
+				playerNav?.animateExpandedCell(isExpanding: true)
+			}
+		} else if sender.state == .ended {
+			if (tapPoint.x < playToggleButton.frame.right.x + 12) {
+				// playButton tapped
+				playToggleButtonClicked()
+			} else if (tapPoint.x > addButton.frame.left.x - 12 && tapPoint.x < separatorPoint) {
+				// addButton tapped
+				addButtonClicked()
+			} else if (tapPoint.x > separatorPoint) {
+				// likedButton tapped
+				likeButtonClicked()
+			}
+		}
+		
 	}
 	
 	override func updatePlayingStatus() {
@@ -77,7 +97,7 @@ class PlayerCellView: ParentPlayerCellView {
 		updatePlayToggleButton()
 	}
 	
-    @IBAction func playToggleButtonClicked(sender: UIButton) {
+    func playToggleButtonClicked() {
         if let _ = post {
             delegate?.didTogglePlaying(animate: true)
         }
@@ -91,13 +111,13 @@ class PlayerCellView: ParentPlayerCellView {
 		}
 	}
     
-	@IBAction func addButtonClicked(_ sender: UIButton) {
+	func addButtonClicked() {
 		if let _ = post {
 			toggleAddButton()
 		}
 	}
 	
-	@IBAction func likeButtonClicked(sender: UIButton) {
+	func likeButtonClicked() {
 		if let selectedPost = post, (postsLikable ?? false) {
 			selectedPost.toggleLike()
 			updateLikeButton()
@@ -107,10 +127,8 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	func updateLikeButton() {
 		if let selectedPost = post {
-			if postsLikable! {
-				let name = selectedPost.isLiked ? "filled-heart" : "empty-heart"
-				likeButton?.setBackgroundImage(UIImage(named: name), for: .normal)
-			}
+			let name = (selectedPost.isLiked || playerNav.playingPostType == .liked) ? "filled-heart" : "empty-heart"
+			likeButton?.setBackgroundImage(UIImage(named: name), for: .normal)
 		}
 	}
 	

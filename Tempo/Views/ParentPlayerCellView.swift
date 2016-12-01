@@ -10,7 +10,7 @@ import UIKit
 
 class ParentPlayerCellView: UIView {
 
-	internal var postsLikable: Bool?
+	var postsLikable: Bool?
 	
 	var playerNav: PlayerNavigationController!
 	

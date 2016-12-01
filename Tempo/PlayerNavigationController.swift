@@ -24,6 +24,7 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	
 	var postsRef: [Post]?
 	var postRefIndex: Int?
+	var playingPostType: PlayingPostType?
 	var currentPost: Post? {
 		didSet {
 			if let newPost = currentPost {

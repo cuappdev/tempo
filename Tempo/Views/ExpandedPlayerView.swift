@@ -238,10 +238,8 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	func updateLikeButton() {
 		if let selectedPost = post {
-			if postsLikable! {
-				let name = selectedPost.isLiked ? "filled-heart" : "empty-heart"
-				likeButtonImage.image = UIImage(named: name)
-			}
+			let name = (selectedPost.isLiked || playerNav.playingPostType == .liked) ? "filled-heart" : "empty-heart"
+			likeButtonImage.image = UIImage(named: name)
 		}
 	}
 	

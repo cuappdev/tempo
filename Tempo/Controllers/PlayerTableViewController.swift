@@ -19,6 +19,12 @@ import MediaPlayer
 	@objc optional func playPrevSong()
 }
 
+enum PlayingPostType {
+	case feed
+	case history
+	case liked
+}
+
 class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate, PostViewDelegate, PlayerDelegate {
 	
 	var tableView: UITableView!
@@ -28,6 +34,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	var filteredPosts: [Post] = []
     var currentlyPlayingPost: Post?
 	var playerNav: PlayerNavigationController!
+	var playingPostType: PlayingPostType?
 	
     var currentlyPlayingIndexPath: IndexPath? {
         didSet {
@@ -65,6 +72,13 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				
 				//update post to new song
                 currentlyPlayingPost = array[currentlyPlayingIndexPath!.row]
+				if self is FeedViewController {
+					playingPostType = .feed
+				} else if self is LikedTableViewController {
+					playingPostType = .liked
+				} else {
+					playingPostType = .history
+				}
 				updatePlayerNavRefs(row: currentlyPlayingIndexPath!.row)
 				didTogglePlaying(animate: true)
             }
@@ -365,6 +379,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	
 	func updatePlayerNavRefs(row: Int) {
 		playerNav.updateDelegates(delegate: self)
+		playerNav.playingPostType = playingPostType
 		playerNav.currentPost = currentlyPlayingPost
 		playerNav.postsRef = posts
 		playerNav.postRefIndex = row

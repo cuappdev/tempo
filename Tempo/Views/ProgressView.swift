@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum Type {
-	case NormalPlayer
-	case ExpandedPlayer
-}
-
 class ProgressView: UIView {
 	
 	var playerDelegate: PostDelegate!
