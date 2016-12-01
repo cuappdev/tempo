@@ -48,7 +48,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     var post: Post? {
         didSet {
-            // update stuff
             if let post = post {
                 switch type {
                 case .feed:
@@ -137,6 +136,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+		likedButton?.tag = 1
         updateProfileLabel()
 		updateBackground()
     }
@@ -196,18 +196,21 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 		}
 	}
     
+
 	func postViewPressed(_ sender: UIGestureRecognizer) {
 		guard let post = post else { return }
 		
 		if sender is UITapGestureRecognizer {
 			let tapPoint = sender.location(in: self)
 			let hitView = hitTest(tapPoint, with: nil)
+			let tapPointX = tapPoint.x
+			if (tapPointX + 4.0) < (avatarImageView?.frame.maxX)! {
+				postViewDelegate?.didTapImageForPostView?(post)
+			}
 			if hitView == likedButton {
 				post.toggleLike()
 				updateLikedStatus()
 				playerDelegate.didToggleLike!()
-			} else if hitView == avatarImageView {
-				postViewDelegate?.didTapImageForPostView?(post)
 			}
 		}
 	}
