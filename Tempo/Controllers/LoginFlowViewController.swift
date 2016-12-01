@@ -21,6 +21,8 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		view.backgroundColor = UIColor.tempoDarkGray
 
 		pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 		pageViewController.dataSource = self

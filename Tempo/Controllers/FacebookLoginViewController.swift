@@ -25,15 +25,24 @@ class FacebookLoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+		view.alpha = 0.0
 		layoutSubviews()
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		UIView.animate(withDuration: 1.0, delay: 0.5, options: .curveEaseIn, animations: {
+			self.view.alpha = 1.0
+
+		}, completion: nil)
+
 	}
 	
 	func layoutSubviews() {
 		
-		logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.55, height: view.frame.width * 0.55))
+		logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.45, height: view.frame.width * 0.45))
 		logoImageView.center = CGPoint(x: view.center.x, y: view.frame.height * 0.275)
-		logoImageView.image = UIImage(named: "tempoCircle")
+		logoImageView.image = UIImage(named: "tempo-logo-transparent")
 		
 		tempoLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 10))
 		tempoLabel.center = view.center
@@ -66,6 +75,7 @@ class FacebookLoginViewController: UIViewController {
 	}
 	
 	func showActivityIndicator() {
+		view.isUserInteractionEnabled = false
 		descriptionTextView.alpha = 0.0
 
 		activityIndicatorView.center = descriptionTextView.center
@@ -74,6 +84,8 @@ class FacebookLoginViewController: UIViewController {
 	}
 	
 	func hideActivityIndicator() {
+		view.isUserInteractionEnabled = true
+
 		descriptionTextView.alpha = 1.0
 		
 		activityIndicatorView.stopAnimating()

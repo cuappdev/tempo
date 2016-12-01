@@ -33,6 +33,10 @@ class SettingsViewController: UIViewController {
 		toggleNotifications.isOn = User.currentUser.remotePushNotificationsEnabled
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		updateSpotifyState()
+	}
+	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		title = "Settings"
@@ -44,13 +48,17 @@ class SettingsViewController: UIViewController {
 	func updateSpotifyState() {
 		if let session = SPTAuth.defaultInstance().session {
 			if session.isValid() {
-				SpotifyController.sharedController.setSpotifyUser(session.accessToken)
-				if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
-					nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
-					usernameLabel?.text = "@\(currentSpotifyUser.username)"
-				}
+				SpotifyController.sharedController.setSpotifyUser(session.accessToken, completion: { (success: Bool) in
+					
+					DispatchQueue.main.async {
+						if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
+							self.nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
+							self.usernameLabel?.text = "@\(currentSpotifyUser.username)"
+							self.loggedInToSpotify(session.isValid())
+						}
+					}
+				})
 			}
-			loggedInToSpotify(session.isValid())
 		} else {
 			loggedInToSpotify(false)
 		}

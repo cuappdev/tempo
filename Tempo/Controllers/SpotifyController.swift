@@ -24,13 +24,14 @@ class SpotifyController {
 		}
 	}
 	
-	func setSpotifyUser(_ accessToken: String) {
+	func setSpotifyUser(_ accessToken: String, completion: ((_ success: Bool) -> ())?) {
 		do {
 			let currentUserRequest = try SPTUser.createRequestForCurrentUser(withAccessToken: accessToken)			
 			let task = URLSession.shared.dataTask(with: currentUserRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
 				guard let unwrappedData = data, error == nil else { return }
 				let jsonDict = JSON(data: unwrappedData)
 				User.currentUser.currentSpotifyUser = CurrentSpotifyUser(json: jsonDict)
+				completion?(true)
 			})
 			
 			task.resume()
@@ -46,8 +47,7 @@ class SpotifyController {
 				let expirationDate = Date(timeIntervalSince1970: expiresAt)
 				let spotifyUsername = User.currentUser.currentSpotifyUser?.username
 				SPTAuth.defaultInstance().session = SPTSession(userName: spotifyUsername, accessToken: accessToken, expirationDate: expirationDate)
-				self.setSpotifyUser(accessToken)
-				completionHandler(true)
+				self.setSpotifyUser(accessToken, completion: completionHandler)
 			} else {
 				if let spotifyLoginUrl = URL(string: accessToken) {
 					UIApplication.shared.openURL(spotifyLoginUrl)

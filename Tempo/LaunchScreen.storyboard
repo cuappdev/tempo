@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,7 +23,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ffv-cz-L26">
-                                <rect key="frame" x="16" y="469" width="343" height="128"/>
+                                <rect key="frame" x="16" y="469" width="344" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="FM8-nJ-atf"/>
+                                </constraints>
                                 <attributedString key="attributedText">
                                     <fragment content="Made by AppDev ">
                                         <attributes>
@@ -56,23 +59,23 @@
                                 </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenLogo" translatesAutoresizingMaskIntoConstraints="NO" id="YES-UD-DPS">
-                                <rect key="frame" x="59" y="116" width="257" height="257"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tempo-logo-transparent" translatesAutoresizingMaskIntoConstraints="NO" id="YES-UD-DPS">
+                                <rect key="frame" x="102" y="95" width="170" height="170"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="257" id="Twf-2U-ydL"/>
-                                    <constraint firstAttribute="width" secondItem="YES-UD-DPS" secondAttribute="height" multiplier="1:1" id="lBh-CS-L01"/>
+                                    <constraint firstAttribute="height" constant="170" id="2Kn-tN-BRT"/>
+                                    <constraint firstAttribute="width" secondItem="YES-UD-DPS" secondAttribute="height" multiplier="1:1" id="Nb2-kd-IAn"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.16078431372549018" green="0.14117647058823529" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.13622057437896729" green="0.14123448729515076" blue="0.15397775173187256" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ffv-cz-L26" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="9rN-Yk-Ofd"/>
-                            <constraint firstItem="ffv-cz-L26" firstAttribute="centerX" secondItem="YES-UD-DPS" secondAttribute="centerX" id="JDy-U4-Xg1"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="ffv-cz-L26" secondAttribute="bottom" constant="70" id="SqR-gw-QMq"/>
-                            <constraint firstItem="ffv-cz-L26" firstAttribute="top" secondItem="YES-UD-DPS" secondAttribute="bottom" constant="96" id="csb-WM-po0"/>
-                            <constraint firstItem="YES-UD-DPS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="hVa-tN-7k3"/>
-                            <constraint firstItem="YES-UD-DPS" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="43" id="np4-Mj-s2V"/>
-                            <constraint firstItem="YES-UD-DPS" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="96" id="sQb-JN-1B2"/>
+                            <constraint firstItem="ffv-cz-L26" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Fda-1t-pCS"/>
+                            <constraint firstItem="ffv-cz-L26" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="HFr-3o-J5v"/>
+                            <constraint firstItem="YES-UD-DPS" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="75" id="Pfq-Ym-FkZ"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="ffv-cz-L26" secondAttribute="bottom" constant="70" id="bBX-wg-K47"/>
+                            <constraint firstItem="YES-UD-DPS" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="86" id="eZb-lP-c1R"/>
+                            <constraint firstItem="YES-UD-DPS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="uEY-qq-iQw"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -82,6 +85,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchScreenLogo" width="512" height="512"/>
+        <image name="tempo-logo-transparent" width="320" height="320"/>
     </resources>
 </document>

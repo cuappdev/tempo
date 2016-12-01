@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		]
 		
 		if SPTAuth.defaultInstance().session != nil && SPTAuth.defaultInstance().session.isValid() {
-			SpotifyController.sharedController.setSpotifyUser(SPTAuth.defaultInstance().session.accessToken)
+			SpotifyController.sharedController.setSpotifyUser(SPTAuth.defaultInstance().session.accessToken, completion: nil)
 			User.currentUser.currentSpotifyUser?.savedTracks = UserDefaults.standard.dictionary(forKey: "savedTracks") as [String : AnyObject]? ?? [:]
 		}
 
@@ -177,7 +177,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 					let unixExpirationDate = url.getQueryItemValueForKey("expires_at") as? String
 					let expirationDate = Date(timeIntervalSince1970: Double(unixExpirationDate!)!)
 					
-					SpotifyController.sharedController.setSpotifyUser(accessToken!)
+					SpotifyController.sharedController.setSpotifyUser(accessToken!, completion: nil)
 					SPTAuth.defaultInstance().session = SPTSession(userName: User.currentUser.currentSpotifyUser?.username, accessToken: accessToken, expirationDate: expirationDate)
 					self?.settingsVC.updateSpotifyState()
 					if let currentVC = self?.window?.rootViewController as? SpotifyLoginViewController {

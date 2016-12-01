@@ -82,7 +82,7 @@ class SpotifyLoginViewController: UIViewController {
 
 	func setSpotifyUserAndContinue() {
 		if let session = SPTAuth.defaultInstance().session, session.isValid() {
-			SpotifyController.sharedController.setSpotifyUser(session.accessToken)
+			SpotifyController.sharedController.setSpotifyUser(session.accessToken, completion: nil)
 
 			delegate?.spotifyLoginViewController(spotifyLoginViewController: self, didFinishLoggingIntoSpotifyWithAccessToken: session.accessToken)
 		}
