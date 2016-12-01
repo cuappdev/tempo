@@ -55,7 +55,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		tableView.rowHeight = 100
 		tableView.showsVerticalScrollIndicator = false
 		refreshControl = customRefresh.refreshControl
-		tableView.addSubview(self.refreshControl)
+		tableView.insertSubview(refreshControl, belowSubview: tableView.getScrollView()!)
 		tableView.alpha = 0.0
 		
 		// Add follow suggestions controller to tableView
@@ -194,7 +194,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	}
 	
 	func refreshFeed() {
-		refreshFeedWithDelay(1.0, timeout: 5.0)
+		refreshFeedWithDelay(3.0, timeout: 10.0)
 	}
 	
 	// MARK: - UITableViewDataSource
@@ -352,5 +352,16 @@ extension FeedViewController: UIViewControllerPreviewingDelegate {
 	
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
 		show(viewControllerToCommit, sender: self)
+	}
+}
+
+extension UITableView {
+	func getScrollView() -> UIScrollView? {
+		for subview in subviews {
+			if subview is UIScrollView {
+				return subview as? UIScrollView
+			}
+		}
+		return nil
 	}
 }
