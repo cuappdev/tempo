@@ -74,7 +74,7 @@ class User: NSObject, NSCoding {
 	}
 	
 	func shortenLastName()->String{
-		if lastName.characters.count > 6{
+		if lastName.characters.count > 18{
 			return "\(lastName[lastName.startIndex])."
 		} else {
 			return lastName
