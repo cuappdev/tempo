@@ -14,7 +14,7 @@ class CreateUsernameViewController: UIViewController {
 	var profileImageView: UIImageView!
 	var profileUsernameLabel: UILabel!
 	var newUsernameLabel: UILabel!
-	var newUsernameTextField: UITextField!
+	var newUsernameTextField: TextField!
 	var continueButton: UIButton!
 	var alertLabel: UILabel!
 	
@@ -66,7 +66,7 @@ class CreateUsernameViewController: UIViewController {
 		newUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		newUsernameLabel.textAlignment = .left
 		
-		newUsernameTextField = UITextField(frame: CGRect(x: 0, y: newUsernameLabel.frame.bottom.y + 10, width: view.frame.width * 0.7, height: view.frame.height * 0.07))
+		newUsernameTextField = TextField(frame: CGRect(x: 0, y: newUsernameLabel.frame.bottom.y + 10, width: view.frame.width * 0.7, height: view.frame.height * 0.07))
 		newUsernameTextField.autocorrectionType = .no
 		newUsernameTextField.autocapitalizationType = .none
 		newUsernameTextField.keyboardType = .alphabet
@@ -220,5 +220,22 @@ extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControl
 	override func viewWillDisappear(_ animated: Bool) {
 		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+	}
+}
+
+class TextField: UITextField {
+	
+	let padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10);
+	
+	override func textRect(forBounds bounds: CGRect) -> CGRect {
+		return UIEdgeInsetsInsetRect(bounds, padding)
+	}
+	
+	override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+		return UIEdgeInsetsInsetRect(bounds, padding)
+	}
+	
+	override func editingRect(forBounds bounds: CGRect) -> CGRect {
+		return UIEdgeInsetsInsetRect(bounds, padding)
 	}
 }
