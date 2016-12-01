@@ -17,6 +17,7 @@ class FacebookLoginViewController: UIViewController {
 	var tempoLabel: UILabel!
 	var descriptionTextView: UITextView!
 	var loginButton: UIButton!
+	var activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
 	
 	weak var delegate: FacebookLoginViewControllerDelegate?
 	
@@ -64,14 +65,32 @@ class FacebookLoginViewController: UIViewController {
 		view.addSubview(loginButton)
 	}
 	
+	func showActivityIndicator() {
+		descriptionTextView.alpha = 0.0
+
+		activityIndicatorView.center = descriptionTextView.center
+		activityIndicatorView.startAnimating()
+		view.addSubview(activityIndicatorView)
+	}
+	
+	func hideActivityIndicator() {
+		descriptionTextView.alpha = 1.0
+		
+		activityIndicatorView.stopAnimating()
+		activityIndicatorView.removeFromSuperview()
+	}
+	
 	func loginToFacebook() {
+		showActivityIndicator()
 		let fbLoginManager = FBSDKLoginManager()
 		fbLoginManager.logOut()
 		fbLoginManager.logIn(withReadPermissions: ["public_profile", "email", "user_friends"], from: nil) { loginResult, error in
 			if error != nil {
 				print("Facebook login error: \(error)")
+				self.hideActivityIndicator()
 			} else if (loginResult?.isCancelled)! {
 				print("FB Login Cancelled")
+				self.hideActivityIndicator()
 			} else {
 				self.fbSessionStateChanged(error: error as NSError?)
 			}
@@ -98,10 +117,13 @@ class FacebookLoginViewController: UIViewController {
 				guard success else { return }
 				if newUser {
 					self.delegate?.facebookLoginViewController(facebookLoginViewController: self, didFinishLoggingInWithNewUserNamed: name, withFacebookID: fbid)
+					self.hideActivityIndicator()
+
 				} else {
 					API.sharedAPI.setCurrentUser(fbid, fbAccessToken: fbAccessToken!) { success in
 						guard success else { return }
 						self.delegate?.facebookLoginViewController(facebookLoginViewController: self, didFinishLoggingInWithPreviouslyRegisteredUserNamed: name, withFacebookID: fbid)
+						self.hideActivityIndicator()
 					}
 				}
 				
