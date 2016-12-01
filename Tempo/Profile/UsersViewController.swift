@@ -167,7 +167,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 			user = searchController.isActive ? filteredUsers[indexPath.row] : users[indexPath.row]
 		}
 		
-        cell.userName.text = user.name
+        cell.userName.text = "\(user.firstName) \(user.shortenLastName())"
         cell.userHandle.text = "@\(user.username)"
 		cell.numFollowLabel.text = (user.followersCount == 1) ? "1 follower" : "\(user.followersCount) followers"
 		cell.userImage.hnk_setImageFromURL(user.imageURL)

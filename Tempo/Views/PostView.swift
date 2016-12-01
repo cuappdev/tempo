@@ -53,7 +53,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 switch type {
                 case .feed:
 					avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
-                    profileNameLabel?.text = post.user.name
+                    profileNameLabel?.text = "\(post.user.firstName) \(post.user.shortenLastName())"
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					let imageName = post.isLiked ? "filled-heart" : "empty-heart"

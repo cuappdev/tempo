@@ -14,7 +14,7 @@ class CreateUsernameViewController: UIViewController {
 	var profileImageView: UIImageView!
 	var profileUsernameLabel: UILabel!
 	var newUsernameLabel: UILabel!
-	var newUsernameTextField: UITextField!
+	var newUsernameTextField: TextField!
 	var continueButton: UIButton!
 	var alertLabel: UILabel!
 	
@@ -54,7 +54,7 @@ class CreateUsernameViewController: UIViewController {
 		
 		profileUsernameLabel = UILabel(frame: CGRect(x: 0, y: profileImageView.frame.bottom.y + 15, width: view.frame.width * 0.8, height: 16))
 		profileUsernameLabel.center = CGPoint(x: view.center.x, y: profileUsernameLabel.center.y)
-		profileUsernameLabel.text = "@"
+		profileUsernameLabel.text = ""
 		profileUsernameLabel.textColor = .white
 		profileUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		profileUsernameLabel.textAlignment = .center
@@ -66,7 +66,7 @@ class CreateUsernameViewController: UIViewController {
 		newUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		newUsernameLabel.textAlignment = .left
 		
-		newUsernameTextField = UITextField(frame: CGRect(x: 0, y: newUsernameLabel.frame.bottom.y + 10, width: view.frame.width * 0.7, height: view.frame.height * 0.07))
+		newUsernameTextField = TextField(frame: CGRect(x: 0, y: newUsernameLabel.frame.bottom.y + 10, width: view.frame.width * 0.7, height: view.frame.height * 0.07))
 		newUsernameTextField.autocorrectionType = .no
 		newUsernameTextField.autocapitalizationType = .none
 		newUsernameTextField.keyboardType = .alphabet
@@ -84,6 +84,8 @@ class CreateUsernameViewController: UIViewController {
 		alertLabel.textColor = .red
 		alertLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		alertLabel.textAlignment = .center
+		alertLabel.lineBreakMode = .byWordWrapping
+		alertLabel.numberOfLines = 0
 
 		continueButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.7, height: 60))
 		continueButton.frame.bottom = CGPoint(x: view.center.x, y: view.frame.height - view.frame.width * 0.15)
@@ -92,6 +94,8 @@ class CreateUsernameViewController: UIViewController {
 		continueButton.setTitleColor(.white, for: .normal)
 		continueButton.layer.cornerRadius = 5
 		continueButton.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
+		continueButton.addTarget(self, action: #selector(pressButton), for: .touchDown)
+		continueButton.addTarget(self, action: #selector(releaseButton), for: .touchDragExit)
 		
 		view.addSubview(createUsernameLabel)
 		view.addSubview(profileNameLabel)
@@ -104,6 +108,14 @@ class CreateUsernameViewController: UIViewController {
 		
 	}
 	
+	func pressButton(){
+		continueButton.alpha = 0.8
+	}
+	
+	func releaseButton(){
+		continueButton.alpha = 1.0
+	}
+
 	func setProfileImage() {
 		guard let imageUrl = URL(string: "http://graph.facebook.com/\(fbid)/picture?type=large") else { return }
 		profileImageView.hnk_setImageFromURL(imageUrl)
@@ -111,11 +123,17 @@ class CreateUsernameViewController: UIViewController {
 	
 	func textFieldDidChange(textField: UITextField) {
 		if let username = textField.text {
-			profileUsernameLabel.text = "@\(username)"
+			if username == ""{
+				profileUsernameLabel.text = ""
+			}
+			else{
+				profileUsernameLabel.text = "@\(username)"
+			}
 		}
 	}
 	
 	func continueButtonPressed() {
+		continueButton.alpha = 1.0
 		guard let usernameText = newUsernameTextField.text?.lowercased() else { print("No Username"); return}
 		let username = usernameText.substring(from: usernameText.startIndex)
 		
@@ -136,9 +154,7 @@ class CreateUsernameViewController: UIViewController {
 				if success { // Username available
 					API.sharedAPI.updateCurrentUser(username, didSucceed: { (success) in
 						if success {
-							
 							self.delegate?.createUsernameViewController(createUsernameViewController: self, didFinishCreatingUsername: username)
-							
 						} else {
 							self.alertLabel.text = "Username failed to update. Try again."
 							self.alertLabel.textColor = .red
@@ -151,12 +167,25 @@ class CreateUsernameViewController: UIViewController {
 			}
 		}
 	}
-
 }
 
 extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControllerDelegate {
 	
+	func animateImageView(){
+		
+		if profileImageView.alpha != 0{
+			UIView.animate(withDuration: 1.0) {
+				self.profileImageView.alpha = 0
+			}
+		} else{
+			UIView.animate(withDuration: 1.0) {
+				self.profileImageView.alpha = 1.0
+			}
+		}
+	}
+	
 	func keyboardWillShow(sender: NSNotification) {
+		animateImageView()
 		if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
 			let keyboardHeight = keyboardSize.height
 			UIView.animate(withDuration: 0.2, animations: { 
@@ -166,6 +195,7 @@ extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControl
 	}
 	
 	func keyboardWillHide(sender: NSNotification) {
+		animateImageView()
 		UIView.animate(withDuration: 0.2, animations: {
 			self.view.frame.origin.y = 0
 		})
@@ -174,6 +204,11 @@ extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControl
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
 		return true
+	}
+	
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		super.touchesBegan(touches, with: event)
+		view.endEditing(true)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -185,5 +220,22 @@ extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControl
 	override func viewWillDisappear(_ animated: Bool) {
 		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+	}
+}
+
+class TextField: UITextField {
+	
+	let padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10);
+	
+	override func textRect(forBounds bounds: CGRect) -> CGRect {
+		return UIEdgeInsetsInsetRect(bounds, padding)
+	}
+	
+	override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+		return UIEdgeInsetsInsetRect(bounds, padding)
+	}
+	
+	override func editingRect(forBounds bounds: CGRect) -> CGRect {
+		return UIEdgeInsetsInsetRect(bounds, padding)
 	}
 }

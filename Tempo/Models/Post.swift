@@ -77,7 +77,7 @@ class Post: NSObject {
     }
     
     override var description: String {
-        return "\(song.title) posted by \(user.name)"
+        return "\(song.title) posted by \(user.firstName) \(user.shortenLastName())"
     }
 	
 	func toggleLike() {
