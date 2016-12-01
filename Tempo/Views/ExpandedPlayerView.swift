@@ -92,7 +92,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		artistLabel.text = newPost.song.artist
 		albumImage.hnk_setImageFromURL(newPost.song.largeArtworkURL ?? NSURL() as URL)
 		if delegate is FeedViewController {
-			postDetailLabel.text = "\(newPost.user.name) posted \(getPostTime(time: newPost.relativeDate())) ago"
+			postDetailLabel.text = "\(newPost.user.firstName) \(newPost.user.shortenLastName()) posted \(getPostTime(time: newPost.relativeDate())) ago"
 		} else if delegate is LikedTableViewController {
 			postDetailLabel.text = "Playing from your Liked Songs"
 		} else if delegate is PostHistoryTableViewController {

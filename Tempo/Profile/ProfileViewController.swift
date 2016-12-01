@@ -134,7 +134,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			addHamburgerMenu()
 		}
 		
-		nameLabel.text = user.name
+		nameLabel.text = "\(user.firstName) \(user.shortenLastName())"
 		usernameLabel.text = "@" + user.username
 		hipsterCredLabel.text = "\(user.hipsterScore)"
 		

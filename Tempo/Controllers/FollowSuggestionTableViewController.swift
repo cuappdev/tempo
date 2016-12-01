@@ -51,7 +51,7 @@ class FollowSuggestionTableViewController: UIViewController, UITableViewDelegate
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FollowSuggestionsCell", for: indexPath) as! FollowSuggestionsTableViewCell
 		
 		let user = users[indexPath.row]
-		cell.userName.text = user.name
+		cell.userName.text = "\(user.firstName) \(user.shortenLastName())"
 		cell.userHandle.text = "@\(user.username)"
 		cell.numFollowLabel.text = "\(user.followersCount) followers"
 		cell.userImage.hnk_setImageFromURL(user.imageURL)

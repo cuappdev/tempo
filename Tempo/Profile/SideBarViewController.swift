@@ -93,7 +93,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		nameLabel.text = User.currentUser.name
+		nameLabel.text = "\(User.currentUser.firstName) \(User.currentUser.shortenLastName())"
 		usernameLabel.text = "@\(User.currentUser.username)"
 		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
 		

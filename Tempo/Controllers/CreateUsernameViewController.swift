@@ -84,6 +84,8 @@ class CreateUsernameViewController: UIViewController {
 		alertLabel.textColor = .red
 		alertLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		alertLabel.textAlignment = .center
+		alertLabel.lineBreakMode = .byWordWrapping
+		alertLabel.numberOfLines = 0
 
 		continueButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.7, height: 60))
 		continueButton.frame.bottom = CGPoint(x: view.center.x, y: view.frame.height - view.frame.width * 0.15)
