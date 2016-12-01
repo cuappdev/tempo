@@ -11,26 +11,30 @@ import UIKit
 class ADRefreshControl {
 	
 	var refreshControl: UIRefreshControl!
-	var vinylView: UIImageView!
+	var logoView: AnimatedLogoView!
 	var isRefreshAnimating = false
-	var timesAnimationLooped = 0
 	var pullDistance: CGFloat = 0
+	var needsReset = false
 	
 	init(refreshControl: UIRefreshControl) {
 		
 		self.refreshControl = refreshControl
 		
-		// Create the graphic image views
-		vinylView = UIImageView(image: UIImage(named: "vinyl-red")?.withRenderingMode(.alwaysTemplate))
-		vinylView.tintColor = UIColor.tempoLightRed
-		vinylView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-		vinylView.layer.opacity = 0
-		
-		// Add the graphics to the loading view
-		refreshControl.addSubview(vinylView)
+		createLogoView()
 		
 		// Hide the original spinner icon
 		refreshControl.tintColor = UIColor.clear
+	}
+	
+	func createLogoView() {
+		
+		// Create the graphic image views
+		logoView = AnimatedLogoView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), style: .refresh, showsCircle: false, showsBackground: false)
+		logoView.isUserInteractionEnabled = false
+		logoView.layer.opacity = 0
+		
+		// Add the graphics to the loading view
+		refreshControl.addSubview(logoView)
 	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -41,18 +45,20 @@ class ADRefreshControl {
 		// Distance the table has been pulled >= 0
 		let newPullDistance = max(0, -refreshControl.frame.origin.y)
 		
-		if !isRefreshAnimating {
-			let direction = newPullDistance < pullDistance ? -10.0 : 10.0
-			vinylView.transform = vinylView.transform.rotated(by: CGFloat(direction * M_PI/180))
-		}
-		
 		pullDistance = newPullDistance
 		
-		// Animate vinyl opacity when initially appearing/fading
-		vinylView.layer.opacity = isRefreshAnimating ? 1.0 : Float(pullDistance-10.0)/45.0
+		if pullDistance == 0 {
+			needsReset = false
+		}
 		
-		//have vinyl case follow disc up to a certain point then return
-		vinylView.center = CGPoint(x: refreshBounds.size.width/2.0, y: pullDistance/2.0)
+		if needsReset {
+			return
+		}
+		
+		// Animate logoView opacity when initially appearing/fading
+		logoView.layer.opacity = isRefreshAnimating ? 1.0 : Float(pullDistance-10.0)/45.0
+		
+		logoView.center = CGPoint(x: refreshBounds.size.width/2.0, y: pullDistance/2.0)
 		
 		// Set the encompassing view's frames
 		refreshBounds.size.height = pullDistance
@@ -68,33 +74,28 @@ class ADRefreshControl {
 		// Flag that we are animating
 		isRefreshAnimating = true
 		
-		UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveLinear, animations: {
-
-			// Rotate the spinner by M_PI_2 = PI/2 = 90 degrees
-			self.vinylView.transform = self.vinylView.transform.rotated(by: CGFloat(-1 * M_PI_2))
-			if self.timesAnimationLooped % 2 == 0 {
-				self.vinylView.transform = self.vinylView.transform.scaledBy(x: 1.3, y: 1.3)
-			} else {
-				self.vinylView.transform = self.vinylView.transform.scaledBy(x: 1/1.3, y: 1/1.3)
-			}
-		}, completion: { finished in
-			// If still refreshing, keep spinning, else reset
+		logoView.animate(withDelay: 0.0, completion: {
 			if self.refreshControl.isRefreshing {
 				self.animateRefreshView()
 			} else {
 				self.resetAnimation()
 			}
 		})
-		timesAnimationLooped += 1
+		
 	}
 	
 	func resetAnimation() {
 		
-		// Reset our flags and background color
-		if timesAnimationLooped % 2 != 0 {
-			vinylView.transform = vinylView.transform.scaledBy(x: 1/1.3, y: 1/1.3)
-		}
-		timesAnimationLooped = 0
+		needsReset = true
+		
+		UIView.animate(withDuration: 0.1, animations: {
+			self.logoView.alpha = 0.0
+			self.logoView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+		}, completion: { _ in
+			self.logoView.removeFromSuperview()
+			self.createLogoView()
+		})
+		
 		isRefreshAnimating = false
 	}
 	
