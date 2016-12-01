@@ -169,7 +169,21 @@ class CreateUsernameViewController: UIViewController {
 
 extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControllerDelegate {
 	
+	func animateImageView(){
+		
+		if profileImageView.alpha != 0{
+			UIView.animate(withDuration: 1.0) {
+				self.profileImageView.alpha = 0
+			}
+		} else{
+			UIView.animate(withDuration: 1.0) {
+				self.profileImageView.alpha = 1.0
+			}
+		}
+	}
+	
 	func keyboardWillShow(sender: NSNotification) {
+		animateImageView()
 		if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
 			let keyboardHeight = keyboardSize.height
 			UIView.animate(withDuration: 0.2, animations: { 
@@ -179,6 +193,7 @@ extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControl
 	}
 	
 	func keyboardWillHide(sender: NSNotification) {
+		animateImageView()
 		UIView.animate(withDuration: 0.2, animations: {
 			self.view.frame.origin.y = 0
 		})
