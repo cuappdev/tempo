@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let revealVC = SWRevealViewController()
 	let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
 	let feedVC = FeedViewController()
-	let searchVC = SearchViewController(nibName: "SearchViewController", bundle: nil)
+	let searchVC = SearchViewController()
 	let usersVC = UsersViewController()
 	let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 	let likedVC = LikedTableViewController()

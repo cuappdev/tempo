@@ -23,7 +23,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	var plusButton: UIButton!
 	
 	lazy var searchTableViewController: SearchViewController = {
-		let vc = SearchViewController(nibName: "SearchViewController", bundle: nil)
+		let vc = SearchViewController()
 		vc.delegate = self
 		return vc
 	}()
