@@ -30,6 +30,7 @@ class ADRefreshControl {
 		
 		// Create the graphic image views
 		logoView = AnimatedLogoView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), style: .refresh, showsCircle: false, showsBackground: false)
+		logoView.center = CGPoint(x: refreshControl.frame.width / 2.0, y: refreshControl.frame.height / 2.0)
 		logoView.isUserInteractionEnabled = false
 		logoView.layer.opacity = 0
 		
