@@ -20,7 +20,6 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerTransitioningDelegate {
     
     var user: User = User.currentUser
@@ -35,6 +34,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	var earliestPostDate: Date?
 	var padding: CGFloat = 5
 	var avgLikes: Float = 0
+	var justLoaded: Bool = true
 	
 	// Outlets
 	@IBOutlet weak var profilePictureView: UIImageView!
@@ -83,16 +83,16 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		}
 		
 		setupUserUI()
-		updateFollowingUI()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
+		justLoaded ? justLoaded = false : setupUserUI()
+		
 		nameLabel.isHidden = notConnected(true)
 		usernameLabel.isHidden = notConnected(false)
 		followButton.isHidden = notConnected(false)
-
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -106,7 +106,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	}
 
 	func setupUserUI() {
-		
 		API.sharedAPI.fetchPosts(user.id) { post in
 			self.posts = post
 			self.postedDates = post.map { $0.date! }
@@ -334,6 +333,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	}
 	
 }
+
+// MARK: - Peek and Pop
 
 @available(iOS 9.0, *)
 extension ProfileViewController: UIViewControllerPreviewingDelegate {
