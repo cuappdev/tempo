@@ -73,7 +73,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		collectionView.register(HipCalendarDayCollectionViewCell.self, forCellWithReuseIdentifier: "DayCell")
 		collectionView.backgroundColor = UIColor.clear
 		collectionView.scrollsToTop = false
-		collectionView.alpha = 0.0
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
@@ -92,17 +91,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		
 		nameLabel.isHidden = notConnected(true)
 		usernameLabel.isHidden = notConnected(false)
-		followButton.isHidden = notConnected(false)
-	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		
-		if collectionView.alpha == 0.0 {
-			activityIndicatorView.center = CGPoint(x: view.frame.width / 2.0, y: collectionView.center.y)
-			activityIndicatorView.startAnimating()
-			view.addSubview(activityIndicatorView)
-		}
+		followButton.alpha = 0.0
 	}
 
 	func setupUserUI() {
@@ -148,16 +137,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 			followButton.addTarget(self, action: #selector(ProfileViewController.userHandleButtonClicked(_:)), for: .touchUpInside)
 		} else {
 			title = "Profile"
-			followButton.isHidden = true
 			followButton.addTarget(self, action: #selector(followButtonPressed(_:)), for: .touchUpInside)
-			}
+		}
 		
 		API.sharedAPI.fetchUser(user.id) {
 			self.user = $0
 			self.updateFollowingUI()
-			self.followButton.isHidden = false
 			UIView.animate(withDuration: 0.25, animations: {
-				self.followButton.alpha = 1
+				self.followButton.alpha = 1.0
 			}) 
 		}
 	}

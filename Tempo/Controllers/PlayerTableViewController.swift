@@ -175,7 +175,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			
 			UIApplication.shared.beginReceivingRemoteControlEvents()
 			
-			let artwork = post.song.fetchArtwork() ?? UIImage(named: "temp-user")!
+			let artwork = post.song.fetchArtwork() ?? UIImage()
 			var count = posts.count
 			if searchController.isActive {
 				count = filteredPosts.count
