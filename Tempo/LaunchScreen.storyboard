@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,7 +28,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TempoLogo" translatesAutoresizingMaskIntoConstraints="NO" id="iT4-b8-EW9" userLabel="App Logo">
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="iT4-b8-EW9" secondAttribute="height" multiplier="1:1" id="bKm-JK-Acu"/>
-                                    <constraint firstAttribute="width" constant="200" id="ct6-Yu-eu5"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Made by AppDev" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktI-S7-Xv8">
@@ -51,6 +51,7 @@
                         <constraints>
                             <constraint firstItem="iT4-b8-EW9" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1I6-Zm-Xze"/>
                             <constraint firstItem="LOL-Ov-Ahj" firstAttribute="height" secondItem="nft-by-bNw" secondAttribute="height" id="48s-BE-cx2"/>
+                            <constraint firstItem="iT4-b8-EW9" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.54" id="4i7-PE-GPV"/>
                             <constraint firstItem="LOL-Ov-Ahj" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="6WB-F4-UZL"/>
                             <constraint firstItem="nft-by-bNw" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="D4B-uy-72Q"/>
                             <constraint firstItem="bRc-e1-ukU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" id="Ecl-tP-kj5"/>
