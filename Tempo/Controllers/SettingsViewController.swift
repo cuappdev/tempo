@@ -20,6 +20,7 @@ class SettingsViewController: UIViewController {
 	@IBOutlet weak var useLabel: UILabel!
 	
 	static let registeredForRemotePushNotificationsKey = "SettingsViewController.registeredForRemotePushNotificationsKey"
+	static let presentedAlertForRemotePushNotificationsKey = "SettingsViewController.presentedAlertForRemotePushNotificationsKey"
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -30,11 +31,11 @@ class SettingsViewController: UIViewController {
 		updateSpotifyState()
 		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
 		
-		toggleNotifications.isOn = User.currentUser.remotePushNotificationsEnabled
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		updateSpotifyState()
+		toggleNotifications.setOn(User.currentUser.remotePushNotificationsEnabled, animated: false)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -85,14 +86,27 @@ class SettingsViewController: UIViewController {
 	
 	func showPromptIfPushNotificationsDisabled() {
 		
+		let alertController = UIAlertController(title: "Push Notifications Disabled", message: "Please enable push notifications for Tempo in the Settings app", preferredStyle: .alert)
+		
+		let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+			if let url = URL(string:UIApplicationOpenSettingsURLString) {
+				UIApplication.shared.openURL(url)
+			}
+		})
+		
+		alertController.addAction(okAction)
+		
+		present(alertController, animated: true, completion: nil)
 	}
 	
 	@IBAction func toggledNotifications(_ sender: UISwitch) {
 		
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		let didRegisterForPushNotifications = UserDefaults.standard.bool(forKey: SettingsViewController.registeredForRemotePushNotificationsKey)
+		let didPresentAlertForPushNotifications = UserDefaults.standard.bool(forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey)
 
-		if didRegisterForPushNotifications && !UIApplication.shared.isRegisteredForRemoteNotifications {
+		if didPresentAlertForPushNotifications && !UIApplication.shared.isRegisteredForRemoteNotifications && sender.isOn {
+			sender.setOn(false, animated: false)
 			showPromptIfPushNotificationsDisabled()
 			return
 		}

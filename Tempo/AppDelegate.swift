@@ -291,6 +291,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	static let remotePushNotificationsDeviceTokenKey = "AppDelegate.remotePushNotificationsDeviceTokenKey"
 	
 	func registerForRemotePushNotifications() {
+		UserDefaults.standard.set(true, forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey)
 		DispatchQueue.main.async {
 			let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
 			UIApplication.shared.registerUserNotificationSettings(settings)
