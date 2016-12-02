@@ -20,46 +20,64 @@ class SpotifyLoginViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		view.backgroundColor = .tempoOnboardingGray
 		layoutSubviews()
 	}
 	
 	func layoutSubviews() {
-		
-		connectToSpotifyLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.125, width: view.frame.width * 0.9, height: 25))
-		connectToSpotifyLabel.center = CGPoint(x: view.center.x, y: connectToSpotifyLabel.center.y)
+		// Connect to Spotify Label
+		connectToSpotifyLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.168, width: view.frame.width * 0.9, height: 28))
 		connectToSpotifyLabel.text = "Connect to Spotify"
-		connectToSpotifyLabel.textColor = .white
-		connectToSpotifyLabel.font = UIFont(name: "AvenirNext-Regular", size: 25)
+		connectToSpotifyLabel.font = UIFont(name: "AvenirNext-Regular", size: 29.0)
+		connectToSpotifyLabel.textColor = .tempoGray
 		connectToSpotifyLabel.textAlignment = .center
+		connectToSpotifyLabel.sizeToFit()
+		connectToSpotifyLabel.center.x = view.center.x
 		
-		connectToSpotifyImageView = UIImageView(frame: CGRect(x: 0, y: connectToSpotifyLabel.frame.bottom.y + 40, width: view.frame.width * 0.5, height: view.frame.width * 0.5))
-		connectToSpotifyImageView.center = CGPoint(x: view.center.x, y: connectToSpotifyImageView.center.y)
+		// Connect to Spotify Graphic
+		connectToSpotifyImageView = UIImageView(frame: CGRect(x: 0, y: view.frame.height * 0.33, width: view.frame.width * 0.549, height: (view.frame.width * 0.549) * 0.626))
 		connectToSpotifyImageView.clipsToBounds = true
 		connectToSpotifyImageView.contentMode = .scaleAspectFit
-		connectToSpotifyImageView.image = UIImage(named: "spotify-connect")
+		connectToSpotifyImageView.image = #imageLiteral(resourceName: "ConnectToSpotifyGraphic")
+		connectToSpotifyImageView.center.x = view.center.x
 		
-		connectToSpotifyButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.7, height: 60))
-		connectToSpotifyButton.frame.bottom = CGPoint(x: view.center.x, y: view.frame.height - view.frame.width * 0.25)
-		connectToSpotifyButton.backgroundColor = UIColor.spotifyGreen
+		// Description Label
+		descriptionLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.627, width: view.frame.width * 0.84, height: 56))
+		
+		let descParagraphStyle = NSMutableParagraphStyle()
+		descParagraphStyle.lineSpacing = 5
+		
+		let descAttributedString = NSMutableAttributedString(string: "Add newly discovered songs to your Spotify library")
+		descAttributedString.addAttribute(NSParagraphStyleAttributeName, value: descParagraphStyle, range: NSMakeRange(0, descAttributedString.length))
+		descriptionLabel.attributedText = descAttributedString
+		
+		descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
+		descriptionLabel.textColor = .tempoGray
+		descriptionLabel.textAlignment = .center
+		descriptionLabel.numberOfLines = 2
+		descriptionLabel.sizeToFit()
+		descriptionLabel.frame.size.width = view.frame.width * 0.84
+		descriptionLabel.center.x = view.center.x
+		
+		// Connect to Spotify Button
+		connectToSpotifyButton = UIButton(frame: CGRect(x: 0, y: view.frame.height * 0.784, width: view.frame.width * 0.736, height: view.frame.height * 0.09))
+		connectToSpotifyButton.center.x = view.center.x
+		connectToSpotifyButton.backgroundColor = .spotifyGreen
 		connectToSpotifyButton.setTitle("Connect to Spotify", for: .normal)
-		connectToSpotifyButton.setTitleColor(.white, for: .normal)
+		connectToSpotifyButton.setTitleColor(.buttonGrey, for: .normal)
+		connectToSpotifyButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
 		connectToSpotifyButton.layer.cornerRadius = 5
 		connectToSpotifyButton.addTarget(self, action: #selector(connectToSpotifyButtonPressed), for: .touchUpInside)
 		connectToSpotifyButton.addTarget(self, action: #selector(pressButton), for: .touchDown)
 		connectToSpotifyButton.addTarget(self, action: #selector(releaseButton), for: .touchDragExit)
 
-		descriptionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.8, height: 20))
-		descriptionLabel.center = CGPoint(x: view.center.x, y: connectToSpotifyImageView.frame.bottom.y + (connectToSpotifyButton.frame.top.y - connectToSpotifyImageView.frame.bottom.y) / 2)
-		descriptionLabel.text = "Add songs to your Spotify library"
-		descriptionLabel.textAlignment = .center
-		descriptionLabel.textColor = .white
-		descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
-		descriptionLabel.baselineAdjustment = .alignCenters
-
-		skipThisStepButton = UIButton(frame: CGRect(x: 0, y: connectToSpotifyButton.frame.bottom.y + 20, width: view.frame.width * 0.7, height: 17))
-		skipThisStepButton.center = CGPoint(x: view.center.x, y: skipThisStepButton.center.y)
-		skipThisStepButton.setTitle("Skip This Step", for: .normal)
-		skipThisStepButton.setTitleColor(.lightGray, for: .normal)
+		// Skip Button
+		skipThisStepButton = UIButton(frame: CGRect(x: 0, y: view.frame.height * 0.9, width: view.frame.width * 0.736, height: 23))
+	
+		let skipButtonAttrString = NSMutableAttributedString(string: "Skip and connect later", attributes: [NSFontAttributeName : UIFont(name: "AvenirNext-Regular", size: 17.0)!, NSForegroundColorAttributeName : UIColor.buttonTransparentGrey, NSUnderlineStyleAttributeName : 1])
+		skipThisStepButton.setAttributedTitle(skipButtonAttrString, for: .normal)
+		skipThisStepButton.sizeToFit()
+		skipThisStepButton.center.x = view.center.x
 		skipThisStepButton.addTarget(self, action: #selector(skipThisStepButtonPressed), for: .touchUpInside)
 		
 		view.addSubview(connectToSpotifyLabel)
@@ -67,14 +85,13 @@ class SpotifyLoginViewController: UIViewController {
 		view.addSubview(descriptionLabel)
 		view.addSubview(connectToSpotifyButton)
 		view.addSubview(skipThisStepButton)
-
 	}
 	
-	func pressButton(){
-		connectToSpotifyButton.alpha = 0.8
+	func pressButton() {
+		connectToSpotifyButton.alpha = 0.5
 	}
 	
-	func releaseButton(){
+	func releaseButton() {
 		connectToSpotifyButton.alpha = 1.0
 	}
 	

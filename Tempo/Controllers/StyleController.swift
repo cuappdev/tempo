@@ -11,8 +11,8 @@ import UIKit
 class StyleController {
 	class func applyStyles() {
 		// UIKit appearances
-		UINavigationBar.appearance().barTintColor = UIColor.tempoLightRed
-		UINavigationBar.appearance().tintColor = UIColor.white
+		UINavigationBar.appearance().barTintColor = .tempoLightRed
+		UINavigationBar.appearance().tintColor = .white
 		UINavigationBar.appearance().barStyle = .black
 		UINavigationBar.appearance().isTranslucent = false
 		UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "Avenir-Heavy", size: 17.0)!, NSForegroundColorAttributeName: UIColor.white]
@@ -20,29 +20,29 @@ class StyleController {
 		UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
 		
 		UISearchBar.appearance().backgroundImage = UIImage()
-		UISearchBar.appearance().backgroundColor = UIColor.tempoLightRed
-		UISearchBar.appearance().barTintColor = UIColor.tempoLightRed
-		UISearchBar.appearance().tintColor = UIColor.white
+		UISearchBar.appearance().backgroundColor = .tempoLightRed
+		UISearchBar.appearance().barTintColor = .tempoLightRed
+		UISearchBar.appearance().tintColor = .white
 		UISearchBar.appearance().isTranslucent = true
 		UISearchBar.appearance().placeholder = "Search"
-		UISearchBar.appearance().searchBarStyle = UISearchBarStyle.prominent
+		UISearchBar.appearance().searchBarStyle = .prominent
 		
 		if #available(iOS 9.0, *) {
 			UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.tempoDarkRed
 			UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Avenir-Book", size: 14.0)!], for: UIControlState())
 		}
 		
-		UITableView.appearance().backgroundColor = UIColor.tempoDarkGray
-		UITableView.appearance().separatorColor = UIColor.clear
+		UITableView.appearance().backgroundColor = .tempoDarkGray
+		UITableView.appearance().separatorColor = .clear
 		UITableView.appearance().separatorStyle = .none
 		UITableView.appearance().sectionHeaderHeight = 0
 		UITableView.appearance().sectionFooterHeight = 0
 		UITableView.appearance().rowHeight = 96
 		
-		UITableViewCell.appearance().backgroundColor = UIColor.tempoDarkGray
+		UITableViewCell.appearance().backgroundColor = .tempoDarkGray
 		
 		// User defined appearances
-		PostButton.appearance().backgroundColor = UIColor.tempoLightRed
-		SearchPostView.appearance().backgroundColor = UIColor.tempoLightGray
+		PostButton.appearance().backgroundColor = .tempoLightRed
+		SearchPostView.appearance().backgroundColor = .tempoLightGray
 	}
 }

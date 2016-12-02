@@ -7,6 +7,8 @@ protocol LoginFlowViewControllerDelegate: class {
 
 class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 	
+	let pageVCOffset: CGFloat = 40
+	
 	var pageViewController: UIPageViewController!
 	
 	var facebookLoginViewController: FacebookLoginViewController!
@@ -14,6 +16,7 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 	var spotifyLoginViewController: SpotifyLoginViewController!
 	
 	var pages = [UIViewController]()
+	var pageControl: UIPageControl?
 	
 	weak var delegate: LoginFlowViewControllerDelegate?
 	
@@ -22,7 +25,7 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		view.backgroundColor = UIColor.tempoDarkGray
+		view.backgroundColor = .clear
 
 		pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 		pageViewController.dataSource = self
@@ -41,8 +44,10 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 		
 		pageViewController.setViewControllers([facebookLoginViewController], direction: .forward, animated: false, completion: nil)
 		
-		/// Disable for easy debug of login flow screens
+		// Disable swiping and hide page control
 		pageViewController.disablePageViewControllerSwipeGesture()
+		pageViewController.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height + pageVCOffset)
+		pageViewController.hidePageControl()
 		
 		addChildViewController(pageViewController)
 		view.addSubview(pageViewController.view)
@@ -113,4 +118,13 @@ extension UIPageViewController {
 			}
 		}
 	}
+	
+	func hidePageControl() {
+		for subview in view.subviews {
+			if subview is UIPageControl {
+				subview.isHidden = true
+			}
+		}
+	}
+
 }
