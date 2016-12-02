@@ -46,6 +46,5 @@ class ProgressView: UIView {
 			updateTimer?.invalidate()
 			updateTimer = nil
 		}
-		
 	}
 }

@@ -130,11 +130,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		let cell = tableView.dequeueReusableCell(withIdentifier: "SongSearchTableViewCell", for: indexPath) as! SongSearchTableViewCell
 		let post = results[indexPath.row]
 		cell.postView.post = post
-		cell.postView.post?.player.prepareToPlay()
 		if let smallArtworkURL = post.song.smallArtworkURL {
 			cell.postView.avatarImageView?.hnk_setImageFromURL(smallArtworkURL)
 		}
-		cell.shareButton.isHidden = true
+		cell.shareButton.isHidden = !(selectedSong?.equals(other: post.song) ?? false)
 		if (selfPostIds.contains(post.song.spotifyID)) {
 			cell.shareButton.setTitle("SHARED", for: UIControlState())
 			cell.shareButton.backgroundColor = UIColor.clear
@@ -144,15 +143,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			cell.shareButton.backgroundColor = UIColor.tempoLightRed
 			cell.shareButton.addTarget(self, action: #selector(SearchViewController.submitSong), for: .touchUpInside)
 		}
-		if activePlayer != nil {
-			if activePlayer == post.player {
-				cell.postView.profileNameLabel?.textColor = UIColor.tempoLightRed
-				cell.shareButton.isHidden = false
-			} else {
-				cell.postView.profileNameLabel?.textColor = UIColor.white
-			}
-		}
 		
+		cell.postView.updatePlayingStatus()
+	
 		return cell
 	}
 	
@@ -160,29 +153,27 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		
 		let cell = tableView.cellForRow(at: indexPath) as! SongSearchTableViewCell
-		cell.shareButton.isHidden = false
-		
 		let post = results[indexPath.row]
-		selectSong(post.song)
 		
-		if activePlayer != nil && activePlayer != cell.postView.post?.player {
-			activePlayer!.pause()
-			activePlayer = nil
+		if selectedSong?.equals(other: post.song) ?? false {
+			didTogglePlaying(animate: true)
+		} else {
+			if activePlayer?.isPlaying ?? false {
+				didTogglePlaying(animate: true)
+			}
+			cell.shareButton.isHidden = false
+			selectedCell?.shareButton.isHidden = true
+			
+			selectSong(post.song)
+			selectedCell = cell
+			activePlayer = cell.postView.post?.player
+			activePlayer?.delegate = self
+			didTogglePlaying(animate: true)
+			playerNav.updateDelegates(delegate: self)
+			playerNav.currentPost = cell.postView.post
+			playerNav.postsRef = nil //do not want to autoplay next song
 		}
-		
-		//deselect previous cell
-		selectedCell?.postView.updatePlayingStatus()
-		selectedCell?.shareButton.isHidden = true
-		
-		selectedCell = cell
-		activePlayer = cell.postView.post?.player
-		activePlayer?.delegate = self
-		didTogglePlaying(animate: true)
-		playerNav.updateDelegates(delegate: self)
-		playerNav.currentPost = cell.postView.post
-		playerNav.postsRef = nil //do not want to autoplay next song
 	}
 	
     // MARK: - General Request Methods
@@ -226,8 +217,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		results = items.map {
 			let song = Song(responseDictionary: $0)
-			return Post(song: song, user: User.currentUser)
+			let post = Post(song: song, user: User.currentUser)
+			post.player.prepareToPlay()
+			return post
 		}
+		
 		
 		tableView.reloadData()
 	}
@@ -247,13 +241,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	func didTogglePlaying(animate: Bool) {
 		if let activePlayer = activePlayer {
 			activePlayer.togglePlaying()
-			selectedCell?.postView.updatePlayingStatus()
-			playerNav.updatePlayingStatus()
 		}
+		selectedCell?.postView.updatePlayingStatus()
+		playerNav.updatePlayingStatus()
 	}
 	
 	func didFinishPlaying() {
 		selectedCell?.postView.updatePlayingStatus()
+		playerNav.updatePlayingStatus()
 	}
 	
 	// MARK: - Notifications

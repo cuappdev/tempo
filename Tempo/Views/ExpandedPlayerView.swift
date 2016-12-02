@@ -259,10 +259,11 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	}
 	
 	override func resetPlayerCell() {
-		post = nil
+		super.resetPlayerCell()
 		songLabel.text = ""
 		artistLabel.text = ""
 		albumImage.hnk_setImageFromURL(NSURL() as URL)
 		postDetailLabel.text = ""
+		progressView.setNeedsDisplay()
 	}
 }
