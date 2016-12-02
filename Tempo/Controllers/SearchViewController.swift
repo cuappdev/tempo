@@ -89,8 +89,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		}, completion:nil)
 		
 		searchBar.becomeFirstResponder()
-		searchBar.setImage(UIImage(named: "search-icon"), for: .search, state: UIControlState())
-		searchBar.setImage(UIImage(named: "clear-search-icon"), for: .clear, state: UIControlState())
+		searchBar.setImage(#imageLiteral(resourceName: "SearchIcon"), for: .search, state: UIControlState())
+		searchBar.setImage(#imageLiteral(resourceName: "ClearSearchIcon"), for: .clear, state: UIControlState())
 		
 		if notConnected(true) {
 			searchBar.isHidden = true

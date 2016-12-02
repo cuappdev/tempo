@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		// Set up navigation bar divider
 		let navigationBar = navigationController.navigationBar
 		let navigationSeparator = UIView(frame: CGRect(x: 0, y: navigationBar.frame.size.height - 0.5, width: navigationBar.frame.size.width, height: 0.5))
-		navigationSeparator.backgroundColor = UIColor.tempoDarkRed
+		navigationSeparator.backgroundColor = .searchBackgroundRed
 		navigationSeparator.isOpaque = true
 		navigationController.navigationBar.addSubview(navigationSeparator)
 		

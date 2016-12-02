@@ -14,11 +14,12 @@ class LikedTableViewController: PlayerTableViewController {
         super.viewDidLoad()
 		
 		title = "Liked"
-		view.backgroundColor = UIColor.tempoDarkGray
+		view.backgroundColor = .backgroundDarkGrey
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
-		tableView.rowHeight = 100
+		tableView.rowHeight = 88
+		tableView.backgroundColor = .clear
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(LikedTableViewCell.self, forCellReuseIdentifier: "LikedCell")
 		
@@ -27,7 +28,7 @@ class LikedTableViewController: PlayerTableViewController {
 		// Fix color above search bar
 		let topView = UIView(frame: view.frame)
 		topView.frame.origin.y = -view.frame.size.height
-		topView.backgroundColor = UIColor.tempoLightRed
+		topView.backgroundColor = .tempoRed
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
     }
@@ -62,7 +63,6 @@ class LikedTableViewController: PlayerTableViewController {
 	}
 	
     func retrieveLikedSongs() {
-		
 		let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
 		activityIndicatorView.center = view.center
 		activityIndicatorView.startAnimating()
@@ -73,16 +73,11 @@ class LikedTableViewController: PlayerTableViewController {
 		
         API.sharedAPI.fetchLikes(User.currentUser.id) {
             self.posts = $0.map { Post(song: $0, user: User.currentUser) }
-//			self.posts.sort { $0.song.description < $1.song.description }
 			self.preparePosts()
 			
             self.tableView.reloadData()
 			
-			if self.posts.count == 0 {
-				self.tableView.backgroundView = UIView.viewForEmptyViewController(.Liked, size: self.view.bounds.size, isCurrentUser: true, userFirstName: "")
-			} else {
-				self.tableView.backgroundView = nil
-			}
+			self.tableView.backgroundView = (self.posts.count == 0) ? UIView.viewForEmptyViewController(.Liked, size: self.view.bounds.size, isCurrentUser: true, userFirstName: "") : nil
 			
 			activityIndicatorView.stopAnimating()
 			activityIndicatorView.removeFromSuperview()
@@ -90,7 +85,7 @@ class LikedTableViewController: PlayerTableViewController {
     }
 	
 	func didToggleAdd() {
-		//if there is a currentlyPlayingIndexPath, need to sync add status of playerCells and post
+		// if there is a currentlyPlayingIndexPath, need to sync add status of playerCells and post
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
 			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? LikedTableViewCell {
 				cell.postView?.updateAddStatus()
