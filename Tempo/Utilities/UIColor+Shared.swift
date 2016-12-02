@@ -9,6 +9,7 @@
 import Foundation
 
 extension UIColor {
+	@nonobjc static let tempoOnboardingGray = UIColor.colorFromCode(0x292424)
 	@nonobjc static let tempoUltraLightRed = UIColor.colorFromCode(0xA26660)
 	@nonobjc static let tempoLightRed = UIColor.colorFromCode(0xB04B40)
 	@nonobjc static let tempoDarkRed = UIColor.colorFromCode(0x8B4038)
