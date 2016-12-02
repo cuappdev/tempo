@@ -13,7 +13,7 @@ import FBSDKShareKit
 
 private enum Router: URLConvertible {
 	static let tempoBaseURLString = "http://35.162.35.23"
-	static let notificationsBaseURLString = "http://ec2-35-162-151-106.us-west-2.compute.amazonaws.com"
+	static let notificationsBaseURLString = "http://35.163.179.243:8080"
 	
 	case root
 	case validAuthenticate

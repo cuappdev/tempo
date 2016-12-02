@@ -73,7 +73,7 @@ class LikedTableViewController: PlayerTableViewController {
 		
         API.sharedAPI.fetchLikes(User.currentUser.id) {
             self.posts = $0.map { Post(song: $0, user: User.currentUser) }
-			self.posts.sort { $0.song.description < $1.song.description }
+//			self.posts.sort { $0.song.description < $1.song.description }
 			self.preparePosts()
 			
             self.tableView.reloadData()

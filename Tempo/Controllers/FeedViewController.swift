@@ -114,36 +114,39 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		
 		API.sharedAPI.fetchFeedOfEveryone { [weak self] in
 			self?.posts = $0
-			//return even if we get data after a timeout
-			if finishedRefreshing {
+			DispatchQueue.main.async {
+				//return even if we get data after a timeout
+				if finishedRefreshing {
+					self?.tableView.alpha = 1.0
+					self?.activityIndicatorView.stopAnimating()
+					self?.activityIndicatorView.removeFromSuperview()
+					return
+				} else if minimumTimePassed {
+					self?.refreshControl?.endRefreshing()
+					self?.view.isUserInteractionEnabled = true
+					self?.tableView.reloadData()
+				}
+				finishedRefreshing = true
+				
+				if let x = self {
+					if x.posts.count == 0 {
+						x.feedFollowSuggestionsController?.showNoMorePostsLabel()
+						x.tableView.tableFooterView = x.feedFollowSuggestionsController?.view
+					} else if x.posts.count < 3 {
+						x.feedFollowSuggestionsController?.hideNoMorePostsLabel()
+						x.tableView.tableFooterView = x.feedFollowSuggestionsController?.view
+					} else {
+						x.tableView.backgroundView = nil
+						x.tableView.tableFooterView = nil
+					}
+					x.preparePosts()
+				}
+				
 				self?.tableView.alpha = 1.0
 				self?.activityIndicatorView.stopAnimating()
 				self?.activityIndicatorView.removeFromSuperview()
-				return
-			} else if minimumTimePassed {
-				self?.tableView.reloadData()
-				self?.refreshControl?.endRefreshing()
-				self?.view.isUserInteractionEnabled = true
 			}
-			finishedRefreshing = true
-			
-			if let x = self {
-				if x.posts.count == 0 {
-					x.feedFollowSuggestionsController?.showNoMorePostsLabel()
-					x.tableView.tableFooterView = x.feedFollowSuggestionsController?.view
-				} else if x.posts.count < 3 {
-					x.feedFollowSuggestionsController?.hideNoMorePostsLabel()
-					x.tableView.tableFooterView = x.feedFollowSuggestionsController?.view
-				} else {
-					x.tableView.backgroundView = nil
-					x.tableView.tableFooterView = nil
-				}
-				x.preparePosts()
-			}
-			
-			self?.tableView.alpha = 1.0
-			self?.activityIndicatorView.stopAnimating()
-			self?.activityIndicatorView.removeFromSuperview()
+
 		}
 		
 		//fetch for a minimum of delay seconds
