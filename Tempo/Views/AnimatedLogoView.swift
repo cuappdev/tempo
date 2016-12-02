@@ -130,13 +130,17 @@ class AnimatedLogoView: UIView {
     }
     
 	func animate(withDelay delay: Double, completion: (() -> ())?) {
+		if isAnimating {
+			return
+		}
         isAnimating = true
         animateBar(index: 0, withDelay: 0.1 + delay, completion: nil)
         animateBar(index: 1, withDelay: 0.2 + delay, completion: nil)
         animateBar(index: 2, withDelay: 0.3 + delay, completion: nil)
         animateBar(index: 3, withDelay: 0.4 + delay, completion: nil)
         animateBar(index: 4, withDelay: 0.5 + delay, completion: {
-            
+			
+			self.isAnimating = false
             if self.shouldStopAnimating {
                 self.isAnimating = false
                 self.shouldStopAnimating = false
