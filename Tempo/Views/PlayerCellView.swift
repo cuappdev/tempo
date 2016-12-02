@@ -154,9 +154,10 @@ class PlayerCellView: ParentPlayerCellView {
 				delegate.didTogglePlaying(animate: false)
 			}
 		}
-		post = nil
+		super.resetPlayerCell()
 		songLabel.text = ""
 		artistLabel.text = ""
+		progressView.setNeedsDisplay()
 	}
 }
 

@@ -101,7 +101,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
     
 	var isPlaying: Bool {
-		return player?.isPlaying ?? false
+		return player?.isPlaying ?? false || shouldAutoplay
     }
     
     func togglePlaying() {

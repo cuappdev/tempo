@@ -52,12 +52,13 @@ class CreateUsernameViewController: UIViewController {
 		profileImageView.contentMode = .scaleAspectFill
 		setProfileImage()
 		
-		profileUsernameLabel = UILabel(frame: CGRect(x: 0, y: profileImageView.frame.bottom.y + 15, width: view.frame.width * 0.8, height: 16))
+		profileUsernameLabel = UILabel(frame: CGRect(x: 0, y: profileImageView.frame.bottom.y + 15, width: view.frame.width * 0.8, height: 25))
 		profileUsernameLabel.center = CGPoint(x: view.center.x, y: profileUsernameLabel.center.y)
 		profileUsernameLabel.text = ""
 		profileUsernameLabel.textColor = .white
 		profileUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		profileUsernameLabel.textAlignment = .center
+		
 		
 		newUsernameLabel = UILabel(frame: CGRect(x: 0, y: profileUsernameLabel.frame.bottom.y + view.frame.height * 0.05, width: view.frame.width * 0.7, height: 16))
 		newUsernameLabel.center = CGPoint(x: view.center.x, y: newUsernameLabel.center.y)
@@ -79,13 +80,13 @@ class CreateUsernameViewController: UIViewController {
 		newUsernameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
 		newUsernameTextField.delegate = self
 		
-		alertLabel = UILabel(frame: CGRect(x: 0, y: newUsernameTextField.frame.bottom.y + 10, width: view.frame.width * 0.7, height: 16))
+		alertLabel = UILabel(frame: CGRect(x: 0, y: newUsernameTextField.frame.bottom.y + 5, width: view.frame.width * 0.8, height: 80))
 		alertLabel.center = CGPoint(x: view.center.x, y: alertLabel.center.y)
 		alertLabel.textColor = .red
 		alertLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
 		alertLabel.textAlignment = .center
 		alertLabel.lineBreakMode = .byWordWrapping
-		alertLabel.numberOfLines = 0
+		alertLabel.numberOfLines = 3
 
 		continueButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.7, height: 60))
 		continueButton.frame.bottom = CGPoint(x: view.center.x, y: view.frame.height - view.frame.width * 0.15)
