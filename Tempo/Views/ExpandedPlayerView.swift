@@ -245,7 +245,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	override func updateAddButton() {
 		updateSavedStatus()
-		addButtonImage.image = songStatus == .saved ? UIImage(named: "check") : #imageLiteral(resourceName: "AddButton")
+		addButtonImage.image = songStatus == .saved ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
 	}
 	
 	private func setupMarqueeLabel(label: MarqueeLabel) {

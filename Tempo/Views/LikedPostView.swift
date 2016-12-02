@@ -117,7 +117,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 				}
 			}
 			if songStatus == .saved {
-				self.addButton?.setBackgroundImage(UIImage(named: "check"), for: .normal)
+				self.addButton?.setBackgroundImage(#imageLiteral(resourceName: "AddedButton"), for: .normal)
 			} else {
 				self.addButton?.setBackgroundImage(#imageLiteral(resourceName: "AddButton"), for: .normal)
 			}
@@ -189,7 +189,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	func updateAddStatus() {
 		if let _ = post {
 			updateSavedStatus()
-			let image = songStatus == .saved ? UIImage(named: "check") : #imageLiteral(resourceName: "AddButton")
+			let image = songStatus == .saved ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
 			addButton?.setBackgroundImage(image, for: .normal)
 		}
 	}
