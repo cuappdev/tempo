@@ -35,8 +35,8 @@ extension UIColor {
 	@nonobjc static let unreadCellColor = UIColor.colorFromCode(0x232429)
 	@nonobjc static let readCellColor = UIColor.colorFromCode(0x1D1E1F)
 	@nonobjc static let paleRed = UIColor.colorFromCode(0xBCAEAD)
-	
-	
+	@nonobjc static let searchBackgroundRed = UIColor.colorFromCode(0x8A393D)
+	@nonobjc static let searchTextColor = UIColor.white.withAlphaComponent(0.63)
 	
 	public static func colorFromCode(_ code: Int) -> UIColor {
 		let red = CGFloat(((code & 0xFF0000) >> 16)) / 255

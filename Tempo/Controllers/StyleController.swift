@@ -28,21 +28,23 @@ class StyleController {
 		UISearchBar.appearance().searchBarStyle = .prominent
 		
 		if #available(iOS 9.0, *) {
-			UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.tempoDarkRed
-			UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Avenir-Book", size: 14.0)!], for: UIControlState())
+			UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .searchBackgroundRed
+			UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = .searchTextColor
+			
+			UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 14.0)!], for: UIControlState())
 		}
 		
-		UITableView.appearance().backgroundColor = .tempoDarkGray
+		UITableView.appearance().backgroundColor = .backgroundDarkGrey
 		UITableView.appearance().separatorColor = .clear
 		UITableView.appearance().separatorStyle = .none
 		UITableView.appearance().sectionHeaderHeight = 0
 		UITableView.appearance().sectionFooterHeight = 0
 		UITableView.appearance().rowHeight = 96
 		
-		UITableViewCell.appearance().backgroundColor = .tempoDarkGray
+		UITableViewCell.appearance().backgroundColor = .readCellColor
 		
 		// User defined appearances
 		PostButton.appearance().backgroundColor = .tempoRed
-		SearchPostView.appearance().backgroundColor = .tempoLightGray
+		SearchPostView.appearance().backgroundColor = .searchBackgroundRed
 	}
 }

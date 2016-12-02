@@ -85,6 +85,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
             tableView.selectRow(at: currentlyPlayingIndexPath, animated: false, scrollPosition: .none)
         }
     }
+	
 	var savedSongAlertView: SavedSongView!
 	var justOpened = true
 	
@@ -107,14 +108,15 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		searchController.searchResultsUpdater = self
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.delegate = self
-		searchController.searchBar.setImage(UIImage(named: "search-icon"), for: .search, state: UIControlState())
+		searchController.searchBar.setImage(#imageLiteral(resourceName: "SearchIcon"), for: .search, state: UIControlState())
 		searchController.searchBar.setImage(UIImage(named: "clear-search-icon"), for: .clear, state: UIControlState())
+		
 		let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
-		textFieldInsideSearchBar?.textColor = UIColor.white
-		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
-		textFieldInsideSearchBar?.font = UIFont(name: "Avenir-Book", size: 14)
+		textFieldInsideSearchBar?.textColor = .white
+		textFieldInsideSearchBar?.backgroundColor = .searchBackgroundRed
+		textFieldInsideSearchBar?.font = UIFont(name: "AvenirNext-Regular", size: 14.0)
 		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.value(forKey: "placeholderLabel") as? UILabel
-		textFieldInsideSearchBarLabel?.textColor = UIColor.tempoUltraLightRed
+		textFieldInsideSearchBarLabel?.textColor = .searchTextColor
 		
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
@@ -291,7 +293,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	//This allows for the text not to be viewed behind the search bar at the top of the screen
 	fileprivate let statusBarView: UIView = {
 		let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
-		view.backgroundColor = UIColor.tempoLightRed
+		view.backgroundColor = .tempoRed
 		return view
 	}()
 	
