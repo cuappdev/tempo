@@ -29,6 +29,8 @@ extension UIColor {
 	@nonobjc static let usernameBGGrey = UIColor.colorFromCode(0xD8D8D8).withAlphaComponent(0.75)
 	@nonobjc static let wrongRed = UIColor.colorFromCode(0xA32222)
 	@nonobjc static let correctGreen = UIColor.colorFromCode(0x08673A)
+	@nonobjc static let aboutDarkGrey = UIColor.colorFromCode(0x7A7676)
+	@nonobjc static let backgroundDarkGrey = UIColor.colorFromCode(0x1C1D1E)
 
 	public static func colorFromCode(_ code: Int) -> UIColor {
 		let red = CGFloat(((code & 0xFF0000) >> 16)) / 255
