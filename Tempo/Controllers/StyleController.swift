@@ -11,17 +11,17 @@ import UIKit
 class StyleController {
 	class func applyStyles() {
 		// UIKit appearances
-		UINavigationBar.appearance().barTintColor = .tempoLightRed
+		UINavigationBar.appearance().barTintColor = .tempoRed
 		UINavigationBar.appearance().tintColor = .white
 		UINavigationBar.appearance().barStyle = .black
 		UINavigationBar.appearance().isTranslucent = false
-		UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "Avenir-Heavy", size: 17.0)!, NSForegroundColorAttributeName: UIColor.white]
+		UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "AvenirNext-Medium", size: 18.0)!, NSForegroundColorAttributeName: UIColor.white]
 		UINavigationBar.appearance().shadowImage = UIImage()
 		UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
 		
 		UISearchBar.appearance().backgroundImage = UIImage()
-		UISearchBar.appearance().backgroundColor = .tempoLightRed
-		UISearchBar.appearance().barTintColor = .tempoLightRed
+		UISearchBar.appearance().backgroundColor = .tempoRed
+		UISearchBar.appearance().barTintColor = .tempoRed
 		UISearchBar.appearance().tintColor = .white
 		UISearchBar.appearance().isTranslucent = true
 		UISearchBar.appearance().placeholder = "Search"
@@ -42,7 +42,7 @@ class StyleController {
 		UITableViewCell.appearance().backgroundColor = .tempoDarkGray
 		
 		// User defined appearances
-		PostButton.appearance().backgroundColor = .tempoLightRed
+		PostButton.appearance().backgroundColor = .tempoRed
 		SearchPostView.appearance().backgroundColor = .tempoLightGray
 	}
 }
