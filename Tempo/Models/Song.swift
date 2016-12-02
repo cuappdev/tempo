@@ -111,4 +111,8 @@ class Song: NSObject {
 	override var description: String {
 		return "Song: \(title) \(artist)"
 	}
+	
+	func equals(other: Song) -> Bool {
+		return spotifyID == other.spotifyID
+	}
 }

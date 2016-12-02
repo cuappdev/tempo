@@ -85,6 +85,6 @@ class ParentPlayerCellView: UIView {
 	
 	//Clears any playing song, resets all labels to default state
 	func resetPlayerCell() {
-		preconditionFailure("This method must be overridden")
+		post = nil
 	}
 }
