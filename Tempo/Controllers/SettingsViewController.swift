@@ -10,6 +10,8 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 	
+	let buttonHeight: CGFloat = 50
+	
 	@IBOutlet weak var profilePicture: UIImageView!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var usernameLabel: UILabel!
@@ -18,6 +20,7 @@ class SettingsViewController: UIViewController {
 	@IBOutlet weak var logOutSpotifyButton: UIButton!
 	@IBOutlet weak var toggleNotifications: UISwitch!
 	@IBOutlet weak var useLabel: UILabel!
+	@IBOutlet weak var logOutButtonHeight: NSLayoutConstraint!
 	
 	static let registeredForRemotePushNotificationsKey = "SettingsViewController.registeredForRemotePushNotificationsKey"
 	static let presentedAlertForRemotePushNotificationsKey = "SettingsViewController.presentedAlertForRemotePushNotificationsKey"
@@ -25,12 +28,11 @@ class SettingsViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		toggleNotifications.onTintColor = UIColor.tempoLightRed
+		toggleNotifications.onTintColor = .tempoRed
 		profilePicture.layer.cornerRadius = profilePicture.frame.width / 2.0
 		
 		updateSpotifyState()
 		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
-		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -40,10 +42,12 @@ class SettingsViewController: UIViewController {
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
+		
 		title = "Settings"
+		view.backgroundColor = .backgroundOffBlack
+		
 		addHamburgerMenu()
 	}
-	
 	
 	// Can be called after successful login to Spotify SDK
 	func updateSpotifyState() {
@@ -68,12 +72,12 @@ class SettingsViewController: UIViewController {
 	func loggedInToSpotify(_ loggedIn: Bool) {
 		loginToSpotifyButton?.isHidden = loggedIn
 		useLabel?.isHidden = loggedIn
-		
 		profilePicture?.isHidden = !loggedIn
 		nameLabel?.isHidden = !loggedIn
 		usernameLabel?.isHidden = !loggedIn
 		goToSpotifyButton?.isHidden = !loggedIn
 		logOutSpotifyButton?.isHidden = !loggedIn
+		logOutButtonHeight.constant = loggedIn ? 50 : 0
 	}
 	
 	@IBAction func loginToSpotify() {
@@ -85,7 +89,6 @@ class SettingsViewController: UIViewController {
 	}
 	
 	func showPromptIfPushNotificationsDisabled() {
-		
 		let alertController = UIAlertController(title: "Push Notifications Disabled", message: "Please enable push notifications for Tempo in the Settings app", preferredStyle: .alert)
 		
 		let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
