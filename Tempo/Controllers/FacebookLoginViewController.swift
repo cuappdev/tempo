@@ -5,17 +5,16 @@ import FBSDKLoginKit
 import Haneke
 
 protocol FacebookLoginViewControllerDelegate: class {
-	
 	func facebookLoginViewController(facebookLoginViewController: FacebookLoginViewController, didFinishLoggingInWithNewUserNamed name: String, withFacebookID fbid: String)
 
 	func facebookLoginViewController(facebookLoginViewController: FacebookLoginViewController, didFinishLoggingInWithPreviouslyRegisteredUserNamed name: String, withFacebookID fbid: String)
 }
 
 class FacebookLoginViewController: UIViewController {
-	
+
 	var logoImageView: UIImageView!
 	var tempoLabel: UILabel!
-	var descriptionTextView: UITextView!
+	var descriptionLabel: UILabel!
 	var loginButton: UIButton!
 	var activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
 	
@@ -25,64 +24,75 @@ class FacebookLoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		view.backgroundColor = .tempoOnboardingGray
 		view.alpha = 0.0
 		layoutSubviews()
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
+		
 		UIView.animate(withDuration: 1.0, delay: 0.5, options: .curveEaseIn, animations: {
 			self.view.alpha = 1.0
-
-		}, completion: nil)
-
+		})
 	}
 	
 	func layoutSubviews() {
+		// Logo Image
+		logoImageView = UIImageView(frame: CGRect(x: 0, y: view.frame.height*0.16, width: view.frame.width*0.54, height: view.frame.width*0.54))
+		logoImageView.center.x = view.center.x
+		logoImageView.image = #imageLiteral(resourceName: "TempoLogo")
+		view.addSubview(logoImageView)
 		
-		logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.45, height: view.frame.width * 0.45))
-		logoImageView.center = CGPoint(x: view.center.x, y: view.frame.height * 0.275)
-		logoImageView.image = UIImage(named: "tempo-logo-transparent")
-		
-		tempoLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 10))
-		tempoLabel.center = view.center
+		// Tempo Label
+		tempoLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height*0.5, width: view.frame.width, height: view.frame.height))
 		tempoLabel.text = "Tempo"
 		tempoLabel.textAlignment = .center
 		tempoLabel.textColor = .white
-		tempoLabel.font = UIFont(name: "HelveticaNeue-Bold", size: view.frame.height / 10)
-		tempoLabel.isUserInteractionEnabled = false
+		tempoLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 60.0)
+		tempoLabel.sizeToFit()
+		tempoLabel.center.x = view.center.x
+		view.addSubview(tempoLabel)
 		
-		loginButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.7, height: 60))
-		loginButton.frame.bottom = CGPoint(x: view.center.x, y: view.frame.height - view.frame.width * 0.15)
-		loginButton.backgroundColor = UIColor.tempoBlue
+		// Description Label
+		descriptionLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height*0.69, width: view.frame.width*0.84, height: view.frame.height))
+		
+		let descParagraphStyle = NSMutableParagraphStyle()
+		descParagraphStyle.lineSpacing = 5
+		
+		let descAttributedString = NSMutableAttributedString(string: "Share 30 second music snippets with your friends for 24 hours.")
+		descAttributedString.addAttribute(NSParagraphStyleAttributeName, value: descParagraphStyle, range: NSMakeRange(0, descAttributedString.length))
+		descriptionLabel.attributedText = descAttributedString
+		
+		descriptionLabel.textAlignment = .center
+		descriptionLabel.textColor = .tempoGray
+		descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
+		descriptionLabel.numberOfLines = 2
+		descriptionLabel.sizeToFit()
+		descriptionLabel.center.x = view.center.x
+		view.addSubview(descriptionLabel)
+		
+		// Facebook Login Button
+		loginButton = UIButton(frame: CGRect(x: 0, y: view.frame.height*0.855, width: view.frame.width*0.74, height: view.frame.height*0.09))
+		loginButton.center.x = view.center.x
 		loginButton.setTitle("Log in with Facebook", for: .normal)
-		loginButton.setTitleColor(.white, for: .normal)
+		loginButton.setTitleColor(.facebookGrey, for: .normal)
+		loginButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
+		loginButton.backgroundColor = .facebookBlue
 		loginButton.layer.cornerRadius = 5
 		loginButton.addTarget(self, action: #selector(loginToFacebook), for: .touchUpInside)
 		loginButton.addTarget(self, action: #selector(pressButton), for: .touchDown)
 		loginButton.addTarget(self, action: #selector(releaseButton), for: .touchDragExit)
-		
-		descriptionTextView = UITextView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.8, height: 80))
-		descriptionTextView.center = CGPoint(x: view.center.x, y: tempoLabel.frame.bottom.y + (loginButton.frame.top.y - tempoLabel.frame.bottom.y) / 2)
-		descriptionTextView.backgroundColor = .clear
-		descriptionTextView.text = "Tempo is a music sharing app that allows you to share 30 second clips with your friends"
-		descriptionTextView.textAlignment = .center
-		descriptionTextView.textColor = .white
-		descriptionTextView.font = UIFont(name: "AvenirNext-Regular", size: 16)
-		descriptionTextView.isScrollEnabled = false
-		descriptionTextView.isEditable = false
-		
-		view.addSubview(logoImageView)
-		view.addSubview(tempoLabel)
-		view.addSubview(descriptionTextView)
 		view.addSubview(loginButton)
 	}
 	
 	func showActivityIndicator() {
 		view.isUserInteractionEnabled = false
-		descriptionTextView.alpha = 0.0
+		
+		descriptionLabel.alpha = 0.0
 
-		activityIndicatorView.center = descriptionTextView.center
+		activityIndicatorView.center = descriptionLabel.center
 		activityIndicatorView.startAnimating()
 		view.addSubview(activityIndicatorView)
 	}
@@ -90,29 +100,31 @@ class FacebookLoginViewController: UIViewController {
 	func hideActivityIndicator() {
 		view.isUserInteractionEnabled = true
 
-		descriptionTextView.alpha = 1.0
+		descriptionLabel.alpha = 1.0
 		
 		activityIndicatorView.stopAnimating()
 		activityIndicatorView.removeFromSuperview()
 	}
 	
-	func pressButton(){
+	func pressButton() {
 		loginButton.alpha = 0.8
 	}
 	
-	func releaseButton(){
+	func releaseButton() {
 		loginButton.alpha = 1.0
 	}
 	
 	func loginToFacebook() {
 		showActivityIndicator()
 		loginButton.alpha = 1.0
+		
 		let fbLoginManager = FBSDKLoginManager()
 		fbLoginManager.logOut()
+		
 		fbLoginManager.logIn(withReadPermissions: ["public_profile", "email", "user_friends"], from: nil) { loginResult, error in
 			self.loginButton.isUserInteractionEnabled = true
-			if error != nil {
-				print("Facebook login error: \(error)")
+			if let err = error {
+				print("Facebook login error: \(err)")
 				self.hideActivityIndicator()
 			} else if (loginResult?.isCancelled)! {
 				print("FB Login Cancelled")
@@ -121,6 +133,7 @@ class FacebookLoginViewController: UIViewController {
 				self.fbSessionStateChanged(error: error as NSError?)
 			}
 		}
+		
 		Shared.imageCache.removeAll()
 	}
 
@@ -131,7 +144,6 @@ class FacebookLoginViewController: UIViewController {
 		let userRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
 		
 		let _ = userRequest?.start(completionHandler: { (connection: FBSDKGraphRequestConnection?, result: Any?, error: Error?) in
-			
 			guard let responseJSON = result as? [String:Any],
 				let fbid = responseJSON["id"] as? String,
 				let name = responseJSON["name"] as? String,
@@ -141,6 +153,7 @@ class FacebookLoginViewController: UIViewController {
 			
 			API.sharedAPI.fbAuthenticate(fbid, userToken: fbAccessToken!) { success, newUser in
 				guard success else { return }
+				
 				if newUser {
 					self.delegate?.facebookLoginViewController(facebookLoginViewController: self, didFinishLoggingInWithNewUserNamed: name, withFacebookID: fbid)
 					self.hideActivityIndicator()
@@ -158,18 +171,16 @@ class FacebookLoginViewController: UIViewController {
 	}
 	
 	static func retrieveCurrentFacebookUserWithAccessToken(token: String, completion: ((Bool) -> ())?) {
-
 		let userRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
-				
+		
 		let _ = userRequest?.start(completionHandler: { (connection: FBSDKGraphRequestConnection?, result: Any?, error: Error?) in
-					
 			guard let responseJSON = result as? [String:Any],
-			let fbid = responseJSON["id"] as? String,
-			error == nil else {
-				print("Error getting Facebook user: \(error)")
-				completion?(false)
-				return
-			}
+				let fbid = responseJSON["id"] as? String,
+				error == nil else {
+					print("Error getting Facebook user: \(error)")
+					completion?(false)
+					return
+				}
 					
 			API.sharedAPI.fbAuthenticate(fbid, userToken: token) { success, newUser in
 				guard success else { completion?(false); return }

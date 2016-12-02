@@ -30,12 +30,12 @@
                                     <constraint firstAttribute="width" constant="200" id="ct6-Yu-eu5"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Made by AppDev" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktI-S7-Xv8">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Made by AppDev" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktI-S7-Xv8">
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cornell's App Development Project Team" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRc-e1-ukU">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cornell's App Development Project Team" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRc-e1-ukU">
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                 <color key="textColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -53,13 +53,17 @@
                             <constraint firstItem="LOL-Ov-Ahj" firstAttribute="height" secondItem="nft-by-bNw" secondAttribute="height" id="48s-BE-cx2"/>
                             <constraint firstItem="LOL-Ov-Ahj" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="6WB-F4-UZL"/>
                             <constraint firstItem="nft-by-bNw" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="D4B-uy-72Q"/>
+                            <constraint firstItem="bRc-e1-ukU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" id="Ecl-tP-kj5"/>
                             <constraint firstItem="bRc-e1-ukU" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="FL9-Ft-jGb"/>
                             <constraint firstItem="bRc-e1-ukU" firstAttribute="top" secondItem="ktI-S7-Xv8" secondAttribute="bottom" constant="5" id="Kt7-Ko-KEa"/>
                             <constraint firstItem="LOL-Ov-Ahj" firstAttribute="top" secondItem="bRc-e1-ukU" secondAttribute="bottom" id="OVo-p4-WhB"/>
                             <constraint firstItem="ktI-S7-Xv8" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Oxd-YI-NlW"/>
                             <constraint firstItem="ktI-S7-Xv8" firstAttribute="top" secondItem="iT4-b8-EW9" secondAttribute="bottom" constant="10" id="Qab-7W-Noh"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bRc-e1-ukU" secondAttribute="trailing" constant="20" id="Qin-vl-VF7"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ktI-S7-Xv8" secondAttribute="trailing" constant="20" id="Rx8-H4-1zo"/>
                             <constraint firstItem="nft-by-bNw" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="-20" id="VFc-oy-by6"/>
                             <constraint firstItem="iT4-b8-EW9" firstAttribute="top" secondItem="nft-by-bNw" secondAttribute="bottom" constant="-20" id="VXH-3n-0jJ"/>
+                            <constraint firstItem="ktI-S7-Xv8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" id="ZmV-cC-zJE"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="LOL-Ov-Ahj" secondAttribute="bottom" id="v4E-Vi-9de"/>
                         </constraints>
                     </view>
