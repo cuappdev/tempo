@@ -47,6 +47,8 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
+		
+		
 		backgroundColor = UIColor.tempoLightGray
 		
 		albumArtworkImageView = UIImageView(frame: CGRect(x: 20, y: 24, width: 52, height: 52))
@@ -57,6 +59,8 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 		addButton = UIButton(frame: CGRect(x: frame.width-44, y: 39, width: 22, height: 22))
 		addButton?.setBackgroundImage(UIImage(named: "plus"), for: .normal)
 		addButton?.translatesAutoresizingMaskIntoConstraints = true
+		//this tag makes the hitbox bigger
+		addButton?.tag = 1
 		addSubview(addButton!)
 		
 		let labelX = albumArtworkImageView!.frame.origin.x + albumArtworkImageView!.frame.width + 16
