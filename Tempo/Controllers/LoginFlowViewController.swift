@@ -22,7 +22,7 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		view.backgroundColor = UIColor.tempoDarkGray
+		view.backgroundColor = .tempoOnboardingGray
 
 		pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 		pageViewController.dataSource = self
@@ -41,8 +41,9 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 		
 		pageViewController.setViewControllers([facebookLoginViewController], direction: .forward, animated: false, completion: nil)
 		
-		/// Disable for easy debug of login flow screens
+		// Disable swiping and hide page control
 		pageViewController.disablePageViewControllerSwipeGesture()
+		pageViewController.hidePageControl()
 		
 		addChildViewController(pageViewController)
 		view.addSubview(pageViewController.view)
@@ -113,4 +114,14 @@ extension UIPageViewController {
 			}
 		}
 	}
+	
+	func hidePageControl() {
+		for subview in view.subviews {
+			if subview is UIPageControl {
+				subview.isHidden = true
+				view.frame.size.height += subview.frame.height
+			}
+		}
+	}
+	
 }

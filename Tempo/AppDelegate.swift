@@ -21,7 +21,7 @@ extension URL {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate, LoginFlowViewControllerDelegate {
 	
 	var window: UIWindow?
 	let revealVC = SWRevealViewController()
@@ -35,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let aboutVC = AboutViewController()
 	let transparentView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
 	let navigationController = PlayerNavigationController()
+	
+	var loginFlowViewController: LoginFlowViewController?
 
 	// Saved shortcut item used as a result of an app launch, used later when app is activated.
 	var launchedShortcutItem: AnyObject?
@@ -109,8 +111,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func toggleRootVC() {
 		launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
 		if FBSDKAccessToken.current() == nil {
-			let loginVC = FacebookLoginViewController()
-			window?.rootViewController = loginVC
+			loginFlowViewController = LoginFlowViewController()
+			loginFlowViewController?.delegate = self
+			window?.rootViewController = loginFlowViewController
 		} else {
 			if resetFirstVC {
 				navigationController.setViewControllers([firstViewController], animated: false)
