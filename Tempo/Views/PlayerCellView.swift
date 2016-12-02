@@ -134,7 +134,7 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	override func updateAddButton() {
 		updateSavedStatus()
-		let image = songStatus == .saved ? UIImage(named: "check") : UIImage(named: "plus")
+		let image = songStatus == .saved ? UIImage(named: "check") : #imageLiteral(resourceName: "AddButton")
 		addButton.setBackgroundImage(image, for: .normal)
 	}
 	

@@ -14,13 +14,14 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
 	fileprivate var longPressGestureRecognizer: UILongPressGestureRecognizer?
 	
+	let artworkImageLength: CGFloat = 45
+	let addButtonLength: CGFloat = 20
+	
 	var songNameLabel: UILabel?
 	var songArtistLabel: UILabel?
 	var albumArtworkImageView: UIImageView?
 	var addButton: UIButton?
-	
-	let fillColor = UIColor.tempoDarkGray
- 
+
 	var songStatus: SavedSongStatus = .notSaved
 	var postViewDelegate: PostViewDelegate!
 	var playerDelegate: PlayerDelegate!
@@ -31,7 +32,6 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 		didSet {
 			// update stuff
 			if let post = post {
-				albumArtworkImageView?.layer.cornerRadius = 7
 				songNameLabel?.text = post.song.title
 				songArtistLabel?.text = post.song.artist
 				
@@ -40,6 +40,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 				if User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] != nil {
 					songStatus = .saved
 				}
+				
 				updateAddButton()
 			}
 		}
@@ -48,45 +49,34 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
 		
+		backgroundColor = .unreadCellColor
 		
-		backgroundColor = UIColor.tempoLightGray
-		
-		albumArtworkImageView = UIImageView(frame: CGRect(x: 20, y: 24, width: 52, height: 52))
+		albumArtworkImageView = UIImageView(frame: CGRect(x: 22, y: 22, width: artworkImageLength, height: artworkImageLength))
+		albumArtworkImageView?.center.y = center.y
 		albumArtworkImageView?.clipsToBounds = true
 		albumArtworkImageView?.translatesAutoresizingMaskIntoConstraints = true
 		addSubview(albumArtworkImageView!)
-		
-		addButton = UIButton(frame: CGRect(x: frame.width-44, y: 39, width: 22, height: 22))
-		addButton?.setBackgroundImage(UIImage(named: "plus"), for: .normal)
-		addButton?.translatesAutoresizingMaskIntoConstraints = true
-		//this tag makes the hitbox bigger
-		addButton?.tag = 1
-		addSubview(addButton!)
-		
-		let labelX = albumArtworkImageView!.frame.origin.x + albumArtworkImageView!.frame.width + 16
-		songNameLabel = UILabel(frame: CGRect(x: labelX, y: 21, width: 50, height: 18))
-		songNameLabel?.font = UIFont(name: "Avenir-Medium", size: 16)
-		songNameLabel?.textColor = UIColor.white
+
+		let labelX = (albumArtworkImageView?.frame.maxX)! + 25
+		let labelWidth = bounds.width - labelX - 64
+		songNameLabel = UILabel(frame: CGRect(x: labelX, y: 22, width: labelWidth, height: 22))
+		songNameLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16.0)
+		songNameLabel?.textColor = .white
 		songNameLabel?.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(songNameLabel!)
 		
-		songArtistLabel = UILabel(frame: CGRect(x: labelX, y: 45, width: 50, height: 18))
-		songArtistLabel?.font = UIFont(name: "Avenir-book", size: 14)
-		songArtistLabel?.textColor = UIColor.descriptionLightGray
+		songArtistLabel = UILabel(frame: CGRect(x: labelX, y: (songNameLabel?.frame.maxY)!, width: labelWidth, height: 22))
+		songArtistLabel?.font = UIFont(name: "AvenirNext-Regular", size: 14.0)
+		songArtistLabel?.textColor = .paleRed
 		songArtistLabel?.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(songArtistLabel!)
 		
-		let songTopConstraint = NSLayoutConstraint(item: songNameLabel!, attribute: .top, relatedBy: .equal, toItem: albumArtworkImageView, attribute: .top, multiplier: 1, constant: 5)
-		let songWidthConstraint = NSLayoutConstraint(item: songNameLabel!, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50)
-		let songLeftConstraint = NSLayoutConstraint(item: songNameLabel!, attribute: .left, relatedBy: .equal, toItem: albumArtworkImageView!, attribute: .right, multiplier: 1, constant: 16)
-		let songRightConstraint = NSLayoutConstraint(item: songNameLabel!, attribute: .right, relatedBy: .equal, toItem: addButton, attribute: .left, multiplier: 1, constant: -16)
-		
-		let artistTopConstraint = NSLayoutConstraint(item: songArtistLabel!, attribute: .top, relatedBy: .equal, toItem: songNameLabel, attribute: .bottom, multiplier: 1, constant: 6)
-		let artistLeftConstraint = NSLayoutConstraint(item: songArtistLabel!, attribute: .left, relatedBy: .equal, toItem: songNameLabel, attribute: .left, multiplier: 1, constant: 0)
-		let artistWidthConstraint = NSLayoutConstraint(item: songArtistLabel!, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50)
-		let artistRightConstraint = NSLayoutConstraint(item: songArtistLabel!, attribute: .right, relatedBy: .equal, toItem: songNameLabel, attribute: .right, multiplier: 1, constant: 0)
-		
-		addConstraints([songTopConstraint, songWidthConstraint, songLeftConstraint, songRightConstraint, artistTopConstraint, artistLeftConstraint, artistWidthConstraint, artistRightConstraint])
+		addButton = UIButton(frame: CGRect(x: frame.width - addButtonLength - 17, y: 34, width: addButtonLength, height: addButtonLength))
+		addButton?.center.y = center.y
+		addButton?.setBackgroundImage(#imageLiteral(resourceName: "AddButton"), for: .normal)
+		addButton?.translatesAutoresizingMaskIntoConstraints = true
+		addButton?.tag = 1 // this tag makes the hitbox bigger
+		addSubview(addButton!)
 	}
 	
 	func updatePlayingStatus() {
@@ -95,7 +85,6 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	}
 	
 	override func didMoveToWindow() {
-		
 		if tapGestureRecognizer == nil {
 			tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(likedPostViewPressed(_:)))
 			tapGestureRecognizer?.delegate = self
@@ -111,16 +100,12 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 			addGestureRecognizer(longPressGestureRecognizer!)
 		}
 		
-		albumArtworkImageView?.clipsToBounds = true
 		isUserInteractionEnabled = true
-		
-		layer.borderColor = UIColor.tempoDarkGray.cgColor
-		layer.borderWidth = 0.7
 	}
 	
 	// Customize view to be able to re-use it for search results.
 	func flagAsSearchResultPost() {
-		songArtistLabel?.text = post!.song.title + " · " + post!.song.album
+		songArtistLabel?.text = "\(post!.song.title) · \(post!.song.album)"
 	}
 	
 	func updateAddButton() {
@@ -134,27 +119,22 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 			if songStatus == .saved {
 				self.addButton?.setBackgroundImage(UIImage(named: "check"), for: .normal)
 			} else {
-				self.addButton?.setBackgroundImage(UIImage(named: "plus"), for: .normal)
+				self.addButton?.setBackgroundImage(#imageLiteral(resourceName: "AddButton"), for: .normal)
 			}
 		}
 	}
 	
 	func updateSongLabel() {
 		if let post = post {
-			let color: UIColor
 			let duration = TimeInterval(0.3)
-			if post.player.isPlaying {
-				color = UIColor.tempoLightRed
-			} else {
-				color = UIColor.white
-			}
+			let color: UIColor = post.player.isPlaying ? .tempoRed : .white
+			let font: UIFont = post.player.isPlaying ? UIFont(name: "AvenirNext-Medium", size: 16.0)! : UIFont(name: "AvenirNext-Regular", size: 16.0)!
 			
 			guard let label = songNameLabel else { return }
 			if !label.textColor.isEqual(color) {
 				UIView.transition(with: label, duration: duration, options: .transitionCrossDissolve, animations: {
 					label.textColor = color
-				}, completion: { _ in
-					label.textColor = color
+					label.font = font
 				})
 			}
 		}
@@ -162,7 +142,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	
 	func updateBackground() {
 		if let post = post {
-			backgroundColor = post.player.isPlaying ? UIColor.tempoDarkGray : UIColor.tempoLightGray
+			backgroundColor = post.player.isPlaying ? .tempoDarkGray : .tempoLightGray
 		}
 	}
 	
@@ -209,7 +189,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	func updateAddStatus() {
 		if let _ = post {
 			updateSavedStatus()
-			let image = songStatus == .saved ? UIImage(named: "check") : UIImage(named: "plus")
+			let image = songStatus == .saved ? UIImage(named: "check") : #imageLiteral(resourceName: "AddButton")
 			addButton?.setBackgroundImage(image, for: .normal)
 		}
 	}

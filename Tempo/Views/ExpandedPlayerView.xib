@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,10 +18,8 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYO-ZG-8sm">
-                    <rect key="frame" x="0.0" y="0.0" width="380" height="262"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark Byran posted 5 mins ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMS-4o-SU3">
-                            <rect key="frame" x="12" y="12" width="298" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="22" id="TcF-uX-zD2"/>
                             </constraints>
@@ -33,27 +28,23 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KaL-JG-6xo">
-                            <rect key="frame" x="342" y="8" width="26" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="26" id="Hgq-Q9-Tiu"/>
                             </constraints>
                             <state key="normal" backgroundImage="expanded-arrow"/>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p2b-rC-KRD">
-                            <rect key="frame" x="132" y="56" width="116" height="116"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="116" id="Hhw-em-19P"/>
                                 <constraint firstAttribute="height" constant="116" id="QWk-sH-9GL"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Song Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ye-a8-W0G" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                            <rect key="frame" x="41" y="202" width="299" height="28"/>
                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uwf-Mu-fEz">
-                            <rect key="frame" x="296" y="88" width="44" height="53"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="44" id="feH-Id-LTJ"/>
                                 <constraint firstAttribute="height" constant="53" id="yyX-r8-k2U"/>
@@ -62,7 +53,6 @@
                             <state key="normal" image="skip"/>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcR-vP-5Lt" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                            <rect key="frame" x="41" y="230" width="299" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="Rpo-Fe-ttO"/>
                             </constraints>
@@ -71,7 +61,6 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jtm-qb-OpD">
-                            <rect key="frame" x="163" y="87" width="54" height="54"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="54" id="05s-ZP-pQt"/>
                                 <constraint firstAttribute="width" constant="54" id="Gnc-4X-f8I"/>
@@ -79,7 +68,6 @@
                             <state key="normal" backgroundImage="pause"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9FI-6T-Mzs">
-                            <rect key="frame" x="41" y="87" width="44" height="53"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="44" id="8TR-Ns-r1U"/>
                                 <constraint firstAttribute="height" constant="53" id="i1S-tP-T4D"/>
@@ -112,23 +100,18 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YuT-Z9-UpH" customClass="ProgressView" customModule="Tempo" customModuleProvider="target">
-                    <rect key="frame" x="41" y="284" width="299" height="2"/>
                     <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VSm-hU-Lkf">
-                    <rect key="frame" x="16" y="294" width="348" height="46"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3H0-NH-Sl1" customClass="UIButton">
-                            <rect key="frame" x="8" y="0.0" width="58" height="46"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty-heart" translatesAutoresizingMaskIntoConstraints="NO" id="R47-QV-Fdg">
-                                    <rect key="frame" x="8" y="12" width="22" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="22" id="PaY-Uy-ouH"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Like" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dai-iK-3k2">
-                                    <rect key="frame" x="34" y="12" width="24" height="22"/>
                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
                                     <color key="textColor" red="0.66588109731674194" green="0.66586118936538696" blue="0.66587245464324951" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -144,16 +127,13 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tbr-7O-06Y" customClass="UIButton">
-                            <rect key="frame" x="74" y="0.0" width="126" height="46"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" translatesAutoresizingMaskIntoConstraints="NO" id="TqH-RI-SXj">
-                                    <rect key="frame" x="8" y="12" width="22" height="22"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AddButton" translatesAutoresizingMaskIntoConstraints="NO" id="TqH-RI-SXj">
                                     <constraints>
                                         <constraint firstAttribute="width" constant="22" id="08f-De-xIi"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save to Spotify" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sC-mC-pNO">
-                                    <rect key="frame" x="34" y="12" width="88" height="22"/>
                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
                                     <color key="textColor" red="0.66588109731674194" green="0.66586118936538696" blue="0.66587245464324951" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -169,16 +149,13 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIj-Kw-tOo" customClass="UIButton">
-                            <rect key="frame" x="202" y="0.0" width="131" height="46"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="open" translatesAutoresizingMaskIntoConstraints="NO" id="3vf-rS-nom">
-                                    <rect key="frame" x="8" y="12" width="21" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="21" id="kCL-jZ-cts"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open in Spotify" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EJo-X0-3Mu">
-                                    <rect key="frame" x="34" y="12" width="93" height="22"/>
                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
                                     <color key="textColor" red="0.6658810973" green="0.66586118940000005" blue="0.6658724546" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -250,12 +227,12 @@
         </view>
     </objects>
     <resources>
+        <image name="AddButton" width="22" height="21"/>
         <image name="back" width="7" height="11"/>
         <image name="empty-heart" width="18" height="16"/>
         <image name="expanded-arrow" width="23" height="23"/>
         <image name="open" width="16" height="16"/>
         <image name="pause" width="54" height="54"/>
-        <image name="plus" width="16" height="16"/>
         <image name="skip" width="7" height="11"/>
     </resources>
 </document>

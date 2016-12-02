@@ -22,11 +22,10 @@ class LikedTableViewCell: UITableViewCell {
 		
 		postView = LikedPostView()
 		postView?.frame = bounds
-		postView?.backgroundColor = UIColor.tempoLightGray
 		addSubview(postView!)
 		
-		separator = UIView(frame: CGRect(x: 0, y: bounds.height-1, width: bounds.width, height: 1))
-		separator?.backgroundColor = UIColor.separatorGray
+		separator = UIView(frame: CGRect(x: 0, y: bounds.height - 1, width: bounds.width, height: 1))
+		separator?.backgroundColor = .backgroundDarkGrey
 		addSubview(separator!)
 	}
 
