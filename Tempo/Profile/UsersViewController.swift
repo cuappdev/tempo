@@ -52,7 +52,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.delegate = self
 		searchController.searchBar.setImage(#imageLiteral(resourceName: "SearchIcon"), for: .search, state: UIControlState())
-		searchController.searchBar.setImage(UIImage(named: "clear-search-icon"), for: .clear, state: UIControlState())
+		searchController.searchBar.setImage(#imageLiteral(resourceName: "ClearSearchIcon"), for: .clear, state: UIControlState())
 		let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
 		textFieldInsideSearchBar!.textColor = UIColor.white
 		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
