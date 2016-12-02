@@ -7,6 +7,8 @@ protocol LoginFlowViewControllerDelegate: class {
 
 class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 	
+	let pageVCOffset: CGFloat = 40
+	
 	var pageViewController: UIPageViewController!
 	
 	var facebookLoginViewController: FacebookLoginViewController!
@@ -14,6 +16,7 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 	var spotifyLoginViewController: SpotifyLoginViewController!
 	
 	var pages = [UIViewController]()
+	var pageControl: UIPageControl?
 	
 	weak var delegate: LoginFlowViewControllerDelegate?
 	
@@ -22,7 +25,7 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		view.backgroundColor = .tempoOnboardingGray
+		view.backgroundColor = .clear
 
 		pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 		pageViewController.dataSource = self
@@ -43,6 +46,7 @@ class LoginFlowViewController: UIViewController, UIPageViewControllerDataSource,
 		
 		// Disable swiping and hide page control
 		pageViewController.disablePageViewControllerSwipeGesture()
+		pageViewController.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height + pageVCOffset)
 		pageViewController.hidePageControl()
 		
 		addChildViewController(pageViewController)
@@ -119,9 +123,8 @@ extension UIPageViewController {
 		for subview in view.subviews {
 			if subview is UIPageControl {
 				subview.isHidden = true
-				view.frame.size.height += subview.frame.height
 			}
 		}
 	}
-	
+
 }

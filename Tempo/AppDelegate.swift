@@ -80,6 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window!.backgroundColor = UIColor.tempoLightGray
 		window!.makeKeyAndVisible()
+		window?.tintColor = .tempoRed
 		
 		FBSDKProfile.enableUpdates(onAccessTokenChange: true)
 		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)

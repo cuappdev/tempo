@@ -8,7 +8,7 @@ protocol CreateUsernameViewControllerDelegate: class {
 }
 
 class CreateUsernameViewController: UIViewController {
-	
+
 	var createUsernameLabel: UILabel!
 	var profileNameLabel: UILabel!
 	var profileImageView: UIImageView!
@@ -16,83 +16,89 @@ class CreateUsernameViewController: UIViewController {
 	var newUsernameLabel: UILabel!
 	var newUsernameTextField: TextField!
 	var continueButton: UIButton!
+	var alertImageView: UIImageView!
 	var alertLabel: UILabel!
 	
 	var fbid: String = ""
 	var name: String = "Dennis Fedorko"
+	var validUsername: Bool = false
 	
 	weak var delegate: CreateUsernameViewControllerDelegate?
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 
+		view.backgroundColor = .tempoOnboardingGray
         layoutSubviews()
     }
 
 	func layoutSubviews() {
+		let contentWidth = view.frame.width * 0.736
 		
-		createUsernameLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.1, width: view.frame.width * 0.9, height: 20))
-		createUsernameLabel.center = CGPoint(x: view.center.x, y: createUsernameLabel.center.y)
+		createUsernameLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.093, width: view.frame.width * 0.84, height: 22))
 		createUsernameLabel.text = "New user? Create a username!"
-		createUsernameLabel.textColor = .white
-		createUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
+		createUsernameLabel.textColor = .tempoGray
+		createUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 18.0)
 		createUsernameLabel.textAlignment = .center
+		createUsernameLabel.sizeToFit()
+		createUsernameLabel.center.x = view.center.x
 		
-		profileNameLabel = UILabel(frame: CGRect(x: 0, y: createUsernameLabel.frame.bottom.y + 40, width: view.frame.width * 0.9, height: 20))
-		profileNameLabel.center = CGPoint(x: view.center.x, y: profileNameLabel.center.y)
+		profileNameLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.187, width: contentWidth, height: 22))
 		profileNameLabel.text = name
 		profileNameLabel.textColor = .white
-		profileNameLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
+		profileNameLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 22.0)
 		profileNameLabel.textAlignment = .center
+		profileNameLabel.sizeToFit()
+		profileNameLabel.center.x = view.center.x
 		
-		profileImageView = UIImageView(frame: CGRect(x: 0, y: profileNameLabel.frame.bottom.y + 15, width: view.frame.height * 0.2, height: view.frame.height * 0.2))
-		profileImageView.center = CGPoint(x: view.center.x, y: profileImageView.center.y)
+		profileImageView = UIImageView(frame: CGRect(x: 0, y: view.frame.height * 0.25, width: view.frame.width * 0.384, height: view.frame.width * 0.384))
+		profileImageView.center.x = view.center.x
 		profileImageView.layer.cornerRadius = profileImageView.frame.width / 2.0
 		profileImageView.clipsToBounds = true
 		profileImageView.contentMode = .scaleAspectFill
 		setProfileImage()
 		
-		profileUsernameLabel = UILabel(frame: CGRect(x: 0, y: profileImageView.frame.bottom.y + 15, width: view.frame.width * 0.8, height: 25))
-		profileUsernameLabel.center = CGPoint(x: view.center.x, y: profileUsernameLabel.center.y)
+		profileUsernameLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.486, width: contentWidth, height: 22))
+		profileUsernameLabel.center.x = view.center.x
 		profileUsernameLabel.text = ""
 		profileUsernameLabel.textColor = .white
-		profileUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
+		profileUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16.0)
 		profileUsernameLabel.textAlignment = .center
 		
-		
-		newUsernameLabel = UILabel(frame: CGRect(x: 0, y: profileUsernameLabel.frame.bottom.y + view.frame.height * 0.05, width: view.frame.width * 0.7, height: 16))
-		newUsernameLabel.center = CGPoint(x: view.center.x, y: newUsernameLabel.center.y)
+		newUsernameLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.594, width: contentWidth, height: 22))
+		newUsernameLabel.center.x = view.center.x
 		newUsernameLabel.text = "New Username"
 		newUsernameLabel.textColor = .white
-		newUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
+		newUsernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 16.0)
 		newUsernameLabel.textAlignment = .left
 		
-		newUsernameTextField = TextField(frame: CGRect(x: 0, y: newUsernameLabel.frame.bottom.y + 10, width: view.frame.width * 0.7, height: view.frame.height * 0.07))
+		newUsernameTextField = TextField(frame: CGRect(x: 0, y: view.frame.height * 0.64, width: contentWidth, height: view.frame.height * 0.069))
+		newUsernameTextField.center.x = view.center.x
 		newUsernameTextField.autocorrectionType = .no
 		newUsernameTextField.autocapitalizationType = .none
 		newUsernameTextField.keyboardType = .alphabet
-		newUsernameTextField.center = CGPoint(x: view.center.x, y: newUsernameTextField.center.y)
 		newUsernameTextField.placeholder = "@username"
-		newUsernameTextField.backgroundColor = .lightGray
+		newUsernameTextField.backgroundColor = .usernameBGGrey
 		newUsernameTextField.textColor = UIColor.tempoDarkGray
-		newUsernameTextField.font = UIFont(name: "AvenirNext-Regular", size: 16)
+		newUsernameTextField.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
 		newUsernameTextField.textAlignment = .left
 		newUsernameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
 		newUsernameTextField.delegate = self
 		
-		alertLabel = UILabel(frame: CGRect(x: 0, y: newUsernameTextField.frame.bottom.y + 5, width: view.frame.width * 0.8, height: 80))
-		alertLabel.center = CGPoint(x: view.center.x, y: alertLabel.center.y)
-		alertLabel.textColor = .red
-		alertLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
-		alertLabel.textAlignment = .center
-		alertLabel.lineBreakMode = .byWordWrapping
+		alertImageView = UIImageView(frame: CGRect(x: newUsernameTextField.frame.minX, y: (view.frame.height * 0.73) - 1, width: 22, height: 22))
+		
+		alertLabel = UILabel(frame: CGRect(x: alertImageView.frame.maxX + 8, y: view.frame.height * 0.73, width: contentWidth - (alertImageView.frame.width + 8), height: 20))
+		alertLabel.textColor = .wrongRed
+		alertLabel.font = UIFont(name: "AvenirNext-Medium", size: 16.0)
+		alertLabel.textAlignment = .left
 		alertLabel.numberOfLines = 3
 
-		continueButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.7, height: 60))
-		continueButton.frame.bottom = CGPoint(x: view.center.x, y: view.frame.height - view.frame.width * 0.15)
-		continueButton.backgroundColor = UIColor.tempoLightRed
+		continueButton = UIButton(frame: CGRect(x: 0, y: view.frame.height * 0.858, width: contentWidth, height: view.frame.height * 0.09))
+		continueButton.center.x = view.center.x
+		continueButton.backgroundColor = .tempoRed
 		continueButton.setTitle("Continue", for: .normal)
-		continueButton.setTitleColor(.white, for: .normal)
+		continueButton.setTitleColor(.buttonGrey, for: .normal)
+		continueButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
 		continueButton.layer.cornerRadius = 5
 		continueButton.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
 		continueButton.addTarget(self, action: #selector(pressButton), for: .touchDown)
@@ -104,13 +110,15 @@ class CreateUsernameViewController: UIViewController {
 		view.addSubview(profileUsernameLabel)
 		view.addSubview(newUsernameLabel)
 		view.addSubview(newUsernameTextField)
+		view.addSubview(alertImageView)
 		view.addSubview(alertLabel)
 		view.addSubview(continueButton)
 		
+		checkUsername()
 	}
 	
 	func pressButton(){
-		continueButton.alpha = 0.8
+		continueButton.alpha = 0.5
 	}
 	
 	func releaseButton(){
@@ -122,19 +130,19 @@ class CreateUsernameViewController: UIViewController {
 		profileImageView.hnk_setImageFromURL(imageUrl)
 	}
 	
-	func textFieldDidChange(textField: UITextField) {
-		if let username = textField.text {
-			if username == ""{
-				profileUsernameLabel.text = ""
-			}
-			else{
-				profileUsernameLabel.text = "@\(username)"
-			}
-		}
+	func updateAlert(correct: Bool, message: String) {
+		let alertLabelWidth = alertLabel.frame.width
+		alertLabel.text = message
+		alertLabel.sizeToFit()
+		alertLabel.frame.size.width = alertLabelWidth
+		
+		alertImageView.image = (message != "") ? (correct ? #imageLiteral(resourceName: "CorrectIcon") : #imageLiteral(resourceName: "WrongIcon")) : nil
+		alertLabel.textColor = correct ? .correctGreen : .wrongRed
+		continueButton.alpha = correct ? 1.0 : 0.5
+		continueButton.isUserInteractionEnabled = correct
 	}
 	
-	func continueButtonPressed() {
-		continueButton.alpha = 1.0
+	func checkUsername() {
 		guard let usernameText = newUsernameTextField.text?.lowercased() else { print("No Username"); return}
 		let username = usernameText.substring(from: usernameText.startIndex)
 		
@@ -142,43 +150,53 @@ class CreateUsernameViewController: UIViewController {
 		let invalidChars = username.rangeOfCharacter(from: charSet)
 		
 		if username == "" {
-			alertLabel.text = "Username must have at least one character."
-			alertLabel.textColor = UIColor.red
+			updateAlert(correct: false, message: "")
 		} else if invalidChars != nil { // Username contains some invalid characters
-			alertLabel.text = "Only underscores and alphanumeric characters allowed."
-			alertLabel.textColor = UIColor.red
+			updateAlert(correct: false, message: "Username can only contain underscores and alphanumeric characters.")
 		} else if username.characters.count > 18 {
-			alertLabel.text = "Username is too long."
-			alertLabel.textColor = UIColor.red
+			updateAlert(correct: false, message: "Username exceeds 18 characters limit.")
 		} else { // Username contains only valid characters
-			API.sharedAPI.usernameIsValid(username) { success in
-				if success { // Username available
-					API.sharedAPI.updateCurrentUser(username, didSucceed: { (success) in
-						if success {
-							self.delegate?.createUsernameViewController(createUsernameViewController: self, didFinishCreatingUsername: username)
-						} else {
-							self.alertLabel.text = "Username failed to update. Try again."
-							self.alertLabel.textColor = .red
-						}
-					})
-				} else { // Username already taken
-					self.alertLabel.text = "Username unavailable."
-					self.alertLabel.textColor = .red
-				}
+			updateAlert(correct: true, message: "")
+		}
+	}
+	
+	func textFieldDidChange(textField: UITextField) {
+		if let username = textField.text {
+			profileUsernameLabel.text = (username == "") ? "" : "@\(username)"
+			checkUsername()
+		}
+	}
+	
+	func continueButtonPressed() {
+		guard let usernameText = newUsernameTextField.text?.lowercased() else { print("No Username"); return}
+		let username = usernameText.substring(from: usernameText.startIndex)
+		
+		API.sharedAPI.usernameIsValid(username) { success in
+			if success { // Username available
+				self.updateAlert(correct: true, message: "Username is available.")
+				API.sharedAPI.updateCurrentUser(username, didSucceed: { (success) in
+					if success {
+						self.delegate?.createUsernameViewController(createUsernameViewController: self, didFinishCreatingUsername: username)
+					} else {
+						self.updateAlert(correct: true, message: "Username could not be created. Please try again.")
+					}
+				})
+			} else { // Username already taken
+				self.updateAlert(correct: false, message: "Username is not available.")
 			}
 		}
 	}
+
 }
 
 extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControllerDelegate {
 	
-	func animateImageView(){
-		
-		if profileImageView.alpha != 0{
+	func animateImageView(hidden: Bool) {
+		if hidden {
 			UIView.animate(withDuration: 1.0) {
 				self.profileImageView.alpha = 0
 			}
-		} else{
+		} else {
 			UIView.animate(withDuration: 1.0) {
 				self.profileImageView.alpha = 1.0
 			}
@@ -186,7 +204,7 @@ extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControl
 	}
 	
 	func keyboardWillShow(sender: NSNotification) {
-		animateImageView()
+		animateImageView(hidden: true)
 		if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
 			let keyboardHeight = keyboardSize.height
 			UIView.animate(withDuration: 0.2, animations: { 
@@ -196,7 +214,7 @@ extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControl
 	}
 	
 	func keyboardWillHide(sender: NSNotification) {
-		animateImageView()
+		animateImageView(hidden: false)
 		UIView.animate(withDuration: 0.2, animations: {
 			self.view.frame.origin.y = 0
 		})
@@ -226,7 +244,7 @@ extension CreateUsernameViewController: UITextFieldDelegate, UINavigationControl
 
 class TextField: UITextField {
 	
-	let padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10);
+	let padding = UIEdgeInsets(top: 0, left: 7.5, bottom: 0, right: 10);
 	
 	override func textRect(forBounds bounds: CGRect) -> CGRect {
 		return UIEdgeInsetsInsetRect(bounds, padding)

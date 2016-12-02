@@ -20,6 +20,7 @@ class SpotifyLoginViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		view.backgroundColor = .tempoOnboardingGray
 		layoutSubviews()
 	}
 	

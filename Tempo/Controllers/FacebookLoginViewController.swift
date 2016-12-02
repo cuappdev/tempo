@@ -40,23 +40,21 @@ class FacebookLoginViewController: UIViewController {
 	
 	func layoutSubviews() {
 		// Logo Image
-		logoImageView = UIImageView(frame: CGRect(x: 0, y: view.frame.height*0.16, width: view.frame.width*0.54, height: view.frame.width*0.54))
+		logoImageView = UIImageView(frame: CGRect(x: 0, y: view.frame.height * 0.16, width: view.frame.width * 0.54, height: view.frame.width * 0.54))
 		logoImageView.center.x = view.center.x
 		logoImageView.image = #imageLiteral(resourceName: "TempoLogo")
-		view.addSubview(logoImageView)
 		
 		// Tempo Label
-		tempoLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height*0.5, width: view.frame.width, height: view.frame.height))
+		tempoLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.5, width: view.frame.width, height: view.frame.height))
 		tempoLabel.text = "Tempo"
 		tempoLabel.textAlignment = .center
 		tempoLabel.textColor = .white
 		tempoLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 60.0)
 		tempoLabel.sizeToFit()
 		tempoLabel.center.x = view.center.x
-		view.addSubview(tempoLabel)
 		
 		// Description Label
-		descriptionLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height*0.69, width: view.frame.width*0.84, height: view.frame.height))
+		descriptionLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.69, width: view.frame.width * 0.84, height: view.frame.height))
 		
 		let descParagraphStyle = NSMutableParagraphStyle()
 		descParagraphStyle.lineSpacing = 5
@@ -71,19 +69,22 @@ class FacebookLoginViewController: UIViewController {
 		descriptionLabel.numberOfLines = 2
 		descriptionLabel.sizeToFit()
 		descriptionLabel.center.x = view.center.x
-		view.addSubview(descriptionLabel)
 		
 		// Facebook Login Button
-		loginButton = UIButton(frame: CGRect(x: 0, y: view.frame.height*0.855, width: view.frame.width*0.74, height: view.frame.height*0.09))
+		loginButton = UIButton(frame: CGRect(x: 0, y: view.frame.height * 0.855, width: view.frame.width * 0.74, height: view.frame.height * 0.09))
 		loginButton.center.x = view.center.x
 		loginButton.setTitle("Log in with Facebook", for: .normal)
-		loginButton.setTitleColor(.facebookGrey, for: .normal)
+		loginButton.setTitleColor(.buttonGrey, for: .normal)
 		loginButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
 		loginButton.backgroundColor = .facebookBlue
 		loginButton.layer.cornerRadius = 5
 		loginButton.addTarget(self, action: #selector(loginToFacebook), for: .touchUpInside)
 		loginButton.addTarget(self, action: #selector(pressButton), for: .touchDown)
 		loginButton.addTarget(self, action: #selector(releaseButton), for: .touchDragExit)
+		
+		view.addSubview(logoImageView)
+		view.addSubview(tempoLabel)
+		view.addSubview(descriptionLabel)
 		view.addSubview(loginButton)
 	}
 	
