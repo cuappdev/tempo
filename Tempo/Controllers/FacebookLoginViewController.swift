@@ -71,7 +71,7 @@ class FacebookLoginViewController: UIViewController {
 		descriptionLabel.center.x = view.center.x
 		
 		// Facebook Login Button
-		loginButton = UIButton(frame: CGRect(x: 0, y: view.frame.height * 0.855, width: view.frame.width * 0.74, height: view.frame.height * 0.09))
+		loginButton = UIButton(frame: CGRect(x: 0, y: view.frame.height * 0.855, width: view.frame.width * 0.736, height: view.frame.height * 0.09))
 		loginButton.center.x = view.center.x
 		loginButton.setTitle("Log in with Facebook", for: .normal)
 		loginButton.setTitleColor(.buttonGrey, for: .normal)
@@ -108,7 +108,7 @@ class FacebookLoginViewController: UIViewController {
 	}
 	
 	func pressButton() {
-		loginButton.alpha = 0.8
+		loginButton.alpha = 0.5
 	}
 	
 	func releaseButton() {
