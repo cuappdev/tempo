@@ -112,12 +112,13 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		
 		feedFollowSuggestionsController?.reload()
 		
-		API.sharedAPI.fetchFeedOfEveryone { [weak self] in
-			self?.posts = $0
+		API.sharedAPI.fetchFeedOfEveryone { [weak self] (posts: [Post]) in
 			DispatchQueue.main.async {
+				self?.posts = posts
 				//return even if we get data after a timeout
 				if finishedRefreshing {
 					self?.tableView.alpha = 1.0
+					self?.tableView.reloadData()
 					return
 				} else if minimumTimePassed {
 					self?.refreshControl?.endRefreshing()
