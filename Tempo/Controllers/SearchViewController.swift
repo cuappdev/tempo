@@ -14,6 +14,9 @@ protocol SongSearchDelegate: class {
 }
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, PlayerDelegate {
+	
+	let searchBarHeight: CGFloat = 44
+	let shareButtonWidth: CGFloat = 96
 
 	var tableView: UITableView!
 	var searchBarContainer: UIView!
@@ -40,13 +43,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		super.viewDidLoad()
 		
 		title = "Post a track"
-		view.backgroundColor = UIColor.tempoDarkGray
-		let searchBarHeight = CGFloat(44)
+		
 		tableView = UITableView(frame: CGRect(x: 0, y: searchBarHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight - searchBarHeight - 20), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
+		tableView.backgroundColor = .backgroundDarkGrey
 		
-		tableView.rowHeight = 84
+		tableView.rowHeight = 85
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
 		
@@ -78,11 +81,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		tableView.tableFooterView = UIView()
 		
 		let textFieldInsideSearchBar = searchBar.value(forKey: "_searchField") as? UITextField
-		textFieldInsideSearchBar?.textColor = UIColor.white
-		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
-		textFieldInsideSearchBar?.font = UIFont(name: "Avenir-Book", size: 14)
+		textFieldInsideSearchBar?.textColor = .white
+		textFieldInsideSearchBar?.backgroundColor = .searchBackgroundRed
+		textFieldInsideSearchBar?.font = UIFont(name: "AvenirNext-Regular", size: 14.0)
 		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.value(forKey: "placeholderLabel") as? UILabel
-		textFieldInsideSearchBarLabel?.textColor = UIColor.tempoUltraLightRed
+		textFieldInsideSearchBarLabel?.textColor = .searchTextColor
 		
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
 			self.searchBar.layer.transform = CATransform3DIdentity
@@ -136,11 +139,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		cell.shareButton.isHidden = !(selectedSong?.equals(other: post.song) ?? false)
 		if (selfPostIds.contains(post.song.spotifyID)) {
 			cell.shareButton.setTitle("SHARED", for: UIControlState())
-			cell.shareButton.backgroundColor = UIColor.clear
+			cell.shareButton.backgroundColor = .clear
 			cell.shareButton.removeTarget(self, action: #selector(SearchViewController.submitSong), for: .touchUpInside)
 		} else {
 			cell.shareButton.setTitle("SHARE", for: UIControlState())
-			cell.shareButton.backgroundColor = UIColor.tempoLightRed
+			cell.shareButton.backgroundColor = .tempoRed
 			cell.shareButton.addTarget(self, action: #selector(SearchViewController.submitSong), for: .touchUpInside)
 		}
 		
@@ -162,8 +165,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			if activePlayer?.isPlaying ?? false {
 				didTogglePlaying(animate: true)
 			}
+			
 			cell.shareButton.isHidden = false
+			cell.shareButtonWidthConstraint.constant = shareButtonWidth
 			selectedCell?.shareButton.isHidden = true
+			selectedCell?.shareButtonWidthConstraint.constant = 0
 			
 			selectSong(post.song)
 			selectedCell = cell
@@ -221,7 +227,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			post.player.prepareToPlay()
 			return post
 		}
-		
 		
 		tableView.reloadData()
 	}

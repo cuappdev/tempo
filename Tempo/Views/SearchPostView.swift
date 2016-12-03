@@ -20,7 +20,6 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         didSet {
             // update stuff
 			if let post = post {
-				avatarImageView?.layer.cornerRadius = 7
                 profileNameLabel?.text = post.song.title
                 descriptionLabel?.text = post.song.artist
             }
@@ -40,11 +39,6 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         isUserInteractionEnabled = true
         avatarImageView?.isUserInteractionEnabled = true
         profileNameLabel?.isUserInteractionEnabled = true
-        
-        layer.borderColor = UIColor.tempoDarkGray.cgColor
-        layer.borderWidth = CGFloat(0.7)
-		
-		descriptionLabel?.textColor = UIColor.descriptionLightGray
     }
     
     override func didMoveToSuperview() {
@@ -58,37 +52,28 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
 	
     // Customize view to be able to re-use it for search results.
     func flagAsSearchResultPost() {
-        descriptionLabel?.text = post!.song.title + " · " + post!.song.album
+        descriptionLabel?.text = "\(post!.song.title) · \(post!.song.album)"
     }
     
     func updateProfileLabel() {
         if let post = post {
-            var color: UIColor!
-			let font = UIFont(name: "Avenir-Medium", size: 14)
-            let duration = TimeInterval(0.3) as TimeInterval
-            let label = profileNameLabel!
-            if post.player.isPlaying {
-                color = UIColor.tempoLightRed
-                // Will scroll labels
-            } else {
-                color = UIColor.white
-            }
-            
+            let duration = TimeInterval(0.3)
+			let color: UIColor = post.player.isPlaying ? .tempoLightRed : .white
+			let font: UIFont = post.player.isPlaying ? UIFont(name: "AvenirNext-Medium", size: 16.0)! : UIFont(name: "AvenirNext-Regular", size: 16.0)!
+   
+			guard let label = profileNameLabel else { return }
             if !label.textColor.isEqual(color) {
                 UIView.transition(with: label, duration: duration, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
                     label.textColor = color
 					label.font = font
-                    }, completion: { _ in
-                        label.textColor = color
-						label.font = font
-                })
+				})
             }
         }
 	}
 	
 	func updateBackground() {
 		if let post = post {
-			backgroundColor = post.player.isPlaying ? UIColor.tempoDarkGray : UIColor.tempoLightGray
+			backgroundColor = post.player.isPlaying ? .readCellColor : .unreadCellColor
 		}
 	}
     
