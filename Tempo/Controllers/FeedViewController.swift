@@ -118,8 +118,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 				//return even if we get data after a timeout
 				if finishedRefreshing {
 					self?.tableView.alpha = 1.0
-					self?.activityIndicatorView.stopAnimating()
-					self?.activityIndicatorView.removeFromSuperview()
 					return
 				} else if minimumTimePassed {
 					self?.refreshControl?.endRefreshing()
@@ -143,10 +141,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 				}
 				
 				self?.tableView.alpha = 1.0
-				self?.activityIndicatorView.stopAnimating()
-				self?.activityIndicatorView.removeFromSuperview()
 			}
 
+			self?.activityIndicatorView.stopAnimating()
+			self?.activityIndicatorView.removeFromSuperview()
 		}
 		
 		//fetch for a minimum of delay seconds
