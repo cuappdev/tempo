@@ -58,6 +58,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		textFieldInsideSearchBar!.textColor = .white
 		textFieldInsideSearchBar?.backgroundColor = .searchBackgroundRed
 		textFieldInsideSearchBar?.font = UIFont(name: "AvenirNext-Regular", size: 14.0)
+		textFieldInsideSearchBar?.keyboardAppearance = .dark
 		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.value(forKey: "placeholderLabel") as? UILabel
 		textFieldInsideSearchBarLabel?.textColor = .searchTextColor
 		
