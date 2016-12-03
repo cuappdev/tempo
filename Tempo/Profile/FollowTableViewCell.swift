@@ -28,24 +28,24 @@ class FollowTableViewCell: UITableViewCell {
 		super.awakeFromNib()
 		
 		selectionStyle = .none
-		backgroundColor = UIColor.tempoLightGray
-		separator.backgroundColor = UIColor.separatorGray
-		separatorHeight.constant = 1
-		followButton.backgroundColor = UIColor.tempoLightRed
-		followButton.layer.borderColor = UIColor.tempoLightRed.cgColor
+		backgroundColor = .unreadCellColor
+		
+		followButton.backgroundColor = .tempoRed
+		followButton.layer.borderColor = UIColor.tempoRed.cgColor
+		followButton.layer.borderWidth = 1.5
 		userImage.layer.cornerRadius = userImage.bounds.size.width/2
 		userImage.clipsToBounds = true
+		separator.backgroundColor = .backgroundDarkGrey
+		separatorHeight.constant = 2
 	}
 	
     @IBAction func userImageClicked(_ sender: UIButton) {
-        
-        
-        
+		
     }
 
     // Custom selected cell view
     override func setSelected(_ selected: Bool, animated: Bool) {
-		contentView.backgroundColor = selected ? UIColor.tempoLightGray : UIColor.clear
+		contentView.backgroundColor = selected ? .readCellColor : .clear
     }
 	
 	@IBAction func didTapFollowButton(_ sender: AnyObject) {

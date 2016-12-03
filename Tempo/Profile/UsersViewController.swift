@@ -32,17 +32,17 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		extendedLayoutIncludesOpaqueBars = true
+		definesPresentationContext = true
+		
 		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
-		
-		extendedLayoutIncludesOpaqueBars = true
-		definesPresentationContext = true
-		view.backgroundColor = UIColor.tempoDarkGray
-		tableView.rowHeight = 80
+		tableView.rowHeight = 100
+		tableView.backgroundColor = .backgroundDarkGrey
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
-		self.view.addSubview(tableView)
+		view.addSubview(tableView)
 		
 		// Set up search bar
 		searchController = UISearchController(searchResultsController: nil)
@@ -53,28 +53,29 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		searchController.searchBar.delegate = self
 		searchController.searchBar.setImage(#imageLiteral(resourceName: "SearchIcon"), for: .search, state: UIControlState())
 		searchController.searchBar.setImage(#imageLiteral(resourceName: "ClearSearchIcon"), for: .clear, state: UIControlState())
+		
 		let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
-		textFieldInsideSearchBar!.textColor = UIColor.white
-		textFieldInsideSearchBar?.backgroundColor = UIColor.tempoDarkRed
-		textFieldInsideSearchBar?.font = UIFont(name: "Avenir-Book", size: 14)
+		textFieldInsideSearchBar!.textColor = .white
+		textFieldInsideSearchBar?.backgroundColor = .searchBackgroundRed
+		textFieldInsideSearchBar?.font = UIFont(name: "AvenirNext-Regular", size: 14.0)
 		let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.value(forKey: "placeholderLabel") as? UILabel
-		textFieldInsideSearchBarLabel?.textColor = UIColor.tempoUltraLightRed
+		textFieldInsideSearchBarLabel?.textColor = .searchTextColor
 		
 		// Fix color above search bar
 		let topView = UIView(frame: view.frame)
 		topView.frame.origin.y = -view.frame.size.height
-		topView.backgroundColor = UIColor.tempoLightRed
+		topView.backgroundColor = .tempoRed
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
 		
 		activityIndicatorView.center = view.center
 		
 		if displayType == .Users {
-			title = "Search Users"
+			title = "Users"
+			
 			addHamburgerMenu()
 			populateSuggestions()
 		} else {
-			
 			showActivityIndicator()
 			
 			let completion: ([User]) -> Void = {
@@ -111,8 +112,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 	}
 	
 	func hideActivityIndicator() {
-		self.activityIndicatorView.stopAnimating()
-		self.activityIndicatorView.removeFromSuperview()
+		activityIndicatorView.stopAnimating()
+		activityIndicatorView.removeFromSuperview()
 	}
 	
 	func populateSuggestions() {
@@ -146,6 +147,10 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		if !searchController.isActive && displayType == .Users {
 			populateSuggestions()
 		}
+		
+		if let indexPath = tableView.indexPathForSelectedRow {
+			tableView.deselectRow(at: indexPath, animated: true)
+		}
 	}
 	
     // MARK: Table View Methods
@@ -160,6 +165,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FollowCell", for: indexPath) as! FollowTableViewCell
+		
 		var user: User
 		if displayType == .Users {
 			user = searchController.isActive ? users[indexPath.row] : suggestedUsers[indexPath.row]
@@ -171,11 +177,12 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.userHandle.text = "@\(user.username)"
 		cell.numFollowLabel.text = (user.followersCount == 1) ? "1 follower" : "\(user.followersCount) followers"
 		cell.userImage.hnk_setImageFromURL(user.imageURL)
+		
 		if user.id != User.currentUser.id {
 			cell.followButton.alpha = 1.0
 			cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
-			cell.followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
-			cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.white, for: UIControlState())
+			cell.followButton.backgroundColor = (user.isFollowing) ? .clear : .tempoRed
+			cell.followButton.setTitleColor((user.isFollowing) ? .redTintedWhite : .followLightRed, for: UIControlState())
 			cell.delegate = self
 		} else {
 			cell.followButton.alpha = 0.0
@@ -185,15 +192,13 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 100
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor.tempoLightGray
-		
 		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
         profileVC.title = "Profile"
+		
 		if self.displayType == .Users {
 			profileVC.user = searchController.isActive ? users[indexPath.row] : suggestedUsers[indexPath.row]
 		} else {
@@ -222,7 +227,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 				}
 				
 				page += 1
-				self.isLoadingMoreSuggestions = true
+				isLoadingMoreSuggestions = true
 				API.sharedAPI.fetchFollowSuggestions(completion, length: length, page: page)
 			}
 		}
@@ -240,17 +245,17 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 			user = searchController.isActive ? filteredUsers[indexPath!.row] : users[indexPath!.row]
 		}
 		
-		if user.id == User.currentUser.id {
-			return
-		}
+		if user.id == User.currentUser.id { return }
 		
 		user.isFollowing = !user.isFollowing
 		User.currentUser.followingCount += user.isFollowing ? 1 : -1
 		user.followersCount += user.isFollowing ? 1 : -1
+		
 		let cell = tableView.cellForRow(at: indexPath!) as! FollowTableViewCell
 		cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
-		cell.followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
-		cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.white, for: UIControlState())
+		cell.followButton.backgroundColor = (user.isFollowing) ? .tempoLightGray : .tempoRed
+		cell.followButton.setTitleColor((user.isFollowing) ? .offWhite : .white, for: UIControlState())
+		
 		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
 		DispatchQueue.main.async {
 			self.tableView.reloadData()
@@ -266,7 +271,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 	}
 	
 	func updateSearchResults(for searchController: UISearchController) {
-		self.tableView.reloadData()
+		tableView.reloadData()
 		
 		if displayType == .Users {
 			let completion: ([User]) -> Void = {
@@ -318,7 +323,7 @@ extension UsersViewController: UIViewControllerPreviewingDelegate {
 		peekViewController.title = "Profile"
 		peekViewController.user = searchController.isActive ? filteredUsers[indexPath.row] : users[indexPath.row]
 		
-		peekViewController.preferredContentSize = CGSize.zero
+		peekViewController.preferredContentSize = .zero
 		previewingContext.sourceRect = tableView.convert(cell.frame, to: view)
 		
 		return peekViewController

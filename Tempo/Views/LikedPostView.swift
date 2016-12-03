@@ -142,7 +142,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	
 	func updateBackground() {
 		if let post = post {
-			backgroundColor = post.player.isPlaying ? .tempoDarkGray : .tempoLightGray
+			backgroundColor = post.player.isPlaying ? .readCellColor : .unreadCellColor
 		}
 	}
 	

@@ -24,11 +24,11 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 	
 	var aboutLabel: UILabel!
 	var linksLabel: UILabel!
-	var teamLabel:  UILabel!
+	var teamLabel: UILabel!
 	
-	var aboutInfoLabel:  UILabel!
-	var linksInfoTextView:  UITextView!
-	var teamInfoLabel:   UILabel!
+	var aboutInfoLabel: UILabel!
+	var linksInfoTextView: UITextView!
+	var teamInfoLabel: UILabel!
 	
 	var screenWidth: CGFloat!
 
@@ -36,13 +36,13 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
 		
 		title = "About"
-		view.backgroundColor = .backgroundDarkGrey
 		screenWidth = view.frame.width
 		
 		addHamburgerMenu()
 		
 		let scrollView = UIScrollView(frame: view.frame)
 		scrollView.delegate = self
+		scrollView.backgroundColor = .backgroundDarkGrey
 		view = scrollView
 		
 		setupTopViews()

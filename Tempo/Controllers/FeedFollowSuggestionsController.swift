@@ -149,8 +149,8 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		cell.userImage.hnk_setImageFromURL(user.imageURL)
 		if user.id != User.currentUser.id {
 			cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
-			cell.followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
-			cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.white, for: UIControlState())
+			cell.followButton.backgroundColor = (user.isFollowing) ? .clear : .tempoRed
+			cell.followButton.setTitleColor((user.isFollowing) ? .redTintedWhite : .followLightRed, for: UIControlState())
 			cell.delegate = self
 		} else {
 			cell.followButton.setTitle("", for: UIControlState())
@@ -160,9 +160,6 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath)!
-		selectedCell.contentView.backgroundColor = UIColor.tempoLightGray
-		
 		let user = suggestedPeopleToFollow[indexPath.row]
 		
 		delegate?.feedFollowSuggestionsController(controller: self, wantsToShowProfileForUser: user)
@@ -185,8 +182,8 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		user.followersCount += user.isFollowing ? 1 : -1
 		let cell = tableView.cellForRow(at: indexPath) as! FollowTableViewCell
 		cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
-		cell.followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
-		cell.followButton.setTitleColor((user.isFollowing) ? UIColor.offWhite : UIColor.white, for: UIControlState())
+		cell.followButton.backgroundColor = (user.isFollowing) ? .clear : .tempoRed
+		cell.followButton.setTitleColor((user.isFollowing) ? .redTintedWhite : .followLightRed, for: UIControlState())
 		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
 		DispatchQueue.main.async {
 			self.tableView.reloadData()
