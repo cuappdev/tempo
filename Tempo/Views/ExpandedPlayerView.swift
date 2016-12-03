@@ -68,10 +68,10 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		progressIndicator.layer.cornerRadius = 6
 		progressIndicator.backgroundColor = .tempoLightRed
 		progressIndicator.isUserInteractionEnabled = true
-		addSubview(progressIndicator)
 		bringSubview(toFront: playToggleButton)
 		
 		progressView.indicator = progressIndicator
+		progressView.addSubview(progressIndicator)
 		
 		playToggleButton.layer.cornerRadius = 5
 		playToggleButton.clipsToBounds = true

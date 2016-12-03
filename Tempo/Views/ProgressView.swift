@@ -23,7 +23,8 @@ class ProgressView: UIView {
 
 		UIGraphicsGetCurrentContext()!.fill(CGRect(x: 0, y: 0, width: fill, height: bounds.height))
 		if let indicator = indicator {
-			indicator.center.x = frame.origin.x + fill
+			indicator.center.x = fill
+			indicator.center.y = frame.height / 2.0
 		}
 	}
 	
