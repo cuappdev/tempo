@@ -13,17 +13,19 @@ class SongSearchTableViewCell: UITableViewCell {
 	@IBOutlet weak var separator: UIView!
     @IBOutlet weak var separatorHeight: NSLayoutConstraint!
     @IBOutlet weak var shareButton: UIButton!
+	@IBOutlet weak var shareButtonWidthConstraint: NSLayoutConstraint!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		contentView.backgroundColor = UIColor.tempoLightGray
-		separator.backgroundColor = UIColor.separatorGray
-		separatorHeight.constant = 0.5
+		contentView.backgroundColor = .unreadCellColor
+		separator.backgroundColor = .backgroundDarkGrey
+		separatorHeight.constant = 2
 		
 		shareButton.layer.borderWidth = 1.5
-		shareButton.layer.borderColor = UIColor.tempoLightRed.cgColor
-		shareButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 12)!
+		shareButton.layer.borderColor = UIColor.tempoRed.cgColor
+		shareButton.titleLabel?.textColor = .followLightRed
+		shareButtonWidthConstraint.constant = 0
 	}
 	
 	override func prepareForReuse() {
