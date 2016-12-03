@@ -19,6 +19,8 @@ class StyleController {
 		UINavigationBar.appearance().shadowImage = UIImage()
 		UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
 		
+		UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).setTitleTextAttributes([NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 17.0)!], for: .normal)
+		
 		UISearchBar.appearance().backgroundImage = UIImage()
 		UISearchBar.appearance().backgroundColor = .tempoRed
 		UISearchBar.appearance().barTintColor = .tempoRed
