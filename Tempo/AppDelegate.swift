@@ -208,7 +208,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			navigationController.view.addSubview(transparentView)
 		}
 		//Notify any hamburger menus that the menu is being toggled
-		NotificationCenter.default.post(name: Notification.Name(rawValue: RevealControllerToggledNotificaiton), object: revealController)
+		NotificationCenter.default.post(name: Notification.Name(rawValue: RevealControllerToggledNotification), object: revealController)
 	}
 	
 	func applicationDidBecomeActive(_ application: UIApplication) {

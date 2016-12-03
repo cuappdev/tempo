@@ -9,7 +9,7 @@
 import UIKit
 import SWRevealViewController
 
-let RevealControllerToggledNotificaiton = "RevealControllerToggled"
+let RevealControllerToggledNotification = "RevealControllerToggled"
 
 class HamburgerIconView: UIButton {
     
@@ -43,7 +43,7 @@ class HamburgerIconView: UIButton {
 		applyStyle(bottomBar, heightMultiplier: 0.5 + spacingRatio)
 		
 		//be notified when hamburger menu opens/closes
-		NotificationCenter.default.addObserver(self, selector: #selector(hamburgerMenuToggled), name: NSNotification.Name(rawValue: RevealControllerToggledNotificaiton), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(hamburgerMenuToggled), name: NSNotification.Name(rawValue: RevealControllerToggledNotification), object: nil)
     }
 	
 	required init?(coder aDecoder: NSCoder) {
