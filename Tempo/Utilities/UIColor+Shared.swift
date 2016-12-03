@@ -37,6 +37,8 @@ extension UIColor {
 	@nonobjc static let paleRed = UIColor.colorFromCode(0xBCAEAD)
 	@nonobjc static let searchBackgroundRed = UIColor.colorFromCode(0x8A393D)
 	@nonobjc static let searchTextColor = UIColor.white.withAlphaComponent(0.63)
+	@nonobjc static let followLightRed = UIColor.colorFromCode(0xEBCECC)
+	@nonobjc static let redTintedWhite = UIColor.colorFromCode(0xE3DCDC)
 	
 	public static func colorFromCode(_ code: Int) -> UIColor {
 		let red = CGFloat(((code & 0xFF0000) >> 16)) / 255
