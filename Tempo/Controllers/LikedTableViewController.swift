@@ -14,12 +14,11 @@ class LikedTableViewController: PlayerTableViewController {
         super.viewDidLoad()
 		
 		title = "Liked"
-		view.backgroundColor = .backgroundDarkGrey
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
 		tableView.rowHeight = 88
-		tableView.backgroundColor = .clear
+		tableView.backgroundColor = .backgroundDarkGrey
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(LikedTableViewCell.self, forCellReuseIdentifier: "LikedCell")
 		

@@ -24,7 +24,7 @@ class LikedTableViewCell: UITableViewCell {
 		postView?.frame = bounds
 		addSubview(postView!)
 		
-		separator = UIView(frame: CGRect(x: 0, y: bounds.height - 1, width: bounds.width, height: 1))
+		separator = UIView(frame: CGRect(x: 0, y: bounds.height - 2, width: bounds.width, height: 2))
 		separator?.backgroundColor = .backgroundDarkGrey
 		addSubview(separator!)
 	}
