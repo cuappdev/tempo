@@ -29,7 +29,7 @@ extension UIColor {
 	@nonobjc static let usernameBGGrey = UIColor.colorFromCode(0xD8D8D8).withAlphaComponent(0.75)
 	@nonobjc static let wrongRed = UIColor.colorFromCode(0xA32222)
 	@nonobjc static let correctGreen = UIColor.colorFromCode(0x08673A)
-	@nonobjc static let aboutDarkGrey = UIColor.colorFromCode(0x7A7676)
+	@nonobjc static let descriptionGrey = UIColor.colorFromCode(0x7A7676)
 	@nonobjc static let backgroundDarkGrey = UIColor.colorFromCode(0x1C1D1E)
 	@nonobjc static let backgroundOffBlack = UIColor.colorFromCode(0x0E0C0C)
 	@nonobjc static let unreadCellColor = UIColor.colorFromCode(0x232429)
@@ -39,6 +39,7 @@ extension UIColor {
 	@nonobjc static let searchTextColor = UIColor.white.withAlphaComponent(0.63)
 	@nonobjc static let followLightRed = UIColor.colorFromCode(0xEBCECC)
 	@nonobjc static let redTintedWhite = UIColor.colorFromCode(0xE3DCDC)
+	@nonobjc static let sectionTitleGrey = UIColor.colorFromCode(0x636363)
 	
 	public static func colorFromCode(_ code: Int) -> UIColor {
 		let red = CGFloat(((code & 0xFF0000) >> 16)) / 255

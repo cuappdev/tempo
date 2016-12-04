@@ -28,7 +28,7 @@ extension UIView {
 		
 		switch type {
 		case .Feed:
-			labelText = "No posts in the last 24 hours"
+			labelText = "No posts in the last 24 hours."
 		case .Followers:
 			image = UIImage(named: "followers")!
 			labelText = isCurrentUser ? "No followers right now\nTell your friends to follow you!" : "\(userFirstName) doesn't have any followers\nFollow them!"

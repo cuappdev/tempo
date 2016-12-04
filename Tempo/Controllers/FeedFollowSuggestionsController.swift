@@ -15,6 +15,8 @@ protocol FeedFollowSuggestionsControllerDelegate: class {
 
 class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableViewDelegate, FollowUserDelegate {
 	
+	let suggestionsEdgePadding: CGFloat = 16
+	
 	var view: UIView!
 	var noMorePostsLabel: UILabel!
 	var followSuggestionsLabel: UILabel!
@@ -95,36 +97,33 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 	}
 	
 	func setupView() {
-		noMorePostsLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height * 0.225))
-		noMorePostsLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
-		noMorePostsLabel.text = "No posts in the last 24 hours"
-		noMorePostsLabel.textColor = .white
+		noMorePostsLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.125, width: view.frame.width, height: 23))
+		noMorePostsLabel.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
+		noMorePostsLabel.text = "No posts in the last 24 hours."
+		noMorePostsLabel.textColor = .descriptionGrey
 		noMorePostsLabel.textAlignment = .center
-		noMorePostsLabel.baselineAdjustment = .alignCenters
 		
-		followSuggestionsLabel = UILabel(frame: CGRect(x: 16, y: noMorePostsLabel.frame.bottom.y, width: view.frame.width - 32, height: 20))
-		followSuggestionsLabel.font = UIFont(name: "Avenir-Light", size: 14)
+		followSuggestionsLabel = UILabel(frame: CGRect(x: suggestionsEdgePadding, y: view.frame.height * 0.23, width: view.frame.width - 2*suggestionsEdgePadding, height: 18))
+		followSuggestionsLabel.font = UIFont(name: "AvenirNext-Regular", size: 13.0)
 		followSuggestionsLabel.text = "SUGGESTED PEOPLE TO FOLLOW"
-		followSuggestionsLabel.textColor = UIColor(red: 99/255.0, green: 99/255.0, blue: 99/255.0, alpha: 1.0)
+		followSuggestionsLabel.textColor = .sectionTitleGrey
 		followSuggestionsLabel.textAlignment = .left
-		followSuggestionsLabel.baselineAdjustment = .alignCenters
 		
-		tableView = UITableView(frame: CGRect(x: 16, y: followSuggestionsLabel.frame.bottom.y + 10, width: view.frame.width - 32, height: 240), style: .plain)
+		tableView = UITableView(frame: CGRect(x: suggestionsEdgePadding, y: followSuggestionsLabel.frame.maxY + suggestionsEdgePadding/2, width: view.frame.width - 2*suggestionsEdgePadding, height: 300), style: .plain)
 		tableView.dataSource = self
 		tableView.delegate = self
+		tableView.rowHeight = 100
 		tableView.isScrollEnabled = false
-		tableView.rowHeight = 80
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
 		
-		showMoreSuggestionsButton = UIButton(type: .system)
-		showMoreSuggestionsButton.frame = CGRect(x: 0, y: 0, width: 200, height: 36)
-		showMoreSuggestionsButton.center = CGPoint(x: view.center.x, y: tableView.frame.bottom.y + (view.frame.height - tableView.frame.bottom.y) / 2.0)
-		showMoreSuggestionsButton.backgroundColor = UIColor.tempoLightRed
+		showMoreSuggestionsButton = UIButton(frame: CGRect(x: 0, y: tableView.frame.maxY + suggestionsEdgePadding, width: 200, height: 36))
+		showMoreSuggestionsButton.center.x = view.center.x
+		showMoreSuggestionsButton.backgroundColor = .tempoRed
 		showMoreSuggestionsButton.setTitle("Follow more friends", for: UIControlState())
-		showMoreSuggestionsButton.setTitleColor(UIColor.white, for: UIControlState())
-		showMoreSuggestionsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
-		showMoreSuggestionsButton.layer.cornerRadius = 5.0
+		showMoreSuggestionsButton.setTitleColor(UIColor.white.withAlphaComponent(0.87), for: UIControlState())
+		showMoreSuggestionsButton.titleLabel?.font = UIFont(name: "AvenirNext-Demibold", size: 16.0)
+		showMoreSuggestionsButton.layer.cornerRadius = 3
 		showMoreSuggestionsButton.addTarget(self, action: #selector(didTapShowMoreSuggestionsButton), for: .touchUpInside)
 
 		

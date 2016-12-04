@@ -145,7 +145,7 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 		teamInfoLabel.attributedText = teamInfoAttrString
 		
 		teamInfoLabel.font = UIFont(name: "AvenirNext-Regular", size: 14.0)
-		teamInfoLabel.textColor = .aboutDarkGrey
+		teamInfoLabel.textColor = .descriptionGrey
 		teamInfoLabel.layer.opacity = 0.74
 		teamInfoLabel.numberOfLines = 0
 		teamInfoLabel.sizeToFit()
