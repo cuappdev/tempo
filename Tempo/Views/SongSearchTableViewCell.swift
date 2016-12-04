@@ -19,12 +19,12 @@ class SongSearchTableViewCell: UITableViewCell {
 		super.awakeFromNib()
 		
 		contentView.backgroundColor = .unreadCellColor
-		separator.backgroundColor = .backgroundDarkGrey
-		separatorHeight.constant = 2
+		separator.backgroundColor = .readCellColor
+		separatorHeight.constant = 1
 		
 		shareButton.layer.borderWidth = 1.5
 		shareButton.layer.borderColor = UIColor.tempoRed.cgColor
-		shareButton.titleLabel?.textColor = .followLightRed
+		shareButton.titleLabel?.textColor = UIColor.white.withAlphaComponent(0.87)
 		shareButtonWidthConstraint.constant = 0
 	}
 	

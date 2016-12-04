@@ -47,9 +47,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		tableView = UITableView(frame: CGRect(x: 0, y: searchBarHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight - searchBarHeight - 20), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
-		tableView.backgroundColor = .backgroundDarkGrey
+		tableView.backgroundColor = .readCellColor
 		
-		tableView.rowHeight = 85
+		tableView.rowHeight = 89
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
 		
