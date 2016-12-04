@@ -53,10 +53,11 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Formatting
         categoryTableView.separatorStyle = .none
         categoryTableView.isScrollEnabled = false
-        categoryTableView.backgroundColor = .tempoDarkGray
-        profileView.backgroundColor = .tempoDarkGray
-        view.backgroundColor = .tempoDarkGray
-        divider.backgroundColor = .tempoLightGray
+        categoryTableView.backgroundColor = .readCellColor
+		categoryTableView.rowHeight = 65
+        profileView.backgroundColor = .readCellColor
+        view.backgroundColor = .readCellColor
+        divider.backgroundColor = .readCellColor
 
 		sideView.isHidden = true
 		sideView.backgroundColor = .tempoRed
@@ -66,9 +67,9 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		profilePicture.clipsToBounds = true
 		
 		// Add button to profile view
-		button = UIButton(type: UIButtonType.system)
+		button = UIButton(type: .system)
 		button.frame = profileView.bounds
-		button.addTarget(self, action: #selector(pushToProfile(_:)), for: UIControlEvents.touchUpInside)
+		button.addTarget(self, action: #selector(pushToProfile(_:)), for: .touchUpInside)
 		view.addSubview(button)
 		
 		categoryTableView.reloadData()
@@ -77,7 +78,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		if elements.count > 0 {
 			if let selectedIndex = preselectedIndex {
 				if selectedIndex == -1 {
-					profileView.backgroundColor = .tempoLightGray
+					profileView.backgroundColor = .unreadCellColor
 					sideView.isHidden = false
 					categoryTableView.selectRow(at: nil, animated: false, scrollPosition: .none)
 				} else {
@@ -100,7 +101,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		// Mark first item selected unless there was a preselected item
 		if let selectedIndex = preselectedIndex {
 			if selectedIndex == -1 {
-				profileView.backgroundColor = .tempoLightGray
+				profileView.backgroundColor = .unreadCellColor
 				sideView.isHidden = false
 				categoryTableView.selectRow(at: nil, animated: false, scrollPosition: .none)
 			} else {
@@ -111,7 +112,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 	}
 	
 	func pushToProfile(_ sender:UIButton!) {
-		profileView.backgroundColor = UIColor.tempoLightGray
+		profileView.backgroundColor = .unreadCellColor
 		sideView.isHidden = false
 		let loginVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 		loginVC.user = User.currentUser
@@ -138,12 +139,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let element = elements[indexPath.row]
 		selectionHandler?(element.viewController)
-		profileView.backgroundColor = UIColor.clear
+		profileView.backgroundColor = .clear
 		sideView.isHidden = true
-	}
-	
-	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 55
 	}
 	
 }
