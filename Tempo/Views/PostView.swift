@@ -55,7 +55,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                     profileNameLabel?.text = "\(post.user.firstName) \(post.user.shortenLastName())"
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
-					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
+					let imageName = post.isLiked ? "LikedButton" : "LikeButton"
 					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
 					dateLabel?.text = post.relativeDate()
 				case .history:
@@ -63,7 +63,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					profileNameLabel?.text = post.song.title
 					descriptionLabel?.text = post.song.artist
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
-					let imageName = post.isLiked ? "filled-heart" : "empty-heart"
+					let imageName = post.isLiked ? "LikedButton" : "LikeButton"
 					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
 				}
 				
@@ -217,7 +217,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	
 	func updateLikedStatus() {
 		if let post = post {
-			let name = post.isLiked ? "filled-heart" : "empty-heart"
+			let name = post.isLiked ? "LikedButton" : "LikeButton"
 			likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 			likedButton?.setBackgroundImage(UIImage(named: name), for: .normal)
 		}
