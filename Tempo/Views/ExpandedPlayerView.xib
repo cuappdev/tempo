@@ -50,9 +50,10 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uwf-Mu-fEz">
                             <constraints>
-                                <constraint firstAttribute="height" constant="23" id="MRq-1O-Ux9"/>
-                                <constraint firstAttribute="width" constant="15" id="feH-Id-LTJ"/>
+                                <constraint firstAttribute="height" constant="33" id="MRq-1O-Ux9"/>
+                                <constraint firstAttribute="width" constant="25" id="feH-Id-LTJ"/>
                             </constraints>
+                            <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                             <state key="normal" image="SkipButton"/>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcR-vP-5Lt" customClass="MarqueeLabel" customModule="MarqueeLabel">
@@ -72,9 +73,10 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9FI-6T-Mzs">
                             <constraints>
-                                <constraint firstAttribute="width" constant="15" id="8TR-Ns-r1U"/>
-                                <constraint firstAttribute="height" constant="23" id="wut-V3-mCe"/>
+                                <constraint firstAttribute="width" constant="25" id="8TR-Ns-r1U"/>
+                                <constraint firstAttribute="height" constant="33" id="wut-V3-mCe"/>
                             </constraints>
+                            <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                             <state key="normal" image="PreviousButton"/>
                         </button>
                     </subviews>
@@ -128,7 +130,6 @@
                                 <constraint firstItem="Dai-iK-3k2" firstAttribute="leading" secondItem="R47-QV-Fdg" secondAttribute="trailing" constant="5" id="3Zi-mY-bfY"/>
                                 <constraint firstAttribute="width" constant="57" id="6Pb-ab-dyk"/>
                                 <constraint firstItem="R47-QV-Fdg" firstAttribute="leading" secondItem="3H0-NH-Sl1" secondAttribute="leading" id="DBh-WX-Wdd"/>
-                                <constraint firstAttribute="height" constant="18" id="aFS-tf-hqh"/>
                                 <constraint firstItem="R47-QV-Fdg" firstAttribute="centerY" secondItem="3H0-NH-Sl1" secondAttribute="centerY" id="dkw-jk-Ygg"/>
                                 <constraint firstItem="R47-QV-Fdg" firstAttribute="centerY" secondItem="Dai-iK-3k2" secondAttribute="centerY" id="lmY-aj-HsB"/>
                                 <constraint firstAttribute="trailing" secondItem="Dai-iK-3k2" secondAttribute="trailing" id="reG-dc-UFJ"/>
@@ -155,7 +156,6 @@
                                 <constraint firstItem="TqH-RI-SXj" firstAttribute="leading" secondItem="tbr-7O-06Y" secondAttribute="leading" id="Vdo-x8-k88"/>
                                 <constraint firstAttribute="trailing" secondItem="9sC-mC-pNO" secondAttribute="trailing" id="ZSn-rs-Vta"/>
                                 <constraint firstItem="TqH-RI-SXj" firstAttribute="centerY" secondItem="tbr-7O-06Y" secondAttribute="centerY" id="ase-zP-Zau"/>
-                                <constraint firstAttribute="height" constant="18" id="b5l-cj-8gm"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIj-Kw-tOo" userLabel="Open in Spotify Button" customClass="UIButton">
@@ -174,7 +174,6 @@
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="width" constant="116" id="Bc9-tz-9rQ"/>
-                                <constraint firstAttribute="height" constant="18" id="G0z-GO-qO7"/>
                                 <constraint firstAttribute="trailing" secondItem="EJo-X0-3Mu" secondAttribute="trailing" id="OXz-cb-UxT"/>
                                 <constraint firstItem="EJo-X0-3Mu" firstAttribute="leading" secondItem="3vf-rS-nom" secondAttribute="trailing" constant="5" id="Qly-P3-ZWq"/>
                                 <constraint firstItem="EJo-X0-3Mu" firstAttribute="centerY" secondItem="3vf-rS-nom" secondAttribute="centerY" id="ZtN-Kv-HdU"/>
@@ -198,6 +197,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="tbr-7O-06Y" firstAttribute="centerY" secondItem="VSm-hU-Lkf" secondAttribute="centerY" id="0Dh-TI-9GU"/>
+                        <constraint firstItem="3H0-NH-Sl1" firstAttribute="height" secondItem="VSm-hU-Lkf" secondAttribute="height" id="0cX-fe-KyH"/>
                         <constraint firstAttribute="trailing" secondItem="qIj-Kw-tOo" secondAttribute="trailing" constant="27" id="4FD-wu-YfS"/>
                         <constraint firstItem="wen-H0-pYV" firstAttribute="width" secondItem="woL-8u-PYM" secondAttribute="width" id="5KJ-Yx-UYI"/>
                         <constraint firstItem="woL-8u-PYM" firstAttribute="centerY" secondItem="VSm-hU-Lkf" secondAttribute="centerY" id="6Tm-gc-8cA"/>
@@ -205,8 +205,10 @@
                         <constraint firstItem="woL-8u-PYM" firstAttribute="leading" secondItem="3H0-NH-Sl1" secondAttribute="trailing" id="I1j-QS-m5R"/>
                         <constraint firstItem="wen-H0-pYV" firstAttribute="centerY" secondItem="VSm-hU-Lkf" secondAttribute="centerY" id="QEM-Sh-PQB"/>
                         <constraint firstItem="3H0-NH-Sl1" firstAttribute="leading" secondItem="VSm-hU-Lkf" secondAttribute="leading" constant="27" id="Tym-3a-HaV"/>
+                        <constraint firstItem="tbr-7O-06Y" firstAttribute="height" secondItem="VSm-hU-Lkf" secondAttribute="height" id="UnA-qe-aOv"/>
                         <constraint firstItem="wen-H0-pYV" firstAttribute="leading" secondItem="tbr-7O-06Y" secondAttribute="trailing" id="akp-nR-NvC"/>
                         <constraint firstItem="qIj-Kw-tOo" firstAttribute="centerY" secondItem="VSm-hU-Lkf" secondAttribute="centerY" id="fdM-x7-QG5"/>
+                        <constraint firstItem="qIj-Kw-tOo" firstAttribute="height" secondItem="VSm-hU-Lkf" secondAttribute="height" id="oIa-Ng-IQm"/>
                         <constraint firstItem="tbr-7O-06Y" firstAttribute="leading" secondItem="woL-8u-PYM" secondAttribute="trailing" id="uuf-fd-C69"/>
                         <constraint firstItem="qIj-Kw-tOo" firstAttribute="leading" secondItem="wen-H0-pYV" secondAttribute="trailing" id="y6o-VL-NyS"/>
                     </constraints>
