@@ -17,15 +17,15 @@ class SideBarTableViewCell: UITableViewCell {
     
     override func didMoveToSuperview() {
         selectionStyle = .none
-        backgroundColor = .tempoDarkGray
-        customSeparator.backgroundColor = .separatorGray
+        backgroundColor = .readCellColor
+        customSeparator.backgroundColor = .unreadCellColor
         selectedCellView.frame = CGRect(x: 0, y: 0, width: 8, height: frame.height + 10)
         selectedCellView.backgroundColor = .tempoRed
     }
     
     // Custom selected cell view
     override func setSelected(_ selected: Bool, animated: Bool) {
-		contentView.backgroundColor = selected ? .tempoLightGray : .clear
+		contentView.backgroundColor = selected ? .unreadCellColor : .clear
 		selectedCellView.isHidden = !selected
     }
     
