@@ -123,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			revealVC.setRear(sidebarVC, animated: false)
 			sidebarVC.elements = [
 				SideBarElement(title: "Feed", viewController: feedVC, image: #imageLiteral(resourceName: "FeedSidebarIcon")),
-				SideBarElement(title: "Users", viewController: usersVC, image: #imageLiteral(resourceName: "UsersSidebarIcon")),
+				SideBarElement(title: "People", viewController: usersVC, image: #imageLiteral(resourceName: "PeopleSidebarIcon")),
 				SideBarElement(title: "Liked", viewController: likedVC, image: #imageLiteral(resourceName: "LikedSidebarButton")),
 				SideBarElement(title: "Settings", viewController: settingsVC, image: #imageLiteral(resourceName: "SettingsSidebarIcon")),
 				SideBarElement(title: "About", viewController: aboutVC, image: #imageLiteral(resourceName: "AboutSidebarIcon"))

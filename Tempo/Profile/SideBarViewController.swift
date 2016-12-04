@@ -57,7 +57,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		categoryTableView.rowHeight = 65
         profileView.backgroundColor = .readCellColor
         view.backgroundColor = .readCellColor
-        divider.backgroundColor = .readCellColor
+        divider.backgroundColor = UIColor.unreadCellColor.withAlphaComponent(0.46)
 
 		sideView.isHidden = true
 		sideView.backgroundColor = .tempoRed

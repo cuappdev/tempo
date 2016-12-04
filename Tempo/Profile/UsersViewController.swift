@@ -72,7 +72,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		activityIndicatorView.center = view.center
 		
 		if displayType == .Users {
-			title = "Users"
+			title = "People"
 			
 			addHamburgerMenu()
 			populateSuggestions()

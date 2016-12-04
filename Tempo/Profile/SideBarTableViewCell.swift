@@ -18,7 +18,7 @@ class SideBarTableViewCell: UITableViewCell {
     override func didMoveToSuperview() {
         selectionStyle = .none
         backgroundColor = .readCellColor
-        customSeparator.backgroundColor = .unreadCellColor
+        customSeparator.backgroundColor = UIColor.unreadCellColor.withAlphaComponent(0.46)
         selectedCellView.frame = CGRect(x: 0, y: 0, width: 8, height: frame.height + 10)
         selectedCellView.backgroundColor = .tempoRed
     }

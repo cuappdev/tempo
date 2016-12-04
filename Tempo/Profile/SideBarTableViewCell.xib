@@ -45,7 +45,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Llw-pk-hnk">
-                        <color key="backgroundColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.18823529411764706" alpha="0.46000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="320" id="p8t-cp-9B1"/>
                             <constraint firstAttribute="height" constant="1" id="zvL-TZ-RR9"/>
