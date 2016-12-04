@@ -10,7 +10,7 @@ import UIKit
 import MarqueeLabel
 
 class PlayerCellView: ParentPlayerCellView {
-	
+
 	@IBOutlet weak var songLabel: MarqueeLabel!
 	@IBOutlet weak var artistLabel: MarqueeLabel!
     @IBOutlet weak var playToggleButton: UIButton!
@@ -20,16 +20,15 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	func setup(parent: PlayerNavigationController) {
 		playerNav = parent
-		backgroundColor = .tempoSuperDarkGray
+		backgroundColor = .tempoOffBlack
+		
 		let tap = UILongPressGestureRecognizer(target: self, action: #selector(playerCellTapped(sender:)))
 		tap.minimumPressDuration = 0
 		addGestureRecognizer(tap)
+		
 		progressView.playerDelegate = playerNav
 		progressView.backgroundColor = .tempoDarkRed
 
-		playToggleButton.layer.cornerRadius = 5
-		playToggleButton.clipsToBounds = true
-		
 		playToggleButton.isUserInteractionEnabled = false
 		addButton.isUserInteractionEnabled = false
 		likeButton.isUserInteractionEnabled = false
@@ -42,6 +41,7 @@ class PlayerCellView: ParentPlayerCellView {
 		post = newPost
 		songLabel.text = newPost.song.title
 		artistLabel.text = newPost.song.artist
+		
 		songLabel.holdScrolling = false
 		artistLabel.holdScrolling = false
 		isUserInteractionEnabled = true
@@ -54,7 +54,7 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	override internal func updateSavedStatus() {
 		if let selectedPost = post {
-			if (User.currentUser.currentSpotifyUser?.savedTracks[selectedPost.song.spotifyID] != nil) {
+			if let _ = User.currentUser.currentSpotifyUser?.savedTracks[selectedPost.song.spotifyID] {
 				songStatus = .saved
 			} else {
 				songStatus = .notSaved
@@ -64,8 +64,7 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	func playerCellTapped(sender: UILongPressGestureRecognizer) {
 		let tapPoint = sender.location(in: self)
-		
-		let separatorPoint = (addButton.frame.right.x + likeButton.frame.left.x)/2
+		let separatorPoint = (addButton.frame.right.x + likeButton.frame.left.x) / 2
 		
 		if sender.state == .began {
 			if (tapPoint.x > playToggleButton.frame.right.x + 12 && tapPoint.x < addButton.frame.left.x - 12) {
@@ -134,7 +133,7 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	override func updateAddButton() {
 		updateSavedStatus()
-		let image = songStatus == .saved ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
+		let image = (songStatus == .saved) ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
 		addButton.setBackgroundImage(image, for: .normal)
 	}
 	

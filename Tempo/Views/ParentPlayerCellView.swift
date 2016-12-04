@@ -10,12 +10,11 @@ import UIKit
 
 class ParentPlayerCellView: UIView {
 
-	var postsLikable: Bool?
-	
 	var playerNav: PlayerNavigationController!
-	
 	var songStatus: SavedSongStatus = .notSaved
 	var post: Post?
+	var postsLikable: Bool?
+	
 	weak var delegate: PlayerDelegate? {
 		didSet {
 			postsLikable = delegate is FeedViewController

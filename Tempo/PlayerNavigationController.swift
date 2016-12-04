@@ -17,10 +17,10 @@ protocol PostDelegate {
 class PlayerNavigationController: UINavigationController, PostDelegate {
 
 	var playerCell: PlayerCellView!
-	let frameHeight = CGFloat(72)
+	let frameHeight: CGFloat = 72
 	
 	var expandedCell: ExpandedPlayerView!
-	let expandedHeight = CGFloat(347)
+	let expandedHeight: CGFloat = 347
 	
 	var postsRef: [Post]?
 	var postRefIndex: Int?

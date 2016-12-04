@@ -125,7 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 				SideBarElement(title: "Feed", viewController: feedVC, image: #imageLiteral(resourceName: "FeedSidebarIcon")),
 				SideBarElement(title: "Users", viewController: usersVC, image: #imageLiteral(resourceName: "UsersSidebarIcon")),
 				SideBarElement(title: "Liked", viewController: likedVC, image: #imageLiteral(resourceName: "LikedSidebarButton")),
-				SideBarElement(title: "Settings", viewController: settingsVC, image: SettingsSidebarIcon),
+				SideBarElement(title: "Settings", viewController: settingsVC, image: #imageLiteral(resourceName: "SettingsSidebarIcon")),
 				SideBarElement(title: "About", viewController: aboutVC, image: #imageLiteral(resourceName: "AboutSidebarIcon"))
 			]
 			sidebarVC.selectionHandler = { [weak self] viewController in
