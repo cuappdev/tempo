@@ -38,8 +38,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
-		tableView.rowHeight = 100
-		tableView.backgroundColor = .backgroundDarkGrey
+		tableView.rowHeight = 101
+		tableView.backgroundColor = .readCellColor
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
 		view.addSubview(tableView)
@@ -105,6 +105,22 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		}
     }
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
+		
+		if let indexPath = tableView.indexPathForSelectedRow {
+			tableView.deselectRow(at: indexPath, animated: true)
+		}
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		if !searchController.isActive && displayType == .Users {
+			populateSuggestions()
+		}
+	}
+	
 	func showActivityIndicator() {
 		if tableView.numberOfRows(inSection: 0) == 0 {
 			activityIndicatorView.startAnimating()
@@ -118,7 +134,6 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 	}
 	
 	func populateSuggestions() {
-		
 		showActivityIndicator()
 		
 		let completion: ([User]) -> Void = {
@@ -136,22 +151,6 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		
 		page = 0 // reset page
 		API.sharedAPI.fetchFollowSuggestions(completion, length: length, page: page)
-	}
-	
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		
-		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
-	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		if !searchController.isActive && displayType == .Users {
-			populateSuggestions()
-		}
-		
-		if let indexPath = tableView.indexPathForSelectedRow {
-			tableView.deselectRow(at: indexPath, animated: true)
-		}
 	}
 	
     // MARK: Table View Methods
@@ -254,8 +253,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		
 		let cell = tableView.cellForRow(at: indexPath!) as! FollowTableViewCell
 		cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
-		cell.followButton.backgroundColor = (user.isFollowing) ? .tempoLightGray : .tempoRed
-		cell.followButton.setTitleColor((user.isFollowing) ? .offWhite : .white, for: UIControlState())
+		cell.followButton.backgroundColor = (user.isFollowing) ? .clear : .tempoRed
+		cell.followButton.setTitleColor((user.isFollowing) ? .redTintedWhite : .followLightRed, for: UIControlState())
 		
 		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
 		DispatchQueue.main.async {

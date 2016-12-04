@@ -33,10 +33,10 @@ class FollowTableViewCell: UITableViewCell {
 		followButton.backgroundColor = .tempoRed
 		followButton.layer.borderColor = UIColor.tempoRed.cgColor
 		followButton.layer.borderWidth = 1.5
-		userImage.layer.cornerRadius = userImage.bounds.size.width/2
+		userImage.layer.cornerRadius = userImage.bounds.width/2
 		userImage.clipsToBounds = true
-		separator.backgroundColor = .backgroundDarkGrey
-		separatorHeight.constant = 2
+		separator.backgroundColor = .readCellColor
+		separatorHeight.constant = 1
 	}
 	
     @IBAction func userImageClicked(_ sender: UIButton) {
@@ -45,7 +45,7 @@ class FollowTableViewCell: UITableViewCell {
 
     // Custom selected cell view
     override func setSelected(_ selected: Bool, animated: Bool) {
-		contentView.backgroundColor = selected ? .readCellColor : .clear
+		contentView.backgroundColor = selected ? .readCellColor : .unreadCellColor
     }
 	
 	@IBAction func didTapFollowButton(_ sender: AnyObject) {
