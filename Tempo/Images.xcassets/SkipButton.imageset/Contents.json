@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Skip Forward Button.png",
+      "filename" : "SkipButton.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Skip Forward Button-1.png",
+      "filename" : "SkipButton@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Skip Forward Button-2.png",
+      "filename" : "SkipButton@3x.png",
       "scale" : "3x"
     }
   ],

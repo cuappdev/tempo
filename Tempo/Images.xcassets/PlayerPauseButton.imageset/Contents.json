@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ExpandedArrowIcon.png",
+      "filename" : "PlayerPauseButton.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ExpandedArrowIcon@2x.png",
+      "filename" : "PlayerPauseButton@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ExpandedArrowIcon@3x.png",
+      "filename" : "PlayerPauseButton@3x.png",
       "scale" : "3x"
     }
   ],

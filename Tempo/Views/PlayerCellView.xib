@@ -115,7 +115,7 @@
         </view>
     </objects>
     <resources>
-        <image name="AddButton" width="42" height="42"/>
+        <image name="AddButton" width="42" height="41"/>
         <image name="LikeButton" width="42" height="38"/>
         <image name="PlayButton" width="70" height="70"/>
     </resources>

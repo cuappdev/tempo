@@ -11,6 +11,8 @@ import MarqueeLabel
 
 class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
+	let progressIndicatorLength: CGFloat = 12
+	
 	@IBOutlet weak var postDetailLabel: UILabel!
 	@IBOutlet weak var songLabel: MarqueeLabel!
 	@IBOutlet weak var artistLabel: MarqueeLabel!
@@ -44,8 +46,9 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	var initialPanView: UIView?
 	
 	func setup(parent: PlayerNavigationController) {
-		backgroundColor = .tempoSuperDarkGray
-		bottomButtonsView.backgroundColor = .tempoSuperDarkGray
+		backgroundColor = .tempoOffBlack
+		bottomButtonsView.backgroundColor = .tempoOffBlack
+		
 		// Setup gesture recognizers
 		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(expandedCellTapped(sender:)))
 		tapGestureRecognizer?.delegate = self
@@ -64,24 +67,16 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		progressView.playerDelegate = playerNav
 		progressView.backgroundColor = .tempoDarkRed
 		
-		progressIndicator = UIView(frame: CGRect(x: progressView.frame.origin.x - 6, y: progressView.frame.origin.y - 6, width: 12, height: 12))
-		progressIndicator.layer.cornerRadius = 6
+		progressIndicator = UIView(frame: CGRect(x: progressView.frame.origin.x - 5, y: progressView.frame.origin.y - 5, width: progressIndicatorLength, height: progressIndicatorLength))
+		progressIndicator.layer.cornerRadius = progressIndicator.frame.height/2
+		progressIndicator.clipsToBounds = true
 		progressIndicator.backgroundColor = .tempoRed
 		progressIndicator.isUserInteractionEnabled = true
 		bringSubview(toFront: playToggleButton)
 		
 		progressView.indicator = progressIndicator
 		progressView.addSubview(progressIndicator)
-		
-		playToggleButton.layer.cornerRadius = 5
-		playToggleButton.clipsToBounds = true
-		prevButton.contentVerticalAlignment = .fill
-		prevButton.contentHorizontalAlignment = .fill
-		prevButton.imageView?.image = #imageLiteral(resourceName: "PreviousButton")
-		nextButton.contentVerticalAlignment = .fill
-		nextButton.contentHorizontalAlignment = .fill
-		nextButton.imageView?.image = #imageLiteral(resourceName: "PreviousButton")
-		
+
 		setupMarqueeLabel(label: songLabel)
 		setupMarqueeLabel(label: artistLabel)
 	}
@@ -231,7 +226,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	override func updatePlayToggleButton() {
 		if let selectedPost = post {
-			let name = selectedPost.player.isPlaying ? "PauseButton" : "PlayButton"
+			let name = selectedPost.player.isPlaying ? "PlayerPauseButton" : "PlayerPlayButton"
 			progressView.setUpTimer()
 			playToggleButton.setBackgroundImage(UIImage(named: name), for: .normal)
 		}
@@ -239,14 +234,14 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	func updateLikeButton() {
 		if let selectedPost = post {
-			let name = (selectedPost.isLiked || playerNav.playingPostType == .liked) ? "LikedButton" : "LikeButton"
+			let name = (selectedPost.isLiked || playerNav.playingPostType == .liked) ? "LikedButton" : "PlayerLikeButton"
 			likeButtonImage.image = UIImage(named: name)
 		}
 	}
 	
 	override func updateAddButton() {
 		updateSavedStatus()
-		addButtonImage.image = songStatus == .saved ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
+		addButtonImage.image = (songStatus == .saved) ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "PlayerAddButton")
 	}
 	
 	private func setupMarqueeLabel(label: MarqueeLabel) {
