@@ -84,6 +84,7 @@ class CreateUsernameViewController: UIViewController {
 		newUsernameTextField.textAlignment = .left
 		newUsernameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
 		newUsernameTextField.delegate = self
+		newUsernameTextField.keyboardAppearance = .dark
 		
 		alertImageView = UIImageView(frame: CGRect(x: newUsernameTextField.frame.minX, y: (view.frame.height * 0.73) - 1, width: 22, height: 22))
 		
