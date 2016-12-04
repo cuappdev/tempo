@@ -18,6 +18,8 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 	"Backend:  Joseph Antonakakis, Celine Brass, Rishab Gupta, Hong Jeon, Sanjana Kaundinya, Ji Hun Kim, Amit Mizrahi, Shiv Roychowdhury"
 	let titleFont = UIFont(name: "AvenirNext-Medium", size: 18.0)!
 	let padding: CGFloat = 31
+	let sectionSpacing: CGFloat = 30
+	let subsectionSpacing: CGFloat = 10
 	
 	var tempoImage: UIImageView!
 	var tempoTitle: UILabel!
@@ -54,13 +56,13 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
     }
 	
 	func setupTopViews() {
-		let imageSize = view.frame.width * 0.45
-		tempoImage = UIImageView(frame: CGRect(x: 0, y: 30, width: imageSize, height: imageSize))
+		let imageSize = view.frame.width * 0.347
+		tempoImage = UIImageView(frame: CGRect(x: 0, y: 46, width: imageSize, height: imageSize))
 		tempoImage.center.x = view.center.x
 		tempoImage.image = #imageLiteral(resourceName: "TempoLogo")
 		view.addSubview(tempoImage)
 		
-		tempoTitle = UILabel(frame: CGRect(x: 20, y: tempoImage.frame.bottom.y - 8, width: screenWidth, height: 60))
+		tempoTitle = UILabel(frame: CGRect(x: 20, y: tempoImage.frame.bottom.y + 13, width: screenWidth, height: 60))
 		tempoTitle.text = "Tempo"
 		tempoTitle.font = UIFont(name: "HelveticaNeue-Bold", size: 50.0)
 		tempoTitle.textColor = .white
@@ -71,14 +73,14 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func setupAbout() {
-		aboutLabel = UILabel(frame: CGRect(x: padding, y: tempoTitle.frame.bottom.y + 30, width: 52, height: 22))
+		aboutLabel = UILabel(frame: CGRect(x: padding, y: tempoTitle.frame.bottom.y + sectionSpacing, width: 52, height: 22))
 		aboutLabel.text = "About"
 		aboutLabel.font = titleFont
 		aboutLabel.textColor = .white
 		aboutLabel.sizeToFit()
 		view.addSubview(aboutLabel)
 		
-		aboutInfoLabel = UILabel(frame: CGRect(x: padding, y: aboutLabel.frame.bottom.y + 10, width: screenWidth - 2*padding, height: 0))
+		aboutInfoLabel = UILabel(frame: CGRect(x: padding, y: aboutLabel.frame.bottom.y + subsectionSpacing, width: screenWidth - 2*padding, height: 0))
 		
 		let aboutInfoParagraphStyle = NSMutableParagraphStyle()
 		aboutInfoParagraphStyle.lineSpacing = 2.5
@@ -96,14 +98,14 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func setupLinks() {
-		linksLabel = UILabel(frame: CGRect(x: padding, y: aboutInfoLabel.frame.bottom.y + 30, width: 42, height: 25))
+		linksLabel = UILabel(frame: CGRect(x: padding, y: aboutInfoLabel.frame.bottom.y + sectionSpacing, width: 42, height: 25))
 		linksLabel.text = "Links"
 		linksLabel.font = titleFont
 		linksLabel.textColor = .white
 		linksLabel.sizeToFit()
 		view.addSubview(linksLabel)
 		
-		linksInfoTextView = UITextView(frame: CGRect(x: padding, y: linksLabel.frame.bottom.y + 5, width: screenWidth - 2*padding, height: 0))
+		linksInfoTextView = UITextView(frame: CGRect(x: padding, y: linksLabel.frame.bottom.y + subsectionSpacing, width: screenWidth - 2*padding, height: 0))
 		
 		let linksInfoParagraphStyle = NSMutableParagraphStyle()
 		linksInfoParagraphStyle.lineSpacing = 1.5
@@ -111,6 +113,9 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 		let linksInfoAttrString = NSMutableAttributedString(string: linksText)
 		linksInfoAttrString.addAttribute(NSParagraphStyleAttributeName, value: linksInfoParagraphStyle, range: NSMakeRange(0, linksInfoAttrString.length))
 		linksInfoTextView.attributedText = linksInfoAttrString
+		
+		linksInfoTextView.textContainer.lineFragmentPadding = 0
+		linksInfoTextView.textContainerInset = .zero
 		
 		linksInfoTextView.font = UIFont(name: "AvenirNext-DemiBold", size: 16.0)
 		linksInfoTextView.backgroundColor = .clear
@@ -123,14 +128,14 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	func setupTeam() {
-		teamLabel = UILabel(frame: CGRect(x: padding, y: linksInfoTextView.frame.bottom.y + 20, width: 80, height: 25))
+		teamLabel = UILabel(frame: CGRect(x: padding, y: linksInfoTextView.frame.bottom.y + sectionSpacing, width: 80, height: 25))
 		teamLabel.text = "The Team"
 		teamLabel.font = titleFont
 		teamLabel.textColor = .white
 		teamLabel.sizeToFit()
 		view.addSubview(teamLabel)
 		
-		teamInfoLabel = UILabel(frame: CGRect(x: padding, y: teamLabel.frame.bottom.y + 10, width: screenWidth - 2*padding, height: 0))
+		teamInfoLabel = UILabel(frame: CGRect(x: padding, y: teamLabel.frame.bottom.y + subsectionSpacing, width: screenWidth - 2*padding, height: 0))
 		
 		let teamInfoParagraphStyle = NSMutableParagraphStyle()
 		teamInfoParagraphStyle.lineSpacing = 2.5
