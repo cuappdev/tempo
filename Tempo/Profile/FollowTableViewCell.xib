@@ -16,10 +16,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="101" id="KGk-i7-Jjw" customClass="FollowTableViewCell" customModule="Tempo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="348" height="101"/>
+            <rect key="frame" x="0.0" y="0.0" width="399" height="101"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="348" height="100"/>
+                <frame key="frameInset" width="399" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@handle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOI-Pn-Mde">
@@ -46,11 +46,32 @@
                         <color key="textColor" red="0.47843137254901957" green="0.46274509803921571" blue="0.46274509803921571" alpha="0.73999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kLX-JJ-ZDz" userLabel="Initials View">
+                        <color key="backgroundColor" red="0.22745098039215686" green="0.22745098039215686" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="kLX-JJ-ZDz" secondAttribute="height" id="bQz-cn-fY4"/>
+                            <constraint firstAttribute="width" constant="56" id="esc-fC-vfm"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="28"/>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y7M-Nq-Lwk" userLabel="Initials Label">
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="VSh-0J-rQs"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                        <color key="textColor" red="0.47058823529411764" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8sn-Jc-sON">
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="56" id="2Y8-e4-gEq"/>
-                            <constraint firstAttribute="width" secondItem="8sn-Jc-sON" secondAttribute="height" multiplier="1:1" id="EVO-4k-POg"/>
                             <constraint firstAttribute="height" constant="45" id="ZTu-wb-jTM"/>
+                            <constraint firstAttribute="width" secondItem="8sn-Jc-sON" secondAttribute="height" multiplier="1:1" id="hMT-W2-Dvr"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -68,9 +89,6 @@
                         <state key="normal" title="FOLLOW">
                             <color key="titleColor" red="0.92156862745098034" green="0.80784313725490198" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="3"/>
-                        </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="didTapFollowButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ugn-XV-tkf"/>
                         </connections>
@@ -89,15 +107,20 @@
                     <constraint firstItem="RHF-ja-uAd" firstAttribute="bottom" secondItem="8sn-Jc-sON" secondAttribute="bottom" constant="3" id="91v-C9-oIU"/>
                     <constraint firstItem="8sn-Jc-sON" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22" id="GwJ-uC-ApR"/>
                     <constraint firstItem="YKr-CE-jlM" firstAttribute="top" secondItem="8sn-Jc-sON" secondAttribute="top" constant="-6" id="Kds-dW-z9j"/>
+                    <constraint firstItem="kLX-JJ-ZDz" firstAttribute="leading" secondItem="8sn-Jc-sON" secondAttribute="leading" id="KjF-RL-hdf"/>
                     <constraint firstItem="esL-gW-6wl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uOI-Pn-Mde" secondAttribute="trailing" constant="14" id="Kpj-CX-w0K"/>
+                    <constraint firstItem="Y7M-Nq-Lwk" firstAttribute="centerY" secondItem="kLX-JJ-ZDz" secondAttribute="centerY" constant="1.5" id="OVp-gw-Z7T"/>
                     <constraint firstItem="YKr-CE-jlM" firstAttribute="leading" secondItem="RHF-ja-uAd" secondAttribute="leading" id="Qry-BM-hi0"/>
                     <constraint firstAttribute="trailingMargin" secondItem="esL-gW-6wl" secondAttribute="trailing" constant="1" id="Sob-qb-LuO"/>
+                    <constraint firstItem="Y7M-Nq-Lwk" firstAttribute="centerX" secondItem="8sn-Jc-sON" secondAttribute="centerX" id="Uch-Hb-DE5"/>
                     <constraint firstAttribute="bottom" secondItem="4aW-FM-QRN" secondAttribute="bottom" id="Ygp-mX-41C"/>
                     <constraint firstItem="esL-gW-6wl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YKr-CE-jlM" secondAttribute="trailing" constant="14" id="ZOr-23-9jW"/>
                     <constraint firstItem="esL-gW-6wl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RHF-ja-uAd" secondAttribute="trailing" constant="14" id="a6F-pR-kl9"/>
                     <constraint firstItem="RHF-ja-uAd" firstAttribute="top" secondItem="uOI-Pn-Mde" secondAttribute="bottom" constant="1" id="arz-3u-CGJ"/>
                     <constraint firstItem="uOI-Pn-Mde" firstAttribute="centerY" secondItem="8sn-Jc-sON" secondAttribute="centerY" id="bJi-Wh-8fo"/>
+                    <constraint firstItem="Y7M-Nq-Lwk" firstAttribute="width" secondItem="8sn-Jc-sON" secondAttribute="width" id="bOv-hI-lRW"/>
                     <constraint firstItem="uOI-Pn-Mde" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="bottom" constant="-1" id="caW-1R-j8a"/>
+                    <constraint firstItem="kLX-JJ-ZDz" firstAttribute="top" secondItem="8sn-Jc-sON" secondAttribute="top" id="dw5-1B-8tA"/>
                     <constraint firstItem="uOI-Pn-Mde" firstAttribute="top" secondItem="YKr-CE-jlM" secondAttribute="bottom" constant="-3" id="gki-D7-0gr"/>
                     <constraint firstItem="RHF-ja-uAd" firstAttribute="top" secondItem="uOI-Pn-Mde" secondAttribute="bottom" constant="8" symbolic="YES" id="gtp-2c-pMc"/>
                     <constraint firstItem="esL-gW-6wl" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hyN-eO-KEa"/>
@@ -113,16 +136,16 @@
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="qEu-86-r7S"/>
+                        <exclude reference="Kds-dW-z9j"/>
                         <exclude reference="n87-8J-Ooa"/>
                         <exclude reference="t9q-Ue-jJl"/>
-                        <exclude reference="qEu-86-r7S"/>
-                        <exclude reference="91v-C9-oIU"/>
-                        <exclude reference="gtp-2c-pMc"/>
-                        <exclude reference="Kds-dW-z9j"/>
-                        <exclude reference="Sob-qb-LuO"/>
                         <exclude reference="bJi-Wh-8fo"/>
                         <exclude reference="caW-1R-j8a"/>
                         <exclude reference="gki-D7-0gr"/>
+                        <exclude reference="91v-C9-oIU"/>
+                        <exclude reference="gtp-2c-pMc"/>
+                        <exclude reference="Sob-qb-LuO"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
@@ -130,14 +153,18 @@
             <inset key="separatorInset" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="followButton" destination="esL-gW-6wl" id="Gg6-TA-Qwf"/>
+                <outlet property="initialsLabel" destination="Y7M-Nq-Lwk" id="JSC-NN-0Ro"/>
+                <outlet property="initialsView" destination="kLX-JJ-ZDz" id="syf-LF-uzp"/>
+                <outlet property="leadingSpaceConstraint" destination="GwJ-uC-ApR" id="uZW-aE-ZPo"/>
                 <outlet property="numFollowLabel" destination="RHF-ja-uAd" id="rKP-Ln-qhu"/>
                 <outlet property="separator" destination="4aW-FM-QRN" id="8ny-YP-nCb"/>
                 <outlet property="separatorHeight" destination="jRF-fw-lOY" id="RrZ-0x-AjO"/>
+                <outlet property="trailingSpaceConstraint" destination="i5s-2d-QtZ" id="uVv-7f-j7j"/>
                 <outlet property="userHandle" destination="uOI-Pn-Mde" id="E50-0H-wSc"/>
                 <outlet property="userImage" destination="8sn-Jc-sON" id="Wk9-ex-1uz"/>
                 <outlet property="userName" destination="YKr-CE-jlM" id="ceS-Mi-WXe"/>
             </connections>
-            <point key="canvasLocation" x="828" y="146"/>
+            <point key="canvasLocation" x="814.5" y="222.5"/>
         </tableViewCell>
     </objects>
 </document>

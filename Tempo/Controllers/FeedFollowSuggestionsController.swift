@@ -16,6 +16,7 @@ protocol FeedFollowSuggestionsControllerDelegate: class {
 class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableViewDelegate, FollowUserDelegate {
 	
 	let suggestionsEdgePadding: CGFloat = 16
+	let topInset: CGFloat = 40
 	
 	var view: UIView!
 	var noMorePostsLabel: UILabel!
@@ -31,22 +32,17 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		super.init()
 		
 		originalFrame = frame
-		
 		view = UIView(frame: frame)
 				
 		setupView()
-		
 		fetchSuggestedPeopleToFollow()
 	}
 	
 	func hideNoMorePostsLabel() {
-		if !showingNoMorePostsLabel {
-			return
-		}
+		if !showingNoMorePostsLabel { return }
+		
 		noMorePostsLabel.removeFromSuperview()
-		
-		let topInset: CGFloat = 40.0
-		
+
 		view.frame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y, width: view.frame.width, height: view.frame.height - noMorePostsLabel.frame.height + topInset)
 		
 		followSuggestionsLabel.frame.top = CGPoint(x: followSuggestionsLabel.frame.top.x, y: followSuggestionsLabel.frame.top.y - noMorePostsLabel.frame.height + topInset)
@@ -57,12 +53,9 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 	}
 	
 	func showNoMorePostsLabel() {
-		if showingNoMorePostsLabel {
-			return
-		}
+		if showingNoMorePostsLabel { return }
 		
 		view.frame = originalFrame
-
 		view.addSubview(noMorePostsLabel)
 		
 		followSuggestionsLabel.frame.top = CGPoint(x: followSuggestionsLabel.frame.top.x, y: noMorePostsLabel.frame.bottom.y)
@@ -146,6 +139,7 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		cell.userHandle.text = "@\(user.username)"
 		cell.numFollowLabel.text = (user.followersCount == 1) ? "1 follower" : "\(user.followersCount) followers"
 		cell.userImage.hnk_setImageFromURL(user.imageURL)
+		
 		if user.id != User.currentUser.id {
 			cell.followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
 			cell.followButton.backgroundColor = (user.isFollowing) ? .clear : .tempoRed
@@ -154,6 +148,10 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		} else {
 			cell.followButton.setTitle("", for: UIControlState())
 		}
+		
+		cell.setUpFollowSuggestionsCell()
+		cell.setUserInitials(firstName: user.firstName, lastName: user.lastName)
+		cell.setNeedsLayout()
 		
 		return cell
 	}
@@ -166,15 +164,11 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 	
 	func didTapFollowButton(_ cell: FollowTableViewCell) {
 		
-		guard let indexPath = tableView.indexPath(for: cell) else {
-			return
-		}
+		guard let indexPath = tableView.indexPath(for: cell) else { return }
 		
 		let user = suggestedPeopleToFollow[indexPath.row]
 		
-		if user.id == User.currentUser.id {
-			return
-		}
+		if user.id == User.currentUser.id { return }
 		
 		user.isFollowing = !user.isFollowing
 		User.currentUser.followingCount += user.isFollowing ? 1 : -1

@@ -18,11 +18,16 @@ class FollowTableViewCell: UITableViewCell {
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userHandle: UILabel!
     @IBOutlet weak var numFollowLabel: UILabel!
+	@IBOutlet weak var initialsView: UIView!
+	@IBOutlet weak var initialsLabel: UILabel!
     @IBOutlet weak var separator: UIView!
     @IBOutlet weak var separatorHeight: NSLayoutConstraint!
 	@IBOutlet weak var followButton: UIButton!
-	
+    @IBOutlet weak var leadingSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var trailingSpaceConstraint: NSLayoutConstraint!
+    
 	var delegate: FollowUserDelegate?
+	var isFollowSuggestionCell: Bool = false
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -33,10 +38,34 @@ class FollowTableViewCell: UITableViewCell {
 		followButton.backgroundColor = .tempoRed
 		followButton.layer.borderColor = UIColor.tempoRed.cgColor
 		followButton.layer.borderWidth = 1.5
+		followButton.layer.cornerRadius = 3
+		followButton.clipsToBounds = true
 		userImage.layer.cornerRadius = userImage.bounds.width/2
 		userImage.clipsToBounds = true
 		separator.backgroundColor = .readCellColor
 		separatorHeight.constant = 1
+	}
+	
+	func setUpFollowSuggestionsCell() {
+		isFollowSuggestionCell = true
+		leadingSpaceConstraint.constant = 14
+		trailingSpaceConstraint.constant = 11
+		backgroundColor = .cellDarkGrey
+		contentView.backgroundColor = .cellDarkGrey
+	}
+	
+	func setUserInitials(firstName: String, lastName: String) {
+		var initials: String = ""
+		
+		if !firstName.isEmpty {
+			initials += "\(firstName.characters.first!)"
+		}
+		
+		if !lastName.isEmpty {
+			initials += "\(lastName.characters.first!)"
+		}
+
+		initialsLabel.text = initials
 	}
 	
     @IBAction func userImageClicked(_ sender: UIButton) {
@@ -45,7 +74,9 @@ class FollowTableViewCell: UITableViewCell {
 
     // Custom selected cell view
     override func setSelected(_ selected: Bool, animated: Bool) {
-		contentView.backgroundColor = selected ? .readCellColor : .unreadCellColor
+		let unselectedColor: UIColor = isFollowSuggestionCell ? .cellDarkGrey : .unreadCellColor
+		
+		contentView.backgroundColor = selected ? .readCellColor : unselectedColor
     }
 	
 	@IBAction func didTapFollowButton(_ sender: AnyObject) {

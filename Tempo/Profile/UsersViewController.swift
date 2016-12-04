@@ -187,6 +187,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		} else {
 			cell.followButton.alpha = 0.0
 		}
+		
+		cell.setUserInitials(firstName: user.firstName, lastName: user.lastName)
         
         return cell
     }

@@ -40,7 +40,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		super.viewDidLoad()
 		
 		title = "Feed"
-		view.backgroundColor = UIColor.tempoDarkGray
+		view.backgroundColor = .readCellColor
 		setupAddButton()
 		tableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		
@@ -52,7 +52,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		addHamburgerMenu()
 		
 		tableView.tableHeaderView = nil
-		tableView.rowHeight = 100
+		tableView.rowHeight = 101
 		tableView.showsVerticalScrollIndicator = false
 		refreshControl = customRefresh.refreshControl
 		tableView.insertSubview(refreshControl, belowSubview: tableView.getScrollView()!)
