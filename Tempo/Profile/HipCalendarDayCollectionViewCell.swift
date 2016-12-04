@@ -16,12 +16,12 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
     var dayInnerCircleView: UIView!
     
     // Colors
-    let noPostColor = UIColor.tempoDarkGray
-    let circleColor = UIColor.tempoDarkRed
+	let noPostColor: UIColor = .tempoDarkGray
+	let circleColor: UIColor = .tempoRed
     var date: Date! {
         didSet {
             dayLabel.text = HipCalendarDayStringFromDate(date)
-            dayLabel.textColor = UIColor.white
+            dayLabel.textColor = .white
             dayInnerCircleView.backgroundColor = noPostColor
             
             if isToday() {
@@ -43,7 +43,7 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(dayInnerCircleView)
         
         dayLabel = UILabel(frame: bounds)
-        dayLabel.textAlignment = NSTextAlignment.center
+        dayLabel.textAlignment = .center
         contentView.addSubview(dayLabel)
 		isUserInteractionEnabled = false
     }

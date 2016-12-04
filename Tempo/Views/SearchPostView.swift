@@ -58,7 +58,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
     func updateProfileLabel() {
         if let post = post {
             let duration = TimeInterval(0.3)
-			let color: UIColor = post.player.isPlaying ? .tempoLightRed : .white
+			let color: UIColor = post.player.isPlaying ? .tempoRed : .white
 			let font: UIFont = post.player.isPlaying ? UIFont(name: "AvenirNext-Medium", size: 16.0)! : UIFont(name: "AvenirNext-Regular", size: 16.0)!
    
 			guard let label = profileNameLabel else { return }

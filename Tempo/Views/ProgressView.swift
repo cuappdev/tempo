@@ -11,7 +11,7 @@ import UIKit
 class ProgressView: UIView {
 	
 	var playerDelegate: PostDelegate!
-	let fillColor = UIColor.tempoLightRed
+	let fillColor: UIColor = .tempoRed
 	private var updateTimer: Timer?
 	var indicator: UIView?
 	

@@ -20,12 +20,12 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	func setup(parent: PlayerNavigationController) {
 		playerNav = parent
-		backgroundColor = UIColor.tempoSuperDarkGray
+		backgroundColor = .tempoSuperDarkGray
 		let tap = UILongPressGestureRecognizer(target: self, action: #selector(playerCellTapped(sender:)))
 		tap.minimumPressDuration = 0
 		addGestureRecognizer(tap)
 		progressView.playerDelegate = playerNav
-		progressView.backgroundColor = UIColor.tempoSuperDarkRed
+		progressView.backgroundColor = .tempoDarkRed
 
 		playToggleButton.layer.cornerRadius = 5
 		playToggleButton.clipsToBounds = true

@@ -53,13 +53,13 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Formatting
         categoryTableView.separatorStyle = .none
         categoryTableView.isScrollEnabled = false
-        categoryTableView.backgroundColor = UIColor.tempoDarkGray
-        profileView.backgroundColor = UIColor.tempoDarkGray
-        view.backgroundColor = UIColor.tempoDarkGray
-        divider.backgroundColor = UIColor.tempoLightGray
+        categoryTableView.backgroundColor = .tempoDarkGray
+        profileView.backgroundColor = .tempoDarkGray
+        view.backgroundColor = .tempoDarkGray
+        divider.backgroundColor = .tempoLightGray
 
 		sideView.isHidden = true
-		sideView.backgroundColor = UIColor.tempoLightRed
+		sideView.backgroundColor = .tempoRed
 		
 		profilePicture.frame = CGRect(x: 0, y: 0, width: 85, height: 85)
 		profilePicture.layer.cornerRadius = profilePicture.frame.size.height/2

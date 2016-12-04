@@ -56,13 +56,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
 		
 		followButton.layer.borderWidth = 1.5
-		followButton.layer.borderColor = UIColor.tempoLightRed.cgColor
-		followButton.backgroundColor = UIColor.clear
+		followButton.layer.borderColor = UIColor.tempoRed.cgColor
+		followButton.backgroundColor = .clear
 		
 		activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
 		
 		// Post History Calendar
-		separator.backgroundColor = UIColor.tempoLightRed
+		separator.backgroundColor = .tempoRed
 		
 		let layout = collectionView.collectionViewLayout as! HipStickyHeaderFlowLayout
 		layout.sectionInset = UIEdgeInsets(top: 0, left: padding*6, bottom: padding*2, right: 0)
@@ -162,7 +162,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 	func updateFollowingUI() {
 		if User.currentUser.username != user.username {
 			followButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
-			followButton.backgroundColor = (user.isFollowing) ? UIColor.tempoLightGray : UIColor.tempoLightRed
+			followButton.backgroundColor = (user.isFollowing) ? .tempoLightGray : .tempoRed
 		}
 
 		followingLabel.text = "\(user.followingCount)"
@@ -260,7 +260,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 		cell.isUserInteractionEnabled = true
 		if let index = postedYearMonthDay.index(of: date.yearMonthDay()) {
 			let alpha = determineAlpha(postedLikes[index])
-			cell.dayInnerCircleView.backgroundColor = UIColor.tempoLightRed.withAlphaComponent(alpha)
+			cell.dayInnerCircleView.backgroundColor = UIColor.tempoRed.withAlphaComponent(alpha)
 			cell.isUserInteractionEnabled = true
 		}
 		

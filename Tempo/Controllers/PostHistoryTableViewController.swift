@@ -27,7 +27,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		// Fix color above search bar
 		let topView = UIView(frame: view.frame)
 		topView.frame.origin.y = -view.frame.size.height
-		topView.backgroundColor = UIColor.tempoLightRed
+		topView.backgroundColor = .tempoRed
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
 		

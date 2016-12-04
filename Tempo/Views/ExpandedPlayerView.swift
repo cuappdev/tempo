@@ -62,11 +62,11 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		
 		playerNav = parent
 		progressView.playerDelegate = playerNav
-		progressView.backgroundColor = .tempoSuperDarkRed
+		progressView.backgroundColor = .tempoDarkRed
 		
 		progressIndicator = UIView(frame: CGRect(x: progressView.frame.origin.x - 6, y: progressView.frame.origin.y - 6, width: 12, height: 12))
 		progressIndicator.layer.cornerRadius = 6
-		progressIndicator.backgroundColor = .tempoLightRed
+		progressIndicator.backgroundColor = .tempoRed
 		progressIndicator.isUserInteractionEnabled = true
 		bringSubview(toFront: playToggleButton)
 		

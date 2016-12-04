@@ -42,7 +42,7 @@ class AnimatedLogoView: UIView {
                                             UIColor(red: 41/255.0, green: 36/255.0, blue: 36/255.0, alpha: 1.0)]
 			
 			case .refresh:
-				foregroundGradientColors = [UIColor.tempoLightRed, UIColor.tempoLightRed]
+				foregroundGradientColors = [.tempoRed, .tempoRed]
 				backgroundGradientColors = [UIColor(red: 41/255.0, green: 36/255.0, blue: 36/255.0, alpha: 1.0),
 			                            UIColor(red: 41/255.0, green: 36/255.0, blue: 36/255.0, alpha: 1.0)]
         }

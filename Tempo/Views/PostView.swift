@@ -158,7 +158,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			let font = UIFont(name: "Avenir-Medium", size: 16)!
             let duration = TimeInterval(0.3)
             if post.player.isPlaying {
-                color = UIColor.tempoLightRed
+                color = .tempoRed
 				if type == .feed {
 					if let layer = avatarLayer {
 						let animation = CABasicAnimation(keyPath: "transform.rotation")
