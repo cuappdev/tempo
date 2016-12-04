@@ -17,8 +17,8 @@ class FeedTableViewCell: UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		postView.backgroundColor = UIColor.tempoLightGray
-		separator.backgroundColor = UIColor.separatorGray
-		separatorHeight.constant = 1.0
+		postView.backgroundColor = .unreadCellColor
+		separator.backgroundColor = .readCellColor
+		separatorHeight.constant = 1
 	}
 }

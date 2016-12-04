@@ -52,7 +52,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		addHamburgerMenu()
 		
 		tableView.tableHeaderView = nil
-		tableView.rowHeight = 101
+		tableView.rowHeight = 111
 		tableView.showsVerticalScrollIndicator = false
 		refreshControl = customRefresh.refreshControl
 		tableView.insertSubview(refreshControl, belowSubview: tableView.getScrollView()!)
@@ -344,7 +344,7 @@ extension FeedViewController: UIViewControllerPreviewingDelegate {
 			peekViewController.title = "Profile"
 			peekViewController.user = user
 			
-			peekViewController.preferredContentSize = CGSize.zero
+			peekViewController.preferredContentSize = .zero
 			previewingContext.sourceRect = (postView?.convert(avatar.frame, to: tableView))!
 			
 			return peekViewController
