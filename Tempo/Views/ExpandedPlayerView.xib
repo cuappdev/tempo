@@ -32,7 +32,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="26" id="Hgq-Q9-Tiu"/>
                             </constraints>
-                            <state key="normal" backgroundImage="expanded-arrow"/>
+                            <state key="normal" backgroundImage="ExpandedArrowIcon"/>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p2b-rC-KRD">
                             <constraints>
@@ -51,7 +51,7 @@
                                 <constraint firstAttribute="height" constant="53" id="yyX-r8-k2U"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="11" minY="15" maxX="17" maxY="15"/>
-                            <state key="normal" image="skip"/>
+                            <state key="normal" image="SkipButton"/>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcR-vP-5Lt" customClass="MarqueeLabel" customModule="MarqueeLabel">
                             <constraints>
@@ -66,7 +66,7 @@
                                 <constraint firstAttribute="height" constant="54" id="05s-ZP-pQt"/>
                                 <constraint firstAttribute="width" constant="54" id="Gnc-4X-f8I"/>
                             </constraints>
-                            <state key="normal" backgroundImage="pause"/>
+                            <state key="normal" backgroundImage="PauseButton"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9FI-6T-Mzs">
                             <constraints>
@@ -74,7 +74,7 @@
                                 <constraint firstAttribute="height" constant="53" id="i1S-tP-T4D"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="11" minY="15" maxX="19" maxY="15"/>
-                            <state key="normal" image="back"/>
+                            <state key="normal" image="PreviousButton"/>
                         </button>
                     </subviews>
                     <constraints>
@@ -151,7 +151,7 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIj-Kw-tOo" customClass="UIButton">
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="open" translatesAutoresizingMaskIntoConstraints="NO" id="3vf-rS-nom">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OpenInSpotifyIcon" translatesAutoresizingMaskIntoConstraints="NO" id="3vf-rS-nom">
                                     <constraints>
                                         <constraint firstAttribute="width" constant="21" id="kCL-jZ-cts"/>
                                     </constraints>
@@ -229,11 +229,11 @@
     </objects>
     <resources>
         <image name="AddButton" width="42" height="42"/>
+        <image name="ExpandedArrowIcon" width="23" height="23"/>
         <image name="LikeButton" width="42" height="38"/>
-        <image name="back" width="7" height="11"/>
-        <image name="expanded-arrow" width="23" height="23"/>
-        <image name="open" width="16" height="16"/>
-        <image name="pause" width="54" height="54"/>
-        <image name="skip" width="7" height="11"/>
+        <image name="OpenInSpotifyIcon" width="16" height="16"/>
+        <image name="PauseButton" width="54" height="54"/>
+        <image name="PreviousButton" width="7" height="11"/>
+        <image name="SkipButton" width="7" height="11"/>
     </resources>
 </document>

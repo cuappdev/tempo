@@ -77,10 +77,10 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		playToggleButton.clipsToBounds = true
 		prevButton.contentVerticalAlignment = .fill
 		prevButton.contentHorizontalAlignment = .fill
-		prevButton.imageView?.image = UIImage(named: "back")
+		prevButton.imageView?.image = #imageLiteral(resourceName: "PreviousButton")
 		nextButton.contentVerticalAlignment = .fill
 		nextButton.contentHorizontalAlignment = .fill
-		nextButton.imageView?.image = UIImage(named: "back")
+		nextButton.imageView?.image = #imageLiteral(resourceName: "PreviousButton")
 		
 		setupMarqueeLabel(label: songLabel)
 		setupMarqueeLabel(label: artistLabel)
@@ -230,7 +230,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	override func updatePlayToggleButton() {
 		if let selectedPost = post {
-			let name = selectedPost.player.isPlaying ? "pause" : "play"
+			let name = selectedPost.player.isPlaying ? "PauseButton" : "PlayButton"
 			progressView.setUpTimer()
 			playToggleButton.setBackgroundImage(UIImage(named: name), for: .normal)
 		}

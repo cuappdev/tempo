@@ -38,7 +38,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="saved-check" translatesAutoresizingMaskIntoConstraints="NO" id="STY-Hz-79l">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SavedIcon" translatesAutoresizingMaskIntoConstraints="NO" id="STY-Hz-79l">
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="PUJ-nf-dX8"/>
                         <constraint firstAttribute="width" secondItem="STY-Hz-79l" secondAttribute="height" id="VJK-Z4-YYO"/>
@@ -87,6 +87,6 @@
         </view>
     </objects>
     <resources>
-        <image name="saved-check" width="51" height="54"/>
+        <image name="SavedIcon" width="51" height="54"/>
     </resources>
 </document>

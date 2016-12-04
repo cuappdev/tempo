@@ -18,17 +18,17 @@ class SavedSongView: UIView {
 	}
 	
 	func addSongtoPlaylist(_ playlist: String) {
-		statusImage.image = UIImage(named: "saved-check")
+		statusImage.image = #imageLiteral(resourceName: "SavedIcon")
 		statusLabel.text = "Added to \(playlist)"
 	}
 	
 	func saveSongToYourMusic() {
-		statusImage.image = UIImage(named: "saved-check")
+		statusImage.image = #imageLiteral(resourceName: "SavedIcon")
 		statusLabel.text = "Saved to\nYour Music"
 	}
 	
 	func removeSongfromSaved() {
-		statusImage.image = UIImage(named: "saved-cross")
+		statusImage.image = #imageLiteral(resourceName: "RemovedIcon")
 		statusLabel.text = "Removed from Your Music"
 	}
 	

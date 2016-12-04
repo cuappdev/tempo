@@ -105,7 +105,7 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	override func updatePlayToggleButton() {
 		if let selectedPost = post {
-			let name = selectedPost.player.isPlaying ? "pause" : "play"
+			let name = selectedPost.player.isPlaying ? "PauseButton" : "PlayButton"
 			progressView.setUpTimer()
 			playToggleButton.setBackgroundImage(UIImage(named: name), for: UIControlState())
 		}

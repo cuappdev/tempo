@@ -122,11 +122,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			revealVC.setFront(navigationController, animated: false)
 			revealVC.setRear(sidebarVC, animated: false)
 			sidebarVC.elements = [
-				SideBarElement(title: "Feed", viewController: feedVC, image: UIImage(named: "feed-sidebar-icon")),
-				SideBarElement(title: "People", viewController: usersVC, image: UIImage(named: "people-sidebar-icon")),
-				SideBarElement(title: "Liked", viewController: likedVC, image: UIImage(named: "liked-sidebar-icon")),
-				SideBarElement(title: "Settings", viewController: settingsVC, image: UIImage(named: "spotify-sidebar-icon")),
-				SideBarElement(title: "About", viewController: aboutVC, image: UIImage(named: "about-sidebar-icon"))
+				SideBarElement(title: "Feed", viewController: feedVC, image: #imageLiteral(resourceName: "FeedSidebarIcon")),
+				SideBarElement(title: "Users", viewController: usersVC, image: #imageLiteral(resourceName: "UsersSidebarIcon")),
+				SideBarElement(title: "Liked", viewController: likedVC, image: #imageLiteral(resourceName: "LikedSidebarButton")),
+				SideBarElement(title: "Settings", viewController: settingsVC, image: SettingsSidebarIcon),
+				SideBarElement(title: "About", viewController: aboutVC, image: #imageLiteral(resourceName: "AboutSidebarIcon"))
 			]
 			sidebarVC.selectionHandler = { [weak self] viewController in
 				if let viewController = viewController {

@@ -30,16 +30,16 @@ extension UIView {
 		case .Feed:
 			labelText = "No posts in the last 24 hours."
 		case .Followers:
-			image = UIImage(named: "followers")!
-			labelText = isCurrentUser ? "No followers right now\nTell your friends to follow you!" : "\(userFirstName) doesn't have any followers\nFollow them!"
+			image = #imageLiteral(resourceName: "FollowersEmptyStateIcon")!
+			labelText = isCurrentUser ? "You have no followers right now.\nTell your friends to follow you!" : "\(userFirstName) doesn't have any followers.\nFollow them!"
 		case .Following:
-			image = UIImage(named: "following")!
-			labelText = isCurrentUser ? "Follow your Facebook friends to\nview them here!" : "\(userFirstName) is not following anyone"
+			image = #imageLiteral(resourceName: "FollowingEmptyStateIcon")!
+			labelText = isCurrentUser ? "Follow your Facebook friends to\nview them here!" : "\(userFirstName) is not following anyone."
 		case .Users:
-			image = UIImage(named: "search-glass")!
+			image = #imageLiteral(resourceName: "UsersEmptyStateIcon")!
 			labelText = "Search for your friends!"
 		case .Liked:
-			image = UIImage(named: "liked-thumb")!
+			image = #imageLiteral(resourceName: "LikedEmptyStateIcon")!
 			labelText = "Like songs on your home feed\nto view them here!"
 		}
 		
