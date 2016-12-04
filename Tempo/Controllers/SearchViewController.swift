@@ -42,6 +42,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		view.backgroundColor = UIColor.readCellColor
+		
 		title = "Post a track"
 		
 		tableView = UITableView(frame: CGRect(x: 0, y: searchBarHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight - searchBarHeight - 20), style: .plain)
