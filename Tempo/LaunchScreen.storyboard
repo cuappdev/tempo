@@ -6,6 +6,12 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNext.ttc">
+            <string>AvenirNext-Medium</string>
+            <string>AvenirNext-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -25,7 +31,7 @@
                                     <constraint firstAttribute="width" constant="10" id="V32-4J-IHJ"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TempoLogo" translatesAutoresizingMaskIntoConstraints="NO" id="iT4-b8-EW9" userLabel="App Logo">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TempoLogo" translatesAutoresizingMaskIntoConstraints="NO" id="iT4-b8-EW9" userLabel="Tempo Logo">
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="iT4-b8-EW9" secondAttribute="height" multiplier="1:1" id="bKm-JK-Acu"/>
                                 </constraints>
@@ -75,6 +81,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="TempoLogo" width="200" height="200"/>
+        <image name="TempoLogo" width="160" height="160"/>
     </resources>
 </document>

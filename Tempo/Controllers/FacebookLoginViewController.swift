@@ -40,12 +40,12 @@ class FacebookLoginViewController: UIViewController {
 	
 	func layoutSubviews() {
 		// Logo Image
-		logoImageView = UIImageView(frame: CGRect(x: 0, y: view.frame.height * 0.16, width: view.frame.width * 0.54, height: view.frame.width * 0.54))
+		logoImageView = UIImageView(frame: CGRect(x: 0, y: view.frame.height * 0.19, width: view.frame.width * 0.427, height: view.frame.width * 0.427))
 		logoImageView.center.x = view.center.x
 		logoImageView.image = #imageLiteral(resourceName: "TempoLogo")
 		
 		// Tempo Label
-		tempoLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.5, width: view.frame.width, height: view.frame.height))
+		tempoLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.51, width: view.frame.width, height: view.frame.height))
 		tempoLabel.text = "Tempo"
 		tempoLabel.textAlignment = .center
 		tempoLabel.textColor = .white
