@@ -23,11 +23,13 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	@IBOutlet weak var progressView: ProgressView!
 	@IBOutlet weak var likeButton: UIButton!
 	@IBOutlet weak var likeButtonImage: UIImageView!
+    @IBOutlet weak var likeButtonLabel: UILabel!
 	@IBOutlet weak var addButton: UIButton!
+	@IBOutlet weak var addButtonImage: UIImageView!
+	@IBOutlet weak var addButtonLabel: UILabel!
 	@IBOutlet weak var openButton: UIButton!
 	@IBOutlet weak var bottomButtonsView: UIView!
 	@IBOutlet weak var collapseButton: UIButton!
-	@IBOutlet weak var addButtonImage: UIImageView!
 	@IBOutlet weak var nextButton: UIButton!
 	@IBOutlet weak var prevButton: UIButton!
 	
@@ -236,12 +238,14 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		if let selectedPost = post {
 			let name = (selectedPost.isLiked || playerNav.playingPostType == .liked) ? "LikedButton" : "PlayerLikeButton"
 			likeButtonImage.image = UIImage(named: name)
+			likeButtonLabel.text = (selectedPost.isLiked || playerNav.playingPostType == .liked)  ? "Liked" : "Like"
 		}
 	}
 	
 	override func updateAddButton() {
 		updateSavedStatus()
 		addButtonImage.image = (songStatus == .saved) ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "PlayerAddButton")
+		addButtonLabel.text = (songStatus == .saved) ? "Saved to Spotify" : "Save to Spotify"
 	}
 	
 	private func setupMarqueeLabel(label: MarqueeLabel) {
