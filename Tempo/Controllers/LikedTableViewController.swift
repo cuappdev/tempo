@@ -17,8 +17,8 @@ class LikedTableViewController: PlayerTableViewController {
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
-		tableView.rowHeight = 88
-		tableView.backgroundColor = .backgroundDarkGrey
+		tableView.rowHeight = 91
+		tableView.backgroundColor = .readCellColor
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(LikedTableViewCell.self, forCellReuseIdentifier: "LikedCell")
 		
@@ -48,7 +48,7 @@ class LikedTableViewController: PlayerTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "LikedCell", for: indexPath) as! LikedTableViewCell
 		let posts = searchController.isActive ? filteredPosts : self.posts
-		cell.setupCell()
+		cell.setupCell(spotifyAvailable: SpotifyController.sharedController.isSpotifyAvailable)
 		cell.postView?.post = posts[indexPath.row]
 		cell.postView?.postViewDelegate = self
 		cell.postView?.playerDelegate = self

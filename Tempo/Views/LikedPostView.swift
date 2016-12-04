@@ -14,8 +14,14 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
 	fileprivate var longPressGestureRecognizer: UILongPressGestureRecognizer?
 	
-	let artworkImageLength: CGFloat = 45
+	let artworkImageLength: CGFloat = 54
 	let addButtonLength: CGFloat = 20
+	let padding: CGFloat = 22
+	let addButtonPadding: CGFloat = 17
+	let separatorHeight: CGFloat = 1
+	
+	var labelWidth: CGFloat = 0
+	var isSpotifyAvailable: Bool = false
 	
 	var songNameLabel: UILabel?
 	var songArtistLabel: UILabel?
@@ -37,7 +43,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 				
 				albumArtworkImageView?.hnk_setImageFromURL(post.song.smallArtworkURL ?? URL(fileURLWithPath: ""))
 				
-				if User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] != nil {
+				if let _ = User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] {
 					songStatus = .saved
 				}
 				
@@ -45,37 +51,41 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 			}
 		}
 	}
-	
+
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
 		
 		backgroundColor = .unreadCellColor
 		
-		albumArtworkImageView = UIImageView(frame: CGRect(x: 22, y: 22, width: artworkImageLength, height: artworkImageLength))
-		albumArtworkImageView?.center.y = center.y
+		albumArtworkImageView = UIImageView(frame: CGRect(x: padding, y: padding, width: artworkImageLength, height: artworkImageLength))
+		albumArtworkImageView?.center.y = center.y - separatorHeight
 		albumArtworkImageView?.clipsToBounds = true
 		albumArtworkImageView?.translatesAutoresizingMaskIntoConstraints = true
 		addSubview(albumArtworkImageView!)
 
-		let labelX = (albumArtworkImageView?.frame.maxX)! + 25
-		let labelWidth = bounds.width - labelX - 64
-		songNameLabel = UILabel(frame: CGRect(x: labelX, y: 22, width: labelWidth, height: 22))
+		let labelX = (albumArtworkImageView?.frame.maxX)! + padding
+		let shorterlabelWidth = bounds.width - labelX - addButtonLength - 2*addButtonPadding
+		let longerLabelWidth = bounds.width - labelX - padding
+		let currLabelWidth = isSpotifyAvailable ? shorterlabelWidth : longerLabelWidth
+		
+		songNameLabel = UILabel(frame: CGRect(x: labelX, y: padding, width: currLabelWidth, height: 22))
 		songNameLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16.0)
 		songNameLabel?.textColor = .white
 		songNameLabel?.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(songNameLabel!)
 		
-		songArtistLabel = UILabel(frame: CGRect(x: labelX, y: (songNameLabel?.frame.maxY)!, width: labelWidth, height: 22))
+		songArtistLabel = UILabel(frame: CGRect(x: labelX, y: (songNameLabel?.frame.maxY)! + 2, width: currLabelWidth, height: 22))
 		songArtistLabel?.font = UIFont(name: "AvenirNext-Regular", size: 14.0)
 		songArtistLabel?.textColor = .paleRed
 		songArtistLabel?.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(songArtistLabel!)
 		
-		addButton = UIButton(frame: CGRect(x: frame.width - addButtonLength - 17, y: 34, width: addButtonLength, height: addButtonLength))
-		addButton?.center.y = center.y
+		addButton = UIButton(frame: CGRect(x: frame.width - addButtonLength - addButtonPadding, y: 34, width: addButtonLength, height: addButtonLength))
+		addButton?.center.y = center.y - separatorHeight
 		addButton?.setBackgroundImage(#imageLiteral(resourceName: "AddButton"), for: .normal)
 		addButton?.translatesAutoresizingMaskIntoConstraints = true
 		addButton?.tag = 1 // this tag makes the hitbox bigger
+		addButton?.isHidden = !isSpotifyAvailable
 		addSubview(addButton!)
 	}
 	
@@ -109,13 +119,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	}
 	
 	func updateAddButton() {
-		addButton!.isHidden = true
 		if let _ = post {
-			SpotifyController.sharedController.spotifyIsAvailable { success in
-				if success {
-					self.addButton!.isHidden = false
-				}
-			}
 			if songStatus == .saved {
 				self.addButton?.setBackgroundImage(#imageLiteral(resourceName: "AddedButton"), for: .normal)
 			} else {
@@ -137,6 +141,20 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 					label.font = font
 				})
 			}
+		}
+	}
+	
+	func updateViews() {
+		if isSpotifyAvailable {
+			songNameLabel?.frame.size.width = labelWidth
+			songArtistLabel?.frame.size.width = labelWidth
+			addButton!.isHidden = false
+		} else {
+			let newLabelWidth = bounds.width - (songNameLabel?.frame.minX)! - padding
+			songNameLabel?.frame.size.width = newLabelWidth
+			songArtistLabel?.frame.size.width = newLabelWidth
+			
+			addButton!.isHidden = true
 		}
 	}
 	
@@ -178,7 +196,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	
 	func updateSavedStatus() {
 		if let selectedPost = post {
-			if (User.currentUser.currentSpotifyUser?.savedTracks[selectedPost.song.spotifyID] != nil) {
+			if let _ = User.currentUser.currentSpotifyUser?.savedTracks[selectedPost.song.spotifyID] {
 				songStatus = .saved
 			} else {
 				songStatus = .notSaved
@@ -189,7 +207,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 	func updateAddStatus() {
 		if let _ = post {
 			updateSavedStatus()
-			let image = songStatus == .saved ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
+			let image = (songStatus == .saved) ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
 			addButton?.setBackgroundImage(image, for: .normal)
 		}
 	}

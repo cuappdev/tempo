@@ -9,10 +9,21 @@
 import UIKit
 import SwiftyJSON
 
+public func spotifyAvailable() -> Bool {
+	var spotifyAvailable = false
+	
+	SpotifyController.sharedController.spotifyIsAvailable { (success: Bool) in
+		spotifyAvailable = success
+	}
+	
+	return spotifyAvailable
+}
+
 class SpotifyController {
 	
 	let spotifyPlaylistURIKey = "SpotifyPlaylistURIKey"
 	static let sharedController: SpotifyController = SpotifyController()
+	var isSpotifyAvailable: Bool = false
 	
 	func spotifyIsAvailable(_ completion: (Bool) -> Void) {
 		if let session = SPTAuth.defaultInstance().session {
@@ -31,12 +42,14 @@ class SpotifyController {
 				guard let unwrappedData = data, error == nil else { return }
 				let jsonDict = JSON(data: unwrappedData)
 				User.currentUser.currentSpotifyUser = CurrentSpotifyUser(json: jsonDict)
+				self.isSpotifyAvailable = true
 				completion?(true)
 			})
 			
 			task.resume()
 			
 		} catch let error as NSError {
+			isSpotifyAvailable = false
 			print(error)
 		}
 	}
@@ -150,6 +163,7 @@ class SpotifyController {
 	
 	func closeCurrentSpotifySession() {
 		SPTAuth.defaultInstance().session = nil
+		isSpotifyAvailable = false
 	}
 	
 }

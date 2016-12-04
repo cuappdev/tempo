@@ -17,15 +17,16 @@ class LikedTableViewCell: UITableViewCell {
 		super.awakeFromNib()
     }
 	
-	func setupCell() {
+	func setupCell(spotifyAvailable: Bool) {
 		selectionStyle = .none
 		
 		postView = LikedPostView()
 		postView?.frame = bounds
+		postView?.isSpotifyAvailable = spotifyAvailable
 		addSubview(postView!)
 		
-		separator = UIView(frame: CGRect(x: 0, y: bounds.height - 2, width: bounds.width, height: 2))
-		separator?.backgroundColor = .backgroundDarkGrey
+		separator = UIView(frame: CGRect(x: 0, y: bounds.height - 1, width: bounds.width, height: 1))
+		separator?.backgroundColor = .readCellColor
 		addSubview(separator!)
 	}
 
