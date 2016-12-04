@@ -68,18 +68,14 @@ class PlayerCellView: ParentPlayerCellView {
 		
 		if sender.state == .began {
 			if (tapPoint.x > playToggleButton.frame.right.x + 12 && tapPoint.x < addButton.frame.left.x - 12) {
-				// expand cell
 				playerNav?.animateExpandedCell(isExpanding: true)
 			}
 		} else if sender.state == .ended {
 			if (tapPoint.x < playToggleButton.frame.right.x + 12) {
-				// playButton tapped
 				playToggleButtonClicked()
 			} else if (tapPoint.x > addButton.frame.left.x - 12 && tapPoint.x < separatorPoint) {
-				// addButton tapped
 				addButtonClicked()
 			} else if (tapPoint.x > separatorPoint) {
-				// likedButton tapped
 				likeButtonClicked()
 			}
 		}
@@ -106,7 +102,7 @@ class PlayerCellView: ParentPlayerCellView {
 		if let selectedPost = post {
 			let name = selectedPost.player.isPlaying ? "PauseButton" : "PlayButton"
 			progressView.setUpTimer()
-			playToggleButton.setBackgroundImage(UIImage(named: name), for: UIControlState())
+			playToggleButton.setBackgroundImage(UIImage(named: name), for: .normal)
 		}
 	}
     

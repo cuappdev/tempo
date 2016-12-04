@@ -1,7 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,18 +21,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zUX-yd-f29" customClass="ProgressView" customModule="Tempo" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="380" height="4"/>
                     <color key="backgroundColor" red="0.63529411764705879" green="0.22745098039215686" blue="0.25098039215686274" alpha="0.26000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="4" id="BYk-xW-wfg"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Il3-Sc-TqX">
+                    <rect key="frame" x="16" y="21" width="35" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="0eF-6k-aT2"/>
                         <constraint firstAttribute="width" secondItem="Il3-Sc-TqX" secondAttribute="height" id="MOf-Hx-FR5"/>
                         <constraint firstAttribute="width" constant="30" id="bvA-Yk-cgQ"/>
                     </constraints>
-                    <state key="normal" image="PlayButton"/>
+                    <state key="normal" backgroundImage="PlayButton"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="bvA-Yk-cgQ"/>
@@ -37,6 +42,7 @@
                     </variation>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Tracks Playing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lp7-uq-5Ae" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                    <rect key="frame" x="67" y="17" width="128" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="lwO-nD-TG1"/>
                     </constraints>
@@ -45,6 +51,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click a song to play it." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czr-JH-jK0" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                    <rect key="frame" x="67" y="39" width="139.5" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="Lzz-Mk-dDa"/>
                     </constraints>
@@ -53,6 +60,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWp-AK-Ue9">
+                    <rect key="frame" x="299" y="28.5" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="0RO-NQ-Nlv"/>
                         <constraint firstAttribute="width" constant="20" id="eTh-nF-ZGb"/>
@@ -68,6 +76,7 @@
                     </variation>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjX-LE-GtK">
+                    <rect key="frame" x="341" y="29.5" width="20" height="18"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="Jun-zp-4aI"/>
                         <constraint firstAttribute="width" secondItem="tjX-LE-GtK" secondAttribute="height" multiplier="20:18" id="rjL-OC-GFM"/>
