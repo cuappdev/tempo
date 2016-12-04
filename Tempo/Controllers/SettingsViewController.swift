@@ -76,8 +76,8 @@ class SettingsViewController: UIViewController {
 		nameLabel?.isHidden = !loggedIn
 		usernameLabel?.isHidden = !loggedIn
 		goToSpotifyButton?.isHidden = !loggedIn
-		logOutSpotifyButton?.isHidden = !loggedIn
 		logOutButtonHeight.constant = loggedIn ? 50 : 0
+		logOutSpotifyButton?.isHidden = !loggedIn
 	}
 	
 	@IBAction func loginToSpotify() {
