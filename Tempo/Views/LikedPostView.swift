@@ -58,7 +58,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 		backgroundColor = .unreadCellColor
 		
 		albumArtworkImageView = UIImageView(frame: CGRect(x: padding, y: padding, width: artworkImageLength, height: artworkImageLength))
-		albumArtworkImageView?.center.y = center.y - separatorHeight
+		albumArtworkImageView?.center.y = center.y
 		albumArtworkImageView?.clipsToBounds = true
 		albumArtworkImageView?.translatesAutoresizingMaskIntoConstraints = true
 		addSubview(albumArtworkImageView!)
@@ -81,7 +81,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 		addSubview(songArtistLabel!)
 		
 		addButton = UIButton(frame: CGRect(x: frame.width - addButtonLength - addButtonPadding, y: 34, width: addButtonLength, height: addButtonLength))
-		addButton?.center.y = center.y - separatorHeight
+		addButton?.center.y = center.y
 		addButton?.setBackgroundImage(#imageLiteral(resourceName: "AddButton"), for: .normal)
 		addButton?.translatesAutoresizingMaskIntoConstraints = true
 		addButton?.tag = 1 // this tag makes the hitbox bigger

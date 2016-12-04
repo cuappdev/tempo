@@ -17,54 +17,42 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 	
 	let suggestionsEdgePadding: CGFloat = 16
 	let topInset: CGFloat = 40
+	let smallerYOffset: CGFloat = 22
+	let greaterYOffset: CGFloat = 123
 	
 	var view: UIView!
+	var suggestionsContainerView: UIView!
 	var noMorePostsLabel: UILabel!
-	var followSuggestionsLabel: UILabel!
 	var tableView: UITableView!
-	var showMoreSuggestionsButton: UIButton!
+	
 	var suggestedPeopleToFollow = [User]()
-	var showingNoMorePostsLabel = true
-	var originalFrame: CGRect!
+	var showingNoMorePostsLabel: Bool = true
+	var suggestionsContainerHeight: CGFloat!
+	
 	weak var delegate: FeedFollowSuggestionsControllerDelegate?
 	
 	init(frame: CGRect) {
 		super.init()
-		
-		originalFrame = frame
+
 		view = UIView(frame: frame)
-				
 		setupView()
 		fetchSuggestedPeopleToFollow()
+	}
+	
+	func showNoMorePostsLabel() {
+		if showingNoMorePostsLabel { return }
+		
+		view.addSubview(noMorePostsLabel)
+		showingNoMorePostsLabel = true
+		updateViews()
 	}
 	
 	func hideNoMorePostsLabel() {
 		if !showingNoMorePostsLabel { return }
 		
 		noMorePostsLabel.removeFromSuperview()
-
-		view.frame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y, width: view.frame.width, height: view.frame.height - noMorePostsLabel.frame.height + topInset)
-		
-		followSuggestionsLabel.frame.top = CGPoint(x: followSuggestionsLabel.frame.top.x, y: followSuggestionsLabel.frame.top.y - noMorePostsLabel.frame.height + topInset)
-		tableView.frame.top = CGPoint(x: tableView.frame.top.x, y: tableView.frame.top.y - noMorePostsLabel.frame.height + topInset)
-		showMoreSuggestionsButton.center = CGPoint(x: view.center.x, y: tableView.frame.bottom.y + (view.frame.height - tableView.frame.bottom.y) / 2.0)
-		
 		showingNoMorePostsLabel = false
-	}
-	
-	func showNoMorePostsLabel() {
-		if showingNoMorePostsLabel { return }
-		
-		view.frame = originalFrame
-		view.addSubview(noMorePostsLabel)
-		
-		followSuggestionsLabel.frame.top = CGPoint(x: followSuggestionsLabel.frame.top.x, y: noMorePostsLabel.frame.bottom.y)
-		tableView.frame.top = CGPoint(x: tableView.frame.top.x, y: followSuggestionsLabel.frame.bottom.y + 10)
-		showMoreSuggestionsButton.center = CGPoint(x: view.center.x, y: tableView.frame.bottom.y + (view.frame.height - tableView.frame.bottom.y) / 2.0)
-		
-		view.addSubview(noMorePostsLabel)
-		
-		showingNoMorePostsLabel = true
+		updateViews()
 	}
 	
 	func reload() {
@@ -90,40 +78,62 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 	}
 	
 	func setupView() {
-		noMorePostsLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.125, width: view.frame.width, height: 23))
+		// Create no posts in last 24 hours label
+		noMorePostsLabel = UILabel(frame: CGRect(x: 0, y: 65, width: view.frame.width, height: 23))
 		noMorePostsLabel.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
 		noMorePostsLabel.text = "No posts in the last 24 hours."
 		noMorePostsLabel.textColor = .descriptionGrey
 		noMorePostsLabel.textAlignment = .center
+		noMorePostsLabel.isHidden = !showingNoMorePostsLabel
 		
-		followSuggestionsLabel = UILabel(frame: CGRect(x: suggestionsEdgePadding, y: view.frame.height * 0.23, width: view.frame.width - 2*suggestionsEdgePadding, height: 18))
+		// Create suggestions container view
+		let currContainerYOffset = showingNoMorePostsLabel ? greaterYOffset : smallerYOffset
+		let followSuggestionsLabelHeight: CGFloat = 18
+		let tableViewHeight: CGFloat = 303
+		let followMoreButtonHeight: CGFloat = 36
+		suggestionsContainerHeight = followSuggestionsLabelHeight + suggestionsEdgePadding/2 + tableViewHeight + suggestionsEdgePadding + followMoreButtonHeight
+		
+		suggestionsContainerView = UIView(frame: CGRect(x: 0, y: currContainerYOffset, width: view.bounds.width, height: suggestionsContainerHeight))
+
+		let followSuggestionsLabel = UILabel(frame: CGRect(x: suggestionsEdgePadding, y: 0, width: view.frame.width - 2*suggestionsEdgePadding, height: 18))
 		followSuggestionsLabel.font = UIFont(name: "AvenirNext-Regular", size: 13.0)
 		followSuggestionsLabel.text = "SUGGESTED PEOPLE TO FOLLOW"
 		followSuggestionsLabel.textColor = .sectionTitleGrey
 		followSuggestionsLabel.textAlignment = .left
 		
-		tableView = UITableView(frame: CGRect(x: suggestionsEdgePadding, y: followSuggestionsLabel.frame.maxY + suggestionsEdgePadding/2, width: view.frame.width - 2*suggestionsEdgePadding, height: 300), style: .plain)
+		tableView = UITableView(frame: CGRect(x: suggestionsEdgePadding, y: followSuggestionsLabel.frame.maxY + suggestionsEdgePadding/2, width: view.frame.width - 2*suggestionsEdgePadding, height: 303), style: .plain)
 		tableView.dataSource = self
 		tableView.delegate = self
-		tableView.rowHeight = 100
+		tableView.rowHeight = 101
 		tableView.isScrollEnabled = false
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
 		
-		showMoreSuggestionsButton = UIButton(frame: CGRect(x: 0, y: tableView.frame.maxY + suggestionsEdgePadding, width: 200, height: 36))
-		showMoreSuggestionsButton.center.x = view.center.x
-		showMoreSuggestionsButton.backgroundColor = .tempoRed
-		showMoreSuggestionsButton.setTitle("Follow more friends", for: UIControlState())
-		showMoreSuggestionsButton.setTitleColor(UIColor.white.withAlphaComponent(0.87), for: UIControlState())
-		showMoreSuggestionsButton.titleLabel?.font = UIFont(name: "AvenirNext-Demibold", size: 16.0)
-		showMoreSuggestionsButton.layer.cornerRadius = 3
-		showMoreSuggestionsButton.addTarget(self, action: #selector(didTapShowMoreSuggestionsButton), for: .touchUpInside)
+		let followMoreButton = UIButton(frame: CGRect(x: 0, y: tableView.frame.maxY + suggestionsEdgePadding, width: 200, height: 36))
+		followMoreButton.center.x = view.center.x
+		followMoreButton.backgroundColor = .tempoRed
+		followMoreButton.setTitle("Follow more friends", for: UIControlState())
+		followMoreButton.setTitleColor(UIColor.white.withAlphaComponent(0.87), for: UIControlState())
+		followMoreButton.titleLabel?.font = UIFont(name: "AvenirNext-Demibold", size: 16.0)
+		followMoreButton.layer.cornerRadius = 3
+		followMoreButton.addTarget(self, action: #selector(didTapFollowMoreButton), for: .touchUpInside)
 
-		
 		view.addSubview(noMorePostsLabel)
-		view.addSubview(followSuggestionsLabel)
-		view.addSubview(tableView)
-		view.addSubview(showMoreSuggestionsButton)
+		suggestionsContainerView.addSubview(followSuggestionsLabel)
+		suggestionsContainerView.addSubview(tableView)
+		suggestionsContainerView.addSubview(followMoreButton)
+		view.addSubview(suggestionsContainerView)
+		
+		let viewHeight = currContainerYOffset + suggestionsContainerHeight + smallerYOffset
+		view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: viewHeight)
+	}
+	
+	func updateViews() {
+		noMorePostsLabel.isHidden = !showingNoMorePostsLabel
+		suggestionsContainerView.frame.origin.y = showingNoMorePostsLabel ? greaterYOffset : smallerYOffset
+		
+		let viewHeight = suggestionsContainerView.frame.minY + suggestionsContainerHeight + smallerYOffset
+		view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: viewHeight)
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -183,7 +193,7 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		}
 	}
 
-	func didTapShowMoreSuggestionsButton() {
+	func didTapFollowMoreButton() {
 		delegate?.feedFollowSuggestionsControllerWantsToShowMoreSuggestions()
 	}
 }

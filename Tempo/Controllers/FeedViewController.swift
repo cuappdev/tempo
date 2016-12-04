@@ -60,7 +60,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		
 		// Add follow suggestions controller to tableView
 		// Only shows if no posts in past 24 hours
-		feedFollowSuggestionsController = FeedFollowSuggestionsController(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - navigationController!.navigationBar.frame.height - playerNav.playerCell.frame.height - UIApplication.shared.statusBarFrame.height))
+		feedFollowSuggestionsController = FeedFollowSuggestionsController(frame: view.frame)
 		feedFollowSuggestionsController?.delegate = self
 		
 		// Check for 3D Touch availability
