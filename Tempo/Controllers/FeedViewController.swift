@@ -214,6 +214,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 			cell.postView.post?.player.wasPlayed = true
 		}
 		
+		cell.setUserInitials(firstName: post.user.firstName, lastName: post.user.lastName)
+		
 		return cell
 	}
 	
@@ -246,7 +248,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	func setupAddButton() {
 		let image = #imageLiteral(resourceName: "AddIcon")
 		plusButton = UIButton(type: .custom)
-		plusButton.frame = CGRect(origin: CGPoint.zero, size: image.size)
+		plusButton.frame = CGRect(origin: .zero, size: image.size)
 		plusButton.setImage(image, for: UIControlState())
 		plusButton.imageView!.contentMode = .center
 		plusButton.imageView!.clipsToBounds = false

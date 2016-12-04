@@ -59,7 +59,6 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
 					dateLabel?.text = post.relativeDate()
 				case .history:
-					avatarImageView?.layer.cornerRadius = 7
 					profileNameLabel?.text = post.song.title
 					descriptionLabel?.text = post.song.artist
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
@@ -189,9 +188,9 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 	func updateBackground() {
 		if let post = post {
 			if type == .feed {
-				backgroundColor = post.player.wasPlayed ? UIColor.tempoDarkGray : UIColor.tempoLightGray
+				backgroundColor = post.player.wasPlayed ? .readCellColor : .unreadCellColor
 			} else {
-				backgroundColor = post.player.isPlaying ? UIColor.tempoDarkGray : UIColor.tempoLightGray
+				backgroundColor = post.player.isPlaying ? .readCellColor : .unreadCellColor
 			}
 		}
 	}
