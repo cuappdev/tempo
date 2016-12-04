@@ -42,26 +42,26 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mPq-C5-plJ">
-                    <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.12156862745098039" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="Rgp-eD-N67"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                     <state key="normal" title="Log out of Spotify">
-                        <color key="titleColor" red="0.47843137254901957" green="0.46274509803921571" blue="0.46274509803921571" alpha="0.73999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" red="0.67843137254901964" green="0.6705882352941176" blue="0.6705882352941176" alpha="0.73999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="logOutSpotify:" destination="-1" eventType="touchUpInside" id="Qav-gI-5ub"/>
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Dl-Dt-Cf4">
-                    <color key="backgroundColor" red="0.10588235294117647" green="0.10980392156862745" blue="0.11372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="47" id="2BH-wR-G0B"/>
+                        <constraint firstAttribute="height" constant="50" id="2BH-wR-G0B"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                     <state key="normal" title="Open Spotify">
-                        <color key="titleColor" red="0.38823529411764707" green="0.38823529411764707" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" red="0.67843137254901964" green="0.6705882352941176" blue="0.6705882352941176" alpha="0.73999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="goToSpotify:" destination="-1" eventType="touchUpInside" id="PWL-wo-3oY"/>
@@ -76,7 +76,7 @@
                         </label>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdg-bw-3Aj" userLabel="Username Label">
                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                            <color key="textColor" red="0.47843137254901957" green="0.46274509803921571" blue="0.46274509803921571" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.67843137254901964" green="0.6705882352941176" blue="0.6705882352941176" alpha="0.73999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3LL-O1-glU">
@@ -86,13 +86,13 @@
                                 <constraint firstAttribute="width" secondItem="3LL-O1-glU" secondAttribute="height" id="xiw-Do-WLQ"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to allow Tempo to add songs your find to your Spotify." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eD4-5d-DJ7">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in to allow Tempo to add songs your find to your Spotify." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eD4-5d-DJ7">
                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                            <color key="textColor" red="0.47843137254901957" green="0.46274509803921571" blue="0.46274509803921571" alpha="0.73999999999999999" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.67843137254901964" green="0.6705882352941176" blue="0.6705882352941176" alpha="0.73999999999999999" colorSpace="calibratedRGB"/>
                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.12156862745098039" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="91" id="2FR-Iv-Eam"/>
                         <constraint firstItem="3LL-O1-glU" firstAttribute="centerY" secondItem="POc-Cn-iow" secondAttribute="centerY" id="BNR-sX-D4t"/>
@@ -113,11 +113,11 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zSO-9T-0hZ">
                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                            <color key="textColor" red="0.47843137254901957" green="0.46274509803921571" blue="0.46274509803921571" alpha="0.73999999999999999" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.67843137254901964" green="0.6705882352941176" blue="0.6705882352941176" alpha="0.73999999999999999" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.12156862745098039" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="zSO-9T-0hZ" firstAttribute="centerY" secondItem="n8j-yT-ozA" secondAttribute="centerY" id="5mM-2H-MHM"/>
                         <constraint firstItem="zSO-9T-0hZ" firstAttribute="leading" secondItem="n8j-yT-ozA" secondAttribute="leading" constant="22" id="l58-mU-sQu"/>
@@ -125,14 +125,14 @@
                     </constraints>
                 </view>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TyH-kz-APS">
-                    <color key="tintColor" red="0.47843137254901957" green="0.46274509803921571" blue="0.46274509803921571" alpha="0.73999999999999999" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="0.67843137254901964" green="0.6705882352941176" blue="0.6705882352941176" alpha="0.73999999999999999" colorSpace="calibratedRGB"/>
                     <color key="thumbTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="toggledNotifications:" destination="-1" eventType="valueChanged" id="Jok-fh-Ykw"/>
                     </connections>
                 </switch>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCy-rO-jND">
-                    <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.12156862745098039" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="1xi-zu-cLS"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="57" id="4D3-Ke-ocb"/>
@@ -142,8 +142,8 @@
                         <constraint firstAttribute="height" constant="57" id="U5B-0h-86d"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                    <state key="normal" title="Login to Spotify">
-                        <color key="titleColor" red="0.47843137254901957" green="0.46274509803921571" blue="0.46274509803921571" alpha="0.73999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="Log in to Spotify">
+                        <color key="titleColor" red="0.67843137254901964" green="0.6705882352941176" blue="0.6705882352941176" alpha="0.73999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <variation key="default">
                         <mask key="constraints">
@@ -159,7 +159,7 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.050980392156862744" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.12156862745098039" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="6rq-4p-ZgW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="22" id="0UQ-ju-nJ2"/>
                 <constraint firstItem="n8j-yT-ozA" firstAttribute="top" secondItem="PTm-Qt-aaa" secondAttribute="bottom" constant="11" id="0kO-zf-ayv"/>
@@ -178,10 +178,8 @@
                 <constraint firstItem="6rq-4p-ZgW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="cGT-bk-cAN"/>
                 <constraint firstAttribute="trailing" secondItem="n8j-yT-ozA" secondAttribute="trailing" id="dNM-vv-Rkx"/>
                 <constraint firstItem="POc-Cn-iow" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dpV-Uo-eka"/>
-                <constraint firstItem="6Dl-Dt-Cf4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="erK-R9-teT"/>
                 <constraint firstItem="hCy-rO-jND" firstAttribute="top" secondItem="POc-Cn-iow" secondAttribute="bottom" constant="2" id="gOO-og-kCg"/>
-                <constraint firstItem="mPq-C5-plJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="gQb-oG-OXn"/>
-                <constraint firstItem="6Dl-Dt-Cf4" firstAttribute="top" secondItem="POc-Cn-iow" secondAttribute="bottom" constant="1" id="uiD-MC-NwK"/>
+                <constraint firstItem="6Dl-Dt-Cf4" firstAttribute="top" secondItem="POc-Cn-iow" secondAttribute="bottom" constant="2" id="uiD-MC-NwK"/>
                 <constraint firstItem="TyH-kz-APS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zSO-9T-0hZ" secondAttribute="trailing" constant="22" id="x2F-KY-WUT"/>
                 <constraint firstItem="n8j-yT-ozA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yXS-x4-HPh"/>
                 <constraint firstItem="mPq-C5-plJ" firstAttribute="top" secondItem="6Dl-Dt-Cf4" secondAttribute="bottom" constant="1" id="zOQ-uH-uu3"/>

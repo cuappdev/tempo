@@ -27,7 +27,7 @@ class SettingsViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+
 		toggleNotifications.onTintColor = .tempoRed
 		profilePicture.layer.cornerRadius = profilePicture.frame.width / 2.0
 		
@@ -44,7 +44,7 @@ class SettingsViewController: UIViewController {
 		super.viewDidAppear(animated)
 		
 		title = "Settings"
-		view.backgroundColor = .backgroundOffBlack
+		view.backgroundColor = .readCellColor
 		
 		addHamburgerMenu()
 	}
