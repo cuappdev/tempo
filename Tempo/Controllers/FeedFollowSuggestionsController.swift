@@ -20,12 +20,12 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 	let smallerYOffset: CGFloat = 22
 	let greaterYOffset: CGFloat = 123
 	let cellHeight: CGFloat = 101
+	let numFollowSuggestions: Int = 3
 	
 	var view: UIView!
 	var suggestionsContainerView: UIView!
 	var noMorePostsLabel: UILabel!
 	var tableView: UITableView!
-	var followMoreButton: UIButton!
 	
 	var suggestedPeopleToFollow = [User]()
 	var showingNoMorePostsLabel: Bool = true
@@ -72,13 +72,11 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 				} else {
 					self.view.alpha = 1.0
 					self.tableView.backgroundView = nil
-					self.tableView.frame.size.height = self.cellHeight * CGFloat(self.suggestedPeopleToFollow.count)
-					self.followMoreButton.frame.origin.y = self.tableView.frame.maxY + self.suggestionsEdgePadding
 				}
 			}
 		}
 		
-		API.sharedAPI.fetchFollowSuggestions(completion, length: 3, page: 0)
+		API.sharedAPI.fetchFollowSuggestions(completion, length: numFollowSuggestions, page: 0)
 	}
 	
 	func setupView() {
@@ -93,7 +91,7 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		// Create suggestions container view
 		let currContainerYOffset = showingNoMorePostsLabel ? greaterYOffset : smallerYOffset
 		let followSuggestionsLabelHeight: CGFloat = 18
-		let tableViewHeight: CGFloat = cellHeight * CGFloat(suggestedPeopleToFollow.count)
+		let tableViewHeight: CGFloat = cellHeight * CGFloat(numFollowSuggestions)
 		let followMoreButtonHeight: CGFloat = 36
 		suggestionsContainerHeight = followSuggestionsLabelHeight + suggestionsEdgePadding/2 + tableViewHeight + suggestionsEdgePadding + followMoreButtonHeight
 		
@@ -113,7 +111,7 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
 		
-		followMoreButton = UIButton(frame: CGRect(x: 0, y: tableView.frame.maxY + suggestionsEdgePadding, width: 200, height: 36))
+		let followMoreButton = UIButton(frame: CGRect(x: 0, y: tableView.frame.maxY + suggestionsEdgePadding, width: 200, height: 36))
 		followMoreButton.center.x = view.center.x
 		followMoreButton.backgroundColor = .tempoRed
 		followMoreButton.setTitle("Follow more friends", for: UIControlState())
