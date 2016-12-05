@@ -66,7 +66,6 @@
 		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
 		C7B1984E1DD67D6800EAB8EA /* SpotifyLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B1984D1DD67D6800EAB8EA /* SpotifyLoginViewController.swift */; };
 		D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9C51AE889D600C66385 /* SideBarViewController.swift */; };
-		D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D102A9C61AE889D600C66385 /* SideBarViewController.xib */; };
 		D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */; };
 		D11740001AF8574400302FFD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1173FFF1AF8574400302FFD /* ProfileViewController.swift */; };
 		D11740081AF8574900302FFD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D11740071AF8574900302FFD /* ProfileViewController.xib */; };
@@ -532,7 +531,6 @@
 				1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */,
 				60256C101BC1BC7900B52FDD /* SavedSongView.xib in Resources */,
 				0271C9481D9582410037F6AD /* PostHistoryHeaderSectionCell.xib in Resources */,
-				D102A9C81AE889D600C66385 /* SideBarViewController.xib in Resources */,
 				FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */,
 				6038B1801D80EDAF0083940D /* FeedTableViewCell.xib in Resources */,
 				D11740081AF8574900302FFD /* ProfileViewController.xib in Resources */,
