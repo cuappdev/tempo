@@ -15,7 +15,10 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var initialsLabel: UILabel!
     @IBOutlet weak var separator: UIView!
     @IBOutlet weak var separatorHeight: NSLayoutConstraint!
-	
+    @IBOutlet weak var imageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var likeButtonBottomConstraint: NSLayoutConstraint!
+    
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
@@ -26,5 +29,13 @@ class FeedTableViewCell: UITableViewCell {
 	
 	func setUpCell(firstName: String, lastName: String) {
 		initialsLabel.text = setUserInitials(firstName: firstName, lastName: firstName)
+	}
+	
+	func setUpPostHistoryCell() {
+		postView.dateLabel!.isHidden = true
+		postView.avatarImageView?.layer.cornerRadius = 0
+		imageViewWidthConstraint.constant = 60
+		imageViewTopConstraint.constant = 25
+		likeButtonBottomConstraint.constant = 48.5
 	}
 }

@@ -31,10 +31,12 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		tableView.tableHeaderView = searchController.searchBar
 		tableView.addSubview(topView)
 		
-		tableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		tableView.register(UINib(nibName: "PostHistoryHeaderSectionCell", bundle: nil), forCellReuseIdentifier: "HeaderCell")
-		tableView.rowHeight = 100
-		tableView.sectionHeaderHeight = 30
+		tableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+		tableView.rowHeight = 111
+		tableView.sectionHeaderHeight = 33
+		tableView.backgroundColor = .readCellColor
+		tableView.separatorStyle = .none
 		tableView.showsVerticalScrollIndicator = false
     }
 	
@@ -110,7 +112,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		cell.postView.post = posts[absoluteIndex(indexPath)]
 		cell.postView.postViewDelegate = self
 		cell.postView.playerDelegate = self
-	    cell.postView.dateLabel!.isHidden = true
+		cell.setUpPostHistoryCell()
 		
 		return cell
     }

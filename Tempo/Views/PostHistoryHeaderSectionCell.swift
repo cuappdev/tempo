@@ -11,7 +11,6 @@ import UIKit
 class PostHistoryHeaderSectionCell: UITableViewCell {
 	
 	@IBOutlet weak var postDate: UILabel?
-	@IBOutlet weak var customSeparator: UIView?
 
     override func awakeFromNib() {
         super.awakeFromNib()
