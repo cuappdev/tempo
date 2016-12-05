@@ -28,8 +28,21 @@ extension DateFormatter {
 		return $0
 	}(DateFormatter())
 	
+	@nonobjc static let slashYearMonthDayFormatter: DateFormatter = {
+		$0.dateFormat = "yyyy/MM/dd"
+		$0.locale = Locale(identifier: "en_US_POSIX")
+		return $0
+	}(DateFormatter())
+	
 	@nonobjc static let monthFormatter: DateFormatter = {
 		$0.dateFormat = "MMM"
 		return $0
 	}(DateFormatter())
+	
+	@nonobjc static let postHistoryDateFormatter: DateFormatter = {
+		$0.dateFormat = "MMM d, yyyy"
+		$0.locale = Locale(identifier: "en_US_POSIX")
+		return $0
+	}(DateFormatter())
+	
 }

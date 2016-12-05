@@ -47,25 +47,24 @@ class PostHistoryTableViewController: PlayerTableViewController {
     override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		if sectionIndex != nil {
+		if let _ = sectionIndex {
 			let selectedRow = IndexPath(row: 0, section: sectionIndex!)
 			tableView.scrollToRow(at: selectedRow, at: UITableViewScrollPosition.top, animated: true)
 		}
     }
 	
 	fileprivate func convertDate(_ date: String) -> String {
-		let year = date.substring(to: date.characters.index(date.startIndex, offsetBy: 4))
-		let monthDay = date.substring(from: date.characters.index(date.startIndex, offsetBy: 5))
-		let editedDate = monthDay + "/" + year.substring(from: year.characters.index(year.startIndex, offsetBy: 2))
-		let d = editedDate.replacingOccurrences(of: "/", with: ".")
-		return d
+		let dateObject = DateFormatter.slashYearMonthDayFormatter.date(from: date)
+		let dateString = DateFormatter.postHistoryDateFormatter.string(from: dateObject!)
+
+		return dateString
 	}
 	
 	// Get the absolute index path of cell
 	fileprivate func absoluteIndex(_ indexPath: IndexPath) -> Int {
 		var absoluteIndex = indexPath.row
 		if indexPath.section > 0 {
-			for s in 0...indexPath.section-1 {
+			for s in 0..<indexPath.section {
 				absoluteIndex = absoluteIndex + postedDatesDict[postedDatesSections[s]]!
 			}
 		}

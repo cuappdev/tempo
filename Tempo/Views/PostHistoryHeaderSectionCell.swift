@@ -16,10 +16,7 @@ class PostHistoryHeaderSectionCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 		
-		contentView.backgroundColor = UIColor.tempoDarkGray
-		customSeparator?.backgroundColor = UIColor.tempoDarkGray
-		postDate?.textColor = UIColor.white
-		postDate?.layer.opacity = 0.7
+		contentView.backgroundColor = .readCellColor
     }
 	
 }
