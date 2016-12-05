@@ -113,6 +113,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func didFinishLoggingIn() {
+		if !UserDefaults.standard.bool(forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey) {
+			registerForRemotePushNotifications()
+		}
 		toggleRootVC()
 	}
 	

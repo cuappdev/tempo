@@ -10,12 +10,9 @@ import UIKit
 
 class AboutViewController: UIViewController, UIScrollViewDelegate {
 	
-	let aboutText = "Tempo is a music sharing application created by Cornell App Development, a student project team at Cornell University dedicated to mobile app development. Every year, we take apps from idea to product, culminating with releases on the App Store. We give students the opportunity to work in a startup environment and gain practical experience in software development, design, and product management. Our team is made up of talented designers, iOS developers, and backend developers who collaborate to bring projects to life."
+	let aboutText = "Tempo is a music sharing application created by AppDev, a student project team at Cornell University dedicated to mobile app development. Every year, we take apps from idea to product, culminating with releases on the App Store. We give students the opportunity to work in a startup environment and gain practical experience in software development, design, and product management. Our team is made up of talented designers and developers who aspire to bring beautiful projects to life."
 	let linksText = "www.cuappdev.org \n" + "www.github.com/cuappdev \n" + "www.twitter.com/cornellappdev"
-	let teamText = "Leads:  Andrew Aquino, Annie Cheng, Adam ElShaer, Dennis Fedorko, Ilan Filonenko \n\n" +
-		"Designers:  Austin Chan, Mihir Chauhan, Sara Cheong, Eileen Dai, Derrick Ho, Sahil Khoja, Jonathan Lee, Jason Wu, Tiffany Zheng \n\n" +
-		"iOS:  Logan Allen, Natasha Armbrust, Austin Astorga, Matt Barker, Mark Bryan, Jesse Chen, Andrew Dunne, Arman Esmaili, Kevin Greer, Daniel Li, Emily Lien, Monica Ong, Keivan Shahida \n\n" +
-	"Backend:  Joseph Antonakakis, Celine Brass, Rishab Gupta, Hong Jeon, Sanjana Kaundinya, Ji Hun Kim, Amit Mizrahi, Shiv Roychowdhury"
+	let teamText = "Special thanks to all the designer, developers, and dreamers, who lost countless hours of sleep to bring this app to life."
 	let titleFont = UIFont(name: "AvenirNext-Medium", size: 18.0)!
 	let padding: CGFloat = 31
 	let sectionSpacing: CGFloat = 30
@@ -56,15 +53,15 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
     }
 	
 	func setupTopViews() {
-		let imageSize = view.frame.width * 0.347
-		tempoImage = UIImageView(frame: CGRect(x: 0, y: 46, width: imageSize, height: imageSize))
+		let imageSize = view.frame.width * 0.25
+		tempoImage = UIImageView(frame: CGRect(x: 0, y: 40, width: imageSize, height: imageSize))
 		tempoImage.center.x = view.center.x
 		tempoImage.image = #imageLiteral(resourceName: "TempoLogo")
 		view.addSubview(tempoImage)
 		
-		tempoTitle = UILabel(frame: CGRect(x: 20, y: tempoImage.frame.bottom.y + 13, width: screenWidth, height: 60))
+		tempoTitle = UILabel(frame: CGRect(x: 20, y: tempoImage.frame.bottom.y + 10, width: screenWidth, height: 50))
 		tempoTitle.text = "Tempo"
-		tempoTitle.font = UIFont(name: "HelveticaNeue-Bold", size: 50.0)
+		tempoTitle.font = UIFont(name: "HelveticaNeue-Bold", size: 40.0)
 		tempoTitle.textColor = .white
 		tempoTitle.textAlignment = .center
 		tempoTitle.sizeToFit()

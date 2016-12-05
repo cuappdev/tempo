@@ -168,7 +168,6 @@
 		C0CF7B971AE425450083606C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		C7B1984D1DD67D6800EAB8EA /* SpotifyLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewController.swift; sourceTree = "<group>"; };
 		D102A9C51AE889D600C66385 /* SideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
-		D102A9C61AE889D600C66385 /* SideBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SideBarViewController.xib; path = ../Profile/SideBarViewController.xib; sourceTree = "<group>"; };
 		D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideBarTableViewCell.swift; path = ../Profile/SideBarTableViewCell.swift; sourceTree = "<group>"; };
 		D1173FFF1AF8574400302FFD /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D11740071AF8574900302FFD /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileViewController.xib; path = ../Profile/ProfileViewController.xib; sourceTree = "<group>"; };
@@ -400,7 +399,6 @@
 			children = (
 				D11740071AF8574900302FFD /* ProfileViewController.xib */,
 				60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */,
-				D102A9C61AE889D600C66385 /* SideBarViewController.xib */,
 			);
 			name = XIBS;
 			sourceTree = "<group>";
