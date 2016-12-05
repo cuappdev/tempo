@@ -34,6 +34,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 	
 	var profileView: UIView!
 	var highlightView: UIView!
+	var initialsView: UIView!
+	var initialsLabel: UILabel!
     var profileImageView: UIImageView!
     var nameLabel: UILabel!
     var usernameLabel: UILabel!
@@ -112,9 +114,21 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		highlightView = UIView(frame: CGRect(x: 0, y: 0, width: 9, height: profileViewHeight))
 		highlightView.isHidden = true
 		highlightView.backgroundColor = .tempoRed
+		
+		initialsView = UIImageView(frame: CGRect(x: 0, y: profileImageTopPadding, width: profileImageLength, height: profileImageLength))
+		initialsView.center.x = sidebarWidth / 2.0
+		initialsView.layer.cornerRadius = initialsView.frame.size.height/2
+		initialsView.clipsToBounds = true
+		initialsView.backgroundColor = .placeholderGrey
+		
+		initialsLabel = UILabel(frame: CGRect(x: 0, y: 0, width: initialsView.frame.width, height: 25))
+		initialsLabel.text = setUserInitials(firstName: User.currentUser.firstName, lastName: User.currentUser.lastName)
+		initialsLabel.font = UIFont(name: "AvenirNext-Medium", size: 30.0)
+		initialsLabel.textColor = .placeholderTextGrey
+		initialsLabel.textAlignment = .center
+		initialsLabel.center = CGPoint(x: initialsView.center.x, y: initialsView.center.y + 2)
 
-		profileImageView = UIImageView(frame: CGRect(x: 0, y: profileImageTopPadding, width: profileImageLength, height: profileImageLength))
-		profileImageView.center.x = sidebarWidth / 2.0
+		profileImageView = UIImageView(frame: initialsView.frame)
 		profileImageView.layer.cornerRadius = profileImageView.frame.size.height/2
 		profileImageView.clipsToBounds = true
 		
@@ -156,6 +170,8 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		logoutButton.addTarget(self, action: #selector(logOut(_:)), for: .touchUpInside)
 		
 		profileView.addSubview(highlightView)
+		profileView.addSubview(initialsView)
+		profileView.addSubview(initialsLabel)
 		profileView.addSubview(profileImageView)
 		profileView.addSubview(nameLabel)
 		profileView.addSubview(usernameLabel)

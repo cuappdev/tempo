@@ -40,6 +40,8 @@ extension UIColor {
 	@nonobjc static let cellDarkGrey = UIColor.colorFromCode(0x212121)
 	@nonobjc static let tempoOffBlack = UIColor.colorFromCode(0x101112)
 	@nonobjc static let tempoMidGrey = UIColor.colorFromCode(0x787474)
+	@nonobjc static let placeholderGrey = UIColor.colorFromCode(0x3F3F43)
+	@nonobjc static let placeholderTextGrey = UIColor.colorFromCode(0xA8A3A3)
 	
 	public static func colorFromCode(_ code: Int) -> UIColor {
 		let red = CGFloat(((code & 0xFF0000) >> 16)) / 255
