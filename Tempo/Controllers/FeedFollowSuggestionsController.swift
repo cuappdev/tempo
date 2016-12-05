@@ -19,11 +19,13 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 	let topInset: CGFloat = 40
 	let smallerYOffset: CGFloat = 22
 	let greaterYOffset: CGFloat = 123
+	let cellHeight: CGFloat = 101
 	
 	var view: UIView!
 	var suggestionsContainerView: UIView!
 	var noMorePostsLabel: UILabel!
 	var tableView: UITableView!
+	var followMoreButton: UIButton!
 	
 	var suggestedPeopleToFollow = [User]()
 	var showingNoMorePostsLabel: Bool = true
@@ -70,6 +72,8 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 				} else {
 					self.view.alpha = 1.0
 					self.tableView.backgroundView = nil
+					self.tableView.frame.size.height = self.cellHeight * CGFloat(self.suggestedPeopleToFollow.count)
+					self.followMoreButton.frame.origin.y = self.tableView.frame.maxY + self.suggestionsEdgePadding
 				}
 			}
 		}
@@ -89,7 +93,7 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		// Create suggestions container view
 		let currContainerYOffset = showingNoMorePostsLabel ? greaterYOffset : smallerYOffset
 		let followSuggestionsLabelHeight: CGFloat = 18
-		let tableViewHeight: CGFloat = 303
+		let tableViewHeight: CGFloat = cellHeight * CGFloat(suggestedPeopleToFollow.count)
 		let followMoreButtonHeight: CGFloat = 36
 		suggestionsContainerHeight = followSuggestionsLabelHeight + suggestionsEdgePadding/2 + tableViewHeight + suggestionsEdgePadding + followMoreButtonHeight
 		
@@ -101,15 +105,15 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		followSuggestionsLabel.textColor = .sectionTitleGrey
 		followSuggestionsLabel.textAlignment = .left
 		
-		tableView = UITableView(frame: CGRect(x: suggestionsEdgePadding, y: followSuggestionsLabel.frame.maxY + suggestionsEdgePadding/2, width: view.frame.width - 2*suggestionsEdgePadding, height: 303), style: .plain)
+		tableView = UITableView(frame: CGRect(x: suggestionsEdgePadding, y: followSuggestionsLabel.frame.maxY + suggestionsEdgePadding/2, width: view.frame.width - 2*suggestionsEdgePadding, height: tableViewHeight), style: .plain)
 		tableView.dataSource = self
 		tableView.delegate = self
-		tableView.rowHeight = 101
+		tableView.rowHeight = cellHeight
 		tableView.isScrollEnabled = false
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "FollowTableViewCell", bundle: nil), forCellReuseIdentifier: "FollowCell")
 		
-		let followMoreButton = UIButton(frame: CGRect(x: 0, y: tableView.frame.maxY + suggestionsEdgePadding, width: 200, height: 36))
+		followMoreButton = UIButton(frame: CGRect(x: 0, y: tableView.frame.maxY + suggestionsEdgePadding, width: 200, height: 36))
 		followMoreButton.center.x = view.center.x
 		followMoreButton.backgroundColor = .tempoRed
 		followMoreButton.setTitle("Follow more friends", for: UIControlState())
