@@ -63,4 +63,18 @@ func transparentPNG(_ length: CGFloat) -> UIImage {
     return blank!
 }
 
+func setUserInitials(firstName: String, lastName: String) -> String {
+	var initials: String = ""
+	
+	if !firstName.isEmpty {
+		initials += "\(firstName.characters.first!)"
+	}
+	
+	if !lastName.isEmpty {
+		initials += "\(lastName.characters.first!)"
+	}
+	
+	return initials
+}
+
 

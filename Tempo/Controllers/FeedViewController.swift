@@ -214,7 +214,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 			cell.postView.post?.player.wasPlayed = true
 		}
 		
-		cell.setUserInitials(firstName: post.user.firstName, lastName: post.user.lastName)
+		cell.setUpCell(firstName: post.user.firstName, lastName: post.user.lastName)
 		
 		return cell
 	}

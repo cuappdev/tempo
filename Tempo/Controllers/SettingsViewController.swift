@@ -13,6 +13,8 @@ class SettingsViewController: UIViewController {
 	let buttonHeight: CGFloat = 50
 	
 	@IBOutlet weak var profilePicture: UIImageView!
+    @IBOutlet weak var initialsView: UIView!
+    @IBOutlet weak var initialsLabel: UILabel!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var usernameLabel: UILabel!
 	@IBOutlet weak var loginToSpotifyButton: UIButton!
@@ -59,6 +61,7 @@ class SettingsViewController: UIViewController {
 						if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
 							self.nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
 							self.usernameLabel?.text = "@\(currentSpotifyUser.username)"
+							self.initialsLabel.text = setUserInitials(firstName: User.currentUser.firstName, lastName: User.currentUser.lastName)
 							self.loggedInToSpotify(session.isValid())
 						}
 					}
@@ -73,6 +76,8 @@ class SettingsViewController: UIViewController {
 		loginToSpotifyButton?.isHidden = loggedIn
 		useLabel?.isHidden = loggedIn
 		profilePicture?.isHidden = !loggedIn
+		initialsView.isHidden = !loggedIn
+		initialsLabel.isHidden = !loggedIn
 		nameLabel?.isHidden = !loggedIn
 		usernameLabel?.isHidden = !loggedIn
 		goToSpotifyButton?.isHidden = !loggedIn

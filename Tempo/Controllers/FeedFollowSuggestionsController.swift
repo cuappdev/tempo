@@ -160,7 +160,7 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		}
 		
 		cell.setUpFollowSuggestionsCell()
-		cell.setUserInitials(firstName: user.firstName, lastName: user.lastName)
+		cell.setUpInitialsView(firstName: user.firstName, lastName: user.lastName)
 		cell.setNeedsLayout()
 		
 		return cell

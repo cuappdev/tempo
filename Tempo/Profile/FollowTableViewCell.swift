@@ -54,18 +54,8 @@ class FollowTableViewCell: UITableViewCell {
 		contentView.backgroundColor = .cellDarkGrey
 	}
 	
-	func setUserInitials(firstName: String, lastName: String) {
-		var initials: String = ""
-		
-		if !firstName.isEmpty {
-			initials += "\(firstName.characters.first!)"
-		}
-		
-		if !lastName.isEmpty {
-			initials += "\(lastName.characters.first!)"
-		}
-
-		initialsLabel.text = initials
+	func setUpInitialsView(firstName: String, lastName: String) {
+		initialsLabel.text = setUserInitials(firstName: firstName, lastName: lastName)
 	}
 	
     @IBAction func userImageClicked(_ sender: UIButton) {

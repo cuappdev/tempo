@@ -24,17 +24,7 @@ class FeedTableViewCell: UITableViewCell {
 		separatorHeight.constant = 1
 	}
 	
-	func setUserInitials(firstName: String, lastName: String) {
-		var initials: String = ""
-		
-		if !firstName.isEmpty {
-			initials += "\(firstName.characters.first!)"
-		}
-		
-		if !lastName.isEmpty {
-			initials += "\(lastName.characters.first!)"
-		}
-		
-		initialsLabel.text = initials
+	func setUpCell(firstName: String, lastName: String) {
+		initialsLabel.text = setUserInitials(firstName: firstName, lastName: firstName)
 	}
 }
