@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	
 	var window: UIWindow?
 	let revealVC = SWRevealViewController()
-	let sidebarVC = SideBarViewController(nibName: "SideBarViewController", bundle: nil)
+	let sidebarVC = SideBarViewController()
 	let feedVC = FeedViewController()
 	let searchVC = SearchViewController()
 	let usersVC = UsersViewController()
@@ -49,6 +49,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
 		
 		URLCache.shared = Foundation.URLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
+		
+		// Styling reveal controller
+		revealVC.rearViewRevealWidth = DeviceType.IS_IPHONE_5_OR_LESS ? 260 : 300
+		revealVC.frontViewShadowColor = .revealShadowBlack
+		revealVC.frontViewShadowRadius = 14
+		revealVC.frontViewShadowOffset = CGSize(width: -15, height: 0)
+		revealVC.frontViewShadowOpacity = 0.7
 		
 		// Set up navigation bar divider
 		let navigationBar = navigationController.navigationBar

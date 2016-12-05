@@ -28,7 +28,7 @@ extension UIColor {
 	@nonobjc static let correctGreen = UIColor.colorFromCode(0x08673A)
 	@nonobjc static let descriptionGrey = UIColor.colorFromCode(0x7A7676)
 	@nonobjc static let backgroundDarkGrey = UIColor.colorFromCode(0x1C1D1E)
-	@nonobjc static let backgroundOffBlack = UIColor.colorFromCode(0x0E0C0C)
+	@nonobjc static let revealShadowBlack = UIColor.colorFromCode(0x0E0C0C)
 	@nonobjc static let unreadCellColor = UIColor.colorFromCode(0x2E2E30)
 	@nonobjc static let readCellColor = UIColor.colorFromCode(0x1D1E1F)
 	@nonobjc static let paleRed = UIColor.colorFromCode(0xBCAEAD)
@@ -39,6 +39,7 @@ extension UIColor {
 	@nonobjc static let sectionTitleGrey = UIColor.colorFromCode(0x636363)
 	@nonobjc static let cellDarkGrey = UIColor.colorFromCode(0x212121)
 	@nonobjc static let tempoOffBlack = UIColor.colorFromCode(0x101112)
+	@nonobjc static let tempoMidGrey = UIColor.colorFromCode(0x787474)
 	
 	public static func colorFromCode(_ code: Int) -> UIColor {
 		let red = CGFloat(((code & 0xFF0000) >> 16)) / 255

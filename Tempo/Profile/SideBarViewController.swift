@@ -22,56 +22,39 @@ struct SideBarElement {
 }
 
 class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+	
+	let padding: CGFloat = 22
+	
     var selectionHandler: ((UIViewController?) -> ())?
-    
     var searchNavigationController: UINavigationController!
     var elements: [SideBarElement] = []
     var button: UIButton!
 	
 	var preselectedIndex: Int? // -1 is profile
-    
-    @IBOutlet weak var profilePicture: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var categoryTableView: UITableView!
-    @IBOutlet weak var profileView: UIView!
-    @IBOutlet weak var divider: UIView!
-    @IBOutlet weak var sideView: UIView!
-    
-    @IBAction func logOut(_ sender: UIButton) {
-		FBSDKAccessToken.setCurrent(nil)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.toggleRootVC()
-		appDelegate.feedVC.refreshNeeded = true
-    }
+	
+	var profileView: UIView!
+	var highlightView: UIView!
+    var profileImageView: UIImageView!
+    var nameLabel: UILabel!
+    var usernameLabel: UILabel!
+	var divider: UIView!
+    var categoryTableView: UITableView!
+	var logoutButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        categoryTableView.register(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
-        
-        // Formatting
-        categoryTableView.separatorStyle = .none
-        categoryTableView.isScrollEnabled = false
-        categoryTableView.backgroundColor = .readCellColor
-		categoryTableView.rowHeight = 65
-        profileView.backgroundColor = .readCellColor
-        view.backgroundColor = .readCellColor
-        divider.backgroundColor = UIColor.unreadCellColor.withAlphaComponent(0.46)
+		
+		view.backgroundColor = .readCellColor
+		
+		setUpViews()
 
-		sideView.isHidden = true
-		sideView.backgroundColor = .tempoRed
-		
-		profilePicture.frame = CGRect(x: 0, y: 0, width: 85, height: 85)
-		profilePicture.layer.cornerRadius = profilePicture.frame.size.height/2
-		profilePicture.clipsToBounds = true
-		
 		// Add button to profile view
 		button = UIButton(type: .system)
 		button.frame = profileView.bounds
 		button.addTarget(self, action: #selector(pushToProfile(_:)), for: .touchUpInside)
 		view.addSubview(button)
 		
+		categoryTableView.register(UINib(nibName: "SideBarTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
 		categoryTableView.reloadData()
 		
 		// Mark first item selected unless there was a preselected item
@@ -79,7 +62,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 			if let selectedIndex = preselectedIndex {
 				if selectedIndex == -1 {
 					profileView.backgroundColor = .unreadCellColor
-					sideView.isHidden = false
+					highlightView.isHidden = false
 					categoryTableView.selectRow(at: nil, animated: false, scrollPosition: .none)
 				} else {
 					categoryTableView.selectRow(at: IndexPath(row: selectedIndex, section: 0), animated: false, scrollPosition: .none)
@@ -96,13 +79,13 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		
 		nameLabel.text = "\(User.currentUser.firstName) \(User.currentUser.shortenLastName())"
 		usernameLabel.text = "@\(User.currentUser.username)"
-		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
+		profileImageView.hnk_setImageFromURL(User.currentUser.imageURL)
 		
 		// Mark first item selected unless there was a preselected item
 		if let selectedIndex = preselectedIndex {
 			if selectedIndex == -1 {
 				profileView.backgroundColor = .unreadCellColor
-				sideView.isHidden = false
+				highlightView.isHidden = false
 				categoryTableView.selectRow(at: nil, animated: false, scrollPosition: .none)
 			} else {
 				categoryTableView.selectRow(at: IndexPath(row: selectedIndex, section: 0), animated: false, scrollPosition: .none)
@@ -111,16 +94,97 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		}
 	}
 	
+	func setUpViews() {
+		// Profile View
+		let profileImageLength: CGFloat = DeviceType.IS_IPHONE_5_OR_LESS ? 86 : 102
+		let sidebarWidth: CGFloat = DeviceType.IS_IPHONE_5_OR_LESS ? 260 : 300
+		let profileImageTopPadding: CGFloat = DeviceType.IS_IPHONE_5_OR_LESS ? 47 : 65
+		let nameLabelTopPadding: CGFloat = DeviceType.IS_IPHONE_5_OR_LESS ? 12 : 14
+		let tableViewTopPadding: CGFloat = DeviceType.IS_IPHONE_5_OR_LESS ? 25 : 30
+		let nameLabelHeight: CGFloat = 25
+		let usernameLabelHeight: CGFloat = 22
+		
+		let profileViewHeight: CGFloat = profileImageTopPadding + profileImageLength + nameLabelTopPadding + nameLabelHeight + usernameLabelHeight + tableViewTopPadding
+		
+		profileView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: profileViewHeight))
+		profileView.backgroundColor = .readCellColor
+		
+		highlightView = UIView(frame: CGRect(x: 0, y: 0, width: 9, height: profileViewHeight))
+		highlightView.isHidden = true
+		highlightView.backgroundColor = .tempoRed
+
+		profileImageView = UIImageView(frame: CGRect(x: 0, y: profileImageTopPadding, width: profileImageLength, height: profileImageLength))
+		profileImageView.center.x = sidebarWidth / 2.0
+		profileImageView.layer.cornerRadius = profileImageView.frame.size.height/2
+		profileImageView.clipsToBounds = true
+		
+		nameLabel = UILabel(frame: CGRect(x: 0, y: profileImageView.frame.maxY + nameLabelTopPadding, width: 200, height: nameLabelHeight))
+		nameLabel.font = UIFont(name: "AvenirNext-Demibold", size: 18.0)
+		nameLabel.textColor = .redTintedWhite
+		nameLabel.textAlignment = .center
+		nameLabel.center.x = profileImageView.center.x
+		
+		usernameLabel = UILabel(frame: CGRect(x: 0, y: nameLabel.frame.maxY, width: 200, height: usernameLabelHeight))
+		usernameLabel.font = UIFont(name: "AvenirNext-Regular", size: 14.0)
+		usernameLabel.textColor = .paleRed
+		usernameLabel.textAlignment = .center
+		usernameLabel.center.x = nameLabel.center.x
+		
+		divider = UIView(frame: CGRect(x: 0, y: profileViewHeight - 1, width: view.bounds.width, height: 1))
+		divider.backgroundColor = UIColor.unreadCellColor.withAlphaComponent(0.46)
+		
+		// Category Table View
+		let categoryCellHeight: CGFloat = DeviceType.IS_IPHONE_5_OR_LESS ? 55 : 65
+		
+		categoryTableView = UITableView(frame: CGRect(x: 0, y: profileView.frame.maxY, width: view.bounds.width, height: categoryCellHeight*5))
+		categoryTableView.delegate = self
+		categoryTableView.dataSource = self
+		categoryTableView.rowHeight = categoryCellHeight
+		categoryTableView.backgroundColor = .readCellColor
+		categoryTableView.separatorStyle = .none
+		categoryTableView.isScrollEnabled = false
+		
+		// Logout Button
+		let logoutButtonHeight: CGFloat = 40
+		let logoutButtonYOffset: CGFloat = DeviceType.IS_IPHONE_5_OR_LESS ? 18 : 22
+		
+		logoutButton = UIButton(frame: CGRect(x: 0, y: view.frame.height - logoutButtonYOffset - logoutButtonHeight, width: 80, height: logoutButtonHeight))
+		logoutButton.center.x = profileImageView.center.x
+		logoutButton.setTitle("Logout", for: .normal)
+		logoutButton.setTitleColor(.tempoMidGrey, for: .normal)
+		logoutButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16.0)
+		logoutButton.addTarget(self, action: #selector(logOut(_:)), for: .touchUpInside)
+		
+		profileView.addSubview(highlightView)
+		profileView.addSubview(profileImageView)
+		profileView.addSubview(nameLabel)
+		profileView.addSubview(usernameLabel)
+		profileView.addSubview(divider)
+		
+		view.addSubview(profileView)
+		view.addSubview(categoryTableView)
+		view.addSubview(logoutButton)
+	}
+	
+	// MARK: - Button Action Methods
+	
 	func pushToProfile(_ sender:UIButton!) {
 		profileView.backgroundColor = .unreadCellColor
-		sideView.isHidden = false
+		highlightView.isHidden = false
 		let loginVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
 		loginVC.user = User.currentUser
 		selectionHandler?(loginVC)
 		categoryTableView.selectRow(at: nil, animated: false, scrollPosition: .none)
 	}
 	
-	// TableView Methods
+	func logOut(_ sender: UIButton) {
+		FBSDKAccessToken.setCurrent(nil)
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		appDelegate.toggleRootVC()
+		appDelegate.feedVC.refreshNeeded = true
+	}
+	
+	// MARK: - TableView Methods
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return elements.count
@@ -140,7 +204,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		let element = elements[indexPath.row]
 		selectionHandler?(element.viewController)
 		profileView.backgroundColor = .clear
-		sideView.isHidden = true
+		highlightView.isHidden = true
 	}
 	
 }
