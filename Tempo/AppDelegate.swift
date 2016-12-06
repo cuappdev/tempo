@@ -140,6 +140,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			]
 			sidebarVC.selectionHandler = { [weak self] viewController in
 				if let viewController = viewController {
+					if viewController == self?.settingsVC {
+						//guarantee settingsVC will have HamburgerMenu, if settingsVC was accessed from add button in player cell.
+						self?.settingsVC.addHamburgerMenu()
+					}
 					if let front = self?.revealVC.frontViewController {
 						if viewController == front {
 							self?.revealVC.setFrontViewPosition(.left, animated: true)
