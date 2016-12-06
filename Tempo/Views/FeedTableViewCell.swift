@@ -28,7 +28,7 @@ class FeedTableViewCell: UITableViewCell {
 	}
 	
 	func setUpCell(firstName: String, lastName: String) {
-		initialsLabel.text = setUserInitials(firstName: firstName, lastName: firstName)
+		initialsLabel.text = setUserInitials(firstName: firstName, lastName: lastName)
 	}
 	
 	func setUpPostHistoryCell() {
