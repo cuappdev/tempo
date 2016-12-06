@@ -233,7 +233,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		if let selectedPost = post {
 			let name = selectedPost.player.isPlaying ? "PlayerPauseButton" : "PlayerPlayButton"
 			progressView.setUpTimer()
-			playToggleButton.setBackgroundImage(UIImage(named: name), for: .normal)
+			playToggleButton.setImage(UIImage(named: name), for: .normal)
 		}
 	}
 	
