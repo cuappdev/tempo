@@ -73,10 +73,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		profileTableView.separatorStyle = .none
 		profileTableView.allowsSelection = false
 		profileTableView.isScrollEnabled = false // TODO: Remove when tableviewcell is made dynamic
-<<<<<<< 1810414766476c30072009884b965779b57f5e9a
-
-=======
->>>>>>> Update UI for post history calendar
 		profileTableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: "CalendarCell")
 		view.addSubview(profileTableView)
 		
