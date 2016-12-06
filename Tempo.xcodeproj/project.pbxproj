@@ -68,7 +68,6 @@
 		D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9C51AE889D600C66385 /* SideBarViewController.swift */; };
 		D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */; };
 		D11740001AF8574400302FFD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1173FFF1AF8574400302FFD /* ProfileViewController.swift */; };
-		D11740081AF8574900302FFD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D11740071AF8574900302FFD /* ProfileViewController.xib */; };
 		D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */; };
 		D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */; };
 		D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148F4971AF031DB009AB073 /* NSDateExtension.swift */; };
@@ -79,6 +78,8 @@
 		D160AE001BE67406003B0E1A /* PlaylistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D160ADFE1BE67406003B0E1A /* PlaylistTableViewCell.xib */; };
 		D160AE021BE677D4003B0E1A /* PlaylistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D160AE011BE677D4003B0E1A /* PlaylistTableViewController.swift */; };
 		D17395741ADB080900A53AEE /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17395721ADB080900A53AEE /* UsersViewController.swift */; };
+		D19E42121DF6262000D09F18 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19E42111DF6262000D09F18 /* ProfileHeaderView.swift */; };
+		D19E42141DF650DD00D09F18 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19E42131DF650DC00D09F18 /* CalendarTableViewCell.swift */; };
 		FA1A91311AC3899E00774EF3 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A91301AC3899E00774EF3 /* Player.swift */; };
 		FA1E1A781ADB06A3007C823C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A771ADB06A3007C823C /* Post.swift */; };
 		FA1E1A7C1ADB072A007C823C /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1E1A7B1ADB072A007C823C /* Song.swift */; };
@@ -170,7 +171,6 @@
 		D102A9C51AE889D600C66385 /* SideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
 		D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideBarTableViewCell.swift; path = ../Profile/SideBarTableViewCell.swift; sourceTree = "<group>"; };
 		D1173FFF1AF8574400302FFD /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		D11740071AF8574900302FFD /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileViewController.xib; path = ../Profile/ProfileViewController.xib; sourceTree = "<group>"; };
 		D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarCollectionReusableView.swift; sourceTree = "<group>"; };
 		D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarDayCollectionViewCell.swift; sourceTree = "<group>"; };
 		D148F4971AF031DB009AB073 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
@@ -180,6 +180,8 @@
 		D160ADFE1BE67406003B0E1A /* PlaylistTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistTableViewCell.xib; sourceTree = "<group>"; };
 		D160AE011BE677D4003B0E1A /* PlaylistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewController.swift; sourceTree = "<group>"; };
 		D17395721ADB080900A53AEE /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
+		D19E42111DF6262000D09F18 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderView.swift; path = Tempo/Views/ProfileHeaderView.swift; sourceTree = "<group>"; };
+		D19E42131DF650DC00D09F18 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		DA8EF99B96F4D25422DF410E /* Pods_Tempo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tempo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FA1E1A771ADB06A3007C823C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 		1D72D9AC1AACC4C0007822B0 = {
 			isa = PBXGroup;
 			children = (
+				D19E42111DF6262000D09F18 /* ProfileHeaderView.swift */,
 				1D72D9B71AACC4C0007822B0 /* Tempo */,
 				1D72D9B61AACC4C0007822B0 /* Products */,
 				B9DF81295CC69057799B6683 /* Frameworks */,
@@ -316,6 +319,7 @@
 		1D802AB81B7873A5005A96D1 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				D19E42131DF650DC00D09F18 /* CalendarTableViewCell.swift */,
 				6038B17D1D80ED250083940D /* FeedTableViewCell.swift */,
 				6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */,
 				0276B1FD1DDFC2D900B512E9 /* LikedTableViewCell.swift */,
@@ -397,7 +401,6 @@
 		952E7EDE1DEA8957006C6131 /* XIBS */ = {
 			isa = PBXGroup;
 			children = (
-				D11740071AF8574900302FFD /* ProfileViewController.xib */,
 				60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */,
 			);
 			name = XIBS;
@@ -531,7 +534,6 @@
 				0271C9481D9582410037F6AD /* PostHistoryHeaderSectionCell.xib in Resources */,
 				FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */,
 				6038B1801D80EDAF0083940D /* FeedTableViewCell.xib in Resources */,
-				D11740081AF8574900302FFD /* ProfileViewController.xib in Resources */,
 				60419BED1DE24AE800CAB9BD /* SettingsViewController.xib in Resources */,
 				1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */,
 			);
@@ -552,7 +554,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		78630E2F06DFC643EE8D7CCC /* [CP] Copy Pods Resources */ = {
@@ -603,6 +605,7 @@
 				60AEF76A1DBD38AD00C68AAF /* PlayerCellView.swift in Sources */,
 				D17395741ADB080900A53AEE /* UsersViewController.swift in Sources */,
 				1DE649C31B78590800DA5499 /* SettingsViewController.swift in Sources */,
+				D19E42141DF650DD00D09F18 /* CalendarTableViewCell.swift in Sources */,
 				0276B1FC1DDFBAD800B512E9 /* LikedPostView.swift in Sources */,
 				0276B1FE1DDFC2D900B512E9 /* LikedTableViewCell.swift in Sources */,
 				FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */,
@@ -634,6 +637,7 @@
 				952E7EE21DEA8E6E006C6131 /* FacebookLoginViewController.swift in Sources */,
 				02803D4F1DC18524001D8F01 /* ExpandedPlayerView.swift in Sources */,
 				FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */,
+				D19E42121DF6262000D09F18 /* ProfileHeaderView.swift in Sources */,
 				D102A9C71AE889D600C66385 /* SideBarViewController.swift in Sources */,
 				6DA5FE4D1AED72F800E795DD /* UIColor+Shared.swift in Sources */,
 				D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */,
