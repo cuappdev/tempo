@@ -53,6 +53,11 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
 		
+		// TODO: Make tableviewcell dynamic to fit collectionview content size
+		let statusbarHeight = UIApplication.shared.statusBarFrame.height
+		let navbarHeight = (navigationController?.navigationBar.frame.height)!
+		let collectionViewHeight = view.frame.height - statusbarHeight - navbarHeight - headerViewHeight - sectionHeaderHeight
+		
 		// Set up profile header view
 		profileHeaderView = ProfileHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: headerViewHeight))
 		profileHeaderView.delegate = self
@@ -63,11 +68,11 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		profileTableView.delegate = self
 		profileTableView.dataSource = self
 		profileTableView.tableHeaderView = profileHeaderView
-		profileTableView.rowHeight = UITableViewAutomaticDimension
-		profileTableView.estimatedRowHeight = 300
+		profileTableView.rowHeight = collectionViewHeight
 		profileTableView.backgroundColor = .profileBackgroundBlack
 		profileTableView.separatorStyle = .none
 		profileTableView.allowsSelection = false
+		profileTableView.isScrollEnabled = false // TODO: Remove when tableviewcell is made dynamic
 		profileTableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: "CalendarCell")
 		view.addSubview(profileTableView)
 		
@@ -284,6 +289,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	// MARK: - Calendar TableViewCell Delegate Methods
 	
 	func didSelectCalendarCell(indexPath: IndexPath) {
+		print("select calendar cell")
 		let date = dateForIndexPath(indexPath)
 		
 		// Push to TableView with posted songs and dates
@@ -307,6 +313,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as! HipCalendarDayCollectionViewCell
 		cell.date = date
 		cell.isUserInteractionEnabled = true
+		
 		if let index = postedYearMonthDay.index(of: date.yearMonthDay()) {
 			let alpha = determineAlpha(postedLikes[index])
 			cell.dayInnerCircleView.backgroundColor = UIColor.tempoRed.withAlphaComponent(alpha)
