@@ -44,6 +44,7 @@ extension UIColor {
 	@nonobjc static let placeholderTextGrey = UIColor.colorFromCode(0xA8A3A3)
 	@nonobjc static let profileButtonGrey = UIColor.colorFromCode(0xB5B1B1)
 	@nonobjc static let profileBackgroundBlack = UIColor.colorFromCode(0x101112)
+	@nonobjc static let postHistoryGrey = UIColor.colorFromCode(0x232427)
 
 	public static func colorFromCode(_ code: Int) -> UIColor {
 		let red = CGFloat(((code & 0xFF0000) >> 16)) / 255

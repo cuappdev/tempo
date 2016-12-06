@@ -16,7 +16,7 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
     var dayInnerCircleView: UIView!
     
     // Colors
-	let noPostColor: UIColor = .unreadCellColor
+	let noPostColor: UIColor = .postHistoryGrey
 	let circleColor: UIColor = .tempoRed
     var date: Date! {
         didSet {
