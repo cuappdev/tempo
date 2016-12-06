@@ -73,9 +73,12 @@ class ParentPlayerCellView: UIView {
 			let appDelegate = UIApplication.shared.delegate as! AppDelegate
 			let playerNav = appDelegate.navigationController
 			let settingsVC = appDelegate.settingsVC
-			settingsVC.shouldAddHamburger = false
-			settingsVC.navigationItem.leftBarButtonItem = nil //clear existing hamburgerMenu, if there
-			playerNav.pushViewController(settingsVC, animated: true)
+			
+			if playerNav.visibleViewController != settingsVC {
+				settingsVC.shouldAddHamburger = false
+				settingsVC.navigationItem.leftBarButtonItem = nil //clear existing hamburgerMenu, if there
+				playerNav.pushViewController(settingsVC, animated: true)
+			}
 		}
 	}
 	
