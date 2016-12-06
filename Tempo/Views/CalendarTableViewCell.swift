@@ -49,7 +49,7 @@ class CalendarTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
 			addSubview(divider)
 			
 			collectionViewAdded = true
-		}
+		} 
 		
 		return calendarCollectionView
 	}
