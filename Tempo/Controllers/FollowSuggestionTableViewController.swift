@@ -61,7 +61,7 @@ class FollowSuggestionTableViewController: UIViewController, UITableViewDelegate
     }
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		let profileVC = ProfileViewController()
 		profileVC.title = "Profile"
 		profileVC.user = users[indexPath.row]
 		navigationController?.pushViewController(profileVC, animated: true)

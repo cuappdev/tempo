@@ -297,7 +297,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	// MARK: - Navigation
 	
 	func didTapImageForPostView(_ post: Post) {
-		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		let profileVC = ProfileViewController()
 		profileVC.title = "Profile"
 		profileVC.user = post.user
 		navigationController?.pushViewController(profileVC, animated: true)
@@ -314,7 +314,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	}
 	
 	func feedFollowSuggestionsController(controller: FeedFollowSuggestionsController, wantsToShowProfileForUser user: User) {
-		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		let profileVC = ProfileViewController()
 		profileVC.title = "Profile"
 		profileVC.user = user
 		navigationController?.pushViewController(profileVC, animated: true)
@@ -342,7 +342,7 @@ extension FeedViewController: UIViewControllerPreviewingDelegate {
 		
 		if (avatarFrame?.contains(tableViewPoint))! {
 			guard let user = postView?.post?.user else { return nil }
-			let peekViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+			let peekViewController = ProfileViewController()
 			peekViewController.title = "Profile"
 			peekViewController.user = user
 			
