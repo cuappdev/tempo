@@ -93,7 +93,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		profileHeaderView.nameLabel.isHidden = notConnected(true)
 		profileHeaderView.usernameButton.isHidden = notConnected(false)
-		profileHeaderView.profileButton.alpha = 0.0
 	}
 	
 	// MARK: - UI Setup and Update Methods
@@ -125,6 +124,8 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 			addHamburgerMenu()
 		}
 		
+		updateFollowingUI()
+		
 		profileHeaderView.nameLabel.text = "\(user.firstName) \(user.shortenLastName())"
 		profileHeaderView.usernameButton.setTitle("@\(user.username)", for: .normal)
 		profileHeaderView.hipsterScoreLabel.text = "\(user.hipsterScore)"
@@ -142,10 +143,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		API.sharedAPI.fetchUser(user.id) {
 			self.user = $0
-			self.updateFollowingUI()
-			UIView.animate(withDuration: 0.25, animations: {
-				self.profileHeaderView.profileButton.alpha = 1.0
-			}) 
 		}
 	}
 	
@@ -289,7 +286,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	// MARK: - Calendar TableViewCell Delegate Methods
 	
 	func didSelectCalendarCell(indexPath: IndexPath) {
-		print("select calendar cell")
 		let date = dateForIndexPath(indexPath)
 		
 		// Push to TableView with posted songs and dates
