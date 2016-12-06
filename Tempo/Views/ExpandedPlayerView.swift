@@ -95,6 +95,8 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 			postDetailLabel.text = "Playing from your Liked Songs"
 		} else if delegate is PostHistoryTableViewController {
 			postDetailLabel.text = "Playing from your Post History"
+		} else if delegate is SearchViewController {
+			postDetailLabel.text = "Playing from your Search Results"
 		}
 		
 		songLabel.holdScrolling = false
