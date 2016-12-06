@@ -12,7 +12,7 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 	
 	let aboutText = "Tempo is a music sharing application created by AppDev, a student project team at Cornell University dedicated to mobile app development. Every year, we take apps from idea to product, culminating with releases on the App Store. We give students the opportunity to work in a startup environment and gain practical experience in software development, design, and product management. Our team is made up of talented designers and developers who aspire to bring beautiful projects to life."
 	let linksText = "www.cuappdev.org \n" + "www.github.com/cuappdev \n" + "www.twitter.com/cornellappdev"
-	let teamText = "Special thanks to all the designer, developers, and dreamers, who lost countless hours of sleep to bring this app to life."
+	let teamText = "Special thanks to all the designers, developers, and dreamers, who lost countless hours of sleep to bring this app to life."
 	let titleFont = UIFont(name: "AvenirNext-Medium", size: 18.0)!
 	let padding: CGFloat = 31
 	let sectionSpacing: CGFloat = 30
@@ -53,7 +53,7 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
     }
 	
 	func setupTopViews() {
-		let imageSize = view.frame.width * 0.25
+		let imageSize = view.frame.width * 0.35
 		tempoImage = UIImageView(frame: CGRect(x: 0, y: 40, width: imageSize, height: imageSize))
 		tempoImage.center.x = view.center.x
 		tempoImage.image = #imageLiteral(resourceName: "TempoLogo")
@@ -61,7 +61,7 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 		
 		tempoTitle = UILabel(frame: CGRect(x: 20, y: tempoImage.frame.bottom.y + 10, width: screenWidth, height: 50))
 		tempoTitle.text = "Tempo"
-		tempoTitle.font = UIFont(name: "HelveticaNeue-Bold", size: 40.0)
+		tempoTitle.font = UIFont(name: "HelveticaNeue-Bold", size: 50.0)
 		tempoTitle.textColor = .white
 		tempoTitle.textAlignment = .center
 		tempoTitle.sizeToFit()
