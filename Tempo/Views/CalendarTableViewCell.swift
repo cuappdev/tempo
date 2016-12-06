@@ -28,8 +28,10 @@ class CalendarTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
 		contentView.backgroundColor = .profileBackgroundBlack
     }
 	
-	func setUpCalendarCell(vc: UICollectionViewDataSource) -> UICollectionView {
+	func setUpCalendarCell(vc: UIViewController) -> UICollectionView {
 		if !collectionViewAdded {
+			delegate = vc as? CalendarTableViewCellDelegate
+			
 			let layout = HipStickyHeaderFlowLayout()
 			layout.sectionInset = UIEdgeInsets(top: 0, left: padding*6, bottom: padding*2, right: 0)
 			layout.minimumInteritemSpacing = 0
@@ -37,9 +39,10 @@ class CalendarTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
 			
 			calendarCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height), collectionViewLayout: layout)
 			calendarCollectionView.delegate = self
-			calendarCollectionView.dataSource = vc
+			calendarCollectionView.dataSource = vc as? UICollectionViewDataSource
 			calendarCollectionView.backgroundColor = .profileBackgroundBlack
 			calendarCollectionView.scrollsToTop = false
+			calendarCollectionView.isUserInteractionEnabled = true
 			calendarCollectionView.register(HipCalendarCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
 			calendarCollectionView.register(HipCalendarDayCollectionViewCell.self, forCellWithReuseIdentifier: "DayCell")
 			addSubview(calendarCollectionView)

@@ -104,7 +104,11 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 			self.postedDays = self.postedDates.map { $0.day() }
 			self.postedYearMonthDay = self.postedDates.map { $0.yearMonthDay() }
 			self.postedLikes = post.map{ $0.likes }
-			self.profileTableView.reloadData()
+			
+			if let collectionView = self.calendarCollectionView {
+				collectionView.reloadData()
+			}
+			
 			for date in self.postedDates {
 				if self.earliestPostDate == nil || date < self.earliestPostDate {
 					self.earliestPostDate = date
