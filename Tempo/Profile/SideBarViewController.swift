@@ -187,7 +187,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 	func pushToProfile(_ sender:UIButton!) {
 		profileView.backgroundColor = .unreadCellColor
 		highlightView.isHidden = false
-		let loginVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		let loginVC = ProfileViewController()
 		loginVC.user = User.currentUser
 		selectionHandler?(loginVC)
 		categoryTableView.selectRow(at: nil, animated: false, scrollPosition: .none)

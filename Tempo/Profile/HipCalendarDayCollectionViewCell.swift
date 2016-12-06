@@ -16,19 +16,14 @@ class HipCalendarDayCollectionViewCell: UICollectionViewCell {
     var dayInnerCircleView: UIView!
     
     // Colors
-	let noPostColor: UIColor = .tempoDarkGray
+	let noPostColor: UIColor = .postHistoryGrey
 	let circleColor: UIColor = .tempoRed
     var date: Date! {
         didSet {
             dayLabel.text = HipCalendarDayStringFromDate(date)
             dayLabel.textColor = .white
             dayInnerCircleView.backgroundColor = noPostColor
-            
-            if isToday() {
-                dayLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
-            } else {
-                dayLabel.font = UIFont(name: "HelveticaNeue-Light", size: 12)
-            }
+            dayLabel.font = UIFont(name: isToday() ? "AvenirNext-DemiBold" : "AvenirNext-Regular", size: 13.0)
         }
     }
     

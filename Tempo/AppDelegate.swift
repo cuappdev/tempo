@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let feedVC = FeedViewController()
 	let searchVC = SearchViewController()
 	let usersVC = UsersViewController()
-	let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+	let profileVC = ProfileViewController()
 	let likedVC = LikedTableViewController()
 	let settingsVC = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
 	let aboutVC = AboutViewController()
