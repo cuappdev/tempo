@@ -26,6 +26,7 @@ class SettingsViewController: UIViewController {
 	
 	static let registeredForRemotePushNotificationsKey = "SettingsViewController.registeredForRemotePushNotificationsKey"
 	static let presentedAlertForRemotePushNotificationsKey = "SettingsViewController.presentedAlertForRemotePushNotificationsKey"
+	var shouldAddHamburger = true
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -40,6 +41,10 @@ class SettingsViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		updateSpotifyState()
 		toggleNotifications.setOn(User.currentUser.remotePushNotificationsEnabled, animated: false)
+		
+		if shouldAddHamburger {
+			addHamburgerMenu()
+		}
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -47,8 +52,11 @@ class SettingsViewController: UIViewController {
 		
 		title = "Settings"
 		view.backgroundColor = .readCellColor
-		
-		addHamburgerMenu()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		//add HamburgerMenu by default, unless shouldAddHamburger is explicitly changed
+		shouldAddHamburger = true
 	}
 	
 	// Can be called after successful login to Spotify SDK
@@ -146,7 +154,7 @@ class SettingsViewController: UIViewController {
 	
 	@IBAction func logOutSpotify(_ sender: UIButton) {
 		SpotifyController.sharedController.closeCurrentSpotifySession()
-		
+		User.currentUser.currentSpotifyUser = nil
 		updateSpotifyState()
 	}
 }

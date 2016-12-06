@@ -48,32 +48,34 @@ class ParentPlayerCellView: UIView {
 	
 	//Switches saved to notSaved, or notSaved to saved, and calls updateAddButton()
 	func toggleAddButton() {
-		SpotifyController.sharedController.spotifyIsAvailable { success in
-			if success && songStatus == .notSaved {
-				SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
-					if success {
-						self.playerNav?.playerCell.updateAddButton()
-						self.playerNav?.expandedCell.updateAddButton()
-						self.delegate?.didToggleAdd?()
+		if let _ = User.currentUser.currentSpotifyUser {
+			SpotifyController.sharedController.spotifyIsAvailable { success in
+				if success && songStatus == .notSaved {
+					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
+						if success {
+							self.playerNav?.playerCell.updateAddButton()
+							self.playerNav?.expandedCell.updateAddButton()
+							self.delegate?.didToggleAdd?()
+						}
+					}
+				} else if success && songStatus == .saved {
+					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
+						if success {
+							self.playerNav?.playerCell.updateAddButton()
+							self.playerNav?.expandedCell.updateAddButton()
+							self.delegate?.didToggleAdd?()
+						}
 					}
 				}
-			} else if success && songStatus == .saved {
-				SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
-					if success {
-						self.playerNav?.playerCell.updateAddButton()
-						self.playerNav?.expandedCell.updateAddButton()
-						self.delegate?.didToggleAdd?()
-					}
-				}
-			} else {
-				//bring them to settingsVC
-				let appDelegate = UIApplication.shared.delegate as! AppDelegate
-				let playerNav = appDelegate.navigationController
-				let revealVC = appDelegate.revealVC
-				let settingsVC = appDelegate.settingsVC
-				playerNav.setViewControllers([settingsVC], animated: true)
-				revealVC.setFrontViewPosition(.left, animated: true)
 			}
+		} else {
+			//bring them to settingsVC
+			let appDelegate = UIApplication.shared.delegate as! AppDelegate
+			let playerNav = appDelegate.navigationController
+			let settingsVC = appDelegate.settingsVC
+			settingsVC.shouldAddHamburger = false
+			settingsVC.navigationItem.leftBarButtonItem = nil //clear existing hamburgerMenu, if there
+			playerNav.pushViewController(settingsVC, animated: true)
 		}
 	}
 	

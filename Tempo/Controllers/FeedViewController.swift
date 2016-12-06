@@ -182,7 +182,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		//animate currently playing song
 		if let playerCellPost = self.playerNav.playerCell.post {
 			for row in 0 ..< posts.count {
-				if posts[row].song.spotifyID == playerCellPost.song.spotifyID {
+				if posts[row].song.equals(other: playerCellPost.song) {
 					posts[row] = playerCellPost
 					let indexPath = IndexPath(row: row, section: 0)
 					if let cell = tableView.cellForRow(at: indexPath) as? FeedTableViewCell {
