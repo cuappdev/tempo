@@ -198,7 +198,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		let profileVC = ProfileViewController()
         profileVC.title = "Profile"
 		
 		if self.displayType == .Users {
@@ -321,7 +321,7 @@ extension UsersViewController: UIViewControllerPreviewingDelegate {
 				return nil
 		}
 		
-		let peekViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+		let peekViewController = ProfileViewController()
 		peekViewController.title = "Profile"
 		peekViewController.user = searchController.isActive ? filteredUsers[indexPath.row] : users[indexPath.row]
 		

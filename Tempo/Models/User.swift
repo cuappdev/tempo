@@ -73,12 +73,8 @@ class User: NSObject, NSCoding {
 		return "Name: \(name)| Email: \(email)| ID: \(id)| Username: \(username)| FacebookID: \(fbid)"
 	}
 	
-	func shortenLastName()->String{
-		if lastName.characters.count > 18{
-			return "\(lastName[lastName.startIndex])."
-		} else {
-			return lastName
-		}
+	func shortenLastName() -> String {
+		return (lastName.characters.count > 18) ? "\(lastName[lastName.startIndex])." : lastName
 	}
 	
 	// Extend NSCoding
