@@ -290,7 +290,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	// MARK: - Calendar TableViewCell Delegate Methods
 	
 	func didSelectCalendarCell(indexPath: IndexPath) {
-		print("select calendar cell")
 		let date = dateForIndexPath(indexPath)
 		
 		// Push to TableView with posted songs and dates
