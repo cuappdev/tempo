@@ -62,7 +62,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		profileHeaderView = ProfileHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: headerViewHeight))
 		profileHeaderView.delegate = self
 		view.addSubview(profileHeaderView)
-		
+
 		// Set up profile table view
 		profileTableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height), style: .grouped)
 		profileTableView.delegate = self
@@ -73,6 +73,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		profileTableView.separatorStyle = .none
 		profileTableView.allowsSelection = false
 		profileTableView.isScrollEnabled = false // TODO: Remove when tableviewcell is made dynamic
+
 		profileTableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: "CalendarCell")
 		view.addSubview(profileTableView)
 		
