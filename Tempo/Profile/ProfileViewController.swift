@@ -22,8 +22,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class ProfileViewController: UIViewController, UIViewControllerTransitioningDelegate, ProfileHeaderViewDelegate, CalendarTableViewCellDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource {
 	
-	let headerViewHeight: CGFloat = 324
-	let sectionHeaderHeight: CGFloat = 50
+	let headerViewHeight: CGFloat = 320
 	
     var user: User = User.currentUser
     
@@ -56,7 +55,8 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		// TODO: Make tableviewcell dynamic to fit collectionview content size
 		let statusbarHeight = UIApplication.shared.statusBarFrame.height
 		let navbarHeight = (navigationController?.navigationBar.frame.height)!
-		let collectionViewHeight = view.frame.height - statusbarHeight - navbarHeight - headerViewHeight - sectionHeaderHeight
+		let playerViewHeight: CGFloat = 73.0
+		let collectionViewHeight = view.frame.height - statusbarHeight - navbarHeight - headerViewHeight - playerViewHeight
 		
 		// Set up profile header view
 		profileHeaderView = ProfileHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: headerViewHeight))
@@ -240,10 +240,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		return 1
 	}
 	
-	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return sectionHeaderHeight
-	}
-	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell", for: indexPath) as! CalendarTableViewCell
 		
@@ -252,20 +248,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		return cell
 	}
 	
-	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: sectionHeaderHeight))
-		header.backgroundColor = .profileBackgroundBlack
-		
-		let postHistoryLabel = UILabel(frame: CGRect(x: 0, y: 21, width: 100, height: 22))
-		postHistoryLabel.center.x = tableView.bounds.midX
-		postHistoryLabel.text = "POST HISTORY"
-		postHistoryLabel.font = UIFont(name: "AvenirNext-Regular", size: 14.0)
-		postHistoryLabel.textColor = .white
-		postHistoryLabel.textAlignment = .center
-		header.addSubview(postHistoryLabel)
-		
-		return header
-	}
 
 	/* <------------------------POST HISTORY------------------------> */
 	

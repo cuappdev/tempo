@@ -61,6 +61,7 @@ class ProfileHeaderView: UIView {
 		profileImageView.center.x = profileContainerView.bounds.midX
 		profileImageView.layer.cornerRadius = profileImageView.frame.width / 2.0
 		profileImageView.clipsToBounds = true
+		profileImageView.contentMode = .scaleAspectFill
 		
 		nameLabel = UILabel(frame: CGRect(x: 0, y: profileImageView.frame.maxY + 16, width: bounds.width - 2*edgePadding, height: 23))
 		nameLabel.center.x = profileContainerView.bounds.midX

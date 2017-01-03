@@ -16,7 +16,7 @@ class User: NSObject, NSCoding {
 	
 	fileprivate(set) var caption = ""
 	fileprivate(set) var createdAt = ""
-	fileprivate(set) var email = "temp@example.com"
+	fileprivate(set) var email = "lucas@derraugh.com"
 	fileprivate(set) var fbid = ""
 	var remotePushNotificationsEnabled = false
 	var isFollowing = false
@@ -40,7 +40,7 @@ class User: NSObject, NSCoding {
 		}
 	}
 	var updatedAt: String!
-	var username: String = "temp_username"
+	var username: String = ""
 	fileprivate var profileImage: UIImage?
 	var imageURL: URL {
 		return URL(string: "http://graph.facebook.com/\(fbid)/picture?type=large")!
