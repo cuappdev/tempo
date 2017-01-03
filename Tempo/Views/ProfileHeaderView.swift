@@ -26,6 +26,7 @@ class ProfileHeaderView: UIView {
 	let dividerSize: CGSize = CGSize(width: 2, height: 44)
 	
 	var profileContainerView: UIView!
+	var profileBackgroundImageView: UIImageView!
 	var profileImageView: UIImageView!
 	var nameLabel: UILabel!
 	var usernameButton: UIButton!
@@ -57,6 +58,12 @@ class ProfileHeaderView: UIView {
 		profileContainerView.backgroundColor = .unreadCellColor
 		
 		// TODO: Add initials view
+		profileBackgroundImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: profileContainerView.frame.width, height: profileContainerView.frame.height))
+		profileBackgroundImageView.center.x = profileContainerView.bounds.midX
+		profileBackgroundImageView.clipsToBounds = true
+		profileBackgroundImageView.contentMode = .scaleAspectFill
+		profileBackgroundImageView.alpha = 0.05
+		
 		profileImageView = UIImageView(frame: CGRect(x: 0, y: 30, width: profileImageLength, height: profileImageLength))
 		profileImageView.center.x = profileContainerView.bounds.midX
 		profileImageView.layer.cornerRadius = profileImageView.frame.width / 2.0
@@ -88,6 +95,7 @@ class ProfileHeaderView: UIView {
 		profileButton.layer.cornerRadius = 3
 		profileButton.clipsToBounds = true
 		
+		profileContainerView.addSubview(profileBackgroundImageView)
 		profileContainerView.addSubview(profileImageView)
 		profileContainerView.addSubview(nameLabel)
 		profileContainerView.addSubview(usernameButton)
@@ -111,7 +119,7 @@ class ProfileHeaderView: UIView {
 		
 		hipsterScoreLabel = UILabel(frame: CGRect(x: 0, y: 13, width: labelWidth, height: labelHeight))
 		hipsterScoreLabel.center.x = hipsterScoreButton.bounds.midX
-		hipsterScoreLabel.text = "0"
+		hipsterScoreLabel.text = "-"
 		hipsterScoreLabel.font = UIFont(name: "AvenirNext-Medium", size: 13.0)
 		hipsterScoreLabel.textColor = .white
 		hipsterScoreLabel.textAlignment = .center
@@ -138,7 +146,7 @@ class ProfileHeaderView: UIView {
 		
 		followersLabel = UILabel(frame: CGRect(x: 0, y: 13, width: labelWidth, height: labelHeight))
 		followersLabel.center.x = followersButton.bounds.midX
-		followersLabel.text = "0"
+		followersLabel.text = "-"
 		followersLabel.font = UIFont(name: "AvenirNext-Medium", size: 13.0)
 		followersLabel.textColor = .white
 		followersLabel.textAlignment = .center
@@ -165,7 +173,7 @@ class ProfileHeaderView: UIView {
 		
 		followingLabel = UILabel(frame: CGRect(x: 0, y: 13, width: labelWidth, height: labelHeight))
 		followingLabel.center.x = followingButton.bounds.midX
-		followingLabel.text = "0"
+		followingLabel.text = "-"
 		followingLabel.font = UIFont(name: "AvenirNext-Medium", size: 13.0)
 		followingLabel.textColor = .white
 		followingLabel.textAlignment = .center

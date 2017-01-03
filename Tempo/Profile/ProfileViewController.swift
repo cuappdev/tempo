@@ -128,13 +128,11 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 			addHamburgerMenu()
 		}
 		
-		updateFollowingUI()
-		
 		profileHeaderView.nameLabel.text = "\(user.firstName) \(user.shortenLastName())"
 		profileHeaderView.usernameButton.setTitle("@\(user.username)", for: .normal)
-		profileHeaderView.hipsterScoreLabel.text = "\(user.hipsterScore)"
 		
 		profileHeaderView.profileImageView.hnk_setImageFromURL(user.imageURL)
+		profileHeaderView.profileBackgroundImageView.hnk_setImageFromURL(user.imageURL)
 
 		if User.currentUser.username == user.username {
 			title = "My Profile"
@@ -147,10 +145,11 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		API.sharedAPI.fetchUser(user.id) {
 			self.user = $0
+			self.updateProfileInfoUI()
 		}
 	}
 	
-	func updateFollowingUI() {
+	func updateProfileInfoUI() {
 		if User.currentUser.username != user.username {
 			profileHeaderView.profileButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
 			profileHeaderView.profileButton.backgroundColor = (user.isFollowing) ? .clear : .tempoRed
@@ -158,6 +157,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		profileHeaderView.followingLabel.text = "\(user.followingCount)"
 		profileHeaderView.followersLabel.text = "\(user.followersCount)"
+		profileHeaderView.hipsterScoreLabel.text = "\(user.hipsterScore)"
 	}
 	
 	fileprivate func displayUsers(_ displayType: DisplayType) {
@@ -189,7 +189,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		User.currentUser.followingCount += user.isFollowing ? 1 : -1
 		user.followersCount += user.isFollowing ? 1 : -1
 		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
-		updateFollowingUI()
+		updateProfileInfoUI()
 	}
 	
 	func userHandleButtonClicked(sender: UIButton) {
