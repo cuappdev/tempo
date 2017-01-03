@@ -180,7 +180,7 @@
 		D160ADFE1BE67406003B0E1A /* PlaylistTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistTableViewCell.xib; sourceTree = "<group>"; };
 		D160AE011BE677D4003B0E1A /* PlaylistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewController.swift; sourceTree = "<group>"; };
 		D17395721ADB080900A53AEE /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
-		D19E42111DF6262000D09F18 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderView.swift; path = Tempo/Views/ProfileHeaderView.swift; sourceTree = "<group>"; };
+		D19E42111DF6262000D09F18 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		D19E42131DF650DC00D09F18 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		DA8EF99B96F4D25422DF410E /* Pods_Tempo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tempo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA1A91301AC3899E00774EF3 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -246,6 +246,7 @@
 		1D65392E1AD0E23800E82627 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D19E42111DF6262000D09F18 /* ProfileHeaderView.swift */,
 				957592021DF053F40045FF25 /* AnimatedLogoView.swift */,
 				6035E7871DE8017300221870 /* ParentPlayerCellView.swift */,
 				60AEF7671DBD38AD00C68AAF /* PlayerCellView.swift */,
@@ -268,7 +269,6 @@
 		1D72D9AC1AACC4C0007822B0 = {
 			isa = PBXGroup;
 			children = (
-				D19E42111DF6262000D09F18 /* ProfileHeaderView.swift */,
 				1D72D9B71AACC4C0007822B0 /* Tempo */,
 				1D72D9B61AACC4C0007822B0 /* Products */,
 				B9DF81295CC69057799B6683 /* Frameworks */,

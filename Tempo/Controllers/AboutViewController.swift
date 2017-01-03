@@ -10,9 +10,9 @@ import UIKit
 
 class AboutViewController: UIViewController, UIScrollViewDelegate {
 	
-	let aboutText = "Tempo is a music sharing application created by AppDev, a student project team at Cornell University dedicated to mobile app development. Every year, we take apps from idea to product, culminating with releases on the App Store. We give students the opportunity to work in a startup environment and gain practical experience in software development, design, and product management. Our team is made up of talented designers and developers who aspire to bring beautiful projects to life."
+	let aboutText = "Tempo is a music sharing application created by AppDev, a student project team at Cornell University dedicated to mobile app development. Every year, we take apps from idea to product, culminating with releases on the App Store. We give students the opportunity to work in a startup environment and gain practical experience in software development, design, and product management."
 	let linksText = "www.cuappdev.org \n" + "www.github.com/cuappdev \n" + "www.twitter.com/cornellappdev"
-	let teamText = "Special thanks to all the designers, developers, and dreamers, who lost countless hours of sleep to bring this app to life."
+	let teamText = "Special thanks to all the designers, developers, and dreamers who lost countless hours of sleep to bring this app to life."
 	let titleFont = UIFont(name: "AvenirNext-Medium", size: 18.0)!
 	let padding: CGFloat = 31
 	let sectionSpacing: CGFloat = 30
