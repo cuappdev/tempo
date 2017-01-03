@@ -131,6 +131,7 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 		profileImageView = UIImageView(frame: initialsView.frame)
 		profileImageView.layer.cornerRadius = profileImageView.frame.size.height/2
 		profileImageView.clipsToBounds = true
+		profileImageView.contentMode = .scaleAspectFill
 		
 		nameLabel = UILabel(frame: CGRect(x: 0, y: profileImageView.frame.maxY + nameLabelTopPadding, width: 200, height: nameLabelHeight))
 		nameLabel.font = UIFont(name: "AvenirNext-Demibold", size: 18.0)
