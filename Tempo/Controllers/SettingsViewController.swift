@@ -61,20 +61,19 @@ class SettingsViewController: UIViewController {
 	
 	// Can be called after successful login to Spotify SDK
 	func updateSpotifyState() {
-		if let session = SPTAuth.defaultInstance().session {
-			if session.isValid() {
-				SpotifyController.sharedController.setSpotifyUser(session.accessToken, completion: { (success: Bool) in
+		if let session = SPTAuth.defaultInstance().session, session.isValid() {
+			
+			SpotifyController.sharedController.setSpotifyUser(session.accessToken, completion: { (success: Bool) in
 					
-					DispatchQueue.main.async {
-						if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
-							self.nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
-							self.usernameLabel?.text = "@\(currentSpotifyUser.username)"
-							self.initialsLabel.text = setUserInitials(firstName: User.currentUser.firstName, lastName: User.currentUser.lastName)
-							self.loggedInToSpotify(session.isValid())
-						}
+				DispatchQueue.main.async {
+					if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
+						self.nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
+						self.usernameLabel?.text = "@\(currentSpotifyUser.username)"
+						self.initialsLabel.text = setUserInitials(firstName: User.currentUser.firstName, lastName: User.currentUser.lastName)
+						self.loggedInToSpotify(session.isValid())
 					}
-				})
-			}
+				}
+			})
 		} else {
 			loggedInToSpotify(false)
 		}
