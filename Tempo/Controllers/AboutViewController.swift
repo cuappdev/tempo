@@ -42,6 +42,7 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 		let scrollView = UIScrollView(frame: view.frame)
 		scrollView.delegate = self
 		scrollView.backgroundColor = .backgroundDarkGrey
+		scrollView.bounces = false
 		view = scrollView
 		
 		setupTopViews()

@@ -57,7 +57,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
 		
 		let statusbarHeight = UIApplication.shared.statusBarFrame.height
-		let navbarHeight = navigationController!.navigationBar.frame.height
+		let navbarHeight = navigationController?.navigationBar.frame.height ?? 44
 		let playerViewHeight: CGFloat = 73.0
 		let scrollViewHeight = view.frame.height - statusbarHeight - navbarHeight - playerViewHeight
 		
