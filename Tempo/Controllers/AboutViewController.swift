@@ -56,7 +56,7 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 		let imageSize = view.frame.width * 0.35
 		tempoImage = UIImageView(frame: CGRect(x: 0, y: 40, width: imageSize, height: imageSize))
 		tempoImage.center.x = view.center.x
-		tempoImage.image = #imageLiteral(resourceName: "TempoLogo")
+		tempoImage.image = UIImage(named: "TempoLogo")
 		view.addSubview(tempoImage)
 		
 		tempoTitle = UILabel(frame: CGRect(x: 20, y: tempoImage.frame.bottom.y + 10, width: screenWidth, height: 50))

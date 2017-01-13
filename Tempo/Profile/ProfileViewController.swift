@@ -20,11 +20,13 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 	}
 }
 
-class ProfileViewController: UIViewController, UIViewControllerTransitioningDelegate, ProfileHeaderViewDelegate, CalendarTableViewCellDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource {
+class ProfileViewController: UIViewController, UIViewControllerTransitioningDelegate, ProfileHeaderViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 	
 	let headerViewHeight: CGFloat = 320
 	
     var user: User = User.currentUser
+	
+	var scrollView: UIScrollView!
     
     // Post History Calendar
     var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
@@ -39,12 +41,14 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	var justLoaded: Bool = true
 
 	var profileHeaderView: ProfileHeaderView!
-	var profileTableView: UITableView!
 	var calendarCollectionView: UICollectionView!
+	var calendarCollectionViewDivider: UIView!
 	var activityIndicatorView: UIActivityIndicatorView!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		view.backgroundColor = .readCellColor
 		
 		edgesForExtendedLayout = []
 		extendedLayoutIncludesOpaqueBars = true
@@ -52,29 +56,37 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
 		
-		// TODO: Make tableviewcell dynamic to fit collectionview content size
 		let statusbarHeight = UIApplication.shared.statusBarFrame.height
-		let navbarHeight = (navigationController?.navigationBar.frame.height)!
+		let navbarHeight = navigationController!.navigationBar.frame.height
 		let playerViewHeight: CGFloat = 73.0
-		let collectionViewHeight = view.frame.height - statusbarHeight - navbarHeight - headerViewHeight - playerViewHeight
+		let scrollViewHeight = view.frame.height - statusbarHeight - navbarHeight - playerViewHeight
+		
+		scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: scrollViewHeight))
+		scrollView.bounces = false
+		scrollView.showsVerticalScrollIndicator = false
+		view.addSubview(scrollView)
 		
 		// Set up profile header view
 		profileHeaderView = ProfileHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: headerViewHeight))
 		profileHeaderView.delegate = self
-		view.addSubview(profileHeaderView)
 
-		// Set up profile table view
-		profileTableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height), style: .grouped)
-		profileTableView.delegate = self
-		profileTableView.dataSource = self
-		profileTableView.tableHeaderView = profileHeaderView
-		profileTableView.rowHeight = collectionViewHeight
-		profileTableView.backgroundColor = .profileBackgroundBlack
-		profileTableView.separatorStyle = .none
-		profileTableView.allowsSelection = false
-		profileTableView.isScrollEnabled = false // TODO: Remove when tableviewcell is made dynamic
-		profileTableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: "CalendarCell")
-		view.addSubview(profileTableView)
+		// Set up profile calendar
+		let layout = HipStickyHeaderFlowLayout()
+		layout.sectionInset = UIEdgeInsets(top: 0, left: padding*6, bottom: padding*2, right: 0)
+		layout.minimumInteritemSpacing = 0
+		layout.minimumLineSpacing = 0
+
+		calendarCollectionView = UICollectionView(frame: CGRect(x: 0, y: profileHeaderView.frame.bottom.y, width: view.frame.width, height: view.frame.height), collectionViewLayout: layout)
+		calendarCollectionView.delegate = self
+		calendarCollectionView.dataSource = self
+		calendarCollectionView.backgroundColor = .profileBackgroundBlack
+		calendarCollectionView.scrollsToTop = false
+
+		calendarCollectionView.register(HipCalendarCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
+		calendarCollectionView.register(HipCalendarDayCollectionViewCell.self, forCellWithReuseIdentifier: "DayCell")
+		
+		calendarCollectionViewDivider = UIView(frame: CGRect(x: view.frame.width/11, y: 0, width: 1, height: view.frame.height))
+		calendarCollectionViewDivider.backgroundColor = .tempoRed
 		
 		// Check for 3D Touch availability
 		if #available(iOS 9.0, *) {
@@ -82,6 +94,11 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 				registerForPreviewing(with: self, sourceView: view)
 			}
 		}
+		
+		scrollView.addSubview(calendarCollectionView)
+		scrollView.addSubview(calendarCollectionViewDivider)
+		scrollView.addSubview(profileHeaderView)
+		scrollView.contentSize = CGSize(width: view.frame.width, height: profileHeaderView.frame.height + calendarCollectionView.frame.height)
 		
 		setupUserUI()
 	}
@@ -105,8 +122,18 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 			self.postedYearMonthDay = self.postedDates.map { $0.yearMonthDay() }
 			self.postedLikes = post.map{ $0.likes }
 
-			if let collectionView = self.calendarCollectionView {
-				collectionView.reloadData()
+			self.calendarCollectionView.reloadData()
+			DispatchQueue.main.async {
+				self.calendarCollectionView.frame = CGRect(x: self.calendarCollectionView.frame.origin.x,
+				                                           y: self.calendarCollectionView.frame.origin.y,
+				                                           width: self.calendarCollectionView.frame.width,
+				                                           height: self.calendarCollectionView.contentSize.height)
+				self.scrollView.contentSize = CGSize(width: self.view.frame.width,
+				                                     height: self.calendarCollectionView.frame.height + self.profileHeaderView.frame.height)
+				self.calendarCollectionViewDivider.frame = CGRect(x: self.view.frame.width/11,
+				                                                  y: self.calendarCollectionView.frame.origin.y,
+				                                                  width: 1,
+				                                                  height: self.scrollView.contentSize.height * 2)
 			}
 			
 			for date in self.postedDates {
@@ -234,20 +261,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		present(errorAlert, animated: true, completion: nil)
 	}
 	
-	// MARK: - Profile Table View Methods
-	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
-	}
-	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell", for: indexPath) as! CalendarTableViewCell
-		
-		calendarCollectionView = cell.setUpCalendarCell(vc: self)
-
-		return cell
-	}
-	
 
 	/* <------------------------POST HISTORY------------------------> */
 	
@@ -265,9 +278,24 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		return -0.0311 * CGFloat(pow(ratio, 2)) + 0.2461 * CGFloat(ratio) + 0.4997
 	}
 	
-	// MARK: - Calendar TableViewCell Delegate Methods
+	// MARK: - Calendar Collection View Delegate Methods
 	
-	func didSelectCalendarCell(indexPath: IndexPath) {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+		return CGSize(width: collectionView.frame.width - padding * 2, height: 30)
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let cols: CGFloat = 6
+		let dayWidth = collectionView.frame.width / cols
+		let dayHeight = dayWidth
+		
+		return CGSize(width: dayWidth, height: dayHeight)
+	}
+	
+	// MARK: - UICollectionViewDelegate Methods
+	
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		
 		let date = dateForIndexPath(indexPath)
 		
 		// Push to TableView with posted songs and dates

@@ -15,7 +15,7 @@ protocol FeedFollowSuggestionsControllerDelegate: class {
 
 class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableViewDelegate, FollowUserDelegate {
 	
-	let suggestionsEdgePadding: CGFloat = 16
+	let suggestionsEdgePadding: CGFloat = 15
 	let topInset: CGFloat = 40
 	let smallerYOffset: CGFloat = 22
 	let greaterYOffset: CGFloat = 123
@@ -81,7 +81,7 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 	
 	func setupView() {
 		// Create no posts in last 24 hours label
-		noMorePostsLabel = UILabel(frame: CGRect(x: 0, y: 65, width: view.frame.width, height: 23))
+		noMorePostsLabel = UILabel(frame: CGRect(x: 0, y: 55, width: view.frame.width, height: 23))
 		noMorePostsLabel.font = UIFont(name: "AvenirNext-Regular", size: 17.0)
 		noMorePostsLabel.text = "No posts in the last 24 hours."
 		noMorePostsLabel.textColor = .descriptionGrey
