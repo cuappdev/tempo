@@ -167,14 +167,11 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	}
 	
     fileprivate func updateNowPlayingInfo() {
-        let session = AVAudioSession.sharedInstance()
-        
+		
 		guard let post = currentlyPlayingPost else { return }
 		
 		let center = MPNowPlayingInfoCenter.default()
 		if !post.player.finishedPlaying {
-			_ = try? session.setCategory(AVAudioSessionCategoryPlayback)
-			_ = try? session.setActive(true)
 			
 			UIApplication.shared.beginReceivingRemoteControlEvents()
 			
@@ -196,7 +193,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				MPNowPlayingInfoPropertyPlaybackQueueCount: count ]
 		} else {
 			UIApplication.shared.endReceivingRemoteControlEvents()
-			_ = try? session.setActive(false)
 			center.nowPlayingInfo = nil
 			
 		}

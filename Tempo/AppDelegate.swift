@@ -11,6 +11,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import SWRevealViewController
 import Haneke
+import MediaPlayer
 
 extension URL {
 	func getQueryItemValueForKey(_ key: String) -> AnyObject? {
@@ -108,6 +109,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		setFirstVC()
 		toggleRootVC()
+		
+		// Prepare to play audio
+		_ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+		_ = try? AVAudioSession.sharedInstance().setActive(true)
 		
 		return shouldPerformAdditionalDelegateHandling
 	}
