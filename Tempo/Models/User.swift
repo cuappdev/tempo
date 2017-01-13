@@ -31,9 +31,9 @@ class User: NSObject, NSCoding {
 	var lastName = ""
 	var name: String {
 		set(newName) {
-			let fullName = newName.characters.split { $0 == " " }.map { String($0) }
-			firstName = fullName.first ?? ""
-			lastName = fullName.count > 1 ? fullName.last! : ""
+			var fullName = newName.characters.split { $0 == " " }.map { String($0) }
+			lastName = fullName.isEmpty ? "" : fullName.removeLast()
+			firstName = fullName.isEmpty ? "" : fullName.reduce("", {$0 + " " + $1}).chopPrefix(1)
 		}
 		get {
 			return "\(firstName) \(lastName)"
