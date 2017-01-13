@@ -54,7 +54,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
         if player == nil {
             if fileURL.isFileURL {
 				player = try? AVAudioPlayer(contentsOf: fileURL)
-                player?.prepareToPlay()
+//                player?.prepareToPlay()
             } else if currentTask == nil {
                 let request = URLRequest(url: fileURL, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 15)
 				currentTask = URLSession.dataTaskWithCachedRequest(request) { [weak self] data, response, _ -> Void in
@@ -62,7 +62,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 					if let data = data {
 						s.player = try? AVAudioPlayer(data: data)
 					}
-					s.player?.prepareToPlay()
+//					s.player?.prepareToPlay()
 					s.currentTask = nil
 					
 					if s.shouldAutoplay {

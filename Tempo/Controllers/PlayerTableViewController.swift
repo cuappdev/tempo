@@ -152,7 +152,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	func preparePosts() {
 		posts.forEach({ (post) in
 			post.player.delegate = self
-			post.player.prepareToPlay()
+//			post.player.prepareToPlay()
 		})
 	}
 	
