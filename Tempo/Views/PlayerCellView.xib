@@ -50,8 +50,8 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click a song to play it." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czr-JH-jK0" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                    <rect key="frame" x="67" y="39" width="139.5" height="22"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap a song to play it." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czr-JH-jK0" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                    <rect key="frame" x="67" y="39" width="131.5" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="Lzz-Mk-dDa"/>
                     </constraints>
