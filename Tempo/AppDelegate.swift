@@ -112,7 +112,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		// Prepare to play audio
 		_ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-		_ = try? AVAudioSession.sharedInstance().setActive(true)
 		
 		return shouldPerformAdditionalDelegateHandling
 	}
