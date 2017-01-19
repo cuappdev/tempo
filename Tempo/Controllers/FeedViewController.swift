@@ -282,6 +282,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		searchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
 		searchTableViewController.navigationItem.leftBarButtonItem = navigationItem.leftBarButtonItem
 		searchTableViewController.selfPostIds = posts.filter({ $0.user.name == User.currentUser.name }).map({ $0.song.spotifyID })
+		playerNav.animateExpandedCell(isExpanding: false)
 		navigationController?.pushViewController(searchTableViewController, animated: false)
 	}
 	
