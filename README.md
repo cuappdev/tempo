@@ -8,12 +8,10 @@ Tempo is the second app from [CUAppDev](http://cuappdev.org), a project team at 
 ## Tempo Screenshots <img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/logo.png width=35 />
 
 <div style="text-align:center">
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/launch-screen.png  width=175 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/feed.png width=175 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/sidebar.png  width=175 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/feed-expanded-player.png  width=175 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/profile.png  width=175 />
-</div>
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/5.5-1.png  width=175 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/5.5-2.png width=175 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/5.5-3.png  width=175 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/5.5-4.png  width=175 />
 
 ## Development
 
