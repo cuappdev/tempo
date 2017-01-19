@@ -195,8 +195,9 @@ class SideBarViewController: UIViewController, UITableViewDelegate, UITableViewD
 	}
 	
 	func logOut(_ sender: UIButton) {
-		FBSDKAccessToken.setCurrent(nil)
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		appDelegate.navigationController.resetPlayerCells()
+		FBSDKAccessToken.setCurrent(nil)
 		appDelegate.toggleRootVC()
 		appDelegate.feedVC.refreshNeeded = true
 	}
