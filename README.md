@@ -1,11 +1,10 @@
 [//]: # (https://github.com/cuappdev/assets/tree/master/tempo)
-# Tempo <img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/logo.png width=35 />  
-
+# Tempo
 
 Tempo is the second app from [CUAppDev](http://cuappdev.org), a project team at Cornell University. Tempo allows users to post their song of the day, and discover what others are listening to. You can view our [release notes](RELEASENOTES.md) to learn more about the progress of the Tempo.
 [//]: # (Download the current release on the [Apple App Store](https://itunes.apple.com/us/app/XXXX).)
 
-## Tempo Screenshots <img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/logo.png width=35 />
+## Tempo Screenshots 
 
 <div style="text-align:center">
 <img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/5.5-1.png  width=175 />
