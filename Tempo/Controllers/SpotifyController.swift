@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import SafariServices
 
 public func spotifyAvailable() -> Bool {
 	var spotifyAvailable = false
@@ -24,6 +25,7 @@ class SpotifyController {
 	let spotifyPlaylistURIKey = "SpotifyPlaylistURIKey"
 	static let sharedController: SpotifyController = SpotifyController()
 	var isSpotifyAvailable: Bool = false
+	var authViewController: UIViewController? = nil
 	
 	func spotifyIsAvailable(_ completion: (Bool) -> Void) {
 		if let session = SPTAuth.defaultInstance().session {
@@ -54,7 +56,7 @@ class SpotifyController {
 		}
 	}
 	
-	func loginToSpotify(_ completionHandler: @escaping (_ success: Bool) -> Void) {
+	func loginToSpotify(vc: UIViewController, _ completionHandler: @escaping (_ success: Bool) -> Void) {
 		API.sharedAPI.getSpotifyAccessToken { (success, accessToken, expiresAt) -> Void in
 			if success {
 				let expirationDate = Date(timeIntervalSince1970: expiresAt)
@@ -62,11 +64,11 @@ class SpotifyController {
 				SPTAuth.defaultInstance().session = SPTSession(userName: spotifyUsername, accessToken: accessToken, expirationDate: expirationDate)
 				self.setSpotifyUser(accessToken, completion: completionHandler)
 			} else {
-				if let spotifyLoginUrl = URL(string: accessToken) {
-					UIApplication.shared.openURL(spotifyLoginUrl)
-				} else {
-					completionHandler(false)
-				}
+				// Display Safari VC Login
+				let spotifyLoginURL = SPTAuth.defaultInstance().loginURL
+				self.authViewController = SFSafariViewController(url: spotifyLoginURL!)
+				
+				vc.present(self.authViewController!, animated: true, completion: nil)
 			}
 		}
 	}

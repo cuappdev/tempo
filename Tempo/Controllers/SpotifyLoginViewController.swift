@@ -97,7 +97,7 @@ class SpotifyLoginViewController: UIViewController {
 	
 	func connectToSpotifyButtonPressed() {
 		connectToSpotifyButton.alpha = 1.0
-		SpotifyController.sharedController.loginToSpotify { (success: Bool) in
+		SpotifyController.sharedController.loginToSpotify(vc: self) { (success: Bool) in
 			if success {
 				self.setSpotifyUserAndContinue()
 			}

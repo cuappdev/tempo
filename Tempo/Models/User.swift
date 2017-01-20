@@ -16,7 +16,7 @@ class User: NSObject, NSCoding {
 	
 	fileprivate(set) var caption = ""
 	fileprivate(set) var createdAt = ""
-	fileprivate(set) var email = "lucas@derraugh.com"
+	fileprivate(set) var email = ""
 	fileprivate(set) var fbid = ""
 	var remotePushNotificationsEnabled = false
 	var isFollowing = false

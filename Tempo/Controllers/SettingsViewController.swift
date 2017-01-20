@@ -52,6 +52,9 @@ class SettingsViewController: UIViewController {
 		
 		title = "Settings"
 		view.backgroundColor = .readCellColor
+		
+		updateSpotifyState()
+		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -62,14 +65,12 @@ class SettingsViewController: UIViewController {
 	// Can be called after successful login to Spotify SDK
 	func updateSpotifyState() {
 		if let session = SPTAuth.defaultInstance().session, session.isValid() {
-			
 			SpotifyController.sharedController.setSpotifyUser(session.accessToken, completion: { (success: Bool) in
-					
 				DispatchQueue.main.async {
 					if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
 						self.nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
 						self.usernameLabel?.text = "@\(currentSpotifyUser.username)"
-						self.initialsLabel.text = setUserInitials(firstName: User.currentUser.firstName, lastName: User.currentUser.lastName)
+						self.initialsLabel?.text = setUserInitials(firstName: User.currentUser.firstName, lastName: User.currentUser.lastName)
 						self.loggedInToSpotify(session.isValid())
 					}
 				}
@@ -84,7 +85,7 @@ class SettingsViewController: UIViewController {
 		useLabel?.isHidden = loggedIn
 		profilePicture?.isHidden = !loggedIn
 		initialsView.isHidden = !loggedIn
-		initialsLabel.isHidden = !loggedIn
+		initialsLabel?.isHidden = !loggedIn
 		nameLabel?.isHidden = !loggedIn
 		usernameLabel?.isHidden = !loggedIn
 		goToSpotifyButton?.isHidden = !loggedIn
@@ -93,7 +94,7 @@ class SettingsViewController: UIViewController {
 	}
 	
 	@IBAction func loginToSpotify() {
-		SpotifyController.sharedController.loginToSpotify { (success) in
+		SpotifyController.sharedController.loginToSpotify(vc: self) { (success) in
 			if success {
 				self.updateSpotifyState()
 			}
