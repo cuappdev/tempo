@@ -68,9 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		StyleController.applyStyles()
 		UIApplication.shared.statusBarStyle = .lightContent
 		
+		// Set up Spotify auth
 		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
-		SPTAuth.defaultInstance().redirectURL = NSURL(string: "tempologin://callback") as URL!
-
+		SPTAuth.defaultInstance().redirectURL = NSURL(string: "tempo-login://callback") as URL!
 		SPTAuth.defaultInstance().sessionUserDefaultsKey = "SpotifyUserDefaultsKey"
 		SPTAuth.defaultInstance().requestedScopes = [
 			SPTAuthPlaylistReadPrivateScope,
@@ -186,22 +186,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 		
 	func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-		if url.absoluteString.contains(SPTAuth.defaultInstance().redirectURL.absoluteString) {
-			SPTAuth.defaultInstance().handleAuthCallback(withTriggeredAuthURL: url) { [weak self] error, session in
-				if error != nil {
-					print("*** Auth error: \(error)")
-				} else {
-					let accessToken = url.getQueryItemValueForKey("access_token") as? String
-					let unixExpirationDate = url.getQueryItemValueForKey("expires_at") as? String
-					let expirationDate = Date(timeIntervalSince1970: Double(unixExpirationDate!)!)
+		
+		// Handle Spotify authentication
+		if SPTAuth.defaultInstance().canHandle(url) {
+			if let authVC = SpotifyController.sharedController.authViewController {
+				// Parse url to a session object
+				SPTAuth.defaultInstance().handleAuthCallback(withTriggeredAuthURL: url, callback: { (error, spotifySession) in
+					// Dismiss auth window
+					authVC.presentingViewController?.dismiss(animated: true, completion: nil)
+					SpotifyController.sharedController.authViewController = nil
 					
-					SpotifyController.sharedController.setSpotifyUser(accessToken!, completion: nil)
-					SPTAuth.defaultInstance().session = SPTSession(userName: User.currentUser.currentSpotifyUser?.username, accessToken: accessToken, expirationDate: expirationDate)
-					self?.settingsVC.updateSpotifyState()
-					if let currentVC = self?.window?.rootViewController as? SpotifyLoginViewController {
-						currentVC.setSpotifyUserAndContinue()
+					if let err = error {
+						print("Spotify auth error: \(err)")
+					} else if let session = spotifySession {
+						let (accessToken, expirationDate) = (session.accessToken, session.expirationDate)
+						
+						SpotifyController.sharedController.setSpotifyUser(accessToken!, completion: nil)
+						SPTAuth.defaultInstance().session = SPTSession(userName: User.currentUser.currentSpotifyUser?.username, accessToken: accessToken, expirationDate: expirationDate)
+						
+						if let currentVC = self.window?.rootViewController as? LoginFlowViewController {
+							currentVC.spotifyLoginViewController.setSpotifyUserAndContinue()
+						}
 					}
-				}
+				})
 			}
 			return true
 		}

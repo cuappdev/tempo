@@ -33,7 +33,7 @@
 			<string>com.cuappdev.Tempo.spotify-auth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tempoLogin</string>
+				<string>tempo-login</string>
 			</array>
 		</dict>
 	</array>
