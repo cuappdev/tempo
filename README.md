@@ -1,23 +1,26 @@
 [//]: # (https://github.com/cuappdev/assets/tree/master/tempo)
+
 # Tempo
 
-Tempo is the second app from [CUAppDev](http://cuappdev.org), a project team at Cornell University. Tempo allows users to post their song of the day, and discover what others are listening to. You can view our [release notes](RELEASENOTES.md) to learn more about the progress of the Tempo.
-[//]: # (Download the current release on the [Apple App Store](https://itunes.apple.com/us/app/XXXX).)
 
-## Tempo Screenshots 
+<p align="center"><img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/Tempo-Long-Logo.png width=500 /></p>
+
+Tempo is the second app made by [CUAppDev](http://cuappdev.org), an engineering project team at Cornell University focused on mobile app development. Tempo allows users to post their song of the day, and discover what others are listening to. You can view our [release notes](RELEASENOTES.md) to learn more about the progress of the Tempo.
+
+## Screenshots 
 
 <div style="text-align:center">
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/5.5-1.png  width=175 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/5.5-2.png width=175 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/5.5-3.png  width=175 />
-<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone/5.5-4.png  width=175 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone-screenshots/Tempo-Discover-Screen.png  width=290 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone-screenshots/Tempo-Listen-Screen.png width=290 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone-screenshots/Tempo-Save-Screen.png width=290 />
+<img src=https://raw.githubusercontent.com/cuappdev/assets/master/tempo/iphone-screenshots/Tempo-Share-Screen.png width=290 />
 
-## Development
+##Development
 
-### Installation
+###Installation
 We use [CocoaPods](http://cocoapods.org) for our dependency manager. This should be installed before continuing.
 
-After cloning the project, run the following:
+To access the project, run the following:
 
 ```bash
 git clone --recursive https://github.com/cuappdev/tempo.git
