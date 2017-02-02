@@ -17,7 +17,7 @@ class ParentPlayerCellView: UIView {
 	
 	weak var delegate: PlayerDelegate? {
 		didSet {
-			postsLikable = delegate is FeedViewController
+			postsLikable = delegate is FeedViewController || delegate is PostHistoryTableViewController
 		}
 	}
 	
