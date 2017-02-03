@@ -35,7 +35,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	var postedDays: [Int] = []
 	var postedYearMonthDay: [String] = []
 	var postedLikes: [Int] = []
-	var earliestPostDate: Date?
 	var padding: CGFloat = 5
 	var avgLikes: Float = 0
 	var justLoaded: Bool = true
@@ -48,7 +47,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		view.backgroundColor = .readCellColor
+		view.backgroundColor = .profileBackgroundBlack
 		
 		edgesForExtendedLayout = []
 		extendedLayoutIncludesOpaqueBars = true
@@ -136,11 +135,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 				                                                  height: self.scrollView.contentSize.height * 2)
 			}
 			
-			for date in self.postedDates {
-				if self.earliestPostDate == nil || date < self.earliestPostDate {
-					self.earliestPostDate = date
-				}
-			}
 			for likes in self.postedLikes {
 				self.avgLikes += Float(likes)
 			}
@@ -344,7 +338,13 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	}
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return earliestPostDate?.firstDayOfMonth().numberOfMonths(Date()) ?? 1
+
+		var dateComponents = DateComponents()
+		dateComponents.day = 1
+		dateComponents.month = 1
+		dateComponents.year = 2017
+		
+		return calendar.date(from: dateComponents)?.firstDayOfMonth().numberOfMonths(Date()) ?? 1
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
