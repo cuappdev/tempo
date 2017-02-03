@@ -169,10 +169,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 				didTogglePlaying(animate: true)
 			}
 			
-			cell.shareButton.isHidden = false
-			cell.shareButtonWidthConstraint.constant = shareButtonWidth
+			//hide shareButton for previous cell, if needed
 			selectedCell?.shareButton.isHidden = true
 			selectedCell?.shareButtonWidthConstraint.constant = 0
+			
+			//show shareButton for current cell
+			cell.shareButton.isHidden = false
+			cell.shareButtonWidthConstraint.constant = shareButtonWidth
 			
 			selectSong(post.song)
 			selectedCell = cell

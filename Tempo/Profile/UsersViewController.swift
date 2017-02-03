@@ -108,8 +108,6 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
-		
 		if let indexPath = tableView.indexPathForSelectedRow {
 			tableView.deselectRow(at: indexPath, animated: true)
 		}

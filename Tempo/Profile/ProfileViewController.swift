@@ -235,8 +235,10 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 				self.showErrorAlert("Oh no!", message: "Username must have at least one character.", actionTitle: "Try again")
 			} else if invalidChars != nil {
 				self.showErrorAlert("Invalid characters", message: "Only underscores and alphanumeric characters are allowed.", actionTitle: "Try again")
-			} else if newUsername.characters.count > 18{
+			} else if newUsername.characters.count > 18 {
 				self.showErrorAlert("Invalid length", message: "Username is too long.", actionTitle: "Try again")
+			} else if CharacterSet.decimalDigits.contains(newUsername.unicodeScalars.first!) || newUsername.characters.first == "_" {
+				self.showErrorAlert("Invalid start", message: "Usernames can only start with letters.", actionTitle: "Try again")
 			} else {
 				let oldUsername = User.currentUser.username
 				

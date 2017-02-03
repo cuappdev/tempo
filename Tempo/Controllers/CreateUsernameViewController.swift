@@ -156,6 +156,8 @@ class CreateUsernameViewController: UIViewController {
 			updateAlert(correct: false, message: "Username can only contain underscores and alphanumeric characters.")
 		} else if username.characters.count > 18 {
 			updateAlert(correct: false, message: "Username exceeds 18 characters limit.")
+		} else if CharacterSet.decimalDigits.contains(username.unicodeScalars.first!) || username.characters.first == "_" {
+			updateAlert(correct: false, message: "Usernames can only start with letters.")
 		} else { // Username contains only valid characters
 			updateAlert(correct: true, message: "")
 		}
