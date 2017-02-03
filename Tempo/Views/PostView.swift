@@ -52,6 +52,7 @@ class PostView: UIView, UIGestureRecognizerDelegate {
                 switch type {
                 case .feed:
 					avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
+					avatarImageView?.alpha = 0.0
                     profileNameLabel?.text = "\(post.user.firstName) \(post.user.shortenLastName())"
                     descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
@@ -68,7 +69,10 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 				
 				switch type {
 				case .feed:
-					avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
+					UIView.animate(withDuration: 0.5, animations: {
+						self.avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
+						self.avatarImageView?.alpha = 1.0
+					})
 				case .history:
 					avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL ?? URL(fileURLWithPath: ""))
 				}

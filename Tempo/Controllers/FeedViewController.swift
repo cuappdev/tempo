@@ -205,6 +205,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		
 		let post = posts[indexPath.row]
 		
+		cell.postView.avatarImageView?.image = nil
 		cell.postView.type = .feed
 		cell.postView.post = posts[indexPath.row]
 		cell.postView.postViewDelegate = self
