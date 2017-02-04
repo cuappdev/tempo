@@ -16,7 +16,7 @@ import Haneke
 }
 
 enum ViewType: Int {
-    case feed
+	case feed
 	case history
 }
 
@@ -30,31 +30,30 @@ enum SavedSongStatus: Int {
 class PostView: UIView, UIGestureRecognizerDelegate {
 	fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
 	fileprivate var longPressGestureRecognizer: UILongPressGestureRecognizer?
-    @IBOutlet var profileNameLabel: UILabel?
-    @IBOutlet var avatarImageView: UIImageView?
-    @IBOutlet var descriptionLabel: UILabel?
-    @IBOutlet var dateLabel: UILabel?
-    @IBOutlet var spacingConstraint: NSLayoutConstraint?
-    @IBOutlet var likesLabel: UILabel?
-    @IBOutlet var likedButton: UIButton?
-    let fillColor = UIColor.tempoDarkGray
+	@IBOutlet var profileNameLabel: UILabel?
+	@IBOutlet var avatarImageView: UIImageView?
+	@IBOutlet var descriptionLabel: UILabel?
+	@IBOutlet var dateLabel: UILabel?
+	@IBOutlet var spacingConstraint: NSLayoutConstraint?
+	@IBOutlet var likesLabel: UILabel?
+	@IBOutlet var likedButton: UIButton?
+	let fillColor = UIColor.tempoDarkGray
  
-    var type: ViewType = .feed
+	var type: ViewType = .feed
 	var songStatus: SavedSongStatus = .notSaved
 	var postViewDelegate: PostViewDelegate!
 	var playerDelegate: PlayerDelegate!
-
+	
 	var playerController: PlayerTableViewController?
-    
-    var post: Post? {
-        didSet {
-            if let post = post {
-                switch type {
-                case .feed:
+	
+	var post: Post? {
+		didSet {
+			if let post = post {
+				switch type {
+				case .feed:
 					avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
-					avatarImageView?.alpha = 0.0
-                    profileNameLabel?.text = "\(post.user.firstName) \(post.user.shortenLastName())"
-                    descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
+					profileNameLabel?.text = "\(post.user.firstName) \(post.user.shortenLastName())"
+					descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					let imageName = post.isLiked ? "LikedButton" : "LikeButton"
 					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
@@ -69,24 +68,20 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 				
 				switch type {
 				case .feed:
-					UIView.animate(withDuration: 0.5, animations: {
-						self.avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
-						self.avatarImageView?.alpha = 1.0
-					})
+					avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
 				case .history:
 					avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL ?? URL(fileURLWithPath: ""))
 				}
-                
-                //! TODO: Write something that makes this nice and relative
-                //! that updates every minute
+				
+				//! TODO: Write something that makes this nice and relative
+				//! that updates every minute
 				
 				if User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] != nil {
 					songStatus = .saved
 				}
-				
-            }
-        }
-    }
+			}
+		}
+	}
 	
 	// Called from delegate whenever player it toggled
 	func updatePlayingStatus() {
@@ -102,13 +97,13 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			}
 		}
 	}
-    
-    override func didMoveToWindow() {
-        
-        if tapGestureRecognizer == nil {
-            tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(postViewPressed(_:)))
-            tapGestureRecognizer?.delegate = self
-            tapGestureRecognizer?.cancelsTouchesInView = false
+	
+	override func didMoveToWindow() {
+		
+		if tapGestureRecognizer == nil {
+			tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(postViewPressed(_:)))
+			tapGestureRecognizer?.delegate = self
+			tapGestureRecognizer?.cancelsTouchesInView = false
 			addGestureRecognizer(tapGestureRecognizer!)
 		}
 		
@@ -120,48 +115,48 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			addGestureRecognizer(longPressGestureRecognizer!)
 		}
 		
-        avatarImageView?.clipsToBounds = true
-        isUserInteractionEnabled = true
-        avatarImageView?.isUserInteractionEnabled = true
-        profileNameLabel?.isUserInteractionEnabled = true
-        
-        layer.borderColor = UIColor.tempoDarkGray.cgColor
-        layer.borderWidth = 0.7
-    }
-    
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-
-        if superview != nil && dateLabel != nil {
-            spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
-        }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-		likedButton?.tag = 1
-        updateProfileLabel()
-		updateBackground()
-    }
+		avatarImageView?.clipsToBounds = true
+		isUserInteractionEnabled = true
+		avatarImageView?.isUserInteractionEnabled = true
+		profileNameLabel?.isUserInteractionEnabled = true
+		
+		layer.borderColor = UIColor.tempoDarkGray.cgColor
+		layer.borderWidth = 0.7
+	}
 	
-    // Customize view to be able to re-use it for search results.
-    func flagAsSearchResultPost() {
-        descriptionLabel?.text = post!.song.title + " · " + post!.song.album
-    }
-    
-    func updateProfileLabel() {
-        let avatarLayer = avatarImageView?.layer
-        if let layer = avatarLayer {
-            layer.transform = CATransform3DIdentity
-            layer.removeAnimation(forKey: "transform.rotation")
-        }
-
-        if let post = post {
-            let color: UIColor
+	override func didMoveToSuperview() {
+		super.didMoveToSuperview()
+		
+		if superview != nil && dateLabel != nil {
+			spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
+		}
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		likedButton?.tag = 1
+		updateProfileLabel()
+		updateBackground()
+	}
+	
+	// Customize view to be able to re-use it for search results.
+	func flagAsSearchResultPost() {
+		descriptionLabel?.text = post!.song.title + " · " + post!.song.album
+	}
+	
+	func updateProfileLabel() {
+		let avatarLayer = avatarImageView?.layer
+		if let layer = avatarLayer {
+			layer.transform = CATransform3DIdentity
+			layer.removeAnimation(forKey: "transform.rotation")
+		}
+		
+		if let post = post {
+			let color: UIColor
 			let font = UIFont(name: "Avenir-Medium", size: 16)!
-            let duration = TimeInterval(0.3)
-            if post.player.isPlaying {
-                color = .tempoRed
+			let duration = TimeInterval(0.3)
+			if post.player.isPlaying {
+				color = .tempoRed
 				if type == .feed {
 					if let layer = avatarLayer {
 						let animation = CABasicAnimation(keyPath: "transform.rotation")
@@ -172,22 +167,22 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 						layer.add(animation, forKey: "transform.rotation")
 					}
 				}
-            } else {
-                color = UIColor.white
-            }
+			} else {
+				color = UIColor.white
+			}
 			
 			guard let label = profileNameLabel else { return }
-            if !label.textColor.isEqual(color) {
-                UIView.transition(with: label, duration: duration, options: .transitionCrossDissolve, animations: {
-                    label.textColor = color
+			if !label.textColor.isEqual(color) {
+				UIView.transition(with: label, duration: duration, options: .transitionCrossDissolve, animations: {
+					label.textColor = color
 					label.font = font
-                    }, completion: { _ in
-                        label.textColor = color
-						label.font = font
-                })
-            }
-        }
-    }
+				}, completion: { _ in
+					label.textColor = color
+					label.font = font
+				})
+			}
+		}
+	}
 	
 	func updateBackground() {
 		if let post = post {
@@ -198,8 +193,8 @@ class PostView: UIView, UIGestureRecognizerDelegate {
 			}
 		}
 	}
-    
-
+	
+	
 	func postViewPressed(_ sender: UIGestureRecognizer) {
 		guard let post = post else { return }
 		

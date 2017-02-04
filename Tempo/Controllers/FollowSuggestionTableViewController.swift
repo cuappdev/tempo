@@ -50,6 +50,7 @@ class FollowSuggestionTableViewController: UIViewController, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FollowSuggestionsCell", for: indexPath) as! FollowSuggestionsTableViewCell
 		
+		cell.userImage.image = nil
 		let user = users[indexPath.row]
 		cell.userName.text = "\(user.firstName) \(user.shortenLastName())"
 		cell.userHandle.text = "@\(user.username)"
