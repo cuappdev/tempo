@@ -86,6 +86,17 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		}
 		plusButton.isHidden = notConnected(false)
 		feedFollowSuggestionsController?.reload()
+		
+		//Animate appropriate cell if feed song is already playing
+		if let currentPost = playerNav.currentPost, playerNav.playingPostType == .feed {
+			let rowCount = tableView.numberOfRows(inSection: 0)
+			for row in 0 ..< rowCount {
+				if let thisCell = tableView.cellForRow(at: NSIndexPath(row: row, section: 0) as IndexPath) as? FeedTableViewCell, thisCell.postView.post == currentPost {
+					thisCell.postView.updatePlayingStatus()
+					break
+				}
+			}
+		}
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
