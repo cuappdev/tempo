@@ -106,7 +106,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedTableViewCell
-		
+		cell.postView.avatarImageView?.image = nil
 		cell.postView.type = .history
 		let posts = searchController.isActive ? filteredPosts : self.posts
 		cell.postView.post = posts[absoluteIndex(indexPath)]
