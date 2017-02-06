@@ -314,6 +314,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		}
 	}
 	
+	// MARK: - FeedFollowSuggestionsDelegate
+	
 	func feedFollowSuggestionsController(controller: FeedFollowSuggestionsController, wantsToShowProfileForUser user: User) {
 		let profileVC = ProfileViewController()
 		profileVC.title = "Profile"
@@ -323,6 +325,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	
 	func feedFollowSuggestionsControllerWantsToShowMoreSuggestions() {
 		navigateToSuggestions()
+	}
+	
+	func feedFollowSuggestionsUserFollowed() {
+		refreshFeed()
 	}
 }
 

@@ -11,6 +11,7 @@ import UIKit
 protocol FeedFollowSuggestionsControllerDelegate: class {
 	func feedFollowSuggestionsController(controller: FeedFollowSuggestionsController, wantsToShowProfileForUser user: User)
 	func feedFollowSuggestionsControllerWantsToShowMoreSuggestions()
+	func feedFollowSuggestionsUserFollowed()
 }
 
 class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableViewDelegate, FollowUserDelegate {
@@ -192,6 +193,7 @@ class FeedFollowSuggestionsController: NSObject, UITableViewDataSource, UITableV
 		API.sharedAPI.updateFollowings(user.id, unfollow: !user.isFollowing)
 		DispatchQueue.main.async {
 			self.tableView.reloadData()
+			self.delegate?.feedFollowSuggestionsUserFollowed()
 		}
 	}
 
