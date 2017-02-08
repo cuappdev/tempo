@@ -135,6 +135,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "SongSearchTableViewCell", for: indexPath) as! SongSearchTableViewCell
 		let post = results[indexPath.row]
+		cell.postView.avatarImageView?.image = nil
 		cell.postView.post = post
 		if let smallArtworkURL = post.song.smallArtworkURL {
 			cell.postView.avatarImageView?.hnk_setImageFromURL(smallArtworkURL)

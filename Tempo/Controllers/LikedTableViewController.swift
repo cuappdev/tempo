@@ -48,6 +48,7 @@ class LikedTableViewController: PlayerTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "LikedCell", for: indexPath) as! LikedTableViewCell
 		let posts = searchController.isActive ? filteredPosts : self.posts
+		cell.postView?.albumArtworkImageView?.image = nil
 		cell.setupCell(spotifyAvailable: SpotifyController.sharedController.isSpotifyAvailable)
 		cell.postView?.post = posts[indexPath.row]
 		cell.postView?.postViewDelegate = self

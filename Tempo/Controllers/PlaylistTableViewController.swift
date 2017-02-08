@@ -59,6 +59,7 @@ class PlaylistTableViewController: UITableViewController, UINavigationController
 		let numTracks = playlists[indexPath.row].trackCount
 		let trackImages = playlists[indexPath.row].images
 		
+		cell.playlistImage.image = nil
 		cell.playlistNameLabel.text = playlists[indexPath.row].name
 		cell.playlistNumSongsLabel.text = numTracks == 1 ? "\(numTracks) Song" : "\(numTracks) Songs"
 		
