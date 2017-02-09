@@ -89,9 +89,9 @@ class SpotifyController {
 				SPTYourMusic.saveTracks([data!], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
 					if error != nil {
 						completionHandler(false)
-					} else {
-						User.currentUser.currentSpotifyUser?.savedTracks[track.song.spotifyID] = true as AnyObject?
-						UserDefaults.standard.setValue(User.currentUser.currentSpotifyUser?.savedTracks, forKey: "savedTracks")
+					} else if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
+						currentSpotifyUser.savedTracks[track.song.spotifyID] = true as AnyObject?
+						UserDefaults.standard.setValue(User.currentUser.currentSpotifyUser?.savedTracks, forKey: currentSpotifyUser.savedTracksKey)
 						completionHandler(true)
 					}
 				}
