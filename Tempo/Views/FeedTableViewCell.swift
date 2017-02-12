@@ -32,6 +32,8 @@ class FeedTableViewCell: UITableViewCell {
 	}
 	
 	func setUpPostHistoryCell() {
+		initialsLabel.text = ""
+		initialsView.isHidden = true
 		postView.dateLabel!.isHidden = true
 		postView.avatarImageView?.layer.cornerRadius = 0
 		imageViewWidthConstraint.constant = 60
