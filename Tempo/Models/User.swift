@@ -127,21 +127,26 @@ class CurrentSpotifyUser: NSObject, NSCoding {
         return URL(string: imageURLString)!
     }
 	var savedTracks = [String : AnyObject]()
-    
+	
+	var savedTracksKey: String {
+		return "savedTracks-\(username)"
+	}
+	
     init(json: JSON) {
         name = json["display_name"].stringValue
         username = json["id"].stringValue
         let images = json["images"].arrayValue
 		imageURLString = images.isEmpty ? "" : images[0]["url"].stringValue
         let externalURLs = json["external_urls"].dictionaryValue
-		spotifyUserURLString = externalURLs["spotify"]!.stringValue 
+		spotifyUserURLString = externalURLs["spotify"]!.stringValue
 		super.init()
+		savedTracks = UserDefaults.standard.dictionary(forKey: savedTracksKey) as [String : AnyObject]? ?? [:]
     }
 	
     override var description: String {
         return "Name: \(name)| Username: \(username)"
     }
-    
+	
     // Extend NSCoding
     // MARK: - NSCoding
     

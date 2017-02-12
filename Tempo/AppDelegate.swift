@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		if SPTAuth.defaultInstance().session != nil && SPTAuth.defaultInstance().session.isValid() {
 			SpotifyController.sharedController.setSpotifyUser(SPTAuth.defaultInstance().session.accessToken, completion: nil)
-			User.currentUser.currentSpotifyUser?.savedTracks = UserDefaults.standard.dictionary(forKey: "savedTracks") as [String : AnyObject]? ?? [:]
+			User.currentUser.currentSpotifyUser?.savedTracks = UserDefaults.standard.dictionary(forKey: User.currentUser.currentSpotifyUser!.savedTracksKey) as [String : AnyObject]? ?? [:]
 		}
 
 		window = UIWindow(frame: UIScreen.main.bounds)

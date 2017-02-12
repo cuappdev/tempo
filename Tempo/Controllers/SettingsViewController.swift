@@ -78,6 +78,8 @@ class SettingsViewController: UIViewController {
 		} else {
 			loggedInToSpotify(false)
 		}
+		let playerNav = navigationController as! PlayerNavigationController
+		playerNav.updateAddButton()
 	}
 	
 	func loggedInToSpotify(_ loggedIn: Bool) {
