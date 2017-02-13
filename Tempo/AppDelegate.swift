@@ -293,8 +293,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		switch (shortcutType) {
 		case ShortcutIdentifier.Post.type:
 			//Bring up Search for Post Song of the day
-			handleShortCutForMenuIndex(0)
-			feedVC.pretappedPlusButton = true
+			if let topVC = navigationController.topViewController {
+				//App has already loaded
+				if topVC != feedVC.searchTableViewController {
+					//not already in song searching mode
+					handleShortCutForMenuIndex(0)
+					feedVC.pretappedPlusButton = true
+					if topVC == feedVC {
+						feedVC.viewWillAppear(false)
+					}
+				}
+			} else { //First time loading the app
+				handleShortCutForMenuIndex(0)
+				feedVC.pretappedPlusButton = true
+			}
 		case ShortcutIdentifier.PeopleSearch.type:
 			//Bring up People Search Screen
 			handleShortCutForMenuIndex(1)
