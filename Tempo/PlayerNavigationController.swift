@@ -22,6 +22,7 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	private var expandedCell: ExpandedPlayerView!
 	let expandedHeight: CGFloat = 347
 	
+	var postView: PostView?
 	var postsRef: [Post]?
 	var postRefIndex: Int?
 	var playingPostType: PlayingPostType?
@@ -94,5 +95,21 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	func updateAddButton() {
 		playerCell.updateAddButton()
 		expandedCell.updateAddButton()
+	}
+	
+	func togglePause() {
+		if let post = currentPost, post.player.isPlaying {
+			post.player.togglePlaying()
+			post.player.progress = 0.0
+			expandedCell.progressView.setNeedsDisplay()
+			playerCell.progressView.setNeedsDisplay()
+			updatePlayingStatus()
+		}
+	}
+	
+	func toggleAvatarAnimation(){
+		if let post = currentPost, post.player.isPlaying {
+			post.player.pause()
+		}
 	}
 }

@@ -216,6 +216,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
 	}
 	
+	func applicationDidEnterBackground(_ application: UIApplication) {
+		if !UserDefaults.standard.bool(forKey: "music_on_off"){
+			navigationController.togglePause()
+		}
+	}
+	
 	// MARK: - SWRevealDelegate
 	
 	func revealController(_ revealController: SWRevealViewController!, willMoveTo position: FrontViewPosition) {

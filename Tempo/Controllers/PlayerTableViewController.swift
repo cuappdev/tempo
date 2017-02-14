@@ -386,5 +386,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		playerNav.currentPost = currentlyPlayingPost
 		playerNav.postsRef = posts
 		playerNav.postRefIndex = row
+		playerNav.postView = tableView.cellForRow(at: NSIndexPath(row: row, section: 1) as IndexPath).postView
 	}
 }

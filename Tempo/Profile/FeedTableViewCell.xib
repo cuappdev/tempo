@@ -22,11 +22,11 @@
             <rect key="frame" x="0.0" y="0.0" width="349" height="111"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="349" height="110"/>
+                <rect key="frame" x="0.0" y="0.0" width="349" height="110.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJt-Cq-8SO" customClass="PostView" customModule="Tempo" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="349" height="110.5"/>
+                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJt-Cq-8SO" customClass="FeedPostView" customModule="Tempo" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="349" height="110"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30m" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5c9-Vi-T55">
                                 <rect key="frame" x="295" y="26" width="32" height="18"/>
@@ -38,7 +38,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark Bryan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKr-CE-jlM">
-                                <rect key="frame" x="102" y="22" width="83.5" height="22"/>
+                                <rect key="frame" x="102" y="22" width="84" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="Dgf-vZ-mOF"/>
                                 </constraints>
@@ -47,7 +47,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reflections · MisterWives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOI-Pn-Mde">
-                                <rect key="frame" x="102" y="45" width="158.5" height="22"/>
+                                <rect key="frame" x="102" y="45" width="159" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="PaO-Cc-c1t"/>
                                 </constraints>
@@ -90,7 +90,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6mr-Fh-ZfQ">
-                                <rect key="frame" x="308" y="66.5" width="19" height="17"/>
+                                <rect key="frame" x="308" y="66" width="19" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="9hG-vk-Btv"/>
                                     <constraint firstAttribute="width" constant="30" id="LDw-C6-eoZ"/>
@@ -149,6 +149,13 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="79W-Kx-Dih"/>
+                                <exclude reference="z8L-dh-MBU"/>
+                                <exclude reference="Qm8-3A-vx8"/>
+                                <exclude reference="eap-fr-BWT"/>
+                                <exclude reference="NnZ-WN-LLM"/>
+                                <exclude reference="bgX-rg-DvA"/>
+                                <exclude reference="2LY-CJ-qI7"/>
                                 <exclude reference="7C3-75-21p"/>
                                 <exclude reference="8RL-a6-Rty"/>
                                 <exclude reference="LjR-Es-b0P"/>
@@ -160,27 +167,20 @@
                                 <exclude reference="NBM-qT-a6T"/>
                                 <exclude reference="QyV-y4-BeW"/>
                                 <exclude reference="ris-zv-Z5S"/>
-                                <exclude reference="79W-Kx-Dih"/>
-                                <exclude reference="z8L-dh-MBU"/>
-                                <exclude reference="Qm8-3A-vx8"/>
-                                <exclude reference="eap-fr-BWT"/>
-                                <exclude reference="2LY-CJ-qI7"/>
-                                <exclude reference="NnZ-WN-LLM"/>
-                                <exclude reference="bgX-rg-DvA"/>
                             </mask>
                         </variation>
                         <connections>
                             <outlet property="avatarImageView" destination="Nid-NE-gCm" id="tOJ-nl-KG3"/>
-                            <outlet property="dateLabel" destination="5c9-Vi-T55" id="OPV-kq-To8"/>
-                            <outlet property="descriptionLabel" destination="uOI-Pn-Mde" id="KMS-oB-AtZ"/>
+                            <outlet property="dateLabel" destination="5c9-Vi-T55" id="QYe-1c-MPG"/>
+                            <outlet property="descriptionLabel" destination="uOI-Pn-Mde" id="vM5-cO-Wdn"/>
                             <outlet property="likedButton" destination="6mr-Fh-ZfQ" id="cPl-NE-hM2"/>
-                            <outlet property="likesLabel" destination="bgO-bG-1rj" id="ByJ-k3-GUD"/>
-                            <outlet property="profileNameLabel" destination="YKr-CE-jlM" id="rGa-cb-aYR"/>
+                            <outlet property="likesLabel" destination="bgO-bG-1rj" id="3Rn-dB-yr5"/>
+                            <outlet property="profileNameLabel" destination="YKr-CE-jlM" id="Bwl-22-YhW"/>
                             <outlet property="spacingConstraint" destination="Qm8-3A-vx8" id="irB-iZ-PBy"/>
                         </connections>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uAH-9e-ILc" userLabel="Separator">
-                        <rect key="frame" x="0.0" y="109.5" width="349" height="1"/>
+                        <rect key="frame" x="0.0" y="109" width="349" height="1"/>
                         <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.12156862745098039" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="z2S-lx-eF2"/>

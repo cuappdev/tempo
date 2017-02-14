@@ -10,7 +10,7 @@ import UIKit
 import MediaPlayer
 import Haneke
 
-class LikedPostView: UIView, UIGestureRecognizerDelegate {
+class LikedPostView: PostView {
 	fileprivate var tapGestureRecognizer: UITapGestureRecognizer?
 	fileprivate var longPressGestureRecognizer: UILongPressGestureRecognizer?
 	
@@ -89,7 +89,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 		addSubview(addButton!)
 	}
 	
-	func updatePlayingStatus() {
+	override func updatePlayingStatus() {
 		updateSongLabel()
 		updateBackground()
 	}
@@ -158,7 +158,7 @@ class LikedPostView: UIView, UIGestureRecognizerDelegate {
 		}
 	}
 	
-	func updateBackground() {
+	override func updateBackground() {
 		if let post = post {
 			backgroundColor = post.player.isPlaying ? .readCellColor : .unreadCellColor
 		}
