@@ -112,6 +112,10 @@ class User: NSObject, NSCoding {
 		aCoder.encode(updatedAt, forKey: "updated_at")
 		aCoder.encode(username, forKey: "username")
 	}
+	
+	func equals(other: User) -> Bool {
+		return username == other.username
+	}
 }
 
 class CurrentSpotifyUser: NSObject, NSCoding {
