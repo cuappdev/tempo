@@ -150,6 +150,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 						x.tableView.tableFooterView = nil
 					}
 					x.preparePosts()
+					x.continueAnimatingAfterRefresh()
 				}
 				
 				self?.tableView.alpha = 1.0
@@ -169,7 +170,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 				Banner.hide()
 				self.plusButton.isHidden = self.notConnected(false)
 				self.tableView.reloadData()
-				self.continueAnimatingAfterRefresh()
 				self.refreshControl?.endRefreshing()
 				self.view.isUserInteractionEnabled = true
 			} else {
@@ -191,14 +191,14 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	
 	func continueAnimatingAfterRefresh() {
 		//animate currently playing song
-		if let playerCellPost = self.playerNav.playerCell.post {
+		if let playerCellPost = self.playerNav.currentPost {
 			for row in 0 ..< posts.count {
-				if posts[row].song.equals(other: playerCellPost.song) {
+				if posts[row].equals(other: playerCellPost) {
 					posts[row] = playerCellPost
 					let indexPath = IndexPath(row: row, section: 0)
 					if let cell = tableView.cellForRow(at: indexPath) as? FeedTableViewCell {
 						cell.postView.post = playerCellPost
-						cell.postView.layoutSubviews()
+						cell.postView.updatePlayingStatus()
 					}
 					break
 				}
@@ -227,6 +227,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		}
 		
 		cell.setUpCell(firstName: post.user.firstName, lastName: post.user.lastName)
+		
+		if let currentPost = playerNav.currentPost, post.equals(other: currentPost) {
+			cell.postView.updatePlayingStatus()
+		}
 		
 		return cell
 	}

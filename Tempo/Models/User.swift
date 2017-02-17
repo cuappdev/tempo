@@ -114,7 +114,7 @@ class User: NSObject, NSCoding {
 	}
 	
 	func equals(other: User) -> Bool {
-		return username == other.username
+		return id == other.id
 	}
 }
 

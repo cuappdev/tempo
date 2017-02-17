@@ -85,4 +85,8 @@ class Post: NSObject {
 		likes += isLiked ? 1 : -1
 		API.sharedAPI.updateLikes(postID, unlike: !isLiked)
 	}
+	
+	func equals(other: Post) -> Bool {
+		return song.equals(other: other.song) && user.equals(other: other.user)
+	}
 }
