@@ -47,10 +47,14 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			if searchController.isActive {
 				array = filteredPosts
 			}
-            if let row = currentlyPlayingIndexPath?.row, (playerNav.currentPost?.song.equals(other: array[row].song) ?? false && self == (playerNav.playerCell.delegate as! PlayerTableViewController)) {
+            if let row = currentlyPlayingIndexPath?.row,
+				let delegate = playerNav.playerCell.delegate as? PlayerTableViewController,
+				let currentPost = playerNav.currentPost,
+				currentPost.equals(other: array[row]),
+				self == delegate {
                 didTogglePlaying(animate: true)
             } else {
-				//Deal with past post that's being played
+				//Deal with previous post that's being played
                 currentlyPlayingPost?.player.pause()
 				currentlyPlayingPost?.player.progress = 0
 				if let oldValue = oldValue {
