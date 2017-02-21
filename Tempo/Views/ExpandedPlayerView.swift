@@ -81,6 +81,20 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 
 		setupMarqueeLabel(label: songLabel)
 		setupMarqueeLabel(label: artistLabel)
+		
+		if (iPhone5){
+			addButtonLabel.text = (songStatus == .saved) ? "Saved" : "Save"
+			let leadingContraints = NSLayoutConstraint(item: addButton, attribute:
+				.leadingMargin, relatedBy: .equal, toItem: likeButton,
+				                 attribute: .leadingMargin, multiplier: 1.0, constant: 72)
+			let trailingConstraints = NSLayoutConstraint(item: addButton, attribute:
+				.trailingMargin, relatedBy: .equal, toItem: openButton,
+				                attribute: .leadingMargin, multiplier: 1.0, constant: -30)
+			let widthContraints = NSLayoutConstraint(item: addButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1.0, constant: 60)
+			NSLayoutConstraint.activate([leadingContraints, trailingConstraints, widthContraints])
+		} else {
+			addButtonLabel.text = (songStatus == .saved) ? "Saved to Spotify" : "Save to Spotify"
+		}
 	}
 	
 	override func updateCellInfo(newPost: Post) {
@@ -248,7 +262,12 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	override func updateAddButton() {
 		updateSavedStatus()
 		addButtonImage.image = (songStatus == .saved) ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "PlayerAddButton")
-		addButtonLabel.text = (songStatus == .saved) ? "Saved to Spotify" : "Save to Spotify"
+		
+		if (iPhone5){
+			addButtonLabel.text = (songStatus == .saved) ? "Saved" : "Save"
+		} else {
+			addButtonLabel.text = (songStatus == .saved) ? "Saved to Spotify" : "Save to Spotify"
+		}
 	}
 	
 	private func setupMarqueeLabel(label: MarqueeLabel) {

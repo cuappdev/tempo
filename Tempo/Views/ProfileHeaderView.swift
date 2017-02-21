@@ -104,6 +104,9 @@ class ProfileHeaderView: UIView {
 	}
 	
 	func setUpButtonsContainerView() {
+		
+		let fontSize = iPhone5 ? 11.0 : 13.0
+		
 		// Buttons Container View
 		buttonsContainerView = UIView(frame: CGRect(x: 0, y: profileContainerView.frame.maxY, width: bounds.width, height: buttonsContainerHeight))
 		buttonsContainerView.backgroundColor = .readCellColor
@@ -126,8 +129,9 @@ class ProfileHeaderView: UIView {
 		
 		let hipsterSectionLabel = UILabel(frame: CGRect(x: 0, y: hipsterScoreLabel.frame.maxY, width: labelWidth, height: labelHeight))
 		hipsterSectionLabel.center.x = hipsterScoreButton.bounds.midX
+		
 		hipsterSectionLabel.text = "HIPSTER CRED"
-		hipsterSectionLabel.font = UIFont(name: "Avenir-Book", size: 13.0)
+		hipsterSectionLabel.font = UIFont(name: "Avenir-Book", size: CGFloat(fontSize))
 		hipsterSectionLabel.textColor = UIColor.white.withAlphaComponent(0.5)
 		hipsterSectionLabel.textAlignment = .center
 		
@@ -154,7 +158,7 @@ class ProfileHeaderView: UIView {
 		let followersSectionLabel = UILabel(frame: CGRect(x: 0, y: followersLabel.frame.maxY, width: labelWidth, height: labelHeight))
 		followersSectionLabel.center.x = followersButton.bounds.midX
 		followersSectionLabel.text = "FOLLOWERS"
-		followersSectionLabel.font = UIFont(name: "Avenir-Book", size: 13.0)
+		followersSectionLabel.font = UIFont(name: "Avenir-Book", size: CGFloat(fontSize))
 		followersSectionLabel.textColor = UIColor.white.withAlphaComponent(0.5)
 		followersSectionLabel.textAlignment = .center
 		
@@ -181,7 +185,7 @@ class ProfileHeaderView: UIView {
 		let followingSectionLabel = UILabel(frame: CGRect(x: 0, y: followingLabel.frame.maxY, width: labelWidth, height: labelHeight))
 		followingSectionLabel.center.x = followingButton.bounds.midX
 		followingSectionLabel.text = "FOLLOWING"
-		followingSectionLabel.font = UIFont(name: "Avenir-Book", size: 13.0)
+		followingSectionLabel.font = UIFont(name: "Avenir-Book", size: CGFloat(fontSize))
 		followingSectionLabel.textColor = UIColor.white.withAlphaComponent(0.5)
 		followingSectionLabel.textAlignment = .center
 		

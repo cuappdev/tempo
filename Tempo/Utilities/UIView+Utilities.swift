@@ -9,6 +9,7 @@
 import Foundation
 
 let playerCellHeight = CGFloat(72)
+let iPhone5: Bool = (UIScreen.main.bounds.width <= CGFloat(320))
 
 enum ContentType: String {
 	case Following = "Following"
