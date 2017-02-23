@@ -21,7 +21,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 	}
     fileprivate var player: AVAudioPlayer? {
         didSet {
-            oldValue?.pause()
+            oldValue?.stop()
             if let oldDelegate = oldValue?.delegate as? Player {
                 if self == oldDelegate {
                     oldValue?.delegate = nil
@@ -54,7 +54,6 @@ class Player: NSObject, AVAudioPlayerDelegate {
         if player == nil {
             if fileURL.isFileURL {
 				player = try? AVAudioPlayer(contentsOf: fileURL)
-//                player?.prepareToPlay()
             } else if currentTask == nil {
                 let request = URLRequest(url: fileURL, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 15)
 				currentTask = URLSession.dataTaskWithCachedRequest(request) { [weak self] data, response, _ -> Void in
@@ -62,7 +61,6 @@ class Player: NSObject, AVAudioPlayerDelegate {
 					if let data = data {
 						s.player = try? AVAudioPlayer(data: data)
 					}
-//					s.player?.prepareToPlay()
 					s.currentTask = nil
 					
 					if s.shouldAutoplay {
@@ -96,7 +94,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
     }
     
     func pause() {
-        player?.pause()
+        player?.stop()
         shouldAutoplay = false
     }
     
