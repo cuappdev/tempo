@@ -231,7 +231,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		results = items.map {
 			let song = Song(responseDictionary: $0)
 			let post = Post(song: song, user: User.currentUser)
-			post.player.prepareToPlay()
 			return post
 		}
 		
