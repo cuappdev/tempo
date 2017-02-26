@@ -8,9 +8,9 @@
 
 import UIKit
 
-class FeedTableViewCell: UITableViewCell {
+class FeedTableViewCell: PostTableViewCell {
 	
-    @IBOutlet var postView: PostView!
+    @IBOutlet weak var feedPostView: FeedPostView!
     @IBOutlet weak var initialsView: UIView!
     @IBOutlet weak var initialsLabel: UILabel!
     @IBOutlet weak var separator: UIView!
@@ -22,20 +22,22 @@ class FeedTableViewCell: UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		postView.backgroundColor = .unreadCellColor
+		postView?.backgroundColor = .unreadCellColor
 		separator.backgroundColor = .readCellColor
 		separatorHeight.constant = 1
 	}
 	
-	func setUpCell(firstName: String, lastName: String) {
+	func setUpFeedCell(firstName: String, lastName: String) {
+		postView = feedPostView
 		initialsLabel.text = setUserInitials(firstName: firstName, lastName: lastName)
 	}
 	
 	func setUpPostHistoryCell() {
+		postView = feedPostView
 		initialsLabel.text = ""
 		initialsView.isHidden = true
-		postView.dateLabel!.isHidden = true
-		postView.avatarImageView?.layer.cornerRadius = 0
+		feedPostView.dateLabel!.isHidden = true
+		feedPostView.avatarImageView?.layer.cornerRadius = 0
 		imageViewWidthConstraint.constant = 60
 		imageViewTopConstraint.constant = 25
 		likeButtonBottomConstraint.constant = 48.5

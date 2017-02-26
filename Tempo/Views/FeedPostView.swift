@@ -29,7 +29,7 @@ class FeedPostView: PostView {
 	
 	var playerController: PlayerTableViewController?
 	
-	var post: Post? {
+	override var post: Post? {
 		didSet {
 			if let post = post {
 				switch type {

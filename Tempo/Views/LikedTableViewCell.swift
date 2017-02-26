@@ -8,9 +8,9 @@
 
 import UIKit
 
-class LikedTableViewCell: UITableViewCell {
+class LikedTableViewCell: PostTableViewCell {
 	
-	var postView: LikedPostView?
+	var likedPostView: LikedPostView? = nil
 	var separator: UIView?
 
     override func awakeFromNib() {
@@ -19,10 +19,10 @@ class LikedTableViewCell: UITableViewCell {
 	
 	func setupCell(spotifyAvailable: Bool) {
 		selectionStyle = .none
-		
-		postView = LikedPostView()
-		postView?.frame = bounds
-		postView?.isSpotifyAvailable = spotifyAvailable
+		likedPostView = LikedPostView()
+		postView = likedPostView as PostView?
+		likedPostView?.frame = bounds
+		likedPostView?.isSpotifyAvailable = spotifyAvailable
 		addSubview(postView!)
 		
 		separator = UIView(frame: CGRect(x: 0, y: bounds.height - 1, width: bounds.width, height: 1))

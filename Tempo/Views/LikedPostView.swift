@@ -34,7 +34,7 @@ class LikedPostView: PostView {
 	
 	var playerController: PlayerTableViewController?
 	
-	var post: Post? {
+	override var post: Post? {
 		didSet {
 			// update stuff
 			if let post = post {

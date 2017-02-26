@@ -28,6 +28,8 @@ enum SavedSongStatus: Int {
 }
 
 class PostView: UIView, UIGestureRecognizerDelegate {
+	
+	var post: Post?
 
 	// Called from delegate whenever player is toggled
 	func updatePlayingStatus() {

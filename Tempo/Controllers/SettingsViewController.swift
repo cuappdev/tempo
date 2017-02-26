@@ -44,7 +44,6 @@ class SettingsViewController: UIViewController {
 		updateSpotifyState()
 		toggleNotifications.setOn(User.currentUser.remotePushNotificationsEnabled, animated: false)
 		toggleMusicOnExit.setOn(UserDefaults.standard.bool(forKey: "music_on_off"), animated: false)
-		print(UserDefaults.standard.bool(forKey: "music_on_off"))
 		
 		if shouldAddHamburger {
 			addHamburgerMenu()
@@ -154,11 +153,7 @@ class SettingsViewController: UIViewController {
 	
 	@IBAction func toggledMusicOnExit(_ sender: UISwitch) {
 		let enabled = UserDefaults.standard.bool(forKey: "music_on_off")
-		if enabled {
-			UserDefaults.standard.set(!enabled, forKey: "music_on_off")
-		} else {
-			UserDefaults.standard.set(!enabled, forKey: "music_on_off")
-		}
+		UserDefaults.standard.set(!enabled, forKey: "music_on_off")
 		sender.setOn(UserDefaults.standard.bool(forKey: "music_on_off"), animated: true)
 		//add logic to appdelegate to meet user's desired settings
 	}

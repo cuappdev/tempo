@@ -87,6 +87,6 @@ class Post: NSObject {
 	}
 	
 	func equals(other: Post) -> Bool {
-		return song.equals(other: other.song) && user.equals(other: other.user)
+		return postID == other.postID
 	}
 }

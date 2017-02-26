@@ -43,6 +43,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		view.backgroundColor = .readCellColor
 		setupAddButton()
 		tableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+		playingPostType = .feed
 		
 		//disable user interaction when first loading up feed
 		//user interaction gets enabled after refresh is done
@@ -86,11 +87,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		}
 		plusButton.isHidden = notConnected(false)
 		feedFollowSuggestionsController?.reload()
-		
-		//Animate appropriate cell if feed song is already playing
-		if let currentPost = playerNav.currentPost, playerNav.playingPostType == .feed {
-				thisCell.postView.updatePlayingStatus()
-		}
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -185,21 +181,21 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	
 	func continueAnimatingAfterRefresh() {
 		//animate currently playing song
-		if let playerCellPost = self.playerNav.currentPost {
+		if let playerCellPost = self.playerNav.currentPost, playerNav.playingPostType == .feed {
 			for row in 0 ..< posts.count {
 				if posts[row].equals(other: playerCellPost) {
 					posts[row] = playerCellPost
 					let indexPath = IndexPath(row: row, section: 0)
 					if let cell = tableView.cellForRow(at: indexPath) as? FeedTableViewCell {
-						cell.postView.post = playerCellPost
-						cell.postView.updatePlayingStatus()
+						cell.feedPostView.post = playerCellPost
+						cell.feedPostView.updatePlayingStatus()
 					}
 					break
 				}
 			}
 		}
 	}
-	
+
 	func refreshFeed() {
 		refreshFeedWithDelay(3.0, timeout: 10.0)
 	}
@@ -210,22 +206,19 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		
 		let post = posts[indexPath.row]
 		
-		cell.postView.avatarImageView?.image = nil
-		cell.postView.type = .feed
-		cell.postView.post = posts[indexPath.row]
-		cell.postView.postViewDelegate = self
-		cell.postView.playerDelegate = self
+		cell.feedPostView.avatarImageView?.image = nil
+		cell.feedPostView.type = .feed
+		cell.feedPostView.post = posts[indexPath.row]
+		cell.feedPostView.postViewDelegate = self
+		cell.feedPostView.playerDelegate = self
 		
 		if let listenedToPosts = UserDefaults.standard.dictionary(forKey: FeedViewController.readPostsKey) as? [String:Double], listenedToPosts[post.postID] != nil {
-			cell.postView.post?.player.wasPlayed = true
+			cell.feedPostView.post?.player.wasPlayed = true
 		}
 		
-		cell.setUpCell(firstName: post.user.firstName, lastName: post.user.lastName)
-		
-		if let currentPost = playerNav.currentPost, post.equals(other: currentPost) {
-			cell.postView.updatePlayingStatus()
-		}
-		
+		cell.setUpFeedCell(firstName: post.user.firstName, lastName: post.user.lastName)
+		transplantPlayerAndPostViewIfNeeded(cell: cell)
+
 		return cell
 	}
 	
@@ -318,7 +311,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		//if there is a currentlyPlayingIndexPath, need to sync liked status of playerCells and post
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
 			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? FeedTableViewCell {
-				cell.postView.updateLikedStatus()
+				cell.feedPostView.updateLikedStatus()
 				playerNav.updateLikeButton()
 			}
 		}
@@ -352,7 +345,7 @@ extension FeedViewController: UIViewControllerPreviewingDelegate {
 				return nil
 		}
 		
-		let postView = cell.postView
+		let postView = cell.postView as? FeedPostView
 		guard let avatar = postView?.avatarImageView else { return nil }
 		
 		let avatarFrame = postView?.convert(avatar.frame, to: tableView)
