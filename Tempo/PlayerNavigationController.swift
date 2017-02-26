@@ -16,10 +16,10 @@ protocol PostDelegate {
 
 class PlayerNavigationController: UINavigationController, PostDelegate {
 
-	var playerCell: PlayerCellView!
+	private var playerCell: PlayerCellView!
 	let frameHeight: CGFloat = 72
 	
-	var expandedCell: ExpandedPlayerView!
+	private var expandedCell: ExpandedPlayerView!
 	let expandedHeight: CGFloat = 347
 	
 	var postsRef: [Post]?
@@ -32,6 +32,7 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 			}
 		}
 	}
+	var playerDelegate: PlayerDelegate?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -68,6 +69,7 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	}
 	
 	func updateDelegates(delegate: PlayerDelegate) {
+		playerDelegate = delegate
 		playerCell.delegate = delegate
 		expandedCell.delegate = delegate
 	}

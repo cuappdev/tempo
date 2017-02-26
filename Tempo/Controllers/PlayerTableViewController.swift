@@ -48,7 +48,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				array = filteredPosts
 			}
             if let row = currentlyPlayingIndexPath?.row,
-				let delegate = playerNav.playerCell.delegate as? PlayerTableViewController,
+				let delegate = playerNav.playerDelegate as? PlayerTableViewController,
 				let currentPost = playerNav.currentPost,
 				currentPost.equals(other: array[row]),
 				self == delegate {

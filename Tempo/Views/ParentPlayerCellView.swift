@@ -53,16 +53,14 @@ class ParentPlayerCellView: UIView {
 				if success && songStatus == .notSaved {
 					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
 						if success {
-							self.playerNav?.playerCell.updateAddButton()
-							self.playerNav?.expandedCell.updateAddButton()
+							self.playerNav.updateAddButton()
 							self.delegate?.didToggleAdd?()
 						}
 					}
 				} else if success && songStatus == .saved {
 					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
 						if success {
-							self.playerNav?.playerCell.updateAddButton()
-							self.playerNav?.expandedCell.updateAddButton()
+							self.playerNav.updateAddButton()
 							self.delegate?.didToggleAdd?()
 						}
 					}
