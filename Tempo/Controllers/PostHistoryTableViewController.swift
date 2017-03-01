@@ -23,6 +23,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
         navigationItem.title = "Post History"
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
+		playingPostType = .history
 		
 		// Fix color above search bar
 		let topView = UIView(frame: view.frame)
@@ -45,7 +46,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		preparePosts()
 		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
 	}
-    
+	
     override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
@@ -106,13 +107,16 @@ class PostHistoryTableViewController: PlayerTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedTableViewCell
-		cell.postView.avatarImageView?.image = nil
-		cell.postView.type = .history
+		cell.feedPostView.avatarImageView?.image = nil
+		cell.feedPostView.type = .history
 		let posts = searchController.isActive ? filteredPosts : self.posts
-		cell.postView.post = posts[absoluteIndex(indexPath)]
-		cell.postView.postViewDelegate = self
-		cell.postView.playerDelegate = self
+		let post = posts[absoluteIndex(indexPath)]
+		cell.feedPostView?.post = post
+		cell.feedPostView?.postViewDelegate = self
+		cell.feedPostView?.playerDelegate = self
 		cell.setUpPostHistoryCell()
+		
+		transplantPlayerAndPostViewIfNeeded(cell: cell)
 		
 		return cell
     }
@@ -137,25 +141,14 @@ class PostHistoryTableViewController: PlayerTableViewController {
 	
     func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath) as! FeedTableViewCell
-		selectedCell.postView.backgroundColor = UIColor.tempoLightGray
+		selectedCell.feedPostView.backgroundColor = UIColor.tempoLightGray
 		currentlyPlayingIndexPath = IndexPath(row: absoluteIndex(indexPath), section: 0)
     } 
-	
-	// Updates all views related to some player
-	override func updatePlayingCells() {
-		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
-			if let cell = tableView.cellForRow(at: relativeIndexPath(row: currentlyPlayingIndexPath.row) as IndexPath) as? FeedTableViewCell {
-				cell.postView.updatePlayingStatus()
-			}
-			
-			playerNav.updatePlayingStatus()
-		}
-	}
 	
 	func didToggleLike() {
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
 			if let cell = tableView.cellForRow(at: relativeIndexPath(row: currentlyPlayingIndexPath.row) as IndexPath) as? FeedTableViewCell {
-				cell.postView.updateLikedStatus()
+				cell.feedPostView.updateLikedStatus()
 			}
 			playerNav.updateLikeButton()
 		}

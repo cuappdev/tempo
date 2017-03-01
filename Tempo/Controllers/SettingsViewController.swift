@@ -23,6 +23,7 @@ class SettingsViewController: UIViewController {
 	@IBOutlet weak var toggleNotifications: UISwitch!
 	@IBOutlet weak var useLabel: UILabel!
 	@IBOutlet weak var logOutButtonHeight: NSLayoutConstraint!
+	@IBOutlet weak var toggleMusicOnExit: UISwitch!
 	
 	static let registeredForRemotePushNotificationsKey = "SettingsViewController.registeredForRemotePushNotificationsKey"
 	static let presentedAlertForRemotePushNotificationsKey = "SettingsViewController.presentedAlertForRemotePushNotificationsKey"
@@ -32,6 +33,7 @@ class SettingsViewController: UIViewController {
 		super.viewDidLoad()
 
 		toggleNotifications.onTintColor = .tempoRed
+		toggleMusicOnExit.onTintColor = .tempoRed
 		profilePicture.layer.cornerRadius = profilePicture.frame.width / 2.0
 		
 		updateSpotifyState()
@@ -41,6 +43,7 @@ class SettingsViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		updateSpotifyState()
 		toggleNotifications.setOn(User.currentUser.remotePushNotificationsEnabled, animated: false)
+		toggleMusicOnExit.setOn(UserDefaults.standard.bool(forKey: "music_on_off"), animated: false)
 		
 		if shouldAddHamburger {
 			addHamburgerMenu()
@@ -118,7 +121,6 @@ class SettingsViewController: UIViewController {
 	}
 	
 	@IBAction func toggledNotifications(_ sender: UISwitch) {
-		
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		let didRegisterForPushNotifications = UserDefaults.standard.bool(forKey: SettingsViewController.registeredForRemotePushNotificationsKey)
 		let didPresentAlertForPushNotifications = UserDefaults.standard.bool(forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey)
@@ -146,8 +148,14 @@ class SettingsViewController: UIViewController {
 			if !success {
 				sender.setOn(!enabled, animated: true)
 			}
-			
 		})
+	}
+	
+	@IBAction func toggledMusicOnExit(_ sender: UISwitch) {
+		let enabled = UserDefaults.standard.bool(forKey: "music_on_off")
+		UserDefaults.standard.set(!enabled, forKey: "music_on_off")
+		sender.setOn(UserDefaults.standard.bool(forKey: "music_on_off"), animated: true)
+		//add logic to appdelegate to meet user's desired settings
 	}
 	
 	@IBAction func goToSpotify(_ sender: UIButton) {

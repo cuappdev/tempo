@@ -16,6 +16,7 @@ class LikedTableViewController: PlayerTableViewController {
 		title = "Liked"
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
+		playingPostType = .liked
 		
 		tableView.rowHeight = 91
 		tableView.backgroundColor = .readCellColor
@@ -48,12 +49,14 @@ class LikedTableViewController: PlayerTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "LikedCell", for: indexPath) as! LikedTableViewCell
 		let posts = searchController.isActive ? filteredPosts : self.posts
-		cell.postView?.albumArtworkImageView?.image = nil
+		cell.likedPostView?.albumArtworkImageView?.image = nil
 		cell.setupCell(spotifyAvailable: SpotifyController.sharedController.isSpotifyAvailable)
-		cell.postView?.post = posts[indexPath.row]
-		cell.postView?.postViewDelegate = self
-		cell.postView?.playerDelegate = self
-		cell.postView?.updatePlayingStatus()
+		cell.likedPostView?.post = posts[indexPath.row]
+		cell.likedPostView?.postViewDelegate = self
+		cell.likedPostView?.playerDelegate = self
+		cell.likedPostView?.updatePlayingStatus()
+		
+		transplantPlayerAndPostViewIfNeeded(cell: cell)
 		
 		return cell
     }
@@ -81,6 +84,7 @@ class LikedTableViewController: PlayerTableViewController {
 			
 			activityIndicatorView.stopAnimating()
 			activityIndicatorView.removeFromSuperview()
+			self.updatePlayingCells()
         }
     }
 	
@@ -88,10 +92,9 @@ class LikedTableViewController: PlayerTableViewController {
 		// if there is a currentlyPlayingIndexPath, need to sync add status of playerCells and post
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
 			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? LikedTableViewCell {
-				cell.postView?.updateAddStatus()
+				cell.likedPostView?.updateAddStatus()
 				playerNav.updateAddButton()
 			}
 		}
 	}
-
 }

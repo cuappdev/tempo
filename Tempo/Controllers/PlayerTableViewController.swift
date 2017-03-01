@@ -47,43 +47,21 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			if searchController.isActive {
 				array = filteredPosts
 			}
-            if let row = currentlyPlayingIndexPath?.row,
-				let delegate = playerNav.playerDelegate as? PlayerTableViewController,
-				let currentPost = playerNav.currentPost,
-				currentPost.equals(other: array[row]),
-				self == delegate {
+            if let row = currentlyPlayingIndexPath?.row, let currentPost = playerNav.currentPost, currentPost.equals(other: array[row]), playerNav.playingPostType == playingPostType {
                 didTogglePlaying(animate: true)
             } else {
-				//Deal with previous post that's being played
-                currentlyPlayingPost?.player.pause()
-				currentlyPlayingPost?.player.progress = 0
-				if let oldValue = oldValue {
-					if self is PostHistoryTableViewController {
-						let neoSelf = self as! PostHistoryTableViewController
-						if let cell = tableView.cellForRow(at: neoSelf.relativeIndexPath(row: oldValue.row) as IndexPath) as? FeedTableViewCell {
-							cell.postView.updatePlayingStatus()
-						}
-					} else if self is LikedTableViewController {
-						if let cell = tableView.cellForRow(at: oldValue) as? LikedTableViewCell {
-							cell.postView?.updatePlayingStatus()
-						}
-					} else {
-						if let cell = tableView.cellForRow(at: oldValue) as? FeedTableViewCell {
-							cell.postView.updatePlayingStatus()
-						}
-					}
+				var newCell: PostTableViewCell? = nil
+				if self is PostHistoryTableViewController {
+					let neoSelf = self as! PostHistoryTableViewController
+					let relativeIndexPath = neoSelf.relativeIndexPath(row: currentlyPlayingIndexPath!.row)
+					newCell = tableView.cellForRow(at: relativeIndexPath) as? PostTableViewCell
+				} else {
+					newCell = tableView.cellForRow(at: currentlyPlayingIndexPath!) as? PostTableViewCell
 				}
 				
 				//update post to new song
                 currentlyPlayingPost = array[currentlyPlayingIndexPath!.row]
-				if self is FeedViewController {
-					playingPostType = .feed
-				} else if self is LikedTableViewController {
-					playingPostType = .liked
-				} else {
-					playingPostType = .history
-				}
-				updatePlayerNavRefs(row: currentlyPlayingIndexPath!.row)
+				updatePlayerNavRefs(row: currentlyPlayingIndexPath!.row, postView: newCell!.postView!)
 				didTogglePlaying(animate: true)
             }
             tableView.selectRow(at: currentlyPlayingIndexPath, animated: false, scrollPosition: .none)
@@ -137,6 +115,11 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		super.viewDidAppear(animated)
 		
 		justOpened = true
+		for cell in tableView.visibleCells {
+			if let cell = cell as? PostTableViewCell {
+				cell.postView?.updatePlayingStatus()
+			}
+		}
 	}
 	
     // MARK: - Table view data source
@@ -156,7 +139,6 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	func preparePosts() {
 		posts.forEach({ (post) in
 			post.player.delegate = self
-//			post.player.prepareToPlay()
 		})
 	}
 	
@@ -359,32 +341,39 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	}
 	
 	// Updates all views related to some player
+	// Function to iterate through all cells in a PlayerTableViewController
+	// to pinpoint which cell is being played and transplant PostView.
 	func updatePlayingCells() {
-		if let path = currentlyPlayingIndexPath {
-			if self is PostHistoryTableViewController {
-				let neoSelf = self as! PostHistoryTableViewController
-				if let cell = tableView.cellForRow(at: neoSelf.relativeIndexPath(row: path.row) as IndexPath) as? FeedTableViewCell {
-					cell.postView.updatePlayingStatus()
-				}
-			} else if self is LikedTableViewController {
-				if let cell = tableView.cellForRow(at: path) as? LikedTableViewCell {
-					cell.postView?.updatePlayingStatus()
-				}
-			} else {
-				if let cell = tableView.cellForRow(at: path) as? FeedTableViewCell {
-					cell.postView.updatePlayingStatus()
-				}
+		if let _ = playerNav.currentPost {
+			if playerNav.playingPostType == playingPostType {
+				// playerNav.postView always guaranteed to have most recent postView
+				playerNav.postView?.updatePlayingStatus()
 			}
-			
-			playerNav.updatePlayingStatus()
+		}
+		playerNav.updatePlayingStatus()
+	}
+	
+	// To maintain invariant of playerNav.postView always having 
+	// the most up-to-date postView
+	func transplantPlayerAndPostViewIfNeeded(cell: PostTableViewCell) {
+		// swap in the old player to preserve song progress
+		// swap out the playerNav postView for the new one
+		if let currentPost = playerNav.currentPost, let post = cell.postView?.post, post.equals(other: currentPost), let type = playerNav.playingPostType, type == playingPostType {
+			if cell.postView != playerNav.postView {
+				// need to transplant new postView in, swap players
+				cell.postView?.post?.player = currentPost.player
+				playerNav.postView = cell.postView
+			}
+			cell.postView?.updatePlayingStatus()
 		}
 	}
 	
-	func updatePlayerNavRefs(row: Int) {
+	func updatePlayerNavRefs(row: Int, postView: PostView) {
 		playerNav.updateDelegates(delegate: self)
 		playerNav.playingPostType = playingPostType
 		playerNav.currentPost = currentlyPlayingPost
 		playerNav.postsRef = posts
 		playerNav.postRefIndex = row
+		playerNav.postView = postView
 	}
 }

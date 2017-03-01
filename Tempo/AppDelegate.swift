@@ -216,6 +216,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
 	}
 	
+	func applicationDidEnterBackground(_ application: UIApplication) {
+		if !UserDefaults.standard.bool(forKey: "music_on_off"){
+			navigationController.togglePause()
+			let center = MPNowPlayingInfoCenter.default()
+			UIApplication.shared.endReceivingRemoteControlEvents()
+			center.nowPlayingInfo = nil
+		}
+	}
+	
+	func applicationWillEnterForeground(_ application: UIApplication) {
+		if let _ = navigationController.currentPost {
+			navigationController.postView?.updatePlayingStatus()
+		}
+	}
+	
 	// MARK: - SWRevealDelegate
 	
 	func revealController(_ revealController: SWRevealViewController!, willMoveTo position: FrontViewPosition) {

@@ -22,16 +22,21 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	private var expandedCell: ExpandedPlayerView!
 	let expandedHeight: CGFloat = 347
 	
-	var postsRef: [Post]?
-	var postRefIndex: Int?
-	var playingPostType: PlayingPostType?
 	var currentPost: Post? {
 		didSet {
 			if let newPost = currentPost {
+				//deal with previous post
+				oldValue?.player.progress = 0
+				oldValue?.player.pause()
+				postView?.updatePlayingStatus()
 				updatePlayerCells(newPost: newPost)
 			}
 		}
 	}
+	var postView: PostView?
+	var postsRef: [Post]?
+	var postRefIndex: Int?
+	var playingPostType: PlayingPostType?
 	var playerDelegate: PlayerDelegate?
 	
 	override func viewDidLoad() {
@@ -94,5 +99,16 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	func updateAddButton() {
 		playerCell.updateAddButton()
 		expandedCell.updateAddButton()
+	}
+	
+	func togglePause() {
+		if let post = currentPost, post.player.isPlaying {
+			post.player.togglePlaying()
+			post.player.progress = 0.0
+			expandedCell.progressView.setNeedsDisplay()
+			playerCell.progressView.setNeedsDisplay()
+			postView?.updatePlayingStatus()
+			updatePlayingStatus()
+		}
 	}
 }
