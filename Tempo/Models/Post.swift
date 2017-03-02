@@ -14,6 +14,7 @@ class Post: NSObject {
     var player: Player!
 	let song: Song
     let date: Date?
+	var postType: PlayingPostType
     fileprivate(set) var likes: Int
 	fileprivate(set) var isLiked: Bool = false
 	fileprivate(set) var postID: String = ""
@@ -30,6 +31,8 @@ class Post: NSObject {
         } else {
             player = Player(fileURL: URL(string: "https://p.scdn.co/mp3-preview/004eaa8d0769f3d464992704d9b5c152b862aa65")!)
         }
+		
+		postType = .unknown
         
         super.init()
     }
@@ -87,6 +90,11 @@ class Post: NSObject {
 	}
 	
 	func equals(other: Post) -> Bool {
-		return postID == other.postID
+		// special case with comparing "liked" posts, since there is no postID
+		if postType == .liked && other.postType == .liked {
+			return song.equals(other: other.song) && user.equals(other: other.user)
+		} else {
+			return postID == other.postID && postType == other.postType
+		}
 	}
 }

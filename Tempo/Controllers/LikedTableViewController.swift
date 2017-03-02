@@ -55,7 +55,7 @@ class LikedTableViewController: PlayerTableViewController {
 		cell.likedPostView?.postViewDelegate = self
 		cell.likedPostView?.playerDelegate = self
 		cell.likedPostView?.updatePlayingStatus()
-		
+
 		transplantPlayerAndPostViewIfNeeded(cell: cell)
 		
 		return cell

@@ -23,6 +23,7 @@ enum PlayingPostType {
 	case feed
 	case history
 	case liked
+	case unknown
 }
 
 class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate, PostViewDelegate, PlayerDelegate {
@@ -34,7 +35,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	var filteredPosts: [Post] = []
     var currentlyPlayingPost: Post?
 	var playerNav: PlayerNavigationController!
-	var playingPostType: PlayingPostType?
+	var playingPostType: PlayingPostType!
 	
     var currentlyPlayingIndexPath: IndexPath? {
         didSet {
@@ -47,7 +48,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			if searchController.isActive {
 				array = filteredPosts
 			}
-            if let row = currentlyPlayingIndexPath?.row, let currentPost = playerNav.currentPost, currentPost.equals(other: array[row]), playerNav.playingPostType == playingPostType {
+            if let row = currentlyPlayingIndexPath?.row, let currentPost = playerNav.currentPost, currentPost.equals(other: array[row]) {
                 didTogglePlaying(animate: true)
             } else {
 				var newCell: PostTableViewCell? = nil
@@ -61,7 +62,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				
 				//update post to new song
                 currentlyPlayingPost = array[currentlyPlayingIndexPath!.row]
-				updatePlayerNavRefs(row: currentlyPlayingIndexPath!.row, postView: newCell!.postView!)
+				updatePlayerNavRefs(row: currentlyPlayingIndexPath!.row, postView: newCell?.postView)
 				didTogglePlaying(animate: true)
             }
             tableView.selectRow(at: currentlyPlayingIndexPath, animated: false, scrollPosition: .none)
@@ -80,6 +81,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
+		playingPostType = .unknown
 		
 		playerNav = navigationController as! PlayerNavigationController
 		
@@ -139,6 +141,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	func preparePosts() {
 		posts.forEach({ (post) in
 			post.player.delegate = self
+			post.postType = self.playingPostType
 		})
 	}
 	
@@ -344,8 +347,8 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	// Function to iterate through all cells in a PlayerTableViewController
 	// to pinpoint which cell is being played and transplant PostView.
 	func updatePlayingCells() {
-		if let _ = playerNav.currentPost {
-			if playerNav.playingPostType == playingPostType {
+		if let currentPost = playerNav.currentPost {
+			if currentPost.postType == playingPostType {
 				// playerNav.postView always guaranteed to have most recent postView
 				playerNav.postView?.updatePlayingStatus()
 			}
@@ -358,22 +361,23 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	func transplantPlayerAndPostViewIfNeeded(cell: PostTableViewCell) {
 		// swap in the old player to preserve song progress
 		// swap out the playerNav postView for the new one
-		if let currentPost = playerNav.currentPost, let post = cell.postView?.post, post.equals(other: currentPost), let type = playerNav.playingPostType, type == playingPostType {
-			if cell.postView != playerNav.postView {
+		if let currentPost = playerNav.currentPost, let post = cell.postView?.post, post.equals(other: currentPost) {
+			if let postView = cell.postView, postView != playerNav.postView {
 				// need to transplant new postView in, swap players
-				cell.postView?.post?.player = currentPost.player
-				playerNav.postView = cell.postView
+				postView.post?.player = currentPost.player
+				playerNav.postView = postView
 			}
 			cell.postView?.updatePlayingStatus()
 		}
 	}
 	
-	func updatePlayerNavRefs(row: Int, postView: PostView) {
+	func updatePlayerNavRefs(row: Int, postView: PostView?) {
 		playerNav.updateDelegates(delegate: self)
-		playerNav.playingPostType = playingPostType
 		playerNav.currentPost = currentlyPlayingPost
 		playerNav.postsRef = posts
 		playerNav.postRefIndex = row
-		playerNav.postView = postView
+		if let postView = postView {
+			playerNav.postView = postView
+		}
 	}
 }
