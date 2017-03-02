@@ -107,7 +107,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			FacebookLoginViewController.retrieveCurrentFacebookUserWithAccessToken(token: facebookLoginToken, completion: nil)
 		}
 		
-		setFirstVC()
+		// Check if launched via push notification
+		if let options = launchOptions {
+			if options.description.lowercased().contains("liked a song") {
+				firstViewController = feedVC
+			} else if options.description.lowercased().contains("following") {
+				firstViewController = usersVC
+//				profileVC.user = API.sharedAPI.fetchUser(___)
+//				firstViewController = profileVC
+			}
+		} else {
+			setFirstVC()
+		}
 		toggleRootVC()
 		
 		// Prepare to play audio
@@ -360,8 +371,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-		print("RECIEVED PUSH NOTIFICATION")
 		print(userInfo)
+		switch application.applicationState {
+		case .active:
+			print("ACTIVE NOTIFICATION")
+			navigationController.showNotificationBanner(userInfo)
+		case .background:
+			print("BACKGROUND NOTIFICATION")
+		default:
+			print("DEFAULT NOTIFICATION")
+			navigationController.showNotificationBanner(userInfo)
+		}
 	}
 
 }

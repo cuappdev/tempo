@@ -72,6 +72,28 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		}
 	}
 	
+	func showNotificationBanner(_ userInfo: [AnyHashable : Any]) {
+		if userInfo.description.lowercased().contains("song") {
+			// Liked song notification
+			let info = userInfo[AnyHashable("aps")] as! NSDictionary
+			Banner.showBanner(
+				self,
+				delay: 0.5,
+				data: TempoNotification(msg: info.value(forKey: "alert") as! String, type: .Like),
+				backgroundColor: .white,
+				textColor: .black)
+		} else if userInfo.description.lowercased().contains("follower") {
+			// New user follower
+			let info = userInfo[AnyHashable("aps")] as! NSDictionary
+			Banner.showBanner(
+				self,
+				delay: 0.5,
+				data: TempoNotification(msg: info.value(forKey: "alert") as! String, type: .Follower),
+				backgroundColor: .white,
+				textColor: .black)
+		}
+	}
+	
 	func updateDelegates(delegate: PlayerDelegate) {
 		playerDelegate = delegate
 		playerCell.delegate = delegate

@@ -41,14 +41,14 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Haneke/HanekeSwift.git
 
 SPEC CHECKSUMS:
-  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  Alamofire: bb309d5f40f6a6892d5bf8e779b2deff22a23909
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  FBSDKCoreKit: 894b2b6eda6a4c8c4204e92e59cc355709ef045c
-  FBSDKLoginKit: 83ca4d8f12a2022570af9fd6aacf27f6b425b99f
-  FBSDKShareKit: 5953758366278430dc322d5cdc906db361ed7f81
+  FBSDKCoreKit: abb06bbe0ec25feb58316fe7058491240f221039
+  FBSDKLoginKit: 22c39840ad2d657e997cf95b339c6b5c2c080590
+  FBSDKShareKit: 39f6429896e1949fdd2f3941a43cfee9d8e4f73f
   HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
   MarqueeLabel: 80ba85d2b76a9f5fa6c13de337db80bcd94feb1d
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  SwiftyJSON: 10da49288e013dfe468fa066995714487bdd5168
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   Tweaks: 524fa47636cce3bf3a4d9156e980f10ae9480e81
 

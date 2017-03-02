@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02063FF51E679A01000B3DBC /* TempoNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02063FF41E679A01000B3DBC /* TempoNotification.swift */; };
+		02063FF71E679A0F000B3DBC /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02063FF61E679A0F000B3DBC /* NotificationTableViewCell.swift */; };
+		02063FF91E679A1B000B3DBC /* NotificationCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02063FF81E679A1B000B3DBC /* NotificationCenterViewController.swift */; };
 		0271C9471D9582410037F6AD /* PostHistoryHeaderSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271C9451D9582410037F6AD /* PostHistoryHeaderSectionCell.swift */; };
 		0271C9481D9582410037F6AD /* PostHistoryHeaderSectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0271C9461D9582410037F6AD /* PostHistoryHeaderSectionCell.xib */; };
 		0276B1FC1DDFBAD800B512E9 /* LikedPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0276B1FB1DDFBAD800B512E9 /* LikedPostView.swift */; };
@@ -62,7 +65,7 @@
 		9563B5541DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9563B5531DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift */; };
 		9563B5561DE0E8C700E80EAF /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9563B5551DE0E8C700E80EAF /* CGRect+Extensions.swift */; };
 		957592031DF053F40045FF25 /* AnimatedLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957592021DF053F40045FF25 /* AnimatedLogoView.swift */; };
-		957E28461DDD1ED2009601CB /* BackendNotConnectedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957E28451DDD1ED2009601CB /* BackendNotConnectedProtocol.swift */; };
+		957E28461DDD1ED2009601CB /* NotificationBannerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957E28451DDD1ED2009601CB /* NotificationBannerProtocol.swift */; };
 		95D1E77E1CE20BED00E1EF0F /* HamburgerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1E77D1CE20BED00E1EF0F /* HamburgerIconView.swift */; };
 		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
 		C7B1984E1DD67D6800EAB8EA /* SpotifyLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B1984D1DD67D6800EAB8EA /* SpotifyLoginViewController.swift */; };
@@ -105,6 +108,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02063FF41E679A01000B3DBC /* TempoNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempoNotification.swift; sourceTree = "<group>"; };
+		02063FF61E679A0F000B3DBC /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		02063FF81E679A1B000B3DBC /* NotificationCenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterViewController.swift; sourceTree = "<group>"; };
 		0271C9451D9582410037F6AD /* PostHistoryHeaderSectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHistoryHeaderSectionCell.swift; sourceTree = "<group>"; };
 		0271C9461D9582410037F6AD /* PostHistoryHeaderSectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHistoryHeaderSectionCell.xib; sourceTree = "<group>"; };
 		0276B1FB1DDFBAD800B512E9 /* LikedPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikedPostView.swift; sourceTree = "<group>"; };
@@ -162,7 +168,7 @@
 		9563B5551DE0E8C700E80EAF /* CGRect+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
 		957319321DD1AF1000B5E3C4 /* Tempo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tempo.entitlements; sourceTree = "<group>"; };
 		957592021DF053F40045FF25 /* AnimatedLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedLogoView.swift; sourceTree = "<group>"; };
-		957E28451DDD1ED2009601CB /* BackendNotConnectedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackendNotConnectedProtocol.swift; path = Utilities/Tools/BackendNotConnectedProtocol.swift; sourceTree = "<group>"; };
+		957E28451DDD1ED2009601CB /* NotificationBannerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationBannerProtocol.swift; path = Utilities/Tools/NotificationBannerProtocol.swift; sourceTree = "<group>"; };
 		95D1E77D1CE20BED00E1EF0F /* HamburgerIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerIconView.swift; sourceTree = "<group>"; };
 		9D5244650DDB6EA6E3FDF1FA /* Pods-Tempo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tempo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tempo/Pods-Tempo.debug.xcconfig"; sourceTree = "<group>"; };
 		A1698B38F16E152E9A84B507 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +225,7 @@
 				6DEE0FC31AC34811005552F9 /* Profile */,
 				D148F4991AF0349A009AB073 /* Post History Calendar */,
 				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
+				02063FF81E679A1B000B3DBC /* NotificationCenterViewController.swift */,
 				9563B5531DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift */,
 				B085F3B31BE3CBB80000421E /* SearchViewController.swift */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
@@ -298,7 +305,7 @@
 				1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */,
 				FA1A91301AC3899E00774EF3 /* Player.swift */,
 				60AEF7651DBD374200C68AAF /* PlayerNavigationController.swift */,
-				957E28451DDD1ED2009601CB /* BackendNotConnectedProtocol.swift */,
+				957E28451DDD1ED2009601CB /* NotificationBannerProtocol.swift */,
 				FA1E1A7A1ADB06A8007C823C /* Models */,
 				1D046D8C1AB6953600D0354B /* Controllers */,
 				1D65392E1AD0E23800E82627 /* Views */,
@@ -341,6 +348,7 @@
 				0271C9451D9582410037F6AD /* PostHistoryHeaderSectionCell.swift */,
 				0271C9461D9582410037F6AD /* PostHistoryHeaderSectionCell.xib */,
 				60728FB91E6369150097C1AC /* PostTableViewCell.swift */,
+				02063FF61E679A0F000B3DBC /* NotificationTableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -448,6 +456,7 @@
 			isa = PBXGroup;
 			children = (
 				FA1E1A771ADB06A3007C823C /* Post.swift */,
+				02063FF41E679A01000B3DBC /* TempoNotification.swift */,
 				FA1E1A7B1ADB072A007C823C /* Song.swift */,
 				6DEE0FD01AC34811005552F9 /* User.swift */,
 			);
@@ -635,10 +644,12 @@
 				D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */,
 				C7B1984E1DD67D6800EAB8EA /* SpotifyLoginViewController.swift in Sources */,
 				D14D06B21BE9535400ABA1CF /* SearchViewController.swift in Sources */,
+				02063FF91E679A1B000B3DBC /* NotificationCenterViewController.swift in Sources */,
 				7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */,
 				6067F0821BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift in Sources */,
 				60AEF76C1DBD38AD00C68AAF /* ProgressView.swift in Sources */,
 				60AEF7661DBD374200C68AAF /* PlayerNavigationController.swift in Sources */,
+				02063FF51E679A01000B3DBC /* TempoNotification.swift in Sources */,
 				D11740001AF8574400302FFD /* ProfileViewController.swift in Sources */,
 				6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */,
 				952E7EE21DEA8E6E006C6131 /* FacebookLoginViewController.swift in Sources */,
@@ -653,12 +664,13 @@
 				6084F6C51BE700B00048EFE3 /* PlayerTableViewController.swift in Sources */,
 				BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */,
 				0271C9471D9582410037F6AD /* PostHistoryHeaderSectionCell.swift in Sources */,
+				02063FF71E679A0F000B3DBC /* NotificationTableViewCell.swift in Sources */,
 				FA1E1A781ADB06A3007C823C /* Post.swift in Sources */,
 				1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */,
 				D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */,
 				D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */,
 				9563B5561DE0E8C700E80EAF /* CGRect+Extensions.swift in Sources */,
-				957E28461DDD1ED2009601CB /* BackendNotConnectedProtocol.swift in Sources */,
+				957E28461DDD1ED2009601CB /* NotificationBannerProtocol.swift in Sources */,
 				95D1E77E1CE20BED00E1EF0F /* HamburgerIconView.swift in Sources */,
 				D160AE021BE677D4003B0E1A /* PlaylistTableViewController.swift in Sources */,
 				D148F4AA1AF03EB4009AB073 /* PostHistoryTableViewController.swift in Sources */,

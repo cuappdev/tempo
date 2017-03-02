@@ -28,6 +28,10 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		return vc
 	}()
 	
+	lazy var notificationCenterViewController: NotificationCenterViewController = {
+		return NotificationCenterViewController()
+	}()
+	
 	var pretappedPlusButton = false
 	var refreshNeeded = false //set to true on logout
 	
@@ -287,6 +291,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		searchTableViewController.selfPostIds = posts.filter({ $0.user.name == User.currentUser.name }).map({ $0.song.spotifyID })
 		playerNav.animateExpandedCell(isExpanding: false)
 		navigationController?.pushViewController(searchTableViewController, animated: false)
+//		navigationController?.pushViewController(notificationCenterViewController, animated: true)
 	}
 	
 	// MARK: - SongSearchDelegate
