@@ -122,7 +122,7 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	func updateLikeButton() {
 		if let selectedPost = post {
-			let name = (selectedPost.isLiked || playerNav.playingPostType == .liked) ? "LikedButton" : "LikeButton"
+			let name = (selectedPost.isLiked || selectedPost.postType == .liked) ? "LikedButton" : "LikeButton"
 			likeButton?.setBackgroundImage(UIImage(named: name), for: .normal)
 		}
 	}

@@ -36,7 +36,6 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	var postView: PostView?
 	var postsRef: [Post]?
 	var postRefIndex: Int?
-	var playingPostType: PlayingPostType?
 	var playerDelegate: PlayerDelegate?
 	
 	override func viewDidLoad() {
