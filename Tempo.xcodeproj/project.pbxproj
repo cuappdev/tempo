@@ -21,9 +21,7 @@
 		1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D72D9C11AACC4C0007822B0 /* Images.xcassets */; };
 		1D802AB51B786351005A96D1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D802AB41B786350005A96D1 /* AVFoundation.framework */; };
 		1D802AB71B78635A005A96D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D802AB61B78635A005A96D1 /* SystemConfiguration.framework */; };
-		1DA44FC61B6D84D1009EC2BD /* PostButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA44FC51B6D84D1009EC2BD /* PostButton.swift */; };
 		1DB283901B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */; };
-		1DB476481AEF24670066014F /* PostButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB476471AEF24670066014F /* PostButton.xib */; };
 		1DCB961C1AED5F48007F6A4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CF7B971AE425450083606C /* API.swift */; };
 		1DD875FC1B6E27DD0041C45B /* NSDateFormatter+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD875FB1B6E27DD0041C45B /* NSDateFormatter+Shared.swift */; };
 		1DE649C31B78590800DA5499 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE649C11B78590800DA5499 /* SettingsViewController.swift */; };
@@ -40,11 +38,8 @@
 		6038B17E1D80ED250083940D /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6038B17D1D80ED250083940D /* FeedTableViewCell.swift */; };
 		6038B1801D80EDAF0083940D /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */; };
 		60419BED1DE24AE800CAB9BD /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */; };
-		6067F0821BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6067F0801BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift */; };
 		60728FBA1E6369150097C1AC /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60728FB91E6369150097C1AC /* PostTableViewCell.swift */; };
 		6084F6C51BE700B00048EFE3 /* PlayerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */; };
-		6092CBD91C021C5E008836AE /* FollowSuggestionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6092CBD71C021C5E008836AE /* FollowSuggestionsTableViewCell.swift */; };
-		6092CBDA1C021C5E008836AE /* FollowSuggestionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6092CBD81C021C5E008836AE /* FollowSuggestionsTableViewCell.xib */; };
 		60AEF7661DBD374200C68AAF /* PlayerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEF7651DBD374200C68AAF /* PlayerNavigationController.swift */; };
 		60AEF76A1DBD38AD00C68AAF /* PlayerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEF7671DBD38AD00C68AAF /* PlayerCellView.swift */; };
 		60AEF76B1DBD38AD00C68AAF /* PlayerCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60AEF7681DBD38AD00C68AAF /* PlayerCellView.xib */; };
@@ -120,9 +115,7 @@
 		1D72D9C11AACC4C0007822B0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D802AB41B786350005A96D1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1D802AB61B78635A005A96D1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		1DA44FC51B6D84D1009EC2BD /* PostButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostButton.swift; sourceTree = "<group>"; };
 		1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSLayoutContraint+Fill.swift"; path = "../Controllers/NSLayoutContraint+Fill.swift"; sourceTree = "<group>"; };
-		1DB476471AEF24670066014F /* PostButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostButton.xib; sourceTree = "<group>"; };
 		1DD875FB1B6E27DD0041C45B /* NSDateFormatter+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDateFormatter+Shared.swift"; sourceTree = "<group>"; };
 		1DE649C11B78590800DA5499 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StyleController.swift; path = ../Controllers/StyleController.swift; sourceTree = "<group>"; };
@@ -139,11 +132,8 @@
 		6038B17D1D80ED250083940D /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedTableViewCell.xib; path = ../Profile/FeedTableViewCell.xib; sourceTree = "<group>"; };
 		60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
-		6067F0801BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowSuggestionTableViewController.swift; sourceTree = "<group>"; };
 		60728FB91E6369150097C1AC /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewController.swift; sourceTree = "<group>"; };
-		6092CBD71C021C5E008836AE /* FollowSuggestionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowSuggestionsTableViewCell.swift; sourceTree = "<group>"; };
-		6092CBD81C021C5E008836AE /* FollowSuggestionsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowSuggestionsTableViewCell.xib; sourceTree = "<group>"; };
 		60AEF7651DBD374200C68AAF /* PlayerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerNavigationController.swift; sourceTree = "<group>"; };
 		60AEF7671DBD38AD00C68AAF /* PlayerCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerCellView.swift; sourceTree = "<group>"; };
 		60AEF7681DBD38AD00C68AAF /* PlayerCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerCellView.xib; sourceTree = "<group>"; };
@@ -223,7 +213,6 @@
 				B085F3B31BE3CBB80000421E /* SearchViewController.swift */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
 				6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */,
-				6067F0801BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift */,
 				60C018041D9C7A2E00FE5166 /* AboutViewController.swift */,
 				952E7EDE1DEA8957006C6131 /* XIBS */,
 			);
@@ -330,8 +319,6 @@
 				0276B1FD1DDFC2D900B512E9 /* LikedTableViewCell.swift */,
 				6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */,
 				6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */,
-				6092CBD71C021C5E008836AE /* FollowSuggestionsTableViewCell.swift */,
-				6092CBD81C021C5E008836AE /* FollowSuggestionsTableViewCell.xib */,
 				D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */,
 				FAB5647B1AF6BAE3001059DF /* SideBarTableViewCell.xib */,
 				1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */,
@@ -349,8 +336,6 @@
 			isa = PBXGroup;
 			children = (
 				FA674C061AF9105E00C14463 /* ADRefreshControl.swift */,
-				1DA44FC51B6D84D1009EC2BD /* PostButton.swift */,
-				1DB476471AEF24670066014F /* PostButton.xib */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -528,10 +513,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6092CBDA1C021C5E008836AE /* FollowSuggestionsTableViewCell.xib in Resources */,
 				60AEF76B1DBD38AD00C68AAF /* PlayerCellView.xib in Resources */,
 				02803D511DC1855C001D8F01 /* ExpandedPlayerView.xib in Resources */,
-				1DB476481AEF24670066014F /* PostButton.xib in Resources */,
 				6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */,
 				D160AE001BE67406003B0E1A /* PlaylistTableViewCell.xib in Resources */,
 				60C5A3CD1D9A1FB1004BDD58 /* LaunchScreen.storyboard in Resources */,
@@ -616,9 +599,7 @@
 				0276B1FE1DDFC2D900B512E9 /* LikedTableViewCell.swift in Sources */,
 				FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */,
 				D160ADFF1BE67406003B0E1A /* PlaylistTableViewCell.swift in Sources */,
-				6092CBD91C021C5E008836AE /* FollowSuggestionsTableViewCell.swift in Sources */,
 				957592031DF053F40045FF25 /* AnimatedLogoView.swift in Sources */,
-				1DA44FC61B6D84D1009EC2BD /* PostButton.swift in Sources */,
 				60C018061D9C7A2E00FE5166 /* AboutViewController.swift in Sources */,
 				1D1DD7141AE492750066AB39 /* Util.swift in Sources */,
 				6035E7881DE8017300221870 /* ParentPlayerCellView.swift in Sources */,
@@ -636,7 +617,6 @@
 				C7B1984E1DD67D6800EAB8EA /* SpotifyLoginViewController.swift in Sources */,
 				D14D06B21BE9535400ABA1CF /* SearchViewController.swift in Sources */,
 				7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */,
-				6067F0821BFD4F7E004059A0 /* FollowSuggestionTableViewController.swift in Sources */,
 				60AEF76C1DBD38AD00C68AAF /* ProgressView.swift in Sources */,
 				60AEF7661DBD374200C68AAF /* PlayerNavigationController.swift in Sources */,
 				D11740001AF8574400302FFD /* ProfileViewController.swift in Sources */,
