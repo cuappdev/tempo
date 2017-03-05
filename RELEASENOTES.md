@@ -4,7 +4,7 @@
 #### Feb, 24, 2017
 - Various bug and compatiblity fixes
 
-### [v1.0.1 - XXX](https://github.com/cuappdev/tempo/compare/v1.0.0...v1.0.1)
+### [v1.0.1 - Bad and Boujee](https://github.com/cuappdev/tempo/compare/v1.0.0...v1.0.1)
 #### Feb, 11, 2017
 - Various bug fixes
 
