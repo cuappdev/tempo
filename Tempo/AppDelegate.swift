@@ -374,12 +374,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		print(userInfo)
 		switch application.applicationState {
 		case .active:
-			print("ACTIVE NOTIFICATION")
 			navigationController.showNotificationBanner(userInfo)
 		case .background:
 			print("BACKGROUND NOTIFICATION")
 		default:
-			print("DEFAULT NOTIFICATION")
 			navigationController.showNotificationBanner(userInfo)
 		}
 	}

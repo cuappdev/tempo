@@ -14,7 +14,7 @@ protocol PostDelegate {
 	var currentPost: Post? { get }
 }
 
-class PlayerNavigationController: UINavigationController, PostDelegate {
+class PlayerNavigationController: UINavigationController, PostDelegate, NotificationDelegate {
 
 	private var playerCell: PlayerCellView!
 	let frameHeight: CGFloat = 72
@@ -72,28 +72,6 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		}
 	}
 	
-	func showNotificationBanner(_ userInfo: [AnyHashable : Any]) {
-		if userInfo.description.lowercased().contains("song") {
-			// Liked song notification
-			let info = userInfo[AnyHashable("aps")] as! NSDictionary
-			Banner.showBanner(
-				self,
-				delay: 0.5,
-				data: TempoNotification(msg: info.value(forKey: "alert") as! String, type: .Like),
-				backgroundColor: .white,
-				textColor: .black)
-		} else if userInfo.description.lowercased().contains("follower") {
-			// New user follower
-			let info = userInfo[AnyHashable("aps")] as! NSDictionary
-			Banner.showBanner(
-				self,
-				delay: 0.5,
-				data: TempoNotification(msg: info.value(forKey: "alert") as! String, type: .Follower),
-				backgroundColor: .white,
-				textColor: .black)
-		}
-	}
-	
 	func updateDelegates(delegate: PlayerDelegate) {
 		playerDelegate = delegate
 		playerCell.delegate = delegate
@@ -130,6 +108,67 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 			playerCell.progressView.setNeedsDisplay()
 			postView?.updatePlayingStatus()
 			updatePlayingStatus()
+		}
+	}
+	
+	// MARK: Banner Methods
+	func showNotificationBanner(_ userInfo: [AnyHashable : Any]) {
+		
+		if userInfo.description.lowercased().contains("song") {
+			// Liked song notification
+			let info = userInfo[AnyHashable("aps")] as! NSDictionary
+			Banner.showBanner(
+				self,
+				delay: 0.5,
+				data: TempoNotification(msg: info.value(forKey: "alert") as! String, type: .Like),
+				backgroundColor: .white,
+				textColor: .black,
+				delegate: self)
+		} else if userInfo.description.lowercased().contains("follower") {
+			// New user follower
+			let info = userInfo[AnyHashable("aps")] as! NSDictionary
+			Banner.showBanner(
+				self,
+				delay: 0.5,
+				data: TempoNotification(msg: info.value(forKey: "alert") as! String, type: .Follower),
+				backgroundColor: .white,
+				textColor: .black,
+				delegate: self)
+		}
+	}
+	
+	func didTapNotification(forNotification notif: TempoNotification) {
+		
+		if let id = notif.id {
+			API.sharedAPI.checkNotification(id, completion: { _ in })
+		}
+		
+		if let postID = notif.postID, notif.type == .Like {
+			// Push to TableView with posted songs and dates
+			let postHistoryVC = PostHistoryTableViewController()
+			API.sharedAPI.fetchPosts(User.currentUser.id) { (post) in
+				postHistoryVC.posts = post
+				postHistoryVC.postedDates = post.map { $0.date! }
+				postHistoryVC.filterPostedDatesToSections(postHistoryVC.postedDates)
+				postHistoryVC.songLikes = post.map{ $0.likes }
+				// find specific post
+				var row: Int = 0
+				for p in post {
+					if p.postID == postID { break }
+					row += 1
+				}
+				postHistoryVC.sectionIndex = postHistoryVC.relativeIndexPath(row: row).section
+				self.pushViewController(postHistoryVC, animated: true)
+			}
+		} else if notif.type == .Follower {
+			let profileVC = ProfileViewController()
+			profileVC.title = "Profile"
+			if let userID = notif.userID {
+				API.sharedAPI.fetchUser(userID) {
+					profileVC.user = $0
+					self.pushViewController(profileVC, animated: true)
+				}
+			}
 		}
 	}
 }

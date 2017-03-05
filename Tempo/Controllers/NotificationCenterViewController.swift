@@ -74,35 +74,9 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let cell = tableView.cellForRow(at: indexPath) as! NotificationTableViewCell
 		
-		API.sharedAPI.checkNotification(cell.notification.id!, completion: { _ in })
+		let navController = navigationController as! PlayerNavigationController
+		navController.didTapNotification(forNotification: cell.notification)
 		
-		if let postID = cell.notification.postID, cell.notification.type == .Like {
-			// Push to TableView with posted songs and dates
-			let postHistoryVC = PostHistoryTableViewController()
-			API.sharedAPI.fetchPosts(User.currentUser.id) { (post) in
-				postHistoryVC.posts = post
-				postHistoryVC.postedDates = post.map { $0.date! }
-				postHistoryVC.filterPostedDatesToSections(postHistoryVC.postedDates)
-				postHistoryVC.songLikes = post.map{ $0.likes }
-				// find specific post
-				var row: Int = 0
-				for p in post {
-					if p.postID == postID { break }
-					row += 1
-				}
-				postHistoryVC.sectionIndex = postHistoryVC.relativeIndexPath(row: row).section
-				self.navigationController?.pushViewController(postHistoryVC, animated: true)
-			}
-		} else if cell.notification.type == .Follower {
-			let profileVC = ProfileViewController()
-			profileVC.title = "Profile"
-			if let id = cell.notification.userID {
-				API.sharedAPI.fetchUser(id) {
-					profileVC.user = $0
-					self.navigationController?.pushViewController(profileVC, animated: true)
-				}
-			}
-		}
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

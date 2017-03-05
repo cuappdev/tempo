@@ -16,11 +16,16 @@ private struct BannerProperties {
 
 private let originY: CGFloat = -BannerProperties.height
 
+protocol NotificationDelegate {
+	func didTapNotification(forNotification notif: TempoNotification)
+}
+
 // MARK: - Banner View -
 class BannerView: UIView {
 	
 	var notificationLabel: UILabel!
 	var notification: TempoNotification!
+	var delegate: NotificationDelegate?
 	
 	override init(frame: CGRect) {
 		let f = CGRect(x: 0, y: originY, width: BannerProperties.width, height: BannerProperties.height)
@@ -47,15 +52,7 @@ class BannerView: UIView {
 	func hideTap() {
 		Banner.hide()
 		if notification.type != .InternetConnectivity {
-			notificationSelection()
-		}
-	}
-	
-	func notificationSelection() {
-		if notification.message.lowercased().contains("liked a song") {
-			// post liked
-		} else {
-			// new follower
+			delegate?.didTapNotification(forNotification: notification)
 		}
 	}
 	
@@ -68,12 +65,13 @@ class Banner {
 	
 	fileprivate static let notificationView = BannerView()
 	
-	static func showBanner(_ topView: UIViewController, delay: TimeInterval, data: TempoNotification, backgroundColor: UIColor, textColor: UIColor) {
+	static func showBanner(_ topView: UIViewController, delay: TimeInterval, data: TempoNotification, backgroundColor: UIColor, textColor: UIColor, delegate: NotificationDelegate? = nil) {
 		
 		guard let window = UIApplication.shared.delegate?.window, window != nil else {
 			return
 		}
 		
+		notificationView.delegate					 = delegate
 		notificationView.notification				 = data
 		notificationView.notificationLabel.text      = data.message
 		print(data.message)
