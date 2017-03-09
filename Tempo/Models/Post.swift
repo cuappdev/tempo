@@ -91,7 +91,7 @@ class Post: NSObject {
 	
 	func equals(other: Post) -> Bool {
 		// special case with comparing "liked" posts, since there is no postID
-		if postType == .liked && other.postType == .liked {
+		if (postType == .liked && other.postType == .liked) || (postType == .search && other.postType == .search) {
 			return song.equals(other: other.song) && user.equals(other: other.user)
 		} else {
 			return postID == other.postID && postType == other.postType

@@ -79,6 +79,9 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	}
 	
 	func resetPlayerCells() {
+		if let currentPost = currentPost, currentPost.player.isPlaying {
+			playerDelegate?.didTogglePlaying(animate: false)
+		}
 		currentPost?.player.progress = 0.0
 		currentPost = nil
 		playerCell.resetPlayerCell()

@@ -9,14 +9,14 @@
 import UIKit
 import MediaPlayer
 
-class SearchPostView: UIView, UIGestureRecognizerDelegate {
+class SearchPostView: PostView {
 	var tapGestureRecognizer: UITapGestureRecognizer?
 	@IBOutlet var profileNameLabel: UILabel?
 	@IBOutlet var avatarImageView: UIImageView?
 	@IBOutlet var descriptionLabel: UILabel?
 	@IBOutlet var spacingConstraint: NSLayoutConstraint?
     
-    var post: Post? {
+    override var post: Post? {
         didSet {
             // update stuff
 			if let post = post {
@@ -45,17 +45,12 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         super.didMoveToSuperview()
     }
 	
-	func updatePlayingStatus() {
-		updateProfileLabel()
-		updateBackground()
-	}
-	
     // Customize view to be able to re-use it for search results.
     func flagAsSearchResultPost() {
         descriptionLabel?.text = "\(post!.song.title) · \(post!.song.album)"
     }
     
-    func updateProfileLabel() {
+    override func updateProfileLabel() {
         if let post = post {
             let duration = TimeInterval(0.3)
 			let color: UIColor = post.player.isPlaying ? .tempoRed : .white
@@ -71,7 +66,7 @@ class SearchPostView: UIView, UIGestureRecognizerDelegate {
         }
 	}
 	
-	func updateBackground() {
+	override func updateBackground() {
 		if let post = post {
 			backgroundColor = post.player.isPlaying ? .readCellColor : .unreadCellColor
 		}
