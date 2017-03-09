@@ -11,7 +11,7 @@ import UIKit
 let PostLikedStatusChangeNotification = "PostLikedStatusChange"
 
 protocol PostDelegate {
-	var currentPost: Post? { get }
+	func getCurrentPost() -> Post?
 }
 
 class PlayerNavigationController: UINavigationController, PostDelegate {
@@ -22,7 +22,7 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	private var expandedCell: ExpandedPlayerView!
 	let expandedHeight: CGFloat = 347
 	
-	var currentPost: Post? {
+	private var currentPost: Post? {
 		didSet {
 			if let newPost = currentPost {
 				//deal with previous post
@@ -33,10 +33,10 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 			}
 		}
 	}
-	var postView: PostView?
-	var postsRef: [Post]?
-	var postRefIndex: Int?
-	var playerDelegate: PlayerDelegate?
+	private var postView: PostView?
+	private var postsRef: [Post]?
+	private var postRefIndex: Int?
+	private var playerDelegate: PlayerDelegate?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -57,7 +57,17 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		view.addSubview(expandedCell!)
 	}
 	
-	func updatePlayerCells(newPost: Post) {
+	// updates all relevant information for new post and begins playing the song
+	func updateNewPost(post: Post, delegate: PlayerDelegate, postsRef: [Post]?, postRefIndex: Int?, postView: PostView?) {
+		updateDelegates(delegate: delegate)
+		currentPost = post
+		self.postsRef = postsRef
+		self.postRefIndex = postRefIndex
+		self.postView = postView
+		delegate.didTogglePlaying(animate: true)
+	}
+	
+	private func updatePlayerCells(newPost: Post) {
 		playerCell.updateCellInfo(newPost: newPost)
 		expandedCell.updateCellInfo(newPost: newPost)
 	}
@@ -72,7 +82,7 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		}
 	}
 	
-	func updateDelegates(delegate: PlayerDelegate) {
+	private func updateDelegates(delegate: PlayerDelegate) {
 		playerDelegate = delegate
 		playerCell.delegate = delegate
 		expandedCell.delegate = delegate
@@ -112,5 +122,19 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 			postView?.updatePlayingStatus()
 			updatePlayingStatus()
 		}
+	}
+	
+	// MARK: - Getters and setters
+	
+	func getCurrentPost() -> Post? {
+		return currentPost
+	}
+	
+	func getPostView() -> PostView? {
+		return postView
+	}
+	
+	func setPostView(newPostView: PostView) {
+		postView = newPostView
 	}
 }

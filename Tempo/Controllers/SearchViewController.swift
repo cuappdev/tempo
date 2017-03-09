@@ -115,7 +115,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	// Called from bar button, not an elegant solution (should audit)
 	func dismiss() {
-		if let _ = playerNav.currentPost {
+		if let _ = playerNav.getCurrentPost() {
 			playerNav.resetPlayerCells()
 		}
 		clearPosts()
@@ -141,7 +141,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			cell.postView.avatarImageView?.hnk_setImageFromURL(smallArtworkURL)
 		}
 		
-		if let currentPost = playerNav.currentPost {
+		if let currentPost = playerNav.getCurrentPost() {
 			cell.shareButton.isHidden = !currentPost.equals(other: post)
 		} else {
 			cell.shareButton.isHidden = true
@@ -169,7 +169,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		let cell = tableView.cellForRow(at: indexPath) as! SongSearchTableViewCell
 		let post = posts[indexPath.row]
 		
-		if let currentPost = playerNav.currentPost, currentPost.equals(other: post) {
+		if let currentPost = playerNav.getCurrentPost(), currentPost.equals(other: post) {
 			didTogglePlaying(animate: true)
 		} else {
 			//hide shareButton for previous cell, if needed
@@ -180,7 +180,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			cell.shareButton.isHidden = false
 			cell.shareButtonWidthConstraint.constant = shareButtonWidth
 			
-			selectSong(post)
+			selectSong(post, selectedCell?.postView)
 			selectedCell = cell
 		}
 	}
@@ -200,18 +200,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	// MARK: - Song Request Methods
 	
-	func selectSong(_ post: Post) {
-		playerNav.updateDelegates(delegate: self)
-		playerNav.currentPost = post
-		playerNav.postsRef = nil //do not want to autoplay next song
-		playerNav.currentPost = post
-		didTogglePlaying(animate: true)
+	func selectSong(_ post: Post, _ postView: PostView?) {
+		playerNav.updateNewPost(post: post, delegate: self, postsRef: nil, postRefIndex: nil, postView: postView)
 		searchBar.resignFirstResponder()
 	}
 	
 	func submitSong() {
 		// shouldn't be able to get here if playerNav.currentPost is nil
-		delegate?.didSelectSong(playerNav.currentPost!.song)
+		delegate?.didSelectSong(playerNav.getCurrentPost()!.song)
 		dismiss()
 	}
 	
@@ -249,10 +245,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		searchBar.resignFirstResponder()
 	}
 	
-	// MARK: - PausePlayDelegate
+	// MARK: - PlayerDelegate
 	
 	func didTogglePlaying(animate: Bool) {
-		if let currentPost = playerNav.currentPost {
+		if let currentPost = playerNav.getCurrentPost() {
 			currentPost.player.togglePlaying()
 		}
 		selectedCell?.postView.updatePlayingStatus()
@@ -260,8 +256,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	}
 	
 	func didFinishPlaying() {
-		selectedCell?.postView.updatePlayingStatus()
-		playerNav.updatePlayingStatus()
+		didTogglePlaying(animate: true)
 	}
 	
 	// MARK: - Notifications

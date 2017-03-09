@@ -48,7 +48,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			if searchController.isActive {
 				array = filteredPosts
 			}
-            if let row = currentlyPlayingIndexPath?.row, let currentPost = playerNav.currentPost, currentPost.equals(other: array[row]) {
+            if let row = currentlyPlayingIndexPath?.row, let currentPost = playerNav.getCurrentPost(), currentPost.equals(other: array[row]) {
                 didTogglePlaying(animate: true)
             } else {
 				var newCell: PostTableViewCell? = nil
@@ -61,8 +61,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				}
 				
 				//update post to new song
-				updatePlayerNavRefs(post: array[currentlyPlayingIndexPath!.row], row: currentlyPlayingIndexPath!.row, postView: newCell?.postView)
-				didTogglePlaying(animate: true)
+				playerNav.updateNewPost(post: array[currentlyPlayingIndexPath!.row], delegate: self, postsRef: posts, postRefIndex: currentlyPlayingIndexPath!.row, postView: newCell?.postView)
             }
             tableView.selectRow(at: currentlyPlayingIndexPath, animated: false, scrollPosition: .none)
         }
@@ -156,7 +155,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	
     fileprivate func updateNowPlayingInfo() {
 		
-		guard let post = playerNav.currentPost else { return }
+		guard let post = playerNav.getCurrentPost() else { return }
 		
 		let center = MPNowPlayingInfoCenter.default()
 		if !post.player.finishedPlaying {
@@ -188,7 +187,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     func notifCenterSetup() {
         downloadArtworkNotificationHandler = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: SongDidDownloadArtworkNotification), object: nil, queue: nil) { [weak self] note in
-            if note.object as? Song == self?.playerNav.currentPost?.song {
+            if note.object as? Song == self?.playerNav.getCurrentPost()?.song {
                 self?.updateNowPlayingInfo()
             }
         }
@@ -204,7 +203,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
         // TODO: fetch the largest artwork image for lockscreen in Post
         let center = MPRemoteCommandCenter.shared()
         center.playCommand.addTarget { [weak self] _ in
-            if let _ = self?.playerNav.currentPost?.player {
+            if let _ = self?.playerNav.getCurrentPost()?.player {
                 self?.didTogglePlaying(animate: true)
                 return .success
             }
@@ -212,7 +211,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
         }
 
         center.pauseCommand.addTarget { [weak self] _ in
-            if let _ = self?.playerNav.currentPost?.player {
+            if let _ = self?.playerNav.getCurrentPost()?.player {
                 self?.didTogglePlaying(animate: true)
                 return .success
             }
@@ -313,7 +312,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	// MARK: - PostViewDelegate
 	
 	func didTogglePlaying(animate: Bool) {
-		if let currentPost = playerNav.currentPost {
+		if let currentPost = playerNav.getCurrentPost() {
 			currentPost.player.togglePlaying()
 			if animate {
 				updatePlayingCells()
@@ -346,10 +345,10 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	// Function to iterate through all cells in a PlayerTableViewController
 	// to pinpoint which cell is being played and transplant PostView.
 	func updatePlayingCells() {
-		if let currentPost = playerNav.currentPost {
+		if let currentPost = playerNav.getCurrentPost() {
 			if currentPost.postType == playingPostType {
 				// playerNav.postView always guaranteed to have most recent postView
-				playerNav.postView?.updatePlayingStatus()
+				playerNav.getPostView()?.updatePlayingStatus()
 			}
 		}
 		playerNav.updatePlayingStatus()
@@ -360,23 +359,13 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	func transplantPlayerAndPostViewIfNeeded(cell: PostTableViewCell) {
 		// swap in the old player to preserve song progress
 		// swap out the playerNav postView for the new one
-		if let currentPost = playerNav.currentPost, let post = cell.postView?.post, post.equals(other: currentPost) {
-			if let postView = cell.postView, postView != playerNav.postView {
+		if let currentPost = playerNav.getCurrentPost(), let post = cell.postView?.post, post.equals(other: currentPost) {
+			if let postView = cell.postView, postView != playerNav.getPostView() {
 				// need to transplant new postView in, swap players
 				postView.post?.player = currentPost.player
-				playerNav.postView = postView
+				playerNav.setPostView(newPostView: postView)
 			}
 			cell.postView?.updatePlayingStatus()
-		}
-	}
-	
-	func updatePlayerNavRefs(post: Post, row: Int, postView: PostView?) {
-		playerNav.updateDelegates(delegate: self)
-		playerNav.currentPost = post
-		playerNav.postsRef = posts
-		playerNav.postRefIndex = row
-		if let postView = postView {
-			playerNav.postView = postView
 		}
 	}
 }
