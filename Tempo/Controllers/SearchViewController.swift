@@ -257,7 +257,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	func didFinishPlaying() {
 		didTogglePlaying(animate: true)
-	}
+	}	
 	
 	// MARK: - Notifications
 	

@@ -77,11 +77,10 @@ class Player: NSObject, AVAudioPlayerDelegate {
         prepareToPlay()
         wasPlayed = true
 		finishedPlaying = false
-        if player == nil {
-            shouldAutoplay = true
-        } else {
+        if player != nil {
             player?.play()
-		}
+        }
+		shouldAutoplay = true
     }
     
     var rate: Float {
