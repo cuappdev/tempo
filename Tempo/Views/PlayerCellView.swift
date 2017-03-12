@@ -79,7 +79,6 @@ class PlayerCellView: ParentPlayerCellView {
 				likeButtonClicked()
 			}
 		}
-		
 	}
 	
 	override func updatePlayingStatus() {
@@ -144,11 +143,6 @@ class PlayerCellView: ParentPlayerCellView {
 	}
 	
 	override func resetPlayerCell() {
-		if let delegate = delegate, post != nil {
-			if post!.player.isPlaying {
-				delegate.didTogglePlaying(animate: false)
-			}
-		}
 		super.resetPlayerCell()
 		songLabel.text = ""
 		artistLabel.text = ""

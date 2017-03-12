@@ -181,7 +181,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	
 	func continueAnimatingAfterRefresh() {
 		//animate currently playing song
-		if let currentPost = self.playerNav.currentPost, currentPost.postType == .feed {
+		if let currentPost = self.playerNav.getCurrentPost(), currentPost.postType == .feed {
 			for row in 0 ..< posts.count {
 				if posts[row].equals(other: currentPost) {
 					posts[row] = currentPost

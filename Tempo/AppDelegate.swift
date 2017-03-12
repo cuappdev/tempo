@@ -226,8 +226,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func applicationWillEnterForeground(_ application: UIApplication) {
-		if let _ = navigationController.currentPost {
-			navigationController.postView?.updatePlayingStatus()
+		if let _ = navigationController.getCurrentPost() {
+			navigationController.getPostView()?.updatePlayingStatus()
 		}
 	}
 	

@@ -168,7 +168,7 @@
 		D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarCollectionReusableView.swift; sourceTree = "<group>"; };
 		D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipCalendarDayCollectionViewCell.swift; sourceTree = "<group>"; };
 		D148F4971AF031DB009AB073 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
-		D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostHistoryTableViewController.swift; path = ../Controllers/PostHistoryTableViewController.swift; sourceTree = "<group>"; };
+		D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHistoryTableViewController.swift; sourceTree = "<group>"; };
 		D14A31581AF53218005153E6 /* HipStickyHeaderFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HipStickyHeaderFlowLayout.swift; sourceTree = "<group>"; };
 		D160ADFD1BE67406003B0E1A /* PlaylistTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewCell.swift; sourceTree = "<group>"; };
 		D160ADFE1BE67406003B0E1A /* PlaylistTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistTableViewCell.xib; sourceTree = "<group>"; };
@@ -209,10 +209,11 @@
 				6DEE0FC31AC34811005552F9 /* Profile */,
 				D148F4991AF0349A009AB073 /* Post History Calendar */,
 				7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */,
+				6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */,
+				D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */,
 				9563B5531DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift */,
 				B085F3B31BE3CBB80000421E /* SearchViewController.swift */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
-				6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */,
 				60C018041D9C7A2E00FE5166 /* AboutViewController.swift */,
 				952E7EDE1DEA8957006C6131 /* XIBS */,
 			);
@@ -419,7 +420,6 @@
 		D148F4991AF0349A009AB073 /* Post History Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				D148F4A81AF03EB4009AB073 /* PostHistoryTableViewController.swift */,
 				D148F48B1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift */,
 				D148F4931AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift */,
 				D148F4971AF031DB009AB073 /* NSDateExtension.swift */,
