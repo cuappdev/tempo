@@ -81,7 +81,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		tableView.dataSource = self
 		playingPostType = .unknown
 		
-		playerNav = navigationController as! PlayerNavigationController
+//		playerNav = navigationController as! PlayerNavigationController
 		
 		//Search Bar
 		searchController = UISearchController(searchResultsController: nil)

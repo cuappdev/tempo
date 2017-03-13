@@ -38,6 +38,8 @@
 		6038B17E1D80ED250083940D /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6038B17D1D80ED250083940D /* FeedTableViewCell.swift */; };
 		6038B1801D80EDAF0083940D /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */; };
 		60419BED1DE24AE800CAB9BD /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */; };
+		6054DC121E7629F600ACEFEA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054DC111E7629F600ACEFEA /* TabBarController.swift */; };
+		6054DC141E762A0D00ACEFEA /* TabBarAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054DC131E762A0D00ACEFEA /* TabBarAccessoryViewController.swift */; };
 		60728FBA1E6369150097C1AC /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60728FB91E6369150097C1AC /* PostTableViewCell.swift */; };
 		6084F6C51BE700B00048EFE3 /* PlayerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */; };
 		60AEF7661DBD374200C68AAF /* PlayerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEF7651DBD374200C68AAF /* PlayerNavigationController.swift */; };
@@ -132,6 +134,8 @@
 		6038B17D1D80ED250083940D /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedTableViewCell.xib; path = ../Profile/FeedTableViewCell.xib; sourceTree = "<group>"; };
 		60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		6054DC111E7629F600ACEFEA /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = ../Profile/TabBarController.swift; sourceTree = "<group>"; };
+		6054DC131E762A0D00ACEFEA /* TabBarAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarAccessoryViewController.swift; sourceTree = "<group>"; };
 		60728FB91E6369150097C1AC /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		6084F6C41BE700B00048EFE3 /* PlayerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewController.swift; sourceTree = "<group>"; };
 		60AEF7651DBD374200C68AAF /* PlayerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerNavigationController.swift; sourceTree = "<group>"; };
@@ -215,6 +219,7 @@
 				B085F3B31BE3CBB80000421E /* SearchViewController.swift */,
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
 				60C018041D9C7A2E00FE5166 /* AboutViewController.swift */,
+				6054DC151E762A1600ACEFEA /* TabBar */,
 				952E7EDE1DEA8957006C6131 /* XIBS */,
 			);
 			path = Controllers;
@@ -347,6 +352,15 @@
 				1DFD735F1BA0DC68008D9FD8 /* Spotify.framework */,
 			);
 			path = Vendor;
+			sourceTree = "<group>";
+		};
+		6054DC151E762A1600ACEFEA /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				6054DC111E7629F600ACEFEA /* TabBarController.swift */,
+				6054DC131E762A0D00ACEFEA /* TabBarAccessoryViewController.swift */,
+			);
+			name = TabBar;
 			sourceTree = "<group>";
 		};
 		65D917AAEF2BE5A6E1AA154D /* Pods */ = {
@@ -598,6 +612,7 @@
 				0276B1FC1DDFBAD800B512E9 /* LikedPostView.swift in Sources */,
 				0276B1FE1DDFC2D900B512E9 /* LikedTableViewCell.swift in Sources */,
 				FA1E1A7E1ADB0818007C823C /* PostView.swift in Sources */,
+				6054DC121E7629F600ACEFEA /* TabBarController.swift in Sources */,
 				D160ADFF1BE67406003B0E1A /* PlaylistTableViewCell.swift in Sources */,
 				957592031DF053F40045FF25 /* AnimatedLogoView.swift in Sources */,
 				60C018061D9C7A2E00FE5166 /* AboutViewController.swift in Sources */,
@@ -637,6 +652,7 @@
 				1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */,
 				D148F48C1AF0310D009AB073 /* HipCalendarCollectionReusableView.swift in Sources */,
 				D14A31591AF53218005153E6 /* HipStickyHeaderFlowLayout.swift in Sources */,
+				6054DC141E762A0D00ACEFEA /* TabBarAccessoryViewController.swift in Sources */,
 				9563B5561DE0E8C700E80EAF /* CGRect+Extensions.swift in Sources */,
 				957E28461DDD1ED2009601CB /* BackendNotConnectedProtocol.swift in Sources */,
 				95D1E77E1CE20BED00E1EF0F /* HamburgerIconView.swift in Sources */,

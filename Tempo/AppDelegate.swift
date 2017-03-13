@@ -25,7 +25,8 @@ extension URL {
 class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate, LoginFlowViewControllerDelegate {
 	
 	var window: UIWindow?
-	let revealVC = SWRevealViewController()
+	let tabBarVC = TabBarController()
+//	let revealVC = SWRevealViewController()
 	let sidebarVC = SideBarViewController()
 	let feedVC = FeedViewController()
 	let searchVC = SearchViewController()
@@ -34,6 +35,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let likedVC = LikedTableViewController()
 	let settingsVC = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
 	let aboutVC = AboutViewController()
+	
+	var feedNavigationController: UINavigationController!
+	var searchNavigationController: UINavigationController!
+	var usersNavigationController: UINavigationController!
+	var likedNavigationController: UINavigationController!
+	var settingsNavigationController: UINavigationController!
+	
 	let transparentView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
 	let navigationController = PlayerNavigationController()
 	
@@ -51,12 +59,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		URLCache.shared = Foundation.URLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
 		
+		feedNavigationController = UINavigationController(rootViewController: feedVC)
+		searchNavigationController = UINavigationController(rootViewController: searchVC)
+		usersNavigationController = UINavigationController(rootViewController: usersVC)
+		likedNavigationController = UINavigationController(rootViewController: likedVC)
+		settingsNavigationController = UINavigationController(rootViewController: settingsVC)
+		
 		// Styling reveal controller
-		revealVC.rearViewRevealWidth = DeviceType.IS_IPHONE_5_OR_LESS ? 260 : 300
-		revealVC.frontViewShadowColor = .revealShadowBlack
-		revealVC.frontViewShadowRadius = 14
-		revealVC.frontViewShadowOffset = CGSize(width: -15, height: 0)
-		revealVC.frontViewShadowOpacity = 0.7
+//		revealVC.rearViewRevealWidth = DeviceType.IS_IPHONE_5_OR_LESS ? 260 : 300
+//		revealVC.frontViewShadowColor = .revealShadowBlack
+//		revealVC.frontViewShadowRadius = 14
+//		revealVC.frontViewShadowOffset = CGSize(width: -15, height: 0)
+//		revealVC.frontViewShadowOpacity = 0.7
 		
 		// Set up navigation bar divider
 		let navigationBar = navigationController.navigationBar
@@ -124,44 +138,79 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func toggleRootVC() {
-		launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-		if FBSDKAccessToken.current() == nil {
-			loginFlowViewController = LoginFlowViewController()
-			loginFlowViewController?.delegate = self
-			window?.rootViewController = loginFlowViewController
-		} else {
-			if resetFirstVC {
-				navigationController.setViewControllers([firstViewController], animated: false)
-			}
-			revealVC.setFront(navigationController, animated: false)
-			revealVC.setRear(sidebarVC, animated: false)
-			sidebarVC.elements = [
-				SideBarElement(title: "Feed", viewController: feedVC, image: #imageLiteral(resourceName: "FeedSidebarIcon")),
-				SideBarElement(title: "People", viewController: usersVC, image: #imageLiteral(resourceName: "PeopleSidebarIcon")),
-				SideBarElement(title: "Liked", viewController: likedVC, image: #imageLiteral(resourceName: "LikedSidebarButton")),
-				SideBarElement(title: "Settings", viewController: settingsVC, image: #imageLiteral(resourceName: "SettingsSidebarIcon")),
-				SideBarElement(title: "About", viewController: aboutVC, image: #imageLiteral(resourceName: "AboutSidebarIcon"))
-			]
-			sidebarVC.selectionHandler = { [weak self] viewController in
-				if let viewController = viewController {
-					if viewController == self?.settingsVC {
-						//guarantee settingsVC will have HamburgerMenu, if settingsVC was accessed from add button in player cell.
-						self?.settingsVC.addHamburgerMenu()
-					}
-					if let front = self?.revealVC.frontViewController {
-						if viewController == front {
-							self?.revealVC.setFrontViewPosition(.left, animated: true)
-							return
-						}
-					}
-					self?.navigationController.setViewControllers([viewController], animated: false)
-					self?.revealVC.setFrontViewPosition(.left, animated: true)
-				}
-			}
-			
-			revealVC.delegate = self
-			window!.rootViewController = revealVC
-		}
+//		launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+//		if FBSDKAccessToken.current() == nil {
+//			loginFlowViewController = LoginFlowViewController()
+//			loginFlowViewController?.delegate = self
+//			window?.rootViewController = loginFlowViewController
+//		} else {
+//			if resetFirstVC {
+//				navigationController.setViewControllers([firstViewController], animated: false)
+//			}
+//			revealVC.setFront(navigationController, animated: false)
+//			revealVC.setRear(sidebarVC, animated: false)
+//			sidebarVC.elements = [
+//				SideBarElement(title: "Feed", viewController: feedVC, image: #imageLiteral(resourceName: "FeedSidebarIcon")),
+//				SideBarElement(title: "People", viewController: usersVC, image: #imageLiteral(resourceName: "PeopleSidebarIcon")),
+//				SideBarElement(title: "Liked", viewController: likedVC, image: #imageLiteral(resourceName: "LikedSidebarButton")),
+//				SideBarElement(title: "Settings", viewController: settingsVC, image: #imageLiteral(resourceName: "SettingsSidebarIcon")),
+//				SideBarElement(title: "About", viewController: aboutVC, image: #imageLiteral(resourceName: "AboutSidebarIcon"))
+//			]
+//			sidebarVC.selectionHandler = { [weak self] viewController in
+//				if let viewController = viewController {
+//					if viewController == self?.settingsVC {
+//						//guarantee settingsVC will have HamburgerMenu, if settingsVC was accessed from add button in player cell.
+//						self?.settingsVC.addHamburgerMenu()
+//					}
+//					if let front = self?.revealVC.frontViewController {
+//						if viewController == front {
+//							self?.revealVC.setFrontViewPosition(.left, animated: true)
+//							return
+//						}
+//					}
+//					self?.navigationController.setViewControllers([viewController], animated: false)
+//					self?.revealVC.setFrontViewPosition(.left, animated: true)
+//				}
+//			}
+//			
+//			revealVC.delegate = self
+//			window!.rootViewController = revealVC
+//		}
+		tabBarVC.transparentTabBarEnabled = true
+		tabBarVC.numberOfTabs = 5
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "FeedSidebarIcon"), forTabAtIndex: 0)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "FeedSidebarIcon"), forTabAtIndex: 0)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "PeopleSidebarIcon"), forTabAtIndex: 1)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PeopleSidebarIcon"), forTabAtIndex: 1)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "AddIcon"), forTabAtIndex: 2)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "AddIcon"), forTabAtIndex: 2)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "LikedSidebarButton"), forTabAtIndex: 3)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "LikedSidebarButton"), forTabAtIndex: 3)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "SettingsSidebarIcon"), forTabAtIndex: 4)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "SettingsSidebarIcon"), forTabAtIndex: 4)
+		
+		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+			self.tabBarVC.present(self.feedNavigationController, animated: false, completion: nil)
+		}, forTabAtIndex: 0)
+		
+		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+			self.tabBarVC.present(self.usersNavigationController, animated: false, completion: nil)
+		}, forTabAtIndex: 1)
+		
+		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+			self.tabBarVC.present(self.searchNavigationController, animated: false, completion: nil)
+		}, forTabAtIndex: 2)
+		
+		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+			self.tabBarVC.present(self.likedNavigationController, animated: false, completion: nil)
+		}, forTabAtIndex: 3)
+		
+		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+			self.tabBarVC.present(self.settingsNavigationController, animated: false, completion: nil)
+		}, forTabAtIndex: 4)
+		
+		
+		window?.rootViewController = tabBarVC
 	}
 	
 	func setFirstVC() {
@@ -233,23 +282,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	
 	// MARK: - SWRevealDelegate
 	
-	func revealController(_ revealController: SWRevealViewController!, willMoveTo position: FrontViewPosition) {
-		UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-		if position == .left {
-			if let _ = transparentView.superview {
-				transparentView.removeGestureRecognizer(revealVC.panGestureRecognizer())
-				transparentView.removeFromSuperview()
-			}
-			revealController.frontViewController.view.addGestureRecognizer(revealVC.panGestureRecognizer())
-			revealController.frontViewController.revealViewController().tapGestureRecognizer()
-		} else {
-			revealController.frontViewController.view.removeGestureRecognizer(revealVC.panGestureRecognizer())
-			transparentView.addGestureRecognizer(revealVC.panGestureRecognizer())
-			navigationController.view.addSubview(transparentView)
-		}
-		//Notify any hamburger menus that the menu is being toggled
-		NotificationCenter.default.post(name: Notification.Name(rawValue: RevealControllerToggledNotification), object: revealController)
-	}
+//	func revealController(_ revealController: SWRevealViewController!, willMoveTo position: FrontViewPosition) {
+//		UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//		if position == .left {
+//			if let _ = transparentView.superview {
+//				transparentView.removeGestureRecognizer(revealVC.panGestureRecognizer())
+//				transparentView.removeFromSuperview()
+//			}
+//			revealController.frontViewController.view.addGestureRecognizer(revealVC.panGestureRecognizer())
+//			revealController.frontViewController.revealViewController().tapGestureRecognizer()
+//		} else {
+//			revealController.frontViewController.view.removeGestureRecognizer(revealVC.panGestureRecognizer())
+//			transparentView.addGestureRecognizer(revealVC.panGestureRecognizer())
+//			navigationController.view.addSubview(transparentView)
+//		}
+//		//Notify any hamburger menus that the menu is being toggled
+//		NotificationCenter.default.post(name: Notification.Name(rawValue: RevealControllerToggledNotification), object: revealController)
+//	}
 	
 	func applicationDidBecomeActive(_ application: UIApplication) {
 		FBSDKAppEvents.activateApp()
@@ -300,7 +349,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			} else {
 				vc = sidebarVC.elements[index].viewController
 			}
-			revealVC.setFrontViewPosition(.left, animated: false)
+//			revealVC.setFrontViewPosition(.left, animated: false)
 			navigationController.setViewControllers([vc], animated: false)
 			sidebarVC.preselectedIndex = index
 		}
