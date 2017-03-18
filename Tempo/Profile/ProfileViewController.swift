@@ -219,6 +219,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		editAlert.addTextField { textField in
 			textField.placeholder = "New username"
 			textField.textAlignment = .center
+			textField.keyboardAppearance = .dark
 		}
 		editAlert.addAction(UIAlertAction(title: "Save", style: .default) { _ in
 			let newUsername = editAlert.textFields!.first!.text!.lowercased()
