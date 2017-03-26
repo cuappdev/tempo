@@ -47,7 +47,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	var panGestureRecognizer: UIPanGestureRecognizer?
 	var initialPanView: UIView?
 	
-	func setup(parent: PlayerNavigationController) {
+	func setup(parent: PlayerCenter) {
 		backgroundColor = .tempoOffBlack
 		bottomButtonsView.backgroundColor = .tempoOffBlack
 		
@@ -65,8 +65,8 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		cellPanGestureRecognizer.delaysTouchesBegan = false
 		topViewContainer.addGestureRecognizer(cellPanGestureRecognizer)
 		
-		playerNav = parent
-		progressView.playerDelegate = playerNav
+		playerCenter = parent
+		progressView.playerDelegate = playerCenter
 		progressView.backgroundColor = .tempoDarkRed
 		
 		progressIndicator = UIView(frame: CGRect(x: progressView.frame.origin.x - 5, y: progressView.frame.origin.y - 5, width: progressIndicatorLength, height: progressIndicatorLength))
@@ -195,7 +195,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		} else if hitView == prevButton {
 			delegate?.playPrevSong?()
 		} else {
-			playerNav.animateExpandedCell(isExpanding: false)
+			playerCenter.animateExpandedCell(isExpanding: false)
 		}
 	}
 	
@@ -227,7 +227,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	func collapsePan(gesture: UIPanGestureRecognizer) {
 		let translation = gesture.translation(in: self)
 		if gesture.state == .began || gesture.state == .changed {
-			let maxCenter = UIScreen.main.bounds.height - playerNav.expandedHeight/2.0
+			let maxCenter = UIScreen.main.bounds.height - playerCenter.expandedHeight/2.0
 			
 			if translation.y > 0 || center.y > maxCenter {
 				center.y = center.y + translation.y < maxCenter ? maxCenter : center.y + translation.y
@@ -237,7 +237,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		
 		if gesture.state == .ended {
 			let velocity = gesture.velocity(in: self)
-			playerNav.animateExpandedCell(isExpanding: velocity.y < 0)
+			playerCenter.animateExpandedCell(isExpanding: velocity.y < 0)
 			initialPanView = nil
 		}
 		setNeedsDisplay()

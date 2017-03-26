@@ -146,7 +146,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		// Profile Info
 		if user == User.currentUser {
-			addHamburgerMenu()
+//			addHamburgerMenu()
 		}
 		
 		profileHeaderView.nameLabel.text = "\(user.firstName) \(user.shortenLastName())"

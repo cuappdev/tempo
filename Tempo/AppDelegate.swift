@@ -26,8 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	
 	var window: UIWindow?
 	let tabBarVC = TabBarController()
-//	let revealVC = SWRevealViewController()
-	let sidebarVC = SideBarViewController()
 	let feedVC = FeedViewController()
 	let searchVC = SearchViewController()
 	let usersVC = UsersViewController()
@@ -36,6 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let settingsVC = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
 	let aboutVC = AboutViewController()
 	
+	let playerCenter = PlayerCenter.sharedInstance
+	
 	var feedNavigationController: UINavigationController!
 	var searchNavigationController: UINavigationController!
 	var usersNavigationController: UINavigationController!
@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	var settingsNavigationController: UINavigationController!
 	
 	let transparentView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-	let navigationController = PlayerNavigationController()
+//	let navigationController = PlayerNavigationController()
 	
 	var loginFlowViewController: LoginFlowViewController?
 
@@ -59,6 +59,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		URLCache.shared = Foundation.URLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
 		
+		feedVC.playerCenter = playerCenter
+		likedVC.playerCenter = playerCenter
+		searchVC.playerCenter = playerCenter
+		settingsVC.playerCenter = playerCenter
+		
 		feedNavigationController = UINavigationController(rootViewController: feedVC)
 		searchNavigationController = UINavigationController(rootViewController: searchVC)
 		usersNavigationController = UINavigationController(rootViewController: usersVC)
@@ -73,11 +78,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 //		revealVC.frontViewShadowOpacity = 0.7
 		
 		// Set up navigation bar divider
-		let navigationBar = navigationController.navigationBar
-		let navigationSeparator = UIView(frame: CGRect(x: 0, y: navigationBar.frame.size.height - 0.5, width: navigationBar.frame.size.width, height: 0.5))
-		navigationSeparator.backgroundColor = .searchBackgroundRed
-		navigationSeparator.isOpaque = true
-		navigationController.navigationBar.addSubview(navigationSeparator)
+//		let navigationBar = navigationController.navigationBar
+//		let navigationSeparator = UIView(frame: CGRect(x: 0, y: navigationBar.frame.size.height - 0.5, width: navigationBar.frame.size.width, height: 0.5))
+//		navigationSeparator.backgroundColor = .searchBackgroundRed
+//		navigationSeparator.isOpaque = true
+//		navigationController.navigationBar.addSubview(navigationSeparator)
 		
 		StyleController.applyStyles()
 		UIApplication.shared.statusBarStyle = .lightContent
@@ -99,10 +104,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			User.currentUser.currentSpotifyUser?.savedTracks = UserDefaults.standard.dictionary(forKey: User.currentUser.currentSpotifyUser!.savedTracksKey) as [String : AnyObject]? ?? [:]
 		}
 
-		window = UIWindow(frame: UIScreen.main.bounds)
-		window!.backgroundColor = UIColor.tempoLightGray
-		window!.makeKeyAndVisible()
-		window?.tintColor = .tempoRed
+//		window = UIWindow(frame: UIScreen.main.bounds)
+//		window!.backgroundColor = UIColor.tempoLightGray
+//		window!.makeKeyAndVisible()
+//		window?.tintColor = .tempoRed
 		
 		FBSDKProfile.enableUpdates(onAccessTokenChange: true)
 		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -122,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		}
 		
 		setFirstVC()
-		toggleRootVC()
+		setupTabBar()
 		
 		// Prepare to play audio
 		_ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
@@ -134,48 +139,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		if !UserDefaults.standard.bool(forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey) {
 			registerForRemotePushNotifications()
 		}
-		toggleRootVC()
+//		setupTabBar()
 	}
 	
-	func toggleRootVC() {
-//		launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-//		if FBSDKAccessToken.current() == nil {
-//			loginFlowViewController = LoginFlowViewController()
-//			loginFlowViewController?.delegate = self
-//			window?.rootViewController = loginFlowViewController
-//		} else {
-//			if resetFirstVC {
-//				navigationController.setViewControllers([firstViewController], animated: false)
-//			}
-//			revealVC.setFront(navigationController, animated: false)
-//			revealVC.setRear(sidebarVC, animated: false)
-//			sidebarVC.elements = [
-//				SideBarElement(title: "Feed", viewController: feedVC, image: #imageLiteral(resourceName: "FeedSidebarIcon")),
-//				SideBarElement(title: "People", viewController: usersVC, image: #imageLiteral(resourceName: "PeopleSidebarIcon")),
-//				SideBarElement(title: "Liked", viewController: likedVC, image: #imageLiteral(resourceName: "LikedSidebarButton")),
-//				SideBarElement(title: "Settings", viewController: settingsVC, image: #imageLiteral(resourceName: "SettingsSidebarIcon")),
-//				SideBarElement(title: "About", viewController: aboutVC, image: #imageLiteral(resourceName: "AboutSidebarIcon"))
-//			]
-//			sidebarVC.selectionHandler = { [weak self] viewController in
-//				if let viewController = viewController {
-//					if viewController == self?.settingsVC {
-//						//guarantee settingsVC will have HamburgerMenu, if settingsVC was accessed from add button in player cell.
-//						self?.settingsVC.addHamburgerMenu()
-//					}
-//					if let front = self?.revealVC.frontViewController {
-//						if viewController == front {
-//							self?.revealVC.setFrontViewPosition(.left, animated: true)
-//							return
-//						}
-//					}
-//					self?.navigationController.setViewControllers([viewController], animated: false)
-//					self?.revealVC.setFrontViewPosition(.left, animated: true)
-//				}
-//			}
-//			
-//			revealVC.delegate = self
-//			window!.rootViewController = revealVC
-//		}
+	func setupTabBar() {
 		tabBarVC.transparentTabBarEnabled = true
 		tabBarVC.numberOfTabs = 5
 		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "FeedSidebarIcon"), forTabAtIndex: 0)
@@ -209,7 +176,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			self.tabBarVC.present(self.settingsNavigationController, animated: false, completion: nil)
 		}, forTabAtIndex: 4)
 		
+		playerCenter.setup()
+		tabBarVC.addAccessoryViewController(accessoryViewController: playerCenter)
 		
+		window = UIWindow(frame: UIScreen.main.bounds)
+		window!.backgroundColor = UIColor.tempoLightGray
+		window!.makeKeyAndVisible()
+		window?.tintColor = .tempoRed
 		window?.rootViewController = tabBarVC
 	}
 	
@@ -267,7 +240,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	
 	func applicationDidEnterBackground(_ application: UIApplication) {
 		if !UserDefaults.standard.bool(forKey: "music_on_off"){
-			navigationController.togglePause()
+			playerCenter.togglePause()
 			let center = MPNowPlayingInfoCenter.default()
 			UIApplication.shared.endReceivingRemoteControlEvents()
 			center.nowPlayingInfo = nil
@@ -275,8 +248,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func applicationWillEnterForeground(_ application: UIApplication) {
-		if let _ = navigationController.getCurrentPost() {
-			navigationController.getPostView()?.updatePlayingStatus()
+		if let _ = playerCenter.getCurrentPost() {
+			playerCenter.getPostView()?.updatePlayingStatus()
 		}
 	}
 	
@@ -306,20 +279,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		if #available(iOS 9.0, *) {
 			guard let shortcut = launchedShortcutItem else { return }
 
-			if FBSDKAccessToken.current() != nil {
-				let _ = handleShortcutItem(shortcut as! UIApplicationShortcutItem)
-				launchedShortcutItem = nil
-			}
+//			if FBSDKAccessToken.current() != nil {
+//				let _ = handleShortcutItem(shortcut as! UIApplicationShortcutItem)
+//				launchedShortcutItem = nil
+//			}
 		}
 	}
 	
 	// MARK: - Force Touch Shortcut
 	
-	@available(iOS 9.0, *)
-	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-		let handleShortcutItem = self.handleShortcutItem(shortcutItem)
-		completionHandler(handleShortcutItem)
-	}
+//	@available(iOS 9.0, *)
+//	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+//		let handleShortcutItem = self.handleShortcutItem(shortcutItem)
+//		completionHandler(handleShortcutItem)
+//	}
 	
 	enum ShortcutIdentifier: String {
 		case Post
@@ -331,60 +304,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			guard let last = fullType.components(separatedBy: ".").last else {return nil}
 			self.init(rawValue: last)
 		}
-		
+	
 		var type: String {
 			return Bundle.main.bundleIdentifier! + ".\(self.rawValue)"
 		}
-	}
-	
-	@available(iOS 9.0, *)
-	func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-		guard ShortcutIdentifier(fullType: shortcutItem.type) != nil else { return false }
-		guard let shortcutType = shortcutItem.type as String? else { return false }
-
-		func handleShortCutForMenuIndex(_ index: Int) {
-			var vc: UIViewController!
-			if index == -1 {
-				vc = profileVC
-			} else {
-				vc = sidebarVC.elements[index].viewController
-			}
-//			revealVC.setFrontViewPosition(.left, animated: false)
-			navigationController.setViewControllers([vc], animated: false)
-			sidebarVC.preselectedIndex = index
-		}
-		
-		switch (shortcutType) {
-		case ShortcutIdentifier.Post.type:
-			//Bring up Search for Post Song of the day
-			if let topVC = navigationController.topViewController {
-				//App has already loaded
-				if topVC != feedVC.searchTableViewController {
-					//not already in song searching mode
-					handleShortCutForMenuIndex(0)
-					feedVC.pretappedPlusButton = true
-					if topVC == feedVC {
-						feedVC.viewWillAppear(false)
-					}
-				}
-			} else { //First time loading the app
-				handleShortCutForMenuIndex(0)
-				feedVC.pretappedPlusButton = true
-			}
-		case ShortcutIdentifier.PeopleSearch.type:
-			//Bring up People Search Screen
-			handleShortCutForMenuIndex(1)
-		case ShortcutIdentifier.Liked.type:
-			//Bring up Liked View
-			handleShortCutForMenuIndex(2)
-		case ShortcutIdentifier.Profile.type:
-			//Bring up Profile Screen (of current user)
-			profileVC.user = User.currentUser
-			handleShortCutForMenuIndex(-1)
-		default:
-			return false
-		}
-		return true
 	}
 	
 	//MARK: - Remote Push Notifications

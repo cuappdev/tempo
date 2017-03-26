@@ -37,8 +37,6 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 		title = "About"
 		screenWidth = view.frame.width
 		
-		addHamburgerMenu()
-		
 		let scrollView = UIScrollView(frame: view.frame)
 		scrollView.delegate = self
 		scrollView.backgroundColor = .backgroundDarkGrey

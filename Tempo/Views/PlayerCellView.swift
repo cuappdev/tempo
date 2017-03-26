@@ -18,15 +18,15 @@ class PlayerCellView: ParentPlayerCellView {
 	@IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var progressView: ProgressView!
 	
-	func setup(parent: PlayerNavigationController) {
-		playerNav = parent
+	func setup(parent: PlayerCenter) {
+		playerCenter = parent
 		backgroundColor = .tempoOffBlack
 		
 		let tap = UILongPressGestureRecognizer(target: self, action: #selector(playerCellTapped(sender:)))
 		tap.minimumPressDuration = 0
 		addGestureRecognizer(tap)
 		
-		progressView.playerDelegate = playerNav
+		progressView.playerDelegate = playerCenter
 		progressView.backgroundColor = .tempoDarkRed
 
 		playToggleButton.isUserInteractionEnabled = false
@@ -68,7 +68,7 @@ class PlayerCellView: ParentPlayerCellView {
 		
 		if sender.state == .began {
 			if (tapPoint.x > playToggleButton.frame.right.x + 12 && tapPoint.x < addButton.frame.left.x - 12) {
-				playerNav?.animateExpandedCell(isExpanding: true)
+				playerCenter?.animateExpandedCell(isExpanding: true)
 			}
 		} else if sender.state == .ended {
 			if (tapPoint.x < playToggleButton.frame.right.x + 12) {

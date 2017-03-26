@@ -11,18 +11,18 @@ protocol TabBarAccessoryViewControllerProtocol {
 class TabBarAccessoryViewController: UIViewController, TabBarAccessoryViewControllerProtocol {
     
     func showAccessoryViewController(animated: Bool) {
-        
+        preconditionFailure("This method must be overridden")
     }
 
     func expandAccessoryViewController(animated: Bool) {
-        
+        preconditionFailure("This method must be overridden")
     }
     
     func collapseAccessoryViewController(animated: Bool) {
-        
+        preconditionFailure("This method must be overridden")
     }
     
     func hideAccessoryViewController(animated: Bool) {
-        
+        preconditionFailure("This method must be overridden")
     }
 }

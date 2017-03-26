@@ -8,7 +8,7 @@
 
 import Foundation
 
-let playerCellHeight = CGFloat(72)
+let tabBarHeight = CGFloat(50.0)
 let iPhone5: Bool = (UIScreen.main.bounds.width <= CGFloat(320))
 
 enum ContentType: String {

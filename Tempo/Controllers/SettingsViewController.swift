@@ -11,6 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController {
 	
 	let buttonHeight: CGFloat = 50
+	var playerCenter: PlayerCenter!
 	
 	@IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var initialsView: UIView!
@@ -45,9 +46,6 @@ class SettingsViewController: UIViewController {
 		toggleNotifications.setOn(User.currentUser.remotePushNotificationsEnabled, animated: false)
 		toggleMusicOnExit.setOn(UserDefaults.standard.bool(forKey: "music_on_off"), animated: false)
 		
-		if shouldAddHamburger {
-			addHamburgerMenu()
-		}
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -81,8 +79,8 @@ class SettingsViewController: UIViewController {
 		} else {
 			loggedInToSpotify(false)
 		}
-		let playerNav = navigationController as! PlayerNavigationController
-		playerNav.updateAddButton()
+//		let playerNav = navigationController as! PlayerNavigationController
+		playerCenter.updateAddButton()
 	}
 	
 	func loggedInToSpotify(_ loggedIn: Bool) {

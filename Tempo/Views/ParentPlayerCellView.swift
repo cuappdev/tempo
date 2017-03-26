@@ -10,7 +10,7 @@ import UIKit
 
 class ParentPlayerCellView: UIView {
 
-	var playerNav: PlayerNavigationController!
+	var playerCenter: PlayerCenter!
 	var songStatus: SavedSongStatus = .notSaved
 	var post: Post?
 	var postsLikable: Bool?
@@ -53,14 +53,14 @@ class ParentPlayerCellView: UIView {
 				if success && songStatus == .notSaved {
 					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
 						if success {
-							self.playerNav.updateAddButton()
+							self.playerCenter.updateAddButton()
 							self.delegate?.didToggleAdd?()
 						}
 					}
 				} else if success && songStatus == .saved {
 					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
 						if success {
-							self.playerNav.updateAddButton()
+							self.playerCenter.updateAddButton()
 							self.delegate?.didToggleAdd?()
 						}
 					}
@@ -68,15 +68,15 @@ class ParentPlayerCellView: UIView {
 			}
 		} else {
 			//bring them to settingsVC
-			let appDelegate = UIApplication.shared.delegate as! AppDelegate
-			let playerNav = appDelegate.navigationController
-			let settingsVC = appDelegate.settingsVC
-			
-			if playerNav.visibleViewController != settingsVC {
-				settingsVC.shouldAddHamburger = false
-				settingsVC.navigationItem.leftBarButtonItem = nil //clear existing hamburgerMenu, if there
-				playerNav.pushViewController(settingsVC, animated: true)
-			}
+//			let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//			let playerCenter = PlayerCenter.sharedInstance
+//			let settingsVC = appDelegate.settingsVC
+//			
+//			if playerCenter.visibleViewController != settingsVC {
+//				settingsVC.shouldAddHamburger = false
+//				settingsVC.navigationItem.leftBarButtonItem = nil //clear existing hamburgerMenu, if there
+//				playerCenter.pushViewController(settingsVC, animated: true)
+//			}
 		}
 	}
 	

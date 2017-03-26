@@ -50,8 +50,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		//not very elegant solution, but fixes some UI issues
 		view.isUserInteractionEnabled = false
 		
-		addHamburgerMenu()
-		
 		tableView.tableHeaderView = nil
 		tableView.rowHeight = 111
 		tableView.showsVerticalScrollIndicator = false
@@ -181,7 +179,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	
 	func continueAnimatingAfterRefresh() {
 		//animate currently playing song
-		if let currentPost = self.playerNav.getCurrentPost(), currentPost.postType == .feed {
+		if let currentPost = self.playerCenter.getCurrentPost(), currentPost.postType == .feed {
 			for row in 0 ..< posts.count {
 				if posts[row].equals(other: currentPost) {
 					posts[row] = currentPost
@@ -224,7 +222,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	
 	// MARK: - UITableViewDelegate
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		
+		print("selected")
 		let post = posts[indexPath.row]
 		if var listenedToPosts = UserDefaults.standard.dictionary(forKey: FeedViewController.readPostsKey) as? [String:Double] {
 				
@@ -285,7 +283,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		searchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
 		searchTableViewController.navigationItem.leftBarButtonItem = navigationItem.leftBarButtonItem
 		searchTableViewController.selfPostIds = posts.filter({ $0.user.name == User.currentUser.name }).map({ $0.song.spotifyID })
-		playerNav.animateExpandedCell(isExpanding: false)
+		playerCenter.animateExpandedCell(isExpanding: false)
 		navigationController?.pushViewController(searchTableViewController, animated: false)
 	}
 	
@@ -312,7 +310,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
 			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? FeedTableViewCell {
 				cell.feedPostView.updateLikedStatus()
-				playerNav.updateLikeButton()
+				playerCenter.updateLikeButton()
 			}
 		}
 	}

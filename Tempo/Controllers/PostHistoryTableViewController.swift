@@ -150,7 +150,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 			if let cell = tableView.cellForRow(at: relativeIndexPath(row: currentlyPlayingIndexPath.row) as IndexPath) as? FeedTableViewCell {
 				cell.feedPostView.updateLikedStatus()
 			}
-			playerNav.updateLikeButton()
+			playerCenter.updateLikeButton()
 		}
 	}
 	
