@@ -17,16 +17,16 @@ enum NotificationType {
 
 class TempoNotification: NSObject {
 	let id: String?
-	let userID: String?
-	let postID: String?
+	let userId: String?
+	let postId: String?
 	let message: String
 	let type: NotificationType
 	let seen: Bool?
 
-	init(id: String?, userID: String?, postID: String?, message: String, type: NotificationType, seen: Bool?) {
+	init(id: String?, userId: String?, postId: String?, message: String, type: NotificationType, seen: Bool?) {
 		self.id = id
-		self.userID = userID
-		self.postID = postID
+		self.userId = userId
+		self.postId = postId
 		self.message = message
 		self.type = type
 		self.seen = seen
@@ -37,8 +37,8 @@ class TempoNotification: NSObject {
 	// Initialization for tempo activity notification
 	convenience init(json: JSON) {
 		let id = json["id"].stringValue
-		let userID = json["from"].stringValue
-		let postID = json["post_id"].stringValue
+		let userId = json["from"].stringValue
+		let postId = json["post_id"].stringValue
 		let message = json["message"].stringValue
 		let type: NotificationType
 		switch json["notification_type"].intValue {
@@ -51,12 +51,12 @@ class TempoNotification: NSObject {
 		}
 		let seen = (json["seen"].intValue) == 0 ? false : true
 		
-		self.init(id: id, userID: userID, postID: postID, message: message, type: type, seen: seen)
+		self.init(id: id, userId: userId, postId: postId, message: message, type: type, seen: seen)
 	}
 	
 	// Initialization for internet connectivity
 	convenience init(msg: String, type: NotificationType = .InternetConnectivity) {
-		self.init(id: nil, userID: nil, postID: nil, message: msg, type: type, seen: nil)
+		self.init(id: nil, userId: nil, postId: nil, message: msg, type: type, seen: nil)
 	}
 	
 	override var description: String {
@@ -64,7 +64,7 @@ class TempoNotification: NSObject {
 	}
 	
 	var notificationDescription: String {
-		return "\(userID): \(message) for the post \(postID)"
+		return "\(userId): \(message) for the post \(postId)"
 	}
 	
 }

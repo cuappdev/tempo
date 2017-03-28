@@ -259,12 +259,12 @@ class API {
 		get(.feed(userID), params: ["session_code": sessionCode as AnyObject], map: postMapping, completion: completion)
 	}
 	
-	func fetchNotifications(_ userID: String, completion: @escaping ([TempoNotification]) -> Void) {
+	func fetchNotifications(_ userID: String, length: Int, page: Int, completion: @escaping ([TempoNotification]) -> Void) {
 		let map: ([String: AnyObject]) -> [TempoNotification] = {
 			guard let notifications = $0["notifications"] as? [AnyObject] else { return [] }
 			return notifications.map { TempoNotification(json: JSON($0)) }
 		}
-		get(.notifications(userID), params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
+		get(.notifications(userID), params: ["p": page as AnyObject, "l": length as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: completion)
 	}
 	
 	func checkNotification(_ notificationID: String, completion: @escaping (Bool) -> Void) {

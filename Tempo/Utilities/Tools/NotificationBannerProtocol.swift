@@ -17,7 +17,7 @@ private struct BannerProperties {
 private let originY: CGFloat = -BannerProperties.height
 
 protocol NotificationDelegate {
-	func didTapNotification(forNotification notif: TempoNotification)
+	func didTapNotification(forNotification notif: TempoNotification, cell: NotificationTableViewCell?, postHistoryVC: PostHistoryTableViewController?)
 }
 
 // MARK: - Banner View -
@@ -31,10 +31,10 @@ class BannerView: UIView {
 		let f = CGRect(x: 0, y: originY, width: BannerProperties.width, height: BannerProperties.height)
 		super.init(frame: f)
 		
-		notificationLabel = UILabel(frame: f)
+		notificationLabel = UILabel(frame: CGRect(x: 16, y: originY, width: BannerProperties.width - 32, height: BannerProperties.height))
 		notificationLabel.backgroundColor = .clear
 		notificationLabel.font = UIFont(name: "AvenirNext-Medium", size: 13)
-		notificationLabel.textAlignment = .center
+		notificationLabel.textAlignment = .left
 		notificationLabel.text = "Placeholder Text"
 		self.addSubview(notificationLabel)
 		
@@ -52,7 +52,7 @@ class BannerView: UIView {
 	func hideTap() {
 		Banner.hide()
 		if notification.type != .InternetConnectivity {
-			delegate?.didTapNotification(forNotification: notification)
+			delegate?.didTapNotification(forNotification: notification, cell: nil, postHistoryVC: nil)
 		}
 	}
 	
@@ -74,13 +74,14 @@ class Banner {
 		notificationView.delegate					 = delegate
 		notificationView.notification				 = data
 		notificationView.notificationLabel.text      = data.message
-		print(data.message)
 		notificationView.backgroundColor             = backgroundColor
 		notificationView.notificationLabel.textColor = textColor
 		
 		UIView.animate(withDuration: 0.5, delay: delay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveLinear, animations: {
 			topView.view.addSubview(self.notificationView)
-			self.notificationView.frame = CGRect(x: 0, y: 0, width: BannerProperties.width, height: BannerProperties.height) }, completion: nil)
+			self.notificationView.frame = CGRect(x: 0, y: 0, width: BannerProperties.width, height: BannerProperties.height)
+			self.notificationView.notificationLabel.frame = CGRect(x: 10, y: 0, width: BannerProperties.width - 20, height: BannerProperties.height)
+		}, completion: nil)
 		
 		// Hide banner after 4.0 seconds
 		DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { self.hide() }

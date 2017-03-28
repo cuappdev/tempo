@@ -110,9 +110,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		// Check if launched via push notification
 		if let options = launchOptions {
 			if options.description.lowercased().contains("liked a song") {
-				firstViewController = feedVC
+				let postHistoryVC = PostHistoryTableViewController()
+				API.sharedAPI.fetchPosts(User.currentUser.id) { (posts) in
+					postHistoryVC.posts = posts
+					postHistoryVC.postedDates = posts.map { $0.date! }
+					postHistoryVC.filterPostedDatesToSections(postHistoryVC.postedDates)
+					postHistoryVC.songLikes = posts.map{ $0.likes }
+				}
+				firstViewController = postHistoryVC
 			} else if options.description.lowercased().contains("following") {
-				firstViewController = usersVC
+				firstViewController = profileVC
 //				profileVC.user = API.sharedAPI.fetchUser(___)
 //				firstViewController = profileVC
 			}

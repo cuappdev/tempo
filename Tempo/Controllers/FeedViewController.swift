@@ -77,6 +77,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		
 		refreshFeedWithDelay(0, timeout: 5.0)
 		activityIndicatorView.center = view.center
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {

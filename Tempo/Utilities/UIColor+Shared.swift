@@ -19,6 +19,7 @@ extension UIColor {
 	@nonobjc static let separatorGray = UIColor.colorFromCode(0x28282B)
 	@nonobjc static let descriptionLightGray = UIColor.colorFromCode(0xC5B7B6)
 	@nonobjc static let offWhite = UIColor.colorFromCode(0xC0C0C1)
+	@nonobjc static let cellOffWhite = UIColor.colorFromCode(0xB6A9A7)
 	@nonobjc static let facebookBlue = UIColor.colorFromCode(0x01457E)
 	@nonobjc static let buttonGrey = UIColor.colorFromCode(0xF3F0F0).withAlphaComponent(0.88)
 	@nonobjc static let buttonTransparentGrey = UIColor.colorFromCode(0xF3F0F0).withAlphaComponent(0.48)

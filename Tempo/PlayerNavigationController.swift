@@ -113,57 +113,48 @@ class PlayerNavigationController: UINavigationController, PostDelegate, Notifica
 	
 	// MARK: Banner Methods
 	func showNotificationBanner(_ userInfo: [AnyHashable : Any]) {
-		
-		if userInfo.description.lowercased().contains("song") {
+		let info = (userInfo[AnyHashable("custom")] as! NSDictionary).value(forKey: "a") as! NSDictionary
+
+		if info.value(forKey: "notification_type") as! Int == 1 {
 			// Liked song notification
-			let info = userInfo[AnyHashable("aps")] as! NSDictionary
 			Banner.showBanner(
 				self,
 				delay: 0.5,
-				data: TempoNotification(msg: info.value(forKey: "alert") as! String, type: .Like),
+				data: TempoNotification(msg: info.value(forKey: "message") as! String, type: .Like),
 				backgroundColor: .white,
 				textColor: .black,
 				delegate: self)
-		} else if userInfo.description.lowercased().contains("follower") {
+		} else if info.value(forKey: "notification_type") as! Int == 2 {
 			// New user follower
-			let info = userInfo[AnyHashable("aps")] as! NSDictionary
+			let custom = userInfo[AnyHashable("custom")] as! NSDictionary
+			let info = custom.value(forKey: "a") as! NSDictionary
 			Banner.showBanner(
 				self,
 				delay: 0.5,
-				data: TempoNotification(msg: info.value(forKey: "alert") as! String, type: .Follower),
+				data: TempoNotification(msg: info.value(forKey: "message") as! String, type: .Follower),
 				backgroundColor: .white,
 				textColor: .black,
 				delegate: self)
+		} else {
+			// Generic notification - do nothing
+			return
 		}
 	}
 	
-	func didTapNotification(forNotification notif: TempoNotification) {
+	func didTapNotification(forNotification notif: TempoNotification, cell: NotificationTableViewCell?, postHistoryVC: PostHistoryTableViewController?) {
 		
-		if let id = notif.id {
-			API.sharedAPI.checkNotification(id, completion: { _ in })
-		}
-		
-		if let postID = notif.postID, notif.type == .Like {
-			// Push to TableView with posted songs and dates
-			let postHistoryVC = PostHistoryTableViewController()
-			API.sharedAPI.fetchPosts(User.currentUser.id) { (post) in
-				postHistoryVC.posts = post
-				postHistoryVC.postedDates = post.map { $0.date! }
-				postHistoryVC.filterPostedDatesToSections(postHistoryVC.postedDates)
-				postHistoryVC.songLikes = post.map{ $0.likes }
-				// find specific post
-				var row: Int = 0
-				for p in post {
-					if p.postID == postID { break }
-					row += 1
-				}
-				postHistoryVC.sectionIndex = postHistoryVC.relativeIndexPath(row: row).section
-				self.pushViewController(postHistoryVC, animated: true)
+		if let postID = notif.postId, notif.type == .Like, let vc = postHistoryVC {
+			var row: Int = 0
+			for p in vc.posts {
+				if p.postID == postID { break }
+				row += 1
 			}
+			vc.sectionIndex = vc.relativeIndexPath(row: row).section
+			self.pushViewController(vc, animated: true)
 		} else if notif.type == .Follower {
 			let profileVC = ProfileViewController()
 			profileVC.title = "Profile"
-			if let userID = notif.userID {
+			if let userID = notif.userId {
 				API.sharedAPI.fetchUser(userID) {
 					profileVC.user = $0
 					self.pushViewController(profileVC, animated: true)
