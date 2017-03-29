@@ -22,7 +22,7 @@ class NotificationTableViewCell: UITableViewCell {
 	var messageLabel = UILabel()
 	var descriptionLabel = UILabel()
 	var timeLabel = UILabel()
-	var acceptButton = UIButton()
+//	var acceptButton = UIButton()
 	var customSeparator = UIView()
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -55,13 +55,13 @@ class NotificationTableViewCell: UITableViewCell {
 		timeLabel.font = UIFont(name: "AvenirNext-Medium", size: 14)
 		contentView.addSubview(timeLabel)
 		
-		acceptButton.frame = CGRect(x: UIScreen.main.bounds.width - 100, y: 15, width: 80, height: notificationCellHeight - 30)
-		acceptButton.backgroundColor = UIColor.tempoRed
-		acceptButton.layer.cornerRadius = 4
-		acceptButton.setAttributedTitle(NSAttributedString(string: "Accept", attributes: [NSForegroundColorAttributeName: UIColor.white]), for: .normal)
-		acceptButton.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 14)
-		acceptButton.isHidden = true
-		contentView.addSubview(acceptButton)
+//		acceptButton.frame = CGRect(x: UIScreen.main.bounds.width - 100, y: 15, width: 80, height: notificationCellHeight - 30)
+//		acceptButton.backgroundColor = UIColor.tempoRed
+//		acceptButton.layer.cornerRadius = 4
+//		acceptButton.setAttributedTitle(NSAttributedString(string: "Accept", attributes: [NSForegroundColorAttributeName: UIColor.white]), for: .normal)
+//		acceptButton.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 14)
+//		acceptButton.isHidden = true
+//		contentView.addSubview(acceptButton)
 		
 		customSeparator.frame = CGRect(x: 0, y: notificationCellHeight-1, width: UIScreen.main.bounds.width, height: 1)
 		customSeparator.backgroundColor = .readCellColor
@@ -82,23 +82,24 @@ class NotificationTableViewCell: UITableViewCell {
 		avatarImage.hnk_setImageFromURL(user.imageURL)
 		
 		if notification.type == .Like {
+			let songName = notification.message.components(separatedBy: ": ").last
 			messageLabel.text = "@\(user.username) liked your song"
-			descriptionLabel.text = "Blah blah"
+			descriptionLabel.text = songName
 			timeLabel.text = "1h"
 			timeLabel.isHidden = false
-			acceptButton.isHidden = true
 		} else {
-			messageLabel.text = "@\(user.username)"
+			messageLabel.text = "@\(user.username) is now following you"
 			descriptionLabel.text = user.name
-			timeLabel.isHidden = true
-			acceptButton.isHidden = false
+			timeLabel.text = "2h"
 		}
+		timeLabel.textColor = notification.seen! ? .cellOffWhite : .yellow
 	}
 
 	func markAsSeen() {
 		if !notification.seen! {
+			print("not seen")
 			API.sharedAPI.checkNotification(notification.id!) {
-				self.descriptionLabel.textColor = $0 ? .white : .yellow
+				self.timeLabel.textColor = $0 ? .cellOffWhite : .yellow
 			}
 		}
 	}

@@ -31,6 +31,11 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		
 		initializeTableView()
 		fetchPostHistory()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
 		fetchNotifications()
 	}
 	
@@ -41,7 +46,7 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		tableView.backgroundColor = .readCellColor
 		tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
 		
-		tableView.rowHeight = 60
+		tableView.rowHeight = notificationCellHeight
 		tableView.showsVerticalScrollIndicator = true
 		view.addSubview(tableView)
 	}
@@ -51,20 +56,21 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 			print(notifs.count)
 			var count = 0
 			for notif in notifs {
-				self.notifications.append(notif)
-				API.sharedAPI.fetchUser(notif.userId!, completion: { (user) in
-					self.users[notif.id!] = user
-					print("Appending")
-					count += 1
-					if count == notifs.count {
-						DispatchQueue.main.async {
-							print("Reloading tableview")
-							self.tableView.reloadData()
+				if self.users[notif.id!] == nil {
+					self.notifications.append(notif)
+					API.sharedAPI.fetchUser(notif.userId!, completion: { (user) in
+						self.users[notif.id!] = user
+//						print("Appending \(notif.id!)")
+						count += 1
+						if count == notifs.count {
+							DispatchQueue.main.async {
+//								print("Reloading tableview")
+								self.tableView.reloadData()
+							}
 						}
-					}
-				})
+					})
+				}
 			}
-			
 			self.isLoadingMore = false
 		}
 	}
@@ -114,27 +120,16 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		return notificationCellHeight
 	}
 	
-//	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//		let contentOffset = scrollView.contentOffset.y
-//		let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-//		if !isLoadingMore && (maximumOffset - contentOffset <= CGFloat(0)) {
-//			self.isLoadingMore = true
-//			let completion: ([TempoNotification]) -> Void = {
-//				for notif in $0 {
-//					self.notifications.append(notif)
-//					API.sharedAPI.fetchUser(notif.userId!) {
-//						self.users.append($0)
-//					}
-//				}
-//				DispatchQueue.main.async {
-//					self.tableView.reloadData()
-//				}
-//				self.isLoadingMore = false
-//			}
-//			page += 1
-//			API.sharedAPI.fetchNotifications(User.currentUser.id, length: length, page: page, completion: completion)
-//		}
-//	}
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		let contentOffset = scrollView.contentOffset.y
+		let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+		if !isLoadingMore && (maximumOffset - contentOffset <= CGFloat(0)) {
+			print("scrolling")
+			self.isLoadingMore = true
+			page += 1
+			fetchNotifications()
+		}
+	}
 	
 	// MARK: - Delegate
 	func didTapUserImageForNotification(_ user: User) {
