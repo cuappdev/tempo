@@ -24,7 +24,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	
 	let headerViewHeight: CGFloat = 320
 	
-    var user: User = User.currentUser
+    var user: User!
 	
 	var scrollView: UIScrollView!
     
@@ -46,6 +46,10 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		if user == nil {
+			user = User.currentUser
+		}
 		
 		view.backgroundColor = .profileBackgroundBlack
 		
@@ -86,13 +90,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		calendarCollectionViewDivider = UIView(frame: CGRect(x: view.frame.width/11, y: 0, width: 1, height: view.frame.height))
 		calendarCollectionViewDivider.backgroundColor = .tempoRed
-		
-		// Check for 3D Touch availability
-		if #available(iOS 9.0, *) {
-			if traitCollection.forceTouchCapability == .available {
-				registerForPreviewing(with: self, sourceView: view)
-			}
-		}
 		
 		scrollView.addSubview(calendarCollectionView)
 		scrollView.addSubview(calendarCollectionViewDivider)
@@ -142,11 +139,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 			
 			self.activityIndicatorView.stopAnimating()
 			self.activityIndicatorView.removeFromSuperview()
-		}
-		
-		// Profile Info
-		if user == User.currentUser {
-//			addHamburgerMenu()
 		}
 		
 		profileHeaderView.nameLabel.text = "\(user.firstName) \(user.shortenLastName())"
@@ -351,68 +343,4 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return Date().firstDayOfMonth().dateByAddingMonths(-section).numDaysInMonth()
 	}
-}
-
-// MARK: - Peek and Pop
-
-@available(iOS 9.0, *)
-extension ProfileViewController: UIViewControllerPreviewingDelegate {
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		
-		if profileHeaderView.followersButton.frame.contains(location) {
-			let followersVC = UsersViewController()
-			followersVC.displayType = .Followers
-			followersVC.user = user
-			followersVC.title = String(describing: followersVC.displayType)
-			
-			previewingContext.sourceRect = profileHeaderView.followersButton.frame
-			
-			return followersVC
-		}
-		
-		if profileHeaderView.followingButton.frame.contains(location) {
-			let followersVC = UsersViewController()
-			followersVC.displayType = .Following
-			followersVC.user = user
-			followersVC.title = String(describing: followersVC.displayType)
-			
-			previewingContext.sourceRect = profileHeaderView.followingButton.frame
-			
-			return followersVC
-		}
-		
-		let collectionViewPoint = view.convert(location, to: calendarCollectionView)
-		
-		guard let indexPath = calendarCollectionView.indexPathForItem(at: collectionViewPoint),
-			let cell = calendarCollectionView.cellForItem(at: indexPath) as? HipCalendarDayCollectionViewCell else {
-				return nil
-		}
-		
-		if let _ = postedYearMonthDay.index(of: cell.date.yearMonthDay()) {
-			
-			let date = dateForIndexPath(indexPath)
-			
-			let peekViewController = PostHistoryTableViewController()
-			peekViewController.posts = posts
-			peekViewController.postedDates = postedDates
-			peekViewController.filterPostedDatesToSections(postedDates)
-			peekViewController.songLikes = postedLikes
-			
-			if let sectionIndex = peekViewController.postedDatesSections.index(of: date.yearMonthDay()) {
-				peekViewController.sectionIndex = sectionIndex
-			}
-			
-			peekViewController.preferredContentSize = .zero
-			previewingContext.sourceRect = calendarCollectionView.convert(cell.frame, to: view)
-			
-			return peekViewController
-		}
-		
-		return nil
-	}
-	
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		show(viewControllerToCommit, sender: self)
-	}
-
 }

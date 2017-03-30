@@ -2,6 +2,8 @@
 import UIKit
 
 class TabBarController: UIViewController {
+	
+	static let sharedInstance = TabBarController()
     
     var numberOfTabs: Int = 0
     var tabBarHeight: CGFloat = 50.0
@@ -45,24 +47,6 @@ class TabBarController: UIViewController {
         tabBarContainerView = UIView(frame: CGRect(x: 0, y: view.frame.height - tabBarHeight, width: view.frame.width, height: tabBarHeight))
         tabBarContainerView.backgroundColor = tabBarColor
 
-        if !UIAccessibilityIsReduceTransparencyEnabled() && transparentTabBarEnabled {
-            
-            tabBarContainerView.backgroundColor = UIColor.clear
-            
-            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-
-            blurEffectView.frame = tabBarContainerView.bounds
-            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            
-            tabBarContainerView.addSubview(blurEffectView)
-            
-        }
-        
-        let lineSeparator = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 1))
-        lineSeparator.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-        tabBarContainerView.addSubview(lineSeparator)
-        
         view.addSubview(tabBarContainerView)
     }
     

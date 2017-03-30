@@ -36,7 +36,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	var filteredPosts: [Post] = []
 	var playingPostType: PlayingPostType!
 	
-	var playerCenter: PlayerCenter!
+	var playerCenter = PlayerCenter.sharedInstance
 	
     var currentlyPlayingIndexPath: IndexPath? {
         didSet {
@@ -143,11 +143,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	}
 	
 	func navigateToSuggestions() {
-		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-			return
-		}
-		
-		//TODO: Navigate to suggestion tab
+		TabBarController.sharedInstance.programmaticallyPressTabBarButton(atIndex: 1)
 	}
 	
     fileprivate func updateNowPlayingInfo() {

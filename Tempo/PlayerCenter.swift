@@ -17,10 +17,12 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 	static let sharedInstance = PlayerCenter()
 	
 	private var playerCell: PlayerCellView!
-	let frameHeight: CGFloat = 72
+	let miniHeight: CGFloat = 72
+	var viewMiniFrame: CGRect!
 	
 	private var expandedCell: ExpandedPlayerView!
 	let expandedHeight: CGFloat = 347
+	var viewExpandedFrame: CGRect!
 	
 	private var currentPost: Post? {
 		didSet {
@@ -38,32 +40,27 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 	private var postRefIndex: Int?
 	private var playerDelegate: PlayerDelegate?
 	
-	func setup() {
-//		viewDidLoad()
-	}
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let playerFrame = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - frameHeight - tabBarHeight, width: UIScreen.main.bounds.width, height: frameHeight))
-
-		playerFrame.backgroundColor = .red
+		viewMiniFrame = CGRect(x: 0, y: UIScreen.main.bounds.height - miniHeight - tabBarHeight, width: UIScreen.main.bounds.width, height: miniHeight)
+		viewExpandedFrame = CGRect(x: 0, y: UIScreen.main.bounds.height - expandedHeight - tabBarHeight, width: UIScreen.main.bounds.width, height: expandedHeight)
+		
 		playerCell = Bundle.main.loadNibNamed("PlayerCellView", owner: self, options: nil)?.first as? PlayerCellView
 		playerCell?.setup(parent: self)
-		playerCell?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: frameHeight)
+		playerCell?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: miniHeight)
 		playerCell?.isUserInteractionEnabled = false
-//		view.addSubview(playerCell!)
 		
 		// Setup expandedCell
 		expandedCell = Bundle.main.loadNibNamed("ExpandedPlayerView", owner: self, options: nil)?.first as? ExpandedPlayerView
 		expandedCell?.setup(parent: self)
 		expandedCell?.frame = CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: expandedHeight)
-//		view.addSubview(expandedCell!)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
-		self.view.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - frameHeight - tabBarHeight, width: UIScreen.main.bounds.width, height: frameHeight)
-		view.addSubview(playerCell!)
+		view.frame = viewMiniFrame
+		view.addSubview(playerCell)
+		view.addSubview(expandedCell)
 	}
 	
 	// updates all relevant information for new post and begins playing the song
@@ -83,9 +80,12 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 	
 	func animateExpandedCell(isExpanding: Bool) {
 		UIView.animate(withDuration: 0.2) {
-			let loc = isExpanding ? self.expandedHeight : CGFloat(0)
+			let offset = isExpanding ? CGFloat(0) : UIScreen.main.bounds.height
+			self.view.frame = isExpanding ? self.viewExpandedFrame : self.viewMiniFrame
+			self.playerCell.alpha = isExpanding ? 0 : 1
+			self.expandedCell.alpha = isExpanding ? 1 : 0
 			UIView.animate(withDuration: 0.2, animations: {
-				self.expandedCell.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - loc, width: UIScreen.main.bounds.width, height: self.expandedHeight)
+				self.expandedCell.frame = CGRect(x: 0, y: offset, width: UIScreen.main.bounds.width, height: self.expandedHeight)
 				self.expandedCell.layer.opacity = isExpanding ? 1 : 0
 			})
 		}
@@ -147,19 +147,11 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 		postView = newPostView
 	}
 	
-	override func showAccessoryViewController(animated: Bool) {
-		
-	}
-	
 	override func expandAccessoryViewController(animated: Bool) {
 		animateExpandedCell(isExpanding: true)
 	}
 	
 	override func collapseAccessoryViewController(animated: Bool) {
 		animateExpandedCell(isExpanding: false)
-	}
-	
-	override func hideAccessoryViewController(animated: Bool) {
-		
 	}
 }

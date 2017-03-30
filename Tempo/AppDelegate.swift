@@ -25,14 +25,14 @@ extension URL {
 class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate, LoginFlowViewControllerDelegate {
 	
 	var window: UIWindow?
-	let tabBarVC = TabBarController()
+	let tabBarVC = TabBarController.sharedInstance
 	let feedVC = FeedViewController()
 	let searchVC = SearchViewController()
 	let usersVC = UsersViewController()
 	let profileVC = ProfileViewController()
 	let likedVC = LikedTableViewController()
-	let settingsVC = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
-	let aboutVC = AboutViewController()
+//	let settingsVC = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
+//	let aboutVC = AboutViewController()
 	
 	let playerCenter = PlayerCenter.sharedInstance
 	
@@ -40,17 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	var searchNavigationController: UINavigationController!
 	var usersNavigationController: UINavigationController!
 	var likedNavigationController: UINavigationController!
-	var settingsNavigationController: UINavigationController!
-	
-	let transparentView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-//	let navigationController = PlayerNavigationController()
+	var profileNavigationController: UINavigationController!
 	
 	var loginFlowViewController: LoginFlowViewController?
 
-	// Saved shortcut item used as a result of an app launch, used later when app is activated.
-	var launchedShortcutItem: AnyObject?
-
-	var firstViewController: UIViewController!
 	var resetFirstVC = true
 	
 	var launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
@@ -59,30 +52,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		URLCache.shared = Foundation.URLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
 		
-		feedVC.playerCenter = playerCenter
-		likedVC.playerCenter = playerCenter
-		searchVC.playerCenter = playerCenter
-		settingsVC.playerCenter = playerCenter
+		// Connect all the delegates
+		searchVC.delegate = feedVC
 		
 		feedNavigationController = UINavigationController(rootViewController: feedVC)
 		searchNavigationController = UINavigationController(rootViewController: searchVC)
 		usersNavigationController = UINavigationController(rootViewController: usersVC)
 		likedNavigationController = UINavigationController(rootViewController: likedVC)
-		settingsNavigationController = UINavigationController(rootViewController: settingsVC)
-		
-		// Styling reveal controller
-//		revealVC.rearViewRevealWidth = DeviceType.IS_IPHONE_5_OR_LESS ? 260 : 300
-//		revealVC.frontViewShadowColor = .revealShadowBlack
-//		revealVC.frontViewShadowRadius = 14
-//		revealVC.frontViewShadowOffset = CGSize(width: -15, height: 0)
-//		revealVC.frontViewShadowOpacity = 0.7
-		
-		// Set up navigation bar divider
-//		let navigationBar = navigationController.navigationBar
-//		let navigationSeparator = UIView(frame: CGRect(x: 0, y: navigationBar.frame.size.height - 0.5, width: navigationBar.frame.size.width, height: 0.5))
-//		navigationSeparator.backgroundColor = .searchBackgroundRed
-//		navigationSeparator.isOpaque = true
-//		navigationController.navigationBar.addSubview(navigationSeparator)
+		profileNavigationController = UINavigationController(rootViewController: profileVC)
 		
 		StyleController.applyStyles()
 		UIApplication.shared.statusBarStyle = .lightContent
@@ -103,58 +80,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			SpotifyController.sharedController.setSpotifyUser(SPTAuth.defaultInstance().session.accessToken, completion: nil)
 			User.currentUser.currentSpotifyUser?.savedTracks = UserDefaults.standard.dictionary(forKey: User.currentUser.currentSpotifyUser!.savedTracksKey) as [String : AnyObject]? ?? [:]
 		}
-
-//		window = UIWindow(frame: UIScreen.main.bounds)
-//		window!.backgroundColor = UIColor.tempoLightGray
-//		window!.makeKeyAndVisible()
-//		window?.tintColor = .tempoRed
 		
 		FBSDKProfile.enableUpdates(onAccessTokenChange: true)
 		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-		
-		// Check if it's launched from Quick Action
-		var shouldPerformAdditionalDelegateHandling = true
-		if #available(iOS 9.0, *) {
-			if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
-				launchedShortcutItem = shortcutItem
-				shouldPerformAdditionalDelegateHandling = false
-				resetFirstVC = false
-			}
-		}
 		
 		if let facebookLoginToken = FBSDKAccessToken.current()?.tokenString {
 			FacebookLoginViewController.retrieveCurrentFacebookUserWithAccessToken(token: facebookLoginToken, completion: nil)
 		}
 		
-		setFirstVC()
 		setupTabBar()
 		
 		// Prepare to play audio
 		_ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
 		
-		return shouldPerformAdditionalDelegateHandling
+		return true
 	}
 	
 	func didFinishLoggingIn() {
 		if !UserDefaults.standard.bool(forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey) {
 			registerForRemotePushNotifications()
 		}
-//		setupTabBar()
+		setupTabBar()
 	}
 	
 	func setupTabBar() {
 		tabBarVC.transparentTabBarEnabled = true
 		tabBarVC.numberOfTabs = 5
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "FeedSidebarIcon"), forTabAtIndex: 0)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "FeedSidebarIcon"), forTabAtIndex: 0)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "PeopleSidebarIcon"), forTabAtIndex: 1)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PeopleSidebarIcon"), forTabAtIndex: 1)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "AddIcon"), forTabAtIndex: 2)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "AddIcon"), forTabAtIndex: 2)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "LikedSidebarButton"), forTabAtIndex: 3)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "LikedSidebarButton"), forTabAtIndex: 3)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "SettingsSidebarIcon"), forTabAtIndex: 4)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "SettingsSidebarIcon"), forTabAtIndex: 4)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "PassiveTabBarFeed"), forTabAtIndex: 0)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "ActiveTabBarFeed"), forTabAtIndex: 0)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "PassiveTabBarSearch"), forTabAtIndex: 1)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "ActiveTabBarSearch"), forTabAtIndex: 1)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "PassiveTabBarNotifications"), forTabAtIndex: 3)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "ActiveTabBarNotifications"), forTabAtIndex: 3)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "PassiveTabBarProfile"), forTabAtIndex: 4)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "ActiveTabBarProfile"), forTabAtIndex: 4)
 		
 		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
 			self.tabBarVC.present(self.feedNavigationController, animated: false, completion: nil)
@@ -173,10 +134,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		}, forTabAtIndex: 3)
 		
 		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
-			self.tabBarVC.present(self.settingsNavigationController, animated: false, completion: nil)
+			self.tabBarVC.present(self.profileNavigationController, animated: false, completion: nil)
 		}, forTabAtIndex: 4)
 		
-		playerCenter.setup()
 		tabBarVC.addAccessoryViewController(accessoryViewController: playerCenter)
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
@@ -184,27 +144,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		window!.makeKeyAndVisible()
 		window?.tintColor = .tempoRed
 		window?.rootViewController = tabBarVC
-	}
-	
-	func setFirstVC() {
-		if #available(iOS 9.0, *) {
-			if let shortcutItem = launchedShortcutItem as? UIApplicationShortcutItem {
-				switch (shortcutItem.type) {
-				case ShortcutIdentifier.Post.type:
-					firstViewController =  feedVC
-				case ShortcutIdentifier.PeopleSearch.type:
-					firstViewController =  searchVC
-				case ShortcutIdentifier.Liked.type:
-					firstViewController = likedVC
-				case ShortcutIdentifier.Profile.type:
-					firstViewController =  profileVC
-				default:
-					firstViewController = feedVC
-				}
-				return
-			}
-		}
-		firstViewController = feedVC
 	}
 		
 	func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -253,61 +192,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		}
 	}
 	
-	// MARK: - SWRevealDelegate
-	
-//	func revealController(_ revealController: SWRevealViewController!, willMoveTo position: FrontViewPosition) {
-//		UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//		if position == .left {
-//			if let _ = transparentView.superview {
-//				transparentView.removeGestureRecognizer(revealVC.panGestureRecognizer())
-//				transparentView.removeFromSuperview()
-//			}
-//			revealController.frontViewController.view.addGestureRecognizer(revealVC.panGestureRecognizer())
-//			revealController.frontViewController.revealViewController().tapGestureRecognizer()
-//		} else {
-//			revealController.frontViewController.view.removeGestureRecognizer(revealVC.panGestureRecognizer())
-//			transparentView.addGestureRecognizer(revealVC.panGestureRecognizer())
-//			navigationController.view.addSubview(transparentView)
-//		}
-//		//Notify any hamburger menus that the menu is being toggled
-//		NotificationCenter.default.post(name: Notification.Name(rawValue: RevealControllerToggledNotification), object: revealController)
-//	}
-	
 	func applicationDidBecomeActive(_ application: UIApplication) {
 		FBSDKAppEvents.activateApp()
-		
-		if #available(iOS 9.0, *) {
-			guard let shortcut = launchedShortcutItem else { return }
-
-//			if FBSDKAccessToken.current() != nil {
-//				let _ = handleShortcutItem(shortcut as! UIApplicationShortcutItem)
-//				launchedShortcutItem = nil
-//			}
-		}
-	}
-	
-	// MARK: - Force Touch Shortcut
-	
-//	@available(iOS 9.0, *)
-//	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-//		let handleShortcutItem = self.handleShortcutItem(shortcutItem)
-//		completionHandler(handleShortcutItem)
-//	}
-	
-	enum ShortcutIdentifier: String {
-		case Post
-		case PeopleSearch
-		case Liked
-		case Profile
-		
-		init?(fullType: String) {
-			guard let last = fullType.components(separatedBy: ".").last else {return nil}
-			self.init(rawValue: last)
-		}
-	
-		var type: String {
-			return Bundle.main.bundleIdentifier! + ".\(self.rawValue)"
-		}
 	}
 	
 	//MARK: - Remote Push Notifications

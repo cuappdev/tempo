@@ -26,7 +26,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	var lastRequest: Request?
 	
 	weak var delegate: SongSearchDelegate?
-	var playerCenter: PlayerCenter!
+	let playerCenter = PlayerCenter.sharedInstance
 	
 	var posts: [Post] = []
 	var selectedCell: SongSearchTableViewCell?
@@ -207,7 +207,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	func submitSong() {
 		// shouldn't be able to get here if playerNav.currentPost is nil
 		delegate?.didSelectSong(playerCenter.getCurrentPost()!.song)
-		dismiss()
+		TabBarController.sharedInstance.programmaticallyPressTabBarButton(atIndex: 0)
 	}
 	
 	func initiateRequest(_ term: String) {

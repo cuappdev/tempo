@@ -11,7 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController {
 	
 	let buttonHeight: CGFloat = 50
-	var playerCenter: PlayerCenter!
+	var playerCenter = PlayerCenter.sharedInstance
 	
 	@IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var initialsView: UIView!
@@ -77,9 +77,9 @@ class SettingsViewController: UIViewController {
 				}
 			})
 		} else {
+			
 			loggedInToSpotify(false)
 		}
-//		let playerNav = navigationController as! PlayerNavigationController
 		playerCenter.updateAddButton()
 	}
 	

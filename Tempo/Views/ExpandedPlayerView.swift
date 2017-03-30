@@ -195,7 +195,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		} else if hitView == prevButton {
 			delegate?.playPrevSong?()
 		} else {
-			playerCenter.animateExpandedCell(isExpanding: false)
+			playerCenter.collapseAccessoryViewController(animated: true)
 		}
 	}
 	

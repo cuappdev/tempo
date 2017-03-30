@@ -158,7 +158,6 @@ class FacebookLoginViewController: UIViewController {
 				if newUser {
 					self.delegate?.facebookLoginViewController(facebookLoginViewController: self, didFinishLoggingInWithNewUserNamed: name, withFacebookID: fbid)
 					self.hideActivityIndicator()
-
 				} else {
 					API.sharedAPI.setCurrentUser(fbid, fbAccessToken: fbAccessToken!) { success in
 						guard success else { return }
@@ -166,7 +165,6 @@ class FacebookLoginViewController: UIViewController {
 						self.hideActivityIndicator()
 					}
 				}
-				
 			}
 		})
 	}

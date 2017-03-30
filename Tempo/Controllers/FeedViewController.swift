@@ -20,15 +20,12 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		return customRefresh
 	}()
 	
-	var plusButton: UIButton!
-	
 	lazy var searchTableViewController: SearchViewController = {
 		let vc = SearchViewController()
 		vc.delegate = self
 		return vc
 	}()
 	
-	var pretappedPlusButton = false
 	var refreshNeeded = false //set to true on logout
 	
 	var activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
@@ -41,7 +38,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		
 		title = "Feed"
 		view.backgroundColor = .readCellColor
-		setupAddButton()
 		tableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
 		playingPostType = .feed
 		
@@ -62,28 +58,12 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		feedFollowSuggestionsController = FeedFollowSuggestionsController(frame: view.frame)
 		feedFollowSuggestionsController?.delegate = self
 		
-		// Check for 3D Touch availability
-		if #available(iOS 9.0, *) {
-			if traitCollection.forceTouchCapability == .available {
-				registerForPreviewing(with: self, sourceView: view)
-			}
-		}
-		
 		refreshFeedWithDelay(0, timeout: 5.0)
 		activityIndicatorView.center = view.center
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		
-		//Begin a post if coming from a quick action
-		if pretappedPlusButton {
-			plusButtonTapped()
-			pretappedPlusButton = false
-		} else {
-			rotatePlusButton(false)
-		}
-		plusButton.isHidden = notConnected(false)
 		feedFollowSuggestionsController?.reload()
 	}
 	
@@ -156,7 +136,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		DispatchQueue.main.asyncAfter(deadline: popTime) {
 			if finishedRefreshing {
 				Banner.hide()
-				self.plusButton.isHidden = self.notConnected(false)
 				self.tableView.reloadData()
 				self.refreshControl?.endRefreshing()
 				self.view.isUserInteractionEnabled = true
@@ -169,7 +148,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		popTime = DispatchTime.now() + Double(Int64(timeout * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
 		DispatchQueue.main.asyncAfter(deadline: popTime) {
 			if !finishedRefreshing {
-				self.plusButton.isHidden = self.notConnected(true)
 				self.refreshControl?.endRefreshing()
 				self.view.isUserInteractionEnabled = true
 				finishedRefreshing = true
@@ -222,7 +200,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	
 	// MARK: - UITableViewDelegate
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		print("selected")
 		let post = posts[indexPath.row]
 		if var listenedToPosts = UserDefaults.standard.dictionary(forKey: FeedViewController.readPostsKey) as? [String:Double] {
 				
@@ -246,45 +223,8 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		customRefresh.scrollViewDidScroll(scrollView)
 	}
 	
-	func setupAddButton() {
-		let image = #imageLiteral(resourceName: "AddIcon")
-		plusButton = UIButton(type: .custom)
-		plusButton.frame = CGRect(origin: .zero, size: image.size)
-		plusButton.setImage(image, for: UIControlState())
-		plusButton.imageView!.contentMode = .center
-		plusButton.imageView!.clipsToBounds = false
-		plusButton.adjustsImageWhenHighlighted = false
-		plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
-		
-		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: plusButton)
-	}
-	
-	func rotatePlusButton(_ active: Bool) {
-		
-		if let currentTransform = plusButton.imageView!.layer.presentation()?.transform {
-			plusButton.imageView?.layer.transform = currentTransform
-		}
-		plusButton.removeTarget(nil, action: nil, for: .allEvents)
-		plusButton.addTarget(self, action: active ? #selector(dismissButtonTapped) : #selector(plusButtonTapped), for: .touchUpInside)
-		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 30, options: [], animations: {
-			let transform = active ? CGAffineTransform(rotationAngle: CGFloat(M_PI_4)) : CGAffineTransform.identity
-			self.plusButton.imageView!.transform = transform
-			}, completion: nil)
-	}
-	
 	func dismissButtonTapped() {
 		searchTableViewController.dismiss()
-	}
-	
-	func plusButtonTapped() {
-		
-		rotatePlusButton(true)
-		
-		searchTableViewController.navigationItem.rightBarButtonItem = navigationItem.rightBarButtonItem
-		searchTableViewController.navigationItem.leftBarButtonItem = navigationItem.leftBarButtonItem
-		searchTableViewController.selfPostIds = posts.filter({ $0.user.name == User.currentUser.name }).map({ $0.song.spotifyID })
-		playerCenter.animateExpandedCell(isExpanding: false)
-		navigationController?.pushViewController(searchTableViewController, animated: false)
 	}
 	
 	// MARK: - SongSearchDelegate
@@ -330,40 +270,6 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 	
 	func feedFollowSuggestionsUserFollowed() {
 		refreshFeed()
-	}
-}
-
-@available(iOS 9.0, *)
-extension FeedViewController: UIViewControllerPreviewingDelegate {
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		let tableViewPoint = view.convert(location, to: tableView)
-		
-		guard let indexPath = tableView.indexPathForRow(at: tableViewPoint),
-			let cell = tableView.cellForRow(at: indexPath) as? FeedTableViewCell else {
-				return nil
-		}
-		
-		let postView = cell.postView as? FeedPostView
-		guard let avatar = postView?.avatarImageView else { return nil }
-		
-		let avatarFrame = postView?.convert(avatar.frame, to: tableView)
-		
-		if (avatarFrame?.contains(tableViewPoint))! {
-			guard let user = postView?.post?.user else { return nil }
-			let peekViewController = ProfileViewController()
-			peekViewController.title = "Profile"
-			peekViewController.user = user
-			
-			peekViewController.preferredContentSize = .zero
-			previewingContext.sourceRect = (postView?.convert(avatar.frame, to: tableView))!
-			
-			return peekViewController
-		}
-		return nil
-	}
-	
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		show(viewControllerToCommit, sender: self)
 	}
 }
 

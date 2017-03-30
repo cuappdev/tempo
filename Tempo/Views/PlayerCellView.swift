@@ -68,7 +68,7 @@ class PlayerCellView: ParentPlayerCellView {
 		
 		if sender.state == .began {
 			if (tapPoint.x > playToggleButton.frame.right.x + 12 && tapPoint.x < addButton.frame.left.x - 12) {
-				playerCenter?.animateExpandedCell(isExpanding: true)
+				playerCenter.expandAccessoryViewController(animated: true)
 			}
 		} else if sender.state == .ended {
 			if (tapPoint.x < playToggleButton.frame.right.x + 12) {
