@@ -106,16 +106,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func setupTabBar() {
 		tabBarVC.transparentTabBarEnabled = true
 		tabBarVC.numberOfTabs = 5
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "PassiveTabBarFeed"), forTabAtIndex: 0)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "ActiveTabBarFeed"), forTabAtIndex: 0)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "PassiveTabBarSearch"), forTabAtIndex: 1)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "ActiveTabBarSearch"), forTabAtIndex: 1)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarFeed"), forTabAtIndex: 0)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarFeed"), forTabAtIndex: 0)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarSearch"), forTabAtIndex: 1)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarSearch"), forTabAtIndex: 1)
 		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "PassiveTabBarNotifications"), forTabAtIndex: 3)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "ActiveTabBarNotifications"), forTabAtIndex: 3)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "PassiveTabBarProfile"), forTabAtIndex: 4)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "ActiveTabBarProfile"), forTabAtIndex: 4)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarNotifications"), forTabAtIndex: 3)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarNotifications"), forTabAtIndex: 3)
+		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarProfile"), forTabAtIndex: 4)
+		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarProfile"), forTabAtIndex: 4)
 		
 		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
 			self.tabBarVC.present(self.feedNavigationController, animated: false, completion: nil)

@@ -67,16 +67,7 @@ class ParentPlayerCellView: UIView {
 				}
 			}
 		} else {
-			//bring them to settingsVC
-//			let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//			let playerCenter = PlayerCenter.sharedInstance
-//			let settingsVC = appDelegate.settingsVC
-//			
-//			if playerCenter.visibleViewController != settingsVC {
-//				settingsVC.shouldAddHamburger = false
-//				settingsVC.navigationItem.leftBarButtonItem = nil //clear existing hamburgerMenu, if there
-//				playerCenter.pushViewController(settingsVC, animated: true)
-//			}
+			// TODO: Bring them to settingsVC
 		}
 	}
 	
