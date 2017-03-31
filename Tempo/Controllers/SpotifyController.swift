@@ -27,6 +27,47 @@ class SpotifyController {
 	var isSpotifyAvailable: Bool = false
 	var authViewController: UIViewController? = nil
 	
+//	func wrapper(callback: type -> type) {
+//
+//		//check if date passed
+//		if(SPTAuth.defaultInstance().session.expirationDate.timeIntervalSinceNow < 0.0){
+//			//if date passed, call login to spotify
+//			API.sharedAPI.getSpotifyAccessToken { (success, accessToken, expiresAt) -> Void in
+//				if success {
+//					let expirationDate = Date(timeIntervalSince1970: expiresAt)
+//					let spotifyUsername = User.currentUser.currentSpotifyUser?.username
+//					SPTAuth.defaultInstance().session = SPTSession(userName: spotifyUsername, accessToken: accessToken, expirationDate: expirationDate)
+//					self.setSpotifyUser(accessToken, completion: completionHandler)
+//				}
+//			}
+//		} else {
+//			
+//		}
+//	}
+	
+	//from JC
+	func refreshSessionIfNeeded(callback: @escaping () -> ()) {
+		if let session = SPTAuth.defaultInstance().session {
+			if !session.isValid() {
+				API.sharedAPI.getSpotifyAccessToken { (success, accessToken, expiresAt) -> Void in
+					if success {
+						self.updateSpotifySession(accessToken: accessToken, expiresAt: expiresAt)
+					}
+					callback()
+					return
+				}
+			}
+		}
+		callback()
+	}
+	
+	//from JC
+	func updateSpotifySession(accessToken: String, expiresAt: Double) {
+		let expirationDate = Date(timeIntervalSince1970: expiresAt)
+		let spotifyUsername = User.currentUser.currentSpotifyUser?.username
+		SPTAuth.defaultInstance().session = SPTSession(userName: spotifyUsername, accessToken: accessToken, expirationDate: expirationDate)
+	}
+	
 	func spotifyIsAvailable(_ completion: (Bool) -> Void) {
 		if let session = SPTAuth.defaultInstance().session {
 			if session.isValid() {
@@ -56,18 +97,16 @@ class SpotifyController {
 		}
 	}
 	
+	//from JC
 	func loginToSpotify(vc: UIViewController, _ completionHandler: @escaping (_ success: Bool) -> Void) {
 		API.sharedAPI.getSpotifyAccessToken { (success, accessToken, expiresAt) -> Void in
 			if success {
-				let expirationDate = Date(timeIntervalSince1970: expiresAt)
-				let spotifyUsername = User.currentUser.currentSpotifyUser?.username
-				SPTAuth.defaultInstance().session = SPTSession(userName: spotifyUsername, accessToken: accessToken, expirationDate: expirationDate)
+				self.updateSpotifySession(accessToken: accessToken, expiresAt: expiresAt)
 				self.setSpotifyUser(accessToken, completion: completionHandler)
 			} else {
 				// Display Safari VC Login
 				let spotifyLoginURL = SPTAuth.defaultInstance().loginURL
 				self.authViewController = SFSafariViewController(url: spotifyLoginURL!)
-				
 				vc.present(self.authViewController!, animated: true, completion: nil)
 			}
 		}
