@@ -6,7 +6,6 @@ class TabBarController: UIViewController {
 	static let sharedInstance = TabBarController()
     
     var numberOfTabs: Int = 0
-    var tabBarHeight: CGFloat = 50.0
     var tabBarContainerView = UIView()
     var tabBarButtons = [UIButton]()
     var transparentTabBarEnabled: Bool = false

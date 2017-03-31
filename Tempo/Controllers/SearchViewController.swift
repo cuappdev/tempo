@@ -46,7 +46,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		title = "Post a track"
 		
-		tableView = UITableView(frame: CGRect(x: 0, y: searchBarHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - tabBarHeight - searchBarHeight - 20), style: .plain)
+		tableView = UITableView(frame: CGRect(x: 0, y: searchBarHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - tabBarHeight - searchBarHeight - miniPlayerHeight - 20), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.backgroundColor = .readCellColor

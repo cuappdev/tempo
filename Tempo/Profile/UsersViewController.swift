@@ -35,7 +35,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
-		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - tabBarHeight), style: .plain)
+		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - tabBarHeight - miniPlayerHeight), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.rowHeight = 101

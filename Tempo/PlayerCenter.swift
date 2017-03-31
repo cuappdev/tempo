@@ -82,11 +82,11 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 		UIView.animate(withDuration: 0.2) {
 			let offset = isExpanding ? CGFloat(0) : UIScreen.main.bounds.height
 			self.view.frame = isExpanding ? self.viewExpandedFrame : self.viewMiniFrame
-			self.playerCell.alpha = isExpanding ? 0 : 1
-			self.expandedCell.alpha = isExpanding ? 1 : 0
 			UIView.animate(withDuration: 0.2, animations: {
 				self.expandedCell.frame = CGRect(x: 0, y: offset, width: UIScreen.main.bounds.width, height: self.expandedHeight)
 				self.expandedCell.layer.opacity = isExpanding ? 1 : 0
+				self.playerCell.alpha = isExpanding ? 0 : 1
+				self.expandedCell.alpha = isExpanding ? 1 : 0
 			})
 		}
 	}

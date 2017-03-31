@@ -61,8 +61,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		let statusbarHeight = UIApplication.shared.statusBarFrame.height
 		let navbarHeight = navigationController?.navigationBar.frame.height ?? 44
-		let playerViewHeight: CGFloat = 73.0
-		let scrollViewHeight = view.frame.height - statusbarHeight - navbarHeight - playerViewHeight
+		let scrollViewHeight = view.frame.height - statusbarHeight - navbarHeight - tabBarHeight - miniPlayerHeight
 		
 		scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: scrollViewHeight))
 		scrollView.bounces = false
