@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let usersVC = UsersViewController()
 	let profileVC = ProfileViewController()
 	let likedVC = LikedTableViewController()
+	let notifVC = NotificationCenterViewController()
 //	let settingsVC = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
 //	let aboutVC = AboutViewController()
 	
@@ -41,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	var usersNavigationController: UINavigationController!
 	var likedNavigationController: UINavigationController!
 	var profileNavigationController: UINavigationController!
+	var notificationNavigationController: UINavigationController!
 	
 	var loginFlowViewController: LoginFlowViewController?
 
@@ -60,6 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		usersNavigationController = UINavigationController(rootViewController: usersVC)
 		likedNavigationController = UINavigationController(rootViewController: likedVC)
 		profileNavigationController = UINavigationController(rootViewController: profileVC)
+		notificationNavigationController = UINavigationController(rootViewController: notifVC)
 		
 		StyleController.applyStyles()
 		UIApplication.shared.statusBarStyle = .lightContent
@@ -130,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		}, forTabAtIndex: 2)
 		
 		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
-			self.tabBarVC.present(self.likedNavigationController, animated: false, completion: nil)
+			self.tabBarVC.present(self.notificationNavigationController, animated: false, completion: nil)
 		}, forTabAtIndex: 3)
 		
 		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {

@@ -12,7 +12,7 @@ protocol PostDelegate {
 	func getCurrentPost() -> Post?
 }
 
-class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
+class PlayerCenter: TabBarAccessoryViewController, PostDelegate, NotificationDelegate {
 	
 	static let sharedInstance = PlayerCenter()
 	
@@ -153,5 +153,55 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 	
 	override func collapseAccessoryViewController(animated: Bool) {
 		animateExpandedCell(isExpanding: false)
+	}
+	
+	// MARK: - Notification Delegate Method
+	
+	// MARK: Banner Methods
+	func showNotificationBanner(_ userInfo: [AnyHashable : Any]) {
+		let info = (userInfo[AnyHashable("custom")] as! NSDictionary).value(forKey: "a") as! NSDictionary
+		
+		if info.value(forKey: "notification_type") as! Int == 1 {
+			// Liked song notification
+			Banner.showBanner(
+				self,
+				delay: 0.5,
+				data: TempoNotification(msg: info.value(forKey: "message") as! String, type: .Like),
+				backgroundColor: .white,
+				textColor: .black,
+				delegate: self)
+		} else if info.value(forKey: "notification_type") as! Int == 2 {
+			// New user follower
+			let custom = userInfo[AnyHashable("custom")] as! NSDictionary
+			let info = custom.value(forKey: "a") as! NSDictionary
+			Banner.showBanner(
+				self,
+				delay: 0.5,
+				data: TempoNotification(msg: info.value(forKey: "message") as! String, type: .Follower),
+				backgroundColor: .white,
+				textColor: .black,
+				delegate: self)
+		} else {
+			// Generic notification - do nothing
+			return
+		}
+	}
+	
+	func didTapNotification(forNotification notif: TempoNotification, cell: NotificationTableViewCell?, postHistoryVC: PostHistoryTableViewController?) {
+		
+		if let postID = notif.postId, notif.type == .Like, let vc = postHistoryVC {
+			var row: Int = 0
+			for p in vc.posts {
+				if p.postID == postID { break }
+				row += 1
+			}
+			vc.sectionIndex = vc.relativeIndexPath(row: row).section
+			self.show(vc, sender: nil)
+		} else if notif.type == .Follower, let user = notif.user {
+			let profileVC = ProfileViewController()
+			profileVC.title = "Profile"
+			profileVC.user = user
+			self.show(profileVC, sender: nil)
+		}
 	}
 }

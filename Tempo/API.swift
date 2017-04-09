@@ -30,8 +30,10 @@ private enum Router: URLConvertible {
 	case followings
 	case posts
 	case followSuggestions
-    case spotifyAccessToken
+	case spotifyAccessToken
+	case notificationsEnabled(String)
 	case notifications(String)
+	case notificationSeen(String)
 	case registerNotifications
 	
 	func asURL() throws -> URL {
@@ -79,9 +81,13 @@ private enum Router: URLConvertible {
 			case .followSuggestions:
 				return "/users/suggestions"
             case .spotifyAccessToken:
-                return "/spotify/get_access_token"
-			case .notifications(let userID):
+				return "/spotify/get_access_token"
+			case .notificationsEnabled(let userID):
 				return "/users/\(userID)/toggle_push"
+			case .notifications(let userID):
+				return "/notifications/\(userID)"
+			case .notificationSeen(let id):
+				return "/notifications/\(id)"
 			case .registerNotifications:
 				return "/register_user"
 			}
@@ -189,7 +195,7 @@ class API {
 			return true
 		}
 		
-		put(.notifications(userID), params: ["enabled" : enabled as AnyObject], map: map, completion: completion)
+		put(.notificationsEnabled(userID), params: ["enabled" : enabled as AnyObject], map: map, completion: completion)
 	}
 	
 	func setCurrentUser(_ fbid: String, fbAccessToken: String, completion: @escaping (Bool) -> Void) {
@@ -251,6 +257,22 @@ class API {
 	
 	func fetchFeed(_ userID: String, completion: @escaping ([Post]) -> Void) {
 		get(.feed(userID), params: ["session_code": sessionCode as AnyObject], map: postMapping, completion: completion)
+	}
+	
+	func fetchNotifications(_ userID: String, length: Int, page: Int, completion: @escaping ([TempoNotification]) -> Void) {
+		let map: ([String: AnyObject]) -> [TempoNotification] = {
+			guard let notifications = $0["notifications"] as? [AnyObject] else { return [] }
+			return notifications.map { TempoNotification(json: JSON($0)) }
+		}
+		get(.notifications(userID), params: ["p": page as AnyObject, "l": length as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: completion)
+	}
+	
+	func checkNotification(_ notificationID: String, completion: @escaping (Bool) -> Void) {
+		let map: ([String: AnyObject]) -> Bool = {
+			guard let seen = $0["success"] as? Bool else { return false }
+			return seen
+		}
+		put(.notificationSeen(notificationID), params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
 	}
 	
 	// Method used for testing purposes
