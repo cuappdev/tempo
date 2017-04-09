@@ -72,12 +72,12 @@ class NotificationTableViewCell: UITableViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	func setupCell(notification: TempoNotification, user: User) {
+	func setupCell(notification: TempoNotification) {
 		contentView.backgroundColor = .unreadCellColor
 		selectionStyle = .none
 		
 		self.notification = notification
-		self.user = user
+		self.user = notification.user
 		
 		avatarImage.hnk_setImageFromURL(user.imageURL)
 		

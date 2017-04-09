@@ -16,7 +16,6 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	let length = 20
 	var page = 0
 	var isLoadingMore = false
-	var users: [String: User] = [String: User]()
 	let postHistoryVC = PostHistoryTableViewController()
 	var tableView: UITableView!
 	let reuseIdentifier: String = "NotificationCell"
@@ -53,25 +52,13 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	
 	func fetchNotifications() {
 		API.sharedAPI.fetchNotifications(User.currentUser.id, length: length, page: page) { (notifs) in
-			print(notifs.count)
-			var count = 0
 			for notif in notifs {
-				if self.users[notif.id!] == nil {
-					self.notifications.append(notif)
-					API.sharedAPI.fetchUser(notif.userId!, completion: { (user) in
-						self.users[notif.id!] = user
-//						print("Appending \(notif.id!)")
-						count += 1
-						if count == notifs.count {
-							DispatchQueue.main.async {
-//								print("Reloading tableview")
-								self.tableView.reloadData()
-							}
-						}
-					})
-				}
+				self.notifications.append(notif)
 			}
 			self.isLoadingMore = false
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
 		}
 	}
 	
@@ -100,11 +87,9 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NotificationTableViewCell
 		
 		let notif = notifications[indexPath.row]
-		if let user = users[notif.id!] {
-			cell.setupCell(notification: notif, user: user)
-			cell.markAsSeen()
-			cell.delegate = self
-		}
+		cell.setupCell(notification: notif)
+//		cell.markAsSeen()
+		cell.delegate = self
 		
 		return cell
 	}

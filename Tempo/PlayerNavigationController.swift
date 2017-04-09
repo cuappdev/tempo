@@ -151,15 +151,11 @@ class PlayerNavigationController: UINavigationController, PostDelegate, Notifica
 			}
 			vc.sectionIndex = vc.relativeIndexPath(row: row).section
 			self.pushViewController(vc, animated: true)
-		} else if notif.type == .Follower {
+		} else if notif.type == .Follower, let user = notif.user {
 			let profileVC = ProfileViewController()
 			profileVC.title = "Profile"
-			if let userID = notif.userId {
-				API.sharedAPI.fetchUser(userID) {
-					profileVC.user = $0
-					self.pushViewController(profileVC, animated: true)
-				}
-			}
+			profileVC.user = user
+			self.pushViewController(profileVC, animated: true)
 		}
 	}
 }

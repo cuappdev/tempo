@@ -17,15 +17,15 @@ enum NotificationType {
 
 class TempoNotification: NSObject {
 	let id: String?
-	let userId: String?
+	let user: User?
 	let postId: String?
 	let message: String
 	let type: NotificationType
 	let seen: Bool?
 
-	init(id: String?, userId: String?, postId: String?, message: String, type: NotificationType, seen: Bool?) {
+	init(id: String?, user: User?, postId: String?, message: String, type: NotificationType, seen: Bool?) {
 		self.id = id
-		self.userId = userId
+		self.user = user
 		self.postId = postId
 		self.message = message
 		self.type = type
@@ -37,26 +37,19 @@ class TempoNotification: NSObject {
 	// Initialization for tempo activity notification
 	convenience init(json: JSON) {
 		let id = json["id"].stringValue
-		let userId = json["from"].stringValue
-		let postId = json["post_id"].stringValue
 		let message = json["message"].stringValue
-		let type: NotificationType
-		switch json["notification_type"].intValue {
-		case 1:
-			type = .Like
-		case 2:
-			type = .Follower
-		default:
-			type = .Like
-		}
 		let seen = (json["seen"].intValue) == 0 ? false : true
+		let user = User(json: json["data"]["from"])
+		let postId = json["data"]["post_id"].stringValue
+		print(json)
+		let type: NotificationType = json["data"]["type"].intValue == 1 ? .Like : .Follower
 		
-		self.init(id: id, userId: userId, postId: postId, message: message, type: type, seen: seen)
+		self.init(id: id, user: user, postId: postId, message: message, type: type, seen: seen)
 	}
 	
 	// Initialization for internet connectivity
 	convenience init(msg: String, type: NotificationType = .InternetConnectivity) {
-		self.init(id: nil, userId: nil, postId: nil, message: msg, type: type, seen: nil)
+		self.init(id: nil, user: nil, postId: nil, message: msg, type: type, seen: nil)
 	}
 	
 	override var description: String {
@@ -64,7 +57,7 @@ class TempoNotification: NSObject {
 	}
 	
 	var notificationDescription: String {
-		return "\(userId): \(message) for the post \(postId)"
+		return "\(user): \(message) for the post \(postId)"
 	}
 	
 }
