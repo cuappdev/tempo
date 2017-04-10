@@ -15,13 +15,17 @@ enum NotificationType {
 	case InternetConnectivity
 }
 
+protocol NotificationDelegate {
+	func didTapNotification(forNotification notif: TempoNotification, cell: NotificationTableViewCell?, postHistoryVC: PostHistoryTableViewController?)
+}
+
 class TempoNotification: NSObject {
 	let id: String?
 	let user: User?
 	let postId: String?
 	let message: String
 	let type: NotificationType
-	let seen: Bool?
+	var seen: Bool?
 
 	init(id: String?, user: User?, postId: String?, message: String, type: NotificationType, seen: Bool?) {
 		self.id = id
@@ -41,7 +45,6 @@ class TempoNotification: NSObject {
 		let seen = (json["seen"].intValue) == 0 ? false : true
 		let user = User(json: json["data"]["from"])
 		let postId = json["data"]["post_id"].stringValue
-		print(json)
 		let type: NotificationType = json["data"]["type"].intValue == 1 ? .Like : .Follower
 		
 		self.init(id: id, user: user, postId: postId, message: message, type: type, seen: seen)
@@ -57,7 +60,7 @@ class TempoNotification: NSObject {
 	}
 	
 	var notificationDescription: String {
-		return "\(user): \(message) for the post \(postId)"
+		return "\(user!.name): \(message) for the post \(postId!)"
 	}
 	
 }

@@ -23,6 +23,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 class ProfileViewController: UIViewController, UIViewControllerTransitioningDelegate, ProfileHeaderViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 	
 	let headerViewHeight: CGFloat = 320
+	let postHistoryVC = PostHistoryTableViewController()
 	
     var user: User!
 	
@@ -287,7 +288,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		let date = dateForIndexPath(indexPath)
 		
 		// Push to TableView with posted songs and dates
-		let postHistoryVC = PostHistoryTableViewController()
 		postHistoryVC.posts = posts
 		postHistoryVC.postedDates = postedDates
 		postHistoryVC.filterPostedDatesToSections(postedDates)

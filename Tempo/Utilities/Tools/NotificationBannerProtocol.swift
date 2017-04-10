@@ -17,10 +17,6 @@ private struct BannerProperties {
 
 private let originY: CGFloat = -BannerProperties.height
 
-protocol NotificationDelegate {
-	func didTapNotification(forNotification notif: TempoNotification, cell: NotificationTableViewCell?, postHistoryVC: PostHistoryTableViewController?)
-}
-
 // MARK: - Banner View -
 class BannerView: UIView {
 	

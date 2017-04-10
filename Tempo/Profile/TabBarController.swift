@@ -1,7 +1,7 @@
 
 import UIKit
 
-class TabBarController: UIViewController {
+class TabBarController: UIViewController, NotificationDelegate {
 	
 	static let sharedInstance = TabBarController()
     
@@ -181,4 +181,57 @@ class TabBarController: UIViewController {
         
         tabBarIsHidden = true
     }
+	
+	// MARK: - Notification Delegate
+	
+	func showNotificationBanner(_ userInfo: [AnyHashable : Any]) {
+		let info = (userInfo[AnyHashable("custom")] as! NSDictionary).value(forKey: "a") as! NSDictionary
+		
+		if info.value(forKey: "notification_type") as! Int == 1 {
+			// Liked song notification
+			Banner.showBanner(
+				self,
+				delay: 0.5,
+				data: TempoNotification(msg: info.value(forKey: "message") as! String, type: .Like),
+				backgroundColor: .white,
+				textColor: .black,
+				delegate: self)
+		} else if info.value(forKey: "notification_type") as! Int == 2 {
+			// New user follower
+			Banner.showBanner(
+				self,
+				delay: 0.5,
+				data: TempoNotification(msg: info.value(forKey: "message") as! String, type: .Follower),
+				backgroundColor: .white,
+				textColor: .black,
+				delegate: self)
+		} else {
+			// Generic notification - do nothing
+			return
+		}
+	}
+	
+	func didTapNotification(forNotification notif: TempoNotification, cell: NotificationTableViewCell?, postHistoryVC: PostHistoryTableViewController?) {
+		print("Tapped notification")
+		if notif.type == .Like, let postID = notif.postId {
+			if let vc = postHistoryVC {
+				var row: Int = 0
+				for p in vc.posts {
+					if p.postID == postID { break }
+					row += 1
+				}
+				vc.sectionIndex = vc.relativeIndexPath(row: row).section
+				self.present(vc, animated: true)
+			} else {
+				print("Needs to be implemented -- access global profile history VC?")
+			}
+		} else if notif.type == .Follower, let user = notif.user {
+			let profileVC = ProfileViewController()
+			profileVC.title = "Profile"
+			profileVC.user = user
+			self.present(profileVC, animated: true)
+		}
+		
+		
+	}
 }

@@ -10,7 +10,7 @@ import UIKit
 
 let notificationCellHeight: CGFloat = 60
 
-class NotificationCenterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate {
+class NotificationCenterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate, NotificationDelegate {
 	
 	var notifications: [TempoNotification] = []
 	let length = 20
@@ -19,14 +19,12 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	let postHistoryVC = PostHistoryTableViewController()
 	var tableView: UITableView!
 	let reuseIdentifier: String = "NotificationCell"
-	var firstLoad: Bool = true
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
 
         title = "Notifications"
 		view.backgroundColor = .readCellColor
-		firstLoad = true
 		
 		initializeTableView()
 		fetchPostHistory()
@@ -73,7 +71,7 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		}
 	}
 	
-	// MARK: - Table View Delegate Methods
+	// MARK: - Table View Delegate
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
@@ -83,7 +81,6 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-			
 		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NotificationTableViewCell
 		
 		let notif = notifications[indexPath.row]
@@ -97,7 +94,7 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let cell = tableView.cellForRow(at: indexPath) as! NotificationTableViewCell
 		
-		PlayerCenter.sharedInstance.didTapNotification(forNotification: cell.notification, cell: cell, postHistoryVC: postHistoryVC)
+		didTapNotification(forNotification: cell.notification, cell: cell, postHistoryVC: postHistoryVC)
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -107,20 +104,38 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		let contentOffset = scrollView.contentOffset.y
 		let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-		if !isLoadingMore && (maximumOffset - contentOffset <= CGFloat(0)) {
-//			print("scrolling")
+		if !isLoadingMore && (maximumOffset - contentOffset <= CGFloat(0) && notifications.count < 60) {
 			self.isLoadingMore = true
 			page += 1
 			fetchNotifications()
 		}
 	}
 	
-	// MARK: - Delegate
+	// MARK: - Notification Cell Delegate
 	func didTapUserImageForNotification(_ user: User) {
 		let profileVC = ProfileViewController()
 		profileVC.title = "Profile"
 		profileVC.user = user
 		navigationController?.pushViewController(profileVC, animated: true)
+	}
+	
+	// MARK: - Notification Delegate
+	func didTapNotification(forNotification notif: TempoNotification, cell: NotificationTableViewCell?, postHistoryVC: PostHistoryTableViewController?) {
+		if let postID = notif.postId, notif.type == .Like, let vc = postHistoryVC {
+			var row: Int = 0
+			for p in vc.posts {
+				if p.postID == postID { break }
+				row += 1
+			}
+			vc.sectionIndex = vc.relativeIndexPath(row: row).section
+			navigationController?.pushViewController(vc, animated: true)
+		} else if notif.type == .Follower, let user = notif.user {
+			didTapUserImageForNotification(user)
+		}
+		
+		if let cell = cell {
+			cell.markAsSeen()
+		}
 	}
 	
 }

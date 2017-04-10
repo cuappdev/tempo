@@ -22,11 +22,15 @@ class NotificationTableViewCell: UITableViewCell {
 	var messageLabel = UILabel()
 	var descriptionLabel = UILabel()
 	var timeLabel = UILabel()
+	var seenView = UIView()
 //	var acceptButton = UIButton()
 	var customSeparator = UIView()
+	var seen = false
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		
+		let width = UIScreen.main.bounds.width
 		
 		avatarImage.frame = CGRect(x: 10, y: 10, width: notificationCellHeight - 20, height: notificationCellHeight - 20)
 		avatarImage.layer.cornerRadius = avatarImage.bounds.size.width / 2
@@ -37,19 +41,19 @@ class NotificationTableViewCell: UITableViewCell {
 		avatarImage.addGestureRecognizer(tapGestureRecognizer)
 		
 		let x = avatarImage.frame.maxX + 10
-		messageLabel.frame = CGRect(x: x, y: 8, width: UIScreen.main.bounds.width - (x+10), height: notificationCellHeight/2 - 8)
+		messageLabel.frame = CGRect(x: x, y: 8, width: width - (x+10), height: notificationCellHeight/2 - 8)
 		messageLabel.backgroundColor = .clear
 		messageLabel.textColor = .white
 		messageLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
 		contentView.addSubview(messageLabel)
 		
-		descriptionLabel.frame = CGRect(x: x, y: notificationCellHeight/2, width: UIScreen.main.bounds.width - (x+50), height: notificationCellHeight/2 - 8)
+		descriptionLabel.frame = CGRect(x: x, y: notificationCellHeight/2, width: width - (x+50), height: notificationCellHeight/2 - 8)
 		descriptionLabel.backgroundColor = .clear
 		descriptionLabel.textColor = .cellOffWhite
 		descriptionLabel.font = UIFont(name: "AvenirNext-Medium", size: 13)
 		contentView.addSubview(descriptionLabel)
 		
-		timeLabel.frame = CGRect(x: UIScreen.main.bounds.width - 40, y: 10, width: 30, height: notificationCellHeight - 20)
+		timeLabel.frame = CGRect(x: width - 40, y: 10, width: 20, height: notificationCellHeight - 20)
 		timeLabel.backgroundColor = .clear
 		timeLabel.textColor = .cellOffWhite
 		timeLabel.font = UIFont(name: "AvenirNext-Medium", size: 14)
@@ -62,6 +66,11 @@ class NotificationTableViewCell: UITableViewCell {
 //		acceptButton.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 14)
 //		acceptButton.isHidden = true
 //		contentView.addSubview(acceptButton)
+		
+		seenView.frame = CGRect(x: width - 18, y: notificationCellHeight/2 - 5, width: 10, height: 10)
+		seenView.layer.cornerRadius = 5
+		seenView.backgroundColor = .clear
+		contentView.addSubview(seenView)
 		
 		customSeparator.frame = CGRect(x: 0, y: notificationCellHeight-1, width: UIScreen.main.bounds.width, height: 1)
 		customSeparator.backgroundColor = .readCellColor
@@ -78,6 +87,7 @@ class NotificationTableViewCell: UITableViewCell {
 		
 		self.notification = notification
 		self.user = notification.user
+		self.seen = notification.seen!
 		
 		avatarImage.hnk_setImageFromURL(user.imageURL)
 		
@@ -92,16 +102,21 @@ class NotificationTableViewCell: UITableViewCell {
 			descriptionLabel.text = user.name
 			timeLabel.text = "2h"
 		}
-		timeLabel.textColor = notification.seen! ? .cellOffWhite : .yellow
+		updateCell()
 	}
 
 	func markAsSeen() {
-		if !notification.seen! {
-			print("not seen")
+		if !seen {
 			API.sharedAPI.checkNotification(notification.id!) {
-				self.timeLabel.textColor = $0 ? .cellOffWhite : .yellow
+				self.notification.seen = $0
+				self.seen = $0
+				self.updateCell()
 			}
 		}
+	}
+	
+	func updateCell() {
+		seenView.backgroundColor = seen ? .clear : .notificationYellow
 	}
 	
 	func didTapAvatarImage(_ : UITapGestureRecognizer) {

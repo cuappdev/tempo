@@ -93,6 +93,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		setupTabBar()
 		
+		// Check if launched via push notification
+		if let options = launchOptions {
+			print(options)
+			if options.description.lowercased().contains("liked a song") {
+				let postHistoryVC = profileVC.postHistoryVC
+				postHistoryVC.posts = profileVC.posts
+				postHistoryVC.postedDates = profileVC.postedDates
+				postHistoryVC.filterPostedDatesToSections(profileVC.postedDates)
+				postHistoryVC.songLikes = profileVC.postedLikes
+				tabBarVC.present(postHistoryVC, animated: false)
+			} else if options.description.lowercased().contains("following") {
+				
+			}
+		}
+		
 		// Prepare to play audio
 		_ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
 		
@@ -222,7 +237,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	
 	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
 		print("RECIEVED PUSH NOTIFICATION")
-		print(userInfo)
+		switch application.applicationState {
+		case .active:
+			tabBarVC.showNotificationBanner(userInfo)
+		default:
+			return
+		}
+		
 	}
 
 }
