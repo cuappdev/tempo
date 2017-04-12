@@ -32,8 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	let profileVC = ProfileViewController()
 	let likedVC = LikedTableViewController()
 	let notifVC = NotificationCenterViewController()
-//	let settingsVC = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
-//	let aboutVC = AboutViewController()
 	
 	let playerCenter = PlayerCenter.sharedInstance
 	
@@ -91,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			FacebookLoginViewController.retrieveCurrentFacebookUserWithAccessToken(token: facebookLoginToken, completion: nil)
 		}
 		
-		setupTabBar()
+		toggleRootVC()
 		
 		// Check if launched via push notification
 		if let options = launchOptions {
@@ -118,50 +116,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		if !UserDefaults.standard.bool(forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey) {
 			registerForRemotePushNotifications()
 		}
-		setupTabBar()
+		toggleRootVC()
 	}
 	
-	func setupTabBar() {
-		tabBarVC.transparentTabBarEnabled = true
-		tabBarVC.numberOfTabs = 5
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarFeed"), forTabAtIndex: 0)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarFeed"), forTabAtIndex: 0)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarSearch"), forTabAtIndex: 1)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarSearch"), forTabAtIndex: 1)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarNotifications"), forTabAtIndex: 3)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarNotifications"), forTabAtIndex: 3)
-		tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarProfile"), forTabAtIndex: 4)
-		tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarProfile"), forTabAtIndex: 4)
-		
-		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
-			self.tabBarVC.present(self.feedNavigationController, animated: false, completion: nil)
-		}, forTabAtIndex: 0)
-		
-		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
-			self.tabBarVC.present(self.usersNavigationController, animated: false, completion: nil)
-		}, forTabAtIndex: 1)
-		
-		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
-			self.tabBarVC.present(self.searchNavigationController, animated: false, completion: nil)
-		}, forTabAtIndex: 2)
-		
-		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
-			self.tabBarVC.present(self.notificationNavigationController, animated: false, completion: nil)
-		}, forTabAtIndex: 3)
-		
-		tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
-			self.tabBarVC.present(self.profileNavigationController, animated: false, completion: nil)
-		}, forTabAtIndex: 4)
-		
-		tabBarVC.addAccessoryViewController(accessoryViewController: playerCenter)
-		
-		window = UIWindow(frame: UIScreen.main.bounds)
-		window!.backgroundColor = UIColor.tempoLightGray
-		window!.makeKeyAndVisible()
-		window?.tintColor = .tempoRed
-		window?.rootViewController = tabBarVC
+	func toggleRootVC() {
+		launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+		if FBSDKAccessToken.current() == nil {
+			loginFlowViewController = LoginFlowViewController()
+			loginFlowViewController?.delegate = self
+			window?.rootViewController = loginFlowViewController
+		} else {
+			tabBarVC.transparentTabBarEnabled = true
+			tabBarVC.numberOfTabs = 5
+			tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarFeed"), forTabAtIndex: 0)
+			tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarFeed"), forTabAtIndex: 0)
+			tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarSearch"), forTabAtIndex: 1)
+			tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarSearch"), forTabAtIndex: 1)
+			tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
+			tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
+			tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarNotifications"), forTabAtIndex: 3)
+			tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarNotifications"), forTabAtIndex: 3)
+			tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarProfile"), forTabAtIndex: 4)
+			tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarProfile"), forTabAtIndex: 4)
+			
+			tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+				self.tabBarVC.present(self.feedNavigationController, animated: false, completion: nil)
+			}, forTabAtIndex: 0)
+			
+			tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+				self.tabBarVC.present(self.usersNavigationController, animated: false, completion: nil)
+			}, forTabAtIndex: 1)
+			
+			tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+				self.tabBarVC.present(self.searchNavigationController, animated: false, completion: nil)
+			}, forTabAtIndex: 2)
+			
+			tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+				self.tabBarVC.present(self.notificationNavigationController, animated: false, completion: nil)
+			}, forTabAtIndex: 3)
+			
+			tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+				self.tabBarVC.present(self.profileNavigationController, animated: false, completion: nil)
+			}, forTabAtIndex: 4)
+			
+			tabBarVC.addAccessoryViewController(accessoryViewController: playerCenter)
+			tabBarVC.programmaticallyPressTabBarButton(atIndex: 0)
+			
+			window = UIWindow(frame: UIScreen.main.bounds)
+			window!.backgroundColor = UIColor.tempoLightGray
+			window!.makeKeyAndVisible()
+			window?.tintColor = .tempoRed
+			window?.rootViewController = tabBarVC
+		}
 	}
 		
 	func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {

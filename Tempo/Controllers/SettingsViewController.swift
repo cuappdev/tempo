@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import FBSDKShareKit
 
 class SettingsViewController: UIViewController {
+	
+	static let sharedInstance = SettingsViewController()
 	
 	let buttonHeight: CGFloat = 50
 	var playerCenter = PlayerCenter.sharedInstance
@@ -39,6 +42,11 @@ class SettingsViewController: UIViewController {
 		
 		updateSpotifyState()
 		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
+		
+		let logoutItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logOutUser))
+		let aboutItem = UIBarButtonItem(image: UIImage(named: "AboutSidebarIcon"), style: .plain, target: self, action: #selector(navigateToAbout))
+		navigationItem.rightBarButtonItem = logoutItem
+//		navigationItem.leftBarButtonItem = aboutItem
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -164,5 +172,17 @@ class SettingsViewController: UIViewController {
 		SpotifyController.sharedController.closeCurrentSpotifySession()
 		User.currentUser.currentSpotifyUser = nil
 		updateSpotifyState()
+	}
+	
+	func logOutUser() {
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		PlayerCenter.sharedInstance.resetPlayerCells()
+		FBSDKAccessToken.setCurrent(nil)
+		appDelegate.toggleRootVC()
+		appDelegate.feedVC.refreshNeeded = true
+	}
+	
+	func navigateToAbout() {
+		navigationController?.pushViewController(AboutViewController.sharedInstance, animated: true)
 	}
 }

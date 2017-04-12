@@ -50,6 +50,8 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		if user == nil {
 			user = User.currentUser
+			let settingsItem = UIBarButtonItem(image: UIImage(named: "SettingsSidebarIcon"), style: .plain, target: self, action: #selector(navigateToSettings))
+			navigationItem.rightBarButtonItem = settingsItem
 		}
 		
 		view.backgroundColor = .profileBackgroundBlack
@@ -248,6 +250,10 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		let errorAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 		errorAlert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
 		present(errorAlert, animated: true, completion: nil)
+	}
+	
+	func navigateToSettings() {
+		navigationController?.pushViewController(SettingsViewController.sharedInstance, animated: true)
 	}
 	
 

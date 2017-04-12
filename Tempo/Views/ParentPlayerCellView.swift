@@ -67,7 +67,9 @@ class ParentPlayerCellView: UIView {
 				}
 			}
 		} else {
-			// TODO: Bring them to settingsVC
+			TabBarController.sharedInstance.programmaticallyPressTabBarButton(atIndex: 4)
+			let appDelegate = UIApplication.shared.delegate as! AppDelegate
+			appDelegate.profileVC.navigateToSettings()
 		}
 	}
 	
