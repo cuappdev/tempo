@@ -86,7 +86,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 		
 		if let facebookLoginToken = FBSDKAccessToken.current()?.tokenString {
-			FacebookLoginViewController.retrieveCurrentFacebookUserWithAccessToken(token: facebookLoginToken, completion: nil)
+			FacebookLoginViewController.retrieveCurrentFacebookUserWithAccessToken(token: facebookLoginToken, completion: { _ in
+				self.profileVC.user = User.currentUser
+				self.profileVC.setupUserUI()
+			})
 		}
 		
 		toggleRootVC()

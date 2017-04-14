@@ -45,6 +45,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		super.viewWillAppear(animated)
 		preparePosts()
 		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
+		tableView.reloadData()
 	}
 	
     override func viewDidAppear(_ animated: Bool) {
