@@ -68,6 +68,9 @@ class SpotifyController {
 				let spotifyLoginURL = SPTAuth.defaultInstance().loginURL
 				self.authViewController = SFSafariViewController(url: spotifyLoginURL!)
 				
+//				vc.present(self.authViewController!, animated: true, completion: {
+//					API.sharedAPI.postSpotifyAccessToken(accessToken: SPTAuth.defaultInstance().session.accessToken)
+//				})
 				vc.present(self.authViewController!, animated: true, completion: nil)
 			}
 		}

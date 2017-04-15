@@ -30,7 +30,8 @@ private enum Router: URLConvertible {
 	case followings
 	case posts
 	case followSuggestions
-	case spotifyAccessToken
+	case getSpotifyAccessToken
+	case postSpotifyAccessToken
 	case notificationsEnabled(String)
 	case notifications(String)
 	case notificationSeen(String)
@@ -80,8 +81,10 @@ private enum Router: URLConvertible {
 				return "/posts"
 			case .followSuggestions:
 				return "/users/suggestions"
-            case .spotifyAccessToken:
+            case .getSpotifyAccessToken:
 				return "/spotify/get_access_token"
+			case .postSpotifyAccessToken:
+				return "/spotify/get_hash"
 			case .notificationsEnabled(let userID):
 				return "/users/\(userID)/toggle_push"
 			case .notifications(let userID):
@@ -330,8 +333,13 @@ class API {
                 return (false, url, expiresAt)
             }
         }
-        get(.spotifyAccessToken, params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
+        get(.getSpotifyAccessToken, params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
     }
+	
+	func postSpotifyAccessToken(accessToken: String, completion: (() -> Void)? = nil) {
+		print("hitting get hash")
+		get(.postSpotifyAccessToken, params: ["code": accessToken as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 }, completion: completion)
+	}
 	
 	// MARK: - Private Methods
 	

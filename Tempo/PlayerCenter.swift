@@ -143,6 +143,14 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 		return postView
 	}
 	
+	func getPostsRef() -> [Post]? {
+		return postsRef
+	}
+	
+	func getPostRefIndex() -> Int? {
+		return postRefIndex
+	}
+	
 	func setPostView(newPostView: PostView) {
 		postView = newPostView
 	}

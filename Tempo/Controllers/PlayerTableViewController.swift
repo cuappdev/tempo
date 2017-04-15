@@ -169,7 +169,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				MPMediaItemPropertyPlaybackDuration: post.player.duration,
 				MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
 				MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying ? post.player.rate : 0,
-				MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
+				MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath?.row ?? 0,
 				MPNowPlayingInfoPropertyPlaybackQueueCount: count ]
 		} else {
 			UIApplication.shared.endReceivingRemoteControlEvents()
