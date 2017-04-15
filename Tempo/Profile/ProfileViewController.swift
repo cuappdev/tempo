@@ -253,7 +253,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	}
 	
 	func navigateToSettings() {
-		navigationController?.pushViewController(SettingsViewController.sharedInstance, animated: true)
+		navigationController?.pushViewController(SettingsScrollViewController.sharedInstance, animated: true)
 	}
 	
 

@@ -181,7 +181,7 @@ class API {
 		let map: ([String: AnyObject]) -> Bool? = {
 			guard let success = $0["success"] as? String, success == "User successfully registered." else { return false }
 			User.currentUser.remotePushNotificationsEnabled = true
-			UserDefaults.standard.set(true, forKey: SettingsViewController.registeredForRemotePushNotificationsKey)
+			UserDefaults.standard.set(true, forKey: SettingsScrollViewController.registeredForRemotePushNotificationsKey)
 			return true
 		}
 		

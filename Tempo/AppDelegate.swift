@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func didFinishLoggingIn() {
-		if !UserDefaults.standard.bool(forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey) {
+		if !UserDefaults.standard.bool(forKey: SettingsScrollViewController.presentedAlertForRemotePushNotificationsKey) {
 			registerForRemotePushNotifications()
 		}
 		toggleRootVC()
@@ -225,7 +225,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	static let remotePushNotificationsDeviceTokenKey = "AppDelegate.remotePushNotificationsDeviceTokenKey"
 	
 	func registerForRemotePushNotifications() {
-		UserDefaults.standard.set(true, forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey)
+		UserDefaults.standard.set(true, forKey: SettingsScrollViewController.presentedAlertForRemotePushNotificationsKey)
 		DispatchQueue.main.async {
 			let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
 			UIApplication.shared.registerUserNotificationSettings(settings)

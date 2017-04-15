@@ -63,6 +63,7 @@
 		957E28461DDD1ED2009601CB /* NotificationBannerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957E28451DDD1ED2009601CB /* NotificationBannerProtocol.swift */; };
 		95D1E77E1CE20BED00E1EF0F /* HamburgerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1E77D1CE20BED00E1EF0F /* HamburgerIconView.swift */; };
 		BA24C57D1AF866630066C2ED /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA24C57C1AF866630066C2ED /* SearchPostView.swift */; };
+		C70F5DF91EA2A2390092D154 /* SettingsScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70F5DF81EA2A2390092D154 /* SettingsScrollViewController.swift */; };
 		C7B1984E1DD67D6800EAB8EA /* SpotifyLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B1984D1DD67D6800EAB8EA /* SpotifyLoginViewController.swift */; };
 		C7EEF4C51E5E4EDF00C6EF94 /* FeedPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEF4C41E5E4EDF00C6EF94 /* FeedPostView.swift */; };
 		D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */; };
@@ -165,6 +166,7 @@
 		BA24C57C1AF866630066C2ED /* SearchPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPostView.swift; sourceTree = "<group>"; };
 		BA257E271ABA3FE200D939B0 /* Tempo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tempo-Bridging-Header.h"; sourceTree = "<group>"; };
 		C0CF7B971AE425450083606C /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		C70F5DF81EA2A2390092D154 /* SettingsScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsScrollViewController.swift; sourceTree = "<group>"; };
 		C7B1984D1DD67D6800EAB8EA /* SpotifyLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewController.swift; sourceTree = "<group>"; };
 		C7EEF4C41E5E4EDF00C6EF94 /* FeedPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedPostView.swift; sourceTree = "<group>"; };
 		D102A9CF1AE88CB400C66385 /* SideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideBarTableViewCell.swift; path = ../Profile/SideBarTableViewCell.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				FAB564711AF6A8C9001059DF /* LikedTableViewController.swift */,
 				027E4BB71E9AE34300EB568A /* NotificationCenterViewController.swift */,
 				60C018041D9C7A2E00FE5166 /* AboutViewController.swift */,
+				C70F5DF81EA2A2390092D154 /* SettingsScrollViewController.swift */,
 				6054DC151E762A1600ACEFEA /* TabBar */,
 				952E7EDE1DEA8957006C6131 /* XIBS */,
 			);
@@ -557,7 +560,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		78630E2F06DFC643EE8D7CCC /* [CP] Copy Pods Resources */ = {
@@ -641,6 +644,7 @@
 				FA674C071AF9105E00C14463 /* ADRefreshControl.swift in Sources */,
 				C7EEF4C51E5E4EDF00C6EF94 /* FeedPostView.swift in Sources */,
 				D19E42121DF6262000D09F18 /* ProfileHeaderView.swift in Sources */,
+				C70F5DF91EA2A2390092D154 /* SettingsScrollViewController.swift in Sources */,
 				6DA5FE4D1AED72F800E795DD /* UIColor+Shared.swift in Sources */,
 				D148F4981AF031DB009AB073 /* NSDateExtension.swift in Sources */,
 				6038B17E1D80ED250083940D /* FeedTableViewCell.swift in Sources */,
