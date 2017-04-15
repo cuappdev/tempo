@@ -48,7 +48,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		if user == nil {
+		if user == nil || user == User.currentUser {
 			user = User.currentUser
 			let settingsItem = UIBarButtonItem(image: UIImage(named: "SettingsSidebarIcon"), style: .plain, target: self, action: #selector(navigateToSettings))
 			navigationItem.rightBarButtonItem = settingsItem
@@ -113,54 +113,56 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	// MARK: - UI Setup and Update Methods
 
 	func setupUserUI() {
-		API.sharedAPI.fetchPosts(user.id) { post in
-			self.posts = post
-			self.postedDates = post.map { $0.date! }
-			self.postedDays = self.postedDates.map { $0.day() }
-			self.postedYearMonthDay = self.postedDates.map { $0.yearMonthDay() }
-			self.postedLikes = post.map{ $0.likes }
+		if let _ = user {
+			API.sharedAPI.fetchPosts(user.id) { post in
+				self.posts = post
+				self.postedDates = post.map { $0.date! }
+				self.postedDays = self.postedDates.map { $0.day() }
+				self.postedYearMonthDay = self.postedDates.map { $0.yearMonthDay() }
+				self.postedLikes = post.map{ $0.likes }
 
-			self.calendarCollectionView.reloadData()
-			DispatchQueue.main.async {
-				self.calendarCollectionView.frame = CGRect(x: self.calendarCollectionView.frame.origin.x,
-				                                           y: self.calendarCollectionView.frame.origin.y,
-				                                           width: self.calendarCollectionView.frame.width,
-				                                           height: self.calendarCollectionView.contentSize.height)
-				self.scrollView.contentSize = CGSize(width: self.view.frame.width,
-				                                     height: self.calendarCollectionView.frame.height + self.profileHeaderView.frame.height)
-				self.calendarCollectionViewDivider.frame = CGRect(x: self.view.frame.width/11,
-				                                                  y: self.calendarCollectionView.frame.origin.y,
-				                                                  width: 1,
-				                                                  height: self.scrollView.contentSize.height * 2)
+				self.calendarCollectionView.reloadData()
+				DispatchQueue.main.async {
+					self.calendarCollectionView.frame = CGRect(x: self.calendarCollectionView.frame.origin.x,
+															   y: self.calendarCollectionView.frame.origin.y,
+															   width: self.calendarCollectionView.frame.width,
+															   height: self.calendarCollectionView.contentSize.height)
+					self.scrollView.contentSize = CGSize(width: self.view.frame.width,
+														 height: self.calendarCollectionView.frame.height + self.profileHeaderView.frame.height)
+					self.calendarCollectionViewDivider.frame = CGRect(x: self.view.frame.width/11,
+																	  y: self.calendarCollectionView.frame.origin.y,
+																	  width: 1,
+																	  height: self.scrollView.contentSize.height * 2)
+				}
+				
+				for likes in self.postedLikes {
+					self.avgLikes += Float(likes)
+				}
+				self.avgLikes /= Float(self.postedLikes.count)
+				
+				self.activityIndicatorView.stopAnimating()
+				self.activityIndicatorView.removeFromSuperview()
 			}
 			
-			for likes in self.postedLikes {
-				self.avgLikes += Float(likes)
-			}
-			self.avgLikes /= Float(self.postedLikes.count)
+			profileHeaderView.nameLabel.text = "\(user.firstName) \(user.shortenLastName())"
+			profileHeaderView.usernameButton.setTitle("@\(user.username)", for: .normal)
 			
-			self.activityIndicatorView.stopAnimating()
-			self.activityIndicatorView.removeFromSuperview()
-		}
-		
-		profileHeaderView.nameLabel.text = "\(user.firstName) \(user.shortenLastName())"
-		profileHeaderView.usernameButton.setTitle("@\(user.username)", for: .normal)
-		
-		profileHeaderView.profileImageView.hnk_setImageFromURL(user.imageURL)
-		profileHeaderView.profileBackgroundImageView.hnk_setImageFromURL(user.imageURL)
+			profileHeaderView.profileImageView.hnk_setImageFromURL(user.imageURL)
+			profileHeaderView.profileBackgroundImageView.hnk_setImageFromURL(user.imageURL)
 
-		if User.currentUser.username == user.username {
-			title = "My Profile"
-			profileHeaderView.profileButton.setTitle("EDIT", for: .normal)
-			profileHeaderView.profileButton.addTarget(self, action: #selector(userHandleButtonClicked(sender:)), for: .touchUpInside)
-		} else {
-			title = "Profile"
-			profileHeaderView.profileButton.addTarget(self, action: #selector(profileButtonPressed(sender:)), for: .touchUpInside)
-		}
-		
-		API.sharedAPI.fetchUser(user.id) {
-			self.user = $0
-			self.updateProfileInfoUI()
+			if User.currentUser.username == user.username {
+				title = "My Profile"
+				profileHeaderView.profileButton.setTitle("EDIT", for: .normal)
+				profileHeaderView.profileButton.addTarget(self, action: #selector(userHandleButtonClicked(sender:)), for: .touchUpInside)
+			} else {
+				title = "Profile"
+				profileHeaderView.profileButton.addTarget(self, action: #selector(profileButtonPressed(sender:)), for: .touchUpInside)
+			}
+			
+			API.sharedAPI.fetchUser(user.id) {
+				self.user = $0
+				self.updateProfileInfoUI()
+			}
 		}
 	}
 	
