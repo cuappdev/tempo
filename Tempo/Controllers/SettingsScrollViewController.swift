@@ -67,10 +67,13 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		setupSettingsView()
 		
 		//FIX THIS !!! ALSO TEXT GETTING CUT OFF !!!
-		profilePicture.layer.cornerRadius = profilePicture.frame.width / 2.0
 		
 		updateSpotifyState()
+		
 		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
+		profilePicture.layer.masksToBounds = false
+		profilePicture.layer.cornerRadius = profilePicture.frame.height/2
+		profilePicture.clipsToBounds = true
 		
 		scrollView.contentSize = CGSize(width: screenWidth, height: 480 + tabBarHeight + miniPlayerHeight + 50)
 	}
@@ -119,6 +122,7 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		nameLabel.font = UIFont(name: "AvenirNext-Medium", size: 16.0)
 		nameLabel.textColor = .offWhite
 		nameLabel.textAlignment = .left
+		nameLabel.isHidden = true
 		spotifyDescriptionView.addSubview(nameLabel)
 		
 		usernameLabel = UILabel(frame: CGRect(x: 86, y:  47, width: 200, height: 20))
@@ -126,10 +130,11 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		usernameLabel.font = settingsFont
 		usernameLabel.textColor = .sectionTitleGrey
 		usernameLabel.textAlignment = .left
+		usernameLabel.isHidden = true
 		spotifyDescriptionView.addSubview(usernameLabel)
 		
 		initialsLabel = UILabel(frame: CGRect(x: 22, y:  37, width: 48, height: 21))
-		initialsLabel.text = "KS"
+		initialsLabel.text = ""
 		initialsLabel.font = UIFont(name: "AvenirNext-Medium", size: 18.0)
 		initialsLabel.textColor = .sectionTitleGrey
 		initialsLabel.textAlignment = .center

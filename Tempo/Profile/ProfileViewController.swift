@@ -108,6 +108,8 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		profileHeaderView.nameLabel.isHidden = notConnected(true)
 		profileHeaderView.usernameButton.isHidden = notConnected(false)
+		
+		navigationItem.rightBarButtonItem?.isEnabled = true
 	}
 	
 	// MARK: - UI Setup and Update Methods
@@ -254,10 +256,12 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		present(errorAlert, animated: true, completion: nil)
 	}
 	
+	//TO DO: PREVENT MULTIPLE CLICKS !!!
 	func navigateToSettings() {
+		print("go to settings!!")
+		navigationItem.rightBarButtonItem?.isEnabled = false
 		navigationController?.pushViewController(SettingsScrollViewController.sharedInstance, animated: true)
 	}
-	
 
 	/* <------------------------POST HISTORY------------------------> */
 	
