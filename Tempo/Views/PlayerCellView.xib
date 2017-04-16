@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -59,22 +59,6 @@
                     <color key="textColor" red="0.73725490196078436" green="0.68235294117647061" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWp-AK-Ue9">
-                    <rect key="frame" x="299" y="28.5" width="20" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="0RO-NQ-Nlv"/>
-                        <constraint firstAttribute="width" constant="20" id="eTh-nF-ZGb"/>
-                        <constraint firstAttribute="width" secondItem="GWp-AK-Ue9" secondAttribute="height" id="sKs-tN-us9"/>
-                    </constraints>
-                    <state key="normal" backgroundImage="AddButton">
-                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </state>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="0RO-NQ-Nlv"/>
-                        </mask>
-                    </variation>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjX-LE-GtK">
                     <rect key="frame" x="341" y="29.5" width="20" height="18"/>
                     <constraints>
@@ -91,13 +75,29 @@
                         </mask>
                     </variation>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWp-AK-Ue9">
+                    <rect key="frame" x="272" y="25" width="61" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="0RO-NQ-Nlv"/>
+                        <constraint firstAttribute="width" constant="61" id="eTh-nF-ZGb"/>
+                        <constraint firstAttribute="width" secondItem="GWp-AK-Ue9" secondAttribute="height" constant="35" id="sKs-tN-us9"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="AddButton">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="0RO-NQ-Nlv"/>
+                        </mask>
+                    </variation>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.062745098039215685" green="0.066666666666666666" blue="0.070588235294117646" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="zUX-yd-f29" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9jx-QV-BuG"/>
                 <constraint firstItem="zUX-yd-f29" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9xw-TX-kuQ"/>
                 <constraint firstItem="Lp7-uq-5Ae" firstAttribute="leading" secondItem="Il3-Sc-TqX" secondAttribute="trailing" constant="16" id="HYp-Ik-l78"/>
-                <constraint firstItem="tjX-LE-GtK" firstAttribute="leading" secondItem="GWp-AK-Ue9" secondAttribute="trailing" constant="22" id="KkH-7W-zUn"/>
+                <constraint firstItem="tjX-LE-GtK" firstAttribute="leading" secondItem="GWp-AK-Ue9" secondAttribute="trailing" constant="8" id="KkH-7W-zUn"/>
                 <constraint firstItem="Il3-Sc-TqX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Lbk-RS-oTe"/>
                 <constraint firstItem="Il3-Sc-TqX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="2" id="Mfu-V0-KQ3"/>
                 <constraint firstAttribute="trailing" secondItem="tjX-LE-GtK" secondAttribute="trailing" constant="19" id="P7v-wm-lKk"/>
@@ -124,7 +124,7 @@
         </view>
     </objects>
     <resources>
-        <image name="AddButton" width="42" height="41"/>
+        <image name="AddButton" width="91" height="36"/>
         <image name="LikeButton" width="42" height="38"/>
         <image name="PlayButton" width="70" height="70"/>
     </resources>

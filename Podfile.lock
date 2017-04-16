@@ -13,7 +13,7 @@ PODS:
   - FBSDKShareKit (4.21.0):
     - FBSDKCoreKit
   - HanekeSwift (0.10.1)
-  - MarqueeLabel/Swift (3.0.1)
+  - MarqueeLabel/Swift (3.0.2)
   - SwiftyJSON (3.1.4)
   - SWRevealViewController (2.3.0)
   - Tweaks (2.0.0)
@@ -37,7 +37,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   HanekeSwift:
-    :commit: 1157a124ec699f4ad926cb054f1d0bfce88ae7a9
+    :commit: 62057645b77a5bd0652e53b43258c6f5b4757f2f
     :git: https://github.com/Haneke/HanekeSwift.git
 
 SPEC CHECKSUMS:
@@ -47,11 +47,11 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: a1a5f4b4ac445823a020fbeeaf5f03714a67ff9c
   FBSDKShareKit: 649a7acfd01a3e056a33994c1bfbb997814cc8a2
   HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
-  MarqueeLabel: 80ba85d2b76a9f5fa6c13de337db80bcd94feb1d
+  MarqueeLabel: 365d4a7cd5a9504e51a2034d2be83782424223ac
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   Tweaks: 524fa47636cce3bf3a4d9156e980f10ae9480e81
 
 PODFILE CHECKSUM: 53851c287d93f33a327912dda9d7fa66efa4c976
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.1.1

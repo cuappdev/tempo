@@ -283,6 +283,7 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 			loggedInToSpotify(false)
 		}
 		playerCenter.updateAddButton()
+		playerCenter.getPlayerDelegate()?.didToggleAdd?()
 	}
 	
 	func loggedInToSpotify(_ loggedIn: Bool) {

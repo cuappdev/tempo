@@ -166,6 +166,14 @@ class SpotifyController {
 		}
 	}
 	
+	func getSongStatus(post: Post) -> SavedSongStatus {
+		if let _ = User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] {
+			return .saved
+		} else {
+			return .notSaved
+		}
+	}
+	
 	func closeCurrentSpotifySession() {
 		SPTAuth.defaultInstance().session = nil
 		isSpotifyAvailable = false

@@ -336,8 +336,7 @@ class API {
         get(.getSpotifyAccessToken, params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
     }
 	
-	func postSpotifyAccessToken(accessToken: String, completion: (() -> Void)? = nil) {
-		print("hitting get hash")
+	func sendSpotifyAccessToken(accessToken: String, completion: (() -> Void)? = nil) {
 		get(.postSpotifyAccessToken, params: ["code": accessToken as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 }, completion: completion)
 	}
 	

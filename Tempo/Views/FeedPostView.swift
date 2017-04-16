@@ -17,9 +17,11 @@ class FeedPostView: PostView {
 	@IBOutlet var avatarImageView: UIImageView?
 	@IBOutlet var descriptionLabel: UILabel?
 	@IBOutlet var dateLabel: UILabel?
-	@IBOutlet var spacingConstraint: NSLayoutConstraint?
+//	@IBOutlet var spacingConstraint: NSLayoutConstraint?
 	@IBOutlet var likesLabel: UILabel?
 	@IBOutlet var likedButton: UIButton?
+	@IBOutlet var addButton: UIButton?
+	
 	let fillColor = UIColor.tempoDarkGray
  
 	var type: ViewType = .feed
@@ -34,9 +36,8 @@ class FeedPostView: PostView {
 			if let post = post {
 				switch type {
 				case .feed:
-					avatarImageView?.layer.cornerRadius = avatarImageView!.bounds.size.width / 2
 					profileNameLabel?.text = "\(post.user.firstName) \(post.user.shortenLastName())"
-					descriptionLabel?.text = "\(post.song.title) · \(post.song.artist)"
+					descriptionLabel?.text = "\(post.song.title)\n\(post.song.artist)"
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					let imageName = post.isLiked ? "LikedButton" : "LikeButton"
 					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
@@ -49,18 +50,14 @@ class FeedPostView: PostView {
 					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
 				}
 				
-				switch type {
-				case .feed:
-					avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
-				case .history:
-					avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL ?? URL(fileURLWithPath: ""))
-				}
+				avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL ?? URL(fileURLWithPath: ""))
 				
 				//! TODO: Write something that makes this nice and relative
 				//! that updates every minute
 				
 				if User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] != nil {
 					songStatus = .saved
+					updateAddStatus()
 				}
 			}
 		}
@@ -110,9 +107,9 @@ class FeedPostView: PostView {
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
 		
-		if superview != nil && dateLabel != nil {
-			spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
-		}
+//		if superview != nil && dateLabel != nil {
+//			spacingConstraint?.constant = (dateLabel!.frame.origin.x - superview!.frame.size.width) + 8
+//		}
 	}
 	
 	override func layoutSubviews() {
@@ -135,33 +132,15 @@ class FeedPostView: PostView {
 		}
 		
 		if let post = post {
-			let color: UIColor
-			let font = UIFont(name: "Avenir-Medium", size: 16)!
+			let color = post.player.isPlaying ? .tempoRed : UIColor.white
 			let duration = TimeInterval(0.3)
-			if post.player.isPlaying {
-				color = .tempoRed
-				if type == .feed {
-					if let layer = avatarLayer {
-						let animation = CABasicAnimation(keyPath: "transform.rotation")
-						animation.fromValue = 0
-						animation.duration = 3 * M_PI
-						animation.toValue = 2 * M_PI
-						animation.repeatCount = FLT_MAX
-						layer.add(animation, forKey: "transform.rotation")
-					}
-				}
-			} else {
-				color = UIColor.white
-			}
 			
 			guard let label = profileNameLabel else { return }
 			if !label.textColor.isEqual(color) {
 				UIView.transition(with: label, duration: duration, options: .transitionCrossDissolve, animations: {
 					label.textColor = color
-					label.font = font
 				}, completion: { _ in
 					label.textColor = color
-					label.font = font
 				})
 			}
 		}
@@ -192,6 +171,11 @@ class FeedPostView: PostView {
 				post.toggleLike()
 				updateLikedStatus()
 				playerDelegate.didToggleLike!()
+			} else if hitView == addButton {
+				PlayerCenter.sharedInstance.toggleSaveStatus(post: post) {
+					self.updateAddStatus()
+				}
+				updateAddStatus()
 			}
 		}
 	}
@@ -201,6 +185,14 @@ class FeedPostView: PostView {
 			let name = post.isLiked ? "LikedButton" : "LikeButton"
 			likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 			likedButton?.setBackgroundImage(UIImage(named: name), for: .normal)
+		}
+	}
+	
+	func updateAddStatus() {
+		if let post = post {
+			songStatus = SpotifyController.sharedController.getSongStatus(post: post)
+			let image = songStatus == .saved ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
+			addButton?.setBackgroundImage(image, for: .normal)
 		}
 	}
 }

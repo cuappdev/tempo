@@ -82,6 +82,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			User.currentUser.currentSpotifyUser?.savedTracks = UserDefaults.standard.dictionary(forKey: User.currentUser.currentSpotifyUser!.savedTracksKey) as [String : AnyObject]? ?? [:]
 		}
 		
+		window = UIWindow(frame: UIScreen.main.bounds)
+		window!.backgroundColor = UIColor.tempoLightGray
+		window!.makeKeyAndVisible()
+		window?.tintColor = .tempoRed
+		
 		FBSDKProfile.enableUpdates(onAccessTokenChange: true)
 		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 		
@@ -167,10 +172,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			tabBarVC.addAccessoryViewController(accessoryViewController: playerCenter)
 			tabBarVC.programmaticallyPressTabBarButton(atIndex: 0)
 			
-			window = UIWindow(frame: UIScreen.main.bounds)
-			window!.backgroundColor = UIColor.tempoLightGray
-			window!.makeKeyAndVisible()
-			window?.tintColor = .tempoRed
 			window?.rootViewController = tabBarVC
 		}
 	}
