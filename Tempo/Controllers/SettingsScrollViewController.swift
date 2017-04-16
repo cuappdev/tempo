@@ -115,7 +115,6 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		spotifyDescriptionLabel.numberOfLines = 2
 		spotifyDescriptionLabel.sizeToFit()
 		spotifyDescriptionLabel.center.x = spotifyDescriptionView.center.x
-		spotifyDescriptionLabel.isHidden = true //DELETE WHEN DONE
 		spotifyDescriptionView.addSubview(spotifyDescriptionLabel)
 
 		nameLabel = UILabel(frame: CGRect(x: 86, y:  22, width: 250, height: 24)) //h 22
@@ -201,6 +200,14 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		
 		view.addSubview(notificationView)
 		
+		let centerNotificationSwitchY = NSLayoutConstraint(item: notificationSwitch, attribute: .centerY, relatedBy: .equal,toItem: self.notificationView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+		
+		let trailingNotificationSwitchConstraints = NSLayoutConstraint(item: notificationSwitch, attribute: .trailingMargin, relatedBy: .equal, toItem: self.notificationView, attribute: .trailingMargin, multiplier: 1.0, constant: -15)
+		
+		notificationSwitch.translatesAutoresizingMaskIntoConstraints = false;
+		
+		self.view.addConstraints([centerNotificationSwitchY, trailingNotificationSwitchConstraints])
+		
 		//Enable Music View
 		
 		enableMusicView = UIView(frame: CGRect(x: 0, y: notificationView.frame.origin.y + notificationView.frame.height + 1, width: screenWidth, height: 50))
@@ -221,15 +228,13 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		
 		view.addSubview(enableMusicView)
 		
-		//TO DO: FIX CONSTRAINTS!!
-		//
-		//		let centerY = NSLayoutConstraint(item: self.enableMusicSwitch, attribute: .centerY, relatedBy: .equal, toItem: enableMusicView, attribute: .centerY, multiplier: 1, constant: 0)
-		//
-		//		let trailingConstraints = NSLayoutConstraint(item: enableMusicSwitch, attribute:
-		//			.trailingMargin, relatedBy: .equal, toItem: view,
-		//				                attribute: .leadingMargin, multiplier: 1.0, constant: -15)
-		//
-		//		self.view.addConstraints([trailingConstraints, centerY])
+		let centerY = NSLayoutConstraint(item: enableMusicSwitch, attribute: .centerY, relatedBy: .equal, toItem: self.enableMusicView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+		
+		let trailingConstraints = NSLayoutConstraint(item: enableMusicSwitch, attribute: .trailingMargin, relatedBy: .equal,  toItem: self.enableMusicView, attribute: .trailingMargin, multiplier: 1.0, constant: -15)
+		
+		enableMusicSwitch.translatesAutoresizingMaskIntoConstraints = false;
+
+		self.view.addConstraints([trailingConstraints, centerY])
 		
 		
 		//About Button
