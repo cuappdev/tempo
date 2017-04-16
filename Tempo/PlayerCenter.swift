@@ -122,6 +122,11 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 		expandedCell.updateAddButton()
 	}
 	
+	// Interface for other parts of app to toggle the saved status
+	func toggleAddButton(post: Post) {
+		playerCell.toggleAddButton(post: post)
+	}
+	
 	func togglePause() {
 		if let post = currentPost, post.player.isPlaying {
 			post.player.togglePlaying()
@@ -149,6 +154,10 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 	
 	func getPostRefIndex() -> Int? {
 		return postRefIndex
+	}
+	
+	func getSongStatus() -> SavedSongStatus {
+		return playerCell.songStatus
 	}
 	
 	func setPostView(newPostView: PostView) {

@@ -261,7 +261,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	override func updateAddButton() {
 		updateSavedStatus()
-		addButtonImage.image = (songStatus == .saved) ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "PlayerAddButton")
+		addButtonImage.image = (songStatus == .saved) ? #imageLiteral(resourceName: "ExpandedPlayerAddedButton") : #imageLiteral(resourceName: "ExpandedPlayerAddButton")
 		
 		if (iPhone5){
 			addButtonLabel.text = (songStatus == .saved) ? "Saved" : "Save"

@@ -155,6 +155,14 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		}
 	}
 	
+	func didToggleAdd() {
+		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? FeedTableViewCell {
+				cell.feedPostView.updateAddStatus()
+			}
+		}
+	}
+	
 	// MARK: - Search Override
 	
 	override func filterContentForSearchText(_ searchText: String, scope: String = "All") {

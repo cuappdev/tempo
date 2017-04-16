@@ -48,17 +48,23 @@ class ParentPlayerCellView: UIView {
 	
 	//Switches saved to notSaved, or notSaved to saved, and calls updateAddButton()
 	func toggleAddButton() {
+		if let post = post {
+			toggleAddButton(post: post)
+		}
+	}
+	
+	func toggleAddButton(post: Post) {
 		if let _ = User.currentUser.currentSpotifyUser {
 			SpotifyController.sharedController.spotifyIsAvailable { success in
 				if success && songStatus == .notSaved {
-					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
+					SpotifyController.sharedController.saveSpotifyTrack(post) { success in
 						if success {
 							self.playerCenter.updateAddButton()
 							self.delegate?.didToggleAdd?()
 						}
 					}
 				} else if success && songStatus == .saved {
-					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
+					SpotifyController.sharedController.removeSavedSpotifyTrack(post) { success in
 						if success {
 							self.playerCenter.updateAddButton()
 							self.delegate?.didToggleAdd?()
@@ -67,9 +73,7 @@ class ParentPlayerCellView: UIView {
 				}
 			}
 		} else {
-			TabBarController.sharedInstance.programmaticallyPressTabBarButton(atIndex: 4)
-			let appDelegate = UIApplication.shared.delegate as! AppDelegate
-			appDelegate.profileVC.navigateToSettings()
+			(TabBarController.sharedInstance.currentlyPresentedViewController as? UINavigationController)?.pushViewController(SettingsViewController.sharedInstance, animated: true)
 		}
 	}
 	

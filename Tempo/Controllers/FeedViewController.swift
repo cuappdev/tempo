@@ -255,6 +255,14 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		}
 	}
 	
+	func didToggleAdd() {
+		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? FeedTableViewCell {
+				cell.feedPostView.updateAddStatus()
+			}
+		}
+	}
+	
 	// MARK: - FeedFollowSuggestionsDelegate
 	
 	func feedFollowSuggestionsController(controller: FeedFollowSuggestionsController, wantsToShowProfileForUser user: User) {
