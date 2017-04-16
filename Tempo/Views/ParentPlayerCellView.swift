@@ -53,14 +53,16 @@ class ParentPlayerCellView: UIView {
 		}
 	}
 	
-	func toggleAddButton(post: Post) {
+	func toggleAddButton(post: Post, completion: (() -> Void)? = nil) {
 		if let _ = User.currentUser.currentSpotifyUser {
 			SpotifyController.sharedController.spotifyIsAvailable { success in
+				let songStatus = SpotifyController.sharedController.getSongStatus(post: post)
 				if success && songStatus == .notSaved {
 					SpotifyController.sharedController.saveSpotifyTrack(post) { success in
 						if success {
 							self.playerCenter.updateAddButton()
 							self.delegate?.didToggleAdd?()
+							completion?()
 						}
 					}
 				} else if success && songStatus == .saved {
@@ -68,6 +70,7 @@ class ParentPlayerCellView: UIView {
 						if success {
 							self.playerCenter.updateAddButton()
 							self.delegate?.didToggleAdd?()
+							completion?()
 						}
 					}
 				}

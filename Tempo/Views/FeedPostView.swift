@@ -172,11 +172,8 @@ class FeedPostView: PostView {
 				updateLikedStatus()
 				playerDelegate.didToggleLike!()
 			} else if hitView == addButton {
-				PlayerCenter.sharedInstance.toggleAddButton(post: post)
-				if let _ = User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] {
-					songStatus = .saved
-				} else {
-					songStatus = .notSaved
+				PlayerCenter.sharedInstance.toggleSaveStatus(post: post) {
+					self.updateAddStatus()
 				}
 				updateAddStatus()
 			}
@@ -193,9 +190,7 @@ class FeedPostView: PostView {
 	
 	func updateAddStatus() {
 		if let post = post {
-			if let currentPost = PlayerCenter.sharedInstance.getCurrentPost(), currentPost.equals(other: post) {
-				songStatus = PlayerCenter.sharedInstance.getSongStatus()
-			}
+			songStatus = SpotifyController.sharedController.getSongStatus(post: post)
 			let image = songStatus == .saved ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
 			addButton?.setBackgroundImage(image, for: .normal)
 		}

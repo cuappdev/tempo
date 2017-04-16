@@ -123,8 +123,8 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 	}
 	
 	// Interface for other parts of app to toggle the saved status
-	func toggleAddButton(post: Post) {
-		playerCell.toggleAddButton(post: post)
+	func toggleSaveStatus(post: Post, completion: (() -> Void)? = nil) {
+		playerCell.toggleAddButton(post: post, completion: completion)
 	}
 	
 	func togglePause() {
@@ -158,6 +158,10 @@ class PlayerCenter: TabBarAccessoryViewController, PostDelegate {
 	
 	func getSongStatus() -> SavedSongStatus {
 		return playerCell.songStatus
+	}
+	
+	func getPlayerDelegate() -> PlayerDelegate? {
+		return playerDelegate
 	}
 	
 	func setPostView(newPostView: PostView) {
