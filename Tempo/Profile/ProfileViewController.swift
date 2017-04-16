@@ -109,6 +109,9 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		profileHeaderView.nameLabel.isHidden = notConnected(true)
 		profileHeaderView.usernameButton.isHidden = notConnected(false)
 		
+		calendarCollectionView.isUserInteractionEnabled = true
+		profileHeaderView.followingButton.isEnabled = true
+		profileHeaderView.followersButton.isEnabled = true
 		navigationItem.rightBarButtonItem?.isEnabled = true
 	}
 	
@@ -184,6 +187,8 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		followersVC.displayType = displayType
 		followersVC.user = user
 		followersVC.title = String(describing: displayType)
+		profileHeaderView.followersButton.isEnabled = false
+		profileHeaderView.followingButton.isEnabled = false
 		navigationController?.pushViewController(followersVC, animated: true)
 	}
 	
@@ -309,6 +314,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 			postHistoryVC.sectionIndex = sectionIndex
 		}
 		
+		calendarCollectionView.isUserInteractionEnabled = false
 		navigationController?.pushViewController(postHistoryVC, animated: true)
 	}
 	
