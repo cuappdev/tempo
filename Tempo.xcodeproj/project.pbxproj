@@ -26,7 +26,6 @@
 		1DB283901B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */; };
 		1DCB961C1AED5F48007F6A4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CF7B971AE425450083606C /* API.swift */; };
 		1DD875FC1B6E27DD0041C45B /* NSDateFormatter+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD875FB1B6E27DD0041C45B /* NSDateFormatter+Shared.swift */; };
-		1DE649C31B78590800DA5499 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE649C11B78590800DA5499 /* SettingsViewController.swift */; };
 		1DFB2ED71B76D7FB001B7C76 /* StyleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */; };
 		1DFBFB521B7845E7001DD6AC /* SongSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DFBFB511B7845E7001DD6AC /* SongSearchTableViewCell.xib */; };
 		1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */; };
@@ -123,7 +122,6 @@
 		1D802AB61B78635A005A96D1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1DB2838F1B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSLayoutContraint+Fill.swift"; path = "../Controllers/NSLayoutContraint+Fill.swift"; sourceTree = "<group>"; };
 		1DD875FB1B6E27DD0041C45B /* NSDateFormatter+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDateFormatter+Shared.swift"; sourceTree = "<group>"; };
-		1DE649C11B78590800DA5499 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StyleController.swift; path = ../Controllers/StyleController.swift; sourceTree = "<group>"; };
 		1DFBFB511B7845E7001DD6AC /* SongSearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongSearchTableViewCell.xib; sourceTree = "<group>"; };
 		1DFBFB531B784634001DD6AC /* SongSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongSearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -418,7 +416,6 @@
 			isa = PBXGroup;
 			children = (
 				1D653F3D1B81451700F54455 /* SpotifyController.swift */,
-				1DE649C11B78590800DA5499 /* SettingsViewController.swift */,
 				D160AE011BE677D4003B0E1A /* PlaylistTableViewController.swift */,
 			);
 			name = Spotify;
@@ -560,7 +557,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		78630E2F06DFC643EE8D7CCC /* [CP] Copy Pods Resources */ = {
@@ -610,7 +607,6 @@
 				1DB283901B6D8FCC00134FEA /* NSLayoutContraint+Fill.swift in Sources */,
 				60AEF76A1DBD38AD00C68AAF /* PlayerCellView.swift in Sources */,
 				D17395741ADB080900A53AEE /* UsersViewController.swift in Sources */,
-				1DE649C31B78590800DA5499 /* SettingsViewController.swift in Sources */,
 				D19E42141DF650DD00D09F18 /* CalendarTableViewCell.swift in Sources */,
 				0276B1FC1DDFBAD800B512E9 /* LikedPostView.swift in Sources */,
 				0276B1FE1DDFC2D900B512E9 /* LikedTableViewCell.swift in Sources */,

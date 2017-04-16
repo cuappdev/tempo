@@ -55,7 +55,6 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		title = "Settings"
-		
 		screenWidth = view.frame.width
 		
 		let scrollViewHeight = view.frame.height - tabBarHeight - miniPlayerHeight
@@ -84,10 +83,8 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
 		title = "Settings"
 		view.backgroundColor = .readCellColor
-		
 		updateSpotifyState()
 		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
 	}
@@ -139,14 +136,12 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		initialsLabel.sizeToFit()
 		spotifyDescriptionView.addSubview(initialsLabel)
 		
-		//DOUBLE CHECK THIS !!! !!!
 		initialsView = UIView(frame: CGRect(x: 22, y:  22, width: 48, height: 48))
 		spotifyDescriptionView.addSubview(initialsView)
 		
 		profilePicture = UIImageView(frame: CGRect(x: 22, y:  22, width: 48, height: 48))
 		profilePicture.layer.cornerRadius = profilePicture.frame.width / 2.0
 		spotifyDescriptionView.addSubview(profilePicture)
-		
 		
 		view.addSubview(spotifyDescriptionView)
 		
@@ -160,7 +155,6 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		loginSpotifyButton.center.x = view.center.x
 		view.addSubview(loginSpotifyButton)
 		
-		
 		//Log out Button
 		logoutSpotifyButton = UIButton(frame: CGRect(x: 0, y:  151, width: screenWidth, height: 50))
 		logoutSpotifyButton.setTitleColor(.sectionTitleGrey, for: .normal)
@@ -170,7 +164,6 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		logoutSpotifyButton.backgroundColor = .tempoDarkGray
 		logoutSpotifyButton.center.x = view.center.x
 		view.addSubview(logoutSpotifyButton)
-		
 		
 		//Options Section Title
 		optionsTitle = UILabel(frame: CGRect(x: 22, y:  loginSpotifyButton.frame.origin.y + loginSpotifyButton.frame.height + sectionSpacing, width: 62.5, height: 20))
@@ -195,7 +188,7 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		
 		notificationSwitch = UISwitch(frame: CGRect(x: 0, y: 0, width: 51, height: 31))
 		notificationSwitch.onTintColor = .tempoRed
-		notificationSwitch.addTarget(self, action: #selector(toggledMusicOnExit(_:)), for: .valueChanged)
+		notificationSwitch.addTarget(self, action: #selector(toggledNotifications(_:)), for: .valueChanged)
 		notificationView.addSubview(notificationSwitch)
 		
 		view.addSubview(notificationView)
@@ -205,11 +198,9 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		let trailingNotificationSwitchConstraints = NSLayoutConstraint(item: notificationSwitch, attribute: .trailingMargin, relatedBy: .equal, toItem: self.notificationView, attribute: .trailingMargin, multiplier: 1.0, constant: -15)
 		
 		notificationSwitch.translatesAutoresizingMaskIntoConstraints = false;
-		
 		self.view.addConstraints([centerNotificationSwitchY, trailingNotificationSwitchConstraints])
 		
 		//Enable Music View
-		
 		enableMusicView = UIView(frame: CGRect(x: 0, y: notificationView.frame.origin.y + notificationView.frame.height + 1, width: screenWidth, height: 50))
 		enableMusicView.backgroundColor = .tempoDarkGray
 
@@ -223,7 +214,7 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		
 		enableMusicSwitch = UISwitch(frame: CGRect(x: 0, y: 0, width: 51, height: 31))
 		enableMusicSwitch.onTintColor = .tempoRed
-		enableMusicSwitch.addTarget(self, action: #selector(toggledNotifications(_:)), for: .valueChanged)
+		enableMusicSwitch.addTarget(self, action: #selector(toggledMusicOnExit(_:)), for: .valueChanged)
 		enableMusicView.addSubview(enableMusicSwitch)
 		
 		view.addSubview(enableMusicView)
@@ -233,9 +224,7 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		let trailingConstraints = NSLayoutConstraint(item: enableMusicSwitch, attribute: .trailingMargin, relatedBy: .equal,  toItem: self.enableMusicView, attribute: .trailingMargin, multiplier: 1.0, constant: -15)
 		
 		enableMusicSwitch.translatesAutoresizingMaskIntoConstraints = false;
-
 		self.view.addConstraints([trailingConstraints, centerY])
-		
 		
 		//About Button
 		aboutButton = UIButton(frame: CGRect(x: 0, y:  enableMusicView.frame.origin.y + enableMusicView.frame.height + sectionSpacing, width: screenWidth, height: 50))
@@ -279,7 +268,6 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 				}
 			})
 		} else {
-			
 			loggedInToSpotify(false)
 		}
 		playerCenter.updateAddButton()
@@ -318,8 +306,8 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 	
 	func toggledNotifications(_ sender: UISwitch) {
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
-		let didRegisterForPushNotifications = UserDefaults.standard.bool(forKey: SettingsViewController.registeredForRemotePushNotificationsKey)
-		let didPresentAlertForPushNotifications = UserDefaults.standard.bool(forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey)
+		let didRegisterForPushNotifications = UserDefaults.standard.bool(forKey: SettingsScrollViewController.registeredForRemotePushNotificationsKey)
+		let didPresentAlertForPushNotifications = UserDefaults.standard.bool(forKey: SettingsScrollViewController.presentedAlertForRemotePushNotificationsKey)
 		
 		if didPresentAlertForPushNotifications && !UIApplication.shared.isRegisteredForRemoteNotifications && sender.isOn {
 			sender.setOn(false, animated: false)
@@ -381,7 +369,6 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		})
 		
 		alertController.addAction(okAction)
-		
 		present(alertController, animated: true, completion: nil)
 	}
 }
