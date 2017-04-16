@@ -37,7 +37,6 @@
 		6035E7881DE8017300221870 /* ParentPlayerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6035E7871DE8017300221870 /* ParentPlayerCellView.swift */; };
 		6038B17E1D80ED250083940D /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6038B17D1D80ED250083940D /* FeedTableViewCell.swift */; };
 		6038B1801D80EDAF0083940D /* FeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */; };
-		60419BED1DE24AE800CAB9BD /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */; };
 		6054DC121E7629F600ACEFEA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054DC111E7629F600ACEFEA /* TabBarController.swift */; };
 		6054DC141E762A0D00ACEFEA /* TabBarAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054DC131E762A0D00ACEFEA /* TabBarAccessoryViewController.swift */; };
 		60728FBA1E6369150097C1AC /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60728FB91E6369150097C1AC /* PostTableViewCell.swift */; };
@@ -133,7 +132,6 @@
 		6035E7871DE8017300221870 /* ParentPlayerCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentPlayerCellView.swift; sourceTree = "<group>"; };
 		6038B17D1D80ED250083940D /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		6038B17F1D80EDAF0083940D /* FeedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedTableViewCell.xib; path = ../Profile/FeedTableViewCell.xib; sourceTree = "<group>"; };
-		60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		6054DC111E7629F600ACEFEA /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = ../Profile/TabBarController.swift; sourceTree = "<group>"; };
 		6054DC131E762A0D00ACEFEA /* TabBarAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarAccessoryViewController.swift; sourceTree = "<group>"; };
 		60728FB91E6369150097C1AC /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
@@ -222,7 +220,6 @@
 				60C018041D9C7A2E00FE5166 /* AboutViewController.swift */,
 				C70F5DF81EA2A2390092D154 /* SettingsScrollViewController.swift */,
 				6054DC151E762A1600ACEFEA /* TabBar */,
-				952E7EDE1DEA8957006C6131 /* XIBS */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -404,14 +401,6 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
-		952E7EDE1DEA8957006C6131 /* XIBS */ = {
-			isa = PBXGroup;
-			children = (
-				60419BEC1DE24AE800CAB9BD /* SettingsViewController.xib */,
-			);
-			name = XIBS;
-			sourceTree = "<group>";
-		};
 		B01FE1541C1765080077C2BF /* Spotify */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,7 +526,6 @@
 				0271C9481D9582410037F6AD /* PostHistoryHeaderSectionCell.xib in Resources */,
 				FAB5647C1AF6BAE4001059DF /* SideBarTableViewCell.xib in Resources */,
 				6038B1801D80EDAF0083940D /* FeedTableViewCell.xib in Resources */,
-				60419BED1DE24AE800CAB9BD /* SettingsViewController.xib in Resources */,
 				1D72D9C21AACC4C0007822B0 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
