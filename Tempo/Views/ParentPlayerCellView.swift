@@ -76,7 +76,7 @@ class ParentPlayerCellView: UIView {
 				}
 			}
 		} else {
-			(TabBarController.sharedInstance.currentlyPresentedViewController as? UINavigationController)?.pushViewController(SettingsViewController.sharedInstance, animated: true)
+			(TabBarController.sharedInstance.currentlyPresentedViewController as? UINavigationController)?.pushViewController(SettingsScrollViewController.sharedInstance, animated: true)
 		}
 	}
 	
