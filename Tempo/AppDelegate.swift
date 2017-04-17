@@ -251,7 +251,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		print("RECIEVED PUSH NOTIFICATION")
 		switch application.applicationState {
 		case .active:
-			tabBarVC.showNotificationBanner(userInfo)
+			// TODO: Update unread notifications icon?
+//			tabBarVC.showNotificationBanner(userInfo)
+			return
 		default:
 			return
 		}
