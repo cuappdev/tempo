@@ -16,6 +16,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 	var postedDatesDict: [String: Int] = [String: Int]()
 	var postedDatesSections: [String] = []
     var sectionIndex: Int?
+	var rowIndex: Int?
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,8 +52,8 @@ class PostHistoryTableViewController: PlayerTableViewController {
     override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		if let _ = sectionIndex {
-			let selectedRow = IndexPath(row: 0, section: sectionIndex!)
+		if let _ = sectionIndex, let _ = rowIndex {
+			let selectedRow = IndexPath(row: rowIndex!, section: sectionIndex!)
 			tableView.scrollToRow(at: selectedRow, at: UITableViewScrollPosition.top, animated: true)
 		}
     }

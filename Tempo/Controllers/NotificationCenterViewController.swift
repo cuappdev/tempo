@@ -12,13 +12,22 @@ let notificationCellHeight: CGFloat = 60
 
 class NotificationCenterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate, NotificationDelegate {
 	
-	var notifications = [NotificationType : [TempoNotification]]()
+	var notifications: [NotificationType : [TempoNotification]]!
+	var unreadNotificationCount = 0
 	let length = 40
 	var page = 0
-	var isLoadingMore = false
 	let postHistoryVC = PostHistoryTableViewController()
 	var tableView: UITableView!
 	let reuseIdentifier: String = "NotificationCell"
+	var firstLoad = true
+	
+	var refreshControl: UIRefreshControl!
+	lazy var customRefresh: ADRefreshControl = {
+		self.refreshControl = UIRefreshControl()
+		let customRefresh = ADRefreshControl(refreshControl: self.refreshControl!)
+		self.refreshControl?.addTarget(self, action: #selector(refreshNotifications), for: .valueChanged)
+		return customRefresh
+	}()
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,20 +36,22 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		view.backgroundColor = .readCellColor
 		
 		initializeTableView()
-		fetchPostHistory()
 		
+		notifications = [NotificationType : [TempoNotification]]()
 		notifications[.Follower] = []
 		notifications[.Like] = []
+		
+		refreshNotifications()
 	}
 	
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
 		
-		fetchNotifications()
+		let _ = notConnected(true)
 	}
 	
 	func initializeTableView() {
-		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - tabBarHeight - miniPlayerHeight))
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.backgroundColor = .readCellColor
@@ -48,28 +59,46 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		
 		tableView.rowHeight = notificationCellHeight
 		tableView.showsVerticalScrollIndicator = true
+		refreshControl = customRefresh.refreshControl
+		tableView.insertSubview(refreshControl, belowSubview: tableView.getScrollView()!)
 		view.addSubview(tableView)
 	}
 	
-	func fetchNotifications() {
-		API.sharedAPI.fetchNotifications(User.currentUser.id, length: length, page: page) { (notifs) in
-			for notif in notifs {
-				self.notifications[notif.type]?.append(notif)
-			}
-			self.isLoadingMore = false
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
+	func refreshNotifications() {
+		//finished refreshing gets set to true when the api returns
+		var finishedRefreshingNotifs = false
+		var finishedRefreshingHistory = false
+		
+		API.sharedAPI.fetchPosts(User.currentUser.id) { (posts) in
+			self.postHistoryVC.posts = posts
+			self.postHistoryVC.postedDates = posts.map { $0.date! }
+			self.postHistoryVC.filterPostedDatesToSections(self.postHistoryVC.postedDates)
+			self.postHistoryVC.songLikes = posts.map{ $0.likes }
+			finishedRefreshingHistory = true
+			
+			if (finishedRefreshingNotifs) {
+				DispatchQueue.main.async {
+					self.tableView.reloadData()
+					self.refreshControl.endRefreshing()
+				}
 			}
 		}
-	}
-	
-	func fetchPostHistory() {
-		API.sharedAPI.fetchPosts(User.currentUser.id) { (posts) in
-			DispatchQueue.main.async {
-				self.postHistoryVC.posts = posts
-				self.postHistoryVC.postedDates = posts.map { $0.date! }
-				self.postHistoryVC.filterPostedDatesToSections(self.postHistoryVC.postedDates)
-				self.postHistoryVC.songLikes = posts.map{ $0.likes }
+		
+		API.sharedAPI.fetchNotifications(User.currentUser.id, length: length, page: page) { (notifs) in
+			self.notifications[.Follower] = []
+			self.notifications[.Like] = []
+			self.unreadNotificationCount = 0
+			for notif in notifs {
+				self.notifications[notif.type]?.append(notif)
+				if !notif.seen! { self.unreadNotificationCount += 1 }
+			}
+			finishedRefreshingNotifs = true
+			
+			if (finishedRefreshingHistory) {
+				DispatchQueue.main.async {
+					self.tableView.reloadData()
+					self.refreshControl.endRefreshing()
+				}
 			}
 		}
 	}
@@ -127,6 +156,10 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		return notificationCellHeight
 	}
 	
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		customRefresh.scrollViewDidScroll(scrollView)
+	}
+	
 	// MARK: - Notification Cell Delegate
 	func didTapUserImageForNotification(_ user: User) {
 		let profileVC = ProfileViewController()
@@ -144,6 +177,7 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 				row += 1
 			}
 			vc.sectionIndex = vc.relativeIndexPath(row: row).section
+			vc.rowIndex = vc.relativeIndexPath(row: row).row
 			navigationController?.pushViewController(vc, animated: true)
 		} else if notif.type == .Follower, let user = notif.user {
 			didTapUserImageForNotification(user)

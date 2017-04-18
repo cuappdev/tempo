@@ -221,6 +221,7 @@ class TabBarController: UIViewController, NotificationDelegate {
 					row += 1
 				}
 				vc.sectionIndex = vc.relativeIndexPath(row: row).section
+				vc.rowIndex = vc.relativeIndexPath(row: row).row
 				self.present(vc, animated: true)
 			} else {
 				print("Needs to be implemented -- access global profile history VC?")
