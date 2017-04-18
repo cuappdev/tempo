@@ -41,23 +41,24 @@ class NotificationTableViewCell: UITableViewCell {
 		avatarImage.isUserInteractionEnabled = true
 		avatarImage.addGestureRecognizer(tapGestureRecognizer)
 		
-		timeLabel.frame = CGRect(x: width - 40, y: 10, width: 20, height: notificationCellHeight - 20)
+		timeLabel.frame = CGRect(x: width - 50, y: 10, width: 30, height: notificationCellHeight - 20)
 		timeLabel.backgroundColor = .clear
 		timeLabel.textColor = .cellOffWhite
 		timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 13)
+		timeLabel.textAlignment = .right
 		contentView.addSubview(timeLabel)
 		
 		let x = avatarImage.frame.maxX + 16
 		usernameLabel.frame = CGRect(x: x, y: 8, width: 50, height: notificationCellHeight/2 - 8)
 		usernameLabel.backgroundColor = .clear
 		usernameLabel.textColor = .white
-		usernameLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
+		usernameLabel.font = UIFont(name: "AvenirNext-Medium", size: 14)
 		contentView.addSubview(usernameLabel)
 		
 		messageLabel.frame = CGRect(x: x, y: 8, width: width - (x+50), height: notificationCellHeight/2 - 8)
 		messageLabel.backgroundColor = .clear
 		messageLabel.textColor = .cellOffWhite
-		messageLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+		messageLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
 		contentView.addSubview(messageLabel)
 		
 		descriptionLabel.frame = CGRect(x: x, y: notificationCellHeight/2, width: width - (x+50), height: notificationCellHeight/2 - 8)
@@ -74,7 +75,7 @@ class NotificationTableViewCell: UITableViewCell {
 //		acceptButton.isHidden = true
 //		contentView.addSubview(acceptButton)
 		
-		seenView.frame = CGRect(x: width - 18, y: notificationCellHeight/2 - 5, width: 10, height: 10)
+		seenView.frame = CGRect(x: width - 15, y: notificationCellHeight/2 - 5, width: 10, height: 10)
 		seenView.layer.cornerRadius = 5
 		seenView.backgroundColor = .clear
 		contentView.addSubview(seenView)
