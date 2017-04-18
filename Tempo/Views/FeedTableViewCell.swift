@@ -24,6 +24,8 @@ class FeedTableViewCell: PostTableViewCell {
 		
 		postView?.backgroundColor = .unreadCellColor
 		separator.backgroundColor = .readCellColor
+		initialsLabel.isHidden = true
+		initialsView.isHidden = true
 //		separatorHeight.constant = 1
 	}
 	
@@ -35,7 +37,6 @@ class FeedTableViewCell: PostTableViewCell {
 	func setUpPostHistoryCell() {
 		postView = feedPostView
 		initialsLabel.text = ""
-		initialsView.isHidden = true
 		feedPostView.dateLabel!.isHidden = true
 		feedPostView.avatarImageView?.layer.cornerRadius = 0
 //		imageViewWidthConstraint.constant = 60

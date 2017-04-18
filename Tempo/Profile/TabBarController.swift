@@ -186,7 +186,7 @@ class TabBarController: UIViewController, NotificationDelegate {
 	
 	func showNotificationBanner(_ userInfo: [AnyHashable : Any]) {
 		let info = (userInfo[AnyHashable("custom")] as! NSDictionary).value(forKey: "a") as! NSDictionary
-		
+		print(userInfo)
 		if info.value(forKey: "notification_type") as! Int == 1 {
 			// Liked song notification
 			Banner.showBanner(
