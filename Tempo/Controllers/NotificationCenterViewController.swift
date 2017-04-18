@@ -12,8 +12,8 @@ let notificationCellHeight: CGFloat = 60
 
 class NotificationCenterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate, NotificationDelegate {
 	
-	var notifications: [TempoNotification] = []
-	let length = 20
+	var notifications = [NotificationType : [TempoNotification]]()
+	let length = 40
 	var page = 0
 	var isLoadingMore = false
 	let postHistoryVC = PostHistoryTableViewController()
@@ -28,6 +28,9 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		
 		initializeTableView()
 		fetchPostHistory()
+		
+		notifications[.Follower] = []
+		notifications[.Like] = []
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -51,7 +54,7 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	func fetchNotifications() {
 		API.sharedAPI.fetchNotifications(User.currentUser.id, length: length, page: page) { (notifs) in
 			for notif in notifs {
-				self.notifications.append(notif)
+				self.notifications[notif.type]?.append(notif)
 			}
 			self.isLoadingMore = false
 			DispatchQueue.main.async {
@@ -73,19 +76,42 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	
 	// MARK: - Table View Delegate
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+		return 2
+	}
+	
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 36))
+		headerView.backgroundColor = .readCellColor
+		
+		let title = UILabel(frame: CGRect(x: 10, y: 0, width: tableView.bounds.width - 10, height: 36))
+		title.font = UIFont(name: "AvenirNext-Medium", size: 15)
+		title.textColor = .white
+		title.textAlignment = .left
+		title.text = (section == 0) ? "Follow Requests" : "Likes"
+		headerView.addSubview(title)
+		
+		return headerView
+	}
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 36
+	}
+	
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return (section == 0) ? "Follow Requests" : "Likes"
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return notifications.count
+		let key: NotificationType = (section == 0) ? .Follower : .Like
+		return notifications[key]!.count
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NotificationTableViewCell
 		
-		let notif = notifications[indexPath.row]
+		let key: NotificationType = (indexPath.section == 0) ? .Follower : .Like
+		let notif = notifications[key]![indexPath.row]
 		cell.setupCell(notification: notif)
-//		cell.markAsSeen()
 		cell.delegate = self
 		
 		return cell
@@ -99,16 +125,6 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return notificationCellHeight
-	}
-	
-	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		let contentOffset = scrollView.contentOffset.y
-		let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-		if !isLoadingMore && (maximumOffset - contentOffset <= CGFloat(0) && notifications.count < 60) {
-			self.isLoadingMore = true
-			page += 1
-			fetchNotifications()
-		}
 	}
 	
 	// MARK: - Notification Cell Delegate
