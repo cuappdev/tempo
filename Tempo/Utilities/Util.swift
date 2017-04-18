@@ -24,6 +24,7 @@ struct DeviceType {
 
 let tabBarHeight = CGFloat(50.0)
 let miniPlayerHeight = CGFloat(72.0)
+let expandedPlayerHeight = CGFloat(347.0)
 let iPhone5: Bool = (UIScreen.main.bounds.width <= CGFloat(320))
 
 enum ContentType: String {

@@ -227,7 +227,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	func collapsePan(gesture: UIPanGestureRecognizer) {
 		let translation = gesture.translation(in: self)
 		if gesture.state == .began || gesture.state == .changed {
-			let maxCenter = UIScreen.main.bounds.height - playerCenter.expandedHeight/2.0
+			let maxCenter = UIScreen.main.bounds.height - expandedPlayerHeight/2.0
 			
 			if translation.y > 0 || center.y > maxCenter {
 				center.y = center.y + translation.y < maxCenter ? maxCenter : center.y + translation.y

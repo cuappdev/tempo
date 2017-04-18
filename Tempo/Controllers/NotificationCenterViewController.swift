@@ -19,7 +19,7 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	let postHistoryVC = PostHistoryTableViewController()
 	var tableView: UITableView!
 	let reuseIdentifier: String = "NotificationCell"
-	var firstLoad = true
+	var activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
 	
 	var refreshControl: UIRefreshControl!
 	lazy var customRefresh: ADRefreshControl = {
@@ -41,6 +41,7 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		notifications[.Follower] = []
 		notifications[.Like] = []
 		
+		activityIndicatorView.center = view.center
 		refreshNotifications()
 	}
 	
@@ -55,6 +56,7 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.backgroundColor = .readCellColor
+		tableView.alpha = 0.0
 		tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
 		
 		tableView.rowHeight = notificationCellHeight
@@ -65,9 +67,14 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 	}
 	
 	func refreshNotifications() {
-		//finished refreshing gets set to true when the api returns
+		// Finished refreshing gets set to true when each api call returns
 		var finishedRefreshingNotifs = false
 		var finishedRefreshingHistory = false
+		
+		if tableView.alpha == 0.0 {
+			activityIndicatorView.startAnimating()
+			view.addSubview(activityIndicatorView)
+		}
 		
 		// PROBLEM: On first load from push notification these api calls dont work...
 		
@@ -80,8 +87,7 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 			
 			if (finishedRefreshingNotifs) {
 				DispatchQueue.main.async {
-					self.tableView.reloadData()
-					self.refreshControl.endRefreshing()
+					self.finishRefreshing()
 				}
 			}
 		}
@@ -98,11 +104,26 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 			
 			if (finishedRefreshingHistory) {
 				DispatchQueue.main.async {
-					self.tableView.reloadData()
-					self.refreshControl.endRefreshing()
+					self.finishRefreshing()
 				}
 			}
 		}
+		
+		// Finish loading and stop animating after timeout
+		let popTime = DispatchTime.now() + Double(Int64(8.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+		DispatchQueue.main.asyncAfter(deadline: popTime) {
+			if !(finishedRefreshingNotifs && finishedRefreshingHistory) {
+				self.finishRefreshing()
+			}
+		}
+	}
+	
+	func finishRefreshing() {
+		activityIndicatorView.stopAnimating()
+		activityIndicatorView.removeFromSuperview()
+		tableView.reloadData()
+		refreshControl.endRefreshing()
+		tableView.alpha = 1.0
 	}
 	
 	// MARK: - Table View Delegate
