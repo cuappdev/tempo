@@ -360,7 +360,7 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		PlayerCenter.sharedInstance.resetPlayerCells()
 		FBSDKAccessToken.setCurrent(nil)
-		appDelegate.toggleRootVC()
+		appDelegate.toggleRootVC(toTabButton: 0)
 		appDelegate.feedVC.refreshNeeded = true
 	}
 	

@@ -69,6 +69,8 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		var finishedRefreshingNotifs = false
 		var finishedRefreshingHistory = false
 		
+		// PROBLEM: On first load from push notification these api calls dont work...
+		
 		API.sharedAPI.fetchPosts(User.currentUser.id) { (posts) in
 			self.postHistoryVC.posts = posts
 			self.postHistoryVC.postedDates = posts.map { $0.date! }

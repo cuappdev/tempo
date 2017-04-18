@@ -99,21 +99,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			})
 		}
 		
-		toggleRootVC()
-		
 		// Check if launched via push notification
 		if let options = launchOptions {
-			print(options)
-			if options.description.lowercased().contains("liked a song") {
-				let postHistoryVC = profileVC.postHistoryVC
-				postHistoryVC.posts = profileVC.posts
-				postHistoryVC.postedDates = profileVC.postedDates
-				postHistoryVC.filterPostedDatesToSections(profileVC.postedDates)
-				postHistoryVC.songLikes = profileVC.postedLikes
-				tabBarVC.present(postHistoryVC, animated: false)
-			} else if options.description.lowercased().contains("following") {
-				
-			}
+			print("Options: \(options)")
+			toggleRootVC(toTabButton: 3)
+		} else {
+			toggleRootVC(toTabButton: 0)
 		}
 		
 		// Prepare to play audio
@@ -126,10 +117,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		if !UserDefaults.standard.bool(forKey: SettingsScrollViewController.presentedAlertForRemotePushNotificationsKey) {
 			registerForRemotePushNotifications()
 		}
-		toggleRootVC()
+		toggleRootVC(toTabButton: 0)
 	}
 	
-	func toggleRootVC() {
+	func toggleRootVC(toTabButton tab: Int) {
 		launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
 		if FBSDKAccessToken.current() == nil {
 			loginFlowViewController = LoginFlowViewController()
@@ -170,7 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			}, forTabAtIndex: 4)
 			
 			tabBarVC.addAccessoryViewController(accessoryViewController: playerCenter)
-			tabBarVC.programmaticallyPressTabBarButton(atIndex: 0)
+			tabBarVC.programmaticallyPressTabBarButton(atIndex: tab)
 			
 			window?.rootViewController = tabBarVC
 		}
@@ -248,16 +239,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-		print("RECIEVED PUSH NOTIFICATION")
 		switch application.applicationState {
 		case .active:
 			// TODO: Update unread notifications icon?
-//			tabBarVC.showNotificationBanner(userInfo)
-			return
-		default:
-			return
+			// tabBarVC.showNotificationBanner(userInfo)
+			break
+		case .background, .inactive:
+			let info = (userInfo[AnyHashable("custom")] as! NSDictionary).value(forKey: "a") as! NSDictionary
+			if let type = info.value(forKey: "notification_type") {
+				if type as? Int == 0 || type as? Int == 1 {
+					tabBarVC.programmaticallyPressTabBarButton(atIndex: 3)
+				}
+			}
+			break
 		}
-		
 	}
 
 }
