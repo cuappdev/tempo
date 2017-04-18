@@ -98,7 +98,7 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		spotifyTitle = UILabel(frame: CGRect(x: 22, y:  30, width: 52, height: 18))
 		spotifyTitle.text = "SPOTIFY"
 		spotifyTitle.font = settingsFont
-		spotifyTitle.textColor = .sectionTitleGrey
+		spotifyTitle.textColor = .cellOffWhite
 		spotifyTitle.textAlignment = .left
 		spotifyTitle.sizeToFit()
 		view.addSubview(spotifyTitle)
@@ -174,7 +174,7 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		optionsTitle = UILabel(frame: CGRect(x: 22, y:  loginSpotifyButton.frame.origin.y + loginSpotifyButton.frame.height + sectionSpacing, width: 62.5, height: 20))
 		optionsTitle.text = "OPTIONS"
 		optionsTitle.font = settingsFont
-		optionsTitle.textColor = .sectionTitleGrey
+		optionsTitle.textColor = .cellOffWhite
 		optionsTitle.textAlignment = .left
 		optionsTitle.sizeToFit()
 		view.addSubview(optionsTitle)
@@ -233,7 +233,7 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		
 		//About Button
 		aboutButton = UIButton(frame: CGRect(x: 0, y:  enableMusicView.frame.origin.y + enableMusicView.frame.height + sectionSpacing, width: screenWidth, height: 50))
-		aboutButton.setTitleColor(.sectionTitleGrey, for: .normal)
+		aboutButton.setTitleColor(.cellOffWhite, for: .normal)
 		aboutButton.setTitle("About", for: .normal)
 		aboutButton.titleLabel?.font = settingsFont
 		aboutButton.backgroundColor = .tempoDarkGray
@@ -244,7 +244,7 @@ class SettingsScrollViewController: UIViewController, UIScrollViewDelegate {
 		
 		//Log out Tempo
 		logoutTempoButton = UIButton(frame: CGRect(x: 0, y:  aboutButton.frame.origin.y + aboutButton.frame.height + 1, width: screenWidth, height: 50))
-		logoutTempoButton.setTitleColor(.sectionTitleGrey, for: .normal)
+		logoutTempoButton.setTitleColor(.cellOffWhite, for: .normal)
 		logoutTempoButton.setTitle("Log Out", for: .normal)
 		logoutTempoButton.titleLabel?.font = settingsFont
 		logoutTempoButton.backgroundColor = .tempoDarkGray
