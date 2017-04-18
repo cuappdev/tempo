@@ -19,6 +19,7 @@ class NotificationTableViewCell: UITableViewCell {
 	var delegate: NotificationCellDelegate?
 	
 	var avatarImage = UIImageView()
+	var usernameLabel = UILabel()
 	var messageLabel = UILabel()
 	var descriptionLabel = UILabel()
 	var timeLabel = UILabel()
@@ -32,7 +33,7 @@ class NotificationTableViewCell: UITableViewCell {
 		
 		let width = UIScreen.main.bounds.width
 		
-		avatarImage.frame = CGRect(x: 10, y: 10, width: notificationCellHeight - 20, height: notificationCellHeight - 20)
+		avatarImage.frame = CGRect(x: 16, y: 10, width: notificationCellHeight - 20, height: notificationCellHeight - 20)
 		avatarImage.layer.cornerRadius = avatarImage.bounds.size.width / 2
 		avatarImage.clipsToBounds = true
 		contentView.addSubview(avatarImage)
@@ -40,24 +41,30 @@ class NotificationTableViewCell: UITableViewCell {
 		avatarImage.isUserInteractionEnabled = true
 		avatarImage.addGestureRecognizer(tapGestureRecognizer)
 		
-		let x = avatarImage.frame.maxX + 10
-		messageLabel.frame = CGRect(x: x, y: 8, width: width - (x+10), height: notificationCellHeight/2 - 8)
+		timeLabel.frame = CGRect(x: width - 40, y: 10, width: 20, height: notificationCellHeight - 20)
+		timeLabel.backgroundColor = .clear
+		timeLabel.textColor = .cellOffWhite
+		timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 13)
+		contentView.addSubview(timeLabel)
+		
+		let x = avatarImage.frame.maxX + 16
+		usernameLabel.frame = CGRect(x: x, y: 8, width: 50, height: notificationCellHeight/2 - 8)
+		usernameLabel.backgroundColor = .clear
+		usernameLabel.textColor = .white
+		usernameLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
+		contentView.addSubview(usernameLabel)
+		
+		messageLabel.frame = CGRect(x: x, y: 8, width: width - (x+50), height: notificationCellHeight/2 - 8)
 		messageLabel.backgroundColor = .clear
-		messageLabel.textColor = .white
-		messageLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
+		messageLabel.textColor = .cellOffWhite
+		messageLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
 		contentView.addSubview(messageLabel)
 		
 		descriptionLabel.frame = CGRect(x: x, y: notificationCellHeight/2, width: width - (x+50), height: notificationCellHeight/2 - 8)
 		descriptionLabel.backgroundColor = .clear
 		descriptionLabel.textColor = .cellOffWhite
-		descriptionLabel.font = UIFont(name: "AvenirNext-Medium", size: 13)
+		descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 13)
 		contentView.addSubview(descriptionLabel)
-		
-		timeLabel.frame = CGRect(x: width - 40, y: 10, width: 20, height: notificationCellHeight - 20)
-		timeLabel.backgroundColor = .clear
-		timeLabel.textColor = .cellOffWhite
-		timeLabel.font = UIFont(name: "AvenirNext-Medium", size: 14)
-		contentView.addSubview(timeLabel)
 		
 //		acceptButton.frame = CGRect(x: UIScreen.main.bounds.width - 100, y: 15, width: 80, height: notificationCellHeight - 30)
 //		acceptButton.backgroundColor = UIColor.tempoRed
@@ -91,17 +98,25 @@ class NotificationTableViewCell: UITableViewCell {
 		
 		avatarImage.hnk_setImageFromURL(user.imageURL)
 		
+		// Adjust label widths to match text content
+		usernameLabel.text = "@\(user.username)"
+		let oldFrame = usernameLabel.frame
+		usernameLabel.sizeToFit()
+		let newFrame = usernameLabel.frame
+		usernameLabel.frame = CGRect(origin: oldFrame.origin, size: CGSize(width: newFrame.width, height: oldFrame.height))
+		
+		messageLabel.frame = CGRect(x: usernameLabel.frame.maxX, y: 8, width: timeLabel.frame.minX - (usernameLabel.frame.maxX+10), height: usernameLabel.frame.height)
+		
 		if notification.type == .Like {
-			let songName = notification.message.components(separatedBy: ": ").last
-			messageLabel.text = "@\(user.username) liked your song"
+			let songName = notification.message.components(separatedBy: ": ").last?.components(separatedBy: "!").first
+			messageLabel.text =  " liked your song"
 			descriptionLabel.text = songName
-			timeLabel.text = "1h"
 			timeLabel.isHidden = false
 		} else {
-			messageLabel.text = "@\(user.username) is now following you"
+			messageLabel.text = ""
 			descriptionLabel.text = user.name
-			timeLabel.text = "2h"
 		}
+		timeLabel.text = notification.relativeDate()
 		updateCell()
 	}
 
