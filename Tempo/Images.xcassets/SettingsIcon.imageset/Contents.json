@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "AboutSidebarIcon.png",
+      "filename" : "Settings Icon 1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "AboutSidebarIcon@2x.png",
+      "filename" : "Settings Icon 2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "AboutSidebarIcon@3x.png",
+      "filename" : "Settings Icon 3x.png",
       "scale" : "3x"
     }
   ],
