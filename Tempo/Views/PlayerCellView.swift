@@ -66,12 +66,10 @@ class PlayerCellView: ParentPlayerCellView {
 		let tapPoint = sender.location(in: self)
 		let separatorPoint = (addButton.frame.right.x + likeButton.frame.left.x) / 2
 		
-		if sender.state == .began {
+		if sender.state == .ended {
 			if (tapPoint.x > playToggleButton.frame.right.x + 12 && tapPoint.x < addButton.frame.left.x - 12) {
 				playerCenter.expandAccessoryViewController(animated: true)
-			}
-		} else if sender.state == .ended {
-			if (tapPoint.x < playToggleButton.frame.right.x + 12) {
+			} else if (tapPoint.x < playToggleButton.frame.right.x + 12) {
 				playToggleButtonClicked()
 			} else if (tapPoint.x > addButton.frame.left.x - 12 && tapPoint.x < separatorPoint) {
 				addButtonClicked()
