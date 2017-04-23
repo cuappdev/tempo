@@ -54,6 +54,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		tableView.rowHeight = 89
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
+		tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(sender:))))
 		
 		searchBarContainer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: searchBarHeight))
 		
@@ -279,4 +280,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		}) 
 	}
 	
+	func hideKeyboard(sender: UITapGestureRecognizer) {
+		searchBar.resignFirstResponder()
+	}
 }
