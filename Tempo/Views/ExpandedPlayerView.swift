@@ -49,7 +49,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	func setup(parent: PlayerCenter) {
 		backgroundColor = .tempoOffBlack
-		bottomButtonsView.backgroundColor = .tempoOffBlack
+		bottomButtonsView.backgroundColor = .clear
 		
 		// Setup gesture recognizers
 		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(expandedCellTapped(sender:)))
@@ -59,11 +59,11 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(progressPanned(gesture:)))
 		panGestureRecognizer?.delegate = self
 		panGestureRecognizer?.delaysTouchesBegan = false
-		addGestureRecognizer(panGestureRecognizer!)
+		bottomButtonsView.addGestureRecognizer(panGestureRecognizer!)
 		
-		let cellPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(collapsePan(gesture:)))
-		cellPanGestureRecognizer.delaysTouchesBegan = false
-		topViewContainer.addGestureRecognizer(cellPanGestureRecognizer)
+//		let cellPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(collapsePan(gesture:)))
+//		cellPanGestureRecognizer.delaysTouchesBegan = false
+//		topViewContainer.addGestureRecognizer(cellPanGestureRecognizer)
 		
 		playerCenter = parent
 		progressView.playerDelegate = playerCenter
@@ -224,24 +224,24 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		progressView.setNeedsDisplay()
 	}
 	
-	func collapsePan(gesture: UIPanGestureRecognizer) {
-		let translation = gesture.translation(in: self)
-		if gesture.state == .began || gesture.state == .changed {
-			let maxCenter = UIScreen.main.bounds.height - expandedPlayerHeight/2.0
-			
-			if translation.y > 0 || center.y > maxCenter {
-				center.y = center.y + translation.y < maxCenter ? maxCenter : center.y + translation.y
-			}
-			gesture.setTranslation(CGPoint.zero, in: self)
-		}
-		
-		if gesture.state == .ended {
-			let velocity = gesture.velocity(in: self)
-			playerCenter.animateExpandedCell(isExpanding: velocity.y < 0)
-			initialPanView = nil
-		}
-		setNeedsDisplay()
-	}
+//	func collapsePan(gesture: UIPanGestureRecognizer) {
+//		let translation = gesture.translation(in: self)
+//		if gesture.state == .began || gesture.state == .changed {
+//			let maxCenter = UIScreen.main.bounds.height - expandedPlayerHeight/2.0
+//			
+//			if translation.y > 0 || center.y > maxCenter {
+//				center.y = center.y + translation.y < maxCenter ? maxCenter : center.y + translation.y
+//			}
+//			gesture.setTranslation(CGPoint.zero, in: self)
+//		}
+//		
+//		if gesture.state == .ended {
+//			let velocity = gesture.velocity(in: self)
+//			playerCenter.animateExpandedCell(isExpanding: velocity.y < 0)
+//			initialPanView = nil
+//		}
+//		setNeedsDisplay()
+//	}
 	
 	override func updatePlayToggleButton() {
 		if let selectedPost = post {

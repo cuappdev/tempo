@@ -314,6 +314,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		if let sectionIndex = postHistoryVC.postedDatesSections.index(of: date.yearMonthDay()) {
 			postHistoryVC.sectionIndex = sectionIndex
+			postHistoryVC.rowIndex = 0
 		}
 		
 		calendarCollectionView.isUserInteractionEnabled = false

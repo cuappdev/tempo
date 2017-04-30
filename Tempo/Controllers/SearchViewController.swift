@@ -183,6 +183,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			selectSong(post, selectedCell?.postView)
 			selectedCell = cell
 		}
+		
+		cell.postView.updatePlayingStatus()
 	}
 	
     // MARK: - General Request Methods
