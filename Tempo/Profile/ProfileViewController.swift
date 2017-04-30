@@ -52,7 +52,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 			user = User.currentUser
 			
 			let settingsItem = UIBarButtonItem(image: UIImage(named: "SettingsIcon"), style: .plain, target: self, action: #selector(navigateToSettings))
-			settingsItem.imageInsets = UIEdgeInsets(top: 0, left: -13.0, bottom: 0, right: 13.0)
+			settingsItem.imageInsets = UIEdgeInsets(top: 0, left: -10.0, bottom: 0, right: 10.0)
 			navigationItem.rightBarButtonItem = settingsItem
 		}
 		
