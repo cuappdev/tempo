@@ -102,6 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		// Check if launched via push notification
 		if let options = launchOptions {
 			print("Options: \(options)")
+			// Problem here because FB user has not completed authentication/loading
 			toggleRootVC(toTabButton: 3)
 		} else {
 			toggleRootVC(toTabButton: 0)
@@ -239,17 +240,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+		let info = (userInfo[AnyHashable("custom")] as! NSDictionary).value(forKey: "a") as! NSDictionary
+		let type = info.value(forKey: "notification_type") as? Int
+		
 		switch application.applicationState {
 		case .active:
-			// TODO: Update unread notifications icon?
-			// tabBarVC.showNotificationBanner(userInfo)
+			if let type = type {
+				tabBarVC.animateNotificationTabBanner(forNotificationType: (type == 0) ? .Follower : .Like)
+			}
 			break
 		case .background, .inactive:
-			let info = (userInfo[AnyHashable("custom")] as! NSDictionary).value(forKey: "a") as! NSDictionary
-			if let type = info.value(forKey: "notification_type") {
-				if type as? Int == 0 || type as? Int == 1 {
-					tabBarVC.programmaticallyPressTabBarButton(atIndex: 3)
-				}
+			if let type = type, type == 0 || type == 1 {
+				tabBarVC.programmaticallyPressTabBarButton(atIndex: 3)
 			}
 			break
 		}

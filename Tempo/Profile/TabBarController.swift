@@ -1,7 +1,7 @@
 
 import UIKit
 
-class TabBarController: UIViewController, NotificationDelegate {
+class TabBarController: UIViewController, NotificationDelegate, UIGestureRecognizerDelegate {
 	
 	static let sharedInstance = TabBarController()
     
@@ -18,6 +18,15 @@ class TabBarController: UIViewController, NotificationDelegate {
     var accessoryViewController: TabBarAccessoryViewController?
     
     var tabBarIsHidden: Bool = false
+	
+	let notificationTabBanner = UIView()
+	let notificationBannerImage = UIImageView()
+	let notificationTabIndicator = UIView()
+	var unreadNotificationCount: Int = 0 {
+		didSet {
+			updateNotificationTabIndicator()
+		}
+	}
     
     // Tab to present on viewDidLoad
     var preselectedTabIndex = 0
@@ -53,8 +62,36 @@ class TabBarController: UIViewController, NotificationDelegate {
         
         let tabBarButtonWidth = view.frame.width / CGFloat(numberOfTabs)
         var xOffset: CGFloat = 0.0
-        for i in 0 ..< numberOfTabs {
-            
+		for i in 0 ..< numberOfTabs {
+			
+			// Initialize notification tab indicator and banner
+			if i == 3 {
+				notificationTabBanner.frame = CGRect(x: xOffset, y: -tabBarHeight, width: tabBarButtonWidth, height: tabBarHeight)
+				notificationTabBanner.backgroundColor = .clear
+				notificationTabBanner.layer.opacity = 0
+				
+				notificationBannerImage.frame = CGRect(x: 10, y: 20, width: tabBarButtonWidth-20, height: tabBarHeight-14)
+				notificationBannerImage.image = #imageLiteral(resourceName: "LikeAlert")
+				
+				notificationTabBanner.addSubview(notificationBannerImage)
+				
+				tabBarContainerView.addSubview(notificationTabBanner)
+				tabBarContainerView.clipsToBounds = false
+				
+				let frame = CGRect(x: xOffset, y: 0, width: tabBarButtonWidth, height: tabBarHeight)
+				let notificationTabView = UIView(frame: frame)
+				notificationTabView.backgroundColor = .clear
+				notificationTabView.isUserInteractionEnabled = false
+				
+				notificationTabIndicator.frame = CGRect(x: (frame.width/2) - 2.5, y: frame.height - 10, width: 5, height: 5)
+				notificationTabIndicator.backgroundColor = .tempoRed
+				notificationTabIndicator.layer.cornerRadius = 2.5
+				notificationTabIndicator.isHidden = true
+				
+				notificationTabView.addSubview(notificationTabIndicator)
+				tabBarContainerView.addSubview(notificationTabView)
+			}
+			
             let newTabBarButton = UIButton(frame: CGRect(x: xOffset,
                                                          y: 0,
                                                          width: tabBarButtonWidth,
@@ -69,8 +106,8 @@ class TabBarController: UIViewController, NotificationDelegate {
             
             tabBarContainerView.addSubview(newTabBarButton)
             
-            tabBarButtons.append(newTabBarButton)
-            
+			tabBarButtons.append(newTabBarButton)
+			
             xOffset += tabBarButtonWidth
         }
         
@@ -181,6 +218,28 @@ class TabBarController: UIViewController, NotificationDelegate {
         
         tabBarIsHidden = true
     }
+	
+	// Animate notification banner with proper image
+	func animateNotificationTabBanner(forNotificationType type: NotificationType) {
+		let hideCompletion: (Bool) -> Void = { _ in
+			UIView.animate(withDuration: 0.3, delay: 2.0, options: .curveEaseInOut, animations: {
+				self.notificationTabBanner.layer.opacity = 0
+			}, completion: nil)
+		}
+		
+		notificationBannerImage.image = (type == .Like) ? #imageLiteral(resourceName: "LikeAlert") : #imageLiteral(resourceName: "FollowerAlert")
+		
+		UIView.animate(withDuration: 0.2, animations: {
+			self.notificationTabBanner.layer.opacity = 1.0
+		}, completion: hideCompletion)
+		
+		unreadNotificationCount += 1
+	}
+	
+	// Show and hide notification tab indicator
+	func updateNotificationTabIndicator() {
+		notificationTabIndicator.isHidden = (unreadNotificationCount < 1)
+	}
 	
 	// MARK: - Notification Delegate
 	

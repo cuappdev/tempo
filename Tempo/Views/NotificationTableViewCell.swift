@@ -23,7 +23,7 @@ class NotificationTableViewCell: UITableViewCell {
 	var messageLabel = UILabel()
 	var descriptionLabel = UILabel()
 	var timeLabel = UILabel()
-	var seenView = UIView()
+	var unreadIndicator = UIView()
 //	var acceptButton = UIButton()
 	var customSeparator = UIView()
 	var seen = false
@@ -75,10 +75,10 @@ class NotificationTableViewCell: UITableViewCell {
 //		acceptButton.isHidden = true
 //		contentView.addSubview(acceptButton)
 		
-		seenView.frame = CGRect(x: width - 15, y: notificationCellHeight/2 - 5, width: 10, height: 10)
-		seenView.layer.cornerRadius = 5
-		seenView.backgroundColor = .clear
-		contentView.addSubview(seenView)
+		unreadIndicator.frame = CGRect(x: width - 14, y: notificationCellHeight/2 - 4, width: 8, height: 8)
+		unreadIndicator.layer.cornerRadius = 4
+		unreadIndicator.backgroundColor = .clear
+		contentView.addSubview(unreadIndicator)
 		
 		customSeparator.frame = CGRect(x: 0, y: notificationCellHeight-1, width: UIScreen.main.bounds.width, height: 1)
 		customSeparator.backgroundColor = .readCellColor
@@ -118,21 +118,26 @@ class NotificationTableViewCell: UITableViewCell {
 			descriptionLabel.text = user.name
 		}
 		timeLabel.text = notification.relativeDate()
+		
 		updateCell()
+		markAsSeen()
 	}
 
 	func markAsSeen() {
 		if !seen {
-			API.sharedAPI.checkNotification(notification.id!) {
-				self.notification.seen = $0
-				self.seen = $0
-				self.updateCell()
-			}
+			API.sharedAPI.checkNotification(notification.id!, completion: { (success) in
+				if success {
+					TabBarController.sharedInstance.unreadNotificationCount -= 1
+					self.notification.seen = true
+					self.seen = true
+					self.updateCell()
+				}
+			})
 		}
 	}
 	
 	func updateCell() {
-		seenView.backgroundColor = seen ? .clear : .notificationYellow
+		unreadIndicator.backgroundColor = seen ? .clear : .tempoRed
 	}
 	
 	func didTapAvatarImage(_ : UITapGestureRecognizer) {

@@ -13,7 +13,6 @@ let notificationCellHeight: CGFloat = 60
 class NotificationCenterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate, NotificationDelegate {
 	
 	var notifications: [NotificationType : [TempoNotification]]!
-	var unreadNotificationCount = 0
 	let length = 40
 	var page = 0
 	let postHistoryVC = PostHistoryTableViewController()
@@ -35,24 +34,8 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
         title = "Notifications"
 		view.backgroundColor = .readCellColor
 		
-		initializeTableView()
 		
-		notifications = [NotificationType : [TempoNotification]]()
-		notifications[.Follower] = []
-		notifications[.Like] = []
-		
-		activityIndicatorView.center = view.center
-		refreshNotifications()
-	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		
-		let _ = notConnected(true)
-	}
-	
-	func initializeTableView() {
-		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - tabBarHeight - miniPlayerHeight))
+		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - tabBarHeight - miniPlayerHeight - notificationCellHeight))
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.backgroundColor = .readCellColor
@@ -64,8 +47,22 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		refreshControl = customRefresh.refreshControl
 		tableView.insertSubview(refreshControl, belowSubview: tableView.getScrollView()!)
 		view.addSubview(tableView)
+		
+		notifications = [NotificationType : [TempoNotification]]()
+		notifications[.Follower] = []
+		notifications[.Like] = []
+		
+		activityIndicatorView.center = tableView.center
+		
+		refreshNotifications()
 	}
 	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		let _ = notConnected(true)
+	}
+
 	func refreshNotifications() {
 		// Finished refreshing gets set to true when each api call returns
 		var finishedRefreshingNotifs = false
@@ -79,11 +76,12 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		// PROBLEM: On first load from push notification these api calls dont work...
 		
 		API.sharedAPI.fetchPosts(User.currentUser.id) { (posts) in
+			finishedRefreshingHistory = true
+			
 			self.postHistoryVC.posts = posts
 			self.postHistoryVC.postedDates = posts.map { $0.date! }
 			self.postHistoryVC.filterPostedDatesToSections(self.postHistoryVC.postedDates)
 			self.postHistoryVC.songLikes = posts.map{ $0.likes }
-			finishedRefreshingHistory = true
 			
 			if (finishedRefreshingNotifs) {
 				DispatchQueue.main.async {
@@ -95,11 +93,12 @@ class NotificationCenterViewController: UIViewController, UITableViewDelegate, U
 		API.sharedAPI.fetchNotifications(User.currentUser.id, length: length, page: page) { (notifs) in
 			self.notifications[.Follower] = []
 			self.notifications[.Like] = []
-			self.unreadNotificationCount = 0
+			var unreadNotifs = 0
 			for notif in notifs {
 				self.notifications[notif.type]?.append(notif)
-				if !notif.seen! { self.unreadNotificationCount += 1 }
+				if !notif.seen! { unreadNotifs += 1 }
 			}
+			TabBarController.sharedInstance.unreadNotificationCount = unreadNotifs
 			finishedRefreshingNotifs = true
 			
 			if (finishedRefreshingHistory) {
