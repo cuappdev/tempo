@@ -23,7 +23,6 @@ class FeedPostView: PostView {
 	@IBOutlet var addButton: UIButton?
 	
 	@IBOutlet weak var albumImageView: UIImageView?
-	//add drop shadow to image
 	//style musicbg to have rounded edges
 	@IBOutlet weak var songTitleLabel: UILabel?
 	@IBOutlet weak var artistLabel: UILabel?
@@ -60,6 +59,12 @@ class FeedPostView: PostView {
 				avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
 				avatarImageView?.layer.cornerRadius = 20
 				avatarImageView?.layer.masksToBounds = true
+				
+				albumImageView?.layer.shadowOpacity = 0.6
+				albumImageView?.layer.shadowRadius = 1.0
+				albumImageView?.layer.shadowOffset = CGSize(width: 2, height: 2)
+				albumImageView?.layer.shadowColor = UIColor.black.cgColor
+				albumImageView?.clipsToBounds = false
 				
 				albumImageView?.hnk_setImageFromURL(post.song.largeArtworkURL ?? URL(fileURLWithPath: ""))
 				

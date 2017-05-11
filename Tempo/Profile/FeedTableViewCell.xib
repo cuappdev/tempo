@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="209"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="208"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="208.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJt-Cq-8SO" customClass="FeedPostView" customModule="Tempo" customModuleProvider="target">
@@ -97,10 +97,10 @@
                                         <color key="textColor" red="0.74111062288284302" green="0.74121862649917603" blue="0.74108701944351196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CorrectIcon" translatesAutoresizingMaskIntoConstraints="NO" id="WT2-GR-nSs">
-                                        <rect key="frame" x="96" y="56" width="18" height="19"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SpotifyIcon" translatesAutoresizingMaskIntoConstraints="NO" id="WT2-GR-nSs">
+                                        <rect key="frame" x="96" y="56" width="19" height="19"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="18" id="tiJ-FE-hNX"/>
+                                            <constraint firstAttribute="width" constant="19" id="tiJ-FE-hNX"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vCo-6P-M3s" userLabel="Add Button">
@@ -117,7 +117,7 @@
                                     <constraint firstItem="uOI-Pn-Mde" firstAttribute="leading" secondItem="xYi-Fc-K3J" secondAttribute="leading" id="7YU-2Q-O4t"/>
                                     <constraint firstAttribute="trailing" secondItem="uOI-Pn-Mde" secondAttribute="trailing" constant="38" id="CFU-qb-FN1"/>
                                     <constraint firstItem="jby-bo-him" firstAttribute="top" secondItem="yLv-yn-Xd7" secondAttribute="top" constant="12" id="DtL-LR-Stl"/>
-                                    <constraint firstItem="vCo-6P-M3s" firstAttribute="leading" secondItem="WT2-GR-nSs" secondAttribute="trailing" constant="6" id="GrX-cE-Lsz"/>
+                                    <constraint firstItem="vCo-6P-M3s" firstAttribute="leading" secondItem="WT2-GR-nSs" secondAttribute="trailing" constant="5" id="GrX-cE-Lsz"/>
                                     <constraint firstItem="jby-bo-him" firstAttribute="top" secondItem="uOI-Pn-Mde" secondAttribute="top" id="IEw-Ue-O9D"/>
                                     <constraint firstItem="vCo-6P-M3s" firstAttribute="centerY" secondItem="WT2-GR-nSs" secondAttribute="centerY" id="Ke7-x0-z5I"/>
                                     <constraint firstItem="jby-bo-him" firstAttribute="centerY" secondItem="yLv-yn-Xd7" secondAttribute="centerY" id="MPO-TL-c8k"/>
@@ -211,7 +211,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="CorrectIcon" width="21" height="21"/>
         <image name="LikeButton" width="42" height="38"/>
+        <image name="SpotifyIcon" width="12" height="12"/>
     </resources>
 </document>
