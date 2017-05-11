@@ -15,12 +15,18 @@ class FeedPostView: PostView {
 	fileprivate var longPressGestureRecognizer: UILongPressGestureRecognizer?
 	@IBOutlet var profileNameLabel: UILabel?
 	@IBOutlet var avatarImageView: UIImageView?
-	@IBOutlet var descriptionLabel: UILabel?
+	//@IBOutlet var descriptionLabel: UILabel?
 	@IBOutlet var dateLabel: UILabel?
 //	@IBOutlet var spacingConstraint: NSLayoutConstraint?
 	@IBOutlet var likesLabel: UILabel?
 	@IBOutlet var likedButton: UIButton?
 	@IBOutlet var addButton: UIButton?
+	
+	@IBOutlet weak var albumImageView: UIImageView?
+	//add drop shadow to image
+	//style musicbg to have rounded edges
+	@IBOutlet weak var songTitleLabel: UILabel?
+	@IBOutlet weak var artistLabel: UILabel?
 	
 	let fillColor = UIColor.tempoDarkGray
  
@@ -37,20 +43,25 @@ class FeedPostView: PostView {
 				switch type {
 				case .feed:
 					profileNameLabel?.text = "\(post.user.firstName) \(post.user.shortenLastName())"
-					descriptionLabel?.text = "\(post.song.title)\n\(post.song.artist)"
-					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
+					songTitleLabel?.text = "\(post.song.title)"
+					artistLabel?.text = "\(post.song.artist)"
+					likesLabel?.text = "\(post.likes)"
 					let imageName = post.isLiked ? "LikedButton" : "LikeButton"
 					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
 					dateLabel?.text = post.relativeDate()
 				case .history:
 					profileNameLabel?.text = post.song.title
-					descriptionLabel?.text = post.song.artist
+					artistLabel?.text = post.song.artist
 					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
 					let imageName = post.isLiked ? "LikedButton" : "LikeButton"
 					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
 				}
 				
-				avatarImageView?.hnk_setImageFromURL(post.song.smallArtworkURL ?? URL(fileURLWithPath: ""))
+				avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
+				avatarImageView?.layer.cornerRadius = 20
+				avatarImageView?.layer.masksToBounds = true
+				
+				albumImageView?.hnk_setImageFromURL(post.song.largeArtworkURL ?? URL(fileURLWithPath: ""))
 				
 				//! TODO: Write something that makes this nice and relative
 				//! that updates every minute
@@ -98,6 +109,10 @@ class FeedPostView: PostView {
 		avatarImageView?.clipsToBounds = true
 		isUserInteractionEnabled = true
 		avatarImageView?.isUserInteractionEnabled = true
+		
+		albumImageView?.clipsToBounds = true
+		isUserInteractionEnabled = true
+		albumImageView?.isUserInteractionEnabled = true
 		profileNameLabel?.isUserInteractionEnabled = true
 		
 		layer.borderColor = UIColor.tempoDarkGray.cgColor
@@ -121,7 +136,8 @@ class FeedPostView: PostView {
 	
 	// Customize view to be able to re-use it for search results.
 	func flagAsSearchResultPost() {
-		descriptionLabel?.text = post!.song.title + " · " + post!.song.album
+		songTitleLabel?.text = post!.song.title
+		artistLabel?.text = post!.song.album
 	}
 	
 	override func updateProfileLabel() {
@@ -183,7 +199,7 @@ class FeedPostView: PostView {
 	func updateLikedStatus() {
 		if let post = post {
 			let name = post.isLiked ? "LikedButton" : "LikeButton"
-			likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
+			likesLabel?.text = "\(post.likes)"
 			likedButton?.setBackgroundImage(UIImage(named: name), for: .normal)
 		}
 	}
@@ -191,9 +207,8 @@ class FeedPostView: PostView {
 	func updateAddStatus() {
 		if let post = post {
 			songStatus = SpotifyController.sharedController.getSongStatus(post: post)
-			let image = songStatus == .saved ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
-			addButton?.setBackgroundImage(image, for: .normal)
+			let savedText = songStatus == .saved ? "Saved to Spotify" : "Save to Spotify"
+			addButton?.setTitle(savedText, for: .normal)
 		}
 	}
 }
-

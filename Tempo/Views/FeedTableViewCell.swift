@@ -18,7 +18,8 @@ class FeedTableViewCell: PostTableViewCell {
     @IBOutlet weak var imageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var likeButtonBottomConstraint: NSLayoutConstraint!
-    
+	@IBOutlet weak var musicBackground: UIView!
+	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
@@ -26,6 +27,7 @@ class FeedTableViewCell: PostTableViewCell {
 		separator.backgroundColor = .readCellColor
 		initialsLabel.isHidden = true
 		initialsView.isHidden = true
+		musicBackground.layer.cornerRadius = 6
 //		separatorHeight.constant = 1
 	}
 	

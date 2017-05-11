@@ -47,7 +47,7 @@ class FeedViewController: PlayerTableViewController, SongSearchDelegate, FeedFol
 		view.isUserInteractionEnabled = false
 		
 		tableView.tableHeaderView = nil
-		tableView.rowHeight = 111
+		tableView.rowHeight = 209
 		tableView.showsVerticalScrollIndicator = false
 		refreshControl = customRefresh.refreshControl
 		tableView.insertSubview(refreshControl, belowSubview: tableView.getScrollView()!)
