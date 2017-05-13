@@ -83,6 +83,10 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		underlineTabBarView = UnderlineTabBarView(frame: CGRect(x: 0, y: profileHeaderView.frame.bottom.y, width: view.bounds.width, height: underlineTabBarHeight))
 		underlineTabBarView.delegate = self
+		
+		// Disable and hide until fully implemented
+		underlineTabBarView.isHidden = true
+		underlineTabBarView.isUserInteractionEnabled = false
 
 		// Set up profile calendar
 		let layout = HipStickyHeaderFlowLayout()
@@ -90,7 +94,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		layout.minimumInteritemSpacing = 0
 		layout.minimumLineSpacing = 0
 
-		calendarCollectionView = UICollectionView(frame: CGRect(x: 0, y: underlineTabBarView.frame.bottom.y, width: view.frame.width, height: view.frame.height), collectionViewLayout: layout)
+		calendarCollectionView = UICollectionView(frame: CGRect(x: 0, y: profileHeaderView.frame.bottom.y, width: view.frame.width, height: view.frame.height), collectionViewLayout: layout)
 		calendarCollectionView.delegate = self
 		calendarCollectionView.dataSource = self
 		calendarCollectionView.backgroundColor = .profileBackgroundBlack
