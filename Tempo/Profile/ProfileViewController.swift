@@ -109,11 +109,11 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		justLoaded ? justLoaded = false : setupUserUI()
 		
 		profileHeaderView.nameLabel.isHidden = notConnected(true)
-		profileHeaderView.usernameButton.isHidden = notConnected(false)
+		profileHeaderView.usernameLabel.isHidden = notConnected(false)
 		
 		calendarCollectionView.isUserInteractionEnabled = true
-		profileHeaderView.followingButton.isEnabled = true
-		profileHeaderView.followersButton.isEnabled = true
+//		profileHeaderView.followingButton.isEnabled = true
+//		profileHeaderView.followersButton.isEnabled = true
 		navigationItem.rightBarButtonItem?.isEnabled = true
 	}
 	
@@ -152,14 +152,14 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 			}
 			
 			profileHeaderView.nameLabel.text = "\(user.firstName) \(user.shortenLastName())"
-			profileHeaderView.usernameButton.setTitle("@\(user.username)", for: .normal)
+			profileHeaderView.usernameLabel.text = "@\(user.username)"
 			
 			profileHeaderView.profileImageView.hnk_setImageFromURL(user.imageURL)
 			profileHeaderView.profileBackgroundImageView.hnk_setImageFromURL(user.imageURL)
 
 			if User.currentUser.username == user.username {
 				title = "My Profile"
-				profileHeaderView.profileButton.setTitle("EDIT", for: .normal)
+				profileHeaderView.profileButton.setTitle("Edit", for: .normal)
 				profileHeaderView.profileButton.addTarget(self, action: #selector(userHandleButtonClicked(sender:)), for: .touchUpInside)
 			} else {
 				title = "Profile"
@@ -175,7 +175,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	
 	func updateProfileInfoUI() {
 		if User.currentUser.username != user.username {
-			profileHeaderView.profileButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
+			profileHeaderView.profileButton.setTitle(user.isFollowing ? "Following" : "Follow", for: UIControlState())
 			profileHeaderView.profileButton.backgroundColor = (user.isFollowing) ? .clear : .tempoRed
 		}
 		
@@ -189,8 +189,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		followersVC.displayType = displayType
 		followersVC.user = user
 		followersVC.title = String(describing: displayType)
-		profileHeaderView.followersButton.isEnabled = false
-		profileHeaderView.followingButton.isEnabled = false
+		profileHeaderView.isWrapperInterationEnabled = false
 		navigationController?.pushViewController(followersVC, animated: true)
 	}
 	
@@ -245,7 +244,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 				if newUsername.lowercased() != oldUsername.lowercased() {
 					API.sharedAPI.updateCurrentUser(newUsername) { success in
 						if success {
-							self.profileHeaderView.usernameButton.setTitle("@\(User.currentUser.username)", for: .normal)
+							self.profileHeaderView.usernameLabel.text = "@\(User.currentUser.username)"
 						} else {
 							self.showErrorAlert("Sorry!", message: "Username is taken.", actionTitle: "Try again")
 						}
@@ -265,7 +264,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	
 	//TO DO: PREVENT MULTIPLE CLICKS !!!
 	func navigateToSettings() {
-		print("go to settings!!")
 		navigationItem.rightBarButtonItem?.isEnabled = false
 		navigationController?.pushViewController(SettingsScrollViewController.sharedInstance, animated: true)
 	}
