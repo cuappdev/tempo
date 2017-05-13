@@ -19,7 +19,6 @@ class ProfileHeaderView: UIView, UIGestureRecognizerDelegate {
 	
 	let profileImageLength: CGFloat = 85
 	let profileContainerHeight: CGFloat = 170
-	let buttonsContainerHeight: CGFloat = 50
 	let profileButtonHeight: CGFloat = 30
 	
 	var profileContainerView: UIView!
@@ -40,18 +39,6 @@ class ProfileHeaderView: UIView, UIGestureRecognizerDelegate {
 	
 	var tapGestureRecognizer: UITapGestureRecognizer!
 	
-	var buttonsContainerView: UIView!
-	var buttons: [UIButton]!
-	var buttonControllers: [UIViewController] = []
-	var currentButtonIndex = 0 {
-		didSet {
-			if currentButtonIndex != oldValue {
-				miniNavigationButtonPressed(atIndex: currentButtonIndex)
-			}
-		}
-	}
-	var buttonsHighlightView: UIView!
-	
 	var delegate: ProfileHeaderViewDelegate?
 	
 	let fontSize = iPhone5 ? 11.0 : 13.0
@@ -60,7 +47,6 @@ class ProfileHeaderView: UIView, UIGestureRecognizerDelegate {
 		super.init(frame: frame)
 		
 		setUpProfileContainerView()
-		setUpButtonsContainerView()
 	}
 	
 	override func layoutSubviews() {
@@ -71,7 +57,6 @@ class ProfileHeaderView: UIView, UIGestureRecognizerDelegate {
 		profileContainerView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: profileContainerHeight))
 		profileContainerView.backgroundColor = .unreadCellColor
 		
-		// TODO: Add initials view
 		profileBackgroundImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: profileContainerView.frame.width, height: profileContainerView.frame.height))
 		profileBackgroundImageView.center.x = profileContainerView.bounds.midX
 		profileBackgroundImageView.clipsToBounds = true
@@ -163,53 +148,6 @@ class ProfileHeaderView: UIView, UIGestureRecognizerDelegate {
 		addSubview(profileContainerView)
 	}
 	
-	func setUpButtonsContainerView() {
-		
-		// Buttons Container View
-		buttonsContainerView = UIView(frame: CGRect(x: 0, y: profileContainerView.frame.maxY, width: bounds.width, height: buttonsContainerHeight))
-		buttonsContainerView.backgroundColor = .black
-		
-		let buttonWidth = bounds.width / 3.0
-		let buttonFont = UIFont(name: "AvenirNext-Medium", size: CGFloat(fontSize))
-		
-		let postsButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonsContainerHeight))
-		postsButton.setTitle("POSTS", for: .normal)
-		postsButton.setTitleColor(.redTintedWhite, for: .normal)
-		postsButton.setTitleColor(.tempoRed, for: .selected)
-		postsButton.titleLabel?.font = buttonFont
-		postsButton.titleLabel?.textAlignment = .center
-		postsButton.addTarget(self, action: #selector(postsButtonPressed), for: .touchUpInside)
-		
-		let calendarButton = UIButton(frame: CGRect(x: buttonWidth, y: 0, width: buttonWidth, height: buttonsContainerHeight))
-		calendarButton.setTitle("CALENDAR", for: .normal)
-		calendarButton.setTitleColor(.redTintedWhite, for: .normal)
-		calendarButton.setTitleColor(.tempoRed, for: .selected)
-		calendarButton.titleLabel?.font = buttonFont
-		calendarButton.titleLabel?.textAlignment = .center
-		calendarButton.addTarget(self, action: #selector(calendarButtonPressed), for: .touchUpInside)
-		
-		let likesButton = UIButton(frame: CGRect(x: 2 * buttonWidth, y: 0, width: buttonWidth, height: buttonsContainerHeight))
-		likesButton.setTitle("LIKES", for: .normal)
-		likesButton.setTitleColor(.redTintedWhite, for: .normal)
-		likesButton.setTitleColor(.tempoRed, for: .selected)
-		likesButton.titleLabel?.font = buttonFont
-		likesButton.titleLabel?.textAlignment = .center
-		likesButton.addTarget(self, action: #selector(likesButtonPressed), for: .touchUpInside)
-		
-		buttonsHighlightView = UIView(frame: CGRect(x: 0, y: buttonsContainerHeight - 12.0, width: buttonWidth * 2.0 / 3.0, height: 2.0))
-		buttonsHighlightView.center.x = buttonsContainerView.center.x
-		buttonsHighlightView.backgroundColor = .tempoRed
-		
-		buttons = [postsButton, calendarButton, likesButton]
-		buttonsContainerView.addSubview(postsButton)
-		buttonsContainerView.addSubview(calendarButton)
-		buttonsContainerView.addSubview(likesButton)
-		buttonsContainerView.addSubview(buttonsHighlightView)
-		addSubview(buttonsContainerView)
-		
-		miniNavigationButtonPressed(atIndex: 1)
-	}
-	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -232,31 +170,6 @@ class ProfileHeaderView: UIView, UIGestureRecognizerDelegate {
 				delegate.hipsterScoreButtonPressed()
 			}
 		}
-	}
-	
-	func postsButtonPressed() {
-		currentButtonIndex = 0
-	}
-	
-	func calendarButtonPressed() {
-		currentButtonIndex = 1
-	}
-	
-	func likesButtonPressed() {
-		currentButtonIndex = 2
-	}
-	
-	// Handle mini navigation button action
-	func miniNavigationButtonPressed(atIndex index: Int) {
-		
-		for i in 0...2 {
-			buttons[i].isSelected = (index == i)
-		}
-		
-		UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
-			self.buttonsHighlightView.center.x = self.buttons[index].center.x
-		}, completion: nil)
-		
 	}
 	
 }

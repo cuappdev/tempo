@@ -20,10 +20,13 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 	}
 }
 
-class ProfileViewController: UIViewController, UIViewControllerTransitioningDelegate, ProfileHeaderViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ProfileViewController: UIViewController, UIViewControllerTransitioningDelegate, ProfileHeaderViewDelegate, UnderlineTabBarDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 	
-	let headerViewHeight: CGFloat = 320
+	let headerViewHeight: CGFloat = 170
+	let underlineTabBarHeight: CGFloat = 50
 	let postHistoryVC = PostHistoryTableViewController()
+	let calendarVC = UIViewController()
+	let likedVC = LikedTableViewController()
 	
     var user: User!
 	
@@ -41,6 +44,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	var justLoaded: Bool = true
 
 	var profileHeaderView: ProfileHeaderView!
+	var underlineTabBarView: UnderlineTabBarView!
 	var calendarCollectionView: UICollectionView!
 	var calendarCollectionViewDivider: UIView!
 	var activityIndicatorView: UIActivityIndicatorView!
@@ -73,9 +77,12 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		scrollView.showsVerticalScrollIndicator = false
 		view.addSubview(scrollView)
 		
-		// Set up profile header view
+		// Set up profile header view and underline tab bar view
 		profileHeaderView = ProfileHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: headerViewHeight))
 		profileHeaderView.delegate = self
+		
+		underlineTabBarView = UnderlineTabBarView(frame: CGRect(x: 0, y: profileHeaderView.frame.bottom.y, width: view.bounds.width, height: underlineTabBarHeight))
+		underlineTabBarView.delegate = self
 
 		// Set up profile calendar
 		let layout = HipStickyHeaderFlowLayout()
@@ -83,7 +90,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		layout.minimumInteritemSpacing = 0
 		layout.minimumLineSpacing = 0
 
-		calendarCollectionView = UICollectionView(frame: CGRect(x: 0, y: profileHeaderView.frame.bottom.y, width: view.frame.width, height: view.frame.height), collectionViewLayout: layout)
+		calendarCollectionView = UICollectionView(frame: CGRect(x: 0, y: underlineTabBarView.frame.bottom.y, width: view.frame.width, height: view.frame.height), collectionViewLayout: layout)
 		calendarCollectionView.delegate = self
 		calendarCollectionView.dataSource = self
 		calendarCollectionView.backgroundColor = .profileBackgroundBlack
@@ -98,6 +105,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		scrollView.addSubview(calendarCollectionView)
 		scrollView.addSubview(calendarCollectionViewDivider)
 		scrollView.addSubview(profileHeaderView)
+		scrollView.addSubview(underlineTabBarView)
 		scrollView.contentSize = CGSize(width: view.frame.width, height: profileHeaderView.frame.height + calendarCollectionView.frame.height)
 		
 		setupUserUI()
@@ -205,6 +213,11 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	
 	func followingButtonPressed() {
 		displayUsers(.Following)
+	}
+	
+	// MARK: - Underline Tab Bar View Delegate Method
+	func selectedTabBarDidChange(_ newIndex: Int) {
+		print("Show new VC for \(newIndex)")
 	}
 	
     // <------------------------FOLLOW BUTTONS------------------------>
