@@ -17,6 +17,7 @@
 		02803D4F1DC18524001D8F01 /* ExpandedPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02803D4E1DC18524001D8F01 /* ExpandedPlayerView.swift */; };
 		02803D511DC1855C001D8F01 /* ExpandedPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02803D501DC1855C001D8F01 /* ExpandedPlayerView.xib */; };
 		02A1C8871EC7A0030063DF42 /* UnderlineTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A1C8861EC7A0030063DF42 /* UnderlineTabBarView.swift */; };
+		02A1C8891EC7A8B50063DF42 /* ProfileTabbedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A1C8881EC7A8B50063DF42 /* ProfileTabbedPageViewController.swift */; };
 		1D1CC60D1C31BC0D0052F66D /* NSURLSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1CC60C1C31BC0D0052F66D /* NSURLSession+Shared.swift */; };
 		1D1DD7141AE492750066AB39 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1DD7121AE492750066AB39 /* Util.swift */; };
 		1D653F3E1B81451700F54455 /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D653F3D1B81451700F54455 /* SpotifyController.swift */; };
@@ -112,6 +113,7 @@
 		02803D4E1DC18524001D8F01 /* ExpandedPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandedPlayerView.swift; sourceTree = "<group>"; };
 		02803D501DC1855C001D8F01 /* ExpandedPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpandedPlayerView.xib; sourceTree = "<group>"; };
 		02A1C8861EC7A0030063DF42 /* UnderlineTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderlineTabBarView.swift; sourceTree = "<group>"; };
+		02A1C8881EC7A8B50063DF42 /* ProfileTabbedPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTabbedPageViewController.swift; sourceTree = "<group>"; };
 		1D1CC60C1C31BC0D0052F66D /* NSURLSession+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Shared.swift"; sourceTree = "<group>"; };
 		1D1DD7121AE492750066AB39 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		1D653F3D1B81451700F54455 /* SpotifyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 			isa = PBXGroup;
 			children = (
 				D1173FFF1AF8574400302FFD /* ProfileViewController.swift */,
+				02A1C8881EC7A8B50063DF42 /* ProfileTabbedPageViewController.swift */,
 				D17395721ADB080900A53AEE /* UsersViewController.swift */,
 			);
 			name = Profile;
@@ -589,6 +592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				027E4BBA1E9AE3EF00EB568A /* NotificationTableViewCell.swift in Sources */,
+				02A1C8891EC7A8B50063DF42 /* ProfileTabbedPageViewController.swift in Sources */,
 				1DCB961C1AED5F48007F6A4B /* API.swift in Sources */,
 				952E7EE01DEA89ED006C6131 /* LoginFlowViewController.swift in Sources */,
 				D148F4941AF03169009AB073 /* HipCalendarDayCollectionViewCell.swift in Sources */,

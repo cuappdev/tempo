@@ -49,10 +49,6 @@ class ProfileHeaderView: UIView, UIGestureRecognizerDelegate {
 		setUpProfileContainerView()
 	}
 	
-	override func layoutSubviews() {
-		
-	}
-	
 	func setUpProfileContainerView() {
 		profileContainerView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: profileContainerHeight))
 		profileContainerView.backgroundColor = .unreadCellColor
@@ -152,9 +148,7 @@ class ProfileHeaderView: UIView, UIGestureRecognizerDelegate {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	
-	// MARK: - Button Action Methods
-	
+	// MARK: - Button Action Handling
 	func headerViewPressed(sender: UITapGestureRecognizer) {
 		guard let delegate = delegate else { return }
 		
