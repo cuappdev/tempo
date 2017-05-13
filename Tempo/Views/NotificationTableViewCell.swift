@@ -41,13 +41,6 @@ class NotificationTableViewCell: UITableViewCell {
 		avatarImage.isUserInteractionEnabled = true
 		avatarImage.addGestureRecognizer(tapGestureRecognizer)
 		
-		timeLabel.frame = CGRect(x: width - 50, y: 10, width: 30, height: notificationCellHeight - 20)
-		timeLabel.backgroundColor = .clear
-		timeLabel.textColor = .cellOffWhite
-		timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 13)
-		timeLabel.textAlignment = .right
-		contentView.addSubview(timeLabel)
-		
 		let x = avatarImage.frame.maxX + 16
 		usernameLabel.frame = CGRect(x: x, y: 8, width: 50, height: notificationCellHeight/2 - 8)
 		usernameLabel.backgroundColor = .clear
@@ -75,7 +68,14 @@ class NotificationTableViewCell: UITableViewCell {
 //		acceptButton.isHidden = true
 //		contentView.addSubview(acceptButton)
 		
-		unreadIndicator.frame = CGRect(x: width - 14, y: notificationCellHeight/2 - 4, width: 8, height: 8)
+		timeLabel.frame = CGRect(x: width - 46, y: 10, width: 34, height: notificationCellHeight - 20)
+		timeLabel.backgroundColor = .clear
+		timeLabel.textColor = .cellOffWhite
+		timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 13)
+		timeLabel.textAlignment = .right
+		contentView.addSubview(timeLabel)
+		
+		unreadIndicator.frame = CGRect(x: width - 10, y: notificationCellHeight/2 - 4, width: 8, height: 8)
 		unreadIndicator.layer.cornerRadius = 4
 		unreadIndicator.backgroundColor = .clear
 		contentView.addSubview(unreadIndicator)
@@ -130,6 +130,7 @@ class NotificationTableViewCell: UITableViewCell {
 					TabBarController.sharedInstance.unreadNotificationCount -= 1
 					self.notification.seen = true
 					self.seen = true
+					Thread.sleep(forTimeInterval: 0.6)
 					self.updateCell()
 				}
 			})
