@@ -50,8 +50,9 @@ class FeedPostView: PostView {
 					dateLabel?.text = post.relativeDate()
 				case .history:
 					profileNameLabel?.text = post.song.title
-					artistLabel?.text = post.song.artist
-					likesLabel?.text = (post.likes == 1) ? "\(post.likes) like" : "\(post.likes) likes"
+					songTitleLabel?.text = post.song.artist
+					artistLabel?.text = ""
+					likesLabel?.text = "\(post.likes)"
 					let imageName = post.isLiked ? "LikedButton" : "LikeButton"
 					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
 				}
@@ -61,7 +62,7 @@ class FeedPostView: PostView {
 				avatarImageView?.layer.masksToBounds = true
 				
 				albumImageView?.layer.shadowOpacity = 0.6
-				albumImageView?.layer.shadowRadius = 1.0
+				albumImageView?.layer.shadowRadius = 3.0
 				albumImageView?.layer.shadowOffset = CGSize(width: 2, height: 2)
 				albumImageView?.layer.shadowColor = UIColor.black.cgColor
 				albumImageView?.clipsToBounds = false

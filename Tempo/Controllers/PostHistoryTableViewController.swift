@@ -35,7 +35,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		
 		tableView.register(UINib(nibName: "PostHistoryHeaderSectionCell", bundle: nil), forCellReuseIdentifier: "HeaderCell")
 		tableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
-		tableView.rowHeight = 111
+		tableView.rowHeight = 209
 		tableView.sectionHeaderHeight = 33
 		tableView.backgroundColor = .readCellColor
 		tableView.separatorStyle = .none
@@ -117,6 +117,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		cell.feedPostView?.postViewDelegate = self
 		cell.feedPostView?.playerDelegate = self
 		cell.setUpPostHistoryCell()
+		cell.feedPostView.updatePlayingStatus()
 		
 		transplantPlayerAndPostViewIfNeeded(cell: cell)
 		

@@ -40,7 +40,6 @@ class FeedTableViewCell: PostTableViewCell {
 		postView = feedPostView
 		initialsLabel.text = ""
 		feedPostView.dateLabel!.isHidden = true
-		feedPostView.avatarImageView?.layer.cornerRadius = 0
 //		imageViewWidthConstraint.constant = 60
 //		imageViewTopConstraint.constant = 25
 //		likeButtonBottomConstraint.constant = 48.5
