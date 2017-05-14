@@ -18,6 +18,8 @@ class PlayerCellView: ParentPlayerCellView {
 	@IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var progressView: ProgressView!
 	
+    @IBOutlet weak var addWidthConstraint: NSLayoutConstraint!
+	
 	func setup(parent: PlayerCenter) {
 		playerCenter = parent
 		backgroundColor = .tempoOffBlack
@@ -127,6 +129,12 @@ class PlayerCellView: ParentPlayerCellView {
 	override func updateAddButton() {
 		updateSavedStatus()
 		let image = (songStatus == .saved) ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
+		
+		if (songStatus == .saved){
+			addWidthConstraint.constant = 73
+		} else {
+            addWidthConstraint.constant = 61
+        }
 		addButton.setBackgroundImage(image, for: .normal)
 	}
 	
