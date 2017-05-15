@@ -36,7 +36,8 @@ class NotificationTableViewCell: UITableViewCell {
 		avatarImage.frame = CGRect(x: 16, y: 10, width: notificationCellHeight - 20, height: notificationCellHeight - 20)
 		avatarImage.layer.cornerRadius = avatarImage.bounds.size.width / 2
 		avatarImage.clipsToBounds = true
-		contentView.addSubview(avatarImage)
+		avatarImage.contentMode = .scaleAspectFill
+		
 		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapAvatarImage(_:)))
 		avatarImage.isUserInteractionEnabled = true
 		avatarImage.addGestureRecognizer(tapGestureRecognizer)
@@ -46,19 +47,16 @@ class NotificationTableViewCell: UITableViewCell {
 		usernameLabel.backgroundColor = .clear
 		usernameLabel.textColor = .white
 		usernameLabel.font = UIFont(name: "AvenirNext-Medium", size: 14)
-		contentView.addSubview(usernameLabel)
 		
 		messageLabel.frame = CGRect(x: x, y: 8, width: width - (x+50), height: notificationCellHeight/2 - 8)
 		messageLabel.backgroundColor = .clear
 		messageLabel.textColor = .cellOffWhite
 		messageLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
-		contentView.addSubview(messageLabel)
 		
 		descriptionLabel.frame = CGRect(x: x, y: notificationCellHeight/2, width: width - (x+50), height: notificationCellHeight/2 - 8)
 		descriptionLabel.backgroundColor = .clear
 		descriptionLabel.textColor = .cellOffWhite
 		descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 13)
-		contentView.addSubview(descriptionLabel)
 		
 //		acceptButton.frame = CGRect(x: UIScreen.main.bounds.width - 100, y: 15, width: 80, height: notificationCellHeight - 30)
 //		acceptButton.backgroundColor = UIColor.tempoRed
@@ -66,22 +64,27 @@ class NotificationTableViewCell: UITableViewCell {
 //		acceptButton.setAttributedTitle(NSAttributedString(string: "Accept", attributes: [NSForegroundColorAttributeName: UIColor.white]), for: .normal)
 //		acceptButton.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 14)
 //		acceptButton.isHidden = true
-//		contentView.addSubview(acceptButton)
 		
 		timeLabel.frame = CGRect(x: width - 46, y: 10, width: 34, height: notificationCellHeight - 20)
 		timeLabel.backgroundColor = .clear
 		timeLabel.textColor = .cellOffWhite
 		timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 13)
 		timeLabel.textAlignment = .right
-		contentView.addSubview(timeLabel)
 		
 		unreadIndicator.frame = CGRect(x: width - 10, y: notificationCellHeight/2 - 4, width: 8, height: 8)
 		unreadIndicator.layer.cornerRadius = 4
 		unreadIndicator.backgroundColor = .clear
-		contentView.addSubview(unreadIndicator)
 		
 		customSeparator.frame = CGRect(x: 0, y: notificationCellHeight-1, width: UIScreen.main.bounds.width, height: 1)
 		customSeparator.backgroundColor = .readCellColor
+		
+		contentView.addSubview(avatarImage)
+		contentView.addSubview(usernameLabel)
+		contentView.addSubview(messageLabel)
+		contentView.addSubview(descriptionLabel)
+//		contentView.addSubview(acceptButton)
+		contentView.addSubview(timeLabel)
+		contentView.addSubview(unreadIndicator)
 		contentView.addSubview(customSeparator)
 	}
 	
