@@ -39,22 +39,20 @@ class FeedPostView: PostView {
 	override var post: Post? {
 		didSet {
 			if let post = post {
+				
+				profileNameLabel?.text = "\(post.user.firstName) \(post.user.shortenLastName())"
+				songTitleLabel?.text = "\(post.song.title)"
+				artistLabel?.text = "\(post.song.artist)"
+				likesLabel?.text = "\(post.likes)"
+				
+				let imageName = post.isLiked ? "LikedButton" : "LikeButton"
+				likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
+
 				switch type {
 				case .feed:
-					profileNameLabel?.text = "\(post.user.firstName) \(post.user.shortenLastName())"
-					songTitleLabel?.text = "\(post.song.title)"
-					artistLabel?.text = "\(post.song.artist)"
-					likesLabel?.text = "\(post.likes)"
-					let imageName = post.isLiked ? "LikedButton" : "LikeButton"
-					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
 					dateLabel?.text = post.relativeDate()
 				case .history:
-					profileNameLabel?.text = post.song.title
-					songTitleLabel?.text = post.song.artist
-					artistLabel?.text = ""
-					likesLabel?.text = "\(post.likes)"
-					let imageName = post.isLiked ? "LikedButton" : "LikeButton"
-					likedButton?.setBackgroundImage(UIImage(named: imageName), for: .normal)
+					dateLabel?.text = ""
 				}
 				
 				avatarImageView?.hnk_setImageFromURL(post.user.imageURL)
