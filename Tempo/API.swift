@@ -18,7 +18,6 @@ private enum Router: URLConvertible {
 	case root
 	case validAuthenticate
 	case validUsername
-	case userSearch
 	case users(String)
 	case followers(String)
 	case following(String)
@@ -53,8 +52,6 @@ private enum Router: URLConvertible {
 				return "/spotify/sign_in_uri/"
 			case .validUsername:
 				return "/users/valid_username"
-			case .userSearch:
-				return "/users.json"
 			case .users(let userID):
 				return "/users/\(userID)"
 			case .followers(let userID):
@@ -169,7 +166,6 @@ class API {
 	}
 	
 	func getSpotifySignInURI(_ completion: @escaping (Bool, String?) -> Void) {
-		
 		let request = GetSpotifyLoginURI(sessionCode: sessionCode)
 		request.make()
 			.then { resp in
@@ -177,6 +173,17 @@ class API {
 			}
 			.catch { error in
 				completion(false, nil)
+			}
+	}
+	
+	func searchUsers(_ query: String, completion: @escaping ([User]) -> Void) {
+		let request = SearchUsers(q: query, sessionCode: sessionCode)
+		request.make()
+			.then { resp in
+				completion(resp.users)
+			}
+			.catch { error in
+				completion([])
 			}
 	}
 	
@@ -230,13 +237,6 @@ class API {
 		}
 		let changes = ["username": changedUsername]
 		put(.users(User.currentUser.id), params: ["user": changes as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: didSucceed)
-	}
-	
-	func searchUsers(_ username: String, completion: @escaping ([User]) -> Void) {
-		let map: ([String: [AnyObject]]) -> [User]? = {
-			$0["users"]?.map { User(json: JSON($0)) }
-		}
-		get(.userSearch, params: ["q": username as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: completion)
 	}
 	
 	func fetchUser(_ userID: String, completion: @escaping (User) -> Void) {

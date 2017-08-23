@@ -52,6 +52,7 @@
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
 		7F22ADA71F4DF527007CA76C /* GetSpotifyLoginURI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22ADA61F4DF527007CA76C /* GetSpotifyLoginURI.swift */; };
 		7F22ADA91F4DFB36007CA76C /* Neutron+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22ADA81F4DFB36007CA76C /* Neutron+Extensions.swift */; };
+		7F22ADAB1F4E129A007CA76C /* SearchUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22ADAA1F4E129A007CA76C /* SearchUsers.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
 		952E7EE01DEA89ED006C6131 /* LoginFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952E7EDF1DEA89ED006C6131 /* LoginFlowViewController.swift */; };
 		952E7EE21DEA8E6E006C6131 /* FacebookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952E7EE11DEA8E6E006C6131 /* FacebookLoginViewController.swift */; };
@@ -148,6 +149,7 @@
 		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		7F22ADA61F4DF527007CA76C /* GetSpotifyLoginURI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSpotifyLoginURI.swift; sourceTree = "<group>"; };
 		7F22ADA81F4DFB36007CA76C /* Neutron+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Neutron+Extensions.swift"; sourceTree = "<group>"; };
+		7F22ADAA1F4E129A007CA76C /* SearchUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUsers.swift; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; usesTabs = 1; };
 		952E7EDF1DEA89ED006C6131 /* LoginFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginFlowViewController.swift; sourceTree = "<group>"; };
 		952E7EE11DEA8E6E006C6131 /* FacebookLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookLoginViewController.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				7F22ADA61F4DF527007CA76C /* GetSpotifyLoginURI.swift */,
+				7F22ADAA1F4E129A007CA76C /* SearchUsers.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -617,6 +620,7 @@
 				60C018061D9C7A2E00FE5166 /* AboutViewController.swift in Sources */,
 				1D1DD7141AE492750066AB39 /* Util.swift in Sources */,
 				6035E7881DE8017300221870 /* ParentPlayerCellView.swift in Sources */,
+				7F22ADAB1F4E129A007CA76C /* SearchUsers.swift in Sources */,
 				9563B5541DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift in Sources */,
 				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
 				1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */,
