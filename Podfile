@@ -14,6 +14,7 @@ target 'Tempo' do
 	pod 'SwiftyJSON'
 	pod 'SWRevealViewController'
 	pod 'Tweaks'
+    pod 'Neutron'
 end
 
 post_install do |installer|

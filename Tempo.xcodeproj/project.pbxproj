@@ -50,6 +50,8 @@
 		6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */; };
 		6DA5FE4D1AED72F800E795DD /* UIColor+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA5FE4C1AED72F800E795DD /* UIColor+Shared.swift */; };
 		6DEE0FDA1AC34811005552F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEE0FD01AC34811005552F9 /* User.swift */; };
+		7F22ADA71F4DF527007CA76C /* GetSpotifyLoginURI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22ADA61F4DF527007CA76C /* GetSpotifyLoginURI.swift */; };
+		7F22ADA91F4DFB36007CA76C /* Neutron+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22ADA81F4DFB36007CA76C /* Neutron+Extensions.swift */; };
 		7FCE05E91ABF4BD1002103DE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */; };
 		952E7EE01DEA89ED006C6131 /* LoginFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952E7EDF1DEA89ED006C6131 /* LoginFlowViewController.swift */; };
 		952E7EE21DEA8E6E006C6131 /* FacebookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952E7EE11DEA8E6E006C6131 /* FacebookLoginViewController.swift */; };
@@ -144,6 +146,8 @@
 		6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowTableViewCell.xib; path = ../Profile/FollowTableViewCell.xib; sourceTree = "<group>"; };
 		6DA5FE4C1AED72F800E795DD /* UIColor+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Shared.swift"; sourceTree = "<group>"; };
 		6DEE0FD01AC34811005552F9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
+		7F22ADA61F4DF527007CA76C /* GetSpotifyLoginURI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSpotifyLoginURI.swift; sourceTree = "<group>"; };
+		7F22ADA81F4DFB36007CA76C /* Neutron+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Neutron+Extensions.swift"; sourceTree = "<group>"; };
 		7FCE05E51ABF4BD1002103DE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; usesTabs = 1; };
 		952E7EDF1DEA89ED006C6131 /* LoginFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginFlowViewController.swift; sourceTree = "<group>"; };
 		952E7EE11DEA8E6E006C6131 /* FacebookLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookLoginViewController.swift; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 				1DFB2ED61B76D7FB001B7C76 /* StyleController.swift */,
 				1D1CC60C1C31BC0D0052F66D /* NSURLSession+Shared.swift */,
 				508440E41DF0B97D00463D94 /* UIButton+Extensions.swift */,
+				7F22ADA81F4DFB36007CA76C /* Neutron+Extensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 		1D72D9B71AACC4C0007822B0 /* Tempo */ = {
 			isa = PBXGroup;
 			children = (
+				7F22ADA51F4DF4F1007CA76C /* Networking */,
 				957319321DD1AF1000B5E3C4 /* Tempo.entitlements */,
 				C0CF7B971AE425450083606C /* API.swift */,
 				1D72D9BA1AACC4C0007822B0 /* AppDelegate.swift */,
@@ -377,6 +383,14 @@
 			);
 			name = Profile;
 			path = ../Profile;
+			sourceTree = "<group>";
+		};
+		7F22ADA51F4DF4F1007CA76C /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				7F22ADA61F4DF527007CA76C /* GetSpotifyLoginURI.swift */,
+			);
+			name = Networking;
 			sourceTree = "<group>";
 		};
 		952E7EDD1DEA890E006C6131 /* Login */ = {
@@ -613,6 +627,8 @@
 				FAB564731AF6A8C9001059DF /* LikedTableViewController.swift in Sources */,
 				1DD875FC1B6E27DD0041C45B /* NSDateFormatter+Shared.swift in Sources */,
 				952E7EE41DEAAA46006C6131 /* CreateUsernameViewController.swift in Sources */,
+				7F22ADA91F4DFB36007CA76C /* Neutron+Extensions.swift in Sources */,
+				7F22ADA71F4DF527007CA76C /* GetSpotifyLoginURI.swift in Sources */,
 				D102A9D11AE88CB400C66385 /* SideBarTableViewCell.swift in Sources */,
 				C7B1984E1DD67D6800EAB8EA /* SpotifyLoginViewController.swift in Sources */,
 				D14D06B21BE9535400ABA1CF /* SearchViewController.swift in Sources */,

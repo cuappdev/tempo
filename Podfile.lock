@@ -1,22 +1,30 @@
 PODS:
-  - Alamofire (4.3.0)
+  - Alamofire (4.5.0)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - FBSDKCoreKit (4.19.0):
+  - FBSDKCoreKit (4.25.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.19.0):
+  - FBSDKLoginKit (4.25.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.19.0):
+  - FBSDKShareKit (4.25.0):
     - FBSDKCoreKit
   - HanekeSwift (0.10.1)
-  - MarqueeLabel/Swift (3.0.1)
+  - MarqueeLabel/Swift (3.1.2)
+  - Neutron (0.3.0):
+    - Alamofire
+    - PromiseKit/Alamofire
+    - SwiftyJSON
+  - PromiseKit/Alamofire (4.3.2):
+    - Alamofire (~> 4.0)
+    - PromiseKit/CorePromise
+  - PromiseKit/CorePromise (4.3.2)
   - SwiftyJSON (3.1.4)
   - SWRevealViewController (2.3.0)
-  - Tweaks (2.0.0)
+  - Tweaks (2.2.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -26,6 +34,7 @@ DEPENDENCIES:
   - FBSDKShareKit
   - HanekeSwift (from `https://github.com/Haneke/HanekeSwift.git`, branch `feature/swift-3`)
   - MarqueeLabel/Swift
+  - Neutron
   - SwiftyJSON
   - SWRevealViewController
   - Tweaks
@@ -37,21 +46,23 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   HanekeSwift:
-    :commit: 1157a124ec699f4ad926cb054f1d0bfce88ae7a9
+    :commit: 2f6d87f1f725d204d85cb34492e8c399cd5a200f
     :git: https://github.com/Haneke/HanekeSwift.git
 
 SPEC CHECKSUMS:
-  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  FBSDKCoreKit: 894b2b6eda6a4c8c4204e92e59cc355709ef045c
-  FBSDKLoginKit: 83ca4d8f12a2022570af9fd6aacf27f6b425b99f
-  FBSDKShareKit: 5953758366278430dc322d5cdc906db361ed7f81
+  FBSDKCoreKit: 53e3f4bfb64e80c5f229dd30ae33ff57fbbbd2d1
+  FBSDKLoginKit: f628c09684dae9c17f071cf90b014e886f5093ea
+  FBSDKShareKit: aea699d3cac749af08e360f4e949b82ffa8813f5
   HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
-  MarqueeLabel: 80ba85d2b76a9f5fa6c13de337db80bcd94feb1d
+  MarqueeLabel: fcd7057a779422d86589be759036f1510b08c6a0
+  Neutron: fd503561f7733dc6b66a72d41ce7cea7aabbd63f
+  PromiseKit: 32430ae679605b17c15d6193679cae7bf60147f7
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
-  Tweaks: 524fa47636cce3bf3a4d9156e980f10ae9480e81
+  Tweaks: 0c41be06d41b82a11f515c27711b65d343aa4af6
 
-PODFILE CHECKSUM: 53851c287d93f33a327912dda9d7fa66efa4c976
+PODFILE CHECKSUM: c06a9c49c7bf89196b6987b5390d59541db4230c
 
 COCOAPODS: 1.2.1

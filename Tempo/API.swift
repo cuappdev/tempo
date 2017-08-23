@@ -169,14 +169,15 @@ class API {
 	}
 	
 	func getSpotifySignInURI(_ completion: @escaping (Bool, String?) -> Void) {
-		let map: ([String: AnyObject]) -> (Bool, String?)? = {
-			if let success = $0["success"] as? Bool, success == true {
-				let uri = $0["data"]?["uri"] as? String ?? ""
-				return (success, uri)
+		
+		let request = GetSpotifyLoginURI(sessionCode: sessionCode)
+		request.make()
+			.then { resp in
+				completion(true, resp.uri)
 			}
-			return (false, nil)
-		}
-		get(.spotifySignInUri, params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
+			.catch { error in
+				completion(false, nil)
+			}
 	}
 	
 	func registerForRemotePushNotificationsWithDeviceToken(_ deviceToken: Data, completion: @escaping (Bool) -> Void) {
