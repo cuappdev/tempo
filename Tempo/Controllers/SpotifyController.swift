@@ -57,19 +57,10 @@ class SpotifyController {
 	}
 	
 	func loginToSpotify(vc: UIViewController, _ completionHandler: @escaping (_ success: Bool) -> Void) {
-		API.sharedAPI.getSpotifyAccessToken { (success, accessToken, expiresAt) -> Void in
-			if success {
-				let expirationDate = Date(timeIntervalSince1970: expiresAt)
-				let spotifyUsername = User.currentUser.currentSpotifyUser?.username
-				SPTAuth.defaultInstance().session = SPTSession(userName: spotifyUsername, accessToken: accessToken, expirationDate: expirationDate)
-				self.setSpotifyUser(accessToken, completion: completionHandler)
-			} else {
-				// Display Safari VC Login
-				let spotifyLoginURL = SPTAuth.defaultInstance().loginURL
-				self.authViewController = SFSafariViewController(url: spotifyLoginURL!)
-				
-				vc.present(self.authViewController!, animated: true, completion: nil)
-			}
+		API.sharedAPI.getSpotifySignInURI { (success, uri) -> Void in
+			// Display Safari VC Login
+			self.authViewController = SFSafariViewController(url: URL(string: uri!)!)
+			vc.present(self.authViewController!, animated: true, completion: nil)
 		}
 	}
 	

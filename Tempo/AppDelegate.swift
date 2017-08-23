@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		UIApplication.shared.statusBarStyle = .lightContent
 		
 		// Set up Spotify auth
-		SPTAuth.defaultInstance().clientID = "0bc3fa31e7b141ed818f37b6e29a9e85"
+		SPTAuth.defaultInstance().clientID = "ecc907ce157c400e8c616b09ce702a05"
 		SPTAuth.defaultInstance().redirectURL = NSURL(string: "tempo-login://callback") as URL!
 		SPTAuth.defaultInstance().sessionUserDefaultsKey = "SpotifyUserDefaultsKey"
 		SPTAuth.defaultInstance().requestedScopes = [

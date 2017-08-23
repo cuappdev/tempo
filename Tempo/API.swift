@@ -12,13 +12,12 @@ import SwiftyJSON
 import FBSDKShareKit
 
 private enum Router: URLConvertible {
-	static let tempoBaseURLString = "http://35.162.35.23"
+	static let tempoBaseURLString = "http://localhost:5000"
 	static let notificationsBaseURLString = "http://35.163.179.243:8080"
 	
 	case root
 	case validAuthenticate
 	case validUsername
-	case sessions
 	case userSearch
 	case users(String)
 	case followers(String)
@@ -31,6 +30,7 @@ private enum Router: URLConvertible {
 	case posts
 	case followSuggestions
     case spotifyAccessToken
+	case spotifySignInUri
 	case notifications(String)
 	case registerNotifications
 	
@@ -48,11 +48,11 @@ private enum Router: URLConvertible {
 			case .root:
 				return "/"
 			case .validAuthenticate:
-				return "/users/authenticate"
+				return "/users/authenticate/"
+			case .spotifySignInUri:
+				return "/spotify/sign_in_uri/"
 			case .validUsername:
 				return "/users/valid_username"
-			case .sessions:
-				return "/sessions"
 			case .userSearch:
 				return "/users.json"
 			case .users(let userID):
@@ -125,19 +125,26 @@ class API {
 	
 	func fbAuthenticate(_ fbid: String, userToken: String, completion: @escaping (_ success: Bool, _ newUser: Bool) -> Void) {
 		let map: ([String: AnyObject]) -> (success: Bool, newUser: Bool) = {
-			if let user = $0["user"] as? [String: AnyObject], let code = $0["session"]?["code"] as? String {
-				if let success = $0["success"] as? Bool, success == true {
-					guard let newUser = $0["new_user"] as? Bool else { return (false, false) }
+			if let success = $0["success"] as? Bool, success == true {
+				if let user = $0["data"]?["user"] as? [String: AnyObject],
+					let session = $0["data"]?["session"] as? ([String: Any]),
+					let code = session["code"] as? String {
+					guard let newUser = $0["data"]?["new_user"] as? Bool
+						else { return (false, false) }
 					self.sessionCode = code
 					User.currentUser = User(json: JSON(user))
 					return (success, newUser)
 				}
 			}
-			
 			return (false, false)
 		}
 		
-		let userRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, first_name, last_name, id, email, picture.type(large)"])
+		let userRequest = FBSDKGraphRequest(
+			graphPath: "me",
+			parameters: [
+				"fields":
+				"name, first_name, last_name, id, email, picture.type(large)"
+			])
 		
 		let _ = userRequest?.start { (connection: FBSDKGraphRequestConnection?, result: Any?, error: Error?) in
 			if error != nil { return }
@@ -159,6 +166,17 @@ class API {
 			
 			self.post(.validAuthenticate, params: ["user": user as AnyObject], map: map, completion: completion)
 		}
+	}
+	
+	func getSpotifySignInURI(_ completion: @escaping (Bool, String?) -> Void) {
+		let map: ([String: AnyObject]) -> (Bool, String?)? = {
+			if let success = $0["success"] as? Bool, success == true {
+				let uri = $0["data"]?["uri"] as? String ?? ""
+				return (success, uri)
+			}
+			return (false, nil)
+		}
+		get(.spotifySignInUri, params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
 	}
 	
 	func registerForRemotePushNotificationsWithDeviceToken(_ deviceToken: Data, completion: @escaping (Bool) -> Void) {
@@ -200,7 +218,7 @@ class API {
 			User.currentUser = User(json: JSON(user))
 			return true
 		}
-		self.post(.sessions, params: ["user": user as AnyObject], map: map, completion: completion)
+		self.post(.validAuthenticate, params: ["user": user as AnyObject], map: map, completion: completion)
 	}
 	
 	func updateCurrentUser(_ changedUsername: String, didSucceed: @escaping (Bool) -> Void) {
@@ -246,7 +264,7 @@ class API {
 			guard let users = $0["users"] as? [AnyObject] else { return [] }
 			return users.map { User(json: JSON($0)) }
 		}
-		post(.followSuggestions, params: ["p": page as AnyObject, "l": length as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: completion)
+		get(.followSuggestions, params: ["p": page as AnyObject, "l": length as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: completion)
 	}
 	
 	func fetchFeed(_ userID: String, completion: @escaping ([Post]) -> Void) {
@@ -311,6 +329,7 @@ class API {
         get(.spotifyAccessToken, params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
     }
 	
+	
 	// MARK: - Private Methods
 	
 	fileprivate func post<O, T>(_ router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
@@ -347,15 +366,6 @@ class API {
 					print("Failed request: \(request)")
 					print(params)
 					print(error)
-//					TODO
-//					if error.code != -1009 {
-//						self.isAPIConnected = false
-//						self.isConnected = true
-//						
-//					} else {
-//						self.isAPIConnected = true
-//						self.isConnected = false
-//					}
 				}
 		})
 	}
