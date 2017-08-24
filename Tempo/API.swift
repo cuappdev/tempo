@@ -187,6 +187,22 @@ class API {
 			}
 	}
 	
+	func updatePost(_ userID: String, song: Song, completion: @escaping ([String: AnyObject]) -> Void) {
+		let songInfo = [
+			"artist": song.artist,
+			"track": song.title,
+			"spotify_url": song.spotifyID
+		]
+		let request = CreatePost(sessionCode: sessionCode, songInfo: songInfo)
+		request.make()
+			.then { resp in
+				completion(resp.song as [String : AnyObject])
+			}
+			.catch { error in
+				completion([:])
+			}
+	}
+	
 	func registerForRemotePushNotificationsWithDeviceToken(_ deviceToken: Data, completion: @escaping (Bool) -> Void) {
 		
 		if User.currentUser.id == "" { return }
@@ -303,16 +319,6 @@ class API {
 		} else {
 			post(.followings, params: ["followed_id": userID as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 as [String: Bool] }, completion: completion)
 		}
-	}
-	
-	func updatePost(_ userID: String, song: Song, completion: @escaping ([String: AnyObject]) -> Void) {
-		let songDict = [
-			"artist": song.artist,
-			"track": song.title,
-			"spotify_url": song.spotifyID
-		]
-		let map: ([String: AnyObject]) -> [String: AnyObject]? = { $0 }
-		post(.posts, params: ["user_id": userID as AnyObject, "song": songDict as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: completion)
 	}
     
     func getSpotifyAccessToken(_ completion: @escaping (Bool, String, Double) -> Void) {
