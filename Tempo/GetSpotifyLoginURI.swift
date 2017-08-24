@@ -24,12 +24,12 @@ struct GetSpotifyLoginURI: TempoRequest {
 	}
 	
 	func process(response: JSON) throws -> GetSpotifyLoginURIResponse {
-		if let success = response["success"].bool, success == true {
-			guard let uri = response["data"]["uri"].string else {
+		guard let success = response["success"].bool,
+			success,
+			let uri = response["data"]["uri"].string else {
 				throw NeutronError.badResponseData
-			}
-			return GetSpotifyLoginURIResponse(uri: uri)
 		}
-		throw NeutronError.badResponseData
+		
+		return GetSpotifyLoginURIResponse(uri: uri)
 	}
 }

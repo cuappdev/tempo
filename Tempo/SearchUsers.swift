@@ -28,13 +28,13 @@ struct SearchUsers: TempoRequest {
 	}
 	
 	func process(response: JSON) throws -> SearchUsersResponse {
-		if let success = response["success"].bool, success == true {
-			guard let userJSONs = response["data"]["users"].array else {
+		guard let success = response["success"].bool,
+			success,
+			let userJSONs = response["data"]["users"].array else {
 				throw NeutronError.badResponseData
-			}
-			let users = userJSONs.map { User(json: $0) }
-			return SearchUsersResponse(users: users)
 		}
-		throw NeutronError.badResponseData
+		
+		let users = userJSONs.map { User(json: $0) }
+		return SearchUsersResponse(users: users)
 	}
 }
