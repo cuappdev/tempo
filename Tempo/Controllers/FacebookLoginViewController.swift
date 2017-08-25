@@ -161,21 +161,8 @@ class FacebookLoginViewController: UIViewController {
 					return
 				}
 				
-				if newUser {
-					self.delegate?.facebookLoginViewController(facebookLoginViewController: self, didFinishLoggingInWithNewUserNamed: name, withFacebookID: fbid)
-					self.hideActivityIndicator()
-
-				} else {
-					API.sharedAPI.setCurrentUser(fbid, fbAccessToken: fbAccessToken!) { success in
-						guard success else {
-							print("DID NOT SUCCEED SET CURRENT USER")
-							return
-						}
-						self.delegate?.facebookLoginViewController(facebookLoginViewController: self, didFinishLoggingInWithPreviouslyRegisteredUserNamed: name, withFacebookID: fbid)
-						self.hideActivityIndicator()
-					}
-				}
-				
+				self.delegate?.facebookLoginViewController(facebookLoginViewController: self, didFinishLoggingInWithPreviouslyRegisteredUserNamed: name, withFacebookID: fbid)
+				self.hideActivityIndicator()
 			}
 		})
 	}

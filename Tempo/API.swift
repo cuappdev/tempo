@@ -228,11 +228,6 @@ class API {
 		put(.notifications(userID), params: ["enabled" : enabled as AnyObject], map: map, completion: completion)
 	}
 	
-	func setCurrentUser(_ fbid: String, fbAccessToken: String, completion: @escaping (Bool) -> Void) {
-		let request = SetCurrentUser(fbid: fbid, fbAccessToken: fbAccessToken).make()
-		
-	}
-	
 	func updateCurrentUser(_ changedUsername: String, didSucceed: @escaping (Bool) -> Void) {
 		let map: ([String: Bool]) -> Bool? = {
 			guard let success = $0["success"], success != false else { return false }
