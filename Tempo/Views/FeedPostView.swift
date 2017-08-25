@@ -138,7 +138,7 @@ class FeedPostView: PostView {
 			let color: UIColor
 			let font = UIFont(name: "Avenir-Medium", size: 16)!
 			let duration = TimeInterval(0.3)
-			if post.player.isPlaying {
+			if post.player?.isPlaying ?? false {
 				color = .tempoRed
 				if type == .feed {
 					if let layer = avatarLayer {
@@ -170,9 +170,9 @@ class FeedPostView: PostView {
 	override func updateBackground() {
 		if let post = post {
 			if type == .feed {
-				backgroundColor = post.player.wasPlayed ? .readCellColor : .unreadCellColor
+				backgroundColor = post.player?.wasPlayed ?? false ? .readCellColor : .unreadCellColor
 			} else {
-				backgroundColor = post.player.isPlaying ? .readCellColor : .unreadCellColor
+				backgroundColor = post.player?.isPlaying ?? false ? .readCellColor : .unreadCellColor
 			}
 		}
 	}

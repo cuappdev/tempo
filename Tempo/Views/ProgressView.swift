@@ -16,7 +16,7 @@ class ProgressView: UIView {
 	var indicator: UIView?
 	
 	override func draw(_ rect: CGRect) {
-		let progress = playerDelegate.getCurrentPost()?.player.progress ?? 0.0
+		let progress = playerDelegate.getCurrentPost()?.player?.progress ?? 0.0
 		let fill = bounds.width * CGFloat(progress)
 		super.draw(rect)
 		fillColor.setFill()
@@ -29,13 +29,13 @@ class ProgressView: UIView {
 	}
 	
 	dynamic private func timerFired(timer: Timer) {
-		if playerDelegate.getCurrentPost()?.player.isPlaying ?? false {
+		if playerDelegate.getCurrentPost()?.player?.isPlaying ?? false {
 			setNeedsDisplay()
 		}
 	}
 	
 	func setUpTimer() {
-		if updateTimer == nil && playerDelegate.getCurrentPost()?.player.isPlaying ?? false {
+		if updateTimer == nil && playerDelegate.getCurrentPost()?.player?.isPlaying ?? false {
 			// 60 fps
 			updateTimer = Timer(timeInterval: 1.0 / 60.0,
 								  target: self, selector: #selector(timerFired(timer:)),
@@ -43,7 +43,7 @@ class ProgressView: UIView {
 								  repeats: true)
 			
 			RunLoop.current.add(updateTimer!, forMode: RunLoopMode.commonModes)
-		} else if !(playerDelegate.getCurrentPost()?.player.isPlaying ?? false) {
+		} else if !(playerDelegate.getCurrentPost()?.player?.isPlaying ?? false) {
 			updateTimer?.invalidate()
 			updateTimer = nil
 		}

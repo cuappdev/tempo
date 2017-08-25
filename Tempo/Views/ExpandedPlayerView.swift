@@ -154,7 +154,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	override func updatePlayingStatus() {
 		if let selectedPost = post {
-			let isPlaying = selectedPost.player.isPlaying
+			let isPlaying = selectedPost.player?.isPlaying ?? false
 			songLabel.holdScrolling = !isPlaying
 			artistLabel.holdScrolling = !isPlaying
 		}
@@ -201,7 +201,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	dynamic func progressPanned(gesture: UIPanGestureRecognizer) {
 		if gesture.state != .ended {
-			if post?.player.isPlaying ?? false {
+			if post?.player?.isPlaying ?? false {
 				delegate?.didTogglePlaying(animate: false)
 				wasPlaying = true
 			}
@@ -218,7 +218,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		let progressWidth = progressView.bounds.width
 		
 		let progress = Double((xTranslation - progressView.frame.origin.x)/progressWidth)
-		post?.player.progress = progress
+		post?.player?.progress = progress
 		delegate?.didChangeProgress?()
 		
 		progressView.setNeedsDisplay()
@@ -245,7 +245,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	override func updatePlayToggleButton() {
 		if let selectedPost = post {
-			let name = selectedPost.player.isPlaying ? "PlayerPauseButton" : "PlayerPlayButton"
+			let name = selectedPost.player?.isPlaying ?? false ? "PlayerPauseButton" : "PlayerPlayButton"
 			progressView.setUpTimer()
 			playToggleButton.setImage(UIImage(named: name), for: .normal)
 		}

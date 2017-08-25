@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class Post: NSObject {
     let user: User
-    var player: Player!
+    var player: Player?
 	let song: Song
     let date: Date?
 	var postType: PlayingPostType
@@ -28,8 +28,6 @@ class Post: NSObject {
         
         if let previewURL = song.previewURL {
             player = Player(fileURL: previewURL)
-        } else {
-            player = Player(fileURL: URL(string: "https://p.scdn.co/mp3-preview/004eaa8d0769f3d464992704d9b5c152b862aa65")!)
         }
 		
 		postType = .unknown

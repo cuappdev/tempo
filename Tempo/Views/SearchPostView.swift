@@ -53,8 +53,8 @@ class SearchPostView: PostView {
     override func updateProfileLabel() {
         if let post = post {
             let duration = TimeInterval(0.3)
-			let color: UIColor = post.player.isPlaying ? .tempoRed : .white
-			let font: UIFont = post.player.isPlaying ? UIFont(name: "AvenirNext-Medium", size: 16.0)! : UIFont(name: "AvenirNext-Regular", size: 16.0)!
+			let color: UIColor = post.player?.isPlaying ?? false ? .tempoRed : .white
+			let font: UIFont = post.player?.isPlaying ?? false ? UIFont(name: "AvenirNext-Medium", size: 16.0)! : UIFont(name: "AvenirNext-Regular", size: 16.0)!
    
 			guard let label = profileNameLabel else { return }
             if !label.textColor.isEqual(color) {
@@ -68,13 +68,13 @@ class SearchPostView: PostView {
 	
 	override func updateBackground() {
 		if let post = post {
-			backgroundColor = post.player.isPlaying ? .readCellColor : .unreadCellColor
+			backgroundColor = post.player?.isPlaying ?? false ? .readCellColor : .unreadCellColor
 		}
 	}
     
     func postViewPressed(_ sender: UITapGestureRecognizer) {
         if let post = post {
-            if post.player.isPlaying {
+            if post.player?.isPlaying ?? false {
                 let tapPoint = sender.location(in: self)
                 let hitView = hitTest(tapPoint, with: nil)
                 

@@ -46,6 +46,7 @@
 		60AEF76C1DBD38AD00C68AAF /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AEF7691DBD38AD00C68AAF /* ProgressView.swift */; };
 		60C018061D9C7A2E00FE5166 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C018041D9C7A2E00FE5166 /* AboutViewController.swift */; };
 		60C5A3CD1D9A1FB1004BDD58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60C5A3CC1D9A1FB1004BDD58 /* LaunchScreen.storyboard */; };
+		65AE2E561F4FBF7D009F3600 /* SearchSpotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AE2E551F4FBF7D009F3600 /* SearchSpotify.swift */; };
 		6D3349A01AE3F11300B512FD /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */; };
 		6D3349A21AE423DA00B512FD /* FollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */; };
 		6DA5FE4D1AED72F800E795DD /* UIColor+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA5FE4C1AED72F800E795DD /* UIColor+Shared.swift */; };
@@ -145,6 +146,7 @@
 		60AEF7691DBD38AD00C68AAF /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		60C018041D9C7A2E00FE5166 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		60C5A3CC1D9A1FB1004BDD58 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		65AE2E551F4FBF7D009F3600 /* SearchSpotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSpotify.swift; sourceTree = "<group>"; };
 		6D33499F1AE3F11300B512FD /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowTableViewCell.swift; path = ../Profile/FollowTableViewCell.swift; sourceTree = "<group>"; };
 		6D3349A11AE423DA00B512FD /* FollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowTableViewCell.xib; path = ../Profile/FollowTableViewCell.xib; sourceTree = "<group>"; };
 		6DA5FE4C1AED72F800E795DD /* UIColor+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Shared.swift"; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				7F22ADAA1F4E129A007CA76C /* SearchUsers.swift */,
 				7F22ADAC1F4E5283007CA76C /* GetIsPostLiked.swift */,
 				7F22ADAE1F4F74C6007CA76C /* CreatePost.swift */,
+				65AE2E551F4FBF7D009F3600 /* SearchSpotify.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				7F22ADAB1F4E129A007CA76C /* SearchUsers.swift in Sources */,
 				9563B5541DE0E3FC00E80EAF /* FeedFollowSuggestionsController.swift in Sources */,
 				FA1A91311AC3899E00774EF3 /* Player.swift in Sources */,
+				65AE2E561F4FBF7D009F3600 /* SearchSpotify.swift in Sources */,
 				1DFBFB541B784634001DD6AC /* SongSearchTableViewCell.swift in Sources */,
 				60256C1A1BC1BFA900B52FDD /* SavedSongView.swift in Sources */,
 				1D72D9BB1AACC4C0007822B0 /* AppDelegate.swift in Sources */,

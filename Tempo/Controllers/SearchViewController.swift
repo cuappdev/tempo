@@ -212,27 +212,22 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	}
 	
 	func initiateRequest(_ term: String) {
-		let searchUrl = kSearchBase + term.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics)!
-		lastRequest = Alamofire.request(searchUrl).responseJSON { response in
-			if let value = response.result.value as? [String: AnyObject] {
-				self.receivedResponse(value)
+		SearchSpotify(query: term, sessionCode: API.sharedAPI.sessionCode).make()
+			.then { songs -> Void in
+				self.posts = songs.map { song in
+					let post = Post(song: song, user: User.currentUser)
+					post.player?.delegate = self
+					post.postType = .search
+					return post
+				}
+				
+				DispatchQueue.main.async {
+					self.tableView.reloadData()
+				}
 			}
-		}
-	}
-	
-	func receivedResponse(_ response: [String: AnyObject]) {
-		let songs = response["tracks"] as! [String: AnyObject]
-		let items = songs["items"] as! [[String: AnyObject]]
-		
-		posts = items.map {
-			let song = Song(responseDictionary: $0)
-			let post = Post(song: song, user: User.currentUser)
-			post.player.delegate = self
-			post.postType = .search
-			return post
-		}
-		
-		tableView.reloadData()
+			.catch { error in
+				print(error)
+			}
 	}
 	
 	// MARK: - UISearchBarDelegete
@@ -249,7 +244,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	func didTogglePlaying(animate: Bool) {
 		if let currentPost = playerNav.getCurrentPost() {
-			currentPost.player.togglePlaying()
+			currentPost.player?.togglePlaying()
 		}
 		selectedCell?.postView.updatePlayingStatus()
 		playerNav.updatePlayingStatus()

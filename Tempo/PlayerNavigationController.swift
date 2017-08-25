@@ -26,8 +26,8 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 		didSet {
 			if let newPost = currentPost {
 				//deal with previous post
-				oldValue?.player.progress = 0
-				oldValue?.player.pause()
+				oldValue?.player?.progress = 0
+				oldValue?.player?.pause()
 				postView?.updatePlayingStatus()
 				updatePlayerCells(newPost: newPost)
 			}
@@ -89,10 +89,10 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	}
 	
 	func resetPlayerCells() {
-		if let currentPost = currentPost, currentPost.player.isPlaying {
+		if let currentPost = currentPost, currentPost.player?.isPlaying ?? false {
 			playerDelegate?.didTogglePlaying(animate: false)
 		}
-		currentPost?.player.progress = 0.0
+		currentPost?.player?.progress = 0.0
 		currentPost = nil
 		playerCell.resetPlayerCell()
 		expandedCell.resetPlayerCell()
@@ -114,9 +114,9 @@ class PlayerNavigationController: UINavigationController, PostDelegate {
 	}
 	
 	func togglePause() {
-		if let post = currentPost, post.player.isPlaying {
-			post.player.togglePlaying()
-			post.player.progress = 0.0
+		if let post = currentPost, post.player?.isPlaying ?? false {
+			post.player?.togglePlaying()
+			post.player?.progress = 0.0
 			expandedCell.progressView.setNeedsDisplay()
 			playerCell.progressView.setNeedsDisplay()
 			postView?.updatePlayingStatus()

@@ -83,7 +83,7 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	override func updatePlayingStatus() {
 		if let selectedPost = post {
-			let isPlaying = selectedPost.player.isPlaying
+			let isPlaying = selectedPost.player?.isPlaying ?? false
 			songLabel.holdScrolling = !isPlaying
 			artistLabel.holdScrolling = !isPlaying
 		}
@@ -99,7 +99,7 @@ class PlayerCellView: ParentPlayerCellView {
 	
 	override func updatePlayToggleButton() {
 		if let selectedPost = post {
-			let name = selectedPost.player.isPlaying ? "PauseButton" : "PlayButton"
+			let name = selectedPost.player?.isPlaying ?? false ? "PauseButton" : "PlayButton"
 			progressView.setUpTimer()
 			playToggleButton.setBackgroundImage(UIImage(named: name), for: .normal)
 		}

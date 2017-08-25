@@ -131,8 +131,8 @@ class LikedPostView: PostView {
 	func updateSongLabel() {
 		if let post = post {
 			let duration = TimeInterval(0.3)
-			let color: UIColor = post.player.isPlaying ? .tempoRed : .white
-			let font: UIFont = post.player.isPlaying ? UIFont(name: "AvenirNext-Medium", size: 16.0)! : UIFont(name: "AvenirNext-Regular", size: 16.0)!
+			let color: UIColor = post.player?.isPlaying ?? false ? .tempoRed : .white
+			let font: UIFont = post.player?.isPlaying ?? false ? UIFont(name: "AvenirNext-Medium", size: 16.0)! : UIFont(name: "AvenirNext-Regular", size: 16.0)!
 			
 			guard let label = songNameLabel else { return }
 			if !label.textColor.isEqual(color) {
@@ -160,7 +160,7 @@ class LikedPostView: PostView {
 	
 	override func updateBackground() {
 		if let post = post {
-			backgroundColor = post.player.isPlaying ? .readCellColor : .unreadCellColor
+			backgroundColor = post.player?.isPlaying ?? false ? .readCellColor : .unreadCellColor
 		}
 	}
 	

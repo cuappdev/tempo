@@ -47,7 +47,7 @@ class Song: NSObject {
 		self.init(songID: id)
 	}
 	
-	init(responseDictionary: [String: AnyObject]) {
+	init(responseDictionary: [String: Any]) {
 		super.init()
 		initializeFromResponseDictionary(responseDictionary)
 	}
@@ -57,7 +57,7 @@ class Song: NSObject {
 		initializeFromResponse(json)
 	}
 	
-	fileprivate func initializeFromResponseDictionary(_ response: [String: AnyObject]) {
+	fileprivate func initializeFromResponseDictionary(_ response: [String: Any]) {
 		initializeFromResponse(JSON(response))
 	}
 	

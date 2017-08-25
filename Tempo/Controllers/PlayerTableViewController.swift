@@ -138,7 +138,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	
 	func preparePosts() {
 		posts.forEach({ (post) in
-			post.player.delegate = self
+			post.player?.delegate = self
 			post.postType = self.playingPostType
 		})
 	}
@@ -158,7 +158,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 		guard let post = playerNav.getCurrentPost() else { return }
 		
 		let center = MPNowPlayingInfoCenter.default()
-		if !post.player.finishedPlaying {
+		if post.player?.finishedPlaying == false {
 			
 			UIApplication.shared.beginReceivingRemoteControlEvents()
 			
@@ -173,9 +173,9 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				MPMediaItemPropertyArtist: post.song.artist,
 				MPMediaItemPropertyAlbumTitle: post.song.album,
 				MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: artwork),
-				MPMediaItemPropertyPlaybackDuration: post.player.duration,
-				MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
-				MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying ? post.player.rate : 0,
+				MPMediaItemPropertyPlaybackDuration: post.player?.duration ?? 0.0,
+				MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player?.currentTime ?? 0.0,
+				MPNowPlayingInfoPropertyPlaybackRate: post.player?.isPlaying ?? false ? post.player?.rate ?? 0.0 : 0,
 				MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
 				MPNowPlayingInfoPropertyPlaybackQueueCount: count ]
 		} else {
@@ -313,7 +313,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	
 	func didTogglePlaying(animate: Bool) {
 		if let currentPost = playerNav.getCurrentPost() {
-			currentPost.player.togglePlaying()
+			currentPost.player?.togglePlaying()
 			if animate {
 				updatePlayingCells()
 				updateNowPlayingInfo()
