@@ -46,10 +46,10 @@ private enum Router: URLConvertible {
 			switch self {
 			case .root:
 				return "/"
-			case .validAuthenticate:
-				return "/users/authenticate/"
 			case .spotifySignInUri:
 				return "/spotify/sign_in_uri/"
+			case .validAuthenticate:
+				return "/users/authenticate/"
 			case .validUsername:
 				return "/users/valid_username"
 			case .users(let userID):
@@ -106,7 +106,7 @@ class API {
 		$0["posts"]?.map { Post(json: JSON($0)) }
 	}
 	
-	fileprivate var sessionCode: String {
+	var sessionCode: String {
 		set {
 			UserDefaults.standard.set(newValue, forKey: sessionCodeKey)
 		}
@@ -187,19 +187,13 @@ class API {
 			}
 	}
 	
-	func updatePost(_ userID: String, song: Song, completion: @escaping ([String: Any]) -> Void) {
-		let songInfo = [
-			"artist": song.artist,
-			"track": song.title,
-			"spotify_url": song.spotifyID
-		]
-		let request = CreatePost(sessionCode: sessionCode, songInfo: songInfo)
-		request.make()
-			.then { song in
-				completion(song)
+	func updatePost(_ userID: String, song: Song, completion: @escaping () -> Void) {
+		CreatePost(sessionCode: sessionCode, song: song).make()
+			.then {
+				completion()
 			}
 			.catch { error in
-				completion([:])
+				completion()
 			}
 	}
 	
@@ -235,16 +229,8 @@ class API {
 	}
 	
 	func setCurrentUser(_ fbid: String, fbAccessToken: String, completion: @escaping (Bool) -> Void) {
-		let user = ["fbid": fbid, "usertoken": fbAccessToken]
-		let map: ([String: AnyObject]) -> Bool = {
-			print("HERE YOU GO")
-			print($0)
-			guard let user = $0["user"] as? [String: AnyObject], let code = $0["session"]?["code"] as? String else { return false }
-			self.sessionCode = code
-			User.currentUser = User(json: JSON(user))
-			return true
-		}
-		self.post(.validAuthenticate, params: ["user": user as AnyObject], map: map, completion: completion)
+		let request = SetCurrentUser(fbid: fbid, fbAccessToken: fbAccessToken).make()
+		
 	}
 	
 	func updateCurrentUser(_ changedUsername: String, didSucceed: @escaping (Bool) -> Void) {

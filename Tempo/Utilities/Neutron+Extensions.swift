@@ -19,7 +19,7 @@ extension TempoRequest {
 		}
 		
 		guard success else {
-			let errors = response["errors"].arrayValue.map({ $0.stringValue })
+			let errors = response["data"]["errors"].arrayValue.map({ $0.stringValue })
 			throw TempoError.backendError(errors: errors)
 		}
 		

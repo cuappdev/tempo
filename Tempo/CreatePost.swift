@@ -3,29 +3,30 @@ import SwiftyJSON
 import Alamofire
 
 struct CreatePost: TempoRequest {
-	typealias Song = [String: Any]
-	typealias ResponseType = Song
+	typealias ResponseType = Void
 	
-	// Parameters
 	let sessionCode: String
-	let songInfo: [String: Any]
+	let song: Song
 	
-	// POST to posts endpoint
 	let route = "/posts/"
 	let method = HTTPMethod.post
 	
 	var parameters: [String: Any] {
+		let songInfo = [
+			"artist": song.artist,
+			"track": song.title,
+			"spotify_url": song.spotifyID
+		]
+		
 		return [
 			"session_code": sessionCode,
 			"song_info": songInfo
 		]
 	}
 	
-	func processData(response: JSON) throws -> Song {
-		guard let song = response["song"].dictionaryObject else {
+	func processData(response: JSON) throws {
+		guard response["song"].exists() else {
 			throw NeutronError.badResponseData
 		}
-		
-		return song
 	}
 }
