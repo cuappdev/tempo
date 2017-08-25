@@ -12,7 +12,7 @@ import SwiftyJSON
 import FBSDKShareKit
 
 private enum Router: URLConvertible {
-	static let tempoBaseURLString = "http://localhost:5000"
+	static let tempoBaseURLString = "http://10.148.12.75:5000"
 	static let notificationsBaseURLString = "http://35.163.179.243:8080"
 	
 	case root
@@ -168,8 +168,8 @@ class API {
 	func getSpotifySignInURI(_ completion: @escaping (Bool, String?) -> Void) {
 		let request = GetSpotifyLoginURI(sessionCode: sessionCode)
 		request.make()
-			.then { resp in
-				completion(true, resp.uri)
+			.then { uri in
+				completion(true, uri)
 			}
 			.catch { error in
 				completion(false, nil)
@@ -177,17 +177,17 @@ class API {
 	}
 	
 	func searchUsers(_ query: String, completion: @escaping ([User]) -> Void) {
-		let request = SearchUsers(q: query, sessionCode: sessionCode)
+		let request = SearchUsers(query: query, sessionCode: sessionCode)
 		request.make()
-			.then { resp in
-				completion(resp.users)
+			.then { users in
+				completion(users)
 			}
 			.catch { error in
 				completion([])
 			}
 	}
 	
-	func updatePost(_ userID: String, song: Song, completion: @escaping ([String: AnyObject]) -> Void) {
+	func updatePost(_ userID: String, song: Song, completion: @escaping ([String: Any]) -> Void) {
 		let songInfo = [
 			"artist": song.artist,
 			"track": song.title,
@@ -195,8 +195,8 @@ class API {
 		]
 		let request = CreatePost(sessionCode: sessionCode, songInfo: songInfo)
 		request.make()
-			.then { resp in
-				completion(resp.song as [String : AnyObject])
+			.then { song in
+				completion(song)
 			}
 			.catch { error in
 				completion([:])
@@ -237,6 +237,8 @@ class API {
 	func setCurrentUser(_ fbid: String, fbAccessToken: String, completion: @escaping (Bool) -> Void) {
 		let user = ["fbid": fbid, "usertoken": fbAccessToken]
 		let map: ([String: AnyObject]) -> Bool = {
+			print("HERE YOU GO")
+			print($0)
 			guard let user = $0["user"] as? [String: AnyObject], let code = $0["session"]?["code"] as? String else { return false }
 			self.sessionCode = code
 			User.currentUser = User(json: JSON(user))

@@ -9,35 +9,27 @@
 import Neutron
 import SwiftyJSON
 
-struct GetIsPostLikedResponse {
-	var isLiked: Bool
-}
-
 struct GetIsPostLiked: TempoRequest {
-	typealias ResponseType = GetIsPostLikedResponse
+	typealias IsPostLiked = Bool
+	typealias ResponseType = IsPostLiked
 	
-	let sessionCode: String?
-	let postId: Int?
+	let sessionCode: String
+	let postId: Int
 	
 	let route = "/likes/is_liked/"
 	
 	var parameters: [String: Any] {
-		guard let sessionCode = sessionCode,
-			let postId = postId else {
-				return [:]
-		}
 		return [
 			"session_code": sessionCode,
 			"post_id": postId
 		]
 	}
 	
-	func process(response: JSON) throws -> GetIsPostLikedResponse {
-		guard let success = response["success"].bool,
-			success,
-			let isLiked = response["data"]["is_liked"].bool else {
+	func processData(response: JSON) throws -> IsPostLiked {
+		guard let isLiked = response["is_liked"].bool else {
 			throw NeutronError.badResponseData
 		}
-		return GetIsPostLikedResponse(isLiked: isLiked)
+		
+		return isLiked
 	}
 }

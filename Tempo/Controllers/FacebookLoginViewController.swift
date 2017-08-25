@@ -148,12 +148,18 @@ class FacebookLoginViewController: UIViewController {
 			guard let responseJSON = result as? [String:Any],
 				let fbid = responseJSON["id"] as? String,
 				let name = responseJSON["name"] as? String,
-				error == nil else { print("Error getting Facebook user: \(error)"); return }
+				error == nil else {
+					if let error = error { print("Error getting Facebook user: \(error)") }
+					return
+			}
 			
 			let fbAccessToken = FBSDKAccessToken.current().tokenString
 			
 			API.sharedAPI.fbAuthenticate(fbid, userToken: fbAccessToken!) { success, newUser in
-				guard success else { return }
+				guard success else {
+					print("FB AUTH DID NOT SUCCEED")
+					return
+				}
 				
 				if newUser {
 					self.delegate?.facebookLoginViewController(facebookLoginViewController: self, didFinishLoggingInWithNewUserNamed: name, withFacebookID: fbid)
@@ -161,7 +167,10 @@ class FacebookLoginViewController: UIViewController {
 
 				} else {
 					API.sharedAPI.setCurrentUser(fbid, fbAccessToken: fbAccessToken!) { success in
-						guard success else { return }
+						guard success else {
+							print("DID NOT SUCCEED SET CURRENT USER")
+							return
+						}
 						self.delegate?.facebookLoginViewController(facebookLoginViewController: self, didFinishLoggingInWithPreviouslyRegisteredUserNamed: name, withFacebookID: fbid)
 						self.hideActivityIndicator()
 					}

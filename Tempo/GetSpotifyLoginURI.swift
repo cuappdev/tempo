@@ -9,12 +9,9 @@
 import Neutron
 import SwiftyJSON
 
-struct GetSpotifyLoginURIResponse {
-	var uri: String
-}
-
 struct GetSpotifyLoginURI: TempoRequest {
-	typealias ResponseType = GetSpotifyLoginURIResponse
+	typealias URI = String
+	typealias ResponseType = URI
 	let sessionCode: String?
 	let route = "/spotify/sign_in_uri/"
 	
@@ -23,13 +20,11 @@ struct GetSpotifyLoginURI: TempoRequest {
 		return ["session_code": sessionCode]
 	}
 	
-	func process(response: JSON) throws -> GetSpotifyLoginURIResponse {
-		guard let success = response["success"].bool,
-			success,
-			let uri = response["data"]["uri"].string else {
-				throw NeutronError.badResponseData
+	func processData(response: JSON) throws -> URI {
+		guard let uri = response["uri"].string else {
+			throw NeutronError.badResponseData
 		}
 		
-		return GetSpotifyLoginURIResponse(uri: uri)
+		return uri
 	}
 }

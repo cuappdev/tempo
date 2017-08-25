@@ -1,17 +1,39 @@
-//
-//  Neutron+Extensions.swift
-//  Tempo
-//
-//  Created by Joseph Antonakakis on 8/23/17.
-//  Copyright © 2017 CUAppDev. All rights reserved.
-//
-
 import Neutron
+import SwiftyJSON
 
-// Custom protocol with a default host
-public protocol TempoRequest: JSONQuark {}
+// Custom protocol with a default host and
+// processData function
+public protocol TempoRequest: JSONQuark {
+	associatedtype ResponseType
+	func processData(response: JSON) throws -> ResponseType
+}
+
 extension TempoRequest {
 	var host: String {
-		return "http://localhost:5000"
+		return "http://10.148.12.75:5000"
+	}
+	
+	public func process(response: JSON) throws -> ResponseType {
+		guard let success = response["success"].bool else {
+			throw NeutronError.badResponseData
+		}
+		
+		guard success else {
+			let errors = response["errors"].arrayValue.map({ $0.stringValue })
+			throw TempoError.backendError(errors: errors)
+		}
+		
+		return try processData(response: response["data"])
+	}
+}
+
+public enum TempoError: Error {
+	case backendError(errors: [String])
+	
+	var localizedDescription: String {
+		switch self {
+		case .backendError(let errors):
+			return "Something went wrong: \(errors)"
+		}
 	}
 }
