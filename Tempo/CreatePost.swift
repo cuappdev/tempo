@@ -9,6 +9,7 @@ struct CreatePost: TempoRequest {
 	
 	let route = "/posts/"
 	let method: HTTPMethod = .post
+	let encoding: ParameterEncoding = URLEncoding.queryString
 	
 	var parameters: [String: Any] {
 		let songInfo = [

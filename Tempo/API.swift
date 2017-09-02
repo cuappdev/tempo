@@ -17,12 +17,10 @@ private enum Router: URLConvertible {
 	
 	case root
 	case validAuthenticate
-	case validUsername
 	case users(String)
 	case followers(String)
 	case following(String)
 	case feed(String)
-	case feedEveryone
 	case history(String)
 	case likes(String?)
 	case followings
@@ -50,37 +48,33 @@ private enum Router: URLConvertible {
 				return "/spotify/sign_in_uri/"
 			case .validAuthenticate:
 				return "/users/authenticate/"
-			case .validUsername:
-				return "/users/valid_username"
 			case .users(let userID):
 				return "/users/\(userID)"
 			case .followers(let userID):
-				return "/users/\(userID)/followers"
+				return "/users/\(userID)/followers/"
 			case .following(let userID):
-				return "/users/\(userID)/following"
+				return "/users/\(userID)/following/"
 			case .feed(let userID):
-				return "/\(userID)/feed"
-			case .feedEveryone:
-				return "/feed"
+				return "/\(userID)/feed/"
 			case .history(let userID):
-				return "/users/\(userID)/posts"
+				return "/users/\(userID)/posts/"
 			case .likes(let userID):
 				if userID != nil {
-					return "/users/\(userID!)/likes"
+					return "/users/\(userID!)/likes/"
 				}
-				return "/likes"
+				return "/likes/"
 			case .followings:
-				return "/followings"
+				return "/followings/"
 			case .posts:
-				return "/posts"
+				return "/posts/"
 			case .followSuggestions:
-				return "/users/suggestions"
+				return "/users/suggestions/"
             case .spotifyAccessToken:
-                return "/spotify/get_access_token"
+                return "/spotify/get_access_token/"
 			case .notifications(let userID):
-				return "/users/\(userID)/toggle_push"
+				return "/users/\(userID)/toggle_push/"
 			case .registerNotifications:
-				return "/register_user"
+				return "/register_user/"
 			}
 			}()
 		
@@ -258,7 +252,7 @@ class API {
 			guard let users = $0["users"] as? [AnyObject] else { return [] }
 			return users.map { User(json: JSON($0)) }
 		}
-		get(.followSuggestions, params: ["p": page as AnyObject, "l": length as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: completion)
+		get(.followSuggestions, params: ["p": page, "l": length, "session_code": sessionCode], map: map, completion: completion)
 	}
 	
 	func fetchFeed(_ userID: String, completion: @escaping ([Post]) -> Void) {
@@ -277,14 +271,14 @@ class API {
 	}
 	
 	func fetchPosts(_ userID: String, completion: @escaping ([Post]) -> Void) {
-		get(.history(userID), params: ["id": userID as AnyObject, "session_code": sessionCode as AnyObject], map: postMapping, completion: completion)
+		get(.history(userID), params: ["id": userID, "session_code": sessionCode], map: postMapping, completion: completion)
 	}
 	
 	func updateLikes(_ postID: String, unlike: Bool, completion: (([String: Bool]) -> Void)? = nil) {
 		if unlike {
-			delete(.likes(nil), params: ["post_id": postID as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 }, completion: completion)
+			delete(.likes(nil), params: ["post_id": postID, "session_code": sessionCode], map: { $0 }, completion: completion)
 		} else {
-			post(.likes(nil), params: ["post_id": postID as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 }, completion: completion)
+			post(.likes(nil), params: ["post_id": postID, "session_code": sessionCode], map: { $0 }, completion: completion)
 		}
 	}
 	
@@ -293,14 +287,14 @@ class API {
 			let songIDs: [String] = $0["songs"]?.flatMap { $0["spotify_url"] as? String } ?? []
 			return songIDs.map { Song(songID: $0) }
 		}
-		get(.likes(userID), params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
+		get(.likes(userID), params: ["session_code": sessionCode], map: map, completion: completion)
 	}
 	
 	func updateFollowings(_ userID: String, unfollow: Bool, completion: (([String: Bool]) -> Void)? = nil) {
 		if unfollow {
-			delete(.followings, params: ["followed_id": userID as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 as [String: Bool] }, completion: completion)
+			delete(.followings, params: ["followed_id": userID, "session_code": sessionCode], map: { $0 as [String: Bool] }, completion: completion)
 		} else {
-			post(.followings, params: ["followed_id": userID as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 as [String: Bool] }, completion: completion)
+			post(.followings, params: ["followed_id": userID, "session_code": sessionCode], map: { $0 as [String: Bool] }, completion: completion)
 		}
 	}
     
@@ -316,29 +310,29 @@ class API {
                 return (false, url, expiresAt)
             }
         }
-        get(.spotifyAccessToken, params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
+        get(.spotifyAccessToken, params: ["session_code": sessionCode], map: map, completion: completion)
     }
 	
 	
 	// MARK: - Private Methods
 	
-	fileprivate func post<O, T>(_ router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
+	fileprivate func post<O, T>(_ router: Router, params: [String: Any], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
 		makeNetworkRequest(.post, router: router, params: params, map: map, completion: completion)
 	}
 	
-	fileprivate func get<O, T>(_ router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
+	fileprivate func get<O, T>(_ router: Router, params: [String: Any], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
 		makeNetworkRequest(.get, router: router, params: params, map: map, completion: completion)
 	}
 	
-	fileprivate func delete<O, T>(_ router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
+	fileprivate func delete<O, T>(_ router: Router, params: [String: Any], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
 		makeNetworkRequest(.delete, router: router, params: params, map: map, completion: completion)
 	}
 	
-	fileprivate func put<O, T>(_ router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
+	fileprivate func put<O, T>(_ router: Router, params: [String: Any], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
 		makeNetworkRequest(.put, router: router, params: params, map: map, completion: completion)
 	}
 	
-	fileprivate func makeNetworkRequest<O, T>(_ method: Alamofire.HTTPMethod, router: Router, params: [String: AnyObject], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
+	fileprivate func makeNetworkRequest<O, T>(_ method: Alamofire.HTTPMethod, router: Router, params: [String: Any], map: @escaping (O) -> T?, completion: ((T) -> Void)?) {
 		
 		let encoding: ParameterEncoding = method == .get || method == .delete ? URLEncoding.default : JSONEncoding.default
 		Alamofire.request(router, method: method, parameters: params, encoding: encoding, headers: nil).responseJSON(completionHandler: { response in

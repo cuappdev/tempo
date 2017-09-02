@@ -1,11 +1,3 @@
-//
-//  SpotifyController.swift
-//  Tempo
-//
-//  Created by Lucas Derraugh on 8/16/15.
-//  Copyright © 2015 CUAppDev. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import SafariServices
@@ -56,23 +48,9 @@ class SpotifyController {
 //		}
 	}
 	
-	func loginToSpotify(vc: UIViewController, _ completionHandler: @escaping (_ success: Bool) -> Void) {
-		GetSpotifyLoginURI().make()
-			.then { uri -> Void in
-				if let url = URL(string: uri) {
-					let safariViewController = SFSafariViewController(url: url)
-					vc.present(safariViewController, animated: true, completion: nil)
-					self.authViewController = safariViewController
-				}
-			}
-			.catch { error in
-				print(error)
-			}
-	}
-	
 	func openSpotifyURL() {
 		let spotifyUserURL = User.currentUser.currentSpotifyUser!.spotifyUserURL
-		UIApplication.shared.openURL(spotifyUserURL as URL)
+		UIApplication.shared.openURL(spotifyUserURL)
 	}
 	
 	func saveSpotifyTrack(_ track: Post, completionHandler: @escaping (_ success: Bool) -> Void) {

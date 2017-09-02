@@ -36,14 +36,13 @@ class Post: NSObject {
     }
     
     convenience init(json: JSON) {
-        let songID = json["song"]["spotify_url"].stringValue
         let user = User(json: json["user"])
         let dateString = json["created_at"].stringValue
         let likes = json["like_count"].intValue
 		let isLiked = json["post"]["is_liked"].boolValue
         let date = DateFormatter.parsingDateFormatter.date(from: dateString)
                 
-		self.init(song: Song(spotifyURI: songID), user: user, date: date, likes: likes, isLiked: isLiked)
+		self.init(song: Song(json: json["song"]), user: user, date: date, likes: likes, isLiked: isLiked)
 		
         postID = json["id"].stringValue
     }

@@ -171,7 +171,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
 		
 		// Handle Spotify authentication
-		print(url)
+		if url.absoluteString.hasPrefix("tempo-login://") {
+			print("Spotify logged in")
+			UserDefaults.standard.set(true, forKey: "spotify-connected")
+			settingsVC.updateSpotifyState()
+		}
 		
 		return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
 	}

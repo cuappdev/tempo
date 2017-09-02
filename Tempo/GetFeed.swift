@@ -17,6 +17,9 @@ struct GetFeed: TempoRequest {
 			throw NeutronError.badResponseData
 		}
 
+		print(response)
+
+		dump(posts.map { Post(json: $0) })
 		return posts.map { Post(json: $0) }
 	}
 }

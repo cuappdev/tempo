@@ -1,14 +1,10 @@
 import UIKit
+import SafariServices
 
 class SettingsViewController: UIViewController {
 	
 	let buttonHeight: CGFloat = 50
-	
-	@IBOutlet weak var profilePicture: UIImageView!
-    @IBOutlet weak var initialsView: UIView!
-    @IBOutlet weak var initialsLabel: UILabel!
-	@IBOutlet weak var nameLabel: UILabel!
-	@IBOutlet weak var usernameLabel: UILabel!
+
 	@IBOutlet weak var loginToSpotifyButton: UIButton!
 	@IBOutlet weak var goToSpotifyButton: UIButton!
 	@IBOutlet weak var logOutSpotifyButton: UIButton!
@@ -20,16 +16,16 @@ class SettingsViewController: UIViewController {
 	static let registeredForRemotePushNotificationsKey = "SettingsViewController.registeredForRemotePushNotificationsKey"
 	static let presentedAlertForRemotePushNotificationsKey = "SettingsViewController.presentedAlertForRemotePushNotificationsKey"
 	var shouldAddHamburger = true
-	
+
+	var safariViewController: SFSafariViewController?
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		toggleNotifications.onTintColor = .tempoRed
 		toggleMusicOnExit.onTintColor = .tempoRed
-		profilePicture.layer.cornerRadius = profilePicture.frame.width / 2.0
 		
 		updateSpotifyState()
-		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +45,6 @@ class SettingsViewController: UIViewController {
 		view.backgroundColor = .readCellColor
 		
 		updateSpotifyState()
-		profilePicture.hnk_setImageFromURL(User.currentUser.imageURL)
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -59,43 +54,35 @@ class SettingsViewController: UIViewController {
 	
 	// Can be called after successful login to Spotify SDK
 	func updateSpotifyState() {
-//		if let session = SPTAuth.defaultInstance().session, session.isValid() {
-//			SpotifyController.sharedController.setSpotifyUser(session.accessToken, completion: { (success: Bool) in
-//				DispatchQueue.main.async {
-//					if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
-//						self.nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
-//						self.usernameLabel?.text = "@\(currentSpotifyUser.username)"
-//						self.initialsLabel?.text = setUserInitials(firstName: User.currentUser.firstName, lastName: User.currentUser.lastName)
-//						self.loggedInToSpotify(session.isValid())
-//					}
-//				}
-//			})
-//		} else {
-//			loggedInToSpotify(false)
-//		}
-//		let playerNav = navigationController as! PlayerNavigationController
-//		playerNav.updateAddButton()
+
+		safariViewController?.dismiss(animated: true, completion: nil)
+
+		if UserDefaults.standard.bool(forKey: "spotify-connected") {
+			self.loggedInToSpotify(true)
+		}
+
 	}
 	
 	func loggedInToSpotify(_ loggedIn: Bool) {
 		loginToSpotifyButton?.isHidden = loggedIn
-		useLabel?.isHidden = loggedIn
-		profilePicture?.isHidden = !loggedIn
-		initialsView.isHidden = !loggedIn
-		initialsLabel?.isHidden = !loggedIn
-		nameLabel?.isHidden = !loggedIn
-		usernameLabel?.isHidden = !loggedIn
+		useLabel.text = loggedIn ? "Logged in to Spotify" : "Login in to allow Tempo to add songs you find to your Spotify"
 		goToSpotifyButton?.isHidden = !loggedIn
 		logOutButtonHeight.constant = loggedIn ? 50 : 0
 		logOutSpotifyButton?.isHidden = !loggedIn
 	}
 	
 	@IBAction func loginToSpotify() {
-//		SpotifyController.sharedController.loginToSpotify(vc: self) { (success) in
-//			if success {
-//				self.updateSpotifyState()
-//			}
-//		}
+		GetSpotifyLoginURI().make()
+			.then { uri -> Void in
+				if let url = URL(string: uri) {
+					let safariViewController = SFSafariViewController(url: url)
+					self.present(safariViewController, animated: true, completion: nil)
+					self.safariViewController = safariViewController
+				}
+			}
+			.catch { error in
+				print(error)
+			}
 	}
 	
 	func showPromptIfPushNotificationsDisabled() {
@@ -156,7 +143,7 @@ class SettingsViewController: UIViewController {
 	
 	@IBAction func logOutSpotify(_ sender: UIButton) {
 //		SpotifyController.sharedController.closeCurrentSpotifySession()
-		User.currentUser.currentSpotifyUser = nil
-		updateSpotifyState()
+//		User.currentUser.currentSpotifyUser = nil
+//		updateSpotifyState()
 	}
 }
