@@ -165,33 +165,34 @@ class LikedPostView: PostView {
 	}
 	
 	func likedPostViewPressed(_ sender: UIGestureRecognizer) {
-		guard let _ = post else { return }
-		
-		if sender is UITapGestureRecognizer {
-			let tapPoint = sender.location(in: self)
-			let hitView = hitTest(tapPoint, with: nil)
-			if hitView == addButton {
-				if songStatus == .notSaved {
-					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
-						if success {
-							self.songStatus = .saved
-							self.updateAddButton()
-							self.playerDelegate.didToggleAdd?()
-							self.postViewDelegate?.didTapAddButtonForPostView?(true)
-						}
-					}
-				} else if songStatus == .saved {
-					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
-						if success {
-							self.songStatus = .notSaved
-							self.updateAddButton()
-							self.playerDelegate.didToggleAdd?()
-							self.postViewDelegate?.didTapAddButtonForPostView?(false)
-						}
-					}
-				}
-			}
-		}
+		// MARK: TODO
+//		guard let _ = post else { return }
+//		
+//		if sender is UITapGestureRecognizer {
+//			let tapPoint = sender.location(in: self)
+//			let hitView = hitTest(tapPoint, with: nil)
+//			if hitView == addButton {
+//				if songStatus == .notSaved {
+//					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
+//						if success {
+//							self.songStatus = .saved
+//							self.updateAddButton()
+//							self.playerDelegate.didToggleAdd?()
+//							self.postViewDelegate?.didTapAddButtonForPostView?(true)
+//						}
+//					}
+//				} else if songStatus == .saved {
+//					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
+//						if success {
+//							self.songStatus = .notSaved
+//							self.updateAddButton()
+//							self.playerDelegate.didToggleAdd?()
+//							self.postViewDelegate?.didTapAddButtonForPostView?(false)
+//						}
+//					}
+//				}
+//			}
+//		}
 	}
 	
 	func updateSavedStatus() {

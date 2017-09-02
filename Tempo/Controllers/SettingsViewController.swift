@@ -1,11 +1,3 @@
-//
-//  SettingsViewController.swift
-//  Tempo
-//
-//  Created by Keivan Shahida on 11/20/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
-
 import UIKit
 
 class SettingsViewController: UIViewController {
@@ -67,22 +59,22 @@ class SettingsViewController: UIViewController {
 	
 	// Can be called after successful login to Spotify SDK
 	func updateSpotifyState() {
-		if let session = SPTAuth.defaultInstance().session, session.isValid() {
-			SpotifyController.sharedController.setSpotifyUser(session.accessToken, completion: { (success: Bool) in
-				DispatchQueue.main.async {
-					if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
-						self.nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
-						self.usernameLabel?.text = "@\(currentSpotifyUser.username)"
-						self.initialsLabel?.text = setUserInitials(firstName: User.currentUser.firstName, lastName: User.currentUser.lastName)
-						self.loggedInToSpotify(session.isValid())
-					}
-				}
-			})
-		} else {
-			loggedInToSpotify(false)
-		}
-		let playerNav = navigationController as! PlayerNavigationController
-		playerNav.updateAddButton()
+//		if let session = SPTAuth.defaultInstance().session, session.isValid() {
+//			SpotifyController.sharedController.setSpotifyUser(session.accessToken, completion: { (success: Bool) in
+//				DispatchQueue.main.async {
+//					if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
+//						self.nameLabel?.text = "\(User.currentUser.firstName) \(User.currentUser.lastName)"
+//						self.usernameLabel?.text = "@\(currentSpotifyUser.username)"
+//						self.initialsLabel?.text = setUserInitials(firstName: User.currentUser.firstName, lastName: User.currentUser.lastName)
+//						self.loggedInToSpotify(session.isValid())
+//					}
+//				}
+//			})
+//		} else {
+//			loggedInToSpotify(false)
+//		}
+//		let playerNav = navigationController as! PlayerNavigationController
+//		playerNav.updateAddButton()
 	}
 	
 	func loggedInToSpotify(_ loggedIn: Bool) {
@@ -99,11 +91,11 @@ class SettingsViewController: UIViewController {
 	}
 	
 	@IBAction func loginToSpotify() {
-		SpotifyController.sharedController.loginToSpotify(vc: self) { (success) in
-			if success {
-				self.updateSpotifyState()
-			}
-		}
+//		SpotifyController.sharedController.loginToSpotify(vc: self) { (success) in
+//			if success {
+//				self.updateSpotifyState()
+//			}
+//		}
 	}
 	
 	func showPromptIfPushNotificationsDisabled() {
@@ -159,11 +151,11 @@ class SettingsViewController: UIViewController {
 	}
 	
 	@IBAction func goToSpotify(_ sender: UIButton) {
-		SpotifyController.sharedController.openSpotifyURL()
+//		SpotifyController.sharedController.openSpotifyURL()
 	}
 	
 	@IBAction func logOutSpotify(_ sender: UIButton) {
-		SpotifyController.sharedController.closeCurrentSpotifySession()
+//		SpotifyController.sharedController.closeCurrentSpotifySession()
 		User.currentUser.currentSpotifyUser = nil
 		updateSpotifyState()
 	}

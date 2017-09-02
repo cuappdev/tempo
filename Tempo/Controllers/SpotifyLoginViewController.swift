@@ -97,11 +97,11 @@ class SpotifyLoginViewController: UIViewController {
 	
 	func connectToSpotifyButtonPressed() {
 		connectToSpotifyButton.alpha = 1.0
-		SpotifyController.sharedController.loginToSpotify(vc: self) { (success: Bool) in
-			if success {
-				self.setSpotifyUserAndContinue()
-			}
-		}
+//		SpotifyController.sharedController.loginToSpotify(vc: self) { (success: Bool) in
+//			if success {
+//				self.setSpotifyUserAndContinue()
+//			}
+//		}
 	}
 	
 	func skipThisStepButtonPressed() {
@@ -109,11 +109,11 @@ class SpotifyLoginViewController: UIViewController {
 	}
 
 	func setSpotifyUserAndContinue() {
-		if let session = SPTAuth.defaultInstance().session, session.isValid() {
-			SpotifyController.sharedController.setSpotifyUser(session.accessToken, completion: nil)
-
-			delegate?.spotifyLoginViewController(spotifyLoginViewController: self, didFinishLoggingIntoSpotifyWithAccessToken: session.accessToken)
-		}
+//		if let session = SPTAuth.defaultInstance().session, session.isValid() {
+//			SpotifyController.sharedController.setSpotifyUser(session.accessToken, completion: nil)
+//
+//			delegate?.spotifyLoginViewController(spotifyLoginViewController: self, didFinishLoggingIntoSpotifyWithAccessToken: session.accessToken)
+//		}
 	}
 	
 	

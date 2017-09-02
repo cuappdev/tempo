@@ -212,7 +212,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	}
 	
 	func initiateRequest(_ term: String) {
-		SearchSpotify(query: term, sessionCode: API.sharedAPI.sessionCode).make()
+		SearchSpotify(query: term).make()
 			.then { songs -> Void in
 				self.posts = songs.map { song in
 					let post = Post(song: song, user: User.currentUser)

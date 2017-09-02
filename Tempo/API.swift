@@ -12,7 +12,7 @@ import SwiftyJSON
 import FBSDKShareKit
 
 private enum Router: URLConvertible {
-	static let tempoBaseURLString = "http://10.148.12.75:5000"
+	static let tempoBaseURLString = "http://10.147.130.117:5000"
 	static let notificationsBaseURLString = "http://35.163.179.243:8080"
 	
 	case root
@@ -116,8 +116,13 @@ class API {
 	}
 	
 	func usernameIsValid(_ username: String, completion: @escaping (Bool) -> Void) {
-		let map: ([String: Bool]) -> Bool? = { $0["is_valid"] }
-		post(.validUsername, params: ["username": username as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: completion)
+		IsUsernameValid().make()
+			.then { valid in
+				completion(valid)
+			}
+			.catch { error in
+				completion(false)
+			}
 	}
 	
 	func fbAuthenticate(_ fbid: String, userToken: String, completion: @escaping (_ success: Bool, _ newUser: Bool) -> Void) {
@@ -165,17 +170,6 @@ class API {
 		}
 	}
 	
-	func getSpotifySignInURI(_ completion: @escaping (Bool, String?) -> Void) {
-		let request = GetSpotifyLoginURI(sessionCode: sessionCode)
-		request.make()
-			.then { uri in
-				completion(true, uri)
-			}
-			.catch { error in
-				completion(false, nil)
-			}
-	}
-	
 	func searchUsers(_ query: String, completion: @escaping ([User]) -> Void) {
 		let request = SearchUsers(query: query, sessionCode: sessionCode)
 		request.make()
@@ -188,7 +182,7 @@ class API {
 	}
 	
 	func updatePost(_ userID: String, song: Song, completion: @escaping () -> Void) {
-		CreatePost(sessionCode: sessionCode, song: song).make()
+		CreatePost(song: song).make()
 			.then {
 				completion()
 			}
@@ -268,12 +262,18 @@ class API {
 	}
 	
 	func fetchFeed(_ userID: String, completion: @escaping ([Post]) -> Void) {
-		get(.feed(userID), params: ["session_code": sessionCode as AnyObject], map: postMapping, completion: completion)
+		fatalError("Unimplemented")
 	}
 	
 	// Method used for testing purposes
 	func fetchFeedOfEveryone(_ completion: @escaping ([Post]) -> Void) {
-		get(.feedEveryone, params: ["session_code": sessionCode as AnyObject], map: postMapping, completion: completion)
+		GetFeed().make()
+			.then { posts in
+				completion(posts)
+			}
+			.catch { error in
+				completion([])
+			}
 	}
 	
 	func fetchPosts(_ userID: String, completion: @escaping ([Post]) -> Void) {

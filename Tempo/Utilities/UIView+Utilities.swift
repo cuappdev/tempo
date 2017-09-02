@@ -1,12 +1,4 @@
-//
-//  UIView+Utilities.swift
-//  Tempo
-//
-//  Created by Mark Bryan on 3/2/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
-
-import Foundation
+import UIKit
 
 let playerCellHeight = CGFloat(72)
 let iPhone5: Bool = (UIScreen.main.bounds.width <= CGFloat(320))

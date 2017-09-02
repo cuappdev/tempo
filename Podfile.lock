@@ -6,11 +6,11 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - FBSDKCoreKit (4.25.0):
+  - FBSDKCoreKit (4.26.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.25.0):
+  - FBSDKLoginKit (4.26.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.25.0):
+  - FBSDKShareKit (4.26.0):
     - FBSDKCoreKit
   - HanekeSwift (0.10.1)
   - MarqueeLabel/Swift (3.1.2)
@@ -18,10 +18,10 @@ PODS:
     - Alamofire
     - PromiseKit/Alamofire
     - SwiftyJSON
-  - PromiseKit/Alamofire (4.3.2):
+  - PromiseKit/Alamofire (4.4.0):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (4.3.2)
+  - PromiseKit/CorePromise (4.4.0)
   - SwiftyJSON (3.1.4)
   - SWRevealViewController (2.3.0)
   - Tweaks (2.2.0)
@@ -52,13 +52,13 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  FBSDKCoreKit: 53e3f4bfb64e80c5f229dd30ae33ff57fbbbd2d1
-  FBSDKLoginKit: f628c09684dae9c17f071cf90b014e886f5093ea
-  FBSDKShareKit: aea699d3cac749af08e360f4e949b82ffa8813f5
+  FBSDKCoreKit: c8b8582311ec11b145451d8b9717dc6cc2ae5a76
+  FBSDKLoginKit: f3f03b94c21eb834af243c0a881d48641f47ca60
+  FBSDKShareKit: 320712d8293fde6392872c91eb80ef0da5d73cc3
   HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
   MarqueeLabel: fcd7057a779422d86589be759036f1510b08c6a0
   Neutron: fd503561f7733dc6b66a72d41ce7cea7aabbd63f
-  PromiseKit: 32430ae679605b17c15d6193679cae7bf60147f7
+  PromiseKit: ecf5fe92275d57ee77c9ede858af47a162e9b97e
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   Tweaks: 0c41be06d41b82a11f515c27711b65d343aa4af6

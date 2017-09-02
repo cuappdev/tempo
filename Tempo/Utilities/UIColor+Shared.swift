@@ -1,12 +1,4 @@
-//
-//  UIColor+Shared.swift
-//  Tempo
-//
-//  Created by Manuela Rios on 4/26/15.
-//  Copyright (c) 2015 Lucas Derraugh. All rights reserved.
-//
-
-import Foundation
+import UIKit
 
 extension UIColor {
 	@nonobjc static let tempoOnboardingGray = UIColor.colorFromCode(0x292424)

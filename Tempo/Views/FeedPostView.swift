@@ -74,11 +74,11 @@ class FeedPostView: PostView {
 	
 	func updateDateLabel() {
 		self.dateLabel!.isHidden = true
-		SpotifyController.sharedController.spotifyIsAvailable { success in
-			if success {
-				self.dateLabel!.isHidden = false
-			}
-		}
+//		SpotifyController.sharedController.spotifyIsAvailable { success in
+//			if success {
+//				self.dateLabel!.isHidden = false
+//			}
+//		}
 	}
 	
 	override func didMoveToWindow() {

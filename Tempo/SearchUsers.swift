@@ -1,11 +1,3 @@
-//
-//  SearchUsers.swift
-//  Tempo
-//
-//  Created by Joseph Antonakakis on 8/23/17.
-//  Copyright © 2017 CUAppDev. All rights reserved.
-//
-
 import Neutron
 import SwiftyJSON
 

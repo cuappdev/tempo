@@ -4,12 +4,11 @@ import Alamofire
 
 struct CreatePost: TempoRequest {
 	typealias ResponseType = Void
-	
-	let sessionCode: String
+
 	let song: Song
 	
 	let route = "/posts/"
-	let method = HTTPMethod.post
+	let method: HTTPMethod = .post
 	
 	var parameters: [String: Any] {
 		let songInfo = [
@@ -19,7 +18,7 @@ struct CreatePost: TempoRequest {
 		]
 		
 		return [
-			"session_code": sessionCode,
+			"session_code": API.sharedAPI.sessionCode,
 			"song_info": songInfo
 		]
 	}

@@ -67,23 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		StyleController.applyStyles()
 		UIApplication.shared.statusBarStyle = .lightContent
-		
-		// Set up Spotify auth
-		SPTAuth.defaultInstance().clientID = "ecc907ce157c400e8c616b09ce702a05"
-		SPTAuth.defaultInstance().redirectURL = NSURL(string: "tempo-login://callback") as URL!
-		SPTAuth.defaultInstance().sessionUserDefaultsKey = "SpotifyUserDefaultsKey"
-		SPTAuth.defaultInstance().requestedScopes = [
-			SPTAuthPlaylistReadPrivateScope,
-			SPTAuthPlaylistModifyPublicScope,
-			SPTAuthPlaylistModifyPrivateScope,
-			SPTAuthUserLibraryReadScope,
-			SPTAuthUserLibraryModifyScope
-		]
-		
-		if SPTAuth.defaultInstance().session != nil && SPTAuth.defaultInstance().session.isValid() {
-			SpotifyController.sharedController.setSpotifyUser(SPTAuth.defaultInstance().session.accessToken, completion: nil)
-			User.currentUser.currentSpotifyUser?.savedTracks = UserDefaults.standard.dictionary(forKey: User.currentUser.currentSpotifyUser!.savedTracksKey) as [String : AnyObject]? ?? [:]
-		}
 
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window!.backgroundColor = UIColor.tempoLightGray
@@ -188,30 +171,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
 		
 		// Handle Spotify authentication
-		if SPTAuth.defaultInstance().canHandle(url) {
-			if let authVC = SpotifyController.sharedController.authViewController {
-				// Parse url to a session object
-				SPTAuth.defaultInstance().handleAuthCallback(withTriggeredAuthURL: url, callback: { (error, spotifySession) in
-					// Dismiss auth window
-					authVC.presentingViewController?.dismiss(animated: true, completion: nil)
-					SpotifyController.sharedController.authViewController = nil
-					
-					if let err = error {
-						print("Spotify auth error: \(err)")
-					} else if let session = spotifySession {
-						let (accessToken, expirationDate) = (session.accessToken, session.expirationDate)
-						
-						SpotifyController.sharedController.setSpotifyUser(accessToken!, completion: nil)
-						SPTAuth.defaultInstance().session = SPTSession(userName: User.currentUser.currentSpotifyUser?.username, accessToken: accessToken, expirationDate: expirationDate)
-						
-						if let currentVC = self.window?.rootViewController as? LoginFlowViewController {
-							currentVC.spotifyLoginViewController.setSpotifyUserAndContinue()
-						}
-					}
-				})
-			}
-			return true
-		}
+		print(url)
 		
 		return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
 	}

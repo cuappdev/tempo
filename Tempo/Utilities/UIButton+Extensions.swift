@@ -1,12 +1,4 @@
-//
-//  UIButton+Extensions.swift
-//  Tempo
-//
-//  Created by Austin Astorga on 12/1/16.
-//  Copyright © 2016 CUAppDev. All rights reserved.
-//
-
-import Foundation
+import UIKit
 
 extension UIButton {
 	override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {

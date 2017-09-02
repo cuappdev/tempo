@@ -297,16 +297,16 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	}
 	
 	func didLongPressOnCell(_ postView: PostView) {
-		SpotifyController.sharedController.spotifyIsAvailable { success in
-			if success {
-				let topVC = getTopViewController()
-				let playlistVC = PlaylistTableViewController()
-				let tableViewNavigationController = UINavigationController(rootViewController: playlistVC)
-				
-				playlistVC.song = postView.post
-				topVC.present(tableViewNavigationController, animated: true, completion: nil)
-			}
-		}
+//		SpotifyController.sharedController.spotifyIsAvailable { success in
+//			if success {
+//				let topVC = getTopViewController()
+//				let playlistVC = PlaylistTableViewController()
+//				let tableViewNavigationController = UINavigationController(rootViewController: playlistVC)
+//				
+//				playlistVC.song = postView.post
+//				topVC.present(tableViewNavigationController, animated: true, completion: nil)
+//			}
+//		}
 	}
 	
 	// MARK: - PostViewDelegate

@@ -28,40 +28,46 @@ class SpotifyController {
 	var authViewController: UIViewController? = nil
 	
 	func spotifyIsAvailable(_ completion: (Bool) -> Void) {
-		if let session = SPTAuth.defaultInstance().session {
-			if session.isValid() {
-				completion(true)
-			}
-		} else {
-			completion(false)
-		}
+//		if let session = SPTAuth.defaultInstance().session {
+//			if session.isValid() {
+//				completion(true)
+//			}
+//		} else {
+//			completion(false)
+//		}
 	}
 	
 	func setSpotifyUser(_ accessToken: String, completion: ((_ success: Bool) -> ())?) {
-		do {
-			let currentUserRequest = try SPTUser.createRequestForCurrentUser(withAccessToken: accessToken)			
-			let task = URLSession.shared.dataTask(with: currentUserRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
-				guard let unwrappedData = data, error == nil else { return }
-				let jsonDict = JSON(data: unwrappedData)
-				User.currentUser.currentSpotifyUser = CurrentSpotifyUser(json: jsonDict)
-				self.isSpotifyAvailable = true
-				completion?(true)
-			})
-			
-			task.resume()
-			
-		} catch let error as NSError {
-			isSpotifyAvailable = false
-			print(error)
-		}
+//		do {
+//			let currentUserRequest = try SPTUser.createRequestForCurrentUser(withAccessToken: accessToken)			
+//			let task = URLSession.shared.dataTask(with: currentUserRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
+//				guard let unwrappedData = data, error == nil else { return }
+//				let jsonDict = JSON(data: unwrappedData)
+//				User.currentUser.currentSpotifyUser = CurrentSpotifyUser(json: jsonDict)
+//				self.isSpotifyAvailable = true
+//				completion?(true)
+//			})
+//			
+//			task.resume()
+//			
+//		} catch let error as NSError {
+//			isSpotifyAvailable = false
+//			print(error)
+//		}
 	}
 	
 	func loginToSpotify(vc: UIViewController, _ completionHandler: @escaping (_ success: Bool) -> Void) {
-		API.sharedAPI.getSpotifySignInURI { (success, uri) -> Void in
-			// Display Safari VC Login
-			self.authViewController = SFSafariViewController(url: URL(string: uri!)!)
-			vc.present(self.authViewController!, animated: true, completion: nil)
-		}
+		GetSpotifyLoginURI().make()
+			.then { uri -> Void in
+				if let url = URL(string: uri) {
+					let safariViewController = SFSafariViewController(url: url)
+					vc.present(safariViewController, animated: true, completion: nil)
+					self.authViewController = safariViewController
+				}
+			}
+			.catch { error in
+				print(error)
+			}
 	}
 	
 	func openSpotifyURL() {
@@ -72,90 +78,90 @@ class SpotifyController {
 	func saveSpotifyTrack(_ track: Post, completionHandler: @escaping (_ success: Bool) -> Void) {
 		let spotifyTrackURI = URL(string: "spotify:track:" + track.song.spotifyID)!
 		
-		SPTTrack.track(withURI: spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, data in
-			if error != nil {
-				print(error as Any)
-				completionHandler(false)
-			} else {
-				SPTYourMusic.saveTracks([data!], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
-					if error != nil {
-						completionHandler(false)
-					} else if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
-						currentSpotifyUser.savedTracks[track.song.spotifyID] = true as AnyObject?
-						UserDefaults.standard.setValue(User.currentUser.currentSpotifyUser?.savedTracks, forKey: currentSpotifyUser.savedTracksKey)
-						completionHandler(true)
-					}
-				}
-			}
-			
-		}
+//		SPTTrack.track(withURI: spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, data in
+//			if error != nil {
+//				print(error as Any)
+//				completionHandler(false)
+//			} else {
+//				SPTYourMusic.saveTracks([data!], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
+//					if error != nil {
+//						completionHandler(false)
+//					} else if let currentSpotifyUser = User.currentUser.currentSpotifyUser {
+//						currentSpotifyUser.savedTracks[track.song.spotifyID] = true as AnyObject?
+//						UserDefaults.standard.setValue(User.currentUser.currentSpotifyUser?.savedTracks, forKey: currentSpotifyUser.savedTracksKey)
+//						completionHandler(true)
+//					}
+//				}
+//			}
+//			
+//		}
 	}
 	
 	func removeSavedSpotifyTrack(_ track: Post, completionHandler: @escaping (_ success: Bool) -> Void) {
 		let spotifyTrackURI = URL(string: "spotify:track:" + track.song.spotifyID)!
 		
-		SPTTrack.track(withURI: spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, data in
-			if error != nil {
-				completionHandler(false)
-			} else {
-				SPTYourMusic.removeTracks(fromSaved: [data!], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
-					if error != nil {
-						completionHandler(false)
-					} else {
-						User.currentUser.currentSpotifyUser?.savedTracks[track.song.spotifyID] = nil
-						UserDefaults.standard.setValue(User.currentUser.currentSpotifyUser?.savedTracks, forKey: "savedTracks")
-						completionHandler(true)
-					}
-				}
-			}
-			
-		}
+//		SPTTrack.track(withURI: spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, data in
+//			if error != nil {
+//				completionHandler(false)
+//			} else {
+//				SPTYourMusic.removeTracks(fromSaved: [data!], forUserWithAccessToken: SPTAuth.defaultInstance().session.accessToken) { error, result in
+//					if error != nil {
+//						completionHandler(false)
+//					} else {
+//						User.currentUser.currentSpotifyUser?.savedTracks[track.song.spotifyID] = nil
+//						UserDefaults.standard.setValue(User.currentUser.currentSpotifyUser?.savedTracks, forKey: "savedTracks")
+//						completionHandler(true)
+//					}
+//				}
+//			}
+//			
+//		}
 	}
 	
-	func getPlaylists(_ completion:@escaping (_ playlists: [SPTPartialPlaylist]?, _ error: NSError?) -> Void) {
-		SPTPlaylistList.playlistsForUser(with: SPTAuth.defaultInstance().session) { error, data in
-			if error != nil {
-				completion(nil, error as NSError?)
-			} else {
-				if let playlistData = data {
-					let playlistList = playlistData as? SPTPlaylistList
-					let playlists = (playlistList?.items as? [SPTPartialPlaylist])!
-					completion(playlists, nil)
-				} else {
-					completion(nil, NSError(domain: "Parsing error", code: 404, userInfo: nil))
-				}
-			}
-		}
-	}
+//	func getPlaylists(_ completion:@escaping (_ playlists: [SPTPartialPlaylist]?, _ error: NSError?) -> Void) {
+//		SPTPlaylistList.playlistsForUser(with: SPTAuth.defaultInstance().session) { error, data in
+//			if error != nil {
+//				completion(nil, error as NSError?)
+//			} else {
+//				if let playlistData = data {
+//					let playlistList = playlistData as? SPTPlaylistList
+//					let playlists = (playlistList?.items as? [SPTPartialPlaylist])!
+//					completion(playlists, nil)
+//				} else {
+//					completion(nil, NSError(domain: "Parsing error", code: 404, userInfo: nil))
+//				}
+//			}
+//		}
+//	}
 	
-	func addTrackToPlaylist(_ playlist: SPTPartialPlaylist, track: Post, completionHandler: @escaping (_ success: Bool) -> Void) {
-		let spotifyTrackURI = URL(string: "spotify:track:" + track.song.spotifyID)!
-		
-		SPTTrack.track(withURI: spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, trackData in
-			if error != nil {
-				completionHandler(false)
-			} else {
-				SPTPlaylistSnapshot.playlist(withURI: playlist.uri, session: SPTAuth.defaultInstance().session) { error, playlistData in
-					if error != nil {
-						completionHandler(false)
-					} else {
-						let selectedPlaylist = playlistData as! SPTPlaylistSnapshot
-						
-						selectedPlaylist.addTracks(toPlaylist: [trackData!], with: SPTAuth.defaultInstance().session) { error in
-							if error != nil {
-								completionHandler(false)
-							} else {
-								completionHandler(true)
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	
+//	func addTrackToPlaylist(_ playlist: SPTPartialPlaylist, track: Post, completionHandler: @escaping (_ success: Bool) -> Void) {
+//		let spotifyTrackURI = URL(string: "spotify:track:" + track.song.spotifyID)!
+//		
+//		SPTTrack.track(withURI: spotifyTrackURI, session: SPTAuth.defaultInstance().session) { error, trackData in
+//			if error != nil {
+//				completionHandler(false)
+//			} else {
+//				SPTPlaylistSnapshot.playlist(withURI: playlist.uri, session: SPTAuth.defaultInstance().session) { error, playlistData in
+//					if error != nil {
+//						completionHandler(false)
+//					} else {
+//						let selectedPlaylist = playlistData as! SPTPlaylistSnapshot
+//						
+//						selectedPlaylist.addTracks(toPlaylist: [trackData!], with: SPTAuth.defaultInstance().session) { error in
+//							if error != nil {
+//								completionHandler(false)
+//							} else {
+//								completionHandler(true)
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
+
 	func closeCurrentSpotifySession() {
-		SPTAuth.defaultInstance().session = nil
+//		SPTAuth.defaultInstance().session = nil
 		isSpotifyAvailable = false
 	}
 	

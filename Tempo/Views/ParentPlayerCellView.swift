@@ -49,23 +49,23 @@ class ParentPlayerCellView: UIView {
 	//Switches saved to notSaved, or notSaved to saved, and calls updateAddButton()
 	func toggleAddButton() {
 		if let _ = User.currentUser.currentSpotifyUser {
-			SpotifyController.sharedController.spotifyIsAvailable { success in
-				if success && songStatus == .notSaved {
-					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
-						if success {
-							self.playerNav.updateAddButton()
-							self.delegate?.didToggleAdd?()
-						}
-					}
-				} else if success && songStatus == .saved {
-					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
-						if success {
-							self.playerNav.updateAddButton()
-							self.delegate?.didToggleAdd?()
-						}
-					}
-				}
-			}
+//			SpotifyController.sharedController.spotifyIsAvailable { success in
+//				if success && songStatus == .notSaved {
+//					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
+//						if success {
+//							self.playerNav.updateAddButton()
+//							self.delegate?.didToggleAdd?()
+//						}
+//					}
+//				} else if success && songStatus == .saved {
+//					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
+//						if success {
+//							self.playerNav.updateAddButton()
+//							self.delegate?.didToggleAdd?()
+//						}
+//					}
+//				}
+//			}
 		} else {
 			//bring them to settingsVC
 			let appDelegate = UIApplication.shared.delegate as! AppDelegate

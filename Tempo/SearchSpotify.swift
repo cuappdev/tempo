@@ -7,15 +7,13 @@ struct SearchSpotify: TempoRequest {
 	typealias ResponseType = SearchResults
 	
 	let query: String
-	let sessionCode: String
-	
-	let method: HTTPMethod = .get
+
 	let route: String = "/spotify/search/"
 	
 	var parameters: Parameters {
 		return [
 			"q": query,
-			"session_code": sessionCode
+			"session_code": API.sharedAPI.sessionCode
 		]
 	}
 	

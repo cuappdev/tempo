@@ -1,11 +1,3 @@
-//
-//  GetIsPostLiked.swift
-//  Tempo
-//
-//  Created by Joseph Antonakakis on 8/23/17.
-//  Copyright © 2017 CUAppDev. All rights reserved.
-//
-
 import Neutron
 import SwiftyJSON
 
@@ -13,14 +5,13 @@ struct GetIsPostLiked: TempoRequest {
 	typealias IsPostLiked = Bool
 	typealias ResponseType = IsPostLiked
 	
-	let sessionCode: String
 	let postId: Int
 	
 	let route = "/likes/is_liked/"
 	
 	var parameters: [String: Any] {
 		return [
-			"session_code": sessionCode,
+			"session_code": API.sharedAPI.sessionCode,
 			"post_id": postId
 		]
 	}
