@@ -47,9 +47,9 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	var panGestureRecognizer: UIPanGestureRecognizer?
 	var initialPanView: UIView?
 	
-	func setup(parent: PlayerNavigationController) {
+	func setup(parent: PlayerCenter) {
 		backgroundColor = .tempoOffBlack
-		bottomButtonsView.backgroundColor = .tempoOffBlack
+		bottomButtonsView.backgroundColor = .clear
 		
 		// Setup gesture recognizers
 		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(expandedCellTapped(sender:)))
@@ -59,14 +59,14 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(progressPanned(gesture:)))
 		panGestureRecognizer?.delegate = self
 		panGestureRecognizer?.delaysTouchesBegan = false
-		addGestureRecognizer(panGestureRecognizer!)
+		bottomButtonsView.addGestureRecognizer(panGestureRecognizer!)
 		
-		let cellPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(collapsePan(gesture:)))
-		cellPanGestureRecognizer.delaysTouchesBegan = false
-		topViewContainer.addGestureRecognizer(cellPanGestureRecognizer)
+//		let cellPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(collapsePan(gesture:)))
+//		cellPanGestureRecognizer.delaysTouchesBegan = false
+//		topViewContainer.addGestureRecognizer(cellPanGestureRecognizer)
 		
-		playerNav = parent
-		progressView.playerDelegate = playerNav
+		playerCenter = parent
+		progressView.playerDelegate = playerCenter
 		progressView.backgroundColor = .tempoDarkRed
 		
 		progressIndicator = UIView(frame: CGRect(x: progressView.frame.origin.x - 5, y: progressView.frame.origin.y - 5, width: progressIndicatorLength, height: progressIndicatorLength))
@@ -195,7 +195,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		} else if hitView == prevButton {
 			delegate?.playPrevSong?()
 		} else {
-			playerNav.animateExpandedCell(isExpanding: false)
+			playerCenter.collapseAccessoryViewController(animated: true)
 		}
 	}
 	
@@ -224,24 +224,24 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 		progressView.setNeedsDisplay()
 	}
 	
-	func collapsePan(gesture: UIPanGestureRecognizer) {
-		let translation = gesture.translation(in: self)
-		if gesture.state == .began || gesture.state == .changed {
-			let maxCenter = UIScreen.main.bounds.height - playerNav.expandedHeight/2.0
-			
-			if translation.y > 0 || center.y > maxCenter {
-				center.y = center.y + translation.y < maxCenter ? maxCenter : center.y + translation.y
-			}
-			gesture.setTranslation(CGPoint.zero, in: self)
-		}
-		
-		if gesture.state == .ended {
-			let velocity = gesture.velocity(in: self)
-			playerNav.animateExpandedCell(isExpanding: velocity.y < 0)
-			initialPanView = nil
-		}
-		setNeedsDisplay()
-	}
+//	func collapsePan(gesture: UIPanGestureRecognizer) {
+//		let translation = gesture.translation(in: self)
+//		if gesture.state == .began || gesture.state == .changed {
+//			let maxCenter = UIScreen.main.bounds.height - expandedPlayerHeight/2.0
+//			
+//			if translation.y > 0 || center.y > maxCenter {
+//				center.y = center.y + translation.y < maxCenter ? maxCenter : center.y + translation.y
+//			}
+//			gesture.setTranslation(CGPoint.zero, in: self)
+//		}
+//		
+//		if gesture.state == .ended {
+//			let velocity = gesture.velocity(in: self)
+//			playerCenter.animateExpandedCell(isExpanding: velocity.y < 0)
+//			initialPanView = nil
+//		}
+//		setNeedsDisplay()
+//	}
 	
 	override func updatePlayToggleButton() {
 		if let selectedPost = post {
@@ -261,7 +261,7 @@ class ExpandedPlayerView: ParentPlayerCellView, UIGestureRecognizerDelegate {
 	
 	override func updateAddButton() {
 		updateSavedStatus()
-		addButtonImage.image = (songStatus == .saved) ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "PlayerAddButton")
+		addButtonImage.image = (songStatus == .saved) ? #imageLiteral(resourceName: "ExpandedPlayerAddedButton") : #imageLiteral(resourceName: "ExpandedPlayerAddButton")
 		
 		if (iPhone5){
 			addButtonLabel.text = (songStatus == .saved) ? "Saved" : "Save"

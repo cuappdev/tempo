@@ -30,8 +30,11 @@ private enum Router: URLConvertible {
 	case followings
 	case posts
 	case followSuggestions
-    case spotifyAccessToken
+	case getSpotifyAccessToken
+	case postSpotifyAccessToken
+	case notificationsEnabled(String)
 	case notifications(String)
+	case notificationSeen(String)
 	case registerNotifications
 	
 	func asURL() throws -> URL {
@@ -78,10 +81,16 @@ private enum Router: URLConvertible {
 				return "/posts"
 			case .followSuggestions:
 				return "/users/suggestions"
-            case .spotifyAccessToken:
-                return "/spotify/get_access_token"
-			case .notifications(let userID):
+            case .getSpotifyAccessToken:
+				return "/spotify/get_access_token"
+			case .postSpotifyAccessToken:
+				return "/spotify/get_hash"
+			case .notificationsEnabled(let userID):
 				return "/users/\(userID)/toggle_push"
+			case .notifications(let userID):
+				return "/notifications/\(userID)"
+			case .notificationSeen(let id):
+				return "/notifications/\(id)"
 			case .registerNotifications:
 				return "/register_user"
 			}
@@ -175,7 +184,7 @@ class API {
 		let map: ([String: AnyObject]) -> Bool? = {
 			guard let success = $0["success"] as? String, success == "User successfully registered." else { return false }
 			User.currentUser.remotePushNotificationsEnabled = true
-			UserDefaults.standard.set(true, forKey: SettingsViewController.registeredForRemotePushNotificationsKey)
+			UserDefaults.standard.set(true, forKey: SettingsScrollViewController.registeredForRemotePushNotificationsKey)
 			return true
 		}
 		
@@ -189,7 +198,7 @@ class API {
 			return true
 		}
 		
-		put(.notifications(userID), params: ["enabled" : enabled as AnyObject], map: map, completion: completion)
+		put(.notificationsEnabled(userID), params: ["enabled" : enabled as AnyObject], map: map, completion: completion)
 	}
 	
 	func setCurrentUser(_ fbid: String, fbAccessToken: String, completion: @escaping (Bool) -> Void) {
@@ -253,6 +262,22 @@ class API {
 		get(.feed(userID), params: ["session_code": sessionCode as AnyObject], map: postMapping, completion: completion)
 	}
 	
+	func fetchNotifications(_ userID: String, length: Int, page: Int, completion: @escaping ([TempoNotification]) -> Void) {
+		let map: ([String: AnyObject]) -> [TempoNotification] = {
+			guard let notifications = $0["notifications"] as? [AnyObject] else { return [] }
+			return notifications.map { TempoNotification(json: JSON($0)) }
+		}
+		get(.notifications(userID), params: ["p": page as AnyObject, "l": length as AnyObject, "session_code": sessionCode as AnyObject], map: map, completion: completion)
+	}
+	
+	func checkNotification(_ notificationID: String, completion: @escaping (Bool) -> Void) {
+		let map: ([String: AnyObject]) -> Bool = {
+			guard let seen = $0["success"] as? Bool else { return false }
+			return seen
+		}
+		put(.notificationSeen(notificationID), params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
+	}
+	
 	// Method used for testing purposes
 	func fetchFeedOfEveryone(_ completion: @escaping ([Post]) -> Void) {
 		get(.feedEveryone, params: ["session_code": sessionCode as AnyObject], map: postMapping, completion: completion)
@@ -308,8 +333,12 @@ class API {
                 return (false, url, expiresAt)
             }
         }
-        get(.spotifyAccessToken, params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
+        get(.getSpotifyAccessToken, params: ["session_code": sessionCode as AnyObject], map: map, completion: completion)
     }
+	
+	func sendSpotifyAccessToken(accessToken: String, completion: (() -> Void)? = nil) {
+		get(.postSpotifyAccessToken, params: ["code": accessToken as AnyObject, "session_code": sessionCode as AnyObject], map: { $0 }, completion: completion)
+	}
 	
 	// MARK: - Private Methods
 	

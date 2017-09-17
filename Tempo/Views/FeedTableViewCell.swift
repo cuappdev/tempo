@@ -18,13 +18,17 @@ class FeedTableViewCell: PostTableViewCell {
     @IBOutlet weak var imageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var likeButtonBottomConstraint: NSLayoutConstraint!
-    
+	@IBOutlet weak var musicBackground: UIView!
+	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
 		postView?.backgroundColor = .unreadCellColor
 		separator.backgroundColor = .readCellColor
-		separatorHeight.constant = 1
+		initialsLabel.isHidden = true
+		initialsView.isHidden = true
+		musicBackground.layer.cornerRadius = 6
+//		separatorHeight.constant = 1
 	}
 	
 	func setUpFeedCell(firstName: String, lastName: String) {
@@ -35,11 +39,9 @@ class FeedTableViewCell: PostTableViewCell {
 	func setUpPostHistoryCell() {
 		postView = feedPostView
 		initialsLabel.text = ""
-		initialsView.isHidden = true
 		feedPostView.dateLabel!.isHidden = true
-		feedPostView.avatarImageView?.layer.cornerRadius = 0
-		imageViewWidthConstraint.constant = 60
-		imageViewTopConstraint.constant = 25
-		likeButtonBottomConstraint.constant = 48.5
+//		imageViewWidthConstraint.constant = 60
+//		imageViewTopConstraint.constant = 25
+//		likeButtonBottomConstraint.constant = 48.5
 	}
 }

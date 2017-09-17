@@ -68,6 +68,9 @@ class SpotifyController {
 				let spotifyLoginURL = SPTAuth.defaultInstance().loginURL
 				self.authViewController = SFSafariViewController(url: spotifyLoginURL!)
 				
+//				vc.present(self.authViewController!, animated: true, completion: {
+//					API.sharedAPI.postSpotifyAccessToken(accessToken: SPTAuth.defaultInstance().session.accessToken)
+//				})
 				vc.present(self.authViewController!, animated: true, completion: nil)
 			}
 		}
@@ -160,6 +163,14 @@ class SpotifyController {
 					}
 				}
 			}
+		}
+	}
+	
+	func getSongStatus(post: Post) -> SavedSongStatus {
+		if let _ = User.currentUser.currentSpotifyUser?.savedTracks[post.song.spotifyID] {
+			return .saved
+		} else {
+			return .notSaved
 		}
 	}
 	

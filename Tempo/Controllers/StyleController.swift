@@ -29,13 +29,6 @@ class StyleController {
 		UISearchBar.appearance().placeholder = "Search"
 		UISearchBar.appearance().searchBarStyle = .prominent
 		
-		if #available(iOS 9.0, *) {
-			UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .searchBackgroundRed
-			UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = .searchTextColor
-			
-			UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 14.0)!], for: UIControlState())
-		}
-		
 		UITableView.appearance().backgroundColor = .backgroundDarkGrey
 		UITableView.appearance().separatorColor = .clear
 		UITableView.appearance().separatorStyle = .none

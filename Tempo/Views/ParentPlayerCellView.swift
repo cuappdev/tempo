@@ -10,7 +10,7 @@ import UIKit
 
 class ParentPlayerCellView: UIView {
 
-	var playerNav: PlayerNavigationController!
+	var playerCenter: PlayerCenter!
 	var songStatus: SavedSongStatus = .notSaved
 	var post: Post?
 	var postsLikable: Bool?
@@ -48,35 +48,35 @@ class ParentPlayerCellView: UIView {
 	
 	//Switches saved to notSaved, or notSaved to saved, and calls updateAddButton()
 	func toggleAddButton() {
+		if let post = post {
+			toggleAddButton(post: post)
+		}
+	}
+	
+	func toggleAddButton(post: Post, completion: (() -> Void)? = nil) {
 		if let _ = User.currentUser.currentSpotifyUser {
 			SpotifyController.sharedController.spotifyIsAvailable { success in
+				let songStatus = SpotifyController.sharedController.getSongStatus(post: post)
 				if success && songStatus == .notSaved {
-					SpotifyController.sharedController.saveSpotifyTrack(post!) { success in
+					SpotifyController.sharedController.saveSpotifyTrack(post) { success in
 						if success {
-							self.playerNav.updateAddButton()
+							self.playerCenter.updateAddButton()
 							self.delegate?.didToggleAdd?()
+							completion?()
 						}
 					}
 				} else if success && songStatus == .saved {
-					SpotifyController.sharedController.removeSavedSpotifyTrack(post!) { success in
+					SpotifyController.sharedController.removeSavedSpotifyTrack(post) { success in
 						if success {
-							self.playerNav.updateAddButton()
+							self.playerCenter.updateAddButton()
 							self.delegate?.didToggleAdd?()
+							completion?()
 						}
 					}
 				}
 			}
 		} else {
-			//bring them to settingsVC
-			let appDelegate = UIApplication.shared.delegate as! AppDelegate
-			let playerNav = appDelegate.navigationController
-			let settingsVC = appDelegate.settingsVC
-			
-			if playerNav.visibleViewController != settingsVC {
-				settingsVC.shouldAddHamburger = false
-				settingsVC.navigationItem.leftBarButtonItem = nil //clear existing hamburgerMenu, if there
-				playerNav.pushViewController(settingsVC, animated: true)
-			}
+			(TabBarController.sharedInstance.currentlyPresentedViewController as? UINavigationController)?.pushViewController(SettingsScrollViewController.sharedInstance, animated: true)
 		}
 	}
 	

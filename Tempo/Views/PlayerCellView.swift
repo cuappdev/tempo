@@ -18,15 +18,17 @@ class PlayerCellView: ParentPlayerCellView {
 	@IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var progressView: ProgressView!
 	
-	func setup(parent: PlayerNavigationController) {
-		playerNav = parent
+    @IBOutlet weak var addWidthConstraint: NSLayoutConstraint!
+	
+	func setup(parent: PlayerCenter) {
+		playerCenter = parent
 		backgroundColor = .tempoOffBlack
 		
 		let tap = UILongPressGestureRecognizer(target: self, action: #selector(playerCellTapped(sender:)))
 		tap.minimumPressDuration = 0
 		addGestureRecognizer(tap)
 		
-		progressView.playerDelegate = playerNav
+		progressView.playerDelegate = playerCenter
 		progressView.backgroundColor = .tempoDarkRed
 
 		playToggleButton.isUserInteractionEnabled = false
@@ -66,12 +68,10 @@ class PlayerCellView: ParentPlayerCellView {
 		let tapPoint = sender.location(in: self)
 		let separatorPoint = (addButton.frame.right.x + likeButton.frame.left.x) / 2
 		
-		if sender.state == .began {
+		if sender.state == .ended {
 			if (tapPoint.x > playToggleButton.frame.right.x + 12 && tapPoint.x < addButton.frame.left.x - 12) {
-				playerNav?.animateExpandedCell(isExpanding: true)
-			}
-		} else if sender.state == .ended {
-			if (tapPoint.x < playToggleButton.frame.right.x + 12) {
+				playerCenter.expandAccessoryViewController(animated: true)
+			} else if (tapPoint.x < playToggleButton.frame.right.x + 12) {
 				playToggleButtonClicked()
 			} else if (tapPoint.x > addButton.frame.left.x - 12 && tapPoint.x < separatorPoint) {
 				addButtonClicked()
@@ -129,6 +129,12 @@ class PlayerCellView: ParentPlayerCellView {
 	override func updateAddButton() {
 		updateSavedStatus()
 		let image = (songStatus == .saved) ? #imageLiteral(resourceName: "AddedButton") : #imageLiteral(resourceName: "AddButton")
+		
+		if (songStatus == .saved){
+			addWidthConstraint.constant = 73
+		} else {
+            addWidthConstraint.constant = 61
+        }
 		addButton.setBackgroundImage(image, for: .normal)
 	}
 	

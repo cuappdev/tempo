@@ -25,24 +25,25 @@ extension URL {
 class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDelegate, LoginFlowViewControllerDelegate {
 	
 	var window: UIWindow?
-	let revealVC = SWRevealViewController()
-	let sidebarVC = SideBarViewController()
+	let tabBarVC = TabBarController.sharedInstance
 	let feedVC = FeedViewController()
 	let searchVC = SearchViewController()
 	let usersVC = UsersViewController()
 	let profileVC = ProfileViewController()
 	let likedVC = LikedTableViewController()
-	let settingsVC = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
-	let aboutVC = AboutViewController()
-	let transparentView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-	let navigationController = PlayerNavigationController()
+	let notifVC = NotificationCenterViewController()
+	
+	let playerCenter = PlayerCenter.sharedInstance
+	
+	var feedNavigationController: UINavigationController!
+	var searchNavigationController: UINavigationController!
+	var usersNavigationController: UINavigationController!
+	var likedNavigationController: UINavigationController!
+	var profileNavigationController: UINavigationController!
+	var notificationNavigationController: UINavigationController!
 	
 	var loginFlowViewController: LoginFlowViewController?
 
-	// Saved shortcut item used as a result of an app launch, used later when app is activated.
-	var launchedShortcutItem: AnyObject?
-
-	var firstViewController: UIViewController!
 	var resetFirstVC = true
 	
 	var launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
@@ -51,19 +52,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		
 		URLCache.shared = Foundation.URLCache(memoryCapacity: 30 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
 		
-		// Styling reveal controller
-		revealVC.rearViewRevealWidth = DeviceType.IS_IPHONE_5_OR_LESS ? 260 : 300
-		revealVC.frontViewShadowColor = .revealShadowBlack
-		revealVC.frontViewShadowRadius = 14
-		revealVC.frontViewShadowOffset = CGSize(width: -15, height: 0)
-		revealVC.frontViewShadowOpacity = 0.7
+		// Connect all the delegates
+		searchVC.delegate = feedVC
 		
-		// Set up navigation bar divider
-		let navigationBar = navigationController.navigationBar
-		let navigationSeparator = UIView(frame: CGRect(x: 0, y: navigationBar.frame.size.height - 0.5, width: navigationBar.frame.size.width, height: 0.5))
-		navigationSeparator.backgroundColor = .searchBackgroundRed
-		navigationSeparator.isOpaque = true
-		navigationController.navigationBar.addSubview(navigationSeparator)
+		feedNavigationController = UINavigationController(rootViewController: feedVC)
+		searchNavigationController = UINavigationController(rootViewController: searchVC)
+		usersNavigationController = UINavigationController(rootViewController: usersVC)
+		likedNavigationController = UINavigationController(rootViewController: likedVC)
+		profileNavigationController = UINavigationController(rootViewController: profileVC)
+		notificationNavigationController = UINavigationController(rootViewController: notifVC)
 		
 		StyleController.applyStyles()
 		UIApplication.shared.statusBarStyle = .lightContent
@@ -84,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 			SpotifyController.sharedController.setSpotifyUser(SPTAuth.defaultInstance().session.accessToken, completion: nil)
 			User.currentUser.currentSpotifyUser?.savedTracks = UserDefaults.standard.dictionary(forKey: User.currentUser.currentSpotifyUser!.savedTracksKey) as [String : AnyObject]? ?? [:]
 		}
-
+		
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window!.backgroundColor = UIColor.tempoLightGray
 		window!.makeKeyAndVisible()
@@ -93,96 +90,82 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 		FBSDKProfile.enableUpdates(onAccessTokenChange: true)
 		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 		
-		// Check if it's launched from Quick Action
-		var shouldPerformAdditionalDelegateHandling = true
-		if #available(iOS 9.0, *) {
-			if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
-				launchedShortcutItem = shortcutItem
-				shouldPerformAdditionalDelegateHandling = false
-				resetFirstVC = false
-			}
-		}
-		
 		if let facebookLoginToken = FBSDKAccessToken.current()?.tokenString {
-			FacebookLoginViewController.retrieveCurrentFacebookUserWithAccessToken(token: facebookLoginToken, completion: nil)
+			FacebookLoginViewController.retrieveCurrentFacebookUserWithAccessToken(token: facebookLoginToken, completion: { _ in
+				self.profileVC.user = User.currentUser
+				if self.profileVC.isViewLoaded {
+					self.profileVC.setupUserUI()
+				}
+			})
 		}
 		
-		setFirstVC()
-		toggleRootVC()
+		// Check if launched via push notification
+		if let options = launchOptions {
+			print("Options: \(options)")
+			// Problem here because FB user has not completed authentication/loading
+			toggleRootVC(toTabButton: 3)
+		} else {
+			toggleRootVC(toTabButton: 0)
+		}
 		
 		// Prepare to play audio
 		_ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
 		
-		return shouldPerformAdditionalDelegateHandling
+		return true
 	}
 	
 	func didFinishLoggingIn() {
-		if !UserDefaults.standard.bool(forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey) {
+		if !UserDefaults.standard.bool(forKey: SettingsScrollViewController.presentedAlertForRemotePushNotificationsKey) {
 			registerForRemotePushNotifications()
 		}
-		toggleRootVC()
+		toggleRootVC(toTabButton: 0)
 	}
 	
-	func toggleRootVC() {
+	func toggleRootVC(toTabButton tab: Int) {
 		launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
 		if FBSDKAccessToken.current() == nil {
 			loginFlowViewController = LoginFlowViewController()
 			loginFlowViewController?.delegate = self
 			window?.rootViewController = loginFlowViewController
 		} else {
-			if resetFirstVC {
-				navigationController.setViewControllers([firstViewController], animated: false)
-			}
-			revealVC.setFront(navigationController, animated: false)
-			revealVC.setRear(sidebarVC, animated: false)
-			sidebarVC.elements = [
-				SideBarElement(title: "Feed", viewController: feedVC, image: #imageLiteral(resourceName: "FeedSidebarIcon")),
-				SideBarElement(title: "People", viewController: usersVC, image: #imageLiteral(resourceName: "PeopleSidebarIcon")),
-				SideBarElement(title: "Liked", viewController: likedVC, image: #imageLiteral(resourceName: "LikedSidebarButton")),
-				SideBarElement(title: "Settings", viewController: settingsVC, image: #imageLiteral(resourceName: "SettingsSidebarIcon")),
-				SideBarElement(title: "About", viewController: aboutVC, image: #imageLiteral(resourceName: "AboutSidebarIcon"))
-			]
-			sidebarVC.selectionHandler = { [weak self] viewController in
-				if let viewController = viewController {
-					if viewController == self?.settingsVC {
-						//guarantee settingsVC will have HamburgerMenu, if settingsVC was accessed from add button in player cell.
-						self?.settingsVC.addHamburgerMenu()
-					}
-					if let front = self?.revealVC.frontViewController {
-						if viewController == front {
-							self?.revealVC.setFrontViewPosition(.left, animated: true)
-							return
-						}
-					}
-					self?.navigationController.setViewControllers([viewController], animated: false)
-					self?.revealVC.setFrontViewPosition(.left, animated: true)
-				}
-			}
+			tabBarVC.transparentTabBarEnabled = true
+			tabBarVC.numberOfTabs = 5
+			tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarFeed"), forTabAtIndex: 0)
+			tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarFeed"), forTabAtIndex: 0)
+			tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarSearch"), forTabAtIndex: 1)
+			tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarSearch"), forTabAtIndex: 1)
+			tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
+			tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "TabBarPost"), forTabAtIndex: 2)
+			tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarNotifications"), forTabAtIndex: 3)
+			tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarNotifications"), forTabAtIndex: 3)
+			tabBarVC.setUnselectedImage(image: #imageLiteral(resourceName: "PassiveTabBarProfile"), forTabAtIndex: 4)
+			tabBarVC.setSelectedImage(image: #imageLiteral(resourceName: "ActiveTabBarProfile"), forTabAtIndex: 4)
 			
-			revealVC.delegate = self
-			window!.rootViewController = revealVC
+			tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+				self.tabBarVC.present(self.feedNavigationController, animated: false, completion: nil)
+			}, forTabAtIndex: 0)
+			
+			tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+				self.tabBarVC.present(self.usersNavigationController, animated: false, completion: nil)
+			}, forTabAtIndex: 1)
+			
+			tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+				self.tabBarVC.present(self.searchNavigationController, animated: false, completion: nil)
+			}, forTabAtIndex: 2)
+			
+			tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+				self.tabBarVC.present(self.notificationNavigationController, animated: false, completion: nil)
+			}, forTabAtIndex: 3)
+			
+			tabBarVC.addBlockToExecuteOnTabBarButtonPress(block: {
+				self.tabBarVC.present(self.profileNavigationController, animated: false, completion: nil)
+			}, forTabAtIndex: 4)
+			
+			tabBarVC.addAccessoryViewController(accessoryViewController: playerCenter)
+			tabBarVC.programmaticallyPressTabBarButton(atIndex: tab)
+			
+			window?.rootViewController = tabBarVC
 		}
-	}
-	
-	func setFirstVC() {
-		if #available(iOS 9.0, *) {
-			if let shortcutItem = launchedShortcutItem as? UIApplicationShortcutItem {
-				switch (shortcutItem.type) {
-				case ShortcutIdentifier.Post.type:
-					firstViewController =  feedVC
-				case ShortcutIdentifier.PeopleSearch.type:
-					firstViewController =  searchVC
-				case ShortcutIdentifier.Liked.type:
-					firstViewController = likedVC
-				case ShortcutIdentifier.Profile.type:
-					firstViewController =  profileVC
-				default:
-					firstViewController = feedVC
-				}
-				return
-			}
-		}
-		firstViewController = feedVC
 	}
 		
 	func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -218,7 +201,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	
 	func applicationDidEnterBackground(_ application: UIApplication) {
 		if !UserDefaults.standard.bool(forKey: "music_on_off"){
-			navigationController.togglePause()
+			playerCenter.togglePause()
 			let center = MPNowPlayingInfoCenter.default()
 			UIApplication.shared.endReceivingRemoteControlEvents()
 			center.nowPlayingInfo = nil
@@ -226,116 +209,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func applicationWillEnterForeground(_ application: UIApplication) {
-		if let _ = navigationController.getCurrentPost() {
-			navigationController.getPostView()?.updatePlayingStatus()
+		if let _ = playerCenter.getCurrentPost() {
+			playerCenter.getPostView()?.updatePlayingStatus()
 		}
-	}
-	
-	// MARK: - SWRevealDelegate
-	
-	func revealController(_ revealController: SWRevealViewController!, willMoveTo position: FrontViewPosition) {
-		UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-		if position == .left {
-			if let _ = transparentView.superview {
-				transparentView.removeGestureRecognizer(revealVC.panGestureRecognizer())
-				transparentView.removeFromSuperview()
-			}
-			revealController.frontViewController.view.addGestureRecognizer(revealVC.panGestureRecognizer())
-			revealController.frontViewController.revealViewController().tapGestureRecognizer()
-		} else {
-			revealController.frontViewController.view.removeGestureRecognizer(revealVC.panGestureRecognizer())
-			transparentView.addGestureRecognizer(revealVC.panGestureRecognizer())
-			navigationController.view.addSubview(transparentView)
-		}
-		//Notify any hamburger menus that the menu is being toggled
-		NotificationCenter.default.post(name: Notification.Name(rawValue: RevealControllerToggledNotification), object: revealController)
 	}
 	
 	func applicationDidBecomeActive(_ application: UIApplication) {
 		FBSDKAppEvents.activateApp()
-		
-		if #available(iOS 9.0, *) {
-			guard let shortcut = launchedShortcutItem else { return }
-
-			if FBSDKAccessToken.current() != nil {
-				let _ = handleShortcutItem(shortcut as! UIApplicationShortcutItem)
-				launchedShortcutItem = nil
-			}
-		}
-	}
-	
-	// MARK: - Force Touch Shortcut
-	
-	@available(iOS 9.0, *)
-	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-		let handleShortcutItem = self.handleShortcutItem(shortcutItem)
-		completionHandler(handleShortcutItem)
-	}
-	
-	enum ShortcutIdentifier: String {
-		case Post
-		case PeopleSearch
-		case Liked
-		case Profile
-		
-		init?(fullType: String) {
-			guard let last = fullType.components(separatedBy: ".").last else {return nil}
-			self.init(rawValue: last)
-		}
-		
-		var type: String {
-			return Bundle.main.bundleIdentifier! + ".\(self.rawValue)"
-		}
-	}
-	
-	@available(iOS 9.0, *)
-	func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-		guard ShortcutIdentifier(fullType: shortcutItem.type) != nil else { return false }
-		guard let shortcutType = shortcutItem.type as String? else { return false }
-
-		func handleShortCutForMenuIndex(_ index: Int) {
-			var vc: UIViewController!
-			if index == -1 {
-				vc = profileVC
-			} else {
-				vc = sidebarVC.elements[index].viewController
-			}
-			revealVC.setFrontViewPosition(.left, animated: false)
-			navigationController.setViewControllers([vc], animated: false)
-			sidebarVC.preselectedIndex = index
-		}
-		
-		switch (shortcutType) {
-		case ShortcutIdentifier.Post.type:
-			//Bring up Search for Post Song of the day
-			if let topVC = navigationController.topViewController {
-				//App has already loaded
-				if topVC != feedVC.searchTableViewController {
-					//not already in song searching mode
-					handleShortCutForMenuIndex(0)
-					feedVC.pretappedPlusButton = true
-					if topVC == feedVC {
-						feedVC.viewWillAppear(false)
-					}
-				}
-			} else { //First time loading the app
-				handleShortCutForMenuIndex(0)
-				feedVC.pretappedPlusButton = true
-			}
-		case ShortcutIdentifier.PeopleSearch.type:
-			//Bring up People Search Screen
-			handleShortCutForMenuIndex(1)
-		case ShortcutIdentifier.Liked.type:
-			//Bring up Liked View
-			handleShortCutForMenuIndex(2)
-		case ShortcutIdentifier.Profile.type:
-			//Bring up Profile Screen (of current user)
-			profileVC.user = User.currentUser
-			handleShortCutForMenuIndex(-1)
-		default:
-			return false
-		}
-		return true
 	}
 	
 	//MARK: - Remote Push Notifications
@@ -343,7 +223,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	static let remotePushNotificationsDeviceTokenKey = "AppDelegate.remotePushNotificationsDeviceTokenKey"
 	
 	func registerForRemotePushNotifications() {
-		UserDefaults.standard.set(true, forKey: SettingsViewController.presentedAlertForRemotePushNotificationsKey)
+		UserDefaults.standard.set(true, forKey: SettingsScrollViewController.presentedAlertForRemotePushNotificationsKey)
 		DispatchQueue.main.async {
 			let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
 			UIApplication.shared.registerUserNotificationSettings(settings)
@@ -360,8 +240,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SWRevealViewControllerDel
 	}
 	
 	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-		print("RECIEVED PUSH NOTIFICATION")
-		print(userInfo)
+		let info = (userInfo[AnyHashable("custom")] as! NSDictionary).value(forKey: "a") as! NSDictionary
+		let type = info.value(forKey: "notification_type") as? Int
+		
+		switch application.applicationState {
+		case .active:
+			if let type = type {
+				tabBarVC.animateNotificationTabBanner(forNotificationType: (type == 0) ? .Follower : .Like)
+			}
+			break
+		case .background, .inactive:
+			if let type = type, type == 0 || type == 1 {
+				tabBarVC.programmaticallyPressTabBarButton(atIndex: 3)
+			}
+			break
+		}
 	}
 
 }

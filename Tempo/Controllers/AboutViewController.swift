@@ -10,6 +10,8 @@ import UIKit
 
 class AboutViewController: UIViewController, UIScrollViewDelegate {
 	
+	static let sharedInstance = AboutViewController()
+	
 	let aboutText = "Tempo is a music sharing application created by AppDev, a student project team at Cornell University dedicated to mobile app development. Every year, we take apps from idea to product, culminating with releases on the App Store. We give students the opportunity to work in a startup environment and gain practical experience in software development, design, and product management."
 	let linksText = "www.cuappdev.org \n" + "www.github.com/cuappdev \n" + "www.twitter.com/cornellappdev"
 	let teamText = "Special thanks to all the designers, developers, and dreamers who lost countless hours of sleep to bring this app to life."
@@ -37,9 +39,8 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 		title = "About"
 		screenWidth = view.frame.width
 		
-		addHamburgerMenu()
-		
-		let scrollView = UIScrollView(frame: view.frame)
+		let scrollViewHeight = view.frame.height - tabBarHeight - miniPlayerHeight
+		let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: scrollViewHeight))
 		scrollView.delegate = self
 		scrollView.backgroundColor = .backgroundDarkGrey
 		scrollView.bounces = false
@@ -50,7 +51,7 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
 		setupLinks()
 		setupTeam()
 		
-		scrollView.contentSize = CGSize(width: screenWidth, height: teamInfoLabel.frame.bottom.y + 100)
+		scrollView.contentSize = CGSize(width: screenWidth, height: teamInfoLabel.frame.bottom.y + tabBarHeight + miniPlayerHeight + 50)
     }
 	
 	func setupTopViews() {

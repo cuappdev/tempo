@@ -20,11 +20,15 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 	}
 }
 
-class ProfileViewController: UIViewController, UIViewControllerTransitioningDelegate, ProfileHeaderViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ProfileViewController: UIViewController, UIViewControllerTransitioningDelegate, ProfileHeaderViewDelegate, UnderlineTabBarDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 	
-	let headerViewHeight: CGFloat = 320
+	let headerViewHeight: CGFloat = 170
+	let underlineTabBarHeight: CGFloat = 50
+	let postHistoryVC = PostHistoryTableViewController()
+	let calendarVC = UIViewController()
+	let likedVC = LikedTableViewController()
 	
-    var user: User = User.currentUser
+    var user: User!
 	
 	var scrollView: UIScrollView!
     
@@ -40,12 +44,21 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	var justLoaded: Bool = true
 
 	var profileHeaderView: ProfileHeaderView!
+	var underlineTabBarView: UnderlineTabBarView!
 	var calendarCollectionView: UICollectionView!
 	var calendarCollectionViewDivider: UIView!
 	var activityIndicatorView: UIActivityIndicatorView!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		if user == nil || user == User.currentUser {
+			user = User.currentUser
+			
+			let settingsItem = UIBarButtonItem(image: UIImage(named: "SettingsIcon"), style: .plain, target: self, action: #selector(navigateToSettings))
+			settingsItem.imageInsets = UIEdgeInsets(top: 0, left: -10.0, bottom: 0, right: 10.0)
+			navigationItem.rightBarButtonItem = settingsItem
+		}
 		
 		view.backgroundColor = .profileBackgroundBlack
 		
@@ -57,17 +70,23 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		let statusbarHeight = UIApplication.shared.statusBarFrame.height
 		let navbarHeight = navigationController?.navigationBar.frame.height ?? 44
-		let playerViewHeight: CGFloat = 73.0
-		let scrollViewHeight = view.frame.height - statusbarHeight - navbarHeight - playerViewHeight
+		let scrollViewHeight = view.frame.height - statusbarHeight - navbarHeight - tabBarHeight - miniPlayerHeight
 		
 		scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: scrollViewHeight))
 		scrollView.bounces = false
 		scrollView.showsVerticalScrollIndicator = false
 		view.addSubview(scrollView)
 		
-		// Set up profile header view
+		// Set up profile header view and underline tab bar view
 		profileHeaderView = ProfileHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: headerViewHeight))
 		profileHeaderView.delegate = self
+		
+		underlineTabBarView = UnderlineTabBarView(frame: CGRect(x: 0, y: profileHeaderView.frame.bottom.y, width: view.bounds.width, height: underlineTabBarHeight))
+		underlineTabBarView.delegate = self
+		
+		// Disable and hide until fully implemented
+		underlineTabBarView.isHidden = true
+		underlineTabBarView.isUserInteractionEnabled = false
 
 		// Set up profile calendar
 		let layout = HipStickyHeaderFlowLayout()
@@ -87,16 +106,10 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		calendarCollectionViewDivider = UIView(frame: CGRect(x: view.frame.width/11, y: 0, width: 1, height: view.frame.height))
 		calendarCollectionViewDivider.backgroundColor = .tempoRed
 		
-		// Check for 3D Touch availability
-		if #available(iOS 9.0, *) {
-			if traitCollection.forceTouchCapability == .available {
-				registerForPreviewing(with: self, sourceView: view)
-			}
-		}
-		
 		scrollView.addSubview(calendarCollectionView)
 		scrollView.addSubview(calendarCollectionViewDivider)
 		scrollView.addSubview(profileHeaderView)
+		scrollView.addSubview(underlineTabBarView)
 		scrollView.contentSize = CGSize(width: view.frame.width, height: profileHeaderView.frame.height + calendarCollectionView.frame.height)
 		
 		setupUserUI()
@@ -108,71 +121,73 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		justLoaded ? justLoaded = false : setupUserUI()
 		
 		profileHeaderView.nameLabel.isHidden = notConnected(true)
-		profileHeaderView.usernameButton.isHidden = notConnected(false)
+		profileHeaderView.usernameLabel.isHidden = notConnected(false)
+		
+		calendarCollectionView.isUserInteractionEnabled = true
+//		profileHeaderView.followingButton.isEnabled = true
+//		profileHeaderView.followersButton.isEnabled = true
+		navigationItem.rightBarButtonItem?.isEnabled = true
 	}
 	
 	// MARK: - UI Setup and Update Methods
 
 	func setupUserUI() {
-		API.sharedAPI.fetchPosts(user.id) { post in
-			self.posts = post
-			self.postedDates = post.map { $0.date! }
-			self.postedDays = self.postedDates.map { $0.day() }
-			self.postedYearMonthDay = self.postedDates.map { $0.yearMonthDay() }
-			self.postedLikes = post.map{ $0.likes }
+		if let _ = user {
+			API.sharedAPI.fetchPosts(user.id) { post in
+				self.posts = post
+				self.postedDates = post.map { $0.date! }
+				self.postedDays = self.postedDates.map { $0.day() }
+				self.postedYearMonthDay = self.postedDates.map { $0.yearMonthDay() }
+				self.postedLikes = post.map{ $0.likes }
 
-			self.calendarCollectionView.reloadData()
-			DispatchQueue.main.async {
-				self.calendarCollectionView.frame = CGRect(x: self.calendarCollectionView.frame.origin.x,
-				                                           y: self.calendarCollectionView.frame.origin.y,
-				                                           width: self.calendarCollectionView.frame.width,
-				                                           height: self.calendarCollectionView.contentSize.height)
-				self.scrollView.contentSize = CGSize(width: self.view.frame.width,
-				                                     height: self.calendarCollectionView.frame.height + self.profileHeaderView.frame.height)
-				self.calendarCollectionViewDivider.frame = CGRect(x: self.view.frame.width/11,
-				                                                  y: self.calendarCollectionView.frame.origin.y,
-				                                                  width: 1,
-				                                                  height: self.scrollView.contentSize.height * 2)
+				self.calendarCollectionView.reloadData()
+				DispatchQueue.main.async {
+					self.calendarCollectionView.frame = CGRect(x: self.calendarCollectionView.frame.origin.x,
+															   y: self.calendarCollectionView.frame.origin.y,
+															   width: self.calendarCollectionView.frame.width,
+															   height: self.calendarCollectionView.contentSize.height)
+					self.scrollView.contentSize = CGSize(width: self.view.frame.width,
+														 height: self.calendarCollectionView.frame.height + self.profileHeaderView.frame.height)
+					self.calendarCollectionViewDivider.frame = CGRect(x: self.view.frame.width/11,
+																	  y: self.calendarCollectionView.frame.origin.y,
+																	  width: 1,
+																	  height: self.scrollView.contentSize.height * 2)
+				}
+				
+				for likes in self.postedLikes {
+					self.avgLikes += Float(likes)
+				}
+				self.avgLikes /= Float(self.postedLikes.count)
+				
+				self.activityIndicatorView.stopAnimating()
+				self.activityIndicatorView.removeFromSuperview()
 			}
 			
-			for likes in self.postedLikes {
-				self.avgLikes += Float(likes)
-			}
-			self.avgLikes /= Float(self.postedLikes.count)
+			profileHeaderView.nameLabel.text = "\(user.firstName) \(user.shortenLastName())"
+			profileHeaderView.usernameLabel.text = "@\(user.username)"
 			
-			self.activityIndicatorView.stopAnimating()
-			self.activityIndicatorView.removeFromSuperview()
-		}
-		
-		// Profile Info
-		if user == User.currentUser {
-			addHamburgerMenu()
-		}
-		
-		profileHeaderView.nameLabel.text = "\(user.firstName) \(user.shortenLastName())"
-		profileHeaderView.usernameButton.setTitle("@\(user.username)", for: .normal)
-		
-		profileHeaderView.profileImageView.hnk_setImageFromURL(user.imageURL)
-		profileHeaderView.profileBackgroundImageView.hnk_setImageFromURL(user.imageURL)
+			profileHeaderView.profileImageView.hnk_setImageFromURL(user.imageURL)
+			profileHeaderView.profileBackgroundImageView.hnk_setImageFromURL(user.imageURL)
 
-		if User.currentUser.username == user.username {
-			title = "My Profile"
-			profileHeaderView.profileButton.setTitle("EDIT", for: .normal)
-			profileHeaderView.profileButton.addTarget(self, action: #selector(userHandleButtonClicked(sender:)), for: .touchUpInside)
-		} else {
-			title = "Profile"
-			profileHeaderView.profileButton.addTarget(self, action: #selector(profileButtonPressed(sender:)), for: .touchUpInside)
-		}
-		
-		API.sharedAPI.fetchUser(user.id) {
-			self.user = $0
-			self.updateProfileInfoUI()
+			if User.currentUser.username == user.username {
+				title = "My Profile"
+				profileHeaderView.profileButton.setTitle("Edit", for: .normal)
+				profileHeaderView.profileButton.addTarget(self, action: #selector(userHandleButtonClicked(sender:)), for: .touchUpInside)
+			} else {
+				title = "Profile"
+				profileHeaderView.profileButton.addTarget(self, action: #selector(profileButtonPressed(sender:)), for: .touchUpInside)
+			}
+			
+			API.sharedAPI.fetchUser(user.id) {
+				self.user = $0
+				self.updateProfileInfoUI()
+			}
 		}
 	}
 	
 	func updateProfileInfoUI() {
 		if User.currentUser.username != user.username {
-			profileHeaderView.profileButton.setTitle(user.isFollowing ? "FOLLOWING" : "FOLLOW", for: UIControlState())
+			profileHeaderView.profileButton.setTitle(user.isFollowing ? "Following" : "Follow", for: UIControlState())
 			profileHeaderView.profileButton.backgroundColor = (user.isFollowing) ? .clear : .tempoRed
 		}
 		
@@ -186,6 +201,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		followersVC.displayType = displayType
 		followersVC.user = user
 		followersVC.title = String(describing: displayType)
+		profileHeaderView.isWrapperInterationEnabled = false
 		navigationController?.pushViewController(followersVC, animated: true)
 	}
 	
@@ -201,6 +217,11 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	
 	func followingButtonPressed() {
 		displayUsers(.Following)
+	}
+	
+	// MARK: - Underline Tab Bar View Delegate Method
+	func selectedTabBarDidChange(_ newIndex: Int) {
+		print("Show new VC for \(newIndex)")
 	}
 	
     // <------------------------FOLLOW BUTTONS------------------------>
@@ -240,7 +261,7 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 				if newUsername.lowercased() != oldUsername.lowercased() {
 					API.sharedAPI.updateCurrentUser(newUsername) { success in
 						if success {
-							self.profileHeaderView.usernameButton.setTitle("@\(User.currentUser.username)", for: .normal)
+							self.profileHeaderView.usernameLabel.text = "@\(User.currentUser.username)"
 						} else {
 							self.showErrorAlert("Sorry!", message: "Username is taken.", actionTitle: "Try again")
 						}
@@ -258,6 +279,11 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		present(errorAlert, animated: true, completion: nil)
 	}
 	
+	//TO DO: PREVENT MULTIPLE CLICKS !!!
+	func navigateToSettings() {
+		navigationItem.rightBarButtonItem?.isEnabled = false
+		navigationController?.pushViewController(SettingsScrollViewController.sharedInstance, animated: true)
+	}
 
 	/* <------------------------POST HISTORY------------------------> */
 	
@@ -296,7 +322,6 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		let date = dateForIndexPath(indexPath)
 		
 		// Push to TableView with posted songs and dates
-		let postHistoryVC = PostHistoryTableViewController()
 		postHistoryVC.posts = posts
 		postHistoryVC.postedDates = postedDates
 		postHistoryVC.filterPostedDatesToSections(postedDates)
@@ -304,8 +329,10 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 		
 		if let sectionIndex = postHistoryVC.postedDatesSections.index(of: date.yearMonthDay()) {
 			postHistoryVC.sectionIndex = sectionIndex
+			postHistoryVC.rowIndex = 0
 		}
 		
+		calendarCollectionView.isUserInteractionEnabled = false
 		navigationController?.pushViewController(postHistoryVC, animated: true)
 	}
 	
@@ -351,68 +378,4 @@ class ProfileViewController: UIViewController, UIViewControllerTransitioningDele
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return Date().firstDayOfMonth().dateByAddingMonths(-section).numDaysInMonth()
 	}
-}
-
-// MARK: - Peek and Pop
-
-@available(iOS 9.0, *)
-extension ProfileViewController: UIViewControllerPreviewingDelegate {
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		
-		if profileHeaderView.followersButton.frame.contains(location) {
-			let followersVC = UsersViewController()
-			followersVC.displayType = .Followers
-			followersVC.user = user
-			followersVC.title = String(describing: followersVC.displayType)
-			
-			previewingContext.sourceRect = profileHeaderView.followersButton.frame
-			
-			return followersVC
-		}
-		
-		if profileHeaderView.followingButton.frame.contains(location) {
-			let followersVC = UsersViewController()
-			followersVC.displayType = .Following
-			followersVC.user = user
-			followersVC.title = String(describing: followersVC.displayType)
-			
-			previewingContext.sourceRect = profileHeaderView.followingButton.frame
-			
-			return followersVC
-		}
-		
-		let collectionViewPoint = view.convert(location, to: calendarCollectionView)
-		
-		guard let indexPath = calendarCollectionView.indexPathForItem(at: collectionViewPoint),
-			let cell = calendarCollectionView.cellForItem(at: indexPath) as? HipCalendarDayCollectionViewCell else {
-				return nil
-		}
-		
-		if let _ = postedYearMonthDay.index(of: cell.date.yearMonthDay()) {
-			
-			let date = dateForIndexPath(indexPath)
-			
-			let peekViewController = PostHistoryTableViewController()
-			peekViewController.posts = posts
-			peekViewController.postedDates = postedDates
-			peekViewController.filterPostedDatesToSections(postedDates)
-			peekViewController.songLikes = postedLikes
-			
-			if let sectionIndex = peekViewController.postedDatesSections.index(of: date.yearMonthDay()) {
-				peekViewController.sectionIndex = sectionIndex
-			}
-			
-			peekViewController.preferredContentSize = .zero
-			previewingContext.sourceRect = calendarCollectionView.convert(cell.frame, to: view)
-			
-			return peekViewController
-		}
-		
-		return nil
-	}
-	
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		show(viewControllerToCommit, sender: self)
-	}
-
 }

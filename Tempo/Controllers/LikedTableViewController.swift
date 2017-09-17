@@ -22,8 +22,6 @@ class LikedTableViewController: PlayerTableViewController {
 		tableView.backgroundColor = .readCellColor
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(LikedTableViewCell.self, forCellReuseIdentifier: "LikedCell")
-		
-		addHamburgerMenu()
 
 		// Fix color above search bar
 		let topView = UIView(frame: view.frame)
@@ -93,7 +91,7 @@ class LikedTableViewController: PlayerTableViewController {
 		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
 			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? LikedTableViewCell {
 				cell.likedPostView?.updateAddStatus()
-				playerNav.updateAddButton()
+				playerCenter.updateAddButton()
 			}
 		}
 	}

@@ -16,6 +16,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 	var postedDatesDict: [String: Int] = [String: Int]()
 	var postedDatesSections: [String] = []
     var sectionIndex: Int?
+	var rowIndex: Int?
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +35,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		
 		tableView.register(UINib(nibName: "PostHistoryHeaderSectionCell", bundle: nil), forCellReuseIdentifier: "HeaderCell")
 		tableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
-		tableView.rowHeight = 111
+		tableView.rowHeight = 209
 		tableView.sectionHeaderHeight = 33
 		tableView.backgroundColor = .readCellColor
 		tableView.separatorStyle = .none
@@ -45,13 +46,14 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		super.viewWillAppear(animated)
 		preparePosts()
 		tableView.tableHeaderView = notConnected(true) ? nil : searchController.searchBar
+		tableView.reloadData()
 	}
 	
     override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		if let _ = sectionIndex {
-			let selectedRow = IndexPath(row: 0, section: sectionIndex!)
+		if let _ = sectionIndex, let _ = rowIndex {
+			let selectedRow = IndexPath(row: rowIndex!, section: sectionIndex!)
 			tableView.scrollToRow(at: selectedRow, at: UITableViewScrollPosition.top, animated: true)
 		}
     }
@@ -115,6 +117,7 @@ class PostHistoryTableViewController: PlayerTableViewController {
 		cell.feedPostView?.postViewDelegate = self
 		cell.feedPostView?.playerDelegate = self
 		cell.setUpPostHistoryCell()
+		cell.feedPostView.updatePlayingStatus()
 		
 		transplantPlayerAndPostViewIfNeeded(cell: cell)
 		
@@ -150,7 +153,15 @@ class PostHistoryTableViewController: PlayerTableViewController {
 			if let cell = tableView.cellForRow(at: relativeIndexPath(row: currentlyPlayingIndexPath.row) as IndexPath) as? FeedTableViewCell {
 				cell.feedPostView.updateLikedStatus()
 			}
-			playerNav.updateLikeButton()
+			playerCenter.updateLikeButton()
+		}
+	}
+	
+	func didToggleAdd() {
+		if let currentlyPlayingIndexPath = currentlyPlayingIndexPath {
+			if let cell = tableView.cellForRow(at: currentlyPlayingIndexPath) as? FeedTableViewCell {
+				cell.feedPostView.updateAddStatus()
+			}
 		}
 	}
 	

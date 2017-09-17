@@ -34,8 +34,9 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	var searchController: UISearchController!
 	var posts: [Post] = []
 	var filteredPosts: [Post] = []
-	var playerNav: PlayerNavigationController!
 	var playingPostType: PlayingPostType!
+	
+	var playerCenter = PlayerCenter.sharedInstance
 	
     var currentlyPlayingIndexPath: IndexPath? {
         didSet {
@@ -48,7 +49,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 			if searchController.isActive {
 				array = filteredPosts
 			}
-            if let row = currentlyPlayingIndexPath?.row, let currentPost = playerNav.getCurrentPost(), currentPost.equals(other: array[row]) {
+            if let row = currentlyPlayingIndexPath?.row, let currentPost = playerCenter.getCurrentPost(), currentPost.equals(other: array[row]) {
                 didTogglePlaying(animate: true)
             } else {
 				var newCell: PostTableViewCell? = nil
@@ -61,7 +62,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				}
 				
 				//update post to new song
-				playerNav.updateNewPost(post: array[currentlyPlayingIndexPath!.row], delegate: self, postsRef: posts, postRefIndex: currentlyPlayingIndexPath!.row, postView: newCell?.postView)
+				playerCenter.updateNewPost(post: array[currentlyPlayingIndexPath!.row], delegate: self, postsRef: posts, postRefIndex: currentlyPlayingIndexPath!.row, postView: newCell?.postView)
             }
             tableView.selectRow(at: currentlyPlayingIndexPath, animated: false, scrollPosition: .none)
         }
@@ -76,12 +77,10 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
 		
 		//TableView
-		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight), style: .plain)
+		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - tabBarHeight - miniPlayerHeight), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
 		playingPostType = .unknown
-		
-		playerNav = navigationController as! PlayerNavigationController
 		
 		//Search Bar
 		searchController = UISearchController(searchResultsController: nil)
@@ -144,18 +143,12 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	}
 	
 	func navigateToSuggestions() {
-		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-			return
-		}
-		
-		let sidebarVC = appDelegate.sidebarVC
-		sidebarVC.preselectedIndex = 1
-		sidebarVC.selectionHandler?(appDelegate.usersVC)
+		TabBarController.sharedInstance.programmaticallyPressTabBarButton(atIndex: 1)
 	}
 	
     fileprivate func updateNowPlayingInfo() {
 		
-		guard let post = playerNav.getCurrentPost() else { return }
+		guard let post = playerCenter.getCurrentPost() else { return }
 		
 		let center = MPNowPlayingInfoCenter.default()
 		if !post.player.finishedPlaying {
@@ -176,7 +169,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 				MPMediaItemPropertyPlaybackDuration: post.player.duration,
 				MPNowPlayingInfoPropertyElapsedPlaybackTime: post.player.currentTime,
 				MPNowPlayingInfoPropertyPlaybackRate: post.player.isPlaying ? post.player.rate : 0,
-				MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath!.row,
+				MPNowPlayingInfoPropertyPlaybackQueueIndex: currentlyPlayingIndexPath?.row ?? 0,
 				MPNowPlayingInfoPropertyPlaybackQueueCount: count ]
 		} else {
 			UIApplication.shared.endReceivingRemoteControlEvents()
@@ -187,7 +180,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     func notifCenterSetup() {
         downloadArtworkNotificationHandler = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: SongDidDownloadArtworkNotification), object: nil, queue: nil) { [weak self] note in
-            if note.object as? Song == self?.playerNav.getCurrentPost()?.song {
+            if note.object as? Song == self?.playerCenter.getCurrentPost()?.song {
                 self?.updateNowPlayingInfo()
             }
         }
@@ -203,7 +196,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
         // TODO: fetch the largest artwork image for lockscreen in Post
         let center = MPRemoteCommandCenter.shared()
         center.playCommand.addTarget { [weak self] _ in
-            if let _ = self?.playerNav.getCurrentPost()?.player {
+            if let _ = self?.playerCenter.getCurrentPost()?.player {
                 self?.didTogglePlaying(animate: true)
                 return .success
             }
@@ -211,7 +204,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
         }
 
         center.pauseCommand.addTarget { [weak self] _ in
-            if let _ = self?.playerNav.getCurrentPost()?.player {
+            if let _ = self?.playerCenter.getCurrentPost()?.player {
                 self?.didTogglePlaying(animate: true)
                 return .success
             }
@@ -312,7 +305,7 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	// MARK: - PostViewDelegate
 	
 	func didTogglePlaying(animate: Bool) {
-		if let currentPost = playerNav.getCurrentPost() {
+		if let currentPost = playerCenter.getCurrentPost() {
 			currentPost.player.togglePlaying()
 			if animate {
 				updatePlayingCells()
@@ -345,25 +338,25 @@ class PlayerTableViewController: UIViewController, UITableViewDelegate, UITableV
 	// Function to iterate through all cells in a PlayerTableViewController
 	// to pinpoint which cell is being played and transplant PostView.
 	func updatePlayingCells() {
-		if let currentPost = playerNav.getCurrentPost() {
+		if let currentPost = playerCenter.getCurrentPost() {
 			if currentPost.postType == playingPostType {
-				// playerNav.postView always guaranteed to have most recent postView
-				playerNav.getPostView()?.updatePlayingStatus()
+				// playerCenter.postView always guaranteed to have most recent postView
+				playerCenter.getPostView()?.updatePlayingStatus()
 			}
 		}
-		playerNav.updatePlayingStatus()
+		playerCenter.updatePlayingStatus()
 	}
 	
-	// To maintain invariant of playerNav.postView always having 
+	// To maintain invariant of playerCenter.postView always having 
 	// the most up-to-date postView
 	func transplantPlayerAndPostViewIfNeeded(cell: PostTableViewCell) {
 		// swap in the old player to preserve song progress
-		// swap out the playerNav postView for the new one
-		if let currentPost = playerNav.getCurrentPost(), let post = cell.postView?.post, post.equals(other: currentPost) {
-			if let postView = cell.postView, postView != playerNav.getPostView() {
+		// swap out the playerCenter postView for the new one
+		if let currentPost = playerCenter.getCurrentPost(), let post = cell.postView?.post, post.equals(other: currentPost) {
+			if let postView = cell.postView, postView != playerCenter.getPostView() {
 				// need to transplant new postView in, swap players
 				postView.post?.player = currentPost.player
-				playerNav.setPostView(newPostView: postView)
+				playerCenter.setPostView(newPostView: postView)
 			}
 			cell.postView?.updatePlayingStatus()
 		}

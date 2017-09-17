@@ -26,7 +26,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	var lastRequest: Request?
 	
 	weak var delegate: SongSearchDelegate?
-	var playerNav: PlayerNavigationController!
+	let playerCenter = PlayerCenter.sharedInstance
 	
 	var posts: [Post] = []
 	var selectedCell: SongSearchTableViewCell?
@@ -46,7 +46,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		
 		title = "Post a track"
 		
-		tableView = UITableView(frame: CGRect(x: 0, y: searchBarHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight - searchBarHeight - 20), style: .plain)
+		tableView = UITableView(frame: CGRect(x: 0, y: searchBarHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - tabBarHeight - searchBarHeight - miniPlayerHeight - 20), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.backgroundColor = .readCellColor
@@ -54,11 +54,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		tableView.rowHeight = 89
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(UINib(nibName: "SongSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SongSearchTableViewCell")
+		tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(sender:))))
 		
 		searchBarContainer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: searchBarHeight))
 		
 		searchBar.delegate = self
-		playerNav = navigationController as! PlayerNavigationController
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -115,8 +115,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	
 	// Called from bar button, not an elegant solution (should audit)
 	func dismiss() {
-		if let _ = playerNav.getCurrentPost() {
-			playerNav.resetPlayerCells()
+		if let _ = playerCenter.getCurrentPost() {
+			playerCenter.resetPlayerCells()
 		}
 		clearPosts()
 		let _ = navigationController?.popViewController(animated: false)
@@ -141,7 +141,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			cell.postView.avatarImageView?.hnk_setImageFromURL(smallArtworkURL)
 		}
 		
-		if let currentPost = playerNav.getCurrentPost() {
+		if let currentPost = playerCenter.getCurrentPost() {
 			cell.shareButton.isHidden = !currentPost.equals(other: post)
 		} else {
 			cell.shareButton.isHidden = true
@@ -169,7 +169,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		let cell = tableView.cellForRow(at: indexPath) as! SongSearchTableViewCell
 		let post = posts[indexPath.row]
 		
-		if let currentPost = playerNav.getCurrentPost(), currentPost.equals(other: post) {
+		if let currentPost = playerCenter.getCurrentPost(), currentPost.equals(other: post) {
 			didTogglePlaying(animate: true)
 		} else {
 			//hide shareButton for previous cell, if needed
@@ -183,6 +183,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 			selectSong(post, selectedCell?.postView)
 			selectedCell = cell
 		}
+		
+		cell.postView.updatePlayingStatus()
 	}
 	
     // MARK: - General Request Methods
@@ -201,14 +203,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	// MARK: - Song Request Methods
 	
 	func selectSong(_ post: Post, _ postView: PostView?) {
-		playerNav.updateNewPost(post: post, delegate: self, postsRef: nil, postRefIndex: nil, postView: postView)
+		playerCenter.updateNewPost(post: post, delegate: self, postsRef: nil, postRefIndex: nil, postView: postView)
 		searchBar.resignFirstResponder()
 	}
 	
 	func submitSong() {
 		// shouldn't be able to get here if playerNav.currentPost is nil
-		delegate?.didSelectSong(playerNav.getCurrentPost()!.song)
-		dismiss()
+		delegate?.didSelectSong(playerCenter.getCurrentPost()!.song)
+		TabBarController.sharedInstance.programmaticallyPressTabBarButton(atIndex: 0)
 	}
 	
 	func initiateRequest(_ term: String) {
@@ -248,11 +250,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 	// MARK: - PlayerDelegate
 	
 	func didTogglePlaying(animate: Bool) {
-		if let currentPost = playerNav.getCurrentPost() {
+		if let currentPost = playerCenter.getCurrentPost() {
 			currentPost.player.togglePlaying()
 		}
 		selectedCell?.postView.updatePlayingStatus()
-		playerNav.updatePlayingStatus()
+		playerCenter.updatePlayingStatus()
 	}
 	
 	func didFinishPlaying() {
@@ -280,4 +282,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 		}) 
 	}
 	
+	func hideKeyboard(sender: UITapGestureRecognizer) {
+		searchBar.resignFirstResponder()
+	}
 }

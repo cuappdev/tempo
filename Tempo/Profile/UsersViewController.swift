@@ -35,7 +35,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		extendedLayoutIncludesOpaqueBars = true
 		definesPresentationContext = true
 		
-		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - playerCellHeight), style: .plain)
+		tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - tabBarHeight - miniPlayerHeight), style: .plain)
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.rowHeight = 101
@@ -74,7 +74,6 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		if displayType == .Users {
 			title = "People"
 			
-			addHamburgerMenu()
 			populateSuggestions()
 		} else {
 			showActivityIndicator()
@@ -94,13 +93,6 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 				API.sharedAPI.fetchFollowers(user.id, completion: completion)
 			} else {
 				API.sharedAPI.fetchFollowing(user.id, completion: completion)
-			}
-		}
-		
-		// Check for 3D Touch availability
-		if #available(iOS 9.0, *) {
-			if traitCollection.forceTouchCapability == .available {
-				registerForPreviewing(with: self, sourceView: view)
 			}
 		}
     }
@@ -308,32 +300,4 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
 		statusBarView.removeFromSuperview()
 	}
 	
-}
-
-@available(iOS 9.0, *)
-extension UsersViewController: UIViewControllerPreviewingDelegate {
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		let tableViewPoint = view.convert(location, to: tableView)
-		
-		guard let indexPath = tableView.indexPathForRow(at: tableViewPoint),
-			let cell = tableView.cellForRow(at: indexPath) as? FollowTableViewCell else {
-				return nil
-		}
-		
-		let peekViewController = ProfileViewController()
-		peekViewController.title = "Profile"
-		peekViewController.user = searchController.isActive ? filteredUsers[indexPath.row] : users[indexPath.row]
-		
-		peekViewController.preferredContentSize = .zero
-		previewingContext.sourceRect = tableView.convert(cell.frame, to: view)
-		
-		return peekViewController
-	}
-	
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		let backButton = UIBarButtonItem()
-		backButton.title = "Search"
-		navigationItem.backBarButtonItem = backButton
-		show(viewControllerToCommit, sender: self)
-	}
 }
